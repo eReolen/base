@@ -1,0 +1,14 @@
+name = Opening hours
+description = Provides database structure and interfaces for managing the opening hours for libraries, offices, shops, etc.
+dependencies[] = date_popup
+dependencies[] = tipsy
+core = 7.x
+php = 5.2.5
+
+
+
+; Information added by drush on 2014-11-06
+version = "81146d1e8ab63ca70976596d928e4ec46dfdfd57"
+project = "opening_hours"
+datestamp = "1415256666"
+

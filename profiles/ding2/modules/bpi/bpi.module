@@ -1,0 +1,859 @@
+<?php
+/**
+ * @file
+ * BPI main module file.
+ *
+ * Defines BPI specific constants, menu, theme and node hooks.
+ */
+
+/**
+ * URL search query key.
+ */
+define('BPI_SEARCH_PHRASE_KEY', 'text');
+
+/**
+ * Ascending sorting identifier.
+ */
+define('BPI_SORT_ASCENDING', 'asc');
+
+/**
+ * Descending sorting identifier.
+ */
+define('BPI_SORT_DESCENDING', 'desc');
+
+/**
+ * Syndicated node identifier.
+ */
+define('BPI_SYNDICATED', 1);
+
+/**
+ * Pushed node identifier.
+ */
+define('BPI_PUSHED', 2);
+
+/**
+ * Default number of BPI content per page when searching.
+ */
+define('BPI_CONTENT_PER_PAGE', 10);
+
+/**
+ * Default number of BPI content per page when searching.
+ */
+define('BPI_DATE_PICKER_FORMAT', 'Y-m-d');
+
+/**
+ * Default number of BPI content per page when searching.
+ */
+define('BPI_ONE_MONTH', 86400 * 30);
+
+/**
+ * Implements hook_menu().
+ */
+function bpi_menu() {
+  $menu = array();
+
+  $menu['admin/bpi'] = array(
+    'title' => 'BPI syndication',
+    'description' => 'Syndicate content from the well.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bpi_syndicate_page_form'),
+    'access arguments' => array('bpi syndicate content'),
+    'file' => 'bpi.syndicate.inc',
+  );
+
+  $menu['admin/bpi/preview/%/%'] = array(
+    'page callback' => 'admin_bpi_preview_ajax_callback',
+    'page arguments' => array(3, 4),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'bpi.preview.inc',
+  );
+
+  $menu['admin/bpi/syndicate/%'] = array(
+    'page callback' => 'bpi_syndicate_action',
+    'page arguments' => array(3),
+    'access arguments' => array('bpi syndicate content'),
+    'file' => 'bpi.syndicate.inc',
+  );
+
+  $menu['admin/bpi/push_http/%'] = array(
+    'title' => 'Push to BPI',
+    'page arguments' => array(3),
+    'page callback' => 'bpi_http_push_action',
+    'access arguments' => array('bpi push content'),
+    'file' => 'bpi.push.inc',
+  );
+
+  $menu['admin/bpi/push/nojs/%'] = array(
+    'title' => 'Push to BPI',
+    'page callback' => 'bpi_push_action',
+    'page arguments' => array(3, 4),
+    'access arguments' => array('bpi push content'),
+    'file' => 'bpi.push.inc',
+  );
+
+  $menu['admin/bpi/push/ajax/%'] = array(
+    'delivery callback' => 'ajax_deliver',
+  ) + $menu['admin/bpi/push/nojs/%'];
+
+  $menu['admin/bpi/delete/nojs/%node'] = array(
+    'title' => 'Delete from BPI',
+    'page callback' => 'bpi_delete_action',
+    'page arguments' => array(3, 4),
+    'access arguments' => array('delete bpi content'),
+    'file' => 'bpi.delete.inc',
+  );
+
+  $menu['admin/bpi/delete/ajax/%node'] = array(
+    'delivery callback' => 'ajax_deliver',
+  ) + $menu['admin/bpi/delete/nojs/%node'];
+
+  $menu['admin/bpi/statistics/nojs'] = array(
+    'page callback' => 'bpi_statistics',
+    'page arguments' => array(3),
+    'access arguments' => array('view bpi statistics'),
+    'file' => 'bpi.statistics.inc',
+  );
+
+  $menu['admin/bpi/statistics/ajax'] = array(
+    'delivery callback' => 'ajax_deliver',
+  ) + $menu['admin/bpi/statistics/nojs'];
+
+  $menu['admin/bpi/images/nojs'] = array(
+    'page callback' => 'bpi_syndicate_images',
+    'page arguments' => array(3),
+    'access arguments' => array('bpi syndicate content'),
+    'file' => 'bpi.images.inc',
+  );
+
+  $menu['admin/bpi/images/ajax'] = array(
+    'delivery callback' => 'ajax_deliver',
+  ) + $menu['admin/bpi/images/nojs'];
+
+  $menu['admin/config/bpi'] = array(
+    'title' => 'BPI',
+    'description' => 'BPI Related Settings',
+    'access arguments' => array('administer bpi'),
+    'page callback' => 'bpi_admin_menu_block_page',
+    'page arguments' => array(),
+    'file' => 'bpi.admin.inc',
+  );
+
+  $menu['admin/config/bpi/settings'] = array(
+    'title' => 'Service settings',
+    'description' => 'BPI integration settings',
+    'access arguments' => array('administer bpi'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bpi_admin_settings_form'),
+    'file' => 'bpi.admin.inc',
+  );
+
+  $menu['admin/config/bpi/content_mapping'] = array(
+    'title' => 'Content mapping',
+    'description' => 'Map BPI fields to your content fields.',
+    'access arguments' => array('administer bpi'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('bpi_admin_content_mapping_form'),
+    'file' => 'bpi.admin.inc',
+  );
+
+  return $menu;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function bpi_permission() {
+  return array(
+    'administer bpi' => array(
+      'title' => t('Administer BPI settings'),
+      'description' => t('Set the web-service end-point and configure the service.'),
+    ),
+    'bpi syndicate content' => array(
+      'title' => t('Syndicate content'),
+      'description' => t('Pull content from the service.'),
+    ),
+    'bpi push content' => array(
+      'title' => t('Push content'),
+      'description' => t('Push content to the service.'),
+    ),
+    'delete bpi content' => array(
+      'title' => t('Delete content'),
+      'description' => t('Delete content at the service.'),
+    ),
+    'view bpi statistics' => array(
+      'title' => t('View statistics'),
+      'description' => t('View usage statistics.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bpi_theme($existing, $type, $theme, $path) {
+  return array(
+    'bpi_filter_item' => array(
+      'path' => $path . '/templates/',
+      'template' => 'bpi-filter-item',
+    ),
+    'bpi_preview_item' => array(
+      'path' => $path . '/templates/',
+      'template' => 'bpi-preview-item',
+    ),
+    'bpi_search_results' => array(
+      'variables' => array('items' => array()),
+      'file' => 'bpi.syndicate.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * Set some default values for the fields, when syndicating content,
+ * according to mapped settings.
+ */
+function bpi_form_node_form_alter(&$form, &$form_state, $form_id) {
+  $bpi_ctype = variable_get('bpi_content_type', '');
+
+  if (empty($bpi_ctype)) {
+    return;
+  }
+
+  $bpi_id = isset($_GET['bpi_id']) ? (string) $_GET['bpi_id'] : FALSE;
+  $form_state['node']->bpi_id = $bpi_id;
+
+  // Checking is_new to see if it's a create node form, not edit.
+  if ($form_id == $bpi_ctype . '_node_form' && !isset($form_state['node']->is_new) && $bpi_id) {
+    $form_state['node']->bpi_id = $bpi_id;
+    try {
+      $bpi = bpi_client_instance();
+      $bpi_node = $bpi->getNode($bpi_id);
+      $bpi_content = $bpi_node->getProperties();
+      $bpi_assets = $bpi_node->getAssets();
+
+      drupal_set_message(
+        t(
+          'Syndicating content <strong>@title</strong>, from category <strong>@category</strong> and audience <strong>@audience</strong>.',
+          array(
+            '@title' => $bpi_content['title'],
+            '@category' => $bpi_content['category'],
+            '@audience' => $bpi_content['audience'],
+          )
+        )
+      );
+    }
+    catch (Exception $e) {
+      watchdog_exception('bpi', $e);
+      drupal_set_message(
+        t('Failed to fetch the article from BPI well.'),
+        'error'
+      );
+
+      return;
+    }
+
+    $form['title']['#default_value'] = isset($bpi_content['title']) ? $bpi_content['title'] : '';
+    $teaser = variable_get('bpi_field_teaser', '');
+    $body = variable_get('bpi_field_body', '');
+    $materials_field = variable_get('bpi_field_materials', '');
+    $current_language = $form['language']['#value'];
+
+    if (module_exists('ting_reference') && isset($bpi_content['material'])) {
+      // Make a copy of the default field settings and values.
+      $default_field = $form[$materials_field][$current_language][0];
+
+      // Loop over materials from BPI inserting new default field for each.
+      foreach ($bpi_content['material'] as $key => $material_number) {
+        $form[$materials_field][$current_language][$key] = $default_field;
+        $form[$materials_field][$current_language][$key]['#weight'] = $key;
+        $form[$materials_field][$current_language][$key]['ting_object_id']['#default_value'] = $material_number;
+      }
+    }
+
+    // Guessing where to put 'teaser' text in the form.
+    $bpi_teaser = isset($bpi_content['teaser']) ? $bpi_content['teaser'] : '';
+    if (isset($form[$teaser][$current_language][0]['summary'])) {
+      $form[$teaser][$current_language][0]['summary']['#default_value'] = $bpi_teaser;
+    }
+    elseif (isset($form[$teaser][$current_language][0]['value'])) {
+      $form[$teaser][$current_language][0]['value']['#default_value'] = $bpi_teaser;
+    }
+    elseif (isset($form[$teaser][$current_language][0])) {
+      $form[$teaser][$current_language][0]['#default_value'] = $bpi_teaser;
+    }
+
+    // Guessing where to put 'body' text in the form.
+    $bpi_body = isset($bpi_content['body']) ? $bpi_content['body'] : '';
+    if (isset($form[$body][$current_language][0]['value'])) {
+      $form[$body][$current_language][0]['value']['#default_value'] = $bpi_body;
+    }
+    elseif (isset($form[$body][$current_language][0])) {
+      $form[$body][$current_language][0]['#default_value'] = $bpi_body;
+    }
+
+    if ($bpi_id) {
+      drupal_add_library('system', 'drupal.ajax');
+      drupal_add_library('system', 'jquery.form');
+      drupal_add_library('system', 'ui.dialog');
+      drupal_add_js(drupal_get_path('module', 'bpi') . '/js/bpi.scripts.js', 'file');
+      drupal_add_js(drupal_get_path('module', 'ding_popup') . '/ding_popup.js', 'file');
+      drupal_add_css(drupal_get_path('module', 'bpi') . '/css/bpi-admin.styles.css', 'file');
+      $_SESSION['bpi']['assets'] = $bpi_assets;
+    }
+  }
+
+  // Add "Save & Push" button.
+  if ($form_id == $bpi_ctype . '_node_form' && !$bpi_id) {
+    $push_permission = user_access('bpi push content');
+    if ($push_permission) {
+      $form['actions']['push'] = $form['actions']['submit'];
+      $form['actions']['push']['#value'] = t('Save and push');
+      $form['actions']['push']['#submit'][] = 'bpi_push_directly_callback_action';
+    }
+  }
+}
+
+/**
+ * Implements hook_form_ID_alter().
+ *
+ * Adds BPI specific labels and actions to content items.
+ */
+function bpi_form_node_admin_content_alter(&$form, &$form_state) {
+  // @todo I do not agree with this implementation of adding BPI status to the administration
+  // content listing:
+  //
+  // 1. The scope of this implementation is limited due to the fact that it only works on a
+  //    single page/form which already has many shortcomings.
+  // 2. The code for handling this is convoluted (note the "cheats", use of $_SESSION and hook_query_alter()
+  //
+  // I think a better solution could be implemented in a way that also plays better with the
+  // Drupal ecosystem by in general. I see two possible solutions:
+  //
+  // A. Exposing the BPI data for nodes as Views data and BPI operations as Drupal actions.
+  //    That would allow us to implement the administrative content listing in a clean way using
+  //    Views to display BPI state and Views Bulk Operations to push and delete nodes to BPI.
+  //    This would also allow us to show BPI data and apply actions in other contexts - e.g.
+  //    using Rules to automatically push nodes to BPI after creating/updating them.
+  // B. Using a Workflow engine such as the Workflow module to model state and performing
+  //    calls to the BPI webservice based on state changes. It is a much larger and more complex
+  //    framework but we would also get functionality for free e.g. Views, Actions, permission
+  //    handling, logging of state changes, buttons for workflow actions, scheduling of state
+  //    changes that we we already have or will have to write code for ourselves.
+  $form['#attached']['css'][] = drupal_get_path('module', 'bpi') . '/css/bpi-admin.styles.css';
+  drupal_add_library('system', 'drupal.ajax');
+
+  // Figure out where our node information is.
+  if (isset($form['admin']['nodes']['#rows'])) {
+    $rows = &$form['admin']['nodes']['#rows'];
+  }
+  else {
+    $rows = &$form['admin']['nodes']['#options'];
+  }
+
+  // Mark BPI nodes.
+  $nodes_to_mark = array();
+  $nodes_in_table = array_keys($rows);
+  $bpi_nodes = bpi_get_bpi_nodes($nodes_in_table);
+  if (!empty($nodes_in_table)) {
+    $nodes_to_mark = array_keys($bpi_nodes);
+
+    foreach ($rows as $node_id => &$row) {
+      if (in_array($node_id, $nodes_to_mark)) {
+        $row['title']['data']['#suffix'] .= '<sup class="bpi-marker">BPI</sup>';
+      }
+    }
+  }
+
+  // BPI filter.
+  if (isset($form['filter']['filters']['status']['filters'])) {
+    $current_bpi_filter = isset($_SESSION['bpi']['filter']) ? $_SESSION['bpi']['filter'] : 'all';
+
+    $bpi_filters = array(
+      'all' => t('any'),
+      'bpi_only' => t('BPI only'),
+      'bpi_syndicated' => t('Syndicated'),
+      'bpi_pushed' => t('Pushed'),
+    );
+
+    $form['filter']['filters']['status']['filters']['bpi'] = array(
+      '#type' => 'select',
+      '#title' => t('bpi'),
+      '#options' => $bpi_filters,
+      '#default_value' => $current_bpi_filter,
+    );
+
+    // It's viable that this module hooks, are fired before the standard ones.
+    array_unshift($form['#submit'], '_bpi_node_admin_content_submit');
+
+    // If a BPI filter is set, prepend an active BPI filter marker.
+    if ($current_bpi_filter != 'all') {
+      $drupal_filters = isset($_SESSION['node_overview_filter']) ? $_SESSION['node_overview_filter'] : array();
+      $t_args = array(
+        '%property' => 'bpi',
+        '%value' => $bpi_filters[$current_bpi_filter],
+      );
+      $bpi_filter_marker['#markup'] = t('where %property is %value', $t_args);
+
+      // Whether there are some filters active, prepend a plural form.
+      if (count($drupal_filters)) {
+        $bpi_filter_marker['#prefix'] = t('and') . ' ';
+      }
+
+      // Add a BPI filter marker to active filters.
+      $form['filter']['filters']['current'][] = $bpi_filter_marker;
+      // Add standard filter buttons,
+      // since those are showed only if drupal filters array is not empty.
+      $filter_actions = &$form['filter']['filters']['status']['actions'];
+      $filter_actions['submit']['#value'] = t('Refine');
+      $filter_actions['undo'] = array('#type' => 'submit', '#value' => t('Undo'));
+      $filter_actions['reset'] = array('#type' => 'submit', '#value' => t('Reset'));
+    }
+  }
+
+  // Content grid columns.
+  $form['admin']['nodes']['#header']['bpi_timestamp'] = t('BPI import/export');
+
+  // Cheat!
+  // Make the operations column last.
+  $tmp = $form['admin']['nodes']['#header']['operations'];
+  unset($form['admin']['nodes']['#header']['operations']);
+  $form['admin']['nodes']['#header']['operations'] = $tmp;
+
+  foreach ($rows as $key => &$row) {
+    $row['bpi_timestamp'] = '';
+    if (in_array($key, $nodes_to_mark)) {
+      $row['bpi_timestamp'] = format_date($bpi_nodes[$key]->timestamp, 'short');
+    }
+
+    // Cheat!
+    // Make the operations column value last.
+    $tmp = $row['operations'];
+    unset($row['operations']);
+    $row['operations'] = $tmp;
+
+    $push_permission = user_access('bpi push content');
+
+    // Adds a push link to operations.
+    if ($push_permission && bpi_push_available($key)) {
+      $row['operations']['data']['#links']['push'] = array(
+        'title' => t('push'),
+        'href' => 'admin/bpi/push/nojs/' . $key,
+        'attributes' => array(
+          'class' => array(
+            'use-ajax',
+          ),
+        ),
+      );
+    }
+
+    $delete_permission = bpi_ability($key, 'delete');
+
+    // Adds a delete from bpi link.
+    if ($delete_permission && isset($bpi_nodes[$key]) && $bpi_nodes[$key]->status == BPI_PUSHED) {
+      $row['operations']['data']['#links']['delete_from_bpi'] = array(
+        'title' => t('DELETE FROM bpi'),
+        'href' => 'admin/bpi/delete/nojs/' . $key,
+        'attributes' => array(
+          'class' => array(
+            'use-ajax',
+          ),
+        ),
+      );
+    }
+  }
+}
+
+/**
+ * Implements hook_form_ID_alter().
+ *
+ * Add ajax submit handler.
+ */
+function bpi_form_bpi_push_form_alter(&$form, &$form_state) {
+  $form['actions']['submit']['#ajax'] = array(
+    'callback' => 'bpi_push_action_ajax_callback',
+  );
+}
+
+/**
+ * Implements hook_form_ID_alter().
+ *
+ * Add ajax submit handler.
+ */
+function bpi_form_bpi_delete_form_alter(&$form, &$form_state) {
+  $form['actions']['submit']['#ajax'] = array(
+    'callback' => 'bpi_delete_action_ajax_callback',
+  );
+}
+
+/**
+ * Custom submit form for "Save and Push" function.
+ *
+ * @param array $form
+ *   Form structure.
+ * @param array $form_state
+ *   Form state values.
+ */
+function bpi_push_directly_callback_action(&$form, &$form_state) {
+  // Node have been saved in default submit handler. So now redirect the use to
+  // the BPI submission form.
+  $destination = drupal_get_destination();
+  drupal_static_reset('drupal_get_destination');
+
+  if (!empty($destination)) {
+    $_GET['prev_destination'] = reset($destination);
+  }
+  $_GET['destination'] = 'admin/bpi/push_http/' . $form_state['values']['nid'];
+}
+
+/**
+ * Custom submit handler for the node filtering form.
+ *
+ * Since drupal has a hardcoded set of node filters, save the new
+ * BPI related filter separately.
+ * Also, munge the standard filter actions above BPI filtering.
+ *
+ * @param array $form
+ *   Form structure.
+ * @param array $form_state
+ *   Form state values.
+ */
+function _bpi_node_admin_content_submit(&$form, &$form_state) {
+  $bpi_filter = $form_state['input']['bpi'];
+  $op = $form_state['input']['op'];
+
+  // These are standard filter actions.
+  // Due to specific BPI filter nature, handle standard actions here.
+  if ($op == 'Reset') {
+    unset($_SESSION['bpi']['filter']);
+  }
+  elseif ($op == 'Undo' && !empty($_SESSION['bpi']['filter'])) {
+    // Cheat!
+    // Let the drupal filters know that there is a BPI filter, but in
+    // real it's kept in this module.
+    // Since BPI filter will always be shown as last, it will pop a filter stub
+    // from self array, and here we kill the actual bpi filter.
+    $_SESSION['node_overview_filter'][] = '';
+    unset($_SESSION['bpi']['filter']);
+  }
+  elseif ($op == 'Filter' || $op == 'Refine') {
+    $_SESSION['bpi']['filter'] = $bpi_filter;
+  }
+}
+
+/**
+ * Returns proper permission.
+ *
+ * @global object $user
+ *   Current user object.
+ *
+ * @param int $nid
+ *   Node id.
+ * @param string $op
+ *   Operation to check permissions for.
+ *
+ * @return bool
+ *   Status.
+ */
+function bpi_ability($nid, $op) {
+  global $user;
+  $node = node_load($nid);
+  $ability = FALSE;
+
+  // Check for ownership.
+  if (is_object($node)) {
+    if ($node->uid == $user->uid) {
+      $ability = TRUE;
+    }
+  }
+
+  switch ($op) {
+    case 'push':
+      return $ability && bpi_push_available($nid);
+
+    case 'delete':
+      break;
+  }
+
+  return $ability;
+}
+
+/**
+ * Implements hook_node_insert().
+ *
+ * Act on node insert, and if it was created through syndication,
+ * write a record about it.
+ */
+function bpi_node_insert($node) {
+  if (!empty($node->bpi_id)) {
+    try {
+      $bpi = bpi_client_instance();
+      $bpi->syndicateNode($node->bpi_id);
+
+      db_merge('bpi_syndicated')
+        ->fields(array(
+          'nid' => $node->nid,
+          'bid' => $node->bpi_id,
+          'status' => BPI_SYNDICATED,
+          'timestamp' => time(),
+        ))
+        ->condition('nid', $node->nid, '=')
+        ->execute();
+    }
+    catch (Exception $exception) {
+      bpi_error_message($exception, 'error');
+      // We should prevent creation of node due to handled exception.
+      // Maybe there is better solution than deletion of newly created node.
+      node_delete($node->nid);
+      drupal_goto('/admin/bpi');
+    }
+  }
+}
+
+/**
+ * Implements hook_node_load().
+ *
+ * Enrich node object with bpi_id, if any.
+ */
+function bpi_node_load($nodes) {
+  $nids = array_keys($nodes);
+
+  $result = db_select('bpi_syndicated', 'bs')
+    ->fields('bs', array(
+      'nid', 'bid',
+    ))
+    ->condition('nid', $nids, 'IN')
+    ->execute()
+    ->fetchAllAssoc('nid');
+
+  foreach ($nodes as $nid => &$node) {
+    if (isset($result[$nid])) {
+      $node->bpi_id = $result[$nid]->bid;
+    }
+  }
+}
+
+/**
+ * Implements hook_query_alter().
+ *
+ * Alters the query for node retrieval in the content grid, so it now takes into
+ * account the BPI filtering settings.
+ *
+ * @todo: is this query alter always run on every tablesort query?
+ */
+function bpi_query_alter($query) {
+  $filter = isset($_SESSION['bpi']['filter']) ? $_SESSION['bpi']['filter'] : 'all';
+  $available_filters = array('bpi_only', 'bpi_syndicated', 'bpi_pushed');
+
+  // Alter the pagination query.
+  if ($query->hasTag('tablesort')) {
+    // In any case, when BPI filter is used, attach the BPI table.
+    if (in_array($filter, $available_filters)) {
+      $tables = &$query->getTables();
+      $tables['bs'] = array(
+        'join type' => 'INNER',
+        'table' => 'bpi_syndicated',
+        'alias' => 'bs',
+        'condition' => 'bs.nid = n.nid',
+        'arguments' => array(),
+      );
+    }
+  }
+
+  // Alter the content query.
+  if ($query->hasTag('node_load_multiple')) {
+    $conditions = &$query->conditions();
+
+    // In any case, when BPI filter is used, attach the BPI table.
+    if (in_array($filter, $available_filters)) {
+      $tables = &$query->getTables();
+      $tables['bs'] = array(
+        'join type' => 'INNER',
+        'table' => 'bpi_syndicated',
+        'alias' => 'bs',
+        'condition' => 'bs.nid = base.nid',
+        'arguments' => array(),
+      );
+    }
+
+    if ($filter == 'bpi_syndicated') {
+      $conditions[] = array(
+        'field' => 'bs.status',
+        'value' => BPI_SYNDICATED,
+        'operator' => '=',
+      );
+    }
+    elseif ($filter == 'bpi_pushed') {
+      $conditions[] = array(
+        'field' => 'bs.status',
+        'value' => BPI_PUSHED,
+        'operator' => '=',
+      );
+    }
+  }
+}
+
+/**
+ * Get the node id's which were actually syndicated/pushed from/to bpi.
+ *
+ * @param array/int $nodes
+ *   An array of node id's or a single node id.
+ *
+ * @return array
+ *   An array of node id's matching the criteria.
+ */
+function bpi_get_bpi_nodes($nodes) {
+  $query = db_select('bpi_syndicated', 'bs')
+    ->fields('bs', array('nid', 'bid', 'timestamp', 'status'));
+
+  if (is_array($nodes) && count($nodes) > 0) {
+    $query->condition('nid', $nodes, 'IN');
+  }
+  elseif (is_numeric($nodes)) {
+    $query->condition('nid', $nodes, '=');
+  }
+
+  $result = $query
+    ->execute()
+    ->fetchAllAssoc('nid');
+
+  return $result;
+}
+
+/**
+ * Check if a node can be actually pushed.
+ *
+ * @param int $nid
+ *   Node id.
+ *
+ * @return bool
+ *   TRUE/FALSE whether the node can be pushed.
+ */
+function bpi_push_available($nid) {
+  // No nid given.
+  if (empty($nid)) {
+    return FALSE;
+  }
+
+  // Load node and check is exists.
+  $node = node_load($nid);
+  if ($node === FALSE) {
+    return FALSE;
+  }
+
+  // Allow pushing of nodes, to which bpi was mapped in the BE.
+  $mapped_type = variable_get('bpi_content_type', '');
+  if ($node->type != $mapped_type) {
+    return FALSE;
+  }
+
+  $result = db_select('bpi_syndicated', 'bs')
+    ->fields('bs', array('nid', 'timestamp', 'status'))
+    ->condition('nid', $nid, '=')
+    ->execute()
+    ->fetchAllAssoc('nid');
+
+  // A node can be pushed if it is either:
+  // - new to BPI.
+  // - has been syndicated (not pushed).
+  // - has been modified after the last push.
+  $bpi_action = isset($result[$nid]);
+  $was_pushed = ($bpi_action && $result[$nid]->status == BPI_PUSHED);
+  $modified_after_push = $was_pushed && ($node->changed > $result[$nid]->timestamp);
+  $can_be_pushed = (!$was_pushed || $modified_after_push || !$bpi_action);
+
+  return $can_be_pushed;
+}
+
+/**
+ * Creates new Bpi client instance.
+ *
+ * It should not behave as singleton.
+ *
+ * @return Bpi
+ *   Webservice client.
+ */
+function bpi_client_instance() {
+  $endpoint = variable_get('bpi_service_url', '');
+  $agency_id = variable_get('bpi_agency_id', '');
+  $api_key = variable_get('bpi_api_key', '');
+  $secret_key = variable_get('bpi_secret_key', '');
+
+  return new Bpi($endpoint, $agency_id, $api_key, $secret_key);
+}
+
+/**
+ * Check that BPI service configuration have been set.
+ *
+ * If it have not been configured yet error message are set.
+ *
+ * @return bool
+ *   If service is configured TRUE else FALSE is returned.
+ */
+function bpi_service_is_configured() {
+  $endpoint = variable_get('bpi_service_url', '');
+  $agency_id = variable_get('bpi_agency_id', '');
+  $api_key = variable_get('bpi_api_key', '');
+  $secret_key = variable_get('bpi_secret_key', '');
+
+  $configure = TRUE;
+
+  if (empty($endpoint)) {
+    drupal_set_message(t('BPI web-service url have not been set yet. Please go to !url and configure BPI.', array('!url' => l(t('settings'), 'admin/config/bpi/settings'))), 'error');
+    $configure = FALSE;
+  }
+
+  if (empty($agency_id)) {
+    drupal_set_message(t('BPI agency id have not been set yet. Please go to !url and configure BPI.', array('!url' => l(t('settings'), 'admin/config/bpi/settings'))), 'error');
+    $configure = FALSE;
+  }
+
+  if (empty($api_key)) {
+    drupal_set_message(t('BPI API key have not been set yet. Please go to !url and configure BPI.', array('!url' => l(t('settings'), 'admin/config/bpi/settings'))), 'error');
+    $configure = FALSE;
+  }
+
+  if (empty($secret_key)) {
+    drupal_set_message(t('BPI secret key have not been set yet. Please go to !url and configure BPI.', array('!url' => l(t('settings'), 'admin/config/bpi/settings'))), 'error');
+    $configure = FALSE;
+  }
+
+  return $configure;
+}
+
+/**
+ * Set user friendly feedback message based on exception error codes.
+ *
+ * @param Exception $exception
+ *   Exception throw by the BPI client.
+ * @param string $level
+ *   The level the message should be displayed - "error" or "notice'.
+ */
+function bpi_error_message($exception, $level) {
+  // Build message based on error code.
+  $c = $exception->getCode();
+  switch ($exception->getCode()) {
+    case 422:
+      $msg = t('Similar resource allready exists in the BPI service.');
+      break;
+
+    case 406:
+      $msg = t('Trying to syndicate content by owner who already did that is not allowed.');
+      break;
+
+    case 500;
+      $msg = t('Internal server error. Please try once more or contact your site administrator.');
+      break;
+
+    default:
+      $msg = t('Error occurred when pushing content to the BPI data well. Check reports for more information.');
+      break;
+  }
+
+  // Set user friendly message.
+  drupal_set_message($msg, $level);
+
+  // Send the exception to logger.
+  watchdog_exception('bpi', $exception);
+}

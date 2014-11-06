@@ -1,0 +1,34 @@
+CHANGELOG file for Secure Permissions
+
+31-DEC-2010
+-- Fixes form callback for secure_permissions_export().
+-- Do not export permissions for a defined admin role.
+-- #843120 by cos. Easier exporting of permissions to code.
+-- Updates README documentation.
+-- #855608 by cos. Better handling of module enable/disable.
+-- Creates the 7.x.1.5 release.
+
+06-JUN-2010
+-- Fix menu callback.
+-- #760450. Removes default admin role handling, which is in core.
+-- #810006 by DamienMcKenna. Do not rebuild before export.
+-- #760454. Updates default permission handling.
+-- Creates the 7.x.1.4 release.
+
+25-MAR-2010
+-- Chasing changes in Drupal HEAD.
+-- Creates the 7.x.1.3 release.
+
+26-NOV-2009
+-- Cleans up some form handling errors.
+-- Creates the 7.x.1.2 release.
+
+25-NOV-2009
+-- Replaces tabs with two spaces in export.
+-- Separates code-loaded permissions from disabling forms.
+-- Creates the 7.x.1.1 release.
+-- Branch point for the backport to Drupal 6.
+
+22-NOV-2009
+-- Initial project commit.
+-- Creates the 7.x.1.0 release.
