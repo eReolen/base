@@ -1,0 +1,116 @@
+<?php
+/**
+ * @file
+ * Main module implementation which defines functions used in the administration
+ * interface and a few helper functions.
+ */
+
+require_once drupal_get_path('module', 'publizon') . '/publizon.admin.inc';
+/**
+ * Implements hook_perm().
+ */
+function publizon_perm() {
+  return array(
+    'administre publizon',
+  );
+}
+
+function publizon_ding_provider() {
+  $path = drupal_get_path('module', 'publizon');
+
+  return array(
+    'title' => 'Publizon provider',
+    'settings' => 'publizon_settings_form',
+    'provides' => array(
+      'user' => array(
+        'prefix' => 'user',
+      ),
+    ),
+  );
+}
+
+/**
+ * Helper function that extracts the name of the author(s) on a ting object.
+ *
+ * @param object $ting_object
+ *   Ting object.
+ * @param bool $link
+ *   If the parameter is true the authors returned is search links else plain
+ *   text.
+ *
+ * @return string
+ *   The author(s) found and the empty string if non is found.
+ */
+function publizon_get_authors($ting_object, $link = TRUE) {
+  $authors = '';
+  if (isset($ting_object->record["dc:creator"]["dkdcplus:aut"][0])) {
+    if ($link) {
+      $authors = l($ting_object->record["dc:creator"]["dkdcplus:aut"][0], 'ting/search/"' . $ting_object->record["dc:creator"]["dkdcplus:aut"][0] . '"');
+    }
+    else {
+      $authors = $ting_object->record["dc:creator"]["dkdcplus:aut"][0];
+    }
+  }
+  else {
+    // Find all authors involved.
+    $contributors = array();
+    if (isset($ting_object->record['dc:contributor']['dkdcplus:edt'])) {
+      $contributors = array_merge($contributors, $ting_object->record['dc:contributor']['dkdcplus:edt']);
+    }
+    if (isset($ting_object->record['dc:contributor']['dkdcplus:aut'])) {
+      $contributors = array_merge($contributors, $ting_object->record['dc:contributor']['dkdcplus:aut']);
+    }
+
+    // Loop over the authors and create the string.
+    sort($contributors);
+    foreach ($contributors as $contributor) {
+      if ($link) {
+        $authors .= l($contributor, 'ting/search/' . $contributor) . ', ';
+      }
+      else {
+        $authors .= $authors . ', ';
+      }
+    }
+    $authors = drupal_substr($authors, 0, -2);
+  }
+
+  return $authors;
+}
+
+/**
+ * Search the T!NG data well for information based on ISBN.
+ *
+ * If more than one match is found only the first match is returned.
+ *
+ * @param string $isbn
+ *   ISBN number for the product that is searched.
+ *
+ * @return TingObject
+ *   Datawell object for the product found, if non is found FALSE will be
+ *   returned.
+ */
+function publizon_ting_find_object($isbn) {
+  // Ensure that the ting client is available.
+  module_load_include('client.inc', 'ting');
+
+  // Build ting request.
+  $request = ting_get_request_factory()->getSearchRequest();
+  $request = ting_add_agency($request);
+  $request = ting_add_profile($request);
+
+  // Try to fetch ting object based on ISBN number. Sadly not all object in
+  // ebooks or net sound have ISBN, but uses oss:PROVIDER-ID, which we can not
+  // search directly on (so no dc.identifier=*). Also therefor it have been
+  // renamed, because it dose not only find object by ISBN.
+  $request->setQuery($isbn);
+  $request->setNumResults(1);
+
+  // Execute the fetch.
+  $response = ting_execute($request);
+  $object = FALSE;
+  if (isset($response->collections[0]->objects[0])) {
+    $object = $response->collections[0]->objects[0];
+  }
+
+  return $object;
+}
