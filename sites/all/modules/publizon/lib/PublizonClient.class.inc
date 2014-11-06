@@ -14,7 +14,6 @@
 class PublizonClient {
   private $retailer_id;
   private $retailer_key_code;
-  private $langcode;
   private $logger;
 
   private $base_url = '';
@@ -47,33 +46,30 @@ class PublizonClient {
    *   An id that represents the library at publizon.
    * @param string $retailer_key_code
    *   An hash value validating the library as publizon.
-   * @param string $langcode
-   *   The language code used to fetch the information ('da').
    * @param PublizonLogger $logger
    *   Publizon logger class.
    */
-  private function __construct($retailer_id, $retailer_key_code, $langcode, $logger) {
+  private function __construct($retailer_id, $retailer_key_code, $logger) {
     // Get publizon settings from the administration interface.
-    $publizon = variable_get('publizon', FALSE);
-    if (!$publizon) {
-      throw new PublizonException('Publizon client could not load default settings.');
+    $publizon_url = variable_get('publizon_base_url', FALSE);
+    if (!$publizon_url) {
+      throw new PublizonException('Publizon client could not load default settings. Missing: publizon_' . implode(', publizon_', $keys));
     }
 
     // Set base URL.
-    $this->base_url = $publizon['settings']['base_url'];
+    $this->base_url = $publizon_url;
 
     // Encode retailer key code (if needed).
     $retailer_key_code = isset($retailer_key_code) ? md5($retailer_key_code) : NULL;
 
     // Set configuration.
-    $this->setSetting('langcode', $langcode);
     $this->setSetting('retailer_id', $retailer_id);
     $this->setSetting('retailer_key_code', $retailer_key_code);
 
     // Set logger.
     $this->logger = new PublizonVoidLogger();
     if (!isset($logger)) {
-      if ($publizon['settings']['logging']) {
+      if (variable_get('publizon_logging', FALSE)) {
         $this->logger = new PublizonWatchDogLogger();
       }
     }
@@ -89,15 +85,13 @@ class PublizonClient {
    *   An id that represents the library at publizon.
    * @param string $retailer_key_code
    *   An hash value validating the library as publizon.
-   * @param string $langcode
-   *   The language code used to fetch the information ('da').
    * @param PublizonLogger $logger
    *   Publizon logger class.
    */
-  public static function getClient($retailer_id = NULL, $retailer_key_code = NULL, $langcode = NULL, $logger = NULL) {
+  public static function getClient($retailer_id = NULL, $retailer_key_code = NULL, $logger = NULL) {
     if (!isset(self::$instance)) {
       $class = __CLASS__;
-      self::$instance = new $class($retailer_id, $retailer_key_code, $langcode, $logger);
+      self::$instance = new $class($retailer_id, $retailer_key_code, $logger);
     }
     return self::$instance;
   }
@@ -378,7 +372,7 @@ class PublizonClient {
     $parameters += array(
       $ns[0] . ':retailerid' => $this->retailer_id,
       $ns[0] . ':retailerkeycode' => $this->retailer_key_code,
-      $ns[0] . ':languagecode' => $this->langcode,
+      $ns[0] . ':languagecode' => '',
     );
 
     // Make the request.
@@ -434,11 +428,11 @@ class PublizonClient {
       $this->$name = $_SESSION[$name];
     }
     else {
-      $publizon = variable_get('publizon', FALSE);
-      if (!$publizon) {
+      $value = variable_get('publizon_' . $name, FALSE);
+      if (!$value) {
         throw new PublizonException('Publizon client could not load default settings for "' . $name . '".');
       }
-      $this->$name = $publizon['settings'][$name];
+      $this->$name = $value;
     }
   }
 }

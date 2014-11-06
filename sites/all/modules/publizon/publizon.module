@@ -5,7 +5,8 @@
  * interface and a few helper functions.
  */
 
-require_once drupal_get_path('module', 'publizon') . '/publizon.admin.inc';
+require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
+
 /**
  * Implements hook_perm().
  */
@@ -16,7 +17,7 @@ function publizon_perm() {
 }
 
 function publizon_ding_provider() {
-  $path = drupal_get_path('module', 'publizon');
+  $path = drupal_get_path('module', 'publizon') . '/includes';
 
   return array(
     'title' => 'Publizon provider',
@@ -24,6 +25,19 @@ function publizon_ding_provider() {
     'provides' => array(
       'user' => array(
         'prefix' => 'user',
+        'file' => $path - '/publizon.user.inc',
+      ),
+      'loan' => array(
+        'prefix' => 'loan',
+        'file' => $path - '/publizon.loan.inc',
+      ),
+      'reservation' => array(
+        'prefix' => 'reservation',
+        'file' => $path - '/publizon.reservation.inc',
+      ),
+      'availability' => array(
+        'prefix' => 'availability',
+        'file' => $path - '/publizon.availability.inc',
       ),
     ),
   );
