@@ -48,6 +48,9 @@ abstract class PublizonLogger {
     $this->doLog($message, $severity);
   }
 
+  /**
+   * Method that must be overridden by child classes.
+   */
   abstract protected function dolog($message, $severity);
 }
 
@@ -56,6 +59,9 @@ abstract class PublizonLogger {
  * logger.
  */
 class PublizonWatchDogLogger extends PublizonLogger {
+  /**
+   * Actually log, and to watchdog.
+   */
   public function doLog($message, $severity) {
     watchdog('publizon client', htmlspecialchars($message, ENT_QUOTES, 'UTF-8', FALSE), array(),
       constant('WATCHDOG_' . $severity),
@@ -67,5 +73,8 @@ class PublizonWatchDogLogger extends PublizonLogger {
  * Void logger class that sends the log message into the big void.
  */
 class PublizonVoidLogger extends PublizonLogger {
+  /**
+   * Log nothing.
+   */
   public function doLog($message, $severity) {}
 }

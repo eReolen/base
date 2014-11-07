@@ -40,6 +40,8 @@ class PublizonUserLoans extends Publizon {
   );
 
   /**
+   * Constructor.
+   *
    * Creates a new PublizonLoans object that stores basic information about the
    * users loans and also how many loans the user has. The object assumes that
    * the user is logged in and falling back to using the session values when
@@ -134,6 +136,8 @@ class PublizonUserLoans extends Publizon {
   }
 
   /**
+   * Get the next loan period.
+   *
    * Finds the number of hours or days until the current user can loan a book
    * again.
    *
@@ -151,11 +155,15 @@ class PublizonUserLoans extends Publizon {
     }
     $hours = (date_difference(time(), $expire, 'hours', DATE_UNIX));
     if ($hours <= 24) {
-      $str = t('You can loan a new product in %hours.', array('%hours' => format_plural(ceil($hours), 'one hour', '@count hours')));
+      $str = t('You can loan a new product in %hours.', array(
+        '%hours' => format_plural(ceil($hours), 'one hour', '@count hours'),
+      ));
     }
     else {
       $days = date_difference(time(), $expire, 'days', DATE_UNIX);
-      $str = t('You can loan a new product in %days.', array('%days' => format_plural(ceil($days), 'one day', '@count days')));
+      $str = t('You can loan a new product in %days.', array(
+        '%days' => format_plural(ceil($days), 'one day', '@count days'),
+      ));
     }
 
     return $str;
@@ -179,12 +187,15 @@ class PublizonUserLoans extends Publizon {
   }
 
   /**
+   * Get card number.
+   *
    * If the parameter given is not NULL and is numeric the card number is
    * returned. If not, the session is checked for a login ID, which is returned,
    * if found.
    *
    * @param string $card_number
    *   Login ID which most likely is a card number or CPR.
+   *
    * @return string
    *   The card number.
    * @throws PublizonLoansException
@@ -201,12 +212,15 @@ class PublizonUserLoans extends Publizon {
   }
 
   /**
+   * Get pincode.
+   *
    * If the parameter given is not NULL and is numeric the pincode is returned.
    * If not, the session is checked for a pincode (pass), which is returned, if
    * found.
    *
    * @param string $pincode
    *   The current users pin code.
+   *
    * @return string
    *   The current users pincode
    *
@@ -243,6 +257,8 @@ class PublizonUserLoans extends Publizon {
   }
 
   /**
+   * Parse XML.
+   *
    * Helper that is used during creation of this class and parses the XML
    * messages delivered from the web-service. It expects to review and array
    * with two elements (LibraryExtension and Loans) from the XML response.

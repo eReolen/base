@@ -1,6 +1,11 @@
 <?php
-/*
- * Available items
+/**
+ * @file
+ * Availability-provider for Publizon.
+ */
+
+/**
+ * Available items.
  * @TODO
  */
 function publizon_availability_items($provider_ids) {
@@ -9,7 +14,7 @@ function publizon_availability_items($provider_ids) {
 }
 
 /**
- * Available holdings
+ * Available holdings.
  * @TODO
  */
 function publizon_availability_holdings($provider_ids) {

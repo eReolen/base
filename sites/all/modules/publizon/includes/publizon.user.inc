@@ -27,6 +27,8 @@ function publizon_user_profile_init($profile, $auth_res) {
 }
 
 /**
+ * Is user authenticated?.
+ *
  * Test that credentials is still valid. If this function is not
  * defined, it is assumed that having credentials available is enough.
  *
@@ -43,10 +45,12 @@ function publizon_user_is_authenticated($creds) {
  *
  * @TODO
  *
- * @param $account User object.
- * @param $changes
+ * @param StdClass $account
+ *   User object.
+ * @param array $changes
  *   An array with 'mail' and/or 'pass' keys.
- * @returns
+ *
+ * @return array
  *   An array, optionally with new 'creds' which will be cached.
  */
 function publizon_user_account_update($account, $changes) {

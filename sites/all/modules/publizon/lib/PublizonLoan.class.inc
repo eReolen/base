@@ -28,20 +28,16 @@ class PublizonLoan extends Publizon {
   );
 
   /**
+   * Constructor.
+   *
    * Creates a new PublizonLoans object that stores basic information about the
    * users loans and also how many loans the user has. The object assumes that
    * the user is logged in and faling back to using the session values when
    * connecting to Publizon.
    *
-   * @param string $uid
-   *  Drupal user ID
-   * @param bool $fetch_ting_object
-   *  Should the object fetch the ting objects for each loan
-   * @param string $card_number
-   *  The card number or CPR (login id) to get loans for (defaults to using the
-   *  session).
-   * @param bool $reset
-   *  Should the cache be by passed.
+   * @param SimpleXMLElement $book
+   *   The XML-book to loan.
+   *
    * @throws PublizonProductException
    */
   public function __construct(SimpleXMLElement $book) {
@@ -52,7 +48,7 @@ class PublizonLoan extends Publizon {
    * Checks if a given loan is expired.
    *
    * @return bool
-   *  Returns TRUE if the loan is expired else FALSE
+   *   Returns TRUE if the loan is expired else FALSE
    */
   public function isExpired() {
     if (($this->expire_date - time()) > 0) {
@@ -62,22 +58,28 @@ class PublizonLoan extends Publizon {
   }
 
   /**
+   * Get expiration of loan.
+   *
    * Creates a user friendly expire string of a loans expire date in relation to
    * the current time.
    *
    * @return string
-   *  Well formatter string of when the loan expires.
+   *   Well formatter string of when the loan expires.
    */
   public function loanExpiresIn() {
     $str = t('The loan is expired.');
     if (!$this->isExpired()) {
       $hours = date_difference(time(), $this->expire_date, 'hours', DATE_UNIX);
       if ($hours <= 24) {
-        $str = t('Loan expires in %hours', array('%hours' => format_plural(ceil($hours), 'one hour.', '@count hours.')));
+        $str = t('Loan expires in %hours', array(
+          '%hours' => format_plural(ceil($hours), 'one hour.', '@count hours.'),
+        ));
       }
       else {
         $days = date_difference(time(), $this->expire_date, 'days', DATE_UNIX);
-        $str = t('Loan expires in %days', array('%days' => format_plural($days, 'one day.', '@count days')));
+        $str = t('Loan expires in %days', array(
+          '%days' => format_plural($days, 'one day.', '@count days'),
+        ));
       }
     }
     return $str;
@@ -87,25 +89,25 @@ class PublizonLoan extends Publizon {
    * Parse a XML loan from publizon into the object.
    *
    * @param SimpleXMLElement $item
-   *  Publizon XML representation of a loan.
+   *   Publizon XML representation of a loan.
    */
   private function parse(SimpleXMLElement $item) {
     // Get book authors.
     $authors = array();
     foreach ($item->book->authors->author as $author) {
-      $authors[] = (string)$author->attributes()->name;
+      $authors[] = (string) $author->attributes()->name;
     }
 
-    $this->isbn = (string)$item->book->attributes()->id;
-    $this->retailer_order_number = (string)$item->retailerordernumber;
-    $this->internal_order_number = (string)$item->internalordernumber;
-    $this->status = (string)$item->orderstatus->attributes()->name;
-    $this->order_date = strtotime((string)$item->orderdate);
-    $this->expire_date = strtotime((string)$item->loanexpiredate);
-    $this->title = (string)$item->book->title;
+    $this->isbn = (string) $item->book->attributes()->id;
+    $this->retailer_order_number = (string) $item->retailerordernumber;
+    $this->internal_order_number = (string) $item->internalordernumber;
+    $this->status = (string) $item->orderstatus->attributes()->name;
+    $this->order_date = strtotime((string) $item->orderdate);
+    $this->expire_date = strtotime((string) $item->loanexpiredate);
+    $this->title = (string) $item->book->title;
     $this->authors = $authors;
-    $this->download_url = (string)$item->data->data->downloadurl;
-    $this->publisher = (string)$item->book->publisher;
+    $this->download_url = (string) $item->data->data->downloadurl;
+    $this->publisher = (string) $item->book->publisher;
     $this->product = new PublizonProduct($this->isbn);
   }
 }

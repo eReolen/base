@@ -1,12 +1,11 @@
 <?php
-
 /**
  * @file
  * Ding loan provider for Publizon.
  */
 
 /**
- * Get list of loans
+ * Get list of loans.
  *
  * @TODO
  */

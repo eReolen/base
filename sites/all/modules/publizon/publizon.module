@@ -127,13 +127,17 @@ function publizon_ting_find_object($isbn) {
 }
 
 /**
- * Helper function that findes all libraries stored in the Publizon configuration
- * and returns the library names indexed by retailer id.
+ * Get publizon libraries.
+ *
+ * Helper function that findes all libraries stored in the Publizon
+ * configuration and returns the library names indexed by retailer id.
  *
  * @staticvar array $retailers
  *   Static cache used to speed-up the search if call more than once.
+ *
  * @param bool $reset
  *   If TRUE the static cache will be rebuild. Defaults to FALSE.
+ *
  * @return array
  *   Library names indexed by retailer id.
  */
@@ -157,6 +161,8 @@ function publizon_get_libraries($reset = FALSE) {
 }
 
 /**
+ * Get single library.
+ *
  * Helper function that loads Publizon configuration information about a given
  * library and return the information as an array. The array contains
  * retailer_id, retailer_key_code and library_name.

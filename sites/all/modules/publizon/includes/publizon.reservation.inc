@@ -1,12 +1,12 @@
 <?php
-
 /**
  * @file
  * Ding reservation provider for Publizon.
  */
 
 /**
- * Get list of reservations
+ * Get list of reservations.
+ *
  * @TODO
  */
 function publizon_reservation_list($account) {
@@ -19,6 +19,7 @@ function publizon_reservation_list($account) {
 
 /**
  * Create reservation.
+ *
  * @TODO
  */
 function publizon_reservation_create($account, $id, $options) {
@@ -26,7 +27,8 @@ function publizon_reservation_create($account, $id, $options) {
 }
 
 /**
- * Delete reservation
+ * Delete reservation.
+ *
  * @TODO
  */
 function publizon_reservation_delete($account, $id) {

@@ -39,7 +39,7 @@ class PublizonProduct extends Publizon {
   // object properties. The ting object is used to get extended information and
   // verify that the product is available, so it needs to be as fresh as
   // possible, hence it's not cached.
-  private $ting_object = NULL;
+  private $tingObject = NULL;
 
   /**
    * Constructor that takes a ISBN and fetches the product from Publizon.
@@ -112,6 +112,8 @@ class PublizonProduct extends Publizon {
   }
 
   /**
+   * Get ting object.
+   *
    * JIT fetch a ting object from the data well that represents the publizon
    * product.
    *
@@ -119,12 +121,12 @@ class PublizonProduct extends Publizon {
    *   Returns a ting object from the T!NG data well.
    */
   public function getTingObject() {
-    if (!isset($this->ting_object)) {
+    if (!isset($this->tingObject)) {
       // If not fetched in this http request, search the data well for the
       // product.
-      $this->ting_object = publizon_ting_find_object($this->isbn);
+      $this->tingObject = publizon_ting_find_object($this->isbn);
     }
-    return $this->ting_object;
+    return $this->tingObject;
   }
 
   /**

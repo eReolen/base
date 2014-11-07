@@ -20,16 +20,18 @@ class PublizonLibrary extends Publizon {
   );
 
   /**
+   * Constructor.
+   *
    * Creates the object, if the parameters is not given if will fallback to the
    * once currently in the session or the library that is defined as default by
    * the site administrator.
    *
    * @param string $retailer_id
-   *  The librarys ID at Publizon.
+   *   The librarys ID at Publizon.
    * @param string $retailer_key_code
-   *  The librarys access code at Publizon.
+   *   The librarys access code at Publizon.
    * @param string $reset
-   *  If TRUE the cache is by-passed.
+   *   If TRUE the cache is by-passed.
    */
   public function __construct($retailer_id = NULL, $retailer_key_code = NULL, $reset = FALSE) {
     // We need to have the retailer id to use that cache.
@@ -52,14 +54,16 @@ class PublizonLibrary extends Publizon {
    * Get the max number of loan per borrower base on the current site type.
    *
    * @return int
-   *  The max number of loan per borrower.
+   *   The max number of loan per borrower.
    */
   public function getMaxLoans($type) {
     switch ($type) {
       case 'ebook':
         return $this->MaxEbookLoansPerBorrower;
+
       case 'audio':
         return $this->MaxAudioLoansPerBorrower;
+
       default:
         $this->logger->log('Type \'' . $type . '\' of book not found!', 'ERROR');
         throw new PublizonLibraryException('Type \'' . $type . '\' not found!');
@@ -67,12 +71,17 @@ class PublizonLibrary extends Publizon {
   }
 
   /**
+   * Get a setting.
+   *
    * Gets a user login setting from the current session. If no active session
    * exception is throw as library profile should only be used after user have
    * logged in.
    *
    * @param string $name
+   *   The name of the setting.
+   *
    * @return string
+   *   The setting
    * @throws PublizonLibraryException
    */
   private function getSetting($name) {
@@ -86,16 +95,16 @@ class PublizonLibrary extends Publizon {
    * Converts XML response from Publizon into the object properties.
    *
    * @param SimpleXmlElement $xml
-   *  The "data" part of the XML message return form Publizon web-service
-   *  request to get product.
+   *   The "data" part of the XML message return form Publizon web-service
+   *   request to get product.
    */
   private function parse($xml) {
-    $this->retailer_id = (int)$xml->Id;
-    $this->dbcId = (int)$xml->DbcId;
-    $this->name = (string)$xml->Name;
-    $this->MaxEbookLoansPerBorrower = (int)$xml->MaxConcurrentLoansPerBorrower;
-    $this->MaxAudioLoansPerBorrower = (int)$xml->MaxConcurrentAudioLoansPerBorrower;
-    $this->LoanDurationInDays = (string)$xml->LoanDurationInDays;
+    $this->retailer_id = (int) $xml->Id;
+    $this->dbcId = (int) $xml->DbcId;
+    $this->name = (string) $xml->Name;
+    $this->MaxEbookLoansPerBorrower = (int) $xml->MaxConcurrentLoansPerBorrower;
+    $this->MaxAudioLoansPerBorrower = (int) $xml->MaxConcurrentAudioLoansPerBorrower;
+    $this->LoanDurationInDays = (string) $xml->LoanDurationInDays;
   }
 }
 

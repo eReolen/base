@@ -6,13 +6,16 @@
  */
 
 /**
+ * Publizon settings form.
+ *
  * Administration form for the configureation of the communication with
  * publizon.
  *
- * @param $form
+ * @param array $form
  *   The form input.
- * @param $form_state
+ * @param array $form_state
  *   The state of the form.
+ *
  * @return array
  *   The finished form.
  */
@@ -25,7 +28,7 @@ function publizon_settings_form($form, &$form_state) {
     '#title' => t('Default settings'),
     '#description' => t('These settings are used to communicate with the publizon web-service, when no user is logged in. They are required to be able to fetch information about products (eg. covers and basic information from Publizon)'),
     '#collapsible' => TRUE,
-    '#collapsed' => (boolean)variable_get('publizon_base_url', FALSE),
+    '#collapsed' => (boolean) variable_get('publizon_base_url', FALSE),
   );
 
   $form['publizon']['settings']['publizon_base_url'] = array(
@@ -170,11 +173,10 @@ function publizon_settings_form($form, &$form_state) {
 /**
  * Callback for adding one more library.
  *
- * @param $form
+ * @param array $form
  *   The form.
- * @param $form_state
+ * @param array $form_state
  *   The form state at submit.
- * @return void.
  */
 function publizon_settings_form_add_library($form, &$form_state) {
   $form_state['values']['publizon']['num_libraries'] = $form_state['values']['publizon']['num_libraries'] + $form_state['values']['publizon']['libraries']['add_count'];
@@ -184,11 +186,10 @@ function publizon_settings_form_add_library($form, &$form_state) {
 /**
  * Callback for removing a library.
  *
- * @param $form
+ * @param array $form
  *   The form.
- * @param $form_state
+ * @param array $form_state
  *   The form state at submit.
- * @return void.
  */
 function publizon_settings_form_remove_library($form, &$form_state) {
   if ($form_state['values']['publizon']['num_libraries'] > 1) {
@@ -200,11 +201,10 @@ function publizon_settings_form_remove_library($form, &$form_state) {
 /**
  * Ajax callback for libraries altering.
  *
- * @param $form
+ * @param array $form
  *   The form.
- * @param $form_state
+ * @param array $form_state
  *   The form state at submit.
- * @return void.
  */
 function publizon_settings_form_libraries_callback($form, $form_state) {
   return $form['publizon']['libraries'];
@@ -212,14 +212,14 @@ function publizon_settings_form_libraries_callback($form, $form_state) {
 
 /**
  * Validate the publizon settings form.
+ *
  * This makes sure that if something is entered in one of the fields,
  * every field for that line should be entered.
  *
- * @param $form
+ * @param array $form
  *   The form.
- * @param $form_state
+ * @param array $form_state
  *   The form state at submit.
- * @return void.
  */
 function publizon_settings_form_validate($form, &$form_state) {
   // Do not validate when we are trying to remove an element.
@@ -249,13 +249,12 @@ function publizon_settings_form_validate($form, &$form_state) {
 }
 
 /**
- * Submit settings form for Publizon
+ * Submit settings form for Publizon.
  *
- * @param $form
+ * @param array $form
  *   The form.
- * @param $form_state
+ * @param array $form_state
  *   The form state at submit.
- * @return void.
  */
 function publizon_settings_form_submit($form, &$form_state) {
   foreach ($form_state['values']['publizon'] as $name => $value) {

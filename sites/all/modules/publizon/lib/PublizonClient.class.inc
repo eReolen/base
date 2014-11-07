@@ -12,12 +12,12 @@
  * You get a instances of the object by calling PublizonClient::getClient();
  */
 class PublizonClient {
-  private $retailer_id;
-  private $retailer_key_code;
+  private $retailerId;
+  private $retailerKeyCode;
   private $logger;
 
-  private $base_url = '';
-  private $end_points = array(
+  private $baseUrl = '';
+  private $endpoints = array(
     'product' => 'getproduct.asmx',
     'product_list' => 'getproductlist.asmx',
     'loan' => 'createloan.asmx',
@@ -32,6 +32,8 @@ class PublizonClient {
   private static $instance = NULL;
 
   /**
+   * Constructor.
+   *
    * Class constructor that prepares an connection to publizon and wrappers all
    * calls into this object. This is a private constructor as the object is
    * implemented as a singleton pattern, use PublizonClient::getClient() to get
@@ -57,7 +59,7 @@ class PublizonClient {
     }
 
     // Set base URL.
-    $this->base_url = $publizon_url;
+    $this->baseUrl = $publizon_url;
 
     // Encode retailer key code (if needed).
     $retailer_key_code = isset($retailer_key_code) ? md5($retailer_key_code) : NULL;
@@ -76,10 +78,12 @@ class PublizonClient {
   }
 
   /**
+   * Get the singleton client.
+   *
    * Returns an instances of the PublizonClient object that can be used to
    * communicate with the Publizon web-service.
    *
-   * @see PublizonClient().
+   * @see PublizonClient()
    *
    * @param string $retailer_id
    *   An id that represents the library at publizon.
@@ -97,6 +101,8 @@ class PublizonClient {
   }
 
   /**
+   * Create a loan.
+   *
    * Create a new loan at Publizon. It throws an exception if the loan does not
    * go through else the retailer orderno and internal orderno is returned.
    *
@@ -125,8 +131,8 @@ class PublizonClient {
     if (isset($data[0])) {
       $data = $data[0];
       return array(
-        'retailer' => (string)$data->retailerordernumber,
-        'internal' => (string)$data->internalordernumber,
+        'retailer' => (string) $data->retailerordernumber,
+        'internal' => (string) $data->internalordernumber,
       );
     }
 
@@ -134,10 +140,20 @@ class PublizonClient {
     throw new PublizonException('Create loan request returned no data (' . $isbn . ').');
   }
 
+  /**
+   * Get last loans.
+   *
+   * Not implemented.
+   */
   public function getLastLoans() {
     throw new PublizonException('Not implemented yet');
   }
 
+  /**
+   * Get last loans by a library.
+   *
+   * Not implemented.
+   */
   public function getLastLoansByLibrary() {
     throw new PublizonException('Not implemented yet');
   }
@@ -182,6 +198,11 @@ class PublizonClient {
     return $products;
   }
 
+  /**
+   * Get top list.
+   *
+   * Not implemented.
+   */
   public function getTopList() {
     throw new PublizonException('Not implemented yet');
   }
@@ -246,15 +267,27 @@ class PublizonClient {
     return FALSE;
   }
 
+  /**
+   * Get product list.
+   *
+   * Not implemented.
+   */
   public function getProductList() {
     throw new Exception('Not implemented yet');
   }
 
+  /**
+   * Get removed products list.
+   *
+   * Not implemented.
+   */
   public function getRemovedProductList() {
     throw new Exception('Not implemented yet');
   }
 
   /**
+   * Validata a library user.
+   *
    * Validates that a given user is allowed to login to the publizon
    * web-service.
    *
@@ -300,12 +333,13 @@ class PublizonClient {
    * @param string $retailer_key_code
    *   The libraries access code at Publizon.
    *
-   * @return bool
+   * @return array
+   *   The information about the library.
    */
   public function getLibraryProfile($retailer_id = NULL, $retailer_key_code = NULL) {
     // Try to get parameters and fallback to default.
-    $retailer_id = isset($retailer_id) ? $retailer_id : $this->retailer_id;
-    $retailer_key_code = isset($retailer_key_code) ? $retailer_key_code : $this->retailer_key_code;
+    $retailer_id = isset($retailer_id) ? $retailer_id : $this->retailerId;
+    $retailer_key_code = isset($retailer_key_code) ? $retailer_key_code : $this->retailerKeyCcode;
 
     // Make the web-service call.
     $response = $this->call('library_profile', 'GetLibraryProfile', array(
@@ -324,6 +358,8 @@ class PublizonClient {
   }
 
   /**
+   * Call method on endpoint.
+   *
    * Wrapper function for preforming of call to Publizon's web-service via the
    * NanoSOAP module.
    *
@@ -347,16 +383,16 @@ class PublizonClient {
    */
   private function call($endpoint, $action, $parameters, $namespace) {
     // Log request.
-    $this->logger->log('Call to "' . $this->end_points[$endpoint] . '" for "' . $action . '"');
+    $this->logger->log('Call to "' . $this->endpoints[$endpoint] . '" for "' . $action . '"');
 
     // Get namespace key.
     $ns = array_keys($namespace);
 
     // Create a new soap client for the request and set default parameters.
-    $client = new PublizonNanoSOAPClient($this->base_url . $this->end_points[$endpoint], array('namespaces' => $namespace));
+    $client = new PublizonNanoSOAPClient($this->baseUrl . $this->endpoints[$endpoint], array('namespaces' => $namespace));
     $parameters += array(
-      $ns[0] . ':retailerid' => $this->retailer_id,
-      $ns[0] . ':retailerkeycode' => $this->retailer_key_code,
+      $ns[0] . ':retailerid' => $this->retailerId,
+      $ns[0] . ':retailerkeycode' => $this->retailerKeyCode,
       $ns[0] . ':languagecode' => '',
     );
 
@@ -389,6 +425,8 @@ class PublizonClient {
   }
 
   /**
+   * Set a setting.
+   *
    * Used to set a object setting for communication with the Publizon
    * web-service. If value is given it's used, if non is given the session will
    * be checked and then the default configuration.
@@ -427,6 +465,8 @@ class PublizonClient {
  * translatable in the front ned.
  *
  * All other Exception class should use this as their base class.
+ *
+ * TODO Find a better solution than passing message through t function.
  */
 class PublizonException extends Exception {
   /**
