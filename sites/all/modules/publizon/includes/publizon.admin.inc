@@ -84,10 +84,12 @@ function publizon_settings_form($form, &$form_state) {
 
   // Add form elements.
   for ($i = 0; $i < $num_libraries; $i++) {
+    $library = array_shift($libraries);
+
     // Only show titles for the fields for every 20th row.
     $titles = $i % 20 == 0;
 
-    $form['publizon']['libraries'][$i] = array(
+    $form['publizon']['libraries']['l'][$i] = array(
       '#type' => 'fieldset',
       '#title' => t('Library information'),
       '#collapsible' => FALSE,
@@ -97,25 +99,25 @@ function publizon_settings_form($form, &$form_state) {
       ),
     );
 
-    $form['publizon']['libraries'][$i]['retailer_id'] = array(
+    $form['publizon']['libraries']['l'][$i]['retailer_id'] = array(
       '#type' => 'textfield',
       '#title' => $titles ? t('Retailer ID') : '',
       '#size' => 6,
-      '#default_value' => count($libraries) ? $libraries[$i]['retailer_id'] : '',
+      '#default_value' => $library ? $library['retailer_id'] : '',
     );
 
-    $form['publizon']['libraries'][$i]['retailer_key_code'] = array(
+    $form['publizon']['libraries']['l'][$i]['retailer_key_code'] = array(
       '#type' => 'textfield',
       '#title' => $titles ? t('Retailer key code') : '',
       '#size' => 20,
-      '#default_value' => count($libraries) ? $libraries[$i]['retailer_key_code'] : '',
+      '#default_value' => $library ? $library['retailer_key_code'] : '',
     );
 
-    $form['publizon']['libraries'][$i]['library_name'] = array(
+    $form['publizon']['libraries']['l'][$i]['library_name'] = array(
       '#type' => 'textfield',
       '#title' => $titles ? t('Library name') : '',
       '#size' => 32,
-      '#default_value' => count($libraries) ? $libraries[$i]['library_name'] : '',
+      '#default_value' => $library ? $library['library_name'] : '',
     );
   }
 
@@ -158,6 +160,9 @@ function publizon_settings_form($form, &$form_state) {
 
   // Make the form look like at system form.
   $form = system_settings_form($form);
+
+  // We will handle submit ourself.
+  $form['#submit'] = array('publizon_settings_form_submit');
 
   return $form;
 }
@@ -222,7 +227,7 @@ function publizon_settings_form_validate($form, &$form_state) {
     return;
   }
 
-  foreach ($form_state['values']['publizon']['libraries'] as $i => $library) {
+  foreach ($form_state['values']['publizon']['libraries']['l'] as $i => $library) {
     $name = $library['library_name'];
     $id   = $library['retailer_id'];
     $code = $library['retailer_key_code'];
@@ -231,13 +236,13 @@ function publizon_settings_form_validate($form, &$form_state) {
     // If none are filled out, it will just be ignored.
     if (!empty($name) || !empty($id) || !empty($code)) {
       if (empty($name)) {
-        form_set_error('publizon][libraries][' . $i . '][library_name', t('Library name must be specified!'));
+        form_set_error('publizon][libraries][l][' . $i . '][library_name', t('Library name must be specified!'));
       }
       if (empty($id)) {
-        form_set_error('publizon][libraries][' . $i . '][retailer_id', t('Library retailer id must be specified!'));
+        form_set_error('publizon][libraries][l][' . $i . '][retailer_id', t('Library retailer id must be specified!'));
       }
       if (empty($code)) {
-        form_set_error('publizon][libraries][' . $i . '][retailer_key_code', t('Library retailer key code must be specified!'));
+        form_set_error('publizon][libraries][l][' . $i . '][retailer_key_code', t('Library retailer key code must be specified!'));
       }
     }
   }
@@ -257,7 +262,7 @@ function publizon_settings_form_submit($form, &$form_state) {
     if ($name == 'libraries') {
       $libraries = array();
       // Go through the libraries submitted.
-      foreach ($value as $library) {
+      foreach ($value['l'] as $library) {
         // Because of the validation function above, if one of
         // the fields are empty, we can assume that they all are.
         // Ignore such libraries.
@@ -276,4 +281,6 @@ function publizon_settings_form_submit($form, &$form_state) {
       variable_set($name, $value);
     }
   }
+
+  drupal_set_message(t('The configuration options have been saved.'));
 }
