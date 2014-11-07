@@ -7,15 +7,6 @@
 
 require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
 
-/**
- * Implements hook_perm().
- */
-function publizon_perm() {
-  return array(
-    'administre publizon',
-  );
-}
-
 function publizon_ding_provider() {
   $path = drupal_get_path('module', 'publizon') . '/includes';
 
