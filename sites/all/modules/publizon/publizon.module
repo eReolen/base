@@ -7,6 +7,12 @@
 
 require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
 
+/**
+ * Define the providers that are provided by publizon.
+ *
+ * @return array
+ *   The array definition for ding_provider.
+ */
 function publizon_ding_provider() {
   $path = drupal_get_path('module', 'publizon') . '/includes';
 
