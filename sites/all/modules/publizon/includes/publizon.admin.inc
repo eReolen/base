@@ -92,14 +92,14 @@ function publizon_settings_form($form, &$form_state) {
     $form['publizon']['libraries'][$i]['retailer_id'] = array(
       '#type' => 'textfield',
       '#title' => t('Retailer ID'),
-      '#size' => 4,
+      '#size' => 6,
       '#default_value' => count($libraries) ? $libraries[$i]['retailer_id'] : '',
     );
 
     $form['publizon']['libraries'][$i]['retailer_key_code'] = array(
       '#type' => 'textfield',
       '#title' => t('Retailer key code'),
-      '#size' => 32,
+      '#size' => 20,
       '#default_value' => count($libraries) ? $libraries[$i]['retailer_key_code'] : '',
     );
 
