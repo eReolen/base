@@ -115,7 +115,7 @@ function publizon_ting_find_object($isbn) {
   // Try to fetch ting object based on ISBN number. Sadly not all object in
   // ebooks or net sound have ISBN, but uses oss:PROVIDER-ID, which we can not
   // search directly on (so no dc.identifier=*). Also therefor it have been
-  // renamed, because it dose not only find object by ISBN.
+  // renamed, because it does not only find object by ISBN.
   $request->setQuery($isbn);
   $request->setNumResults(1);
 
@@ -141,28 +141,22 @@ function publizon_ting_find_object($isbn) {
  *   Library names indexed by retailer id.
  */
 function publizon_get_libraries($reset = FALSE) {
-  static $retailers;
-  if (!isset($retailers) || $reset) {
+  static $libraries;
+  if (!isset($libraries) || $reset) {
     $libraries = variable_get('publizon_libraries', array());
     if (empty($libraries)) {
-      // We are missing som library configuration here.
+      // We are missing some library configuration here.
       drupal_set_message(t('You need to login as administrator and configure Publizon library lists'), 'warning', FALSE);
       return array();
     }
 
-    // Configuration load, so build library array.
-    $retailers = array();
-    foreach ($libraries as $library) {
-      $retailers[$library['retailer_id']] = $library['library_name'];
-    }
+    // Sort the libraries by library name.
+    setlocale(LC_ALL, 'da_DK.UTF8');
+    asort($libraries, SORT_LOCALE_STRING);
+    setlocale(LC_ALL, '');
   }
 
-  // Sort the libraries by library name.
-  setlocale(LC_ALL, 'da_DK.UTF8');
-  asort($retailers, SORT_LOCALE_STRING);
-  setlocale(LC_ALL, '');
-
-  return $retailers;
+  return $libraries;
 }
 
 /**
