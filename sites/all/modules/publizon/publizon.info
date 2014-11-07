@@ -1,0 +1,19 @@
+name = Publizon provider
+description = Ding provider for Publizon API.
+package = ereolen.dk
+core = 7.x
+php = 5.5
+
+dependencies[] = nanosoap
+
+; Communication class used to get information from Publizon.
+files[] = lib/PublizonClient.class.inc
+files[] = lib/PublizonLogger.class.inc
+files[] = lib/PublizonNanoSoapClient.class.inc
+files[] = lib/PublizonLibrary.class.inc
+files[] = lib/PublizonLoan.class.inc
+files[] = lib/PublizonProduct.class.inc
+files[] = lib/PublizonUserLoans.class.inc
+
+; Data classes used to store information from Publizon.
+files[] = lib/Publizon.class.inc

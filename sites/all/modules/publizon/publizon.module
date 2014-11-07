@@ -1,0 +1,147 @@
+<?php
+/**
+ * @file
+ * Main module implementation which defines functions used in the administration
+ * interface and a few helper functions.
+ */
+
+require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
+
+/**
+ * Define the providers that are provided by publizon.
+ *
+ * @return array
+ *   The array definition for ding_provider.
+ */
+function publizon_ding_provider() {
+  $path = drupal_get_path('module', 'publizon') . '/includes';
+
+  return array(
+    'title' => 'Publizon provider',
+    'settings' => 'publizon_settings_form',
+    'provides' => array(
+      'user' => array(
+        'prefix' => 'user',
+        'file' => $path . '/publizon.user.inc',
+      ),
+      'loan' => array(
+        'prefix' => 'loan',
+        'file' => $path . '/publizon.loan.inc',
+      ),
+      'reservation' => array(
+        'prefix' => 'reservation',
+        'file' => $path . '/publizon.reservation.inc',
+      ),
+      'availability' => array(
+        'prefix' => 'availability',
+        'file' => $path . '/publizon.availability.inc',
+      ),
+    ),
+  );
+}
+
+/**
+ * Search the T!NG data well for information based on ISBN.
+ *
+ * If more than one match is found only the first match is returned.
+ *
+ * TODO Not tested. Should problably be rewritten for newer Ding.
+ *
+ * @param string $isbn
+ *   ISBN number for the product that is searched.
+ *
+ * @return TingObject
+ *   Datawell object for the product found, if non is found FALSE will be
+ *   returned.
+ */
+function publizon_ting_find_object($isbn) {
+  // Ensure that the ting client is available.
+  module_load_include('client.inc', 'ting');
+
+  // Build ting request.
+  $request = ting_get_request_factory()->getSearchRequest();
+  $request = ting_add_agency($request);
+  $request = ting_add_profile($request);
+
+  // Try to fetch ting object based on ISBN number. Sadly not all object in
+  // ebooks or net sound have ISBN, but uses oss:PROVIDER-ID, which we can not
+  // search directly on (so no dc.identifier=*). Also therefor it have been
+  // renamed, because it does not only find object by ISBN.
+  $request->setQuery($isbn);
+  $request->setNumResults(1);
+
+  // Execute the fetch.
+  $response = ting_execute($request);
+  $object = FALSE;
+  if (isset($response->collections[0]->objects[0])) {
+    $object = $response->collections[0]->objects[0];
+  }
+
+  return $object;
+}
+
+/**
+ * Get publizon libraries.
+ *
+ * Helper function that findes all libraries stored in the Publizon
+ * configuration and returns the library names indexed by retailer id.
+ *
+ * @staticvar array $retailers
+ *   Static cache used to speed-up the search if call more than once.
+ *
+ * @param bool $reset
+ *   If TRUE the static cache will be rebuild. Defaults to FALSE.
+ *
+ * @return array
+ *   Library names indexed by retailer id.
+ */
+function publizon_get_libraries($reset = FALSE) {
+  static $libraries;
+  if (!isset($libraries) || $reset) {
+    $libraries = variable_get('publizon_libraries', array());
+    if (empty($libraries)) {
+      // We are missing some library configuration here.
+      drupal_set_message(t('You need to login as administrator and configure Publizon library lists'), 'warning', FALSE);
+      return array();
+    }
+
+    // Sort the libraries by library name.
+    setlocale(LC_ALL, 'da_DK.UTF8');
+    asort($libraries, SORT_LOCALE_STRING);
+    setlocale(LC_ALL, '');
+  }
+
+  return $libraries;
+}
+
+/**
+ * Get single library.
+ *
+ * Helper function that loads Publizon configuration information about a given
+ * library and return the information as an array. The array contains
+ * retailer_id, retailer_key_code and library_name.
+ *
+ * @staticvar array $libraries
+ *   Static cache used to speed-up the search if call more than once.
+ *
+ * @param string $retailer_id
+ *   Retailer id that identifies the library at Publizon.
+ * @param bool $reset
+ *   If TRUE the static cache will be rebuild. Defaults to FALSE.
+ *
+ * @return array
+ *   Basic information about the library entered at the publizon administration
+ *   interface.
+ */
+function publizon_get_library($retailer_id, $reset = FALSE) {
+  static $libraries;
+  if (!isset($libraries) || !isset($libraries[$retailer_id]) || $reset) {
+    $libraries = variable_get('publizon_libraries', array());
+    if (empty($libraries)) {
+      // We are missing som library configuration here.
+      drupal_set_message(t('You need to login as administrator and configure Publizon library lists'), 'warning', FALSE);
+      return array();
+    }
+  }
+  return isset($libraries[$retailer_id]) ? $libraries[$retailer_id] : array();
+}
