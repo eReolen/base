@@ -22,76 +22,30 @@ function publizon_ding_provider() {
     'provides' => array(
       'user' => array(
         'prefix' => 'user',
-        'file' => $path - '/publizon.user.inc',
+        'file' => $path . '/publizon.user.inc',
       ),
       'loan' => array(
         'prefix' => 'loan',
-        'file' => $path - '/publizon.loan.inc',
+        'file' => $path . '/publizon.loan.inc',
       ),
       'reservation' => array(
         'prefix' => 'reservation',
-        'file' => $path - '/publizon.reservation.inc',
+        'file' => $path . '/publizon.reservation.inc',
       ),
       'availability' => array(
         'prefix' => 'availability',
-        'file' => $path - '/publizon.availability.inc',
+        'file' => $path . '/publizon.availability.inc',
       ),
     ),
   );
 }
 
 /**
- * Helper function that extracts the name of the author(s) on a ting object.
- *
- * @param object $ting_object
- *   Ting object.
- * @param bool $link
- *   If the parameter is true the authors returned is search links else plain
- *   text.
- *
- * @return string
- *   The author(s) found and the empty string if non is found.
- */
-function publizon_get_authors($ting_object, $link = TRUE) {
-  $authors = '';
-  if (isset($ting_object->record["dc:creator"]["dkdcplus:aut"][0])) {
-    if ($link) {
-      $authors = l($ting_object->record["dc:creator"]["dkdcplus:aut"][0], 'ting/search/"' . $ting_object->record["dc:creator"]["dkdcplus:aut"][0] . '"');
-    }
-    else {
-      $authors = $ting_object->record["dc:creator"]["dkdcplus:aut"][0];
-    }
-  }
-  else {
-    // Find all authors involved.
-    $contributors = array();
-    if (isset($ting_object->record['dc:contributor']['dkdcplus:edt'])) {
-      $contributors = array_merge($contributors, $ting_object->record['dc:contributor']['dkdcplus:edt']);
-    }
-    if (isset($ting_object->record['dc:contributor']['dkdcplus:aut'])) {
-      $contributors = array_merge($contributors, $ting_object->record['dc:contributor']['dkdcplus:aut']);
-    }
-
-    // Loop over the authors and create the string.
-    sort($contributors);
-    foreach ($contributors as $contributor) {
-      if ($link) {
-        $authors .= l($contributor, 'ting/search/' . $contributor) . ', ';
-      }
-      else {
-        $authors .= $authors . ', ';
-      }
-    }
-    $authors = drupal_substr($authors, 0, -2);
-  }
-
-  return $authors;
-}
-
-/**
  * Search the T!NG data well for information based on ISBN.
  *
  * If more than one match is found only the first match is returned.
+ *
+ * TODO Not tested. Should problably be rewritten for newer Ding.
  *
  * @param string $isbn
  *   ISBN number for the product that is searched.

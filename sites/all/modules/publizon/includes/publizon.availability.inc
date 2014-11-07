@@ -23,13 +23,3 @@ function publizon_availability_holdings($provider_ids) {
 
   return $res;
 }
-
-/**
- * Periodical availability.
- * @TODO
- */
-function publizon_availability_periodical($provider_ids) {
-  $res = array();
-
-  return $res;
-}
