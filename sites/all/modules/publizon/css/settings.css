@@ -1,0 +1,19 @@
+.library-settings {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.library-settings .fieldset-wrapper {
+  padding: 0;
+}
+.library-settings legend {
+  display: none;
+}
+.library-settings .form-item {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+#libraries-fieldset-wrapper .spacer {
+  height: 1em;
+}
