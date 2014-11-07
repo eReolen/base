@@ -50,10 +50,10 @@ class PublizonClient {
    *   Publizon logger class.
    */
   private function __construct($retailer_id, $retailer_key_code, $logger) {
-    // Get publizon settings from the administration interface.
+    // Get publizon url.
     $publizon_url = variable_get('publizon_base_url', FALSE);
     if (!$publizon_url) {
-      throw new PublizonException('Publizon client could not load default settings. Missing: publizon_' . implode(', publizon_', $keys));
+      throw new PublizonException('Publizon client could not load publizon base url (publizon_base_url)');
     }
 
     // Set base URL.
@@ -98,7 +98,7 @@ class PublizonClient {
 
   /**
    * Create a new loan at Publizon. It throws an exception if the loan does not
-   * go through else a download url is returned.
+   * go through else the retailer orderno and internal orderno is returned.
    *
    * @param string $card_number
    *   The users card number/CPR also known as login id.
@@ -107,8 +107,8 @@ class PublizonClient {
    * @param string $isbn
    *   ISBN number on the product.
    *
-   * @return string
-   *   Download URL to the product.
+   * @return array
+   *   Array containing the retailer and internal order numbers.
    *
    * @throws PublizonException
    */
@@ -124,7 +124,10 @@ class PublizonClient {
     $data = $response->xpath('//data');
     if (isset($data[0])) {
       $data = $data[0];
-      return (string) $data->downloadurl;
+      return array(
+        'retailer' => (string)$data->retailerordernumber,
+        'internal' => (string)$data->internalordernumber,
+      );
     }
 
     $this->logger->log('Create loan request returned no data (' . $isbn . ').', 'ERROR');
