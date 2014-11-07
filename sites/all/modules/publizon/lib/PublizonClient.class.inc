@@ -143,54 +143,43 @@ class PublizonClient {
   }
 
   /**
-   * Get list of last loaned products for a given type of product.
+   * Get list of last loaned products.
    *
    * @todo Get Publizon to make it possible to limit the number of elements in
    *       the response.
    *
-   * @param int $list_type
-   *   This can either be PUBLIZON_EBOOK or PUBLIZON_NETSOUND.
    * @param int $limit
    *   The number of products that should be returned. If the limit can not be
    *   reached, the number available will be returned.
    *
    * @return array
    *   Array with PublizonProduct objects
-   *
-   * @throws PublizonException
-   *   Will be throw if the list type is unknown.
    */
-  public function getLastLoansForAll($list_type, $limit = 7) {
-    if ($list_type == PUBLIZON_EBOOK || $list_type == PUBLIZON_NETSOUND) {
-      // Make request to the web-service for the loans.
-      $response = $this->call('libraray_list', 'GetLastLoansForAll', array(
-        'pub:listtype' => $list_type,
-      ), array('pub' => 'http://pubhub.dk/'));
+  public function getLastLoansForAll($limit = 7) {
+    // Make request to the web-service for the loans.
+    $response = $this->call('libraray_list', 'GetLastLoansForAll', array(), array('pub' => 'http://pubhub.dk/'));
 
-      $products = array();
-      $items_found = 0;
+    $products = array();
+    $items_found = 0;
 
-      // Convert XML into PublizonProduct objects, if data was returned.
-      $data = $response->xpath('//data');
-      if (isset($data[0])) {
-        $data = $data[0];
-        foreach ($data->orderinformationitem as $item) {
-          $product = new PublizonProduct((string) $item->identifier);
-          if (isset($product->status)) {
-            $products[] = $product;
-            $items_found++;
-          }
-          // If we found the number of products we are looking for, break.
-          if ($items_found == $limit) {
-            break;
-          }
+    // Convert XML into PublizonProduct objects, if data was returned.
+    $data = $response->xpath('//data');
+    if (isset($data[0])) {
+      $data = $data[0];
+      foreach ($data->orderinformationitem as $item) {
+        $product = new PublizonProduct((string) $item->identifier);
+        if (isset($product->status)) {
+          $products[] = $product;
+          $items_found++;
+        }
+        // If we found the number of products we are looking for, break.
+        if ($items_found == $limit) {
+          break;
         }
       }
-
-      return $products;
     }
-    $this->logger->log('Request for unsuported loans type ' . check_plain($list_type), 'ERROR');
-    throw new PublizonException('You are trying to get unsupported type of loans from Publizon');
+
+    return $products;
   }
 
   public function getTopList() {
@@ -202,8 +191,6 @@ class PublizonClient {
    *
    * @param string $card_number
    *   User card_number / CPR also known as login id.
-   * @param string $list_type
-   *   This can either be PUBLIZON_EBOOK or PUBLIZON_NETSOUND.
    *
    * @return bool
    *   Returns an array with general information about the user and the user
@@ -211,26 +198,21 @@ class PublizonClient {
    *
    * @throws PublizonException
    */
-  public function getLibraryUserOrderList($card_number, $list_type) {
-    if ($list_type == PUBLIZON_EBOOK || $list_type == PUBLIZON_NETSOUND) {
-      // Make request to the web-service for the loans.
-      $response = $this->call('library_user_order_list', 'GetLibraryUserOrderList', array(
-        'pub:cardnumber' => $card_number,
-        'pub:booktype' => $list_type,
-      ), array('pub' => 'http://pubhub.dk/'));
+  public function getLibraryUserOrderList($card_number) {
+    // Make request to the web-service for the loans.
+    $response = $this->call('library_user_order_list', 'GetLibraryUserOrderList', array(
+      'pub:cardnumber' => $card_number,
+    ), array('pub' => 'http://pubhub.dk/'));
 
-      // Check if any data was returned.
-      $data = $response->xpath('//data');
-      $extension = $response->xpath('//LibraryExtension');
-      if (isset($data[0]) && isset($extension[0])) {
-        return array($data[0], $extension[0]);
-      }
-
-      $this->logger->log('No loans information was returned for the user', 'WARNING');
-      return FALSE;
+    // Check if any data was returned.
+    $data = $response->xpath('//data');
+    $extension = $response->xpath('//LibraryExtension');
+    if (isset($data[0]) && isset($extension[0])) {
+      return array($data[0], $extension[0]);
     }
-    $this->logger->log('Request for unsuported loans type ' . check_plain($list_type), 'ERROR');
-    throw new PublizonException('You are trying to get unsupported type of loans from Publizon');
+
+    $this->logger->log('No loans information was returned for the user', 'WARNING');
+    return FALSE;
   }
 
   /**
