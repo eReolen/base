@@ -55,6 +55,14 @@ function publizon_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['publizon']['settings']['publizon_client_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Client ID'),
+    '#description' => t('The client ID to send to publizon.'),
+    '#default_value' => variable_get('publizon_client_id', ''),
+    '#required' => TRUE,
+  );
+
   $form['publizon']['settings']['publizon_logging'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable logging'),
@@ -257,28 +265,24 @@ function publizon_settings_form_validate($form, &$form_state) {
  *   The form state at submit.
  */
 function publizon_settings_form_submit($form, &$form_state) {
-  foreach ($form_state['values']['publizon'] as $name => $value) {
-    if ($name == 'libraries') {
-      $libraries = array();
-      // Go through the libraries submitted.
-      foreach ($value['l'] as $library) {
-        // Because of the validation function above, if one of
-        // the fields are empty, we can assume that they all are.
-        // Ignore such libraries.
-        if (empty($library['library_name'])) {
-          continue;
-        }
-
-        // Save this one.
-        $libraries[$library['retailer_id']] = $library;
-      }
-
-      variable_set('publizon_libraries', $libraries);
+  $libraries = array();
+  // Go through the libraries submitted.
+  foreach ($form_state['values']['publizon']['libraries']['l'] as $library) {
+    // Because of the validation function above, if one of
+    // the fields are empty, we can assume that they all are.
+    // Ignore such libraries.
+    if (empty($library['library_name'])) {
+      continue;
     }
-    else {
-      // For all other values that the libraries, just save it as a variable.
-      variable_set($name, $value);
-    }
+
+    // Save this one.
+    $libraries[$library['retailer_id']] = $library;
+  }
+
+  variable_set('publizon_libraries', $libraries);
+  // For all other values that the libraries, just save it as a variable.
+  foreach ($form_state['values']['publizon']['settings'] as $name => $value) {
+    variable_set($name, $value);
   }
 
   drupal_set_message(t('The configuration options have been saved.'));
