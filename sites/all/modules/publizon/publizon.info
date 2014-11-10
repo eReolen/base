@@ -5,6 +5,9 @@ core = 7.x
 php = 5.5
 
 dependencies[] = nanosoap
+dependencies[] = features
+dependencies[] = list
+dependencies[] = profile2
 
 ; Communication class used to get information from Publizon.
 files[] = lib/PublizonClient.class.inc
@@ -17,3 +20,9 @@ files[] = lib/PublizonUserLoans.class.inc
 
 ; Data classes used to store information from Publizon.
 files[] = lib/Publizon.class.inc
+
+; Features for field on profile2
+features[features_api][] = api:2
+features[field_base][] = publizon_retailer_id
+features[field_instance][] = profile2-provider_publizon-publizon_retailer_id
+features[profile2_type][] = "provider_publizon"
