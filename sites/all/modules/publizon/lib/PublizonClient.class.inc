@@ -299,11 +299,16 @@ class PublizonClient {
    * @return bool
    *   If the user is valid TRUE is return else FALSE.
    */
-  public function validateLibraryUser($card_number, $pincode) {
+  public function validateLibraryUser($card_number, $pincode, $retailer_id) {
     try {
+      // Get retailer information.
+      $retailer = publizon_get_library($retailer_id);
+
       $response = $this->call('user', 'ValidateLibraryUser', array(
         'pub:cardnumber' => $card_number,
         'pub:pincode' => $pincode,
+        'pub:retailerid' => $retailer['retailer_id'],
+        'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
       ), array('pub' => 'http://pubhub.dk/'));
     }
     catch (PublizonException $e) {
@@ -391,9 +396,8 @@ class PublizonClient {
     // Create a new soap client for the request and set default parameters.
     $client = new PublizonNanoSOAPClient($this->baseUrl . $this->endpoints[$endpoint], array('namespaces' => $namespace));
     $parameters += array(
-      $ns[0] . ':retailerid' => $this->retailerId,
-      $ns[0] . ':retailerkeycode' => $this->retailerKeyCode,
       $ns[0] . ':languagecode' => '',
+      $ns[0] . ':clientid' => publizon_get_client_id(),
     );
 
     // Make the request.
