@@ -27,7 +27,7 @@ function publizon_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(),
-      'allowed_values_function' => 'publizon_allowed_retailer_ids',
+      'allowed_values_function' => 'publizon_get_libraries_list',
       'profile2_private' => 0,
     ),
     'translatable' => 0,

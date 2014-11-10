@@ -176,3 +176,15 @@ function publizon_profile_update($profile, $data) {
   $langs = field_language('profile2', $profile);
   $profile->publizon_retailer_id[$langs['publizon_retailer_id']][0]['value'] = $data['retailer_id'];
 }
+
+/**
+ * Get all libraries as a list usable in a select form item.
+ *
+ * @return array
+ *   Array of libraries keyed by retailer id.
+ */
+function publizon_get_libraries_list() {
+  return array_map(function ($elem) {
+    return $elem['library_name'];
+  }, publizon_get_libraries());
+}

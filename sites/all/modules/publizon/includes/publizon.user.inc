@@ -20,9 +20,7 @@ function publizon_user_user_login_form_alter($form, $form_state) {
   $form['retailer_id'] = array(
     '#type' => 'select',
     '#title' => t('Select library'),
-    '#options' => array_map(function ($elem) {
-      return $elem['library_name'];
-    }, publizon_get_libraries()),
+    '#options' => publizon_get_libraries_list(),
   );
 
   return $form;
