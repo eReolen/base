@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpi version="0.1">
+  <item type="category" name="Other" />
+  <item type="category" name="Event" />
+  <item type="category" name="Music" />
+  <item type="audience" name="All" />
+  <item type="audience" name="Adult" />
+</bpi>

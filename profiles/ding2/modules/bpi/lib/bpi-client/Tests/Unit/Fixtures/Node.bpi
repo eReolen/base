@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpi version="0.1">
+  <item type="entity">
+    <hypermedia>
+      <link rel="self" href="abc" title=""/>
+      <link rel="collection" href="http://example.com/collection" title="Collection"/>
+      <query rel="search" href="http://example.com/search" title="Search">
+        <params>
+          <param name="id"/>
+        </params>
+      </query>
+      <query rel="filter" href="xyz" title="Filtration">
+        <params>
+          <param name="name"/>
+          <param name="title"/>
+        </params>
+      </query>
+      <template rel="push" href="http://example.com/node" title="Node template">
+        <fields>
+          <field name="title"/>
+          <field name="teaser"/>
+          <field name="body"/>
+          <field name="type"/>
+        </fields>
+      </template>
+    </hypermedia>
+    <property name="title">TITLE</property>
+    <property name="teaser">TEASER</property>
+  </item>
+</bpi>

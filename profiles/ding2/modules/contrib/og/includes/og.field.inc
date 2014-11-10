@@ -19,6 +19,7 @@ function og_field_widget_info() {
   return $widgets;
 }
 
+
 /**
  * Implements hook_field_widget_form().
  */
