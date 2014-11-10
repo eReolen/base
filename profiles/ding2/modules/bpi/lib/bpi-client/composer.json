@@ -1,0 +1,25 @@
+{
+    "name": "bpi/sdk",
+    "type": "application",
+    "description": "BPI SDK.",
+    "keywords": [
+        "rest"
+    ],
+    "homepage": "https://github.com/bpi-dk/sdk",
+    "authors": [
+        {
+            "name": "George Mihailov",
+            "email": "mihailoff@gmail.com",
+            "homepage": "http://george.mihailoff.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/common": "2.3.0",
+        "fabpot/goutte": "v1.0.1"
+    },
+    "autoload": {
+        "psr-0": { "Bpi\\Sdk": "." }
+    }
+}

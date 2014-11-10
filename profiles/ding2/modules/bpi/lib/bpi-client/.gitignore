@@ -1,0 +1,6 @@
+# IDE
+/.buildpath
+/.project
+/.settings
+
+/composer.phar

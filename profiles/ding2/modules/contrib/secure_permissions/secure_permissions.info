@@ -5,8 +5,8 @@ files[] = secure_permissions.module
 configure = admin/config/people/secure_permissions
 
 
-; Information added by drush on 2014-11-06
+; Information added by drush on 2014-11-10
 version = "ef5eec5"
 project = "secure_permissions"
-datestamp = "1415256682"
+datestamp = "1415610062"
 

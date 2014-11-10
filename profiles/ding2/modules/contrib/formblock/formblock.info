@@ -3,8 +3,8 @@ description = Enables the presentation of node creation forms in blocks. This is
 core = 7.x
 
 
-; Information added by drush on 2014-11-06
+; Information added by drush on 2014-11-10
 version = "2d94c83"
 project = "formblock"
-datestamp = "1415256700"
+datestamp = "1415610032"
 

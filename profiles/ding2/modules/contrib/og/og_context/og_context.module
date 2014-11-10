@@ -417,17 +417,9 @@ function og_context_handler_url() {
       $valid_ids = array();
       $entities = entity_load($target_type, $ids);
       foreach ($entities as $id => $entity) {
-        if (!entity_access('view', $target_type, $entity)) {
-          // User can't access entity.
-          continue;
+        if (entity_access('view', $target_type, $entity)) {
+          $valid_ids[] = $id;
         }
-
-        if (!og_is_group($target_type, $entity)) {
-          // Entity is not a group.
-          continue;
-        }
-
-        $valid_ids[] = $id;
       }
 
       if ($valid_ids) {

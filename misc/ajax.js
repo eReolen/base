@@ -448,9 +448,7 @@ Drupal.ajax.prototype.getEffect = function (response) {
  * Handler for the form redirection error.
  */
 Drupal.ajax.prototype.error = function (response, uri) {
-  if (response.status != 0) {
-    alert(Drupal.ajaxError(response, uri));
-  }
+  alert(Drupal.ajaxError(response, uri));
   // Remove the progress element.
   if (this.progress.element) {
     $(this.progress.element).remove();
@@ -618,6 +616,26 @@ Drupal.ajax.prototype.commands = {
       .removeClass('odd even')
       .filter(':even').addClass('odd').end()
       .filter(':odd').addClass('even');
+  },
+
+  /**
+   * Command to add css.
+   *
+   * Uses the proprietary addImport method if available as browsers which
+   * support that method ignore @import statements in dynamically added
+   * stylesheets.
+   */
+  add_css: function (ajax, response, status) {
+    // Add the styles in the normal way.
+    $('head').prepend(response.data);
+    // Add imports in the styles using the addImport method if available.
+    var match, importMatch = /^@import url\("(.*)"\);$/igm;
+    if (document.styleSheets[0].addImport && importMatch.test(response.data)) {
+      importMatch.lastIndex = 0;
+      while (match = importMatch.exec(response.data)) {
+        document.styleSheets[0].addImport(match[1]);
+      }
+    }
   },
 
   /**

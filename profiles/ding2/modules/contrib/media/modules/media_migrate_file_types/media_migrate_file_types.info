@@ -9,8 +9,8 @@ dependencies[] = media
 configure = admin/structure/file-types/upgrade
 
 
-; Information added by drush on 2014-11-06
+; Information added by drush on 2014-11-10
 version = "c3cda2b"
 project = "media"
-datestamp = "1415256556"
+datestamp = "1415610024"
 
