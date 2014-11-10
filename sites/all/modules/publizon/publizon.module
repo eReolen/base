@@ -1,6 +1,12 @@
 <?php
 /**
  * @file
+ * Code for the Publizon provider feature.
+ */
+
+include_once 'publizon.features.inc';
+/**
+ * @file
  * Main module implementation which defines functions used in the administration
  * interface and a few helper functions.
  */
@@ -107,7 +113,9 @@ function publizon_get_libraries($reset = FALSE) {
 
     // Sort the libraries by library name.
     setlocale(LC_ALL, 'da_DK.UTF8');
-    asort($libraries, SORT_LOCALE_STRING);
+    uasort($libraries, function($e1, $e2) {
+      return strcoll($e1['library_name'], $e2['library_name']);
+    });
     setlocale(LC_ALL, '');
   }
 
@@ -144,4 +152,27 @@ function publizon_get_library($retailer_id, $reset = FALSE) {
     }
   }
   return isset($libraries[$retailer_id]) ? $libraries[$retailer_id] : array();
+}
+
+/**
+ * Get the client id to send to Publizon.
+ *
+ * @return string
+ *   The client id.
+ */
+function publizon_get_client_id() {
+  return variable_get('publizon_client_id', '');
+}
+
+/**
+ * Update profile2 with values from login.
+ *
+ * @param StdClass $profile
+ *   The profile to update.
+ * @param array $data
+ *   Data from the authenticate function.
+ */
+function publizon_profile_update($profile, $data) {
+  $langs = field_language('profile2', $profile);
+  $profile->publizon_retailer_id[$langs['publizon_retailer_id']][0]['value'] = $data['retailer_id'];
 }
