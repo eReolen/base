@@ -42,6 +42,10 @@ function publizon_ding_provider() {
         'prefix' => 'availability',
         'file' => $path . '/publizon.availability.inc',
       ),
+      'debt' => array(
+        'prefix' => 'debt',
+        'file' => $path . '/publizon.debt.inc',
+      ),
     ),
   );
 }
@@ -162,19 +166,6 @@ function publizon_get_library($retailer_id, $reset = FALSE) {
  */
 function publizon_get_client_id() {
   return variable_get('publizon_client_id', '');
-}
-
-/**
- * Update profile2 with values from login.
- *
- * @param StdClass $profile
- *   The profile to update.
- * @param array $data
- *   Data from the authenticate function.
- */
-function publizon_profile_update($profile, $data) {
-  $langs = field_language('profile2', $profile);
-  $profile->publizon_retailer_id[$langs['publizon_retailer_id']][0]['value'] = $data['retailer_id'];
 }
 
 /**
