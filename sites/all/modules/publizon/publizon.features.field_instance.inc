@@ -11,7 +11,7 @@ function publizon_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance: 'profile2-provider_publizon-publizon_retailer_id'
-  $field_instances['profile2-provider_publizon-publizon_retailer_id'] = array(
+  $field_instances['profile2-provider_publizon-field_publizon_retailer_id'] = array(
     'bundle' => 'provider_publizon',
     'default_value' => NULL,
     'deleted' => 0,
@@ -26,7 +26,7 @@ function publizon_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'profile2',
-    'field_name' => 'publizon_retailer_id',
+    'field_name' => 'field_publizon_retailer_id',
     'label' => 'Retailer id',
     'required' => 0,
     'settings' => array(

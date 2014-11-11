@@ -11,12 +11,12 @@ function publizon_field_default_field_bases() {
   $field_bases = array();
 
   // Exported field_base: 'publizon_retailer_id'
-  $field_bases['publizon_retailer_id'] = array(
+  $field_bases['field_publizon_retailer_id'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'publizon_retailer_id',
+    'field_name' => 'field_publizon_retailer_id',
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(

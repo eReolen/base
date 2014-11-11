@@ -62,8 +62,19 @@ function publizon_user_authenticate($name, $pass, $values) {
   if ($client->validateLibraryUser($name, $pass, $values['retailer_id'])) {
     $res = array(
       'success' => TRUE,
-      // Transfer retailer id to save on the user.
-      'retailer_id' => $values['retailer_id'],
+      'creds' => array(
+        'name' => $name,
+        'pass' => $pass,
+      ),
+      'user' => array(
+        'mail' => '',
+        'blocked' => FALSE,
+        'data' => array(
+          'display_name' => '',
+          // Transfer retailer id to save on the user.
+          'retailer_id' => $values['retailer_id'],
+        ),
+      ),
     );
   }
   else {
@@ -76,13 +87,17 @@ function publizon_user_authenticate($name, $pass, $values) {
 }
 
 /**
- * Initialise profile.
+ * Finalize the account after login.
  *
- * @TODO
+ * TODO This should not be used, we get data from session instead
+ * of receiving it directly. Not good!
  */
-function publizon_user_profile_init($profile, $auth_res) {
-  publizon_profile_update($profile, $auth_res);
-
+function publizon_user_authenticate_finalize($account) {
+  $profile = profile2_load_by_user($account->uid, 'provider_publizon');
+  $langs = field_language('profile2', $profile);
+  // Get retailer id from session.
+  // TODO NOT the right way to do it.
+  $profile->field_publizon_retailer_id[$langs['field_publizon_retailer_id']][0]['value'] = $_SESSION['ding_user']['user']['data']['retailer_id'];
   $profile->save();
 }
 
