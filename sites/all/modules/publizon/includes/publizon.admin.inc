@@ -39,22 +39,6 @@ function publizon_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
-  $form['publizon']['settings']['publizon_retailer_id'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Retailer ID'),
-    '#description' => t("This is the library's identification at publizon, which you should recieve from them."),
-    '#default_value' => variable_get('publizon_retailer_id', ''),
-    '#required' => TRUE,
-  );
-
-  $form['publizon']['settings']['publizon_retailer_key_code'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Retailer key code'),
-    '#description' => t('This is a MD5 hash of the code provided with the retailer ID above.'),
-    '#default_value' => variable_get('publizon_retailer_key_code', ''),
-    '#required' => TRUE,
-  );
-
   $form['publizon']['settings']['publizon_client_id'] = array(
     '#type' => 'textfield',
     '#title' => t('Client ID'),
