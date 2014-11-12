@@ -140,7 +140,10 @@ function ding_permissions_secure_permissions_roles() {
  */
 function ding_permissions_secure_permissions($role) {
   $permissions = array(
-    'anonymous user' => array(
+    // Built-in user roles are translated, and we need
+    // to translated them here as well.
+    // Otherwise, matching by role name won't work.
+    t('anonymous user') => array(
       'access comments',
       'access content',
       'access site-wide contact form',
@@ -150,7 +153,7 @@ function ding_permissions_secure_permissions($role) {
       'view any ding_staff_profile profile',
       'view files',
     ),
-    'authenticated user' => array(
+    t('authenticated user') => array(
       'access comments',
       'access content',
       'access site-wide contact form',
