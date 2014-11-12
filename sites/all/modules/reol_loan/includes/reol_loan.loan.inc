@@ -70,17 +70,48 @@ function reol_loan_loan_form($form, &$form_state) {
     '#markup' => '<p>' . t("Are you sure you wish to loan this title?") . '</p>',
   );
 
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Yes'),
+  // Extras for both submit buttons.
+  $submit_extras = array(
+    '#attributes' => array(
+      'class' => array(
+        'action-button',
+        'reserve-button',
+      ),
+    ),
+    '#ajax' => array(
+      'callback' => 'reol_loan_loan_form_callback',
+      'wrapper' => 'reol-loan-loan-form',
+    ),
   );
 
-  $form['cancel'] = array(
+  $form['submit'] = $submit_extras + array(
     '#type' => 'submit',
+    '#value' => t('Yes'),
+    '#name' => 'yes',
+  );
+
+  $form['cancel'] = $submit_extras + array(
+    '#type' => 'submit',
+    '#name' => 'no',
     '#value' => t('No'),
   );
 
   return $form;
+}
+
+/**
+ * Submit handler for loan form.
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The state of the form including values.
+ */
+function reol_loan_loan_form_submit($form, &$form_state) {
+  // Only do something if user agrees.
+  if ($form_state['triggering_element']['#name'] != 'no') {
+    // TODO Do something.
+  }
 }
 
 /**
@@ -141,4 +172,38 @@ function reol_loan_loan_ajax($entity) {
 
   // Return the ajax commands as an render array.
   return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Ajax callback.
+ *
+ * Closes the modal on no, reshows form if needed on yes.
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The state of the form.
+ */
+function reol_loan_loan_form_callback($form, &$form_state) {
+  $response = array(
+    '#type' => 'ajax',
+    '#commands' => array(),
+  );
+
+  // If user clicked no, do nothing.
+  if ($form_state['triggering_element']['#name'] == 'no') {
+    $response['#commands'][] = ajax_command_ding_popup_close('reol_loan');
+  }
+  // Otherwise, reshow form if needed.
+  else {
+    $html = theme('status_messages');
+    if ($form_state['rebuild'] || form_get_errors()) {
+      // Redisplay form.
+      $html .= drupal_render($form);
+    }
+
+    $response['#commands'][] = ajax_command_ding_popup('reol_loan', t('Loan'), $html);
+  }
+
+  return $response;
 }
