@@ -3,3 +3,50 @@
  * @file
  * Code for the loan module for eReolen.
  */
+
+require_once 'includes/reol_loan.loan.inc';
+
+/**
+ * Implements hook_permission().
+ */
+function reol_loan_permission() {
+  return array(
+    'perform loan' => array(
+      'title' => t('Perform loan'),
+      'description' => t('Perform a loan of an audiobook or ebook'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reol_loan_menu() {
+  $items = array();
+
+  $items['ting/object/%ting_object/loan'] = array(
+    'page callback' => 'reol_loan_loan_ajax',
+    'page arguments' => array(2),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('perform loan'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to perform a loan.
+ */
+function reol_loan_secure_permissions($role) {
+  $permissions = array(
+    'provider' => array(
+      'perform loan',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
