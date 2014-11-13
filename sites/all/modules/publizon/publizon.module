@@ -395,8 +395,10 @@ function publizon_form_ding_reservation_reserve_form_submit($form, &$form_state)
 function publizon_init() {
   drupal_add_js(array(
     'publizon' => array(
-      'clientId' => variable_get('publizon_client_id', ''),
-      'playerServer' => variable_get('publizon_player_url', ''),
+      'player' => array(
+        'clientId' => variable_get('publizon_player_client_id', ''),
+        'url' => variable_get('publizon_player_url', ''),
+      ),
     ),
   ), 'setting');
 }

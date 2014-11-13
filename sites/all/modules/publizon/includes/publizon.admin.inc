@@ -63,6 +63,14 @@ function publizon_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['publizon']['settings']['publizon_player_client_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Client ID for the player API'),
+    '#description' => t('The Client ID for the player to use on the player API'),
+    '#default_value' => variable_get('publizon_player_client_id', ''),
+    '#required' => TRUE,
+  );
+
   $form['publizon']['settings']['publizon_logging'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable logging'),
