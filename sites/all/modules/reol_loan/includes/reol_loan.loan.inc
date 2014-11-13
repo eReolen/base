@@ -11,7 +11,13 @@
  * Add loan button on entity view page for audiobook or ebook.
  */
 function reol_loan_ding_entity_buttons($type, $entity) {
-  if ($entity instanceof TingEntity && (strtolower($entity->type) == "lydbog (net)")/* TODO OR ebook */) {
+  // Types that should have this button.
+  $types = array(
+    'lydbog (net)',
+    'ebog',
+  );
+
+  if ($entity instanceof TingEntity && in_array(strtolower($entity->type), $types)) {
     drupal_add_library('system', 'drupal.ajax');
 
     $button = array(
