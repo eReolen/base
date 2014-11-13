@@ -106,6 +106,8 @@ class PublizonClient {
    * Create a new loan at Publizon. It throws an exception if the loan does not
    * go through else the retailer orderno and internal orderno is returned.
    *
+   * @param string $retailer_id
+   *   The id of the retailer to loan for.
    * @param string $card_number
    *   The users card number/CPR also known as login id.
    * @param string $pincode
@@ -118,13 +120,20 @@ class PublizonClient {
    *
    * @throws PublizonException
    */
-  public function createLoan($card_number, $pincode, $isbn) {
+  public function createLoan($retailer_id, $card_number, $pincode, $isbn) {
+    // Get retailer information.
+    $retailer = publizon_get_library($retailer_id);
+
     // Make request to the web-service for the loan. It throws an exception if
     // the loan fails.
     $response = $this->call('loan', 'CreateLoan', array(
       'pub:ebookid' => $isbn,
       'pub:cardnumber' => $card_number,
       'pub:pincode' => $pincode,
+      'pub:retailerid' => $retailer['retailer_id'],
+      'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
+      'pub:format' => '',
+      'pub:mobipocketid' => '',
     ), array('pub' => 'pubhub.dk'));
 
     $data = $response->xpath('//data');

@@ -120,13 +120,9 @@ function reol_loan_loan_form_submit($form, &$form_state) {
     if ($form_state['values']['loanable']) {
       $loanable = $form_state['values']['loanable'];
       try {
-        $loan_result = ding_provider_invoke('loan', 'create', $user, $loanable->getProviderId());
+        $loan_result = ding_provider_invoke('loan', 'create', $user, $loanable->ding_entity_id);
         $form_state['loaned'] = TRUE;
         drupal_set_message(t('"@title" loaned.', array('@title' => $loanable->getTitle())));
-
-        if (is_array($loan_result) and !empty($loan_result['queue_number'])) {
-          drupal_set_message(t('You are number @number in queue.', array('@number' => $loan_result['queue_number'])));
-        }
 
         // TODO Clear loan session cache (availability etc.).
       }
@@ -165,7 +161,7 @@ function reol_loan_loan_ajax($entity) {
   if (user_is_logged_in()) {
     if (ding_user_is_provider_user($user)) {
       if (is_object($entity) && $entity instanceof TingEntity) {
-        $loanable = new DingReservationReservableEntity($entity);
+        $loanable = $entity;
 
         // Try to create loan form.
         try {

@@ -34,10 +34,25 @@ function publizon_loan_renew($account, $ids) {
 /**
  * Create a loan.
  *
- * @TODO
+ * @param array $account
+ *   The account that tries to create a loan.
+ * @param string $id
+ *   The id of the ting object the user is trying to loan.
  */
 function publizon_loan_create($account, $id) {
-  return array(
-    'queue_number' => 100,
-  );
+  // This will throw exception if not logged in.
+  $creds = ding_user_get_creds($account);
+
+  // Get the retailer id on the user.
+  $profile = profile2_load_by_user($account, 'provider_publizon');
+  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
+  $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
+
+  // Get the object for extracting the ISBN.
+  $ting_entity = ting_object_load($id);
+  list($isbn) = $ting_entity->getIsbn();
+
+  $client = PublizonClient::getClient();
+  // This will throw exception if loan does not go through.
+  $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
 }
