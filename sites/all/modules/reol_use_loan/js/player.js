@@ -3,13 +3,17 @@
     attach : function() {
       // Go through all players.
       $('[data-role=audiobook-player]').each(function() {
-        var clientId = Drupal.settings.publizon.clientId;
+        var clientId = Drupal.settings.publizon.player.clientId;
         var order = $(this).data('id');
 
         // First load metadata and state from API.
-        $.when(Drupal.behaviors.player.loadMetadata(clientId, order), Drupal.behaviors.player.loadState(clientId, order)).then(function (metadata, state) {
+        $.when(Drupal.behaviors.player.loadMetadata(clientId, order), Drupal.behaviors.player.loadState(clientId, order)).then(function (metadataRes, stateRes) {
+          var metadata = metadataRes[0];
+          var state = stateRes[0];
+
           // Initialize the player.
-          $('[data-role=player]').playable({
+          $(this).playable({
+            streamServer: Drupal.settings.publizon.player.url,
             metadata: {
               title: metadata.title,
               artist: metadata.artist,
@@ -43,7 +47,7 @@
      * Load metadata from API.
      */
     loadMetadata : function(clientId, order) {
-      var url = Drupal.settings.publizon.playerServer + 'v1/orders/' + order;
+      var url = Drupal.settings.publizon.player.url + 'v1/orders/' + order;
       return $.ajax({
         type: 'GET',
         headers: { 'x-service-key': clientId },
@@ -59,7 +63,7 @@
      * Load state from API.
      */
     loadState : function(clientId, order) {
-      var url = Drupal.settings.publizon.playerServer + 'v1/states/' + order;
+      var url = Drupal.settings.publizon.player.url + 'v1/states/' + order;
       return $.ajax({
         type: 'GET',
         headers: { 'x-service-key': clientId },

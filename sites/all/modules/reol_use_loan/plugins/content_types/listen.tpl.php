@@ -12,6 +12,7 @@ $player_path = $path . '/player';
 drupal_add_css($player_path . '/lib/bootstrap-3.2.0-dist/css/bootstrap.min.css');
 drupal_add_css($player_path . '/css/styles.css');
 
+drupal_add_js($path . '/js/jquery-define.js');
 drupal_add_js($player_path . '/scripts/bootstrap-slider.js');
 drupal_add_js($player_path . '/scripts/bowser.min.js');
 drupal_add_js($player_path . '/scripts/tooltip.js');
