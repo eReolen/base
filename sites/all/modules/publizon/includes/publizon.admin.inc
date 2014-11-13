@@ -55,6 +55,14 @@ function publizon_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['publizon']['settings']['publizon_player_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Player API URL'),
+    '#description' => t('The URL for the API for the player.'),
+    '#default_value' => variable_get('publizon_player_url', 'https://audio.api.streaming.pubhub.dk/'),
+    '#required' => TRUE,
+  );
+
   $form['publizon']['settings']['publizon_logging'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable logging'),
