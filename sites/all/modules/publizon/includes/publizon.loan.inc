@@ -49,7 +49,7 @@ function publizon_loan_create($account, $id) {
   $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
 
   // Get the object for extracting the ISBN.
-  $ting_entity = ting_object_load($id);
+  $ting_entity = ding_entity_load($id);
   list($isbn) = $ting_entity->getIsbn();
 
   $client = PublizonClient::getClient();
