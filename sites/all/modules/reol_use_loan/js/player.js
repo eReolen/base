@@ -3,6 +3,7 @@
     attach : function() {
       // Go through all players.
       $('[data-role=audiobook-player]').each(function() {
+        var ctx = this;
         var clientId = Drupal.settings.publizon.player.clientId;
         var order = $(this).data('id');
 
@@ -12,7 +13,7 @@
           var state = stateRes[0];
 
           // Initialize the player.
-          $(this).playable({
+          $(ctx).playable({
             streamServer: Drupal.settings.publizon.player.url,
             metadata: {
               title: metadata.title,
@@ -34,7 +35,7 @@
               headers: { 'x-service-key': clientId },
               contentType: 'application/json',
               data: JSON.stringify(currentState),
-              url: stateUrl
+              url: Drupal.settings.publizon.player.url + 'v1/states/' + order
             });
           });
         }, function (data) {

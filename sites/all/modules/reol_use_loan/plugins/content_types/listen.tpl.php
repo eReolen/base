@@ -23,6 +23,6 @@ drupal_add_js($player_path . '/scripts/player-kernel-1.0.3.min.js');
 drupal_add_js($path . '/js/player.js');
 ?>
 
-<div data-role="audiobook-player" data-id="<?php echo $internal_order_number; ?>">
+<div data-role="audiobook-player" data-id="<?php echo $internal_order_number; ?>" style="margin-top: 0 !important">
 
 </div>
