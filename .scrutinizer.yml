@@ -47,3 +47,6 @@ before_commands:
   - "rm -r sites/all/drush/deployotron"
   # Remove generated code, we don't want to analyze that.
   - "find . '(' -name '*.features.*' -or -name '*.feeds_importer_default.inc' -or -name '*.field_group.inc' -or -name '*.layouts.inc' -or -name '*.pages_default.inc' -or -name '*.panels_default.inc' -or -name '*.panelizer.inc' -or -name '*.strongarm.inc' -or -name '*.views_default.inc' ')' -print0 | xargs -0 rm"
+  # Remove player and reader code from Publizon.
+  - "rm -r sites/all/modules/reol_use_loan/player"
+  - "rm -r sites/all/modules/reol_use_loan/reader"
