@@ -1,0 +1,41 @@
+<?php
+/**
+ * @file
+ * Code for the loan module for eReolen.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function reol_use_loan_permission() {
+  return array(
+    'listen to audiobook' => array(
+      'title' => t('Listen to audiobook'),
+      'description' => t('Listen to a loaned audiobook.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to perform a loan.
+ */
+function reol_use_loan_secure_permissions($role) {
+  $permissions = array(
+    'provider' => array(
+      'listen to audiobook',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_use_loan_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
