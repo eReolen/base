@@ -93,6 +93,10 @@ function publizon_user_authenticate($name, $pass, $values) {
  * of receiving it directly. Not good!
  */
 function publizon_user_authenticate_finalize($account) {
+  // Add provider role to user.
+  // TODO Make sure that Ding is not supposed to handle this.
+  user_multiple_role_edit(array($account->uid), 'add_role', 8);
+
   $profile = profile2_load_by_user($account->uid, 'provider_publizon');
   $langs = field_language('profile2', $profile);
   // Get retailer id from session.
