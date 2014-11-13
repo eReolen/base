@@ -486,9 +486,6 @@ class PublizonException extends Exception {
    * Create new constructor that ensure message is translated.
    */
   public function __construct($message, $code = 0, Exception $previous = NULL) {
-    // Add support for tranlation.
-    $message = t(check_plain($message));
-
     // Make sure everything is assigned properly.
     parent::__construct($message, $code, $previous);
   }
