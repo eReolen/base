@@ -73,5 +73,9 @@ function publizon_loan_create($account, $id) {
 
   $client = PublizonClient::getClient();
   // This will throw exception if loan does not go through.
-  $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
+  $result = $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
+
+  // TODO Only for being able to demo things.
+  variable_set('tmp_last_loan_internal', $result['internal']);
+  variable_set('tmp_last_loan_retailer', $result['retailer']);
 }

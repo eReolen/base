@@ -26,7 +26,7 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
   $block->title = t('Read your ebook');
   $block->content = theme('read', array(
     // TODO Do not hardcode.
-    'retailer_order_number' => '1f461648-d771-4b05-8854-64dfd80d36ab',
+    'retailer_order_number' => variable_get('tmp_last_loan_retailer', ''),
   ));
 
   return $block;
