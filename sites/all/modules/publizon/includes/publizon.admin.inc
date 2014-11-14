@@ -57,9 +57,9 @@ function publizon_settings_form($form, &$form_state) {
 
   $form['publizon']['settings']['publizon_player_url'] = array(
     '#type' => 'textfield',
-    '#title' => t('Player API URL'),
-    '#description' => t('The URL for the API for the player.'),
-    '#default_value' => variable_get('publizon_player_url', 'https://audio.api.streaming.pubhub.dk/'),
+    '#title' => t('Player URL'),
+    '#description' => t('The URL for the Publizon player.'),
+    '#default_value' => variable_get('publizon_player_url', 'https://play.pubhub.dk'),
     '#required' => TRUE,
   );
 
@@ -68,6 +68,22 @@ function publizon_settings_form($form, &$form_state) {
     '#title' => t('Client ID for the player API'),
     '#description' => t('The Client ID for the player to use on the player API'),
     '#default_value' => variable_get('publizon_player_client_id', ''),
+    '#required' => TRUE,
+  );
+
+  $form['publizon']['settings']['publizon_reader_stream_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Reader stream URL'),
+    '#description' => t('The URL for the Publizon reader stream.'),
+    '#default_value' => variable_get('publizon_reader_stream_url', 'https://streaming.pubhub.dk'),
+    '#required' => TRUE,
+  );
+
+  $form['publizon']['settings']['publizon_reader_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Reader URL'),
+    '#description' => t('The URL for the Publizon reader.'),
+    '#default_value' => variable_get('publizon_reader_url', 'https://reader.pubhub.dk'),
     '#required' => TRUE,
   );
 
