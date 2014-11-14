@@ -26,7 +26,8 @@ function listen_content_type_render($subtype, $conf, $panel_args, $context) {
   $block->title = t('Listen to your audiobook');
   $block->content = theme('listen', array(
     // TODO Do not hardcode.
-    'internal_order_number' => 'bbf27a0c-340c-4120-a36f-0a37f8ae3b88',
+    'internal_order_number' => '9c9354f4-42f6-4ec7-bd33-c7b2ede6fced',
+    'player_client_id' => variable_get('publizon_player_client_id', ''),
   ));
 
   return $block;
