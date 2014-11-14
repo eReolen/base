@@ -25,6 +25,7 @@ function listen_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
   $block->title = t('Listen to your audiobook');
   $block->content = theme('listen', array(
+    // TODO Do not hardcode.
     'internal_order_number' => 'bbf27a0c-340c-4120-a36f-0a37f8ae3b88',
   ));
 
