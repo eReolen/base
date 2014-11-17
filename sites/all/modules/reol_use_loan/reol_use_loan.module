@@ -92,7 +92,7 @@ function reol_use_loan_reader_renew_session($id) {
   // Get information for request.
   $client_id = variable_get('publizon_client_id', '');
   $retailer = publizon_get_library($retailer_id);
-  $url = variable_get('publizon_stream_url', '');
+  $url = variable_get('publizon_reader_stream_url', '');
 
   // Get response from endpoint.
   $response = reol_use_loan_get_reader_session($url, $id, $client_id, $retailer['retailer_id'], md5($retailer['retailer_key_code']));
