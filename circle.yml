@@ -5,14 +5,14 @@ machine:
   php:
     # Fix version so we'll be using phpenv instead of the system PHP,
     # which allows us to fiddle with the conf files.
-    version: 5.4.21
+    version: 5.3.10
 
 dependencies:
   cache_directories:
     - "~/.composer"
   pre:
     # Install Drush.
-    - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --prefer-source --no-interaction global require drush/drush:dev-master ; fi
+    - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --prefer-source --no-interaction global require drush/drush:6.2.0 ; fi
     # Waving a dead chicken. For some unfathomable reason, the above
     # composer command decides to ignore drush and not update it (!)
     # because it's not installed (!). But as it's added drush to the
