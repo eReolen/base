@@ -6,8 +6,8 @@ dependencies[] = uuid
 
 
 
-; Information added by drush on 2014-11-10
+; Information added by drush on 2014-11-17
 version = "3f4d9fb"
 project = "uuid"
-datestamp = "1415610000"
+datestamp = "1416222979"
 

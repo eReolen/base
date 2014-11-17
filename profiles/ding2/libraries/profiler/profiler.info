@@ -3,9 +3,9 @@ description = Library library that allows an install profile to be defined as a 
 core = 7.x
 
 
-; Information added by drush on 2014-11-10
+; Information added by drush on 2014-11-17
 version = "7.x-2.0-beta1-dev"
 core = "7.x"
 project = "profiler"
-datestamp = "1415610236"
+datestamp = "1416222982"
 
