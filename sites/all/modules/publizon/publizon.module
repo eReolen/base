@@ -1,6 +1,12 @@
 <?php
 /**
  * @file
+ * Code for the Publizon provider feature.
+ */
+
+include_once 'publizon.features.inc';
+/**
+ * @file
  * Main module implementation which defines functions used in the administration
  * interface and a few helper functions.
  */
@@ -35,6 +41,10 @@ function publizon_ding_provider() {
       'availability' => array(
         'prefix' => 'availability',
         'file' => $path . '/publizon.availability.inc',
+      ),
+      'debt' => array(
+        'prefix' => 'debt',
+        'file' => $path . '/publizon.debt.inc',
       ),
     ),
   );
@@ -107,7 +117,9 @@ function publizon_get_libraries($reset = FALSE) {
 
     // Sort the libraries by library name.
     setlocale(LC_ALL, 'da_DK.UTF8');
-    asort($libraries, SORT_LOCALE_STRING);
+    uasort($libraries, function($e1, $e2) {
+      return strcoll($e1['library_name'], $e2['library_name']);
+    });
     setlocale(LC_ALL, '');
   }
 
@@ -144,4 +156,26 @@ function publizon_get_library($retailer_id, $reset = FALSE) {
     }
   }
   return isset($libraries[$retailer_id]) ? $libraries[$retailer_id] : array();
+}
+
+/**
+ * Get the client id to send to Publizon.
+ *
+ * @return string
+ *   The client id.
+ */
+function publizon_get_client_id() {
+  return variable_get('publizon_client_id', '');
+}
+
+/**
+ * Get all libraries as a list usable in a select form item.
+ *
+ * @return array
+ *   Array of libraries keyed by retailer id.
+ */
+function publizon_get_libraries_list() {
+  return array_map(function ($elem) {
+    return $elem['library_name'];
+  }, publizon_get_libraries());
 }

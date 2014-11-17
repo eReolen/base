@@ -106,6 +106,8 @@ class PublizonClient {
    * Create a new loan at Publizon. It throws an exception if the loan does not
    * go through else the retailer orderno and internal orderno is returned.
    *
+   * @param string $retailer_id
+   *   The id of the retailer to loan for.
    * @param string $card_number
    *   The users card number/CPR also known as login id.
    * @param string $pincode
@@ -118,13 +120,20 @@ class PublizonClient {
    *
    * @throws PublizonException
    */
-  public function createLoan($card_number, $pincode, $isbn) {
+  public function createLoan($retailer_id, $card_number, $pincode, $isbn) {
+    // Get retailer information.
+    $retailer = publizon_get_library($retailer_id);
+
     // Make request to the web-service for the loan. It throws an exception if
     // the loan fails.
     $response = $this->call('loan', 'CreateLoan', array(
       'pub:ebookid' => $isbn,
       'pub:cardnumber' => $card_number,
       'pub:pincode' => $pincode,
+      'pub:retailerid' => $retailer['retailer_id'],
+      'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
+      'pub:format' => '',
+      'pub:mobipocketid' => '',
     ), array('pub' => 'pubhub.dk'));
 
     $data = $response->xpath('//data');
@@ -299,11 +308,16 @@ class PublizonClient {
    * @return bool
    *   If the user is valid TRUE is return else FALSE.
    */
-  public function validateLibraryUser($card_number, $pincode) {
+  public function validateLibraryUser($card_number, $pincode, $retailer_id) {
     try {
+      // Get retailer information.
+      $retailer = publizon_get_library($retailer_id);
+
       $response = $this->call('user', 'ValidateLibraryUser', array(
         'pub:cardnumber' => $card_number,
         'pub:pincode' => $pincode,
+        'pub:retailerid' => $retailer['retailer_id'],
+        'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
       ), array('pub' => 'http://pubhub.dk/'));
     }
     catch (PublizonException $e) {
@@ -391,9 +405,8 @@ class PublizonClient {
     // Create a new soap client for the request and set default parameters.
     $client = new PublizonNanoSOAPClient($this->baseUrl . $this->endpoints[$endpoint], array('namespaces' => $namespace));
     $parameters += array(
-      $ns[0] . ':retailerid' => $this->retailerId,
-      $ns[0] . ':retailerkeycode' => $this->retailerKeyCode,
       $ns[0] . ':languagecode' => '',
+      $ns[0] . ':clientid' => publizon_get_client_id(),
     );
 
     // Make the request.
@@ -473,9 +486,6 @@ class PublizonException extends Exception {
    * Create new constructor that ensure message is translated.
    */
   public function __construct($message, $code = 0, Exception $previous = NULL) {
-    // Add support for tranlation.
-    $message = t(check_plain($message));
-
     // Make sure everything is assigned properly.
     parent::__construct($message, $code, $previous);
   }

@@ -10,6 +10,14 @@
  */
 function publizon_availability_items($provider_ids) {
   $res = array();
+
+  // For now, everything is reservable and available.
+  foreach ($provider_ids as $id) {
+    $res[$id] = array(
+      'available' => TRUE,
+      'reservable' => TRUE,
+    );
+  }
   return $res;
 }
 
@@ -18,8 +26,8 @@ function publizon_availability_items($provider_ids) {
  * @TODO
  */
 function publizon_availability_holdings($provider_ids) {
-  // Holdings is a superset of items.
-  $res = array();
+  // For now, everything is available everywhere.
+  $res = publizon_availability_items($provider_ids);
 
   return $res;
 }

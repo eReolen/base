@@ -1,12 +1,17 @@
 name = Publizon provider
 description = Ding provider for Publizon API.
-package = ereolen.dk
 core = 7.x
-php = 5.5
-
+package = ereolen.dk
+dependencies[] = entity
+dependencies[] = features
+dependencies[] = list
 dependencies[] = nanosoap
-
-; Communication class used to get information from Publizon.
+dependencies[] = options
+dependencies[] = profile2
+features[features_api][] = api:2
+features[field_base][] = field_publizon_retailer_id
+features[field_instance][] = profile2-provider_publizon-field_publizon_retailer_id
+features[profile2_type][] = provider_publizon
 files[] = lib/PublizonClient.class.inc
 files[] = lib/PublizonLogger.class.inc
 files[] = lib/PublizonNanoSoapClient.class.inc
@@ -14,6 +19,5 @@ files[] = lib/PublizonLibrary.class.inc
 files[] = lib/PublizonLoan.class.inc
 files[] = lib/PublizonProduct.class.inc
 files[] = lib/PublizonUserLoans.class.inc
-
-; Data classes used to store information from Publizon.
 files[] = lib/Publizon.class.inc
+mtime = 1415629497
