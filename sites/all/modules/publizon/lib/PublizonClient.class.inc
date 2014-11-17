@@ -64,10 +64,6 @@ class PublizonClient {
     // Encode retailer key code (if needed).
     $retailer_key_code = isset($retailer_key_code) ? md5($retailer_key_code) : NULL;
 
-    // Set configuration.
-    $this->setSetting('retailer_id', $retailer_id);
-    $this->setSetting('retailer_key_code', $retailer_key_code);
-
     // Set logger.
     $this->logger = new PublizonVoidLogger();
     if (!isset($logger)) {
