@@ -5,7 +5,7 @@ machine:
   php:
     # Fix version so we'll be using phpenv instead of the system PHP,
     # which allows us to fiddle with the conf files.
-    version: 5.3.10
+    version: 5.4.21
 
 dependencies:
   cache_directories:
