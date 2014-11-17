@@ -1,0 +1,38 @@
+machine:
+  environment:
+    # Add composer global bin dir to path.
+    PATH: $HOME/.composer/vendor/bin:$PATH
+  php:
+    # Fix version so we'll be using phpenv instead of the system PHP,
+    # which allows us to fiddle with the conf files.
+    version: 5.3.10
+
+dependencies:
+  pre:
+    # Install Drush.
+    - composer --prefer-source --no-interaction global require drush/drush:6.2.0
+    # Waving a dead chicken. For some unfathomable reason, the above
+    # composer command decides to ignore drush and not update it (!)
+    # because it's not installed (!). But as it's added drush to the
+    # composer.json, we can just ask it to update it, which works (!!!).
+    - composer --prefer-source --no-interaction global update drush/drush
+    - mkdir ~/.drush
+    - cd ~/.drush && drush dl drush_drake
+    - cd ~/.drush && drush dl coder
+    - git clone git@github.com:reload/drake_ci.git ~/.drush/drake_ci
+    # Install csslint.
+    - npm install -g csslint
+    # Install jshint.
+    - npm install -g jshint
+    # Hotwire sendmail so PHP will think the mails are sendt.
+    - echo "sendmail_path = /bin/true" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/sendmail.ini
+
+test:
+  override:
+    # Run basic tests.
+    - drush --nocolor drake php-lint
+    - drush --nocolor drake php-debug
+    - drush --nocolor drake check-js
+    - drush --nocolor drake check-css
+    # Run Drupal's simpletests and unittest (if any).
+    #- drush --nocolor drake run-tests
