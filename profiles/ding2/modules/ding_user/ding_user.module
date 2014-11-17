@@ -181,12 +181,21 @@ function ding_user_form_alter(&$form, $form_state, $form_id) {
     // Falling through on purpose (if not reservation and login via ajax will
     // fail.).
 
+      // Allow user provider to alter the login form.
+      if (ding_provider_implements('user', 'user_login_form_alter')) {
+        $form = ding_provider_invoke('user', 'user_login_form_alter', $form, $form_state);
+      }
     case 'ding_user_authenticate_form':
       if (isset($form_state['ajaxify'])) {
         $form['actions']['submit']['#ajax'] = array(
           'callback' => 'ding_user_authenticate_form_callback',
           'wrapper' => drupal_html_id($form_id),
         );
+      }
+
+      // Allow user provider to alter the login form.
+      if (ding_provider_implements('user', 'user_login_form_alter')) {
+        $form = ding_provider_invoke('user', 'user_login_form_alter', $form, $form_state);
       }
       break;
   }
@@ -517,7 +526,7 @@ function ding_user_user_login_validate($form, &$form_state) {
   }
   try {
     // Trying to login the user using the provider.
-    $auth_res = ding_provider_invoke('user', 'authenticate', $form_state['values']['name'], $form_state['values']['pass']);
+    $auth_res = ding_provider_invoke('user', 'authenticate', $form_state['values']['name'], $form_state['values']['pass'], $form_state['values']);
     if (!is_array($auth_res) || !isset($auth_res['success'])) {
       watchdog('ding_user', 'Provider returned invalid result: @res', array('@res' => print_r($auth_res, TRUE)), WATCHDOG_DEBUG);
       return;
