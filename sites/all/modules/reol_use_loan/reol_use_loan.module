@@ -70,7 +70,7 @@ function reol_use_loan_ctools_plugin_directory($owner, $plugin_type) {
  */
 function reol_use_loan_reader_renew_session($id) {
   // Make sure we have url to call.
-  if (!variable_get('publizon_stream_url', FALSE)) {
+  if (!variable_get('publizon_reader_stream_url', FALSE)) {
     http_response_code(500);
     echo t('URL for the stream server has not been defined!');
     drupal_exit();
