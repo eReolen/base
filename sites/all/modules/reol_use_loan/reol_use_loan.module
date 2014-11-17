@@ -1,9 +1,10 @@
 <?php
 /**
  * @file
- * Code for the loan module for eReolen.
+ * Code for the eReolen use loan module feature.
  */
 
+include_once 'reol_use_loan.features.inc';
 /**
  * Implements hook_menu().
  */
