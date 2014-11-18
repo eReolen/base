@@ -1,8 +1,8 @@
-var url = document.getElementById('reader').getAttribute('data-url');
-var imagesUrl = document.getElementById('reader').getAttribute('data-images-url');
+var url = document.getElementById('reader-container').getAttribute('data-url');
+var imagesUrl = document.getElementById('reader-container').getAttribute('data-images-url');
 Reader.init({
-  elementId: 'reader',
-  orderId: document.getElementById('reader').getAttribute('data-id'),
+  elementId: 'reader-container',
+  orderId: document.getElementById('reader-container').getAttribute('data-id'),
   streamPackageBaseUri: url,
   streamingServiceBaseUri: url + '/publicstreaming_v2/v2/',
   sampleStreamingServiceBaseUri: url + '/samplestreaming_v2/v2/',
