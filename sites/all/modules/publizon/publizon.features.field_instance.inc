@@ -69,7 +69,7 @@ function publizon_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'max' => 99999999,
-      'min' => '00000001',
+      'min' => 10000000,
       'prefix' => '+45',
       'suffix' => '',
       'user_register_form' => FALSE,
