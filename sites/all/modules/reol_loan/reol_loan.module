@@ -105,35 +105,51 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
  * Add loan button on entity view page for audiobook or ebook.
  */
 function reol_loan_ding_entity_buttons($type, $entity) {
-  // Types that should have this button.
-  $types = array(
-    'lydbog (net)',
-    'ebog',
-  );
-
-  if ($entity instanceof TingEntity && in_array(strtolower($entity->type), $types)) {
+  if (reol_loan_is_right_type($entity) && reol_loan_is_available($entity)) {
     drupal_add_library('system', 'drupal.ajax');
+    $buttons = array();
 
-    $button = array(
-      array(
-        '#theme' => 'link',
-        '#text' => t('Loan'),
-        '#path' => 'ting/object/' . $entity->id . '/loan',
-        '#options' => array(
-          'attributes' => array(
-            'class' => array(
-              'action-button',
-              'reserve-button',
-              'use-ajax',
-            ),
-            'id' => 'reservation-' . $entity->id,
+    $buttons[] = array(
+      '#theme' => 'link',
+      '#text' => t('Loan'),
+      '#path' => 'ting/object/' . $entity->id . '/loan',
+      '#options' => array(
+        'attributes' => array(
+          'class' => array(
+            'action-button',
+            'reserve-button',
+            'use-ajax',
           ),
-          'html' => FALSE,
+          'id' => 'loan-' . $entity->id,
         ),
+        'html' => FALSE,
       ),
     );
 
-    return $button;
+    return $buttons;
+  }
+}
+
+/**
+ * Get the types we handle.
+ *
+ * @return array
+ *   Array of types by their name in lower case.
+ */
+function _reol_loan_get_types() {
+  return array(
+    'lydbog (net)',
+    'ebog',
+  );
+}
+
+/**
+ * Implements hook_ding_entity_is().
+ */
+function reol_loan_ding_entity_is($entity, $is) {
+  // If title is available, set reservable to false to hide Ding reserve button.
+  if ($is == 'reservable' && reol_loan_is_right_type($entity) && reol_loan_is_available($entity)) {
+    return FALSE;
   }
 }
 
@@ -151,4 +167,60 @@ function reol_loan_ding_entity_menu(&$items, $type, $path, $index) {
       'access callback' => TRUE,
     );
   }
+}
+
+/**
+ * Check if an entity is available.
+ *
+ * @param TingEntity $entity
+ *   The entity to check.
+ *
+ * @return bool
+ *   Whether or not title is available.
+ */
+function reol_loan_is_available($entity) {
+  if ($entity instanceof TingEntity) {
+    // Only do anything if we if we are trying on a single entity,
+    // not collection.
+    $isbns = $entity->getIsbn();
+    if (count($isbns) == 1) {
+      $isbn = $isbns[0];
+
+      // Check if title is available.
+      list($availability) = array_values(ding_availability_items(array($isbn)));
+      if ($availability['available']) {
+        return TRUE;
+      }
+    }
+  }
+
+  // If we end up here, it is not available.
+  return FALSE;
+}
+
+/**
+ * Check if an entity is of one of the types we handle.
+ *
+ * @param TingEntity $entity
+ *   The entity to check.
+ *
+ * @return bool
+ *   Whether or not type is correct.
+ */
+function reol_loan_is_right_type($entity) {
+  // Get types that we check for.
+  $types = _reol_loan_get_types();
+
+  // Actually check type, also check that we are trying on a single entity,
+  // instead of a collection.
+  if ($entity instanceof TingEntity && in_array(strtolower($entity->type), $types)) {
+    $isbns = $entity->getIsbn();
+    if (count($isbns) == 1) {
+      return TRUE;
+    }
+  }
+
+  // If we end up here, the type is not correct.
+  return FALSE;
+
 }
