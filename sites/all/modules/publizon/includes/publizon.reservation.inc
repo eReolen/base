@@ -111,6 +111,11 @@ function publizon_reservation_default_options($account) {
   );
 }
 
+/**
+ * Default interest period.
+ *
+ * @TODO
+ */
 function publizon_reservation_default_interest_period($profile = NULL) {
   return 0;
 }
