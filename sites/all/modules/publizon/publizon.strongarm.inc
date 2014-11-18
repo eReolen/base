@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * reol_loan.strongarm.inc
+ * publizon.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function reol_loan_strongarm() {
+function publizon_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();
