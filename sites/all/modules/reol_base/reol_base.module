@@ -27,5 +27,6 @@ function reol_base_get_field_form($type, $bundle, $field_name, $entity, &$form, 
   $field = field_info_field($field_name);
   $instance = field_info_instance($type, $field_name, $bundle);
   $lang_code = field_language($type, $entity, $field_name);
-  return field_default_form($type, $entity, $field, $instance, $lang_code, $entity->$field_name, $form, $form_state);
+  $items = field_get_items($type, $entity, $field_name);
+  return field_default_form($type, $entity, $field, $instance, $lang_code, $items, $form, $form_state);
 }
