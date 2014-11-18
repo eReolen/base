@@ -14,7 +14,7 @@ function publizon_availability_items($provider_ids) {
   // For now, everything is reservable and available.
   foreach ($provider_ids as $id) {
     $res[$id] = array(
-      'available' => TRUE,
+      'available' => FALSE,
       'reservable' => TRUE,
     );
   }
