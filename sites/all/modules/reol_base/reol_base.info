@@ -1,0 +1,5 @@
+name = eReolen base module
+description = Module containing base functionality
+core = 7.x
+package = ereolen.dk
+features[features_api][] = api:2

@@ -1,0 +1,31 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen base module feature.
+ */
+
+/**
+ * Get the field form for a field.
+ *
+ * @param string $type
+ *   The entity type to get field for.
+ * @param string $bundle
+ *   The entity bundle for the entity.
+ * @param string $field_name
+ *   The name of the field.
+ * @param StdClass $entity
+ *   The entity to get field for.
+ * @param array $form
+ *   The form to attach field to.
+ * @param array $form_state
+ *   The state of the form.
+ *
+ * @return array
+ *   The field form.
+ */
+function reol_base_get_field_form($type, $bundle, $field_name, $entity, &$form, &$form_state) {
+  $field = field_info_field($field_name);
+  $instance = field_info_instance($type, $field_name, $bundle);
+  $lang_code = field_language($type, $entity, $field_name);
+  return field_default_form($type, $entity, $field, $instance, $lang_code, $entity->$field_name, $form, $form_state);
+}
