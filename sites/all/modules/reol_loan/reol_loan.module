@@ -1,9 +1,10 @@
 <?php
 /**
  * @file
- * Code for the loan module for eReolen.
+ * Code for the eReolen loan module feature.
  */
 
+include_once 'reol_loan.features.inc';
 require_once 'includes/reol_loan.loan.inc';
 
 /**
