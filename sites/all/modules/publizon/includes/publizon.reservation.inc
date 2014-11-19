@@ -38,23 +38,16 @@ function publizon_reservation_delete($account, $id) {
 
 /**
  * Provide options for reservation.
+ *
+ * As ding_provider/ding_reservation does not provide access to the form
+ * and form_state variables, we have to use form_alter instead. When adding
+ * fields to a form, the function alters both form and form_state, and we
+ * need those changed applied.
+ *
+ * @see publizon_form_ding_reservation_reserve_form_alter()
  */
 function publizon_reservation_options($account) {
-  $field_form = array(
-    '#parents' => array(),
-  );
-  $form = array();
-  $form_state = array();
-
-  $profile = profile2_load_by_user($account, 'provider_publizon');
-
-  // Add phone field.
-  $form += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone', $profile, $field_form, $form_state);
-
-  // Add email field.
-  $form += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $field_form, $form_state);
-
-  return $form;
+  return array();
 }
 
 /**
@@ -72,12 +65,18 @@ function publizon_reservation_options_submit($account, $values) {
 
   $changed = FALSE;
   $fields = array(
-    'field_phone',
-    'field_email',
+    'field_phone' => 'phone_notification',
+    'field_email' => 'email_notification',
   );
 
   // Check if fields have changed, and change them on the profile.
-  foreach ($fields as $field) {
+  foreach ($fields as $field => $checkbox) {
+    // To not confuse the user, we only save values that result in notification.
+    // If they have not chosen notif for the field, do not save the value.
+    if (!$values[$checkbox]) {
+      continue;
+    }
+
     $lang = field_language('profile2', $profile, $field);
     if ($profile->$field != $values[$field]) {
       $profile->$field = $values[$field];
@@ -108,6 +107,8 @@ function publizon_reservation_default_options($account) {
   return array(
     'field_phone' => NULL,
     'field_email' => NULL,
+    'phone_notification' => NULL,
+    'email_notification' => NULL,
   );
 }
 

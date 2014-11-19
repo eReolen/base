@@ -258,3 +258,80 @@ function publizon_get_product_cover($local_id) {
 
   return $client->getCoverUri($isbn);
 }
+
+/**
+ * Alter reserve form.
+ *
+ * As we are adding field widgets we cannot use the options form
+ * from provider. Instead we have to use alter.
+ *
+ * @see publizon_reservation_options()
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The state of the form.
+ */
+function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state) {
+  if (!isset($form['#parents'])) {
+    $form['#parents'] = array();
+  }
+
+  // This should be OK, as you would always reserve as the logged in user.
+  global $user;
+  $profile = profile2_load_by_user($user, 'provider_publizon');
+
+  $form['provider_options']['#tree'] = TRUE;
+
+  // Add phone field.
+  $form['provider_options'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone', $profile, $field_form, $form_state);
+  $form['provider_options']['phone_notification'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Send notification to my phone'),
+    '#default_value' => TRUE,
+    '#weight' => 0,
+  );
+  // Only show this field when the 'phone_notification' checkbox is enabled.
+  $form['provider_options']['field_phone']['#states'] = array(
+    'visible' => array(
+      ':input[name="provider_options[phone_notification]"]' => array('checked' => TRUE),
+    ),
+  );
+  $form['provider_options']['field_phone']['#weight'] = 10;
+
+  // Add email field.
+  $form['provider_options'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $field_form, $form_state);
+  $form['provider_options']['email_notification'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Send notification to my email'),
+    '#default_value' => TRUE,
+    '#weight' => 20,
+  );
+  // Only show this field when the 'email_notification' checkbox is enabled.
+  $form['provider_options']['field_email']['#states'] = array(
+    'visible' => array(
+      ':input[name="provider_options[email_notification]"]' => array('checked' => TRUE),
+    ),
+  );
+  $form['provider_options']['field_email']['#weight'] = 30;
+
+  array_unshift($form['#validate'], 'publizon_form_ding_reservation_reserve_form_validate');
+  return $form;
+}
+
+/**
+ * Validate reserve form.
+ *
+ * As this for is not actually the profile2 form we have to manually
+ * add the field validations.
+ *
+ * @param array $form
+ *   The form to validate
+ * @param array $form_state
+ *   The state of the form at submit.
+ */
+function publizon_form_ding_reservation_reserve_form_validate($form, &$form_state) {
+  $entity = (object) $form_state['values']['provider_options'];
+  $entity->type = 'provider_publizon';
+  field_attach_form_validate('profile2', $entity, $form, $form_state);
+}
