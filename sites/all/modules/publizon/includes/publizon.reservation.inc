@@ -22,7 +22,7 @@ function publizon_reservation_list($account) {
  *
  * @param StdClass $account
  *   The account that is creating a reservation.
- * @param mixed $id
+ * @param mixed $isbn
  *   The provider id of the title to reserve.
  * @param array $options
  *   Array of options from the options form.
@@ -30,7 +30,7 @@ function publizon_reservation_list($account) {
  * @return array
  *   Result array possibly containing the number in queue.
  */
-function publizon_reservation_create($account, $id, $options) {
+function publizon_reservation_create($account, $isbn, $options) {
   // This will throw exception if not logged in.
   $creds = ding_user_get_creds($account);
 
@@ -54,7 +54,7 @@ function publizon_reservation_create($account, $id, $options) {
 
   $client = PublizonClient::getClient();
   // This will throw exception if reservation does not go through.
-  $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $options['isbn'], $email, $phone);
+  $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $isbn, $email, $phone);
   return array();
 }
 
@@ -141,7 +141,6 @@ function publizon_reservation_default_options($account) {
     'field_email' => NULL,
     'phone_notification' => NULL,
     'email_notification' => NULL,
-    'isbn' => NULL,
   );
 }
 
