@@ -315,6 +315,14 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
   );
   $form['provider_options']['field_email']['#weight'] = 30;
 
+  // The create reservation call in provider is only given the provider_id.
+  // We have to have the isbn-number. Manually transfer it here.
+  $isbn = $form['reservable']['#value']->getEntity()->getIsbn();
+  $form['provider_options']['isbn'] = array(
+    '#type' => 'value',
+    '#value' => $isbn[0],
+  );
+
   array_unshift($form['#validate'], 'publizon_form_ding_reservation_reserve_form_validate');
   return $form;
 }
