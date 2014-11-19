@@ -21,6 +21,7 @@ class PublizonClient {
     'product' => 'getproduct.asmx',
     'product_list' => 'getproductlist.asmx',
     'loan' => 'createloan.asmx',
+    'reservation' => 'reservations.asmx',
     'user' => 'validatelibraryuser.asmx',
     'libraray_list' => 'getlibrarylist.asmx',
     'library_user_order_list' => 'getlibraryuserorderlist.asmx',
@@ -378,6 +379,55 @@ class PublizonClient {
     catch (Exception $e) {
       return FALSE;
     }
+  }
+
+  /**
+   * Create a reservation.
+   *
+   * Create a new reservation at Publizon. It throws an exception if the
+   * reservation does not go through else TRUE returned.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer to loan for.
+   * @param string $card_number
+   *   The users card number/CPR also known as login id.
+   * @param string $pincode
+   *   The users login pin code.
+   * @param string $isbn
+   *   ISBN number on the product.
+   * @param string $email
+   *   Optional email to send notification to when title is available.
+   * @param string $phone
+   *   Optional phone number to send notification to when title is available.
+   *
+   * @return bool
+   *   TRUE on success.
+   *
+   * @throws PublizonException
+   */
+  public function createReservation($retailer_id, $card_number, $pincode, $isbn, $email = '', $phone = '') {
+    // Get retailer information.
+    $retailer = publizon_get_library($retailer_id);
+
+    // Make request to the web-service for the reservation. It throws an
+    // exception if the reservation fails.
+    $response = $this->call('reservation', 'Create', array(
+      'pub:ebookid' => $isbn,
+      'pub:cardnumber' => $card_number,
+      'pub:pincode' => $pincode,
+      'pub:retailerid' => $retailer['retailer_id'],
+      'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
+      'pub:email' => $email,
+      'pub:phoneNumber' => $phone,
+    ), array('pub' => 'pubhub.dk'));
+
+    $data = $response->xpath('//data');
+    if (isset($data[0]) && $data[0]->cardnumber == $card_number) {
+      return TRUE;
+    }
+
+    $this->logger->log('Create reservation request returned no/invalid data (' . $isbn . ').', 'ERROR');
+    throw new PublizonException('Create reservation request returned no/invalid data (' . $isbn . ').');
   }
 
   /**

@@ -20,9 +20,41 @@ function publizon_reservation_list($account) {
 /**
  * Create reservation.
  *
- * @TODO
+ * @param StdClass $account
+ *   The account that is creating a reservation.
+ * @param mixed $id
+ *   The provider id of the title to reserve.
+ * @param array $options
+ *   Array of options from the options form.
+ *
+ * @return array
+ *   Result array possibly containing the number in queue.
  */
 function publizon_reservation_create($account, $id, $options) {
+  // This will throw exception if not logged in.
+  $creds = ding_user_get_creds($account);
+
+  // Get the retailer id on the user.
+  $profile = profile2_load_by_user($account, 'provider_publizon');
+  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
+  $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
+
+  // Get the email and phone for notifications.
+  // Only if user has selected to get notifications.
+  $email = '';
+  if ($options['email_notification']) {
+    $email_lang = field_language('profile2', $profile, 'field_email');
+    $email = $options['field_email'][$email_lang][0]['email'];
+  }
+  $phone = '';
+  if ($options['phone_notification']) {
+    $phone_lang = field_language('profile2', $profile, 'field_phone');
+    $phone = $options['field_phone'][$phone_lang][0]['value'];
+  }
+
+  $client = PublizonClient::getClient();
+  // This will throw exception if reservation does not go through.
+  $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $options['isbn'], $email, $phone);
   return array();
 }
 
@@ -109,6 +141,7 @@ function publizon_reservation_default_options($account) {
     'field_email' => NULL,
     'phone_notification' => NULL,
     'email_notification' => NULL,
+    'isbn' => NULL,
   );
 }
 
