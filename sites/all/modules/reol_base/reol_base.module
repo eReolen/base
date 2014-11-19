@@ -30,3 +30,27 @@ function reol_base_get_field_form($type, $bundle, $field_name, $entity, &$form, 
   $items = field_get_items($type, $entity, $field_name);
   return field_default_form($type, $entity, $field, $instance, $lang_code, $items, $form, $form_state);
 }
+
+/**
+ * Implements hook_entity_load().
+ *
+ * As our provider uses ISBN-numbers, we wish to have localId be the
+ * ISBN-number of the object.
+ */
+function reol_base_entity_load($entities, $type) {
+  // Only act on our own type.
+  if ($type != 'ting_object') {
+    return;
+  }
+
+  foreach ($entities as $entity) {
+    // When only acting on a ting_object, there should always
+    // only be one ISBN.
+    $isbns = $entity->getIsbn();
+    if (!count($isbns)) {
+      continue;
+    }
+
+    $entity->localId = $isbns[0];
+  }
+}
