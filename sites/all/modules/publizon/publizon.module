@@ -5,12 +5,6 @@
  */
 
 include_once 'publizon.features.inc';
-/**
- * @file
- * Main module implementation which defines functions used in the administration
- * interface and a few helper functions.
- */
-
 require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
 
 /**
@@ -196,8 +190,8 @@ function publizon_get_libraries_list() {
 function publizon_get_isbn($local_id) {
   // Remove isbn in front, if found.
   // If not, it is not an ISBN-number.
-  if (strpos('isbn:', $local_id) === 0) {
-    return substr($local_id, 5);
+  if (strpos($local_id, REOL_BASE_LOCAL_ID_PREFIX) === 0) {
+    return substr($local_id, strlen(REOL_BASE_LOCAL_ID_PREFIX));
   }
   return FALSE;
 }
