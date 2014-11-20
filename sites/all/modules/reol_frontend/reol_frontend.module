@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen frontend feature.
+ */
+
+include_once 'reol_frontend.features.inc';
