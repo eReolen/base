@@ -22,7 +22,7 @@ function publizon_reservation_list($account) {
  *
  * @param StdClass $account
  *   The account that is creating a reservation.
- * @param mixed $isbn
+ * @param string $local_id
  *   The provider id of the title to reserve.
  * @param array $options
  *   Array of options from the options form.
@@ -30,7 +30,12 @@ function publizon_reservation_list($account) {
  * @return array
  *   Result array possibly containing the number in queue.
  */
-function publizon_reservation_create($account, $isbn, $options) {
+function publizon_reservation_create($account, $local_id, $options) {
+  $isbn = reol_base_get_isbn($local_id);
+  // If we do not have an ISBN number, we cannot reserve anything.
+  if (!$isbn) {
+    throw new DingProviderReservationNotAvailable();
+  }
   // This will throw exception if not logged in.
   $creds = ding_user_get_creds($account);
 
