@@ -13,6 +13,8 @@ function publizon_cover_get($ids) {
   $covers = array();
 
   foreach ($ids as $isbn) {
+    $isbn = publizon_get_isbn($isbn);
+
     // Get the cover image from Publizon.
     $client = PublizonClient::getClient();
 

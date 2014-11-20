@@ -46,6 +46,10 @@ function publizon_ding_provider() {
         'prefix' => 'debt',
         'file' => $path . '/publizon.debt.inc',
       ),
+      'cover' => array(
+        'prefix' => 'cover',
+        'file' => $path . '/publizon.cover.inc',
+      ),
     ),
   );
 }
@@ -178,4 +182,22 @@ function publizon_get_libraries_list() {
   return array_map(function ($elem) {
     return $elem['library_name'];
   }, publizon_get_libraries());
+}
+
+/**
+ * Convert the local id to an ISBN number.
+ *
+ * @param string $local_id
+ *   The local id.
+ *
+ * @return string
+ *   The ISBN number.
+ */
+function publizon_get_isbn($local_id) {
+  // Remove isbn in front, if found.
+  // If not, it is not an ISBN-number.
+  if (strpos('isbn:', $local_id) === 0) {
+    return substr($local_id, 5);
+  }
+  return FALSE;
 }

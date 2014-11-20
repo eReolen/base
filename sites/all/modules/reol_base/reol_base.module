@@ -54,7 +54,9 @@ function reol_base_entity_load($entities, $type) {
       isset($entity->reply->record['dc:identifier']) &&
       isset($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) &&
       count($entity->reply->record['dc:identifier']['oss:PROVIDER-ID'] == 1)) {
-      $entity->localId = $entity->reply->record['dc:identifier']['oss:PROVIDER-ID'][0];
+      // We append isbn in front to avoid confusing with entities that already
+      // have isbn as localId.
+      $entity->localId = "isbn:" . $entity->reply->record['dc:identifier']['oss:PROVIDER-ID'][0];
     }
   }
 }
