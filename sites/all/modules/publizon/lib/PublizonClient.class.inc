@@ -226,14 +226,14 @@ class PublizonClient {
     ), array('pub' => 'http://pubhub.dk/'));
 
     // Check if any data was returned.
-    $data = $response->xpath('//data');
-    $extension = $response->xpath('//LibraryExtension');
-    if (isset($data[0]) && isset($extension[0])) {
-      return array($data[0], $extension[0]);
+    $data = $response->xpath('//data/orderitem');
+    $loans = array();
+    if (isset($data[0])) {
+      while (list(, $loan) = each($data)) {
+        $loans[] = new PublizonLoan($loan);
+      }
     }
-
-    $this->logger->log('No loans information was returned for the user', 'WARNING');
-    return FALSE;
+    return $loans;
   }
 
   /**
