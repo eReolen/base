@@ -13,7 +13,7 @@ function publizon_cover_get($ids) {
   $covers = array();
 
   foreach ($ids as $local_id) {
-    $isbn = publizon_get_isbn($local_id);
+    $isbn = reol_base_get_isbn($local_id);
     // If we do not have an ISBN, we do not wish to handle it.
     if (!$isbn) {
       continue;

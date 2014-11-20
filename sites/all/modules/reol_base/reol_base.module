@@ -104,3 +104,21 @@ function reol_base_get_local_id($isbns) {
   // that have their local id defined as the ISBN-number.
   return REOL_BASE_LOCAL_ID_PREFIX . $num;
 }
+
+/**
+ * Convert the local id to an ISBN number.
+ *
+ * @param string $local_id
+ *   The local id.
+ *
+ * @return string
+ *   The ISBN number.
+ */
+function reol_base_get_isbn($local_id) {
+  // Remove prefix in front, if found.
+  // If not, it is not an ISBN-number.
+  if (strpos($local_id, REOL_BASE_LOCAL_ID_PREFIX) === 0) {
+    return substr($local_id, strlen(REOL_BASE_LOCAL_ID_PREFIX));
+  }
+  return FALSE;
+}
