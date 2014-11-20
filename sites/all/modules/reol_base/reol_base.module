@@ -44,13 +44,17 @@ function reol_base_entity_load($entities, $type) {
   }
 
   foreach ($entities as $entity) {
-    // When only acting on a ting_object, there should always
-    // only be one ISBN.
-    $isbns = $entity->getIsbn();
-    if (!count($isbns)) {
+    if (!($entity instanceof TingEntity)) {
       continue;
     }
-
-    $entity->localId = $isbns[0];
+    // When have to check all the way down, as chain might be broken
+    // somwhere. Only touch localId if we have the right value for it.
+    if (isset($entity->reply) &&
+      isset($entity->reply->record) &&
+      isset($entity->reply->record['dc:identifier']) &&
+      isset($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) &&
+      count($entity->reply->record['dc:identifier']['oss:PROVIDER-ID'] == 1)) {
+      $entity->localId = $entity->reply->record['dc:identifier']['oss:PROVIDER-ID'][0];
+    }
   }
 }
