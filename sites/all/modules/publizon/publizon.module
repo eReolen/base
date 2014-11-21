@@ -230,7 +230,7 @@ function publizon_ting_covers($entities) {
   return $covers;
 }
 
-/*
+/**
  * Get the retailer id for a user.
  *
  * @param StdClass $account
