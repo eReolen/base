@@ -33,8 +33,8 @@ function publizon_loan_list($account) {
 
     $result[$id] = new DingProviderLoan($id, array(
       'ding_entity_id' => $id,
-      'loan_date' => date('Y-m-d', $loan->order_date),
-      'expiry' => date('Y-m-d', $loan->expire_date),
+      'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
+      'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
       'renewable' => FALSE,
     ));
   }
