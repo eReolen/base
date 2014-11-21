@@ -77,7 +77,7 @@ $header-height: 90px;
         background-size: 40px auto;
         background-position: center 18px;
         &:hover, &.active {
-          text-decoration: none;#{}
+          text-decoration: none;
         }
 
         span {
@@ -119,6 +119,7 @@ $header-height: 90px;
   height: 60px;
   background-color: #353535;
 
+  // Search form.
   .search {
     padding: 0;
     width: auto;
@@ -131,6 +132,10 @@ $header-height: 90px;
       background-color: #202020;
       font-size: 20px;
       padding-left: 20px;
+      &:focus {
+        // Remove the focus outline.
+        outline: none;
+      }
     }
 
     .form-submit {
