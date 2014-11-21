@@ -50,3 +50,31 @@ function reol_loan_secure_permissions($role) {
     return $permissions[$role];
   }
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
+  // Move elements out of group. We do not wish to group items.
+  foreach ($form['loans'] as $loan_group) {
+    $children = element_children($loan_group);
+    foreach ($children as $child) {
+      if ($child == 'title') {
+        continue;
+      }
+      $form['all_loans'][$child] = $loan_group[$child];
+
+      // Add another information regarding when the loan expires.
+      $time = strtotime($form['all_loans'][$child]['#loan']->expiry);
+      $form['all_loans'][$child]['#information']['expire_in'] = array(
+        'label' => t('Expires in'),
+        'data' => format_interval($time - time(), 1),
+        'class' => 'expires-in',
+        '#weight' => 10,
+      );
+    }
+  }
+
+  // Remove old groups.
+  unset($form['loans']);
+}
