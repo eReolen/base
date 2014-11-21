@@ -229,3 +229,19 @@ function publizon_ting_covers($entities) {
 
   return $covers;
 }
+
+/*
+ * Get the retailer id for a user.
+ *
+ * @param StdClass $account
+ *   The user object.
+ *
+ * @return string
+ *   The retailer id.
+ */
+function publizon_get_retailer_id($account) {
+  // Get the retailer id on the user.
+  $profile = profile2_load_by_user($account, 'provider_publizon');
+  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
+  return $profile_wrapper->field_publizon_retailer_id->value();
+}
