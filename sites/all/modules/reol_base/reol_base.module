@@ -168,3 +168,24 @@ function reol_base_get_type_name($type) {
 
   return $types[strtolower($type)];
 }
+
+/**
+ * Implements hook_date_format_Types().
+ */
+function reol_base_date_format_types() {
+  return array(
+    'reol_base_material_lists_date' => t('Reol material lists date'),
+  );
+}
+/**
+ * Implements hook_date_formats().
+ */
+function reol_base_date_formats() {
+  return array(
+    array(
+      'type' => 'reol_base_material_lists_date',
+      'format' => 'j. F Y H:i:s',
+      'locales' => array(),
+    ),
+  );
+}
