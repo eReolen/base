@@ -145,6 +145,10 @@ function reol_base_preprocess_material_item(&$variables) {
   $ting_entity = ding_entity_load($element['#id']);
 
   $variables['type'] = reol_base_get_type_name($ting_entity->type);
+
+  // Put buttons from entity view on list.
+  $buttons = field_view_field('ting_object', $ting_entity, 'ding_entity_buttons', 'default');
+  $variables['buttons'] = drupal_render($buttons);
 }
 
 /**

@@ -23,6 +23,9 @@
           <div class="item-information-data"><?php print $info['data']; ?></div>
         </li>
       <?php endforeach; ?>
+      <div class="material-buttons">
+        <?php echo $buttons; ?>
+      </div>
     </ul>
   </div>
 </div>
