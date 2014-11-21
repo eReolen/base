@@ -65,7 +65,8 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
       $form['all_loans'][$child] = $loan_group[$child];
 
       // Add another information regarding when the loan expires.
-      $time = strtotime($form['all_loans'][$child]['#loan']->expiry);
+      $loan = $form['all_loans'][$child]['#loan'];
+      $time = strtotime(check_plain($loan->expiry));
       $time_diff = $time - time();
 
       // Add class according to how long time there is left.
@@ -82,10 +83,14 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
 
       $form['all_loans'][$child]['#information']['expire_in'] = array(
         'label' => t('Expires in'),
-        'data' => format_interval($time - time(), 1),
+        'data' => format_interval($time - time(), 4),
         'class' => 'expires-in' . $class,
         '#weight' => 10,
       );
+
+      // Change format of the two other dates.
+      $form['all_loans'][$child]['#information']['loan_date']['data'] = format_date(strtotime(check_plain($loan->loan_date)), 'reol_base_material_lists_date');
+      $form['all_loans'][$child]['#information']['expiry']['data'] = format_date(strtotime(check_plain($loan->expiry)), 'reol_base_material_lists_date');
     }
   }
 
