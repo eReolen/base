@@ -20,4 +20,18 @@
   &.audiobook .item-title:after {
     background-image: url("../images/icon-audiobook.png");
   }
+
+  .expires-in {
+    font-weight: bold;
+
+    &.high {
+      color: green;
+    }
+    &.medium {
+      color: #F0CB28;
+    }
+    &.low {
+      color: red;
+    }
+  }
 }
