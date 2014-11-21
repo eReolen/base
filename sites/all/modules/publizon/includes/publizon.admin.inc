@@ -47,6 +47,14 @@ function publizon_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['publizon']['settings']['publizon_default_retailer'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Default library id'),
+    '#description' => t('The default librarys id to use for fetching covers. Note: Must be available in list below.'),
+    '#default_value' => variable_get('publizon_default_retailer', ''),
+    '#required' => TRUE,
+  );
+
   $form['publizon']['settings']['publizon_logging'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable logging'),

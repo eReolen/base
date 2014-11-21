@@ -41,16 +41,6 @@ function ting_covers_menu() {
     'weight' => -10,
   );
 
-  $items['admin/config/ting/covers/addi'] = array(
-    'title' => 'ADDI service',
-    'description' => 'Configure integration with the ADDI service.',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('ting_covers_admin_addi_settings_form'),
-    'access arguments' => array('administer site configuration'),
-    'file' => 'ting_covers.admin.inc',
-    'type' => MENU_LOCAL_TASK,
-  );
-
   return $items;
 }
 
@@ -71,20 +61,6 @@ function ting_covers_theme() {
  */
 function ting_covers_cron() {
   _ting_covers_delete_old_files($_SERVER['REQUEST_TIME'] - variable_get('ting_covers_cache_lifetime', TING_COVERS_DEFAULT_CACHE_LIFETIME));
-}
-
-/**
- * Implements hook_ding_install_tasks().
- */
-function ting_covers_ding_install_tasks() {
-  module_load_include('inc', 'ting_covers', 'ting_covers.admin');
-  return array(
-    'ting_covers_admin_addi_settings_form' => array(
-      'display_name' => st('ADDI service settings'),
-      'type' => 'form',
-      'file' => drupal_get_path('module', 'ting_covers') . '/ting_covers.admin.inc',
-    ),
-  );
 }
 
 /**
@@ -143,4 +119,72 @@ function _ting_covers_delete_old_files($time = NULL) {
  */
 function ting_covers_object_path($object_id) {
   return file_default_scheme() . '://ting' . DIRECTORY_SEPARATOR . 'covers' . DIRECTORY_SEPARATOR . 'object' . DIRECTORY_SEPARATOR . md5($object_id) . '.jpg';
+}
+
+/**
+ * Get covers for an array of ids.
+ *
+ * @param array $requested_covers
+ *   Array keyed by id with each element being an array with one key.
+ *     image_style: The name of the image style to get the image in.
+ *
+ * @return array
+ *   Array of the same type as input, but with the key 'url' added.
+ *   This key has the url of the image with that image style.
+ */
+function ting_covers_load($requested_covers) {
+  $entities = array();
+  $covers = array();
+
+  // Create array of loaded entities for passing to hooks.
+  foreach ($requested_covers as $id => $cover_info) {
+    // Determine if the local id is a known negative.
+    if (cache_get('ting_covers:' . $id, FALSE)) {
+      continue;
+    }
+
+    // If we we already have a valid cover image, use it.
+    $path = ting_covers_object_path($id);
+    if (file_exists($path)) {
+      $covers[$id] = array(
+        'image_style' => $cover_info['image_style'],
+        'url' => image_style_url($cover_info['image_style'], $path),
+      );
+      continue;
+    }
+
+    // If all else fails, try to fetch cover image from hooks.
+    $entities[$id] = ding_entity_load($id);
+  }
+
+  // Go through all modules that implement hook.
+  foreach (module_implements('ting_covers') as $module) {
+    // Fetch covers from hook.
+    $covers_found = module_invoke($module, 'ting_covers', $entities);
+    $covers += $covers_found;
+
+    // Remove elements from entities, where a cover has been found.
+    foreach (array_keys($covers_found) as $id) {
+      if (isset($entities[$id])) {
+        unset($entities[$id]);
+      }
+    }
+  }
+
+  // Mark all remaining as not found in cache.
+  foreach ($entities as $id => $entity) {
+    cache_set('ting_covers:' . $id, 1, 'cache', $_SERVER['REQUEST_TIME'] + TING_COVERS_DEFAULT_CACHE_LIFETIME);
+  }
+
+  // Go through all found covers, and return them in the correct style.
+  $return = array();
+  foreach ($covers as $id => $cover) {
+    $style = $requested_covers[$id]['image_style'];
+    $return[$id] = array(
+      'image_style' => $style,
+      'url' => image_style_url($style, $cover),
+    );
+  }
+
+  return $return;
 }

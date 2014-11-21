@@ -18,9 +18,10 @@ function template_preprocess_ting_object_cover(&$variables) {
   // Set initial values required by the template.
   $variables['classes'] = array(
     'ting-cover',
-    'ting-cover-object-id-' . $object->localId,
-    'ting-cover-style-' . $variables['image_style'],
-    'ting-cover-owner-id-' . $object->ownerId,
+  );
+  $variables['data'] = array(
+    'ting-cover-object-id' => $object->id,
+    'ting-cover-style' => $variables['image_style'],
   );
   $variables['image'] = '';
 
@@ -52,5 +53,9 @@ function template_preprocess_ting_object_cover(&$variables) {
  * Default theme function implementation.
  */
 function theme_ting_object_cover($variables) {
-  return '<div class="' . implode(' ', $variables['classes']) . '">' . $variables['image'] . '</div>';
+  $data = "";
+  foreach ($variables['data'] as $name => $value) {
+    $data .= 'data-' . $name . '="' . htmlentities($value) . '" ';
+  }
+  return '<div class="' . implode(' ', $variables['classes']) . '" ' . trim($data) . '>' . $variables['image'] . '</div>';
 }

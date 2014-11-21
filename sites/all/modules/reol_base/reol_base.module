@@ -4,6 +4,8 @@
  * Code for the eReolen base module feature.
  */
 
+define('REOL_BASE_LOCAL_ID_PREFIX', 'isbn_');
+
 /**
  * Get the field form for a field.
  *
@@ -44,13 +46,79 @@ function reol_base_entity_load($entities, $type) {
   }
 
   foreach ($entities as $entity) {
-    // When only acting on a ting_object, there should always
-    // only be one ISBN.
-    $isbns = $entity->getIsbn();
-    if (!count($isbns)) {
+    if (!($entity instanceof TingEntity)) {
       continue;
     }
+    // When have to check all the way down, as chain might be broken
+    // somwhere. Only touch localId if we have the right value for it.
+    if (isset($entity->reply) &&
+      isset($entity->reply->record) &&
+      isset($entity->reply->record['dc:identifier'])) {
+      $local_id = FALSE;
 
-    $entity->localId = $isbns[0];
+      // Try to find the id we need in oss:PROVIDER-ID.
+      if (isset($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) &&
+        count($entity->reply->record['dc:identifier']['oss:PROVIDER-ID'] == 1)) {
+        $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']);
+      }
+      // If not found there, look in dkdcplus:ISBN.
+      elseif (isset($entity->reply->record['dc:identifier']['dkdcplus:ISBN']) &&
+        count($entity->reply->record['dc:identifier']['dkdcplus:ISBN'])) {
+        $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['dkdcplus:ISBN']);
+      }
+
+      if ($local_id) {
+        $entity->localId = $local_id;
+      }
+    }
   }
+}
+
+/**
+ * Convert an array of ISBN-numbers to a local id.
+ *
+ * @param string $isbns
+ *   The ISBN number array to convert.
+ *
+ * @return string
+ *   The localId string.
+ */
+function reol_base_get_local_id($isbns) {
+  $num = FALSE;
+  foreach ($isbns as $isbn) {
+    $isbn = str_replace('-', '', $isbn);
+    // ISBN is the first 13-length number found.
+    if (strlen($isbn) == 13) {
+      $num = $isbn;
+      break;
+    }
+  }
+
+  // We have no ISBN-number to use.
+  if (!$num) {
+    return FALSE;
+  }
+
+  // Add our prefix and remove dashes that might appear.
+  // We add the prefix to avoid strange conflicts with entities
+  // that have their local id defined as the ISBN-number.
+  return REOL_BASE_LOCAL_ID_PREFIX . $num;
+}
+
+/**
+ * Convert the local id to an ISBN number.
+ *
+ * @param string $local_id
+ *   The local id.
+ *
+ * @return string
+ *   The ISBN number.
+ */
+function reol_base_get_isbn($local_id) {
+  // Remove prefix in front, if found.
+  // If not, it is not an ISBN-number.
+  if (strpos($local_id, REOL_BASE_LOCAL_ID_PREFIX) === 0) {
+    return substr($local_id, strlen(REOL_BASE_LOCAL_ID_PREFIX));
+  }
+  return FALSE;
 }

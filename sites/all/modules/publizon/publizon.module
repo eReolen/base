@@ -5,12 +5,6 @@
  */
 
 include_once 'publizon.features.inc';
-/**
- * @file
- * Main module implementation which defines functions used in the administration
- * interface and a few helper functions.
- */
-
 require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
 
 /**
@@ -178,4 +172,60 @@ function publizon_get_libraries_list() {
   return array_map(function ($elem) {
     return $elem['library_name'];
   }, publizon_get_libraries());
+}
+
+/**
+ * Implements hook_ting_covers().
+ *
+ * Fetch covers from Publizon.
+ */
+function publizon_ting_covers($entities) {
+  $covers = array();
+
+  foreach ($entities as $id => $entity) {
+    $local_id = $entity->localId;
+
+    $isbn = reol_base_get_isbn($local_id);
+    // If we do not have an ISBN, we do not wish to handle it.
+    if (!$isbn) {
+      continue;
+    }
+
+    // Get the cover image from Publizon.
+    $client = PublizonClient::getClient();
+
+    $uri = $client->getCoverUri($isbn);
+
+    // If no cover was found, continue.
+    if (empty($uri)) {
+      continue;
+    }
+
+    // Try to download the image.
+    $result = drupal_http_request($uri);
+
+    // If download failed, continue.
+    if ($result->code != 200) {
+      continue;
+    }
+
+    $filename = ting_covers_object_path($local_id);
+    $directory = dirname($filename);
+
+    // Build the destination folder tree if it doesn't already exist.
+    if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+      watchdog('ting_covers', 'Failed to create directory: %directory', array('%directory' => $directory), WATCHDOG_ERROR);
+      continue;
+    }
+
+    // Try to save the file.
+    $file = file_unmanaged_save_data($result->data, $filename, FILE_EXISTS_REPLACE);
+
+    // If successfull, return file object for this one.
+    if ($file) {
+      $covers[$id] = $file;
+    }
+  }
+
+  return $covers;
 }

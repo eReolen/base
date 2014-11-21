@@ -256,10 +256,15 @@ class PublizonClient {
    * @return SimpleXmlElement
    *   Raw XML object containing the product.
    */
-  public function getProduct($isbn) {
+  public function getProduct($isbn, $retailer_id = FALSE) {
+    // Get default retailer id and code.
+    $retailer = publizon_get_library($retailer_id ? $retailer_id : variable_get('publizon_default_retailer', ''));
+
     // Get product form the web-serivce.
     $response = $this->call('product', 'GetProduct', array(
       'pub:ebookid' => $isbn,
+      'pub:retailerid' => $retailer['retailer_id'],
+      'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
     ), array('pub' => 'http://pubhub.dk/'));
 
     // Check if any data was returned.
@@ -365,6 +370,26 @@ class PublizonClient {
 
     $this->logger->log('The library profile with id (' . $retailer_id . ') did not return any data', 'WARNING');
     return FALSE;
+  }
+
+  /**
+   * Get the cover URI for an ISBN number.
+   *
+   * @param string $isbn
+   *   The ISBN number to get cover for.
+   *
+   * @return string
+   *   URI of the cover image, or false if no image found.
+   */
+  public function getCoverUri($isbn) {
+    try {
+      $product = $this->getProduct($isbn);
+
+      return $product->coverimage ? $product->coverimage : FALSE;
+    }
+    catch (Exception $e) {
+      return FALSE;
+    }
   }
 
   /**
