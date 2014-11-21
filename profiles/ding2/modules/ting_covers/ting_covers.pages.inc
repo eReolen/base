@@ -12,14 +12,14 @@ function ting_covers_objects() {
   $cover_request = array();
 
   foreach ($_POST['coverData'] as $cover_info) {
-    $cover_request[$cover_info['local_id']] = array(
+    $cover_request[$cover_info['id']] = array(
       'image_style' => $cover_info['image_style'],
     );
   }
 
   $covers = ting_covers_load($cover_request);
   array_walk($covers, function(&$elem, $key) {
-    $elem['local_id'] = "" . $key;
+    $elem['id'] = "" . $key;
   });
 
   // Return all image information.

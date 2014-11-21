@@ -133,18 +133,15 @@ function ting_search_carousel_do_request($index) {
   }
 
   // Loop over the search results collecting basic object information.
-  $local_ids = array();
+  $ids = array();
   $objects = array();
   foreach ($collections as $collection) {
     foreach ($collection->collections as $ting_collection) {
       foreach ($ting_collection->reply->objects as $object) {
-        // As we want to allow alterations to the object in hook_entity_load,
-        // we have to make sure that entity_load is called.
-        $item = ding_entity_load($object->id);
-        $local_ids[$item->localId] = array(
+        $ids[$object->id] = array(
           'image_style' => 'ting_search_carousel',
         );
-        $objects[$item->localId] = array(
+        $objects[$object->id] = array(
           'id' => $object->id,
           'title' => isset($object->record['dc:title'][''][0]) ? $object->record['dc:title'][''][0] : '',
           'creator' => isset($object->record['dc:creator']['oss:aut'][0]) ? $object->record['dc:creator']['oss:aut'][0] : '',
@@ -157,15 +154,15 @@ function ting_search_carousel_do_request($index) {
   $items = array();
 
   // Get covers for the ids.
-  $covers = ting_covers_load($local_ids);
+  $covers = ting_covers_load($ids);
 
   // Loop over the fetched covers and build items.
-  foreach ($covers as $local_id => $cover_info) {
+  foreach ($covers as $id => $cover_info) {
     // Build object with the information collected.
     $item = new stdClass();
-    $item->id = $objects[$local_id]['id'];
-    $item->title = $objects[$local_id]['title'];
-    $item->creator = $objects[$local_id]['creator'];
+    $item->id = $objects[$id]['id'];
+    $item->title = $objects[$id]['title'];
+    $item->creator = $objects[$id]['creator'];
     $item->image = $cover_info['url'];
 
     $items[] = $item;
