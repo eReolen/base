@@ -1,0 +1,16 @@
+/**
+ * Usefull mixins.
+ */
+
+@mixin header-gradient($flat, $one, $two) {
+  background-color: $flat;
+  @include background(linear-gradient(to bottom, $one, $two));
+}
+
+@mixin header-logo-gradient {
+  @include header-gradient($logo-header-flat, $logo-header-one, $logo-header-two);
+}
+
+@mixin header-menu-gradient {
+  @include header-gradient($menu-header-flat, $menu-header-one, $menu-header-two);
+}

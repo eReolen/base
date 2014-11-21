@@ -1,0 +1,55 @@
+/**
+ * General layout and coloring.
+ */
+
+body {
+  color: $text-color;
+  background-color: #f3f3f3;
+}
+
+.bottom {
+  color: $inverse-text-color;
+  background-color: #353535;
+}
+
+a,
+a:link,
+a:visited {
+  color: #c7003d;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+.page-title,
+.ui-dialog-title {
+  font-family: 'Open Sans', sans-serif;
+  color: #404040;
+  font-weight: 300;
+  letter-spacing: .2px;
+  text-transform: uppercase !important;
+}
+
+.page-lead,
+strong {
+  font-family: 'Open Sans', sans-serif;
+  color: #404040;
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+
+h1 ,
+.page-title,
+.ui-dialog-title {
+  font-size: 36px;
+  line-height: 40px;
+}

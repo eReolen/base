@@ -3,3 +3,43 @@
  * @file
  * Installation of reol_base module.
  */
+
+/**
+ * Implements hook_install().
+ */
+function reol_base_install() {
+  if (module_exists('ding_library')) {
+    // Run the update hooks from before the module was enabled on "prod".
+    reol_base_update_7101();
+    reol_base_update_7102();
+  }
+}
+
+
+/**
+ * Disable unused modules.
+ */
+function reol_base_update_7101() {
+  $modules = array(
+    'ding_bookmark',
+    'ding_frontpage',
+    'ding_groups',
+    'ding_news',
+    'ding_tabroll',
+    'ding_library',
+    'ding_staff',
+    'ding_event',
+  );
+
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
+
+/**
+ * Enable modules and theme.
+ */
+function reol_base_update_7102() {
+  module_enable(array('reol_frontend', 'publizon', 'reol_loan'), TRUE);
+  theme_enable(array('brin'));
+  variable_set('theme_default', 'brin');
+}
