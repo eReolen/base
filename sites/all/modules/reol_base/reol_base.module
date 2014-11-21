@@ -77,13 +77,18 @@ function reol_base_entity_load($entities, $type) {
 /**
  * Convert an array of ISBN-numbers to a local id.
  *
- * @param string $isbns
+ * @param mixed $isbns
  *   The ISBN number array to convert.
  *
  * @return string
  *   The localId string.
  */
 function reol_base_get_local_id($isbns) {
+  // Make sure it is array,
+  if (!is_array($isbns)) {
+    $isbns = array($isbns);
+  }
+
   $num = FALSE;
   foreach ($isbns as $isbn) {
     $isbn = str_replace('-', '', $isbn);
