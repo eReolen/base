@@ -14,3 +14,7 @@
 @mixin header-menu-gradient {
   @include header-gradient($menu-header-flat, $menu-header-one, $menu-header-two);
 }
+
+@mixin header-menu-selected-gradient {
+  @include header-gradient($menu-selected-flat, $menu-selected-one, $menu-selected-two);
+}

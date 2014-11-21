@@ -1,4 +1,4 @@
-$header-height: 87px;
+$header-height: 90px;
 
 
 .topbar {
@@ -25,6 +25,92 @@ $header-height: 87px;
 
     img {
       margin: 0;
+    }
+  }
+
+  .main-menu-wrapper {
+    margin-left: 301px;
+    margin-right: 10px;
+  }
+
+  .main-menu {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    font-size: 16px;
+
+    li {
+      display: inline-block;
+      position: relative;
+      opacity: .6;
+      filter: alpha(opacity=60);
+
+      &.active, &:hover {
+        @include header-menu-selected-gradient();
+        opacity: 1;
+        filter: alpha(opacity=100);
+      }
+
+      &.active a::after {
+        content: "";
+        color: #cccccc;
+        position: absolute;
+        bottom: -20px;
+        width: 0;
+        height: 0;
+        vertical-align: middle;
+        border-top: 20px solid;
+        border-right: 20px solid transparent;
+        border-left: 20px solid transparent;
+        left: 50%;
+        margin-left: -20px;
+        z-index: 100;
+      }
+
+      a {
+        margin: 0;
+        height: 90px;
+        display: block;
+        padding: 50px 40px 0px 40px;
+        box-sizing: border-box;
+        background-repeat: no-repeat;
+        background-size: 40px auto;
+        background-position: center 18px;
+        &:hover, &.active {
+          text-decoration: none;#{}
+        }
+
+        span {
+          font-family: 'Open Sans', sans-serif;
+          text-transform: uppercase;
+          font-weight: 600;
+          font-size: 13px;
+          color: #404040;
+          letter-spacing: .2px;
+        }
+      }
+
+
+
+      &:nth-child(1) a {
+        background-image: url("../images/icon-nyheder.png");
+      }
+
+      &:nth-child(2) a {
+        background-image: url("../images/icon-eboger.png");
+      }
+
+      &:nth-child(3) a {
+        background-image: url("../images/icon-lydboger.png");
+      }
+
+      &:nth-child(4) a {
+        background-image: url("../images/icon-minelan.png");
+      }
+
+      &:nth-child(5) a {
+        background-image: url("../images/icon-sog.png");
+      }
     }
   }
 }
