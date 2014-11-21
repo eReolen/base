@@ -66,10 +66,24 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
 
       // Add another information regarding when the loan expires.
       $time = strtotime($form['all_loans'][$child]['#loan']->expiry);
+      $time_diff = $time - time();
+
+      // Add class according to how long time there is left.
+      $class = " ";
+      if ($time_diff < variable_get('reol_loan_low_time_max', 86400)) {
+        $class .= 'low';
+      }
+      elseif ($time_diff < variable_get('reol_loan_medium_time_max', 604800)) {
+        $class .= 'medium';
+      }
+      else {
+        $class .= 'high';
+      }
+
       $form['all_loans'][$child]['#information']['expire_in'] = array(
         'label' => t('Expires in'),
         'data' => format_interval($time - time(), 1),
-        'class' => 'expires-in',
+        'class' => 'expires-in' . $class,
         '#weight' => 10,
       );
     }
