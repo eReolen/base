@@ -22,9 +22,8 @@ class PublizonLoan extends Publizon {
     'expire_date' => NULL,
     'title' => NULL,
     'authors' => NULL,
-    'download_url' => NULL,
     'publisher' => NULL,
-    'product' => NULL,
+    'format' => NULL,
   );
 
   /**
@@ -101,13 +100,12 @@ class PublizonLoan extends Publizon {
     $this->isbn = (string) $item->book->attributes()->id;
     $this->retailer_order_number = (string) $item->retailerordernumber;
     $this->internal_order_number = (string) $item->internalordernumber;
-    $this->status = (string) $item->orderstatus->attributes()->name;
+    $this->status = (int) $item->orderstatus->attributes()->id;
     $this->order_date = strtotime((string) $item->orderdate);
     $this->expire_date = strtotime((string) $item->loanexpiredate);
     $this->title = (string) $item->book->title;
     $this->authors = $authors;
-    $this->download_url = (string) $item->data->data->downloadurl;
     $this->publisher = (string) $item->book->publisher;
-    $this->product = new PublizonProduct($this->isbn);
+    $this->format = (int) $item->format->attributes()->id;
   }
 }

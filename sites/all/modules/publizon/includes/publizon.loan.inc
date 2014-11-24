@@ -7,13 +7,37 @@
 /**
  * Get list of loans.
  *
- * @TODO
+ * @param StdClass $account
+ *   The account to get loan list for.
+ *
+ * @return array
+ *   Array containing the loans for the user.
  */
 function publizon_loan_list($account) {
-  // Throw exception if we're not logged in.
-  ding_user_get_creds($account);
-
   $result = array();
+
+  // Throw exception if we're not logged in.
+  $creds = ding_user_get_creds($account);
+
+  $retailer_id = publizon_get_retailer_id($account);
+
+  // Get list of loans from Publizon.
+  $client = PublizonClient::getClient();
+  $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
+
+  module_load_include('client.inc', 'ting');
+  foreach ($loans as $loan) {
+    // Get the id from a search in Ting.
+    $res = ting_do_search("term.identifier=" . $loan->isbn);
+    list($id) = array_keys($res->collections);
+
+    $result[$id] = new DingProviderLoan($id, array(
+      'ding_entity_id' => $id,
+      'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
+      'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
+      'renewable' => FALSE,
+    ));
+  }
 
   return $result;
 }
@@ -43,10 +67,7 @@ function publizon_loan_create($account, $id) {
   // This will throw exception if not logged in.
   $creds = ding_user_get_creds($account);
 
-  // Get the retailer id on the user.
-  $profile = profile2_load_by_user($account, 'provider_publizon');
-  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
-  $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
+  $retailer_id = publizon_get_retailer_id($account);
 
   // Get the object for extracting the ISBN.
   $ting_entity = ding_entity_load($id);

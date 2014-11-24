@@ -117,17 +117,12 @@ class PublizonClient {
    * @throws PublizonException
    */
   public function createLoan($retailer_id, $card_number, $pincode, $isbn) {
-    // Get retailer information.
-    $retailer = publizon_get_library($retailer_id);
-
     // Make request to the web-service for the loan. It throws an exception if
     // the loan fails.
-    $response = $this->call('loan', 'CreateLoan', array(
+    $response = $this->call('loan', 'CreateLoan', $retailer_id, array(
       'pub:ebookid' => $isbn,
       'pub:cardnumber' => $card_number,
       'pub:pincode' => $pincode,
-      'pub:retailerid' => $retailer['retailer_id'],
-      'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
       'pub:format' => '',
       'pub:mobipocketid' => '',
     ), array('pub' => 'pubhub.dk'));
@@ -224,21 +219,21 @@ class PublizonClient {
    *
    * @throws PublizonException
    */
-  public function getLibraryUserOrderList($card_number) {
+  public function getLibraryUserOrderList($retailer_id, $card_number) {
     // Make request to the web-service for the loans.
-    $response = $this->call('library_user_order_list', 'GetLibraryUserOrderList', array(
+    $response = $this->call('library_user_order_list', 'GetLibraryUserOrderList', $retailer_id, array(
       'pub:cardnumber' => $card_number,
     ), array('pub' => 'http://pubhub.dk/'));
 
     // Check if any data was returned.
-    $data = $response->xpath('//data');
-    $extension = $response->xpath('//LibraryExtension');
-    if (isset($data[0]) && isset($extension[0])) {
-      return array($data[0], $extension[0]);
+    $data = $response->xpath('//data/orderitem');
+    $loans = array();
+    if (isset($data[0])) {
+      while (list(, $loan) = each($data)) {
+        $loans[] = new PublizonLoan($loan);
+      }
     }
-
-    $this->logger->log('No loans information was returned for the user', 'WARNING');
-    return FALSE;
+    return $loans;
   }
 
   /**
@@ -257,14 +252,12 @@ class PublizonClient {
    *   Raw XML object containing the product.
    */
   public function getProduct($isbn, $retailer_id = FALSE) {
-    // Get default retailer id and code.
-    $retailer = publizon_get_library($retailer_id ? $retailer_id : variable_get('publizon_default_retailer', ''));
+    // Get default retailer id if none specified.
+    $retailer_id = $retailer_id ? $retailer_id : variable_get('publizon_default_retailer', '');
 
     // Get product form the web-serivce.
-    $response = $this->call('product', 'GetProduct', array(
+    $response = $this->call('product', 'GetProduct', $retailer_id, array(
       'pub:ebookid' => $isbn,
-      'pub:retailerid' => $retailer['retailer_id'],
-      'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
     ), array('pub' => 'http://pubhub.dk/'));
 
     // Check if any data was returned.
@@ -311,14 +304,9 @@ class PublizonClient {
    */
   public function validateLibraryUser($card_number, $pincode, $retailer_id) {
     try {
-      // Get retailer information.
-      $retailer = publizon_get_library($retailer_id);
-
-      $response = $this->call('user', 'ValidateLibraryUser', array(
+      $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, array(
         'pub:cardnumber' => $card_number,
         'pub:pincode' => $pincode,
-        'pub:retailerid' => $retailer['retailer_id'],
-        'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
       ), array('pub' => 'http://pubhub.dk/'));
     }
     catch (PublizonException $e) {
@@ -416,7 +404,10 @@ class PublizonClient {
    * @throws PublizonException
    *   If the response dose not have a 101 status.
    */
-  private function call($endpoint, $action, $parameters, $namespace) {
+  private function call($endpoint, $action, $retailer_id, $parameters, $namespace) {
+    // Get retailer information.
+    $retailer = publizon_get_library($retailer_id);
+
     // Log request.
     $this->logger->log('Call to "' . $this->endpoints[$endpoint] . '" for "' . $action . '"');
 
@@ -428,6 +419,8 @@ class PublizonClient {
     $parameters += array(
       $ns[0] . ':languagecode' => '',
       $ns[0] . ':clientid' => publizon_get_client_id(),
+      $ns[0] . ':retailerid' => $retailer['retailer_id'],
+      $ns[0] . ':retailerkeycode' => md5($retailer['retailer_key_code']),
     );
 
     // Make the request.

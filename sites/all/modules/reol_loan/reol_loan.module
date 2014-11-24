@@ -50,3 +50,50 @@ function reol_loan_secure_permissions($role) {
     return $permissions[$role];
   }
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
+  // Move elements out of group. We do not wish to group items.
+  foreach ($form['loans'] as $loan_group) {
+    $children = element_children($loan_group);
+    foreach ($children as $child) {
+      if ($child == 'title') {
+        continue;
+      }
+      $form['all_loans'][$child] = $loan_group[$child];
+
+      // Add another information regarding when the loan expires.
+      $loan = $form['all_loans'][$child]['#loan'];
+      $time = strtotime(check_plain($loan->expiry));
+      $time_diff = $time - time();
+
+      // Add class according to how long time there is left.
+      $class = " ";
+      if ($time_diff < variable_get('reol_loan_low_time_max', 86400)) {
+        $class .= 'low';
+      }
+      elseif ($time_diff < variable_get('reol_loan_medium_time_max', 604800)) {
+        $class .= 'medium';
+      }
+      else {
+        $class .= 'high';
+      }
+
+      $form['all_loans'][$child]['#information']['expire_in'] = array(
+        'label' => t('Expires in'),
+        'data' => format_interval($time - time(), 4),
+        'class' => 'expires-in' . $class,
+        '#weight' => 10,
+      );
+
+      // Change format of the two other dates.
+      $form['all_loans'][$child]['#information']['loan_date']['data'] = format_date(strtotime(check_plain($loan->loan_date)), 'reol_base_material_lists_date');
+      $form['all_loans'][$child]['#information']['expiry']['data'] = format_date(strtotime(check_plain($loan->expiry)), 'reol_base_material_lists_date');
+    }
+  }
+
+  // Remove old groups.
+  unset($form['loans']);
+}

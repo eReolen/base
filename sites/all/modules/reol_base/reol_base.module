@@ -77,13 +77,18 @@ function reol_base_entity_load($entities, $type) {
 /**
  * Convert an array of ISBN-numbers to a local id.
  *
- * @param string $isbns
+ * @param mixed $isbns
  *   The ISBN number array to convert.
  *
  * @return string
  *   The localId string.
  */
 function reol_base_get_local_id($isbns) {
+  // Make sure it is array,
+  if (!is_array($isbns)) {
+    $isbns = array($isbns);
+  }
+
   $num = FALSE;
   foreach ($isbns as $isbn) {
     $isbn = str_replace('-', '', $isbn);
@@ -121,4 +126,66 @@ function reol_base_get_isbn($local_id) {
     return substr($local_id, strlen(REOL_BASE_LOCAL_ID_PREFIX));
   }
   return FALSE;
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ *
+ * Change material_item to use our template instead.
+ */
+function reol_base_theme_registry_alter(&$theme_registry) {
+  $theme_registry['material_item']['template'] = drupal_get_path('module', 'reol_base') . '/templates/material_item';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function reol_base_preprocess_material_item(&$variables) {
+  $element = $variables['element'];
+  $ting_entity = ding_entity_load($element['#id']);
+
+  $variables['type'] = reol_base_get_type_name($ting_entity->type);
+
+  // Put buttons from entity view on list.
+  $buttons = field_view_field('ting_object', $ting_entity, 'ding_entity_buttons', 'default');
+  $variables['buttons'] = drupal_render($buttons);
+}
+
+/**
+ * Get the name of a type from the type returned from Ting.
+ *
+ * @param string $type
+ *   The string type from Ting.
+ *
+ * @return string
+ *   Our own name for the type.
+ */
+function reol_base_get_type_name($type) {
+  $types = array(
+    'lydbog (net)' => 'audiobook',
+    'ebog' => 'ebook',
+  );
+
+  return $types[strtolower($type)];
+}
+
+/**
+ * Implements hook_date_format_Types().
+ */
+function reol_base_date_format_types() {
+  return array(
+    'reol_base_material_lists_date' => t('Reol material lists date'),
+  );
+}
+/**
+ * Implements hook_date_formats().
+ */
+function reol_base_date_formats() {
+  return array(
+    array(
+      'type' => 'reol_base_material_lists_date',
+      'format' => 'j. F Y H:i:s',
+      'locales' => array(),
+    ),
+  );
 }
