@@ -15,22 +15,47 @@ $header-height: 90px;
     @include header-logo-gradient();
     height: $header-height;
     padding: 0;
-    // Use negative margin to pull the logo out over the left edge.
-    margin-left: -93px;
-    // And use padding to center the logo image.
-    padding-left: 103px;
-    padding-right: 106px;
     padding-top: 29px;
-    width: auto;
+    width: 100%;
+    text-align: center;
+    @include large-x-large() {
+      // Use negative margin to pull the logo out over the left edge.
+      margin-left: -93px;
+      // And use padding to center the logo image.
+      padding-left: 103px;
+      padding-right: 106px;
+      width: auto;
+    }
 
     img {
       margin: 0;
     }
   }
 
+  .topbar-menu {
+    @include large-x-large() {
+      display: none;
+    }
+  }
+
   .main-menu-wrapper {
-    margin-left: 301px;
-    margin-right: 10px;
+    @include large-x-large() {
+      margin-left: 301px;
+      margin-right: 10px;
+      display: block;
+      padding: 0;
+    }
+    @include small-medium() {
+      @include box-sizing(border-box);
+
+  background-color: #353535;
+      display: none;
+      padding-top: 10px;
+      padding-right: 20px;
+      /* Extra space needed below the menu for device stuff (e.g. iOS) */
+      padding-bottom: 30px;
+      padding-left: 20px;
+    }
   }
 
   .main-menu {
@@ -39,6 +64,15 @@ $header-height: 90px;
     margin: 0px;
     font-size: 16px;
 
+    @include small-medium() {
+      .main-menu {
+        display: block;
+        font-size: 16px;
+        margin-left: 10px;
+      }
+    }
+
+    @include large-x-large() {
     li {
       display: inline-block;
       position: relative;
@@ -113,6 +147,7 @@ $header-height: 90px;
       }
     }
   }
+    }
 }
 
 .header-wrapper {
@@ -123,8 +158,10 @@ $header-height: 90px;
   .search {
     padding: 0;
     width: auto;
-    margin-left: 311px;
-    margin-right: 10px;
+    @include large-x-large() {
+      margin-left: 311px;
+      margin-right: 10px;
+    }
 
     .form-text {
       color: white;

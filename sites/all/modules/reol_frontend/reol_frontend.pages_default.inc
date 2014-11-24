@@ -101,6 +101,28 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-3c879038-1011-4427-8465-f638e18375e1'] = $pane;
     $display->panels['branding'][0] = 'new-3c879038-1011-4427-8465-f638e18375e1';
     $pane = new stdClass();
+    $pane->pid = 'new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9';
+    $pane->panel = 'branding';
+    $pane->type = 'block';
+    $pane->subtype = 'menu-menu-tabs-menu';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9';
+    $display->content['new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9'] = $pane;
+    $display->panels['branding'][1] = 'new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9';
+    $pane = new stdClass();
     $pane->pid = 'new-94a239e5-00e0-4807-917f-df52c53405e7';
     $pane->panel = 'branding';
     $pane->type = 'block';
@@ -116,13 +138,16 @@ function reol_frontend_default_page_manager_handlers() {
       'settings' => NULL,
       'style' => 'default',
     );
-    $pane->css = array();
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'js-topbar-menu',
+    );
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '94a239e5-00e0-4807-917f-df52c53405e7';
     $display->content['new-94a239e5-00e0-4807-917f-df52c53405e7'] = $pane;
-    $display->panels['branding'][1] = 'new-94a239e5-00e0-4807-917f-df52c53405e7';
+    $display->panels['branding'][2] = 'new-94a239e5-00e0-4807-917f-df52c53405e7';
     $pane = new stdClass();
     $pane->pid = 'new-1769a64d-2cbe-490d-87aa-a2c3ee082997';
     $pane->panel = 'content';
@@ -337,6 +362,28 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->uuid = 'f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
     $display->content['new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0'] = $pane;
     $display->panels['header'][0] = 'new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
+    $pane = new stdClass();
+    $pane->pid = 'new-d06617cf-6e7d-448e-a8b8-503dfa2bc59a';
+    $pane->panel = 'header';
+    $pane->type = 'block';
+    $pane->subtype = 'user-login';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'd06617cf-6e7d-448e-a8b8-503dfa2bc59a';
+    $display->content['new-d06617cf-6e7d-448e-a8b8-503dfa2bc59a'] = $pane;
+    $display->panels['header'][1] = 'new-d06617cf-6e7d-448e-a8b8-503dfa2bc59a';
     $pane = new stdClass();
     $pane->pid = 'new-3202a330-fa71-44f2-be0a-265ed734b321';
     $pane->panel = 'navigation';

@@ -22,3 +22,14 @@ $menu-selected-flat: #d8d8d8;
 $color-green: #00a84c;
 $color-yellow: #f2ae1b;
 $color-red: #c7003d;
+
+// Breakpoints lifted verbatim from ddbasic.
+
+/* Breakpoints
+   ========================================================================== */
+
+$breakpoint-low:                  580px;
+$breakpoint-small:                480px;
+$breakpoint-medium:               768px;
+$breakpoint-large:                940px;
+$breakpoint-x-large:              1210px;
