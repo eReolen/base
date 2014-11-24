@@ -491,7 +491,7 @@ class PublizonClient {
     $client = new PublizonNanoSOAPClient($this->baseUrl . $this->endpoints[$endpoint], array('namespaces' => $namespace));
     $parameters += array(
       $ns[0] . ':languagecode' => '',
-      $ns[0] . ':clientId' => publizon_get_client_id(),
+      $ns[0] . ':clientid' => publizon_get_client_id(),
       $ns[0] . ':retailerid' => $retailer['retailer_id'],
       $ns[0] . ':retailerkeycode' => md5($retailer['retailer_key_code']),
     );
