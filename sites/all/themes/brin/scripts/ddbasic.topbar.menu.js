@@ -10,5 +10,5 @@
       // Show search on load.
       $('.js-topbar-search').css("display", "block");
     }
-  }
+  };
 })(jQuery);
