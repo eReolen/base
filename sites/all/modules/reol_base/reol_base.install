@@ -48,7 +48,7 @@ function reol_base_update_7102() {
 /**
  * Enable date format.
  */
-function reol_loan_update_7103() {
+function reol_base_update_7103() {
   $formats = system_get_date_formats();
   variable_set('date_format_reol_base_material_lists_date', array_shift(array_keys($formats['reol_base_material_lists_date'])));
 }
