@@ -19,3 +19,11 @@ function brin_form_alter(&$form, &$form_state, $form_id) {
       break;
   }
 }
+
+/**
+ * Implements hook_js_alter().
+ */
+function brin_js_alter(&$javascript) {
+  // Remove minified version of script we have overridden.
+  unset($javascript['sites/all/themes/brin/scripts/ddbasic.topbar.menu.min.js']);
+}
