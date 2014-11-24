@@ -21,7 +21,8 @@
     background-image: url("../images/icon-audiobook.png");
   }
 
-  .expires-in {
+  .expires-in,
+  .pickup-date{
     font-weight: bold;
 
     &.high {
