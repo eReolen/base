@@ -1,0 +1,11 @@
+<?php
+/**
+ * @file
+ * Code for the loan module for eReolen.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_reservation_form_ding_reservation_reservations_ready_form_alter(&$form, &$form_state) {
+}
