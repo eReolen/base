@@ -15,5 +15,5 @@ features[page_manager_handlers][] = site_template_panel_context_2
 features[page_manager_pages][] = reol_frontpage
 features[variable][] = site_frontpage
 features[variable][] = theme_settings
-mtime = 1416824445
+mtime = 1416840143
 project path = sites/all/modules
