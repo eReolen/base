@@ -9,12 +9,27 @@ $inverse-text-color: #c9c9c9;
 
 $logo-header-one: #be0036;
 $logo-header-two: #b80031;
-$logo-header-flat: #c7003d;
+$logo-header-flat: #be0036;
 
 $menu-header-one: #e6e6e6;
 $menu-header-two: #d9d9d9;
-$menu-header-flat: #dedede;
+$menu-header-flat: #e6e6e6;
+
+$menu-selected-one: #d8d8d8;
+$menu-selected-two: #cccccc;
+$menu-selected-flat: #d8d8d8;
 
 $color-green: #00a84c;
 $color-yellow: #f2ae1b;
 $color-red: #c7003d;
+
+// Breakpoints lifted verbatim from ddbasic.
+
+/* Breakpoints
+   ========================================================================== */
+
+$breakpoint-low:                  580px;
+$breakpoint-small:                480px;
+$breakpoint-medium:               768px;
+$breakpoint-large:                940px;
+$breakpoint-x-large:              1210px;
