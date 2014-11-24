@@ -248,6 +248,7 @@ $header-height: 90px;
 
   // Search form.
   .search {
+    display: block !important;
     padding: 0;
     width: auto;
     @include large-x-large() {
