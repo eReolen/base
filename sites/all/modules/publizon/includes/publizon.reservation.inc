@@ -164,3 +164,13 @@ function publizon_reservation_default_interest_period($profile = NULL) {
 function publizon_reservation_branch_name($branch_id) {
   return NULL;
 }
+
+/**
+ * Returns whether or not deletions are enabled.
+ *
+ * @return bool
+ *   Whether or not deletions are enabled.
+ */
+function publizon_reservation_reservation_deletion_enabled() {
+  return TRUE;
+}
