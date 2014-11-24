@@ -36,6 +36,33 @@ $header-height: 90px;
     @include large-x-large() {
       display: none;
     }
+
+    @include small-large() {
+      margin-top: 0;
+      padding: 0;
+
+      i[class^="icon-"] {
+        margin-right: 0;
+      }
+
+      span {
+        display: none;
+      }
+
+      /* Show mobile link menu item */
+      .menu-item.topbar-link-menu {
+        display: inline-block;
+      }
+
+      .topbar-link-user-account.menu-item {
+        display: none;
+      }
+
+      .topbar-link-user-account.default-override {
+        display:inline-block;
+      }
+    }
+
   }
 
   .main-menu-wrapper {
@@ -66,7 +93,7 @@ $header-height: 90px;
     margin: 0px;
     font-size: 16px;
 
-    @include small-medium() {
+    @include small() {
       .main-menu {
         display: block;
         font-size: 16px;
@@ -75,86 +102,86 @@ $header-height: 90px;
     }
 
     @include large-x-large() {
-    li {
-      display: inline-block;
-      position: relative;
-      opacity: .6;
-      filter: alpha(opacity=60);
+      li {
+        display: inline-block;
+        position: relative;
+        opacity: .6;
+        filter: alpha(opacity=60);
 
-      &.active, &:hover {
-        @include header-menu-selected-gradient();
-        opacity: 1;
-        filter: alpha(opacity=100);
-      }
-
-      &.active a::after {
-        content: "";
-        color: #cccccc;
-        position: absolute;
-        bottom: -20px;
-        width: 0;
-        height: 0;
-        vertical-align: middle;
-        border-top: 20px solid;
-        border-right: 20px solid transparent;
-        border-left: 20px solid transparent;
-        left: 50%;
-        margin-left: -20px;
-        z-index: 100;
-      }
-
-      a {
-        margin: 0;
-        height: 90px;
-        display: block;
-        padding: 50px 20px 0px 20px;
-        box-sizing: border-box;
-        background-repeat: no-repeat;
-        background-size: 40px auto;
-        background-position: center 18px;
-
-        @include x-large() {
-          padding: 50px 40px 0px 40px;
+        &.active, &:hover {
+          @include header-menu-selected-gradient();
+          opacity: 1;
+          filter: alpha(opacity=100);
         }
 
-        &:hover, &.active {
-          text-decoration: none;
+        &.active a::after {
+          content: "";
+          color: #cccccc;
+          position: absolute;
+          bottom: -20px;
+          width: 0;
+          height: 0;
+          vertical-align: middle;
+          border-top: 20px solid;
+          border-right: 20px solid transparent;
+          border-left: 20px solid transparent;
+          left: 50%;
+          margin-left: -20px;
+          z-index: 100;
         }
 
-        span {
-          font-family: 'Open Sans', sans-serif;
-          text-transform: uppercase;
-          font-weight: 600;
-          font-size: 13px;
-          color: #404040;
-          letter-spacing: .2px;
+        a {
+          margin: 0;
+          height: 90px;
+          display: block;
+          padding: 50px 20px 0px 20px;
+          box-sizing: border-box;
+          background-repeat: no-repeat;
+          background-size: 40px auto;
+          background-position: center 18px;
+
+          @include x-large() {
+            padding: 50px 40px 0px 40px;
+          }
+
+          &:hover, &.active {
+            text-decoration: none;
+          }
+
+          span {
+            font-family: 'Open Sans', sans-serif;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 13px;
+            color: #404040;
+            letter-spacing: .2px;
+          }
         }
-      }
 
 
 
-      &:nth-child(1) a {
-        background-image: url("../images/icon-nyheder.png");
-      }
+        &:nth-child(1) a {
+          background-image: url("../images/icon-nyheder.png");
+        }
 
-      &:nth-child(2) a {
-        background-image: url("../images/icon-eboger.png");
-      }
+        &:nth-child(2) a {
+          background-image: url("../images/icon-eboger.png");
+        }
 
-      &:nth-child(3) a {
-        background-image: url("../images/icon-lydboger.png");
-      }
+        &:nth-child(3) a {
+          background-image: url("../images/icon-lydboger.png");
+        }
 
-      &:nth-child(4) a {
-        background-image: url("../images/icon-minelan.png");
-      }
+        &:nth-child(4) a {
+          background-image: url("../images/icon-minelan.png");
+        }
 
-      &:nth-child(5) a {
-        background-image: url("../images/icon-sog.png");
+        &:nth-child(5) a {
+          background-image: url("../images/icon-sog.png");
+        }
       }
     }
   }
-    }
 }
 
 .header-wrapper {
@@ -166,7 +193,7 @@ $header-height: 90px;
     padding: 0;
     width: auto;
     @include large-x-large() {
-      margin-left: 311px;
+      margin-left: 301px;
       margin-right: 10px;
     }
 
