@@ -100,11 +100,9 @@ $header-height: 90px;
         display: block;
 
         &:before {
-          //color: $white;
           color: white;
           display: inline;
           float: left;
-          // font-family: $base-icon-library-font;
           font-family: "FontAwesome";
           margin-top: 9px;
           margin-right: 5px;
@@ -117,7 +115,6 @@ $header-height: 90px;
         }
 
         .menu-item {
-          // color: $white;
           color: white;
           display: inline-block;
           margin-right: 0;
@@ -128,16 +125,10 @@ $header-height: 90px;
           width: 95%;
 
           &:hover {
-           //@include font-bold();
-
-            //color: $white;
             text-decoration: none;
           }
 
           &.active {
-//            @include font-bold();
-
-//            color: $white;
             text-decoration: none;
           }
         }

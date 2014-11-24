@@ -1,5 +1,8 @@
 /**
  * Creates the top-bar toggle menu.
+ *
+ * @todo
+ * Refactor this, and remove code we don't need.
  */
 (function($) {
   "use strict";
