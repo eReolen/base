@@ -7,12 +7,42 @@
 /**
  * Get list of reservations.
  *
+ * @param StdClass $account
+ *   The user to get the list for.
+ *
  * @TODO
  */
 function publizon_reservation_list($account) {
+  $result = array(
+    DING_RESERVATION_READY => array(),
+    DING_RESERVATION_NOT_READY => array(),
+    DING_RESERVATION_INTERLIBRARY_LOANS => array(),
+  );
+
   // Throw exception if we're not logged in.
-  ding_user_get_creds($account);
-  $result = array();
+  $creds = ding_user_get_creds($account);
+
+  $retailer_id = publizon_get_retailer_id($account);
+
+  // Get list of reservations from Publizon.
+  $client = PublizonClient::getClient();
+  $reservations = $client->listReservations($retailer_id, $creds['name']);
+
+  module_load_include('client.inc', 'ting');
+  foreach ($reservations as $reservation) {
+    $id = $reservation->bookId;
+    $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
+    $result[$type][$id] = new DingProviderReservation($id, array(
+      'order_id' => $id,
+      // TODO Hardcoding this until API is ready.
+      'ding_entity_id' => '870970-basis:50604934',
+      'ready_for_pickup' => $reservation->status == 2,
+      'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
+      'queue_number' => 10,
+      'renewable' => FALSE,
+      'reservation_type' => $type,
+    ));
+  }
 
   return $result;
 }
@@ -118,4 +148,14 @@ function publizon_reservation_default_options($account) {
  */
 function publizon_reservation_default_interest_period($profile = NULL) {
   return 0;
+}
+
+/**
+ * Ding requires this function. We do not need it.
+ *
+ * @return NULL
+ *   Empty response always.
+ */
+function publizon_reservation_branch_name($branch_id) {
+  return NULL;
 }
