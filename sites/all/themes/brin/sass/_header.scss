@@ -39,22 +39,24 @@ $header-height: 90px;
   }
 
   .main-menu-wrapper {
-    @include large-x-large() {
-      margin-left: 301px;
-      margin-right: 10px;
-      display: block;
-      padding: 0;
-    }
+    display: block;
+    padding: 0;
+    margin-left: 301px;
+    margin-right: 10px;
+    width: auto;
+
     @include small-medium() {
       @include box-sizing(border-box);
 
-  background-color: #353535;
+      background-color: #353535;
       display: none;
       padding-top: 10px;
       padding-right: 20px;
       /* Extra space needed below the menu for device stuff (e.g. iOS) */
       padding-bottom: 30px;
       padding-left: 20px;
+      margin: 0;
+      width: 100%;
     }
   }
 
@@ -105,11 +107,16 @@ $header-height: 90px;
         margin: 0;
         height: 90px;
         display: block;
-        padding: 50px 40px 0px 40px;
+        padding: 50px 20px 0px 20px;
         box-sizing: border-box;
         background-repeat: no-repeat;
         background-size: 40px auto;
         background-position: center 18px;
+
+        @include x-large() {
+          padding: 50px 40px 0px 40px;
+        }
+
         &:hover, &.active {
           text-decoration: none;
         }
@@ -164,11 +171,13 @@ $header-height: 90px;
     }
 
     .form-text {
+      margin: 0;
       color: white;
       border-radius: 0;
       background-color: #202020;
       font-size: 20px;
       padding-left: 20px;
+
       &:focus {
         // Remove the focus outline.
         outline: none;
