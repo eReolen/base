@@ -142,7 +142,9 @@ function reol_base_theme_registry_alter(&$theme_registry) {
  */
 function reol_base_preprocess_material_item(&$variables) {
   $element = $variables['element'];
-  $ting_entity = ding_entity_load($element['#id']);
+  // TODO Can we rely on this?
+  $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
+  $ting_entity = ding_entity_load($ding_entity_id);
 
   $variables['type'] = reol_base_get_type_name($ting_entity->type);
 
