@@ -7,5 +7,15 @@
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function reol_reservation_form_ding_reservation_reservations_ready_form_alter(&$form, &$form_state) {
+function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, &$form_state) {
+  foreach ($form['reservations'] as &$reservation_element) {
+    $reservation = $reservation_element['#reservation'];
+
+    $reservation_element['#information']['created']['data'] = format_date(strtotime(check_plain($reservation->created)), 'reol_base_material_lists_date');
+
+    // Remove the information we do not have.
+    unset($reservation_element['#information']['expiry']);
+    unset($reservation_element['#information']['pickup_branch']);
+    unset($reservation_element['#information']['order_nr']);
+  }
 }
