@@ -38,6 +38,8 @@ function publizon_reservation_list($account) {
       'ding_entity_id' => '870970-basis:50604934',
       'ready_for_pickup' => $reservation->status == 2,
       'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
+      // To avoid warnings, we have to set this, even though we remove it later.
+      'expiry' => date('Y-m-d H:i:s', 0),
       'queue_number' => 10,
       'renewable' => FALSE,
       'reservation_type' => $type,
