@@ -28,6 +28,7 @@ files[] = lib/PublizonLogger.class.inc
 files[] = lib/PublizonNanoSoapClient.class.inc
 files[] = lib/PublizonLibrary.class.inc
 files[] = lib/PublizonLoan.class.inc
+files[] = lib/PublizonReservation.class.inc
 files[] = lib/PublizonUserLoans.class.inc
 files[] = lib/Publizon.class.inc
 mtime = 1416325540
