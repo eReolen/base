@@ -42,6 +42,11 @@ function publizon_reservation_list($account) {
       'renewable' => FALSE,
       'reservation_type' => $type,
     ));
+
+    // If reservation is ready, add pickup date.
+    if ($type == DING_RESERVATION_READY) {
+      $result[$type][$id]['pickup_date'] = date('Y-m-d H:i:s', $reservation->expireUtc);
+    }
   }
 
   return $result;
