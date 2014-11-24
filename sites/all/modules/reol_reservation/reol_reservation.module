@@ -39,7 +39,10 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
       // Remove expires soon message.
       // TODO Do something different than this, i do not like comparing text.
       if ($reservation_element['#material_message']['message'] == t('This reservation is about to expire.')) {
-        $reservation_element['#material_message'] = array();
+        $reservation_element['#material_message'] = array(
+          'message' => '',
+          'class' => '',
+        );
       }
     }
 
