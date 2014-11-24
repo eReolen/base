@@ -148,22 +148,6 @@ $header-height: 90px;
           filter: alpha(opacity=100);
         }
 
-        &.active a::after {
-          content: "";
-          color: #cccccc;
-          position: absolute;
-          bottom: -20px;
-          width: 0;
-          height: 0;
-          vertical-align: middle;
-          border-top: 20px solid;
-          border-right: 20px solid transparent;
-          border-left: 20px solid transparent;
-          left: 50%;
-          margin-left: -20px;
-          z-index: 100;
-        }
-
         a {
           margin: 0;
           height: 90px;
