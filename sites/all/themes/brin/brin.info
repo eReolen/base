@@ -5,6 +5,11 @@ core = 7.x
 release = 7.x-1.x
 stylesheets[all][] = css/brin.styles.css
 
+; Removed the minified script from the base theme.
+scripts[] = scripts/ddbasic.topbar.menu.min.js
+; Add our own override.
+scripts[] = scripts/ddbasic.topbar.menu.js
+
 ;----------// Regions
 regions[header] = Header
 regions[navigation] = Navigation
