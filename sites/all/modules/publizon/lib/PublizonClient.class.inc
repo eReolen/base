@@ -406,17 +406,12 @@ class PublizonClient {
    * @throws PublizonException
    */
   public function createReservation($retailer_id, $card_number, $pincode, $isbn, $email = '', $phone = '') {
-    // Get retailer information.
-    $retailer = publizon_get_library($retailer_id);
-
     // Make request to the web-service for the reservation. It throws an
     // exception if the reservation fails.
-    $response = $this->call('reservation', 'Create', array(
+    $response = $this->call('reservation', 'Create', $retailer_id, array(
       'pub:ebookid' => $isbn,
       'pub:cardnumber' => $card_number,
       'pub:pincode' => $pincode,
-      'pub:retailerid' => $retailer['retailer_id'],
-      'pub:retailerkeycode' => md5($retailer['retailer_key_code']),
       'pub:email' => $email,
       'pub:phoneNumber' => $phone,
     ), array('pub' => 'pubhub.dk'));
