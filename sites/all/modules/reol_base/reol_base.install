@@ -13,6 +13,7 @@ function reol_base_install() {
     reol_base_update_7101();
     reol_base_update_7102();
     reol_base_update_7103();
+    reol_base_update_7104();
   }
 }
 
@@ -51,4 +52,11 @@ function reol_base_update_7102() {
 function reol_base_update_7103() {
   $formats = system_get_date_formats();
   variable_set('date_format_reol_base_material_lists_date', array_shift(array_keys($formats['reol_base_material_lists_date'])));
+}
+
+/**
+ * Enable reol_review module.
+ */
+function reol_base_update_7104() {
+  module_enable(array('reol_review'), TRUE);
 }
