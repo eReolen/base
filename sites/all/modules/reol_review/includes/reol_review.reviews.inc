@@ -6,14 +6,32 @@
  */
 
 /**
- * Update array of reviews in cache.
+ * Get reviews.
+ *
+ * @return array
+ *   Array of titles found for each type.
  */
-function reol_review_update_reviews() {
+function reol_review_get_reviews() {
   module_load_include('client.inc', 'ting');
+
+  // See if we have the results cached.
+  $found = &drupal_static(__FUNCTION__);
+  if (isset($found)) {
+    return $found;
+  }
+  else {
+    if ($cache = cache_get('reol_review:reviews')) {
+      return $cache->data;
+    }
+    $found = array();
+  }
+
+  // Make sure we have arrays for each type.
   $types = reol_base_get_type_name();
-  $found = array();
   foreach ($types as $type => $n) {
-    $found[$type] = array();
+    if (!isset($found[$type])) {
+      $found[$type] = array();
+    }
   }
 
   $find_num = variable_get('reol_review_find_reviews_count_min', 2);
@@ -67,6 +85,8 @@ function reol_review_update_reviews() {
     }
   }
 
+  // Cache result, but only for 12 hours.
+  cache_set('reol_review_reviews', $found, 'cache', time() + 12 * 60 * 60);
   return $found;
 }
 
