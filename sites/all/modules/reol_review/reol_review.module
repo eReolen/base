@@ -4,4 +4,13 @@
  * Code for the eReolen review module feature.
  */
 
-require_once drupal_get_path('module', 'reol_review') . '/includes/reol_review.reviews.inc';
+/**
+ * Implements hook_cron().
+ *
+ * Make sure we have reviews fetched and cached.
+ */
+function reol_review_cron() {
+  // Fetch reviews, making sure they are cached.
+  module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
+  reol_review_get_reviews();
+}
