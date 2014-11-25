@@ -67,10 +67,11 @@ function reol_review_get_reviews() {
         continue;
       }
 
-      // TODO We should be able to do this when we go into production, as
-      // it should be true for all titles from Publizon.
-      // $ting_result = ting_do_search("term.identifier=" . $isbn);
-      // For now, we just search for ISBN.
+      // We have to explicitly search for each title, instead
+      // of searching for more at a time, as the ISBN-number they are
+      // found on is not necessarily their own, it could be the physical
+      // books ISBN. Therefore there is no way to map a result to the
+      // one fetched from Ding, if searches are not done on each result.
       $ting_result = ting_do_search($isbn);
       // If we have found exactly one.
       // If more have been found we cannot count on the results.
@@ -86,7 +87,7 @@ function reol_review_get_reviews() {
   }
 
   // Cache result, but only for 12 hours.
-  cache_set('reol_review_reviews', $found, 'cache', time() + 12 * 60 * 60);
+  cache_set('reol_review:reviews', $found, 'cache', time() + 12 * 60 * 60);
   return $found;
 }
 
