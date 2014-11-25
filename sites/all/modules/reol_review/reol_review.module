@@ -3,3 +3,5 @@
  * @file
  * Code for the eReolen review module feature.
  */
+
+require_once drupal_get_path('module', 'reol_review') . '/includes/reol_review.reviews.inc';
