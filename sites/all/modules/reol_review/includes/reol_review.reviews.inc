@@ -62,6 +62,9 @@ function reol_review_get_reviews() {
     // Go through results, only adding the ones that we can find in our data.
     foreach ($results as $result) {
       // Malformed results might appear, ignore them.
+      if (!isset($result->isbn)) {
+        continue;
+      }
       $isbn = reol_base_convert_to_isbn($result->isbn);
       if (!$isbn) {
         continue;
