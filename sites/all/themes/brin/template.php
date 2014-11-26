@@ -27,3 +27,13 @@ function brin_js_alter(&$javascript) {
   // Remove minified version of script we have overridden.
   unset($javascript['sites/all/themes/brin/scripts/ddbasic.topbar.menu.min.js']);
 }
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function brin_preprocess_node(&$variables, $hook) {
+  // Add tpl suggestions for node view modes on node type.
+  if (isset($variables['view_mode'])) {
+    $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
+  }
+}
