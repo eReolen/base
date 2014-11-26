@@ -16,6 +16,6 @@
     </div>
     <h2><?php echo $title; ?></h2>
     <div class="article-body"><?php echo render($content['body']); ?></div>
-    <span class="read-more"><?php echo render($content['links']); ?></span>
+    <div class="read-more"><?php echo render($content['links']); ?></div>
   </div>
 </div>
