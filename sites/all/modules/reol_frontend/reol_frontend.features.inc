@@ -20,6 +20,7 @@ function reol_frontend_ctools_plugin_api($module = NULL, $api = NULL) {
 }
 
 /**
+<<<<<<< HEAD
  * Implements hook_image_default_styles().
  */
 function reol_frontend_image_default_styles() {
@@ -49,4 +50,21 @@ function reol_frontend_image_default_styles() {
   );
 
   return $styles;
+}
+
+/**
+ * Implements hook_node_info().
+ */
+function reol_frontend_node_info() {
+  $items = array(
+    'article' => array(
+      'name' => t('Article'),
+      'base' => 'node_content',
+      'description' => t('Contains articles written for the frontpage, and for either ebook or audiobook site (or both)'),
+      'has_title' => '1',
+      'title_label' => t('Title'),
+      'help' => '',
+    ),
+  );
+  return $items;
 }
