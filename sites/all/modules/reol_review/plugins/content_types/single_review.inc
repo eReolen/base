@@ -27,13 +27,14 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
   $type_reviews = $reviews[array_rand($reviews)];
   $review = $type_reviews[array_rand($type_reviews)];
 
-  // Cover information.
-  list($cover) = ting_covers_load(array($review->ding_entity_id => array('image_style' => 'ding_list_medium')));
+  $ting_entity = ding_entity_load($review->ding_entity_id);
+  $ting_object_view = ting_object_view($ting_entity, 'review');
 
   $block->content = theme('single_review', array(
-    'review_book_title' => $review->title,
+    'ting_title' => $ting_entity->title,
+    'ting_object' => drupal_render($ting_object_view),
     'review_author' => $review->author,
-    'review_cover' => $cover['url'],
+    'review_uri' => $review->link,
   ));
 
   return $block;
