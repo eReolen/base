@@ -7,7 +7,6 @@
 include_once 'reol_frontend.features.inc';
 
 /**
-<<<<<<< HEAD
  * Implements hook_entity_info_alter().
  */
 function reol_frontend_entity_info_alter(&$entity_info) {
