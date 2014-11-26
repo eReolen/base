@@ -14,3 +14,10 @@ function reol_review_cron() {
   module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
   reol_review_get_reviews();
 }
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_review_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
