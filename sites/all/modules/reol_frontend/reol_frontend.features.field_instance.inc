@@ -67,9 +67,13 @@ function reol_frontend_field_default_field_instances() {
         'weight' => 1,
       ),
       'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => 'content',
+          'image_style' => 'reol_article_teaser',
+        ),
+        'type' => 'image',
         'weight' => 0,
       ),
     ),

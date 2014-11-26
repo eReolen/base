@@ -20,7 +20,6 @@ function reol_frontend_ctools_plugin_api($module = NULL, $api = NULL) {
 }
 
 /**
-<<<<<<< HEAD
  * Implements hook_image_default_styles().
  */
 function reol_frontend_image_default_styles() {
@@ -50,6 +49,13 @@ function reol_frontend_image_default_styles() {
   );
 
   return $styles;
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function reol_frontend_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
 }
 
 /**
