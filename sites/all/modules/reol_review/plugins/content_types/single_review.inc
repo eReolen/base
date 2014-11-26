@@ -23,9 +23,7 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
   $block->title = '';
 
   module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
-  $reviews = reol_review_get_reviews();
-  $type_reviews = $reviews[array_rand($reviews)];
-  $review = $type_reviews[array_rand($type_reviews)];
+  $review = reol_review_get_random_review();
 
   $ting_entity = ding_entity_load($review->ding_entity_id);
   $ting_object_view = ting_object_view($ting_entity, 'review');

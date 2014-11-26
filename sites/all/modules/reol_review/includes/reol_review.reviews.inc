@@ -130,3 +130,18 @@ function reol_review_fetch_reviews($items, $start) {
   curl_close($ch);
   return json_decode($data);
 }
+
+/**
+ * Get a random review.
+ *
+ * @return StdClass
+ *   The review randomly chosen.
+ */
+function reol_review_get_random_review() {
+  $reviews = reol_review_get_reviews();
+  // Reviews are indexed by type. Create an array of all reviews, regardless
+  // of type.
+  $all_reviews = call_user_func_array('array_merge', array_values($reviews));
+
+  return $all_reviews[array_rand($all_reviews)];
+}
