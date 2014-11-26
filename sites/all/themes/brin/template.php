@@ -25,7 +25,7 @@ function brin_form_alter(&$form, &$form_state, $form_id) {
  */
 function brin_js_alter(&$javascript) {
   // Remove minified version of script we have overridden.
-  unset($javascript['sites/all/themes/brin/scripts/ddbasic.topbar.menu.min.js']);
+  unset($javascript['profiles/ding2/themes/ddbasic/scripts/ddbasic.topbar.menu.min.js']);
 }
 
 /**
