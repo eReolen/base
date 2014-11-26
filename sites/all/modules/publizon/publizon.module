@@ -185,19 +185,10 @@ function publizon_ting_covers($entities) {
   foreach ($entities as $id => $entity) {
     $local_id = $entity->localId;
 
-    $isbn = reol_base_get_isbn($local_id);
-    // If we do not have an ISBN, we do not wish to handle it.
-    if (!$isbn) {
-      continue;
-    }
-
-    // Get the cover image from Publizon.
-    $client = PublizonClient::getClient();
-
-    $uri = $client->getCoverUri($isbn);
+    $uri = publizon_get_product_cover($local_id);
 
     // If no cover was found, continue.
-    if (empty($uri)) {
+    if (!$uri || empty($uri)) {
       continue;
     }
 
@@ -244,4 +235,26 @@ function publizon_get_retailer_id($account) {
   $profile = profile2_load_by_user($account, 'provider_publizon');
   $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
   return $profile_wrapper->field_publizon_retailer_id->value();
+}
+
+/**
+ * Get the cover URI from a local id.
+ *
+ * @param string $local_id
+ *   The local id of the ding object.
+ *
+ * @return string
+ *   The URI or FALSE if no cover found.
+ */
+function publizon_get_product_cover($local_id) {
+  $isbn = reol_base_get_isbn($local_id);
+  // If we do not have an ISBN, no cover can be found.
+  if (!$isbn) {
+    return FALSE;
+  }
+
+  // Get the cover image from Publizon.
+  $client = PublizonClient::getClient();
+
+  return $client->getCoverUri($isbn);
 }

@@ -81,6 +81,16 @@ function reol_review_get_reviews() {
       if ($ting_result->numTotalObjects == 1) {
         list($result->ding_entity_id) = array_keys($ting_result->collections);
         $ting_entity = ding_entity_load($result->ding_entity_id);
+
+        // Make sure the title does exist in publizon
+        // and that the title has a cover.
+        $product = publizon_get_product_cover($ting_entity->localId);
+
+        // If not, we ignore this one.
+        if (!$product) {
+          continue;
+        }
+
         $type = reol_base_get_type_name($ting_entity->type);
         if ($type) {
           $found[reol_base_get_type_name($ting_entity->type)][] = $result;
