@@ -52,5 +52,5 @@ features[variable][] = theme_settings
 features_exclude[field_base][body] = body
 features_exclude[field_base][field_ding_news_list_image] = field_ding_news_list_image
 features_exclude[field_base][field_ding_news_materials] = field_ding_news_materials
-mtime = 1417007586
+mtime = 1417010022
 project path = sites/all/modules
