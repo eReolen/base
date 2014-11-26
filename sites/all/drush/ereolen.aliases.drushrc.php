@@ -15,7 +15,7 @@ $aliases['test1404'] = array(
 
 $aliases['test'] = array(
   'parent' => '@test1404',
-  'uri' => 'reload.dk',
+  'uri' => 'ereolen.test1404.reload.dk',
   'root' => '/var/www/ereolen.test1404.reload.dk',
   'deployotron' => array(
     'branch' => 'develop',
@@ -30,7 +30,7 @@ $aliases['test'] = array(
 
 $aliases['test-test'] = array(
   'parent' => '@test1404',
-  'uri' => 'reload.dk',
+  'uri' => 'ereolen-test.test1404.reload.dk',
   'root' => '/var/www/ereolen-test.test1404.reload.dk',
   'deployotron' => array(
     'branch' => 'develop',
