@@ -43,11 +43,10 @@ function reol_frontend_preprocess_node(&$variables) {
       ),
     ));
 
-    // Remove comment link.
-    unset($variables['content']['links']['comment']);
-
     // Change text for read more link.
-    $variables['content']['links']['node']['#links']['node-readmore']['title'] = t('Read entire article');
+    var_dump($variables['content']['links']['node']['#links']['node-readmore']);
+    $variables['readmore_text'] = t('Read entire article');
+    $variables['readmore'] = url($variables['content']['links']['node']['#links']['node-readmore']['href']);
   }
 
   elseif ($variables['node']->type == "author_portait") {

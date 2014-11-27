@@ -436,7 +436,7 @@ function reol_frontend_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = '25_50_25';
+  $display->layout = 'flexible:reol_frontpage_layout';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -454,6 +454,10 @@ function reol_frontend_default_page_manager_pages() {
       'attachment_2_1' => NULL,
       'attachment_2_2' => NULL,
       'attachment_1_1' => NULL,
+      'top' => NULL,
+      'left' => NULL,
+      'right' => NULL,
+      'bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -462,8 +466,68 @@ function reol_frontend_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
+    $pane->pid = 'new-55e54c4d-81d0-4c89-b764-cb03d72f575e';
+    $pane->panel = 'bottom';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'author_portraits-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '55e54c4d-81d0-4c89-b764-cb03d72f575e';
+    $display->content['new-55e54c4d-81d0-4c89-b764-cb03d72f575e'] = $pane;
+    $display->panels['bottom'][0] = 'new-55e54c4d-81d0-4c89-b764-cb03d72f575e';
+    $pane = new stdClass();
+    $pane->pid = 'new-523f8d67-78fd-4cc7-957b-6c7bf7fb08fc';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'articles-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '523f8d67-78fd-4cc7-957b-6c7bf7fb08fc';
+    $display->content['new-523f8d67-78fd-4cc7-957b-6c7bf7fb08fc'] = $pane;
+    $display->panels['left'][0] = 'new-523f8d67-78fd-4cc7-957b-6c7bf7fb08fc';
+    $pane = new stdClass();
+    $pane->pid = 'new-7f68e403-8055-4280-bbc7-9535051451b7';
+    $pane->panel = 'right';
+    $pane->type = 'single_review';
+    $pane->subtype = 'single_review';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '7f68e403-8055-4280-bbc7-9535051451b7';
+    $display->content['new-7f68e403-8055-4280-bbc7-9535051451b7'] = $pane;
+    $display->panels['right'][0] = 'new-7f68e403-8055-4280-bbc7-9535051451b7';
+    $pane = new stdClass();
     $pane->pid = 'new-7e3d15e0-e9cf-40f9-89ab-658161b063e0';
-    $pane->panel = 'main_content';
+    $pane->panel = 'top';
     $pane->type = 'carousel';
     $pane->subtype = 'carousel';
     $pane->shown = TRUE;
@@ -482,26 +546,7 @@ function reol_frontend_default_page_manager_pages() {
     $pane->locks = array();
     $pane->uuid = '7e3d15e0-e9cf-40f9-89ab-658161b063e0';
     $display->content['new-7e3d15e0-e9cf-40f9-89ab-658161b063e0'] = $pane;
-    $display->panels['main_content'][0] = 'new-7e3d15e0-e9cf-40f9-89ab-658161b063e0';
-    $pane = new stdClass();
-    $pane->pid = 'new-44a6f284-ab6b-48d9-b19b-924e1c5d76e5';
-    $pane->panel = 'main_content';
-    $pane->type = 'views_panes';
-    $pane->subtype = 'author_portraits-panel_pane_1';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array();
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '44a6f284-ab6b-48d9-b19b-924e1c5d76e5';
-    $display->content['new-44a6f284-ab6b-48d9-b19b-924e1c5d76e5'] = $pane;
-    $display->panels['main_content'][1] = 'new-44a6f284-ab6b-48d9-b19b-924e1c5d76e5';
+    $display->panels['top'][0] = 'new-7e3d15e0-e9cf-40f9-89ab-658161b063e0';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-7e3d15e0-e9cf-40f9-89ab-658161b063e0';
   $handler->conf['display'] = $display;

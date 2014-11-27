@@ -14,6 +14,9 @@ function reol_frontend_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "page_manager" && $api == "pages_default") {
     return array("version" => "1");
   }
+  if ($module == "panels" && $api == "layouts") {
+    return array("version" => "1");
+  }
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
@@ -31,29 +34,6 @@ function reol_frontend_views_api($module = NULL, $api = NULL) {
  */
 function reol_frontend_image_default_styles() {
   $styles = array();
-
-  // Exported image style: reol_review.
-  $styles['reol_review'] = array(
-    'name' => 'reol_review',
-    'label' => 'reol_review',
-    'effects' => array(
-      1 => array(
-        'label' => 'Skalér og beskær',
-        'help' => 'Skalering og beskæring bevarer billedets højde-bredde-forhold og beskærer derefter den største dimension. Det er nyttigt til at generere kvadratiske thumbnails uden at forvrænge billedet.',
-        'effect callback' => 'image_scale_and_crop_effect',
-        'dimensions callback' => 'image_resize_dimensions',
-        'form callback' => 'image_resize_form',
-        'summary theme' => 'image_resize_summary',
-        'module' => 'image',
-        'name' => 'image_scale_and_crop',
-        'data' => array(
-          'width' => 270,
-          'height' => 400,
-        ),
-        'weight' => 1,
-      ),
-    ),
-  );
 
   // Exported image style: reol_article_teaser.
   $styles['reol_article_teaser'] = array(
@@ -151,6 +131,29 @@ function reol_frontend_image_default_styles() {
         'data' => array(
           'width' => 550,
           'height' => 250,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: reol_review.
+  $styles['reol_review'] = array(
+    'name' => 'reol_review',
+    'label' => 'reol_review',
+    'effects' => array(
+      1 => array(
+        'label' => 'Skalér og beskær',
+        'help' => 'Skalering og beskæring bevarer billedets højde-bredde-forhold og beskærer derefter den største dimension. Det er nyttigt til at generere kvadratiske thumbnails uden at forvrænge billedet.',
+        'effect callback' => 'image_scale_and_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_resize_form',
+        'summary theme' => 'image_resize_summary',
+        'module' => 'image',
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 270,
+          'height' => 400,
         ),
         'weight' => 1,
       ),
