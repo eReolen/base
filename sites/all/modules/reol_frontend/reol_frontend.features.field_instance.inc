@@ -206,10 +206,10 @@ function reol_frontend_field_default_field_instances() {
     'description' => 'Link to the authors profile on Forfatterweb.dk',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'link_url',
         'weight' => 2,
       ),
       'teaser' => array(
@@ -259,11 +259,11 @@ function reol_frontend_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => '',
+          'image_style' => 'reol_author_portrait_full',
         ),
         'type' => 'image',
         'weight' => 1,
@@ -329,9 +329,8 @@ function reol_frontend_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'hidden',
         'weight' => 0,
       ),
       'teaser' => array(
