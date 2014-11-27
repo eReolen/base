@@ -120,6 +120,52 @@ function reol_frontend_image_default_styles() {
     ),
   );
 
+  // Exported image style: reol_author_portrait_full.
+  $styles['reol_author_portrait_full'] = array(
+    'name' => 'reol_author_portrait_full',
+    'label' => 'reol_author_portrait_full',
+    'effects' => array(
+      6 => array(
+        'label' => 'Skalér og beskær',
+        'help' => 'Skalering og beskæring bevarer billedets højde-bredde-forhold og beskærer derefter den største dimension. Det er nyttigt til at generere kvadratiske thumbnails uden at forvrænge billedet.',
+        'effect callback' => 'image_scale_and_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_resize_form',
+        'summary theme' => 'image_resize_summary',
+        'module' => 'image',
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 360,
+          'height' => 400,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: reol_author_portrait_teaser.
+  $styles['reol_author_portrait_teaser'] = array(
+    'name' => 'reol_author_portrait_teaser',
+    'label' => 'reol_author_portrait_teaser',
+    'effects' => array(
+      7 => array(
+        'label' => 'Skalér og beskær',
+        'help' => 'Skalering og beskæring bevarer billedets højde-bredde-forhold og beskærer derefter den største dimension. Det er nyttigt til at generere kvadratiske thumbnails uden at forvrænge billedet.',
+        'effect callback' => 'image_scale_and_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_resize_form',
+        'summary theme' => 'image_resize_summary',
+        'module' => 'image',
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 550,
+          'height' => 250,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
   return $styles;
 }
 
