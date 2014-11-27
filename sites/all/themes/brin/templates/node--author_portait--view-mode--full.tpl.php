@@ -9,5 +9,5 @@
   <a href="<?php echo $link; ?>" target=_blank">
     <?php echo render($content['field_portrait']); ?>
   </a>
-  <a href="<?php echo $link; ?>" class="button arrow-right"><?php echo t('Go to the author portrait on Forfatterweb.dk'); ?></a>
+  <a href="<?php echo $link; ?>" target="_blank" class="button arrow-right"><?php echo t('Go to the author portrait on Forfatterweb.dk'); ?></a>
 </div>
