@@ -162,16 +162,26 @@ function reol_base_preprocess_material_item(&$variables) {
  *
  * @return string
  *   Our own name for the type, or array of type names if no type is input,
- *   keyed by our name type.
+ *   keyed by our internal name of the type.
  *   If type is not found, FALSE is returned.
  */
 function reol_base_get_type_name($type = FALSE) {
-  $types = array(
-    'lydbog (net)' => 'audiobook',
-    'ebog' => 'ebook',
-  );
+  $types = _reol_base_get_types();
 
-  return !$type ? array_flip($types) : (isset($types[strtolower($type)]) ? $types[strtolower($type)] : FALSE);
+  // If no argument received, return all types.
+  if (!$type) {
+    return $types;
+  }
+
+  // Find type.
+  foreach ($types as $n => $t) {
+    if ($t['ext_name'] == strtolower($type)) {
+      return $n;
+    }
+  }
+
+  // If we end up here, type not found.
+  return FALSE;
 }
 
 /**
@@ -207,4 +217,41 @@ function reol_base_date_formats() {
 function reol_base_convert_to_isbn($isbn) {
   $isbn = str_replace(array(' ', '-'), '', $isbn);
   return preg_match('/^[0-9]{13}$/', $isbn) ? $isbn : FALSE;
+}
+
+/**
+ * Get definition of types we support.
+ *
+ * @return array
+ *   Array of types keyed by our internal name. Containing the following info:
+ *     External name (ext_name)
+ *     Internal name (int_name)
+ *     Title (title)
+ */
+function _reol_base_get_types() {
+  return array(
+    'audiobook' => array(
+      'ext_name' => 'lydbog (net)',
+      'int_name' => 'audiobook',
+      'title' => t('Audiobook'),
+    ),
+    'ebook' => array(
+      'ext_name' => 'ebog',
+      'int_name' => 'ebook',
+      'title' => t('E-book'),
+    ),
+  );
+}
+
+/**
+ * Get array of types you can choose from in field_reol_entity_type.
+ *
+ * @return array
+ *   Array of types to choose from.
+ */
+function reol_base_get_entity_types() {
+  return array_reduce(_reol_base_get_types(), function($carry, $elem) {
+    $carry[$elem['int_name']] = $elem['title'];
+    return $carry;
+  }, array());
 }
