@@ -7,7 +7,6 @@
 include_once 'reol_frontend.features.inc';
 
 /**
-<<<<<<< HEAD
  * Implements hook_entity_info_alter().
  */
 function reol_frontend_entity_info_alter(&$entity_info) {
@@ -49,5 +48,9 @@ function reol_frontend_preprocess_node(&$variables) {
 
     // Change text for read more link.
     $variables['content']['links']['node']['#links']['node-readmore']['title'] = t('Read entire article');
+  }
+
+  elseif ($variables['node']->type == "author_portait") {
+    $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
   }
 }
