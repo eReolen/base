@@ -4,12 +4,12 @@
 
 body {
   color: $text-color;
-  background-color: #f3f3f3;
+  background-color: $background-light;
 }
 
 .bottom {
   color: $inverse-text-color;
-  background-color: #353535;
+  background-color: $background-dark;
 }
 
 a,

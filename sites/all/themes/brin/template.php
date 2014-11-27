@@ -37,3 +37,10 @@ function brin_preprocess_node(&$variables, $hook) {
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
   }
 }
+
+/**
+ * Implements theme_menu_tree().
+ */
+function brin_menu_tree__menu_block__main_menu($vars) {
+  return '<ul class="main-menu">' . $vars['tree'] . '</ul>';
+}
