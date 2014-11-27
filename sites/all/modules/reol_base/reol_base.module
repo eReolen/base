@@ -206,5 +206,5 @@ function reol_base_date_formats() {
  */
 function reol_base_convert_to_isbn($isbn) {
   $isbn = str_replace(array(' ', '-'), '', $isbn);
-  return strlen($isbn) == 13 ? $isbn : FALSE;
+  return preg_match('/^[0-9]{13}$/', $isbn) ? $isbn : FALSE;
 }
