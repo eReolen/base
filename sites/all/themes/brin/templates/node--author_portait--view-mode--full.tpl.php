@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Template for view mode default of Author portrait node type.
+ * Template for view mode full of Author portrait node type.
  */
 ?>
 <div class="author-portrait">

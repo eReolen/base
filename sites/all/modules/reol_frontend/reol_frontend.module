@@ -50,7 +50,7 @@ function reol_frontend_preprocess_node(&$variables) {
     $variables['content']['links']['node']['#links']['node-readmore']['title'] = t('Read entire article');
   }
 
-  elseif ($variables['node']->type == "author_portait" && $variables['view_mode'] == 'full') {
+  elseif ($variables['node']->type == "author_portait") {
     $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
   }
 }
