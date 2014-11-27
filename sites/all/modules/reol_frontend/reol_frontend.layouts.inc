@@ -78,7 +78,7 @@ function reol_frontend_default_panels_layout() {
       'left' => array(
         'type' => 'region',
         'title' => 'Left',
-        'width' => '74.98732953808799',
+        'width' => '75',
         'width_type' => '%',
         'parent' => '1',
         'class' => '',
@@ -86,7 +86,7 @@ function reol_frontend_default_panels_layout() {
       'right' => array(
         'type' => 'region',
         'title' => 'Right',
-        'width' => '25.01267046191201',
+        'width' => '25',
         'width_type' => '%',
         'parent' => '1',
         'class' => '',
