@@ -24,14 +24,24 @@
     }
   };
 
+  /**
+   * Main menu dropdown handler.
+   */
   Drupal.behaviors.brinMainmenuDropdown = {
     attach : function() {
       var lis = $('.main-menu .main-menu > li:not(.leaf)');
+      // Global handler that removes dropdowns on mouseclick.
+      $(document).click(function () {
+        lis.removeClass('active');
+      });
+
+      // Handler for menu items triggering dropdown.
       $('.main-menu .main-menu > li:not(.leaf) > a').click(function(e) {
-        lis.removeClass('active active-trail');
+        lis.removeClass('active');
         var li = $(this).parents('li').first();
-        li.toggleClass('active active-trail');
+        li.toggleClass('active');
           e.preventDefault();
+          e.stopPropagation();
       });
     }
   };

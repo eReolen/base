@@ -9,7 +9,8 @@
     width: auto;
 
     // Override ddbasic.
-    .main-menu li .menu-item.active {
+    .main-menu li .menu-item.active,
+    .main-menu li .menu-item:hover {
       font-family: 'Oxygen', sans-serif;
     }
 
@@ -99,8 +100,8 @@
           display: none;
         }
 
-        // Third level, mobile, active trail.
-        .main-menu .active-trail .main-menu {
+        // Third level, mobile, active.
+        .main-menu .active .main-menu {
           display: block;
         }
 
@@ -261,7 +262,7 @@
 
         }
 
-        .main-menu .active-trail .main-menu {
+        .main-menu .active .main-menu {
           display: block;
         }
       }
