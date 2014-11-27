@@ -44,7 +44,6 @@ function reol_frontend_preprocess_node(&$variables) {
     ));
 
     // Change text for read more link.
-    var_dump($variables['content']['links']['node']['#links']['node-readmore']);
     $variables['readmore_text'] = t('Read entire article');
     $variables['readmore'] = url($variables['content']['links']['node']['#links']['node-readmore']['href']);
   }
