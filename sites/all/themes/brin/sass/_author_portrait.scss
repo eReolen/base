@@ -22,7 +22,8 @@
   -moz-transition: all .5s ease;
   -ms-transition: all .5s ease;
   -o-transition: all .5s ease;
-  transition: all .5s ease;ion: relative;
+  transition: all .5s ease;
+  position: relative;
   text-align: center;
 
   &:hover {
