@@ -136,6 +136,14 @@ function reol_frontend_node_info() {
       'title_label' => t('Title'),
       'help' => '',
     ),
+    'author_portait' => array(
+      'name' => t('Author portait'),
+      'base' => 'node_content',
+      'description' => t('Contains portraits of authors from Forfatterweb'),
+      'has_title' => '1',
+      'title_label' => t('Author name'),
+      'help' => '',
+    ),
   );
   return $items;
 }
