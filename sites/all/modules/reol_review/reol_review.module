@@ -1,0 +1,23 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen review module feature.
+ */
+
+/**
+ * Implements hook_cron().
+ *
+ * Make sure we have reviews fetched and cached.
+ */
+function reol_review_cron() {
+  // Fetch reviews, making sure they are cached.
+  module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
+  reol_review_get_reviews();
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_review_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}

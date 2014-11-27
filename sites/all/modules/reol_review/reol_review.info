@@ -1,0 +1,6 @@
+name = eReolen review module
+description = Module containing functionality for gettings reviews (from litteratursiden) and displaying them.
+core = 7.x
+package = ereolen.dk
+dependencies[] = publizon
+features[features_api][] = api:2

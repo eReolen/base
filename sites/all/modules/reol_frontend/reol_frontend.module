@@ -5,3 +5,15 @@
  */
 
 include_once 'reol_frontend.features.inc';
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function reol_frontend_entity_info_alter(&$entity_info) {
+  $entity_info['ting_object']['view modes'] += array(
+    'review' => array(
+      'label' => t('Review'),
+      'custom settings' => TRUE,
+    ),
+  );
+}

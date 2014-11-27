@@ -154,19 +154,24 @@ function reol_base_preprocess_material_item(&$variables) {
 /**
  * Get the name of a type from the type returned from Ting.
  *
+ * If type is not input, it returns an array of names of
+ * types we support.
+ *
  * @param string $type
  *   The string type from Ting.
  *
  * @return string
- *   Our own name for the type.
+ *   Our own name for the type, or array of type names if no type is input,
+ *   keyed by our name type.
+ *   If type is not found, FALSE is returned.
  */
-function reol_base_get_type_name($type) {
+function reol_base_get_type_name($type = FALSE) {
   $types = array(
     'lydbog (net)' => 'audiobook',
     'ebog' => 'ebook',
   );
 
-  return $types[strtolower($type)];
+  return !$type ? array_flip($types) : (isset($types[strtolower($type)]) ? $types[strtolower($type)] : FALSE);
 }
 
 /**
@@ -188,4 +193,18 @@ function reol_base_date_formats() {
       'locales' => array(),
     ),
   );
+}
+
+/**
+ * Convert a string to an ISBN-13 number.
+ *
+ * @param string $isbn
+ *   The isbn-number to convert.
+ *
+ * @return string|bool
+ *   The ISBN-numer if input is an ISBN-13 number. False otherwise.
+ */
+function reol_base_convert_to_isbn($isbn) {
+  $isbn = str_replace(array(' ', '-'), '', $isbn);
+  return preg_match('/^[0-9]{13}$/', $isbn) ? $isbn : FALSE;
 }
