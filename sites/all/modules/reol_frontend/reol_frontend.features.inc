@@ -20,6 +20,13 @@ function reol_frontend_ctools_plugin_api($module = NULL, $api = NULL) {
 }
 
 /**
+ * Implements hook_views_api().
+ */
+function reol_frontend_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
+}
+
+/**
  * Implements hook_image_default_styles().
  */
 function reol_frontend_image_default_styles() {
@@ -47,22 +54,6 @@ function reol_frontend_image_default_styles() {
       ),
     ),
   );
-
-  return $styles;
-}
-
-/**
- * Implements hook_views_api().
- */
-function reol_frontend_views_api($module = NULL, $api = NULL) {
-  return array("api" => "3.0");
-}
-
-/**
- * Implements hook_image_default_styles().
- */
-function reol_frontend_image_default_styles() {
-  $styles = array();
 
   // Exported image style: reol_article_teaser.
   $styles['reol_article_teaser'] = array(
