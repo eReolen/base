@@ -2,7 +2,7 @@
  * Creates the top-bar toggle menu.
  */
 (function($) {
-  Drupal.behaviors.topbar = {
+  Drupal.behaviors.brinTopbar = {
     attach : function() {
       // Hide user login on load.
       $('.js-topbar-user').css("display", "none");
