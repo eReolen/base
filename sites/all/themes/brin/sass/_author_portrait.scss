@@ -1,0 +1,16 @@
+.author-portrait {
+  max-width: 360px;
+  margin: auto;
+  margin-top: 70px;
+
+  a.button {
+    padding: 10px;
+    margin: 20px 0;
+    display: inline-block;
+    width: 340px;
+
+    &:after {
+      content: " >>";
+    }
+  }
+}
