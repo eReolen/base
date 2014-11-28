@@ -316,6 +316,7 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
   $form['provider_options']['field_email']['#weight'] = 30;
 
   array_unshift($form['#validate'], 'publizon_form_ding_reservation_reserve_form_validate');
+  $form['#submit'][] = 'publizon_form_ding_reservation_reserve_form_submit';
   return $form;
 }
 
@@ -334,4 +335,51 @@ function publizon_form_ding_reservation_reserve_form_validate($form, &$form_stat
   $entity = (object) $form_state['values']['provider_options'];
   $entity->type = 'provider_publizon';
   field_attach_form_validate('profile2', $entity, $form, $form_state);
+}
+
+/**
+ * Submit reserve form.
+ *
+ * Save the (changed) values from form on the user.
+ *
+ * We cannot use options_submit here, as Ding checks the values
+ * submitted from form. If the value is empty, and the default value
+ * is empty, it sets and error on the form. An unchecked checkbox (FALSE)
+ * will return true in empty() call, and so will the default value NULL.
+ *
+ * @param array $form
+ *   The form to validate
+ * @param array $form_state
+ *   The state of the form at submit.
+ */
+function publizon_form_ding_reservation_reserve_form_submit($form, &$form_state) {
+  global $user;
+  $profile = profile2_load_by_user($user, 'provider_publizon');
+  $values = $form_state['values']['provider_options'];
+
+  $changed = FALSE;
+  $fields = array(
+    'field_phone' => 'phone_notification',
+    'field_email' => 'email_notification',
+  );
+
+  // Check if fields have changed, and change them on the profile.
+  foreach ($fields as $field => $checkbox) {
+    // To not confuse the user, we only save values that result in notification.
+    // If they have not chosen notif for the field, do not save the value.
+    if (!$values[$checkbox]) {
+      continue;
+    }
+
+    $lang = field_language('profile2', $profile, $field);
+    if ($profile->$field != $values[$field]) {
+      $profile->$field = $values[$field];
+      $changed = TRUE;
+    }
+  }
+
+  // Save if we have changes.
+  if ($changed) {
+    $profile->save();
+  }
 }
