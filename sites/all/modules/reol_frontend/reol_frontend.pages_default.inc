@@ -413,10 +413,12 @@ function reol_frontend_default_page_manager_pages() {
   $page->menu = array();
   $page->arguments = array(
     'type' => array(
-      'id' => '',
-      'identifier' => '',
-      'argument' => '',
-      'settings' => array(),
+      'id' => 1,
+      'identifier' => 'Type',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
     ),
   );
   $page->conf = array(
@@ -426,11 +428,133 @@ function reol_frontend_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
+  $handler->name = 'page_reol_frontpage_panel_context_2';
+  $handler->task = 'page';
+  $handler->subtask = 'reol_frontpage';
+  $handler->handler = 'panel_context';
+  $handler->weight = -30;
+  $handler->conf = array(
+    'title' => 'Type frontpage',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'access' => array(
+      'logic' => 'and',
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = 'flexible:reol_frontpage_layout';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'top' => NULL,
+      'left' => NULL,
+      'right' => NULL,
+      'bottom' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '29b1eda2-6ba2-4b0b-8107-b07b49415d10';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-ac463184-769d-4149-9d46-b4f2d8f3c4e7';
+    $pane->panel = 'bottom';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'author_portraits-panel_pane_2';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'arguments' => array(
+        'field_reol_entity_type_value' => '%type:raw',
+      ),
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'ac463184-769d-4149-9d46-b4f2d8f3c4e7';
+    $display->content['new-ac463184-769d-4149-9d46-b4f2d8f3c4e7'] = $pane;
+    $display->panels['bottom'][0] = 'new-ac463184-769d-4149-9d46-b4f2d8f3c4e7';
+    $pane = new stdClass();
+    $pane->pid = 'new-bddea60b-3c78-4338-8ac3-4caf87e5a482';
+    $pane->panel = 'left';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'articles-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'arguments' => array(
+        'field_reol_entity_type_value' => '%type:raw',
+      ),
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'bddea60b-3c78-4338-8ac3-4caf87e5a482';
+    $display->content['new-bddea60b-3c78-4338-8ac3-4caf87e5a482'] = $pane;
+    $display->panels['left'][0] = 'new-bddea60b-3c78-4338-8ac3-4caf87e5a482';
+    $pane = new stdClass();
+    $pane->pid = 'new-a6d6657b-4a1f-4838-9716-ce70c61afb1d';
+    $pane->panel = 'right';
+    $pane->type = 'single_review';
+    $pane->subtype = 'single_review';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+      'type' => '%type:raw',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'a6d6657b-4a1f-4838-9716-ce70c61afb1d';
+    $display->content['new-a6d6657b-4a1f-4838-9716-ce70c61afb1d'] = $pane;
+    $display->panels['right'][0] = 'new-a6d6657b-4a1f-4838-9716-ce70c61afb1d';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $page->default_handlers[$handler->name] = $handler;
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
   $handler->name = 'page_reol_frontpage_panel_context';
   $handler->task = 'page';
   $handler->subtask = 'reol_frontpage';
   $handler->handler = 'panel_context';
-  $handler->weight = 0;
+  $handler->weight = -29;
   $handler->conf = array(
     'title' => 'Panel',
     'no_blocks' => 0,
