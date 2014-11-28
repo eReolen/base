@@ -13,6 +13,7 @@ $plugin = array(
   'render callback' => 'single_review_content_type_render',
   'hook theme' => 'single_review_content_type_theme',
   'edit form' => 'single_review_content_type_edit_form',
+  'all contexts' => TRUE,
 );
 
 /**
@@ -23,7 +24,8 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
   $block->title = '';
 
   module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
-  $review = reol_review_get_random_review();
+  $type = ctools_context_keyword_substitute($conf['type'], array(), $context);
+  $review = reol_review_get_random_review($type);
 
   $ting_entity = ding_entity_load($review->ding_entity_id);
   $ting_object_view = ting_object_view($ting_entity, 'review');
@@ -42,7 +44,23 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
  * Admin settings form.
  */
 function single_review_content_type_edit_form($form, &$form_state) {
+  $conf = $form_state['conf'];
+
+  $form['type'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Type'),
+    '#description' => t('Select which type to show review for.'),
+    '#default_value' => isset($conf['type']) ? $conf['type'] : '_all',
+  );
+
   return $form;
+}
+
+/**
+ * Submit handler for content type settings form.
+ */
+function single_review_content_type_edit_form_submit($form, &$form_state) {
+  $form_state['conf']['type'] = $form_state['values']['type'];
 }
 
 /**
