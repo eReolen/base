@@ -24,7 +24,10 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
   $block->title = '';
 
   module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
-  $type = ctools_context_keyword_substitute($conf['type'], array(), $context);
+  $type = FALSE;
+  if (isset($conf['type'])) {
+    $type = ctools_context_keyword_substitute($conf['type'], array(), $context);
+  }
   $review = reol_review_get_random_review($type);
 
   $ting_entity = ding_entity_load($review->ding_entity_id);
