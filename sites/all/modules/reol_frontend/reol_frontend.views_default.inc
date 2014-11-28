@@ -142,10 +142,6 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
-  $handler->display->display_options['filter_groups']['groups'] = array(
-    1 => 'AND',
-    2 => 'OR',
-  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filterkriterie: Indhold: Udgivet */
   $handler->display->display_options['filters']['status']['id'] = 'status';
@@ -167,7 +163,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['filters']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['filters']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
   $handler->display->display_options['filters']['field_reol_entity_type_value']['ui_name'] = 'type';
-  $handler->display->display_options['filters']['field_reol_entity_type_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['group'] = 1;
   $handler->display->display_options['filters']['field_reol_entity_type_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['operator_id'] = 'field_reol_entity_type_value_op';
   $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['label'] = 'Regarding:';
@@ -192,12 +188,6 @@ function reol_frontend_views_default_views() {
     2 => array(),
     3 => array(),
   );
-  /* Filterkriterie: Indhold: Entity type (field_reol_entity_type) */
-  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['id'] = 'field_reol_entity_type_value_2';
-  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['table'] = 'field_data_field_reol_entity_type';
-  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['field'] = 'field_reol_entity_type_value';
-  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['operator'] = 'empty';
-  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['group'] = 2;
   $handler->display->display_options['path'] = 'articles';
   $translatables['articles'] = array(
     t('Master'),

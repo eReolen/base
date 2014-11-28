@@ -508,6 +508,11 @@ function reol_frontend_default_page_manager_pages() {
       'arguments' => array(
         'field_reol_entity_type_value' => '%type:raw',
       ),
+      'exposed' => array(
+        'filter-field_reol_entity_type_value' => array(
+          'field_reol_entity_type_value' => '',
+        ),
+      ),
     );
     $pane->cache = array();
     $pane->style = array(
