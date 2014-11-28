@@ -15,6 +15,7 @@
 class PublizonReservation extends Publizon {
   protected $properties = array(
     'bookId' => NULL,
+    'isbn' => NULL,
     'createdUtc' => NULL,
     'status' => NULL,
     'title' => NULL,
@@ -47,6 +48,7 @@ class PublizonReservation extends Publizon {
    */
   private function parse(SimpleXMLElement $item) {
     $this->bookId = (string) $item->bookId;
+    $this->isbn = (string) $item->isbn;
     $this->createdUtc = strtotime((string) $item->createdutc);
     $this->status = (int) $item->status;
     $this->title = (string) $item->title;
