@@ -62,7 +62,8 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
         $class .= 'high';
       }
 
-      $reservation_element['#information']['pickup_date']['data'] = format_date(strtotime(check_plain($reservation->pickup_date)), 'reol_base_material_lists_date');
+      $reservation_element['#information']['pickup_date']['label'] = t('Loan before');
+      $reservation_element['#information']['pickup_date']['data'] = format_date(strtotime(check_plain($reservation->pickup_date)), 'reol_base_material_lists_date') . '<br />(' . format_interval($time - time(), 3) . ')';
       $reservation_element['#information']['pickup_date']['class'] .= $class;
 
       unset($reservation_element['#information']['pickup_id']);
