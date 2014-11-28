@@ -30,12 +30,13 @@ function publizon_reservation_list($account) {
 
   module_load_include('client.inc', 'ting');
   foreach ($reservations as $reservation) {
+    $ding_id = reol_base_ding_entity_get_id($reservation->isbn);
     $id = $reservation->bookId;
     $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
-    $result[$type][$id] = new DingProviderReservation($id, array(
+    $data = array(
       'order_id' => $id,
       // TODO Hardcoding this until API is ready.
-      'ding_entity_id' => '870970-basis:50604934',
+      'ding_entity_id' => $ding_id,
       'ready_for_pickup' => $reservation->status == 2,
       'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
       // To avoid warnings, we have to set this, even though we remove it later.
@@ -43,12 +44,14 @@ function publizon_reservation_list($account) {
       'queue_number' => 10,
       'renewable' => FALSE,
       'reservation_type' => $type,
-    ));
+    );
 
     // If reservation is ready, add pickup date.
     if ($type == DING_RESERVATION_READY) {
-      $result[$type][$id]['pickup_date'] = date('Y-m-d H:i:s', $reservation->expireUtc);
+      $data['pickup_date'] = date('Y-m-d H:i:s', $reservation->expireUtc);
     }
+
+    $result[$type][$id] = new DingProviderReservation($id, $data);
   }
 
   return $result;
