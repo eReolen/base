@@ -417,7 +417,7 @@ class PublizonClient {
     ), array('pub' => 'pubhub.dk'));
 
     $data = $response->xpath('//data');
-    if (isset($data[0]) && $data[0]->cardnumber == $card_number) {
+    if (isset($data[0]) && $data[0][0] == $card_number) {
       return TRUE;
     }
 
