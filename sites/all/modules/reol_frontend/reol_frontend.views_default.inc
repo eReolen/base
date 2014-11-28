@@ -69,6 +69,82 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '4';
   $handler->display->display_options['pager']['options']['offset'] = '0';
+
+  /* Display: Side */
+  $handler = $view->new_display('page', 'Side', 'articles_page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Articles';
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Antal elementer';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filterkriterie: Indhold: Udgivet */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filterkriterie: Indhold: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'article' => 'article',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterie: type */
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['ui_name'] = 'type';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['group'] = 2;
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['operator_id'] = 'field_reol_entity_type_value_op';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['label'] = 'Regarding:';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['operator'] = 'field_reol_entity_type_value_op';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['identifier'] = 'type';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+    6 => 0,
+    7 => 0,
+    8 => 0,
+    9 => 0,
+  );
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['group_info']['label'] = 'Entity type (field_reol_entity_type)';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['group_info']['identifier'] = 'field_reol_entity_type_value';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['group_info']['remember'] = FALSE;
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['group_info']['group_items'] = array(
+    1 => array(),
+    2 => array(),
+    3 => array(),
+  );
+  /* Filterkriterie: Indhold: Entity type (field_reol_entity_type) */
+  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['id'] = 'field_reol_entity_type_value_2';
+  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['table'] = 'field_data_field_reol_entity_type';
+  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['field'] = 'field_reol_entity_type_value';
+  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['operator'] = 'empty';
+  $handler->display->display_options['filters']['field_reol_entity_type_value_2']['group'] = 2;
+  $handler->display->display_options['path'] = 'articles';
   $translatables['articles'] = array(
     t('Master'),
     t('mere'),
@@ -79,6 +155,17 @@ function reol_frontend_views_default_views() {
     t('Faldende'),
     t('Frontpage articles'),
     t('View panes'),
+    t('Side'),
+    t('Articles'),
+    t('Antal elementer'),
+    t('- Alle -'),
+    t('Forskydning'),
+    t('« første'),
+    t('‹ forrige'),
+    t('næste ›'),
+    t('sidste »'),
+    t('Regarding:'),
+    t('Entity type (field_reol_entity_type)'),
   );
   $export['articles'] = $view;
 
