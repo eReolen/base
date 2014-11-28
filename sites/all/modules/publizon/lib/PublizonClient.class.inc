@@ -413,7 +413,7 @@ class PublizonClient {
       'pub:cardnumber' => $card_number,
       'pub:pincode' => $pincode,
       'pub:email' => $email,
-      'pub:phoneNumber' => $phone,
+      'pub:phonenumber' => $phone,
     ), array('pub' => 'pubhub.dk'));
 
     $data = $response->xpath('//data');
