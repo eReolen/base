@@ -65,10 +65,18 @@ function reol_frontend_views_default_views() {
 
   /* Display: Frontpage articles */
   $handler = $view->new_display('panel_pane', 'Frontpage articles', 'panel_pane_1');
+  $handler->display->display_options['defaults']['use_more'] = FALSE;
+  $handler->display->display_options['use_more'] = TRUE;
+  $handler->display->display_options['defaults']['use_more_always'] = FALSE;
+  $handler->display->display_options['defaults']['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_always'] = TRUE;
+  $handler->display->display_options['defaults']['use_more_text'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'Show all articles';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '4';
   $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['footer'] = FALSE;
 
   /* Display: Side */
   $handler = $view->new_display('page', 'Side', 'articles_page');
@@ -154,6 +162,7 @@ function reol_frontend_views_default_views() {
     t('Stigende'),
     t('Faldende'),
     t('Frontpage articles'),
+    t('Show all articles'),
     t('View panes'),
     t('Side'),
     t('Articles'),
