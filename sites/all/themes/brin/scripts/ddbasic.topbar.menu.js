@@ -18,7 +18,15 @@
   Drupal.behaviors.brinMobileMenu = {
     attach : function() {
       $('.js-topbar-link.topbar-link-menu').on('click touchstart', function(e) {
-        $('.site-header .js-topbar-menu').toggle();
+        var menu = $('.site-header .js-topbar-menu');
+        menu.toggle();
+        // If we set it invisible, completely remove the display
+        // property from the elements style, to fall back to what the
+        // style sheets define. Else the menu would stay invisible after
+        // re-sizing the window.
+        if (menu.css('display') === 'none') {
+          menu.css('display', '');
+        }
         e.preventDefault();
       });
     }

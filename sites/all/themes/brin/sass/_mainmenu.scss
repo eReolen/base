@@ -3,6 +3,7 @@
   // page.
   position: relative;
   z-index: 1;
+
   .main-menu-wrapper {
     display: block;
     padding: 0;
@@ -124,7 +125,7 @@
 
           // Make the li of the active trail item higher, so it pushes
           // down the following element, and shows the sub-menu.
-          &.active-trail {
+          &.active-trail:not(.leaf) {
             height: 150px;
           }
 

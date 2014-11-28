@@ -16,6 +16,11 @@
     padding-top: 29px;
     width: 100%;
     text-align: center;
+
+    // Pull the logo above the overlapping menu.
+    position: relative;
+    z-index: 1;
+
     @include large-x-large() {
       // Use negative margin to pull the logo out over the left edge.
       margin-left: -93px;
@@ -29,6 +34,15 @@
       margin: 0;
     }
   }
+
+
+  // And the tabs-menu above the logo.
+  .pane-menu-menu-tabs-menu {
+    position: relative;
+    z-index: 2;
+  }
+
+
 
   .topbar-menu {
     @include large-x-large() {
