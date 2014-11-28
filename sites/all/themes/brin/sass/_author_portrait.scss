@@ -18,7 +18,7 @@
 .author-portrait-teaser {
   width: 550px;
   height: 250px;
-  positt-transition: all .5s ease;
+  -webkit-transition: all .5s ease;
   -moz-transition: all .5s ease;
   -ms-transition: all .5s ease;
   -o-transition: all .5s ease;
@@ -34,6 +34,8 @@
 
   .portrait {
     position: relative;
+    height: 250px;
+    overflow: hidden;
 
     &:after {
       display: block;
@@ -80,14 +82,49 @@
 
 .view-author-portraits {
   .view-content > div {
-    display: inline-block;
+    float: left;
 
     &.first {
-      margin-right: 18px;
+      padding-right: 18px;
     }
 
     &.last {
-      margin-left: 18px;
+      padding-left: 18px;
+    }
+
+    @include small-large() {
+      @include box-sizing(border-box);
+      width: 50%;
+
+      .author-portrait-teaser {
+        @include box-sizing(border-box);
+        width: 100%;
+        max-width: 550px;
+        margin: auto;
+
+        img {
+          max-width: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -o-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+    @include small() {
+      width: 100%;
+      float: none;
+      margin-bottom: 20px;
+
+      &.first,
+      &.last {
+        padding: 0;
+      }
     }
   }
 }

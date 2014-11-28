@@ -43,14 +43,63 @@ function reol_frontend_preprocess_node(&$variables) {
       ),
     ));
 
-    // Remove comment link.
-    unset($variables['content']['links']['comment']);
-
     // Change text for read more link.
-    $variables['content']['links']['node']['#links']['node-readmore']['title'] = t('Read entire article');
+    $variables['readmore_text'] = t('Read entire article');
+    $variables['readmore'] = url($variables['content']['links']['node']['#links']['node-readmore']['href']);
   }
 
   elseif ($variables['node']->type == "author_portait") {
     $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_frontend_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_frontend_form_ding_page_node_form_alter(&$form, &$form_state) {
+  $value = variable_get('reol_frontend_quick_guide_nid', 0) == $form['#node']->nid;
+  $form['quick_guide'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use as quick guide'),
+    '#description' => t('Use this page as the quick guide page.'),
+    '#default_value' => $value,
+  );
+
+  $form['actions']['submit']['#submit'][] = 'reol_frontend_form_ding_page_node_form_submit';
+}
+
+/**
+ * Custom submit handler for saving the quick guide nid.
+ */
+function reol_frontend_form_ding_page_node_form_submit($form, &$form_state) {
+  if ($form_state['values']['quick_guide']) {
+    variable_set('reol_frontend_quick_guide_nid', $form_state['nid']);
+  }
+  elseif (variable_get('reol_frontend_quick_guide_nid', 0) == $form_state['nid']) {
+    variable_del('reol_frontend_quick_guide_nid');
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function reol_frontend_views_query_alter(&$view, &$query) {
+  // Make sure we do left joins, as we would miss results that
+  // have nothing in field.
+  if ($view->name == 'articles' && $view->current_display == "articles_page") {
+    $query->table_queue['field_data_field_reol_entity_type']['join']->type = "LEFT";
+
+    // If we are selecting all, remove second group entirely,
+    // as we would not get all results if not.
+    if ($view->exposed_raw_input['type'] == 'All') {
+      unset($view->query->where[2]);
+    }
   }
 }
