@@ -181,7 +181,7 @@
 
         // Second level.
         .main-menu {
-          display: block;
+          display: none;
           position: absolute;
           left: 0;
           right: 0;
@@ -262,7 +262,13 @@
 
         }
 
-        .main-menu .active .main-menu {
+        // Show active submenus.
+        .active > .main-menu {
+          display: block;
+        }
+
+        // And show the second level submenu, when it's in the active trail.
+        > .active-trail > .main-menu {
           display: block;
         }
       }
