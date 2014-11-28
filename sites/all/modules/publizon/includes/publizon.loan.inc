@@ -27,9 +27,7 @@ function publizon_loan_list($account) {
 
   module_load_include('client.inc', 'ting');
   foreach ($loans as $loan) {
-    // Get the id from a search in Ting.
-    $res = ting_do_search("term.identifier=" . $loan->isbn);
-    list($id) = array_keys($res->collections);
+    $id = reol_base_ding_entity_get_id($loan->isbn);
 
     $result[$id] = new DingProviderLoan($id, array(
       'ding_entity_id' => $id,

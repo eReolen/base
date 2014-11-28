@@ -267,3 +267,19 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
     $element['#options']['_none'] = t('- All -');
   }
 }
+
+/**
+ * Get ding entity id from an ISBN number.
+ *
+ * @param string $isbn
+ *   The ISBN number to search for.
+ *
+ * @return string
+ *   The Ding entity id.
+ */
+function reol_base_ding_entity_get_id($isbn) {
+  // Get the id from a search in Ting.
+  $res = ting_do_search("term.identifier=" . $isbn);
+  list($id) = array_keys($res->collections);
+  return $id;
+}
