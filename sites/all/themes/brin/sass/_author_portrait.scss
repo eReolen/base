@@ -92,13 +92,15 @@
       padding-left: 18px;
     }
 
-    @include medium-large() {
+    @include small-large() {
       @include box-sizing(border-box);
       width: 50%;
 
       .author-portrait-teaser {
         @include box-sizing(border-box);
         width: 100%;
+        max-width: 550px;
+        margin: auto;
 
         img {
           max-width: none;
@@ -111,6 +113,17 @@
           -o-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
         }
+      }
+    }
+
+    @include small() {
+      width: 100%;
+      float: none;
+      margin-bottom: 20px;
+
+      &.first,
+      &.last {
+        padding: 0;
       }
     }
   }

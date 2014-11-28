@@ -6,7 +6,7 @@
   -moz-transition: all .5s ease;
   -ms-transition: all .5s ease;
   -o-transition: all .5s ease;
-  @include medium-large() {
+  @include small-large() {
     width: 100%;
     white-space: nowrap;
   }
@@ -43,8 +43,11 @@
     width: 270px;
     position: relative;
     @include box-sizing(border-box);
-    @include medium-large() {
+    @include small-large() {
       width: 32%;
+    }
+    @include x-small() {
+      display: none;
     }
 
     &:after {
@@ -69,9 +72,13 @@
     height: 300px;
     @include box-sizing(border-box);
     text-align: center;
-    @include medium-large() {
+    @include small-large() {
       width: 68%;
       margin-left: 0;
+    }
+    @include x-small() {
+      width: 100%;
+      padding-left: 0;
     }
 
     .article-background {
@@ -82,6 +89,10 @@
       bottom: 0;
       opacity: 0.2;
       overflow: hidden;
+
+      @include x-small() {
+        left: 0;
+      }
     }
 
     .article-body {

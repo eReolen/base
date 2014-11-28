@@ -68,3 +68,14 @@ h1 ,
     margin-bottom: 30px;
   }
 }
+
+@include small() {
+  .front {
+    .panels-flexible-region-default-layout-left {
+      width: 100%;
+      .panels-flexible-region-inside {
+        padding-right: 0;
+      }
+    }
+  }
+}
