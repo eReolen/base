@@ -25,7 +25,7 @@ function brin_form_alter(&$form, &$form_state, $form_id) {
  */
 function brin_js_alter(&$javascript) {
   // Remove minified version of script we have overridden.
-  unset($javascript['sites/all/themes/brin/scripts/ddbasic.topbar.menu.min.js']);
+  unset($javascript['profiles/ding2/themes/ddbasic/scripts/ddbasic.topbar.menu.min.js']);
 }
 
 /**
@@ -36,4 +36,11 @@ function brin_preprocess_node(&$variables, $hook) {
   if (isset($variables['view_mode'])) {
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
   }
+}
+
+/**
+ * Implements theme_menu_tree().
+ */
+function brin_menu_tree__menu_block__main_menu($vars) {
+  return '<ul class="main-menu">' . $vars['tree'] . '</ul>';
 }
