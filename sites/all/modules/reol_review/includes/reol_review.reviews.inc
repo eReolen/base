@@ -134,14 +134,24 @@ function reol_review_fetch_reviews($items, $start) {
 /**
  * Get a random review.
  *
+ * @param string $type
+ *   The type to get a random review for.
+ *   If not set, return one random result in all types
+ *
  * @return StdClass
  *   The review randomly chosen.
  */
-function reol_review_get_random_review() {
+function reol_review_get_random_review($type = FALSE) {
   $reviews = reol_review_get_reviews();
   // Reviews are indexed by type. Create an array of all reviews, regardless
   // of type.
-  $all_reviews = call_user_func_array('array_merge', array_values($reviews));
+  $all_reviews = array();
+  if ($type) {
+    $all_reviews = $reviews[$type];
+  }
+  else {
+    $all_reviews = call_user_func_array('array_merge', array_values($reviews));
+  }
 
   return $all_reviews[array_rand($all_reviews)];
 }

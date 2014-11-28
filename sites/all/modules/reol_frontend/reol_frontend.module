@@ -89,17 +89,60 @@ function reol_frontend_form_ding_page_node_form_submit($form, &$form_state) {
 
 /**
  * Implements hook_views_query_alter().
+ *
+ * When the field reol_entity_type is present in the where
+ * statement of a views query we have to alter it. By default
+ * the views query will only find exact matches, but this field
+ * works differently. When nothing is selected, it means that
+ * everything is selected. We alter query to find all elements
+ * that match the value, or where the field is empty.
  */
 function reol_frontend_views_query_alter(&$view, &$query) {
-  // Make sure we do left joins, as we would miss results that
-  // have nothing in field.
-  if ($view->name == 'articles' && $view->current_display == "articles_page") {
-    $query->table_queue['field_data_field_reol_entity_type']['join']->type = "LEFT";
-
-    // If we are selecting all, remove second group entirely,
-    // as we would not get all results if not.
-    if ($view->exposed_raw_input['type'] == 'All') {
-      unset($view->query->where[2]);
+  // Find out if the field 'reol_entity_type is present in query.
+  $found = FALSE;
+  foreach ($query->where as $wk => $where) {
+    foreach ($where['conditions'] as $ck => $condition) {
+      if ($condition['field'] == 'field_data_field_reol_entity_type.field_reol_entity_type_value') {
+        $found = $condition;
+        // If it is present, remove it. We add it ourself in a group below.
+        unset($query->where[$wk]['conditions'][$ck]);
+      }
     }
+  }
+
+  // If we have found it. We add a group finding elements that either
+  // match the value, or that has no value in the field.
+  if ($found) {
+    $query->where[] = array(
+      'args' => array(),
+      'type' => 'OR',
+      'conditions' => array(
+        $found,
+        array(
+          'field' => 'field_data_field_reol_entity_type.field_reol_entity_type_value',
+          'value' => '',
+          'operator' => 'IS NULL',
+        ),
+      ),
+    );
+    // By default, Views does inner joins. This means that results
+    // where the field is empty will not appear. Change to left instead.
+    $query->table_queue['field_data_field_reol_entity_type']['join']->type = "LEFT";
+  }
+}
+
+/**
+ * Implements hook_flush_caches().
+ */
+function reol_frontend_flush_caches() {
+  $types = reol_base_get_type_name();
+
+  // Create aliases for the type frontpages.
+  foreach ($types as $type) {
+    $path = array(
+      'source' => 'reol_frontpage/' . $type['int_name'],
+      'alias' => $type['int_name'],
+    );
+    path_save($path);
   }
 }
