@@ -145,4 +145,12 @@
   .article-teaser {
     margin: auto;
   }
+
+  .pane-page-content {
+    @extend .default-layout;
+    .pane-content {
+      @extend .default-layout-inside;
+      padding-bottom: 20px;
+    }
+  }
 }
