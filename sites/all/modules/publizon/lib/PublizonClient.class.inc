@@ -439,7 +439,7 @@ class PublizonClient {
   public function listReservations($retailer_id, $card_number) {
     // Make request to the web-service for the loans.
     $response = $this->call('reservation', 'List', $retailer_id, array(
-      'pub:cardNumber' => $card_number,
+      'pub:cardnumber' => $card_number,
     ), array('pub' => 'pubhub.dk'));
 
     // Check if any data was returned.
