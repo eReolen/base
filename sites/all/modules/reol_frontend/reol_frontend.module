@@ -64,11 +64,11 @@ function reol_frontend_ctools_plugin_directory($owner, $plugin_type) {
  * Implements hook_form_FORM_ID_alter().
  */
 function reol_frontend_form_ding_page_node_form_alter(&$form, &$form_state) {
-  $value = variable_get('reol_frontend_quick_guide_nid', 0) == $form['#node']->nid;
-  $form['quick_guide'] = array(
+  $value = variable_get('reol_frontend_quick_guide_nid', 0) == isset($form['#node']->nid) ? $form['#node']->nid : -1;
+  $form['options']['quick_guide'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use as quick guide'),
-    '#description' => t('Use this page as the quick guide page.'),
+    '#description' => t('Use this page as the quick guide page. If another one has been set earlier, this one takes over.'),
     '#default_value' => $value,
   );
 
