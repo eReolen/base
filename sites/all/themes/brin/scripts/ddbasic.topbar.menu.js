@@ -36,9 +36,9 @@
       });
 
       // Handler for menu items triggering dropdown.
-      $('.main-menu .main-menu > li:not(.leaf) > a').click(function(e) {
+      lis.find('> a').click(function(e) {
         lis.removeClass('active');
-        var li = $(this).parents('li').first();
+        var li = $(this).closest('li').first();
         li.toggleClass('active');
           e.preventDefault();
           e.stopPropagation();
