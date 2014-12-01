@@ -142,7 +142,9 @@ function reol_base_theme_registry_alter(&$theme_registry) {
  */
 function reol_base_preprocess_material_item(&$variables) {
   $element = $variables['element'];
-  $ting_entity = ding_entity_load($element['#id']);
+  // TODO Can we rely on this?
+  $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
+  $ting_entity = ding_entity_load($ding_entity_id);
 
   $variables['type'] = reol_base_get_type_name($ting_entity->type);
 
@@ -264,4 +266,20 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
     // By default, selecting no type means all types. Change label.
     $element['#options']['_none'] = t('- All -');
   }
+}
+
+/**
+ * Get ding entity id from an ISBN number.
+ *
+ * @param string $isbn
+ *   The ISBN number to search for.
+ *
+ * @return string
+ *   The Ding entity id.
+ */
+function reol_base_ding_entity_get_id($isbn) {
+  // Get the id from a search in Ting.
+  $res = ting_do_search("term.identifier=" . $isbn);
+  list($id) = array_keys($res->collections);
+  return $id;
 }

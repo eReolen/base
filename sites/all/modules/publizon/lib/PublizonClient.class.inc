@@ -426,6 +426,34 @@ class PublizonClient {
   }
 
   /**
+   * Get the reservations of a user.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer.
+   * @param string $card_number
+   *   The card number to get list for.
+   *
+   * @return array
+   *   Array of reservation objects.
+   */
+  public function listReservations($retailer_id, $card_number) {
+    // Make request to the web-service for the loans.
+    $response = $this->call('reservation', 'List', $retailer_id, array(
+      'pub:cardnumber' => $card_number,
+    ), array('pub' => 'pubhub.dk'));
+
+    // Check if any data was returned.
+    $data = $response->xpath('//data/reservation');
+    $reservations = array();
+    if (isset($data[0])) {
+      while (list(, $reservation) = each($data)) {
+        $reservations[] = new PublizonReservation($reservation);
+      }
+    }
+    return $reservations;
+  }
+
+  /**
    * Call method on endpoint.
    *
    * Wrapper function for preforming of call to Publizon's web-service via the
@@ -470,10 +498,14 @@ class PublizonClient {
 
     // Make the request.
     try {
-      $response = $client->call($ns[0] . ':' . $action, $parameters);
+      $response = $client->call($ns[0] . ':' . $action, $parameters, in_array($endpoint, $this->getSoap11Endpoints()));
+      // SimpleXML warns that xmlns is relative url, which it is not,
+      // and SOAP 1.1 will not work with absolute. Disable the warnings.
+      libxml_use_internal_errors(TRUE);
       $response = simplexml_load_string($response);
     }
     catch (Exception $e) {
+      drupal_set_message('<pre>' . print_r($e, TRUE) . '</pre>');
       // Connection error.
       $this->logger->log('Connection with the Publizon web-service failed.');
       throw new PublizonConnectionException('Connection with the Publizon web-service failed.');
@@ -494,6 +526,18 @@ class PublizonClient {
     }
 
     return $response;
+  }
+
+  /**
+   * Return array of SOAP 1.1 endpoints.
+   *
+   * @return array
+   *   Array of names of the SOAP 1.1 endpoints.
+   */
+  private function getSoap11Endpoints() {
+    return array(
+      'reservation',
+    );
   }
 
   /**

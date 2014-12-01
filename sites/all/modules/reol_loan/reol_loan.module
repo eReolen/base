@@ -83,7 +83,7 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
 
       $form['all_loans'][$child]['#information']['expire_in'] = array(
         'label' => t('Expires in'),
-        'data' => format_interval($time - time(), 4),
+        'data' => format_interval($time - time(), 2),
         'class' => 'expires-in' . $class,
         '#weight' => 10,
       );

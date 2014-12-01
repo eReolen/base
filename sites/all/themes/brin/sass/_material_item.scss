@@ -12,6 +12,7 @@
       bottom: 0;
       background-repeat: no-repeat;
       background-size: 100% auto;
+      top: 0.25em;
     }
   }
   &.ebook .item-title:after {
@@ -21,7 +22,8 @@
     background-image: url("../images/icon-audiobook.png");
   }
 
-  .expires-in {
+  .expires-in,
+  .pickup-date{
     font-weight: bold;
 
     &.high {
@@ -34,4 +36,8 @@
       color: red;
     }
   }
+}
+
+.pane-reservations .material-item .right-column {
+  padding-left: 40px;
 }

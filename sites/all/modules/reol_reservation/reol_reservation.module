@@ -1,0 +1,72 @@
+<?php
+/**
+ * @file
+ * Code for the loan module for eReolen.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, &$form_state, $form_id) {
+  $type = NULL;
+  switch ($form_id) {
+    case 'ding_reservation_reservations_notready_form':
+      $type = DING_RESERVATION_NOT_READY;
+      break;
+
+    case 'ding_reservation_reservations_ready_form':
+      $type = DING_RESERVATION_READY;
+      break;
+  }
+  // We only wish to modify the two forms for ready and not ready.
+  if (!$type) {
+    return;
+  }
+
+  foreach ($form['reservations'] as &$reservation_element) {
+    $reservation = $reservation_element['#reservation'];
+
+    $reservation_element['#information']['created']['data'] = format_date(strtotime(check_plain($reservation->created)), 'reol_base_material_lists_date');
+
+    // Remove the information we do not have.
+    unset($reservation_element['#information']['pickup_branch']);
+    unset($reservation_element['#information']['order_nr']);
+
+    // Logic for when reservation is not ready.
+    if ($type == DING_RESERVATION_NOT_READY) {
+      unset($reservation_element['#information']['expiry']);
+
+      // Remove expires soon message.
+      // TODO Do something different than this, i do not like comparing text.
+      if ($reservation_element['#material_message']['message'] == t('This reservation is about to expire.')) {
+        $reservation_element['#material_message'] = array(
+          'message' => '',
+          'class' => '',
+        );
+      }
+    }
+
+    // Logic for when reservation is ready.
+    if ($type == DING_RESERVATION_READY) {
+      $time = strtotime(check_plain($reservation->pickup_date));
+      $time_diff = $time - time();
+      // Add class according to how long time there is left.
+      $class = " ";
+      if ($time_diff < variable_get('reol_reservation_low_time_max', 18000)) {
+        $class .= 'low';
+      }
+      elseif ($time_diff < variable_get('reol_reservation_medium_time_max', 86400)) {
+        $class .= 'medium';
+      }
+      else {
+        $class .= 'high';
+      }
+
+      $reservation_element['#information']['pickup_date']['label'] = t('Loan before');
+      $reservation_element['#information']['pickup_date']['data'] = format_date(strtotime(check_plain($reservation->pickup_date)), 'reol_base_material_lists_date') . '<br />(' . format_interval($time - time(), 2) . ')';
+      $reservation_element['#information']['pickup_date']['class'] .= $class;
+
+      unset($reservation_element['#information']['pickup_id']);
+    }
+  }
+}

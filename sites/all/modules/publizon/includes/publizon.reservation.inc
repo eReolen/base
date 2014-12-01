@@ -7,12 +7,52 @@
 /**
  * Get list of reservations.
  *
+ * @param StdClass $account
+ *   The user to get the list for.
+ *
  * @TODO
  */
 function publizon_reservation_list($account) {
+  $result = array(
+    DING_RESERVATION_READY => array(),
+    DING_RESERVATION_NOT_READY => array(),
+    DING_RESERVATION_INTERLIBRARY_LOANS => array(),
+  );
+
   // Throw exception if we're not logged in.
-  ding_user_get_creds($account);
-  $result = array();
+  $creds = ding_user_get_creds($account);
+
+  $retailer_id = publizon_get_retailer_id($account);
+
+  // Get list of reservations from Publizon.
+  $client = PublizonClient::getClient();
+  $reservations = $client->listReservations($retailer_id, $creds['name']);
+
+  module_load_include('client.inc', 'ting');
+  foreach ($reservations as $reservation) {
+    $ding_id = reol_base_ding_entity_get_id($reservation->isbn);
+    $id = $reservation->bookId;
+    $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
+    $data = array(
+      'order_id' => $id,
+      // TODO Hardcoding this until API is ready.
+      'ding_entity_id' => $ding_id,
+      'ready_for_pickup' => $reservation->status == 2,
+      'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
+      // To avoid warnings, we have to set this, even though we remove it later.
+      'expiry' => date('Y-m-d H:i:s', 0),
+      'queue_number' => 10,
+      'renewable' => FALSE,
+      'reservation_type' => $type,
+    );
+
+    // If reservation is ready, add pickup date.
+    if ($type == DING_RESERVATION_READY) {
+      $data['pickup_date'] = date('Y-m-d H:i:s', $reservation->expireUtc);
+    }
+
+    $result[$type][$id] = new DingProviderReservation($id, $data);
+  }
 
   return $result;
 }
@@ -118,4 +158,24 @@ function publizon_reservation_default_options($account) {
  */
 function publizon_reservation_default_interest_period($profile = NULL) {
   return 0;
+}
+
+/**
+ * Ding requires this function. We do not need it.
+ *
+ * @return NULL
+ *   Empty response always.
+ */
+function publizon_reservation_branch_name($branch_id) {
+  return NULL;
+}
+
+/**
+ * Returns whether or not deletions are enabled.
+ *
+ * @return bool
+ *   Whether or not deletions are enabled.
+ */
+function publizon_reservation_reservation_deletion_enabled() {
+  return TRUE;
 }
