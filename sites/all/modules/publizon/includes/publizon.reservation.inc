@@ -80,9 +80,7 @@ function publizon_reservation_create($account, $local_id, $options) {
   $creds = ding_user_get_creds($account);
 
   // Get the retailer id on the user.
-  $profile = profile2_load_by_user($account, 'provider_publizon');
-  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
-  $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
+  $retailer_id = publizon_get_retailer_id($account);
 
   // Get the email and phone for notifications.
   // Only if user has selected to get notifications.
