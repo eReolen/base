@@ -6,60 +6,6 @@
  */
 
 /**
- * Implements hook_ding_entity_buttons().
- *
- * Add loan button on entity view page for audiobook or ebook.
- */
-function reol_loan_ding_entity_buttons($type, $entity) {
-  // Types that should have this button.
-  $types = array(
-    'lydbog (net)',
-    'ebog',
-  );
-
-  if ($entity instanceof TingEntity && in_array(strtolower($entity->type), $types)) {
-    drupal_add_library('system', 'drupal.ajax');
-
-    $button = array(
-      array(
-        '#theme' => 'link',
-        '#text' => t('Loan'),
-        '#path' => 'ting/object/' . $entity->id . '/loan',
-        '#options' => array(
-          'attributes' => array(
-            'class' => array(
-              'action-button',
-              'reserve-button',
-              'use-ajax',
-            ),
-            'id' => 'reservation-' . $entity->id,
-          ),
-          'html' => FALSE,
-        ),
-      ),
-    );
-
-    return $button;
-  }
-}
-
-/**
- * Implements hook_ding_entity_menu().
- *
- * Create menu callback for loaning an audiobook or ebook.
- */
-function reol_loan_ding_entity_menu(&$items, $type, $path, $index) {
-  if ($type == 'ding_entity') {
-    $items[$path . '/loan'] = array(
-      'title' => 'Loan',
-      'page callback' => 'ding_provider_get_form',
-      'page arguments' => array('reol_loan_loan_form', $index),
-      'access callback' => TRUE,
-    );
-  }
-}
-
-/**
  * Form for loaning an audiobook or ebook.
  *
  * @param array $form
