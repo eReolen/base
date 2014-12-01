@@ -6,6 +6,11 @@
 
 require_once 'includes/reol_loan.loan.inc';
 
+define('REOL_LOAN_STATUS_LOANED', 1);
+define('REOL_LOAN_STATUS_RESERVED', 2);
+define('REOL_LOAN_STATUS_LOANABLE', 4);
+define('REOL_LOAN_STATUS_RESERVABLE', 5);
+
 /**
  * Implements hook_permission().
  */
@@ -29,6 +34,14 @@ function reol_loan_menu() {
     'page arguments' => array(2),
     'delivery callback' => 'ajax_deliver',
     'access arguments' => array('perform loan'),
+  );
+
+  $items['user/%user/status/reservations/delete/%/ajax'] = array(
+    'title' => 'Delete reservations',
+    'page callback' => 'reol_loan_delete_reservations_ajax',
+    'page arguments' => array(1, 5),
+    'access callback' => 'ding_reservation_access',
+    'access arguments' => array(1),
   );
 
   return $items;
@@ -104,28 +117,68 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
  * Add loan button on entity view page for audiobook or ebook.
  */
 function reol_loan_ding_entity_buttons($type, $entity) {
-  if (reol_loan_is_right_type($entity) && reol_loan_is_available($entity)) {
+  if (reol_loan_is_right_type($entity)) {
+    global $user;
     drupal_add_library('system', 'drupal.ajax');
-    $buttons = array();
+    list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
-    $buttons[] = array(
-      '#theme' => 'link',
-      '#text' => t('Loan'),
-      '#path' => 'ting/object/' . $entity->id . '/loan',
-      '#options' => array(
-        'attributes' => array(
-          'class' => array(
-            'action-button',
-            'reserve-button',
-            'use-ajax',
+    $buttons = array();
+    switch (_reol_loan_map_availability($availability)) {
+      case REOL_LOAN_STATUS_LOANED:
+        break;
+
+      case REOL_LOAN_STATUS_LOANABLE:
+        $buttons[] = array(
+          '#theme' => 'link',
+          '#text' => t('Loan'),
+          '#path' => 'ting/object/' . $entity->id . '/loan',
+          '#options' => array(
+            'attributes' => array(
+              'class' => array(
+                'action-button',
+                'reserve-button',
+                'use-ajax',
+              ),
+              'id' => 'loan-' . $entity->id,
+            ),
+            'html' => FALSE,
           ),
-          'id' => 'loan-' . $entity->id,
-        ),
-        'html' => FALSE,
-      ),
-    );
+        );
+        break;
+
+      case REOL_LOAN_STATUS_RESERVED:
+        $buttons[] = array(
+          '#theme' => 'link',
+          '#text' => t('Delete reservation'),
+          '#path' => 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax',
+          '#options' => array(
+            'attributes' => array(
+              'class' => array(
+                'action-button',
+                'use-ajax',
+              ),
+              'id' => 'delete-reservation-' . $entity->id,
+            ),
+            'html' => FALSE,
+          ),
+        );
+        break;
+    }
 
     return $buttons;
+  }
+}
+
+/**
+ * Implements hook_ding_entity_is().
+ */
+function reol_loan_ding_entity_is($entity, $is) {
+  // If title is available, set reservable to false to hide Ding reserve button.
+  if ($is == 'reservable' && reol_loan_is_right_type($entity)) {
+    list($availability) = array_values(ding_availability_items(array($entity->localId)));
+    if (_reol_loan_map_availability($availability) != REOL_LOAN_STATUS_RESERVABLE) {
+      return FALSE;
+    }
   }
 }
 
@@ -143,16 +196,6 @@ function _reol_loan_get_types() {
 }
 
 /**
- * Implements hook_ding_entity_is().
- */
-function reol_loan_ding_entity_is($entity, $is) {
-  // If title is available, set reservable to false to hide Ding reserve button.
-  if ($is == 'reservable' && reol_loan_is_right_type($entity) && reol_loan_is_available($entity)) {
-    return FALSE;
-  }
-}
-
-/**
  * Implements hook_ding_entity_menu().
  *
  * Create menu callback for loaning an audiobook or ebook.
@@ -166,35 +209,6 @@ function reol_loan_ding_entity_menu(&$items, $type, $path, $index) {
       'access callback' => TRUE,
     );
   }
-}
-
-/**
- * Check if an entity is available.
- *
- * @param TingEntity $entity
- *   The entity to check.
- *
- * @return bool
- *   Whether or not title is available.
- */
-function reol_loan_is_available($entity) {
-  if ($entity instanceof TingEntity) {
-    // Only do anything if we if we are trying on a single entity,
-    // not collection.
-    $isbns = $entity->getIsbn();
-    if (count($isbns) == 1) {
-      $isbn = $isbns[0];
-
-      // Check if title is available.
-      list($availability) = array_values(ding_availability_items(array($isbn)));
-      if ($availability['available']) {
-        return TRUE;
-      }
-    }
-  }
-
-  // If we end up here, it is not available.
-  return FALSE;
 }
 
 /**
@@ -222,4 +236,55 @@ function reol_loan_is_right_type($entity) {
   // If we end up here, the type is not correct.
   return FALSE;
 
+}
+
+/**
+ * Map the availability to constant.
+ *
+ * @param array $availability
+ *   Availability received from provider.
+ *
+ * @return int
+ *   The status ints from the top of this file.
+ */
+function _reol_loan_map_availability($availability) {
+  if ($availability['loaned']) {
+    return REOL_LOAN_STATUS_LOANED;
+  }
+  elseif ($availability['available']) {
+    return REOL_LOAN_STATUS_LOANABLE;
+  }
+  elseif ($availability['reserved']) {
+    return REOL_LOAN_STATUS_RESERVED;
+  }
+  elseif ($availability['reservable']) {
+    return REOL_LOAN_STATUS_RESERVABLE;
+  }
+}
+
+/**
+ * Ajax version of the delete reservations form.
+ *
+ * @param StdClass $user
+ *   The user from request.
+ * @param array $local_ids
+ *   The local ids to delete reservations for.
+ */
+function reol_loan_delete_reservations_ajax($user, $local_ids) {
+  global $user;
+  $response = array(
+    '#type' => 'ajax',
+    '#commands' => array(),
+  );
+
+  // Get delete form.
+  $form_raw = drupal_get_form('ding_reservation_delete_reservations_form', $user, $local_ids);
+
+  $html = theme('status_messages');
+  $html .= drupal_render($form_raw);
+
+  if ($html) {
+    $response['#commands'][] = ajax_command_ding_popup('ding_reservation', t('Delete reservations'), $html, array('refresh' => TRUE));
+  }
+  ajax_deliver($response);
 }
