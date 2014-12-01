@@ -183,19 +183,6 @@ function reol_loan_ding_entity_is($entity, $is) {
 }
 
 /**
- * Get the types we handle.
- *
- * @return array
- *   Array of types by their name in lower case.
- */
-function _reol_loan_get_types() {
-  return array(
-    'lydbog (net)',
-    'ebog',
-  );
-}
-
-/**
  * Implements hook_ding_entity_menu().
  *
  * Create menu callback for loaning an audiobook or ebook.
@@ -221,21 +208,7 @@ function reol_loan_ding_entity_menu(&$items, $type, $path, $index) {
  *   Whether or not type is correct.
  */
 function reol_loan_is_right_type($entity) {
-  // Get types that we check for.
-  $types = _reol_loan_get_types();
-
-  // Actually check type, also check that we are trying on a single entity,
-  // instead of a collection.
-  if ($entity instanceof TingEntity && in_array(strtolower($entity->type), $types)) {
-    $isbns = $entity->getIsbn();
-    if (count($isbns) == 1) {
-      return TRUE;
-    }
-  }
-
-  // If we end up here, the type is not correct.
-  return FALSE;
-
+  return (bool) reol_base_get_type_name($entity->type);
 }
 
 /**
