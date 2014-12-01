@@ -272,7 +272,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
-    'author_portait' => 'author_portait',
+    'author_portrait' => 'author_portrait',
   );
 
   /* Display: Author portraits on frontpage */

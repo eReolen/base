@@ -198,9 +198,9 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-author_portait-field_link'
-  $field_instances['node-author_portait-field_link'] = array(
-    'bundle' => 'author_portait',
+  // Exported field_instance: 'node-author_portrait-field_link'
+  $field_instances['node-author_portrait-field_link'] = array(
+    'bundle' => 'author_portrait',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Link to the authors profile on Forfatterweb.dk',
@@ -253,9 +253,9 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-author_portait-field_portrait'
-  $field_instances['node-author_portait-field_portrait'] = array(
-    'bundle' => 'author_portait',
+  // Exported field_instance: 'node-author_portrait-field_portrait'
+  $field_instances['node-author_portrait-field_portrait'] = array(
+    'bundle' => 'author_portrait',
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -325,9 +325,9 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-author_portait-field_reol_entity_type'
-  $field_instances['node-author_portait-field_reol_entity_type'] = array(
-    'bundle' => 'author_portait',
+  // Exported field_instance: 'node-author_portrait-field_reol_entity_type'
+  $field_instances['node-author_portrait-field_reol_entity_type'] = array(
+    'bundle' => 'author_portrait',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',

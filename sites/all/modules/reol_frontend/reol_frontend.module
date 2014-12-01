@@ -48,7 +48,7 @@ function reol_frontend_preprocess_node(&$variables) {
     $variables['readmore'] = url($variables['content']['links']['node']['#links']['node-readmore']['href']);
   }
 
-  elseif ($variables['node']->type == "author_portait") {
+  elseif ($variables['node']->type == "author_portrait") {
     $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
   }
 }
