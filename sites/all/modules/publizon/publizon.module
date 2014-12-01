@@ -281,39 +281,41 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
   global $user;
   $profile = profile2_load_by_user($user, 'provider_publizon');
 
-  $form['provider_options']['#tree'] = TRUE;
+  $form['publizon']['#tree'] = TRUE;
 
   // Add phone field.
-  $form['provider_options'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone', $profile, $field_form, $form_state);
-  $form['provider_options']['phone_notification'] = array(
+  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone', $profile, $field_form, $form_state);
+  $form['publizon']['phone_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('Send notification to my phone'),
     '#default_value' => TRUE,
     '#weight' => 0,
   );
   // Only show this field when the 'phone_notification' checkbox is enabled.
-  $form['provider_options']['field_phone']['#states'] = array(
+  $form['publizon']['field_phone']['#states'] = array(
     'visible' => array(
-      ':input[name="provider_options[phone_notification]"]' => array('checked' => TRUE),
+      ':input[name="publizon[phone_notification]"]' => array('checked' => TRUE),
     ),
   );
-  $form['provider_options']['field_phone']['#weight'] = 10;
+  $form['publizon']['field_phone']['#weight'] = 10;
 
   // Add email field.
-  $form['provider_options'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $field_form, $form_state);
-  $form['provider_options']['email_notification'] = array(
+  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $field_form, $form_state);
+  $form['publizon']['email_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('Send notification to my email'),
     '#default_value' => TRUE,
     '#weight' => 20,
   );
   // Only show this field when the 'email_notification' checkbox is enabled.
-  $form['provider_options']['field_email']['#states'] = array(
+  $form['publizon']['field_email']['#states'] = array(
     'visible' => array(
-      ':input[name="provider_options[email_notification]"]' => array('checked' => TRUE),
+      ':input[name="publizon[email_notification]"]' => array('checked' => TRUE),
     ),
   );
-  $form['provider_options']['field_email']['#weight'] = 30;
+  $form['publizon']['field_email']['#weight'] = 30;
+
+  $form['publizon']['#weight'] = 0;
 
   array_unshift($form['#validate'], 'publizon_form_ding_reservation_reserve_form_validate');
   $form['#submit'][] = 'publizon_form_ding_reservation_reserve_form_submit';
@@ -332,7 +334,7 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
  *   The state of the form at submit.
  */
 function publizon_form_ding_reservation_reserve_form_validate($form, &$form_state) {
-  $entity = (object) $form_state['values']['provider_options'];
+  $entity = (object) $form_state['values']['publizon'];
   $entity->type = 'provider_publizon';
   field_attach_form_validate('profile2', $entity, $form, $form_state);
 }
@@ -355,7 +357,7 @@ function publizon_form_ding_reservation_reserve_form_validate($form, &$form_stat
 function publizon_form_ding_reservation_reserve_form_submit($form, &$form_state) {
   global $user;
   $profile = profile2_load_by_user($user, 'provider_publizon');
-  $values = $form_state['values']['provider_options'];
+  $values = $form_state['values']['publizon'];
 
   $changed = FALSE;
   $fields = array(
