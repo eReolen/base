@@ -221,13 +221,15 @@ function reol_loan_is_right_type($entity) {
  *   The status ints from the top of this file.
  */
 function _reol_loan_map_availability($availability) {
-  if ($availability['loaned']) {
+  // Loaned and reserved indexes might not be set. It is okay,
+  // to ignore errors, if they are not set, they should be FALSE.
+  if (@$availability['loaned']) {
     return REOL_LOAN_STATUS_LOANED;
   }
   elseif ($availability['available']) {
     return REOL_LOAN_STATUS_LOANABLE;
   }
-  elseif ($availability['reserved']) {
+  elseif (@$availability['reserved']) {
     return REOL_LOAN_STATUS_RESERVED;
   }
   elseif ($availability['reservable']) {
