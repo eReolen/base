@@ -42,7 +42,7 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
     // For SOAP 1.1 we need to include SOAPAction header.
     if ($soap11) {
       list($action_ns, $action_txt) = explode(':', $action, 2);
-      $headers[] = 'SOAPAction: ' . trim(preg_replace('_http(s)?://_', '', $this->namespaces[$action_ns]), '/') . '/' . $action_txt;
+      $headers[] = 'SOAPAction: ' . trim($this->namespaces[$action_ns], '/') . '/' . $action_txt;
     }
 
     // Make a DOM document from the envelope and get the Body tag so we
