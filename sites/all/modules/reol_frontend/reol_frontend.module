@@ -102,7 +102,7 @@ function reol_frontend_views_query_alter(&$view, &$query) {
   $found = FALSE;
   foreach ($query->where as $wk => $where) {
     foreach ($where['conditions'] as $ck => $condition) {
-      if ($condition['field'] == 'field_data_field_reol_entity_type.field_reol_entity_type_value') {
+      if (is_string($condition['field']) && $condition['field'] == 'field_data_field_reol_entity_type.field_reol_entity_type_value') {
         $found = $condition;
         // If it is present, remove it. We add it ourself in a group below.
         unset($query->where[$wk]['conditions'][$ck]);
