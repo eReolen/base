@@ -31,7 +31,8 @@ function publizon_reservation_list($account) {
   module_load_include('client.inc', 'ting');
   foreach ($reservations as $reservation) {
     $ding_id = reol_base_ding_entity_get_id($reservation->isbn);
-    $id = $reservation->bookId;
+    $ting_entity = ding_entity_load($ding_id);
+    $id = $ting_entity->localId;
     $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
     $data = array(
       'order_id' => $id,
@@ -104,11 +105,27 @@ function publizon_reservation_create($account, $local_id, $options) {
 /**
  * Delete reservation.
  *
- * @TODO
+ * @param StdClass $account
+ *   The account to delete reservation for.
+ * @param string $local_id
+ *   The local id of the title to delete reservation for.
  */
-function publizon_reservation_delete($account, $id) {
-  // Throw exception if we're not logged in.
-  ding_user_get_creds($account);
+function publizon_reservation_delete($account, $local_id) {
+  $isbn = reol_base_get_isbn($local_id);
+  // If we do not have an ISBN number, we cannot remove reservation.
+  // This should not happen, as same check is performed during reserve.
+  if (!$isbn) {
+    return;
+  }
+  // This will throw exception if not logged in.
+  $creds = ding_user_get_creds($account);
+
+  // Get the retailer id on the user.
+  $retailer_id = publizon_get_retailer_id($account);
+
+  $client = PublizonClient::getClient();
+  // This will throw exception if reservation is not deleted.
+  $client->deleteReservation($retailer_id, $creds['name'], $isbn);
 }
 
 /**

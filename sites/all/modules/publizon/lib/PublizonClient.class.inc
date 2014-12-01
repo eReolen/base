@@ -454,6 +454,40 @@ class PublizonClient {
   }
 
   /**
+   * Delete a reservation.
+   *
+   * Delete a reservation for a title at Publizon. It throws an exception on
+   * any error, or returns TRUE.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer to loan for.
+   * @param string $card_number
+   *   The users card number/CPR also known as login id.
+   * @param string $isbn
+   *   ISBN number on the product.
+   *
+   * @return bool
+   *   TRUE on success.
+   *
+   * @throws PublizonException
+   */
+  public function deleteReservation($retailer_id, $card_number, $isbn) {
+    // Make request to the web-service for the loans.
+    $response = $this->call('reservation', 'Delete', $retailer_id, array(
+      'pub:cardnumber' => $card_number,
+      'pub:ebookid' => $isbn,
+    ), array('pub' => 'pubhub.dk'));
+
+    $data = $response->xpath('//data');
+    if (isset($data[0]) && $data[0][0] == $card_number) {
+      return TRUE;
+    }
+
+    $this->logger->log('Create reservation request returned no/invalid data (' . $isbn . ').', 'ERROR');
+    throw new PublizonException('Create reservation request returned no/invalid data (' . $isbn . ').');
+  }
+
+  /**
    * Call method on endpoint.
    *
    * Wrapper function for preforming of call to Publizon's web-service via the
