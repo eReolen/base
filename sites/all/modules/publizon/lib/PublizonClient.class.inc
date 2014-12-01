@@ -414,7 +414,7 @@ class PublizonClient {
       'pub:pincode' => $pincode,
       'pub:email' => $email,
       'pub:phonenumber' => $phone,
-    ), array('pub' => 'pubhub.dk'));
+    ), array('pub' => 'http://pubhub.dk/'));
 
     $data = $response->xpath('//data');
     if (isset($data[0]) && $data[0][0] == $card_number) {
@@ -440,7 +440,7 @@ class PublizonClient {
     // Make request to the web-service for the loans.
     $response = $this->call('reservation', 'List', $retailer_id, array(
       'pub:cardnumber' => $card_number,
-    ), array('pub' => 'pubhub.dk'));
+    ), array('pub' => 'http://pubhub.dk/'));
 
     // Check if any data was returned.
     $data = $response->xpath('//data/reservation');
