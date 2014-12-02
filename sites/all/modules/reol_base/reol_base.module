@@ -46,6 +46,8 @@ function reol_base_entity_load($entities, $type) {
   }
 
   foreach ($entities as $entity) {
+    $entity->online_url = FALSE;
+
     if (!($entity instanceof TingEntity)) {
       continue;
     }

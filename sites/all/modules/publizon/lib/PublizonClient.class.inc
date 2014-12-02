@@ -27,6 +27,7 @@ class PublizonClient {
     'library_user_order_list' => 'getlibraryuserorderlist.asmx',
     'removed_product_list' => 'getremovedproductlist.asmx',
     'library_profile' => 'getlibraryinfo.asmx',
+    'loan_status' => 'getproductloanstatus.asmx',
   );
 
   // Holds the object instance (part of the singleton pattern).
@@ -454,6 +455,75 @@ class PublizonClient {
   }
 
   /**
+   * Delete a reservation.
+   *
+   * Delete a reservation for a title at Publizon. It throws an exception on
+   * any error, or returns TRUE.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer to delete for.
+   * @param string $card_number
+   *   The users card number/CPR also known as login id.
+   * @param string $isbn
+   *   ISBN number on the product.
+   *
+   * @return bool
+   *   TRUE on success.
+   *
+   * @throws PublizonException
+   */
+  public function deleteReservation($retailer_id, $card_number, $isbn) {
+    // Make request to the web-service for the loans.
+    $response = $this->call('reservation', 'Delete', $retailer_id, array(
+      'pub:cardnumber' => $card_number,
+      'pub:ebookid' => $isbn,
+    ), array('pub' => 'pubhub.dk'));
+
+    $data = $response->xpath('//data');
+    if (isset($data[0]) && $data[0][0] == $card_number) {
+      return TRUE;
+    }
+
+    $this->logger->log('Create reservation request returned no/invalid data (' . $isbn . ').', 'ERROR');
+    throw new PublizonException('Create reservation request returned no/invalid data (' . $isbn . ').');
+  }
+
+  /**
+   * Get the status of a loan for a product.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer to get status for.
+   * @param string $card_number
+   *   The users card number/CPR also known as login id.
+   * @param array $isbns
+   *   ISBN numbers on the products.
+   *
+   * @return array
+   *   Array of PublizonLoanStatus objects.
+   *
+   * @throws PublizonException
+   */
+  public function getProductLoanStatusList($retailer_id, $card_number, $isbns) {
+    // Make request to the web-service for the status.
+    $response = $this->call('loan_status', 'GetProductLoanStatusList', $retailer_id, array(
+      'pub:cardnumber' => $card_number,
+      'pub:ebookids' => array(
+        'pub:ebookid' => $isbns,
+      ),
+    ), array('pub' => 'http://pubhub.dk/'));
+
+    // Check if any data was returned.
+    $data = $response->xpath('//data/productloanstatus');
+    $status = array();
+    if (isset($data[0])) {
+      while (list(, $stat) = each($data)) {
+        $status[] = new PublizonLoanStatus($stat);
+      }
+    }
+    return $status;
+  }
+
+  /**
    * Call method on endpoint.
    *
    * Wrapper function for preforming of call to Publizon's web-service via the
@@ -505,7 +575,6 @@ class PublizonClient {
       $response = simplexml_load_string($response);
     }
     catch (Exception $e) {
-      drupal_set_message('<pre>' . print_r($e, TRUE) . '</pre>');
       // Connection error.
       $this->logger->log('Connection with the Publizon web-service failed.');
       throw new PublizonConnectionException('Connection with the Publizon web-service failed.');
@@ -537,6 +606,7 @@ class PublizonClient {
   private function getSoap11Endpoints() {
     return array(
       'reservation',
+      'loan_status',
     );
   }
 
