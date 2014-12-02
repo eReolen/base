@@ -58,18 +58,16 @@ function publizon_loan_renew($account, $ids) {
  *
  * @param array $account
  *   The account that tries to create a loan.
- * @param string $id
- *   The id of the ting object the user is trying to loan.
+ * @param string $local_id
+ *   The local id of the ting object the user is trying to loan.
  */
-function publizon_loan_create($account, $id) {
+function publizon_loan_create($account, $local_id) {
   // This will throw exception if not logged in.
   $creds = ding_user_get_creds($account);
 
   $retailer_id = publizon_get_retailer_id($account);
 
-  // Get the object for extracting the ISBN.
-  $ting_entity = ding_entity_load($id);
-  list($isbn) = $ting_entity->getIsbn();
+  $isbn = reol_base_get_isbn($local_id);
 
   $client = PublizonClient::getClient();
   // This will throw exception if loan does not go through.

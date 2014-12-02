@@ -72,7 +72,7 @@ function reol_loan_loan_form_submit($form, &$form_state) {
     if ($form_state['values']['loanable']) {
       $loanable = $form_state['values']['loanable'];
       try {
-        $loan_result = ding_provider_invoke('loan', 'create', $user, $loanable->ding_entity_id);
+        $loan_result = ding_provider_invoke('loan', 'create', $user, $loanable->localId);
         $form_state['loaned'] = TRUE;
         drupal_set_message(t('"@title" loaned.', array('@title' => $loanable->getTitle())));
 
