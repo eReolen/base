@@ -162,3 +162,56 @@ function reol_use_loan_theme($existing, $type, $theme, $path) {
     ),
   );
 }
+
+/**
+ * Implements hook_ding_entity_buttons().
+ *
+ * Add read/listen buttons on entity view page for audiobook or ebook.
+ */
+function reol_use_loan_ding_entity_buttons($type, $entity) {
+  $buttons = array();
+  if (reol_loan_is_right_type($entity)) {
+    global $user;
+    drupal_add_library('system', 'drupal.ajax');
+    list($availability) = array_values(ding_availability_items(array($entity->localId)));
+
+    if (_reol_loan_map_availability($availability)) {
+      switch (reol_base_get_type_name($entity->type)) {
+        case "ebook":
+          $buttons[] = array(
+            '#theme' => 'link',
+            '#text' => t('Read'),
+            '#path' => 'ting/object/' . $entity->id . '/read',
+            '#options' => array(
+              'attributes' => array(
+                'class' => array(
+                  'action-button',
+                ),
+                'id' => 'read-' . $entity->id,
+              ),
+              'html' => FALSE,
+            ),
+          );
+          break;
+
+        case "audiobook":
+          $buttons[] = array(
+            '#theme' => 'link',
+            '#text' => t('Listen'),
+            '#path' => 'ting/object/' . $entity->id . '/listen',
+            '#options' => array(
+              'attributes' => array(
+                'class' => array(
+                  'action-button',
+                ),
+                'id' => 'listen-' . $entity->id,
+              ),
+              'html' => FALSE,
+            ),
+          );
+          break;
+      }
+    }
+  }
+  return $buttons;
+}
