@@ -477,7 +477,7 @@ class PublizonClient {
     $response = $this->call('reservation', 'Delete', $retailer_id, array(
       'pub:cardnumber' => $card_number,
       'pub:ebookid' => $isbn,
-    ), array('pub' => 'pubhub.dk'));
+    ), array('pub' => 'http://pubhub.dk/'));
 
     $data = $response->xpath('//data');
     if (isset($data[0]) && $data[0][0] == $card_number) {
