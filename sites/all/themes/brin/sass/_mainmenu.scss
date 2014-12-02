@@ -123,8 +123,9 @@
             filter: alpha(opacity=100);
           }
 
-          // Make the li of the active trail item higher, so it pushes
+          // Make the li of the active/active trail item higher, so it pushes
           // down the following element, and shows the sub-menu.
+          &.active:not(.leaf),
           &.active-trail:not(.leaf) {
             height: 150px;
           }
@@ -194,7 +195,9 @@
             opacity: 1;
             filter: alpha(opacity=100);
 
-            &.active-trail {
+            &.active-trail,
+            &.active {
+              // Reset the height from the first levels "push down" size.
               height: auto;
             }
 
