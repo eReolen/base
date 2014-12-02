@@ -9,6 +9,14 @@
 
       // Show search on load.
       $('.js-topbar-search').css("display", "block");
+
+      // Check if #login fragment is in url.
+      var hash = window.location.hash;
+      if (hash === "#login") {
+        // Show login box.
+        $('.topbar-menu .leaf .topbar-link-user').toggleClass('active');
+        $('.js-topbar-user').toggle();
+      }
     }
   };
 
@@ -53,4 +61,18 @@
       });
     }
   };
+
+  /**
+   * Login box handler.
+   */
+  Drupal.behaviors.brinLoginBox = {
+    attach : function() {
+      $('.js-topbar-link.topbar-link-user').on('click touchstart', function(e) {
+        $('.topbar-menu .leaf .topbar-link-user').toggleClass('active');
+        $('.js-topbar-user').toggle();
+      e.preventDefault();
+    });
+    }
+  };
+
 })(jQuery);
