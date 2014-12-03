@@ -175,7 +175,6 @@ function publizon_get_libraries_list() {
 }
 
 /**
-<<<<<<< HEAD
  * Implements hook_ting_covers().
  *
  * Fetch covers from Publizon.
