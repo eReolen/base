@@ -72,14 +72,15 @@ function reol_loan_loan_form_submit($form, &$form_state) {
     if ($form_state['values']['loanable']) {
       $loanable = $form_state['values']['loanable'];
       try {
-        $loan_result = ding_provider_invoke('loan', 'create', $user, $loanable->localId);
+        // Throws exception in case of error.
+        ding_provider_invoke('loan', 'create', $user, $loanable->localId);
         $form_state['loaned'] = TRUE;
         drupal_set_message(t('"@title" loaned.', array('@title' => $loanable->getTitle())));
 
         // TODO Clear loan session cache (availability etc.).
       }
       catch (DingProviderUserException $e) {
-        drupal_set_message($e->getMessageT(array('@title' => $reservable->getTitle())), 'error');
+        drupal_set_message($e->getMessageT(array('@title' => $loanable->getTitle())), 'error');
       }
       catch (DingProviderAuthException $e) {
         // Just rethrow.
