@@ -1,0 +1,17 @@
+
+.ui-dialog {
+  @include border-radius(0);
+  background-color: $background-light;
+
+  // Fix the positioning of the close button.
+  .ui-dialog-titlebar .ui-dialog-titlebar-close {
+    top: 0;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .messages {
+    margin: 16px 0;
+  }
+}
