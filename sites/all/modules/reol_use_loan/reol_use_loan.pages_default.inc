@@ -15,14 +15,14 @@ function reol_use_loan_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Listen to audiobook';
   $page->admin_description = '';
-  $page->path = '/ting/object/%ting_object/listen';
+  $page->path = 'ting/object/%ting_object/listen';
   $page->access = array();
   $page->menu = array();
   $page->arguments = array(
     'ting_object' => array(
       'id' => 1,
       'identifier' => 'Ting object: ID',
-      'name' => 'entity_id:ting_object',
+      'name' => 'ting_object_id',
       'settings' => array(),
     ),
   );
@@ -56,6 +56,19 @@ function reol_use_loan_default_page_manager_pages() {
     'style_settings' => array(
       'default' => NULL,
       'middle' => NULL,
+      'left_sidebar' => NULL,
+      'main_content' => NULL,
+      'right_sidebar' => NULL,
+      'attachment_4_1' => NULL,
+      'attachment_4_2' => NULL,
+      'attachment_4_3' => NULL,
+      'attachment_4_4' => NULL,
+      'attachment_3_1' => NULL,
+      'attachment_3_2' => NULL,
+      'attachment_3_3' => NULL,
+      'attachment_2_1' => NULL,
+      'attachment_2_2' => NULL,
+      'attachment_1_1' => NULL,
     ),
   );
   $display->cache = array();
@@ -72,7 +85,7 @@ function reol_use_loan_default_page_manager_pages() {
     $pane->access = array();
     $pane->configuration = array(
       'context' => array(
-        0 => 'empty',
+        0 => 'argument_ting_object_id_1',
       ),
       'override_title' => 0,
       'override_title_text' => '',
@@ -101,14 +114,14 @@ function reol_use_loan_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Read ebook';
   $page->admin_description = '';
-  $page->path = '//ting/object/%ting_object/read';
+  $page->path = 'ting/object/%ting_object/read';
   $page->access = array();
   $page->menu = array();
   $page->arguments = array(
     'ting_object' => array(
       'id' => 1,
       'identifier' => 'Ting object: ID',
-      'name' => 'entity_id:ting_object',
+      'name' => 'ting_object_id',
       'settings' => array(),
     ),
   );
