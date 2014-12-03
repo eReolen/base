@@ -16,6 +16,13 @@ function reol_frontend_entity_info_alter(&$entity_info) {
       'custom settings' => TRUE,
     ),
   );
+
+  $entity_info['file']['view modes'] += array(
+    'video_frontpage' => array(
+      'label' => t('Video on frontpage'),
+      'custom settings' => TRUE,
+    ),
+  );
 }
 
 /**
@@ -50,6 +57,11 @@ function reol_frontend_preprocess_node(&$variables) {
 
   elseif ($variables['node']->type == "author_portrait") {
     $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
+  }
+
+  elseif ($variables['node']->type == 'video' && $variables['view_mode'] == 'teaser') {
+    dpm($variables['content']);
+    $variables['video_thumb'] = "";
   }
 }
 
