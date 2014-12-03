@@ -58,6 +58,11 @@ function reol_frontend_preprocess_node(&$variables) {
   elseif ($variables['node']->type == "author_portrait") {
     $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
   }
+
+  elseif ($variables['node']->type == "video" && $variables['view_mode'] == 'teaser') {
+    drupal_add_library('system', 'drupal.ajax');
+    $variables['link'] = 'video/' . $variables['node']->nid . '/view';
+  }
 }
 
 /**

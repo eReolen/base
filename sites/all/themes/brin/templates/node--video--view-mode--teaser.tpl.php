@@ -6,7 +6,9 @@
  */
 ?>
 <div class="video-teaser">
-  <div class="video-thumb"><?php echo render($content['field_video']); ?></div>
-  <span class="title"><?php echo $title; ?></span>
-  <div class="play"></div>
+  <a href="<?php echo $link; ?>" class="use-ajax">
+    <div class="video-thumb"><?php echo render($content['field_video']); ?></div>
+    <span class="title"><?php echo $title; ?></span>
+    <div class="play"></div>
+  </a>
 </div>
