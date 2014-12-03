@@ -118,7 +118,7 @@ function reol_loan_loan_ajax($entity) {
         // Try to create loan form.
         try {
           $form = ding_provider_get_form('reol_loan_loan_form', $loanable, FALSE);
-          $commands[] = ajax_command_ding_popup('reol_loan', t('Loan'), render($form));
+          $commands[] = ajax_command_ding_popup('reol_loan', t('Loan'), render($form), array('refresh' => TRUE));
         }
         catch (DingProviderAuthException $exception) {
           // The form may have thrown an Auth exception, so display login. (the
