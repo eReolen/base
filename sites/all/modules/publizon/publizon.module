@@ -385,3 +385,19 @@ function publizon_form_ding_reservation_reserve_form_submit($form, &$form_state)
     $profile->save();
   }
 }
+
+/**
+ * Implements hook_init().
+ *
+ * Add javascript settings.
+ */
+function publizon_init() {
+  drupal_add_js(array(
+    'publizon' => array(
+      'player' => array(
+        'clientId' => variable_get('publizon_player_client_id', ''),
+        'url' => variable_get('publizon_player_url', ''),
+      ),
+    ),
+  ), 'setting');
+}

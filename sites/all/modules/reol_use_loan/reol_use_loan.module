@@ -1,0 +1,217 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen use loan module feature.
+ */
+
+include_once 'reol_use_loan.features.inc';
+/**
+ * Implements hook_menu().
+ */
+function reol_use_loan_menu() {
+  $items = array();
+
+  $items['reol_use_loan/reader/session/renew'] = array(
+    'page callback' => 'reol_use_loan_reader_renew_session',
+    'page arguments' => array(4),
+    'access callback' => 'user_is_logged_in',
+  );
+
+  $items['reol_use_loan/reader'] = array(
+    'page callback' => 'reol_use_loan_reader',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function reol_use_loan_permission() {
+  return array(
+    'listen to audiobook' => array(
+      'title' => t('Listen to audiobook'),
+      'description' => t('Listen to a loaned audiobook.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to perform a loan.
+ */
+function reol_use_loan_secure_permissions($role) {
+  $permissions = array(
+    'provider' => array(
+      'listen to audiobook',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_use_loan_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Get reader session.
+ *
+ * Call the Publizon stream session API to get a session
+ * for the reader.
+ */
+function reol_use_loan_reader_renew_session($id) {
+  // Make sure we have url to call.
+  if (!variable_get('publizon_reader_stream_url', FALSE)) {
+    http_response_code(500);
+    echo t('URL for the stream server has not been defined!');
+    drupal_exit();
+  }
+
+  // Make sure we have client id.
+  if (!variable_get('publizon_client_id', FALSE)) {
+    http_response_code(500);
+    echo t('Client ID has not been defined!');
+    drupal_exit();
+  }
+
+  // Get the retailer id on the user.
+  global $user;
+  $profile = profile2_load_by_user($user, 'provider_publizon');
+  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
+  $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
+
+  // Get information for request.
+  $client_id = variable_get('publizon_client_id', '');
+  $retailer = publizon_get_library($retailer_id);
+  $url = variable_get('publizon_reader_stream_url', '');
+
+  // Get response from endpoint.
+  $response = reol_use_loan_get_reader_session($url, $id, $client_id, $retailer['retailer_id'], md5($retailer['retailer_key_code']));
+
+  // Write response to browser.
+  http_response_code($response['status']);
+  echo $response['result'];
+  drupal_exit();
+}
+
+/**
+ * Call the session callback for the reader, and return results.
+ *
+ * @param string $url
+ *   The URL of the server.
+ * @param string $retailer_order
+ *   The retailer order number to pass along.
+ * @param string $client_id
+ *   The client id to pass along.
+ * @param string $retailer_id
+ *   The retailer id to pass along.
+ * @param string $retailer_key_code
+ *   The retailer key code to pass along.
+ *
+ * @return array
+ *   Array with two keys; status and result.
+ */
+function reol_use_loan_get_reader_session($url, $retailer_order, $client_id, $retailer_id, $retailer_key_code) {
+  // Initialize the cURL call.
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url . '/publicstreaming/v1/' . $retailer_order . '/session/' . $client_id . '/' . $retailer_id . '/' . $retailer_key_code . '/');
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
+
+  // Execute it.
+  $output = curl_exec($ch);
+  $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+  // Return code and result.
+  return array('status' => $status, 'result' => $output);
+}
+
+/**
+ * Render the page for the reader.
+ *
+ * @param string $id
+ *   The retailer order number.
+ */
+function reol_use_loan_reader($id) {
+  echo theme('reol_use_loan_reader', array(
+    'retailer_order_number' => $id,
+  ));
+  drupal_exit();
+}
+
+/**
+ * Implements hook_theme().
+ */
+function reol_use_loan_theme($existing, $type, $theme, $path) {
+  return array(
+    'reol_use_loan_reader' => array(
+      'variables' => array(
+        'retailer_order_number' => NULL,
+      ),
+      'path' => drupal_get_path('module', 'reol_use_loan') . '/templates',
+      'template' => 'reader',
+    ),
+  );
+}
+
+/**
+ * Implements hook_ding_entity_buttons().
+ *
+ * Add read/listen buttons on entity view page for audiobook or ebook.
+ */
+function reol_use_loan_ding_entity_buttons($type, $entity) {
+  $buttons = array();
+  if (reol_loan_is_right_type($entity)) {
+    global $user;
+    drupal_add_library('system', 'drupal.ajax');
+    list($availability) = array_values(ding_availability_items(array($entity->localId)));
+
+    if (_reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED) {
+      switch (reol_base_get_type_name($entity->type)) {
+        case "ebook":
+          $buttons[] = array(
+            '#theme' => 'link',
+            '#text' => t('Read'),
+            '#path' => 'ting/object/' . $entity->id . '/read',
+            '#options' => array(
+              'attributes' => array(
+                'class' => array(
+                  'action-button',
+                ),
+                'id' => 'read-' . $entity->id,
+              ),
+              'html' => FALSE,
+            ),
+          );
+          break;
+
+        case "audiobook":
+          $buttons[] = array(
+            '#theme' => 'link',
+            '#text' => t('Listen'),
+            '#path' => 'ting/object/' . $entity->id . '/listen',
+            '#options' => array(
+              'attributes' => array(
+                'class' => array(
+                  'action-button',
+                ),
+                'id' => 'listen-' . $entity->id,
+              ),
+              'html' => FALSE,
+            ),
+          );
+          break;
+      }
+    }
+  }
+  return $buttons;
+}

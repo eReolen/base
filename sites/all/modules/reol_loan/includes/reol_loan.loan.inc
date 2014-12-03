@@ -72,7 +72,7 @@ function reol_loan_loan_form_submit($form, &$form_state) {
     if ($form_state['values']['loanable']) {
       $loanable = $form_state['values']['loanable'];
       try {
-        $loan_result = ding_provider_invoke('loan', 'create', $user, $loanable->ding_entity_id);
+        $loan_result = ding_provider_invoke('loan', 'create', $user, $loanable->localId);
         $form_state['loaned'] = TRUE;
         drupal_set_message(t('"@title" loaned.', array('@title' => $loanable->getTitle())));
 
@@ -118,7 +118,7 @@ function reol_loan_loan_ajax($entity) {
         // Try to create loan form.
         try {
           $form = ding_provider_get_form('reol_loan_loan_form', $loanable, FALSE);
-          $commands[] = ajax_command_ding_popup('reol_loan', t('Loan'), render($form));
+          $commands[] = ajax_command_ding_popup('reol_loan', t('Loan'), render($form), array('refresh' => TRUE));
         }
         catch (DingProviderAuthException $exception) {
           // The form may have thrown an Auth exception, so display login. (the
