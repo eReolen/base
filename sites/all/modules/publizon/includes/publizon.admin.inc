@@ -193,6 +193,35 @@ function publizon_settings_form($form, &$form_state) {
     );
   }
 
+  // Custom error messages.
+  $form['publizon']['error_messages'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Custom error messages'),
+    '#description' => t('Customize the error messages for loan/reservation.'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
+
+  $messages = _publizon_error_messages();
+  $form['publizon']['error_messages']['default'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Mapping'),
+    '#default_value' => $messages[-1],
+    '#description' => t('Enter one message per line, in the format <em>code|message</em>.'),
+  );
+
+  unset($messages[-1]);
+  $value = "";
+  foreach ($messages as $code => $message) {
+    $value .= $code . '|' . $message . "\n";
+  }
+  $form['publizon']['error_messages']['messages'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Mapping'),
+    '#default_value' => $value,
+    '#description' => t('Enter one message per line, in the format <em>code|message</em>.'),
+  );
+
   // Make the form look like at system form.
   $form = system_settings_form($form);
 
@@ -308,6 +337,21 @@ function publizon_settings_form_submit($form, &$form_state) {
   foreach ($form_state['values']['publizon']['settings'] as $name => $value) {
     variable_set($name, $value);
   }
+
+  $messages = array();
+  foreach (explode("\n", $form_state['values']['publizon']['error_messages']['messages']) as $line) {
+    $tmp = explode('|', $line, 2);
+    if (isset($tmp[1])) {
+      $messages[intval($tmp[0])] = $tmp[1];
+    }
+  }
+  if ($form_state['values']['publizon']['error_messages']['default']) {
+    $messages[-1] = $form_state['values']['publizon']['error_messages']['default'];
+  }
+  else {
+    $messages[-1] = t('Unknown error.');
+  }
+  variable_set('publizon_error_messages', $messages);
 
   drupal_set_message(t('The configuration options have been saved.'));
 }

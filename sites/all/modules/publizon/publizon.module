@@ -401,3 +401,55 @@ function publizon_init() {
     ),
   ), 'setting');
 }
+/**
+ * Get custom error messages for publizon error codes.
+ */
+function _publizon_error_messages() {
+  $messages = variable_get('publizon_error_messages', array());
+  if (empty($messages)) {
+    // Return default messages.
+    $messages = array(
+      -1 => t('Unknown error.'),
+      // Doesn't make sense to include:
+      // 101 => 'OK',
+      105 => 'ebookid er ikke er gyldigt isbn nummer (#105).',
+      114 => 'Ugyldigt kortnummer og/eller pinkode (#114).',
+      118 => 'Biblioteket kunne ikke autoriseres (#118).',
+      120 => 'Antallet af samtidige lån er overskredet (#120).',
+      125 => 'Biblioteket har nået forbrugsgrænsen i indeværende måned. Kontakt evt. dit lokale bibliotek for yderligere oplysninger (#125).',
+      126 => 'Biblioteket har nået grænsen for antal udlån i indeværende måned. Kontakt evt. dit lokale bibliotek for yderligere oplysninger (#126).',
+      128 => 'Bogen er ikke tilgængelig for udlån (#128).',
+      129 => 'Bogen kan højst genlånes én gang (#129).',
+      130 => 'Bogen kan først lånes igen 90 dage efter sidste låns udløb (#130).',
+      131 => 'Bogen kan ikke lånes (#131).',
+      134 => 'Kortet er midlertidigt blokeret (#134)',
+      135 => 'Grænsen for antal tilladte lån på bogen er nået (#135)',
+      136 => 'De opkøbte klip er alle taget i brug (#136).',
+      137 => 'Dit bibliotek tillader kun op til X samtidige reserveringer (#137).',
+      138 => 'Der skete en uventet fejl. (#138).',
+      139 => 'Ugyldigt clientid. (#139).',
+    );
+  }
+
+  return $messages;
+}
+
+/**
+ * Publizon provider exception.
+ */
+class DingPublizonException extends DingProviderUserException {
+  /**
+   * Convert a PublizonException to a DingPublizonException.
+   *
+   * Rethrows the new exception.
+   *
+   * @throws DingPublizonException
+   */
+  static public function convert(PublizonException $publizon_exception) {
+    $messages = _publizon_error_messages();
+    $code = $publizon_exception->getCode();
+    $code = isset($messages[$code]) ? $code : -1;
+    $message = $messages[$code];
+    throw new self($message, $code, $publizon_exception);
+  }
+}
