@@ -175,7 +175,7 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
     drupal_add_library('system', 'drupal.ajax');
     list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
-    if (_reol_loan_map_availability($availability)) {
+    if (_reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED) {
       switch (reol_base_get_type_name($entity->type)) {
         case "ebook":
           $buttons[] = array(
