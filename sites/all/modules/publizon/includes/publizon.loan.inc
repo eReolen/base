@@ -69,9 +69,15 @@ function publizon_loan_create($account, $local_id) {
 
   $isbn = reol_base_get_isbn($local_id);
 
-  $client = PublizonClient::getClient();
-  // This will throw exception if loan does not go through.
-  $result = $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
+  try {
+    $client = PublizonClient::getClient();
+    // This will throw exception if loan does not go through.
+    $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
+  }
+  catch (PublizonException $e) {
+    DingPublizonException::convert($e);
+  }
+
 }
 
 /**

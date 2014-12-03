@@ -1,0 +1,47 @@
+
+
+
+// Kick ddbasic in the nads...
+.field-name-ding-entity-buttons .reserve-button:link,
+.form-submit,
+#edit-cancel,
+.action-button {
+  @extend %button-default;
+}
+
+
+.button,
+a.button,
+%button-default {
+  @include border-radius(2px);
+  color: #ffffff;
+  background-color: #c7003d;
+  background-image: none;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: .2px;
+  padding: 12px 20px;
+  margin-right: 16px;
+  border: none;
+
+  &:link,
+  &:visited,
+  &:focus,
+  &:active {
+    color: #ffffff;
+    text-decoration: none;
+    background-image: none;
+    background-color: #c7003d;
+  }
+
+  &:hover {
+    background-color: #ba0038;
+    background-image: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
