@@ -24,9 +24,18 @@ $plugin = array(
 function read_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
   $block->title = t('Read your ebook');
+
+  $ting_entity = $context[0]->data;
+
+  global $user;
+  $order = ding_provider_invoke('loan', 'get', $user, $ting_entity->localId);
+  if (!$order) {
+    return new StdClass();
+  }
+
   $block->content = theme('read', array(
     // TODO Do not hardcode.
-    'retailer_order_number' => variable_get('tmp_last_loan_retailer', ''),
+    'retailer_order_number' => $order['retailer_order_number'],
   ));
 
   return $block;
