@@ -361,6 +361,155 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-video-body'
+  $field_instances['node-video-body'] = array(
+    'bundle' => 'video',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'trim_length' => 600,
+        ),
+        'type' => 'text_summary_or_trimmed',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'body',
+    'label' => 'Body',
+    'required' => FALSE,
+    'settings' => array(
+      'display_summary' => TRUE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 20,
+        'summary_rows' => 5,
+      ),
+      'type' => 'text_textarea_with_summary',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-video-field_reol_entity_type'
+  $field_instances['node-video-field_reol_entity_type'] = array(
+    'bundle' => 'video',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 1,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_reol_entity_type',
+    'label' => 'Entity type',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance: 'node-video-field_video'
+  $field_instances['node-video-field_video'] = array(
+    'bundle' => 'video',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_video',
+    'label' => 'Video',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 0,
+      'default_image' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'media',
+      'settings' => array(
+        'allowed_schemes' => array(
+          'public' => 0,
+          'vimeo' => 'vimeo',
+          'youtube' => 'youtube',
+        ),
+        'allowed_types' => array(
+          'audio' => 0,
+          'document' => 0,
+          'image' => 0,
+          'video' => 'video',
+        ),
+        'browser_plugins' => array(
+          'ding_content' => 0,
+          'media_default--media_browser_1' => 0,
+          'media_default--media_browser_my_files' => 0,
+          'media_internet' => 0,
+          'upload' => 0,
+          'youtube' => 'youtube',
+        ),
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'media_generic',
+      'weight' => 4,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Body');
@@ -370,6 +519,7 @@ function reol_frontend_field_default_field_instances() {
   t('List image');
   t('Materials');
   t('Portrait');
+  t('Video');
 
   return $field_instances;
 }
