@@ -96,9 +96,15 @@ function publizon_reservation_create($account, $local_id, $options) {
     $phone = $options['field_phone'][$phone_lang][0]['value'];
   }
 
-  $client = PublizonClient::getClient();
-  // This will throw exception if reservation does not go through.
-  $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $isbn, $email, $phone);
+  try {
+    $client = PublizonClient::getClient();
+    // This will throw exception if reservation does not go through.
+    $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $isbn, $email, $phone);
+  }
+  catch (PublizonException $e) {
+    DingPublizonException::convert($e);
+  }
+
   return array();
 }
 
