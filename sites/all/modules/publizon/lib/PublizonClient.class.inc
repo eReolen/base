@@ -239,6 +239,39 @@ class PublizonClient {
   }
 
   /**
+   * Get a users loan for an isbn.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer to get loan for.
+   * @param string $card_number
+   *   The users card number/CPR also known as login id.
+   * @param string $isbn
+   *   ISBN number on the product.
+   *
+   * @return PublizonLoan
+   *   Returns the loan, or FALSE if no loan exists.
+   *
+   * @throws PublizonException
+   */
+  public function getLibraryUserOrder($retailer_id, $card_number, $isbn) {
+    // Make request to the web-service for the loans.
+    $response = $this->call('library_user_order_list', 'GetLibraryUserOrder', $retailer_id, array(
+      'pub:cardnumber' => $card_number,
+      'pub:ebookid' => $isbn,
+    ), array('pub' => 'http://pubhub.dk/'));
+
+    // Check if any data was returned.
+    $data = $response->xpath('//data/orderitem');
+    if (isset($data[0])) {
+      while (list(, $loan) = each($data)) {
+        return new PublizonLoan($loan);
+      }
+    }
+
+    return FALSE;
+  }
+
+  /**
    * Fetch XML representation for a product at publizon.
    *
    * You should not use this function directly, but simple create a new
