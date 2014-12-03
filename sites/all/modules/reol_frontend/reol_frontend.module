@@ -58,11 +58,6 @@ function reol_frontend_preprocess_node(&$variables) {
   elseif ($variables['node']->type == "author_portrait") {
     $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
   }
-
-  elseif ($variables['node']->type == 'video' && $variables['view_mode'] == 'teaser') {
-    dpm($variables['content']);
-    $variables['video_thumb'] = "";
-  }
 }
 
 /**
