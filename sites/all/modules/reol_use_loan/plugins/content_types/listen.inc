@@ -24,9 +24,17 @@ $plugin = array(
 function listen_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
   $block->title = t('Listen to your audiobook');
+
+  $ting_entity = $context[0]->data;
+
+  global $user;
+  $order = ding_provider_invoke('loan', 'get', $user, $ting_entity->localId);
+  if (!$order) {
+    return new StdClass();
+  }
+
   $block->content = theme('listen', array(
-    // TODO Do not hardcode.
-    'internal_order_number' => variable_get('tmp_last_loan_internal', ''),
+    'internal_order_number' => $order['internal_order_number'],
     'player_client_id' => variable_get('publizon_player_client_id', ''),
   ));
 
