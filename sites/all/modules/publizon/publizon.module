@@ -200,7 +200,7 @@ function publizon_ting_covers($entities) {
       continue;
     }
 
-    $filename = ting_covers_object_path($local_id);
+    $filename = ting_covers_object_path($entity->id);
     $directory = dirname($filename);
 
     // Build the destination folder tree if it doesn't already exist.
