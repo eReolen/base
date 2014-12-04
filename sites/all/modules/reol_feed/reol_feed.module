@@ -177,6 +177,8 @@ function reol_feed_menu() {
  * Deliver a feed.
  */
 function reol_feed_deliver() {
+  // Ensure that feeds are up to date.
+  reol_feed_ensure_feeds();
   $feed_path = array();
   $i = 1;
   while (($p = arg($i)) != NULL) {
