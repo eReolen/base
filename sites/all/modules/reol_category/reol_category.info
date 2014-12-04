@@ -1,0 +1,4 @@
+name = eReolen category
+description = Handles eReolen category menu.
+core = 7.x
+package = ereolen.dk

@@ -16,6 +16,7 @@ function reol_base_install() {
     reol_base_update_7104();
     reol_base_update_7105();
     reol_base_update_7106();
+    reol_base_update_7107();
   }
 }
 
@@ -75,4 +76,12 @@ function reol_base_update_7105() {
  */
 function reol_base_update_7106() {
   module_enable(array('reol_use_loan'), TRUE);
+}
+
+
+/**
+ * Enable reol_category module.
+ */
+function reol_base_update_7107() {
+  module_enable(array('reol_category'), TRUE);
 }
