@@ -88,7 +88,6 @@ function reol_feed_feeds_add_news_item($feed, $node) {
 
   $item = $feed->addChild('item');
   $item->addChild('guid', $node->nid);
-  $item->addChild('source', "ereolen");
   $item->addChild('type', "news");
   $item->addChild('date', $node_wrapper->created->value());
   $item->addChild('title', $node_wrapper->title->value());
@@ -146,7 +145,6 @@ function reol_feed_feeds_add_video($feed, $node) {
 
   $item = $feed->addChild('item');
   $item->addChild('guid', $node->nid);
-  $item->addChild('source', "ereolen");
   $item->addChild('type', "video");
   $item->addChild('date', $node_wrapper->created->value());
   $item->addChild('title', $node_wrapper->title->value());
@@ -181,7 +179,6 @@ function reol_feed_feeds_add_author_portrait($feed, $node) {
 
   $item = $feed->addChild('item');
   $item->addChild('guid', $node->nid);
-  $item->addChild('source', "ereolen");
   $item->addChild('type', "author");
   $item->addChild('date', $node_wrapper->created->value());
   $item->addChild('title', $node_wrapper->title->value());
@@ -213,7 +210,6 @@ function reol_feed_feeds_add_review($feed, $review) {
   $ting_object = ding_entity_load($review->ding_entity_id);
 
   $item->addChild('guid', $review->nid);
-  $item->addChild('source', "ereolen");
   $item->addChild('type', "review");
   $item->addChild('title', $ting_object->title);
   $item->addChild('date', $review->credate);
