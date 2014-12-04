@@ -59,13 +59,13 @@ function reol_feed_ensure_feeds() {
  *   Array defining the feeds that exist.
  */
 function reol_feed_get_feeds() {
-  $file = drupal_get_path('module', 'reol_feed') . '/includes/reol_feed.feeds.inc';
+  $path = drupal_get_path('module', 'reol_feed') . '/includes';
 
   return array(
     array(
       'name' => 'carousel',
       'callback' => 'reol_feed_feeds_carousel',
-      'file' => $file,
+      'file' => $path . '/reol_feed.carousel.inc',
       'files' => array(
         array(
           'type' => 'ebook',
@@ -81,7 +81,7 @@ function reol_feed_get_feeds() {
     array(
       'name' => 'frontpage',
       'callback' => 'reol_feed_feeds_frontpage',
-      'file' => $file,
+      'file' => $path . '/reol_feed.frontpage.inc',
       'files' => array(
         array(
           'type' => 'ebook',
