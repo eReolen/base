@@ -12,34 +12,52 @@ function reol_feed_cron() {
 }
 
 /**
+ * Implements hook_flush_caches().
+ */
+function reol_feed_flush_caches() {
+  // Force rebuild of feeds after cache has been cleared.
+  variable_set('reol_feed_rebuild_feeds', TRUE);
+}
+
+/**
  * Ensure that all feeds are updated.
  */
 function reol_feed_ensure_feeds() {
   // Go through all feeds.
   foreach (reol_feed_get_feeds() as $feed) {
-    // Find out if one of the files is to old.
-    foreach ($feed['files'] as $file) {
-      $file_path = reol_feed_get_filename($file);
+    // Find out if feed needs to be updated.
+    // If variable is set, force rebuild of feeds.
+    $update = variable_get('reol_feed_rebuild_feeds', FALSE);
+    if (!$update) {
+      foreach ($feed['files'] as $file) {
+        $file_path = reol_feed_get_filename($file);
 
-      // Find out if feed needs to be updated.
-      $update = FALSE;
-      if (!file_exists($file_path)) {
-        $update = TRUE;
-      }
-      elseif (filemtime($file_path) < time() - $feed['lifetime']) {
-        $update = TRUE;
-      }
-
-      // If feed needs to be updated, do it.
-      if ($update) {
-        // If file is specified, we require it.
-        if (isset($feed['file'])) {
-          require_once $feed['file'];
+        if (!file_exists($file_path)) {
+          $update = TRUE;
         }
-        call_user_func_array($feed['callback'], array());
+        elseif (filemtime($file_path) < time() - $feed['lifetime']) {
+          $update = TRUE;
+        }
+
+        // We have found out, we need to update feed.
+        // No need to continue.
+        if ($update) {
+          break;
+        }
       }
     }
+
+    // If feed needs to be updated, do it.
+    if ($update) {
+      // If file is specified, we require it.
+      if (isset($feed['file'])) {
+        require_once $feed['file'];
+      }
+      call_user_func_array($feed['callback'], array());
+    }
   }
+  // Reset rebuild status.
+  variable_del('reol_feed_rebuild_feeds');
 }
 
 /**
@@ -89,4 +107,19 @@ function reol_feed_get_filename($file) {
   }
 
   return $feed_directory . '/' . $file['filename'];
+}
+
+/**
+ * Write a feed.
+ *
+ * @param array $file
+ *   File definition, containing at least 'type' and 'filename' keys.
+ * @param string $contents
+ *   File contents to write.
+ *
+ * @return bool
+ *   Whether or not write was successfull.
+ */
+function reol_feed_write_feed($file, $contents) {
+  return file_put_contents(reol_feed_get_filename($file), $contents) !== FALSE;
 }
