@@ -13,59 +13,51 @@ function reol_feed_feeds_frontpage() {
   $e_feed = new SimpleXMLElement('<feed></feed>');
   $a_feed = new SimpleXMLElement('<feed></feed>');
 
-  $feed_item_count = variable_get('reol_feed_frontpage_item_count', 2);
   // Add news to feeds.
-  $news_array = array(
-    (object) array(
-      'feed' => $e_feed,
-      'items' => reol_feed_get_latest('article', 'ebook', $feed_item_count),
-    ),
-    (object) array(
-      'feed' => $a_feed,
-      'items' => reol_feed_get_latest('article', 'audiobook', $feed_item_count),
-    ),
-  );
-
-  // Add the news found to feed.
-  foreach ($news_array as $type) {
-    foreach ($type->items as $node) {
-      reol_feed_feeds_add_news_item($type->feed, $node);
-    }
-  }
+  reol_feed_feeds_add_items('article', $e_feed, $a_feed, 'reol_feed_feeds_add_news_item');
 
   // Add video to feeds.
-  $video_array = array(
+  reol_feed_feeds_add_items('video', $e_feed, $a_feed, 'reol_feed_feeds_add_video');
+  var_dump($e_feed->asXML());
+
+  // Add author portraits to feeds.
+  // TODO
+
+  // Add review to feeds.
+  // TODO
+}
+
+/**
+ * Add items to feed.
+ *
+ * @param string $type
+ *   The node type to add.
+ * @param SimpleXMLElement $e_feed
+ *   The ebook feed to add to.
+ * @param SimpleXMLElement $a_feed
+ *   The audiobook feed to add to.
+ * @param callable $add_callback
+ *   The callback for adding the item to feed.
+ */
+function reol_feed_feeds_add_items($type, $e_feed, $a_feed, $add_callback) {
+  $feed_item_count = variable_get('reol_feed_frontpage_item_count', 2);
+  // Add item to feeds.
+  $item_array = array(
     (object) array(
       'feed' => $e_feed,
-      'items' => reol_feed_get_latest('video', 'ebook', $feed_item_count),
+      'items' => reol_feed_get_latest($type, 'ebook', $feed_item_count),
     ),
     (object) array(
       'feed' => $a_feed,
-      'items' => reol_feed_get_latest('video', 'audiobook', $feed_item_count),
+      'items' => reol_feed_get_latest($type, 'audiobook', $feed_item_count),
     ),
   );
 
   // Add the videos found to feed.
-  foreach ($video_array as $type) {
+  foreach ($item_array as $type) {
     foreach ($type->items as $node) {
-      reol_feed_feeds_add_video($type->feed, $node);
+      $add_callback($type->feed, $node);
     }
-  }
-
-  // Add author portraits to feeds.
-  for ($i = 0; $i < $feed_item_count; $i++) {
-    $e_item = $e_feed->addChild('item');
-
-    $a_item = $e_feed->addChild('item');
-
-  }
-
-  // Add review to feeds.
-  for ($i = 0; $i < $feed_item_count; $i++) {
-    $e_item = $e_feed->addChild('item');
-
-    $a_item = $e_feed->addChild('item');
-
   }
 }
 
