@@ -134,6 +134,16 @@ function reol_frontend_image_default_styles() {
         ),
         'weight' => 1,
       ),
+      9 => array(
+        'label' => 'Afmæt',
+        'help' => 'Afmæt konverterer et billede til gråtoner.',
+        'effect callback' => 'image_desaturate_effect',
+        'dimensions passthrough' => TRUE,
+        'module' => 'image',
+        'name' => 'image_desaturate',
+        'data' => array(),
+        'weight' => 2,
+      ),
     ),
   );
 

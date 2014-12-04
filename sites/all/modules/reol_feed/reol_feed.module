@@ -59,13 +59,13 @@ function reol_feed_ensure_feeds() {
  *   Array defining the feeds that exist.
  */
 function reol_feed_get_feeds() {
-  $file = drupal_get_path('module', 'reol_feed') . '/includes/reol_feed.feeds.inc';
+  $path = drupal_get_path('module', 'reol_feed') . '/includes';
 
   return array(
     array(
       'name' => 'carousel',
       'callback' => 'reol_feed_feeds_carousel',
-      'file' => $file,
+      'file' => $path . '/reol_feed.carousel.inc',
       'files' => array(
         array(
           'type' => 'ebook',
@@ -74,6 +74,22 @@ function reol_feed_get_feeds() {
         array(
           'type' => 'audiobook',
           'filename' => 'carousel.xml',
+        ),
+      ),
+      'lifetime' => 24 * 60 * 60,
+    ),
+    array(
+      'name' => 'frontpage',
+      'callback' => 'reol_feed_feeds_frontpage',
+      'file' => $path . '/reol_feed.frontpage.inc',
+      'files' => array(
+        array(
+          'type' => 'ebook',
+          'filename' => 'frontpage.xml',
+        ),
+        array(
+          'type' => 'audiobook',
+          'filename' => 'frontpage.xml',
         ),
       ),
       'lifetime' => 24 * 60 * 60,
@@ -164,4 +180,37 @@ function reol_feed_deliver() {
   // Pass through file.
   readfile($feed_file);
   drupal_exit();
+}
+
+/**
+ * Get the latest nodes of a type limiting by count.
+ *
+ * @param string $type
+ *   The content type to get nodes for.
+ * @param int $count
+ *   The number of items to return.
+ *
+ * @return array
+ *   Array of loaded nodes.
+ */
+function reol_feed_get_latest($type, $ting_type, $count = 2) {
+  $query = db_select('node', 'n')
+    ->fields('n', array('nid'))
+    ->condition('n.type', $type)
+    ->condition(db_or()
+      ->condition('t.field_reol_entity_type_value', $ting_type)
+      ->isNull('t.field_reol_entity_type_value')
+    )
+    ->range(0, $count)
+    ->orderBy('n.created', 'DESC');
+  $query->leftJoin('field_data_field_reol_entity_type', 't', 'n.nid = t.entity_id');
+  $results = $query->execute()
+    ->fetchAll();
+
+  $latest = array();
+  foreach ($results as $res) {
+    $latest[] = node_load($res->nid);
+  }
+
+  return $latest;
 }
