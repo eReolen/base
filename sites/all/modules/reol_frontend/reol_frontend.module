@@ -22,7 +22,27 @@ function reol_frontend_entity_info_alter(&$entity_info) {
       'label' => t('Video on frontpage'),
       'custom settings' => TRUE,
     ),
+    'video_show' => array(
+      'label' => t('Video player'),
+      'custom settings' => TRUE,
+    ),
   );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reol_frontend_menu() {
+  $items = array();
+
+  $items['video/%node/view'] = array(
+    'page callback' => 'reol_frontend_view_video',
+    'page arguments' => array(1),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
 }
 
 /**
@@ -157,4 +177,20 @@ function reol_frontend_flush_caches() {
     );
     path_save($path);
   }
+}
+
+/**
+ * View a video from modal.
+ *
+ * @param StdClass $node
+ *   The video node.
+ *
+ * @return array
+ *   Ajax render array.
+ */
+function reol_frontend_view_video($node) {
+  $commands = array();
+  $commands[] = ajax_command_ding_popup('reol_frontend', t('View video'), drupal_render(node_view($node, 'full')), array('refresh' => TRUE, 'class' => array('video-modal')));
+
+  return array('#type' => 'ajax', '#commands' => $commands);
 }
