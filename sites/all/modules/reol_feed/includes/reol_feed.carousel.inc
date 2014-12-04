@@ -19,17 +19,17 @@ function reol_feed_feeds_carousel() {
   foreach ($searches as $index => $search) {
     // Add item to feed.
     $e_item = $e_feed->addChild('item');
-    $e_item->addChild('guid', "e_" . md5($search['query']));
-    $e_item->addChild('source', "ereolen");
-    $e_item->addChild('title', $search['title']);
-    $e_item->addChild('query', $search['query']);
+    $e_item->addChild('guid')->{0} = "e_" . md5($search['query']);
+    $e_item->addChild('source')->{0} = "ereolen";
+    $e_item->addChild('title')->{0} = $search['title'];
+    $e_item->addChild('query')->{0} = $search['query'];
     $e_books = $e_item->addChild('books');
 
     $a_item = $a_feed->addChild('item');
-    $a_item->addChild('guid', "a_" . md5($search['query']));
-    $a_item->addChild('source', "netlydbog");
-    $a_item->addChild('title', $search['title']);
-    $a_item->addChild('query', $search['query']);
+    $a_item->addChild('guid')->{0} = "a_" . md5($search['query']);
+    $a_item->addChild('source')->{0} = "netlydbog";
+    $a_item->addChild('title')->{0} = $search['title'];
+    $a_item->addChild('query')->{0} = $search['query'];
     $a_books = $a_item->addChild('books');
 
     $results = _ting_search_carousel_get_content($index);
@@ -43,7 +43,8 @@ function reol_feed_feeds_carousel() {
         $books = $a_books;
       }
 
-      $book = $books->addChild('book', $ting_object->title);
+      $book = $books->addChild('book');
+      $book->{0} = $ting_object->title;
       // The search from _ting_search_carousel_get_content fetches covers,
       // so we are safe to just get the file path, and use that.
       $book->addAttribute('cover', file_create_url(ting_covers_object_path($ting_object->id)));
