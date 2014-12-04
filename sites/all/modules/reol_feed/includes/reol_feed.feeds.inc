@@ -62,3 +62,116 @@ function reol_feed_feeds_carousel() {
     ), $a_feed->asXML());
   }
 }
+
+/**
+ * Generate feed for the frontpage items.
+ */
+function reol_feed_feeds_frontpage() {
+  // Prepare XML.
+  $e_feed = new SimpleXMLElement('<feed></feed>');
+  $a_feed = new SimpleXMLElement('<feed></feed>');
+
+  $feed_item_count = variable_get('reol_feed_frontpage_item_count', 2);
+  // Add news to feeds.
+  $news_array = array(
+    (object) array(
+      'feed' => $e_feed,
+      'items' => reol_feed_get_latest('article', 'ebook', $feed_item_count),
+    ),
+    (object) array(
+      'feed' => $a_feed,
+      'items' => reol_feed_get_latest('article', 'audiobook', $feed_item_count),
+    ),
+  );
+
+  // Add the news found to feed.
+  foreach ($news_array as $type) {
+    foreach ($type->items as $node) {
+      reol_feed_feeds_add_news_item($type->feed, $node);
+    }
+  }
+
+  // Add video to feeds.
+  for ($i = 0; $i < $feed_item_count; $i++) {
+    $e_item = $e_feed->addChild('item');
+
+    $a_item = $e_feed->addChild('item');
+
+  }
+
+  // Add author portraits to feeds.
+  for ($i = 0; $i < $feed_item_count; $i++) {
+    $e_item = $e_feed->addChild('item');
+
+    $a_item = $e_feed->addChild('item');
+
+  }
+
+  // Add review to feeds.
+  for ($i = 0; $i < $feed_item_count; $i++) {
+    $e_item = $e_feed->addChild('item');
+
+    $a_item = $e_feed->addChild('item');
+
+  }
+}
+
+/**
+ * Add a news item to a feed.
+ *
+ * @param SimpleXMLElement $feed
+ *   The element to add news item to.
+ * @param StdClass $node
+ *   The news item object.
+ */
+function reol_feed_feeds_add_news_item($feed, $node) {
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+
+  $item = $feed->addChild('item');
+  $item->addChild('guid')->{0} = $node->nid;
+  $item->addChild('source')->{0} = "ereolen";
+  $item->addChild('type')->{0} = "news";
+  $item->addChild('date')->{0} = $node_wrapper->created->value();
+  $item->addChild('title')->{0} = $node_wrapper->title->value();
+
+  // To make sure that we get either summary, or trimmed body,
+  // do it this way:
+  $body = field_get_items('node', $node, 'body');
+  $summary = field_view_value('node', $node, 'body', $body[0], 'teaser');
+  $item->addChild('description')->{0} = strip_tags($summary['#markup']);
+
+  $body = $node_wrapper->body->value();
+  $item->addChild('content')->{0} = strip_tags($body['safe_value']);
+
+  global $base_url;
+
+  $node_link = $item->addChild('link');
+  $node_link->addAttribute('type', 'content');
+  $node_link->{0} = $base_url . '/node/' . $node->nid;
+
+  $thumb_link = $item->addChild('link');
+  $thumb_link->addAttribute('type', 'thumbnail');
+  $thumb = $node_wrapper->field_ding_news_list_image->value();
+  $thumb_link->{0} = file_create_url($thumb['uri']);
+
+  // Add ISBN numbers of referenced titles.
+  $isbns = $item->addChild('isbns');
+
+  $lang = field_language('node', $node, 'field_ding_news_materials');
+  $materials = $node->field_ding_news_materials[$lang];
+
+  if ($materials) {
+    // Add referenced materials.
+    foreach ($materials as $material) {
+      $tid = $material['value']->endpoints[$lang][1]['entity_id'];
+      $ting_objects = entity_load('ting_object', array($tid));
+      $ting_object = $ting_objects[$tid];
+
+      // Make sure we have cover.
+      ting_covers_load(array($ting_object->id));
+
+      $isbn = $isbns->addChild('isbn', reol_base_get_isbn($ting_object->localId));
+      $isbn->addAttribute('cover', file_create_url(ting_covers_object_path($ting_object->id)));
+    }
+  }
+}
