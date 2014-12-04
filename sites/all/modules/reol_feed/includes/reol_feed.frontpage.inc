@@ -97,19 +97,19 @@ function reol_feed_feeds_add_news_item($feed, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
-  $item->addChild('guid')->{0} = $node->nid;
-  $item->addChild('type')->{0} = "news";
-  $item->addChild('date')->{0} = $node_wrapper->created->value();
-  $item->addChild('title')->{0} = $node_wrapper->title->value();
+  $item->guid = $node->nid;
+  $item->type = "news";
+  $item->date = $node_wrapper->created->value();
+  $item->title = $node_wrapper->title->value();
 
   // To make sure that we get either summary, or trimmed body,
   // do it this way:
   $body = field_get_items('node', $node, 'body');
   $summary = field_view_value('node', $node, 'body', $body[0], 'teaser');
-  $item->addChild('description')->{0} = strip_tags($summary['#markup']);
+  $item->description = strip_tags($summary['#markup']);
 
   $body = $node_wrapper->body->value();
-  $item->addChild('content')->{0} = strip_tags($body['safe_value']);
+  $item->content = strip_tags($body['safe_value']);
 
   global $base_url;
 
@@ -157,13 +157,13 @@ function reol_feed_feeds_add_video($feed, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
-  $item->addChild('guid')->{0} = $node->nid;
-  $item->addChild('type')->{0} = "video";
-  $item->addChild('date')->{0} = $node_wrapper->created->value();
-  $item->addChild('title')->{0} = $node_wrapper->title->value();
+  $item->guid = $node->nid;
+  $item->type = "video";
+  $item->date = $node_wrapper->created->value();
+  $item->title = $node_wrapper->title->value();
 
   $body = $node_wrapper->body->value();
-  $item->addChild('description')->{0} = strip_tags($body['safe_value']);
+  $item->description = strip_tags($body['safe_value']);
 
   global $base_url;
 
@@ -193,13 +193,13 @@ function reol_feed_feeds_add_author_portrait($feed, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
-  $item->addChild('guid')->{0} = $node->nid;
-  $item->addChild('type')->{0} = "author";
-  $item->addChild('date')->{0} = $node_wrapper->created->value();
-  $item->addChild('title')->{0} = $node_wrapper->title->value();
+  $item->guid = $node->nid;
+  $item->type = "author";
+  $item->date = $node_wrapper->created->value();
+  $item->title = $node_wrapper->title->value();
 
   $body = $node_wrapper->body->value();
-  $item->addChild('description')->{0} = strip_tags($body['safe_value']);
+  $item->description = strip_tags($body['safe_value']);
 
   global $base_url;
 
@@ -226,13 +226,13 @@ function reol_feed_feeds_add_review($feed, $review) {
 
   $ting_object = ding_entity_load($review->ding_entity_id);
 
-  $item->addChild('guid')->{0} = $review->nid;
-  $item->addChild('type')->{0} = "review";
-  $item->addChild('title')->{0} = $ting_object->title;
-  $item->addChild('date')->{0} = $review->credate;
-  $item->addChild('description')->{0} = $review->description;
+  $item->guid = $review->nid;
+  $item->type = "review";
+  $item->title = $ting_object->title;
+  $item->date = $review->credate;
+  $item->description = $review->description;
   $authors = $ting_object->getCreators();
-  $item->addChild('author')->{0} = $authors[0];
+  $item->author = $authors[0];
 
   global $base_url;
 
