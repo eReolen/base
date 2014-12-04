@@ -113,11 +113,13 @@ function reol_feed_feeds_add_news_item($feed, $node) {
 
   global $base_url;
 
-  $node_link = $item->addChild('link')->{0} = $base_url . '/node/' . $node->nid;
+  $node_link = $item->addChild('link');
+  $node_link->{0} = $base_url . '/node/' . $node->nid;
   $node_link->addAttribute('type', 'content');
 
   $thumb = $node_wrapper->field_ding_news_list_image->value();
-  $thumb_link = $item->addChild('link')->{0} = file_create_url($thumb['uri']);
+  $thumb_link = $item->addChild('link');
+  $thumb_link->{0} = file_create_url($thumb['uri']);
   $thumb_link->addAttribute('type', 'thumbnail');
 
   // Add ISBN numbers of referenced titles.
@@ -136,7 +138,8 @@ function reol_feed_feeds_add_news_item($feed, $node) {
       // Make sure we have cover.
       ting_covers_load(array($ting_object->id));
 
-      $isbn = $isbns->addChild('isbn')->{0} = reol_base_get_isbn($ting_object->localId);
+      $isbn = $isbns->addChild('isbn');
+      $isbn->{0} = reol_base_get_isbn($ting_object->localId);
       $isbn->addAttribute('cover', file_create_url(ting_covers_object_path($ting_object->id)));
     }
   }
@@ -164,7 +167,8 @@ function reol_feed_feeds_add_video($feed, $node) {
 
   global $base_url;
 
-  $node_link = $item->addChild('link')->{0} = $base_url . '/node/' . $node->nid;
+  $node_link = $item->addChild('link');
+  $node_link->{0} = $base_url . '/node/' . $node->nid;
   $node_link->addAttribute('type', 'content');
 
   $file_value = $node_wrapper->field_video->value();
@@ -172,7 +176,8 @@ function reol_feed_feeds_add_video($feed, $node) {
   $file = $files[$file_value['fid']];
 
   $view = file_view($file, 'video_frontpage');
-  $thumb_link = $item->addChild('link')->{0} = file_create_url($view['file']['#path']);
+  $thumb_link = $item->addChild('link');
+  $thumb_link->{0} = file_create_url($view['file']['#path']);
   $thumb_link->addAttribute('type', 'thumbnail');
 }
 
@@ -198,11 +203,13 @@ function reol_feed_feeds_add_author_portrait($feed, $node) {
 
   global $base_url;
 
-  $node_link = $item->addChild('link')->{0} = $base_url . '/node/' . $node->nid;
+  $node_link = $item->addChild('link');
+  $node_link->{0} = $base_url . '/node/' . $node->nid;
   $node_link->addAttribute('type', 'content');
 
   $thumb = $node_wrapper->field_portrait->value();
-  $thumb_link = $item->addChild('link')->{0} = file_create_url($thumb['uri']);
+  $thumb_link = $item->addChild('link');
+  $thumb_link->{0} = file_create_url($thumb['uri']);
   $thumb_link->addAttribute('type', 'thumbnail');
 }
 
@@ -229,7 +236,8 @@ function reol_feed_feeds_add_review($feed, $review) {
 
   global $base_url;
 
-  $node_link = $item->addChild('link')->{0} = $review->link;
+  $node_link = $item->addChild('link');
+  $node_link->{0} = $review->link;
   $node_link->addAttribute('type', 'content');
 
   // Make sure we have cover.
@@ -237,9 +245,11 @@ function reol_feed_feeds_add_review($feed, $review) {
 
   $cover_uri = file_create_url(ting_covers_object_path($ting_object->id));
 
-  $thumb_link = $item->addChild('link')->{0} = $cover_uri;
+  $thumb_link = $item->addChild('link');
+  $thumb_link->{0} = $cover_uri;
   $thumb_link->addAttribute('type', 'thumbnail');
 
-  $isbn = $item->addChild('isbn')->{0} = reol_base_get_isbn($ting_object->localId);
+  $isbn = $item->addChild('isbn');
+  $isbn->{0} = reol_base_get_isbn($ting_object->localId);
   $isbn->addAttribute('cover', $cover_uri);
 }
