@@ -39,6 +39,16 @@ function reol_feed_feeds_frontpage() {
       unset($type_reviews[$review_key]);
     }
   }
+
+  // Write feeds.
+  reol_feed_write_feed(array(
+    'type' => 'ebook',
+    'filename' => 'frontpage.xml',
+  ), $e_feed->asXML());
+  reol_feed_write_feed(array(
+    'type' => 'audiobook',
+    'filename' => 'frontpage.xml',
+  ), $a_feed->asXML());
 }
 
 /**
