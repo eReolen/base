@@ -498,6 +498,29 @@ function reol_frontend_default_page_manager_pages() {
     $display->content['new-ac463184-769d-4149-9d46-b4f2d8f3c4e7'] = $pane;
     $display->panels['bottom'][0] = 'new-ac463184-769d-4149-9d46-b4f2d8f3c4e7';
     $pane = new stdClass();
+    $pane->pid = 'new-ebc6be3d-c779-43f8-bf16-9556f90c5ff9';
+    $pane->panel = 'bottom';
+    $pane->type = 'views_panes';
+    $pane->subtype = 'videos-panel_pane_1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'arguments' => array(
+        'field_reol_entity_type_value' => '%type:raw',
+      ),
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'ebc6be3d-c779-43f8-bf16-9556f90c5ff9';
+    $display->content['new-ebc6be3d-c779-43f8-bf16-9556f90c5ff9'] = $pane;
+    $display->panels['bottom'][1] = 'new-ebc6be3d-c779-43f8-bf16-9556f90c5ff9';
+    $pane = new stdClass();
     $pane->pid = 'new-bddea60b-3c78-4338-8ac3-4caf87e5a482';
     $pane->panel = 'left';
     $pane->type = 'views_panes';

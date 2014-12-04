@@ -14,6 +14,7 @@ function ajax_command_ding_popup($name, $title, $html, $options = array()) {
     'resubmit' => FALSE,
     'extra_data' => array(),
     'refresh' => FALSE,
+    'class' => array(),
   );
   drupal_add_library('system', 'ui.dialog');
   drupal_add_js(drupal_get_path('module', 'ding_popup') . '/ding_popup.js');
@@ -26,6 +27,7 @@ function ajax_command_ding_popup($name, $title, $html, $options = array()) {
     'resubmit' => (bool) $options['resubmit'],
     'extra_data' => $options['extra_data'],
     'refresh' => (bool) $options['refresh'],
+    'class' => $options['class'],
   );
 }
 

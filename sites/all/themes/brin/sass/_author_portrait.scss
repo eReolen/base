@@ -80,7 +80,7 @@
   }
 }
 
-.view-author-portraits {
+.front .view-author-portraits {
   .view-content > div {
     float: left;
 
@@ -127,4 +127,8 @@
       }
     }
   }
+}
+
+.view-author-portraits {
+  float: left;
 }

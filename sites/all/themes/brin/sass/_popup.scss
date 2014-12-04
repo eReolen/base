@@ -14,4 +14,11 @@
   .messages {
     margin: 16px 0;
   }
+
+  // Try to make it responsive.
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto;
+  top: 100px !important;
+  position: absolute !important;
 }

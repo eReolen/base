@@ -177,11 +177,19 @@ function reol_frontend_node_info() {
       'help' => '',
     ),
     'author_portrait' => array(
-      'name' => t('Author portrait'),
+      'name' => t('Om forfatteren'),
       'base' => 'node_content',
       'description' => t('Contains portraits of authors from Forfatterweb'),
       'has_title' => '1',
       'title_label' => t('Author name'),
+      'help' => '',
+    ),
+    'video' => array(
+      'name' => t('Video'),
+      'base' => 'node_content',
+      'description' => t('Contains videos as shown on type frontpages.'),
+      'has_title' => '1',
+      'title_label' => t('Title'),
       'help' => '',
     ),
   );
