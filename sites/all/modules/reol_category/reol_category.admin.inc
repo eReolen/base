@@ -83,3 +83,26 @@ function reol_category_form_submit_delete(&$form, &$form_state) {
   menu_rebuild();
   $form_state['redirect'] = 'admin/structure/reol_category/manage/' . $form_state['reol_category']->name . '/delete';
 }
+
+/**
+ * Feed settings form.
+ */
+function reol_category_feed_settings($form, &$form_settings) {
+  $options = menu_parent_options(array('main-menu' => t('Main menu')), '');
+
+  $form['reol_category_ebook_mlid'] = array(
+    '#type' => 'select',
+    '#title' => t('EBook menu'),
+    '#default_value' => variable_get('reol_category_ebook_mlid', NULL),
+    '#options' => $options,
+  );
+
+  $form['reol_category_audiobook_mlid'] = array(
+    '#type' => 'select',
+    '#title' => t('Audiobook menu'),
+    '#default_value' => variable_get('reol_category_audiobook_mlid', NULL),
+    '#options' => $options,
+  );
+
+  return system_settings_form($form);
+}

@@ -21,6 +21,15 @@ function reol_category_init() {
 function reol_category_menu() {
   $items = array();
 
+  $items['admin/structure/reol_category/feeds'] = array(
+    'title' => 'Feeds',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reol_category_feed_settings'),
+    'access arguments' => array('administer menu'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'reol_category.admin.inc',
+  );
+
   // Create a suggested menu item for each category.
   foreach (entity_load('reol_category') as $category) {
     $items[$category->categoryPath()] = array(
@@ -97,6 +106,59 @@ function reol_category_form_reol_category_operation_form_alter(&$form, &$form_st
  */
 function reol_category_menu_rebuild($form, &$form_state) {
   menu_rebuild();
+}
+
+function reol_category_feed($type) {
+  if ($mlid = variable_get('reol_category_' . $type . '_mlid', NULL)) {
+    $tree = menu_build_tree('main-menu', array());
+
+    // menu_parent_options() uses odd format, quick fix.
+    $mlid = explode(':', $mlid);
+    $mlid = $mlid[1];
+
+    if ($tree = _reol_category_find_tree($tree, $mlid)) {
+      $items = _reol_category_get_feed_items($tree);
+      return reset($items);
+    }
+  }
+  return array();
+}
+
+/**
+ * Find a specific mlid in a menu tree.
+ */
+function _reol_category_find_tree($tree, $mlid) {
+  foreach ($tree as $item) {
+    if ($item['link']['mlid'] == $mlid) {
+      return array($item);
+    }
+    if (count($item['below'])) {
+      if ($found = _reol_category_find_tree($item['below'], $mlid)) {
+        return $found;
+      }
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Recursively get items for feed.
+ */
+function _reol_category_get_feed_items($tree) {
+  $items = array();
+  foreach ($tree as $item) {
+    if ($item['link']['page_callback'] == 'reol_category_page') {
+      $items[$item['link']['link_title']] = _reol_category($item['link']['link_path']);
+    }
+    else {
+      if (count($item['below'])) {
+        $items[$item['link']['link_title']] = _reol_category_get_feed_items($item['below']);
+      }
+    }
+  }
+
+  // Weed out empty values.
+  return array_filter($items);
 }
 
 /**
