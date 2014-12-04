@@ -91,7 +91,7 @@ function reol_feed_get_feeds() {
  *   Path for the file.
  */
 function reol_feed_get_filename($file) {
-  $feed_directory = variable_get('reol_feed_feed_directory', drupal_get_path('module', 'reol_feed') . '/feeds') . '/' . $file['type'];
+  $feed_directory = reol_feed_get_feeds_directory() . '/' . $file['type'];
 
   // Make sure dir exists.
   if (!file_exists($feed_directory)) {
@@ -99,6 +99,16 @@ function reol_feed_get_filename($file) {
   }
 
   return $feed_directory . '/' . $file['filename'];
+}
+
+/**
+ * Get the directory for storing feeds.
+ *
+ * @return string
+ *   Path to the directory relative to Drupal root.
+ */
+function reol_feed_get_feeds_directory() {
+  return variable_get('reol_feed_feed_directory', drupal_get_path('module', 'reol_feed') . '/feeds');
 }
 
 /**
@@ -114,4 +124,44 @@ function reol_feed_get_filename($file) {
  */
 function reol_feed_write_feed($file, $contents) {
   return file_put_contents(reol_feed_get_filename($file), $contents) !== FALSE;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reol_feed_menu() {
+  $items = array();
+
+  $items['feeds'] = array(
+    'page callback' => 'reol_feed_deliver',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Deliver a feed.
+ */
+function reol_feed_deliver() {
+  $feed_path = array();
+  $i = 1;
+  while (($p = arg($i)) != NULL) {
+    $feed_path[] = $p;
+    $i++;
+  }
+
+  // Find the feed.
+  $feed_path = implode($feed_path, '/');
+  $feed_file = reol_feed_get_feeds_directory() . '/' . $feed_path;
+
+  // Set content type as the one from the file.
+  $finfo = finfo_open(FILEINFO_MIME_TYPE);
+  $type = finfo_file($finfo, $feed_file);
+  finfo_close($finfo);
+  header('Content-Type: ' . $type);
+
+  // Pass through file.
+  readfile($feed_file);
+  drupal_exit();
 }
