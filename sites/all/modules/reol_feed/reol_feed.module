@@ -1,0 +1,92 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen feed feature.
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function reol_feed_cron() {
+  reol_feed_ensure_feeds();
+}
+
+/**
+ * Ensure that all feeds are updated.
+ */
+function reol_feed_ensure_feeds() {
+  // Go through all feeds.
+  foreach (reol_feed_get_feeds() as $feed) {
+    // Find out if one of the files is to old.
+    foreach ($feed['files'] as $file) {
+      $file_path = reol_feed_get_filename($file);
+
+      // Find out if feed needs to be updated.
+      $update = FALSE;
+      if (!file_exists($file_path)) {
+        $update = TRUE;
+      }
+      elseif (filemtime($file_path) < time() - $feed['lifetime']) {
+        $update = TRUE;
+      }
+
+      // If feed needs to be updated, do it.
+      if ($update) {
+        // If file is specified, we require it.
+        if (isset($feed['file'])) {
+          require_once $feed['file'];
+        }
+        call_user_func_array($feed['callback'], array());
+      }
+    }
+  }
+}
+
+/**
+ * Get an array of all feeds.
+ *
+ * @return array
+ *   Array defining the feeds that exist.
+ */
+function reol_feed_get_feeds() {
+  $file = drupal_get_path('module', 'reol_feed') . '/includes/reol_feed.feeds.inc';
+
+  return array(
+    array(
+      'name' => 'carousel',
+      'callback' => 'reol_feed_feeds_carousel',
+      'file' => $file,
+      'files' => array(
+        array(
+          'type' => 'ebook',
+          'filename' => 'carousel.xml',
+        ),
+        array(
+          'type' => 'audiobook',
+          'filename' => 'carousel.xml',
+        ),
+      ),
+      'lifetime' => 24 * 60 * 60,
+    ),
+  );
+}
+
+/**
+ * Get the filename for a file definition from feed array.
+ *
+ * @param array $file
+ *   File definition, containing at least 'type' and 'filename' keys.
+ *
+ * @return string
+ *   Path for the file.
+ */
+function reol_feed_get_filename($file) {
+  $feed_directory = variable_get('reol_feed_feed_directory', drupal_get_path('module', 'reol_feed') . '/feeds') . '/' . $file['type'];
+
+  // Make sure dir exists.
+  if (!file_exists($feed_directory)) {
+    mkdir($feed_directory, 0777, TRUE);
+  }
+
+  return $feed_directory . '/' . $file['filename'];
+}
