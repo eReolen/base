@@ -18,7 +18,6 @@ function reol_feed_feeds_frontpage() {
 
   // Add video to feeds.
   reol_feed_feeds_add_items('video', $e_feed, $a_feed, 'reol_feed_feeds_add_video');
-  var_dump($e_feed->asXML());
 
   // Add author portraits to feeds.
   // TODO
