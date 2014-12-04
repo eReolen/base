@@ -20,7 +20,7 @@ function reol_feed_feeds_frontpage() {
   reol_feed_feeds_add_items('video', $e_feed, $a_feed, 'reol_feed_feeds_add_video');
 
   // Add author portraits to feeds.
-  // TODO
+  reol_feed_feeds_add_items('author_portrait', $e_feed, $a_feed, 'reol_feed_feeds_add_author_portrait');
 
   // Add review to feeds.
   // TODO
@@ -150,5 +150,36 @@ function reol_feed_feeds_add_video($feed, $node) {
 
   $view = file_view($file, 'video_frontpage');
   $thumb_link = $item->addChild('link', file_create_url($view['file']['#path']));
+  $thumb_link->addAttribute('type', 'thumbnail');
+}
+
+/**
+ * Add an author portrait to feed.
+ *
+ * @param SimpleXMLElement $feed
+ *   The element to add the author portrait to.
+ * @param StdClass $node
+ *   The author portrait object.
+ */
+function reol_feed_feeds_add_author_portrait($feed, $node) {
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+
+  $item = $feed->addChild('item');
+  $item->addChild('guid', $node->nid);
+  $item->addChild('source', "ereolen");
+  $item->addChild('type', "author");
+  $item->addChild('date', $node_wrapper->created->value());
+  $item->addChild('title', $node_wrapper->title->value());
+
+  $body = $node_wrapper->body->value();
+  $item->addChild('description', strip_tags($body['safe_value']));
+
+  global $base_url;
+
+  $node_link = $item->addChild('link', $base_url . '/node/' . $node->nid);
+  $node_link->addAttribute('type', 'content');
+
+  $thumb = $node_wrapper->field_portrait->value();
+  $thumb_link = $item->addChild('link', file_create_url($thumb['uri']));
   $thumb_link->addAttribute('type', 'thumbnail');
 }
