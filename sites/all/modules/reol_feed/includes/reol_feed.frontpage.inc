@@ -23,7 +23,22 @@ function reol_feed_feeds_frontpage() {
   reol_feed_feeds_add_items('author_portrait', $e_feed, $a_feed, 'reol_feed_feeds_add_author_portrait');
 
   // Add review to feeds.
-  // TODO
+  module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
+  $reviews = reol_review_get_reviews();
+  foreach ($reviews as $t => $type_reviews) {
+    // Determine where to put it.
+    $feed = $e_feed;
+    if ($t == 'audiobook') {
+      $feed = $a_feed;
+    }
+
+    // Add x reviews.
+    while (count($type_reviews) && $added < variable_get('reol_feed_frontpage_item_count', 2)) {
+      $review_key = array_rand($type_reviews);
+      reol_feed_feeds_add_review($feed, $type_reviews[$review_key]);
+      unset($type_reviews[$review_key]);
+    }
+  }
 }
 
 /**
@@ -182,4 +197,43 @@ function reol_feed_feeds_add_author_portrait($feed, $node) {
   $thumb = $node_wrapper->field_portrait->value();
   $thumb_link = $item->addChild('link', file_create_url($thumb['uri']));
   $thumb_link->addAttribute('type', 'thumbnail');
+}
+
+/**
+ * Add a review to feed.
+ *
+ * @param SimpleXMLElement $feed
+ *   The element to add the review to.
+ * @param StdClass $review
+ *   The review object.
+ */
+function reol_feed_feeds_add_review($feed, $review) {
+  $item = $feed->addChild('item');
+
+  $ting_object = ding_entity_load($review->ding_entity_id);
+
+  $item->addChild('guid', $review->nid);
+  $item->addChild('source', "ereolen");
+  $item->addChild('type', "review");
+  $item->addChild('title', $ting_object->title);
+  $item->addChild('date', $review->credate);
+  $item->addChild('description', $review->description);
+  $authors = $ting_object->getCreators();
+  $item->addChild('author', $authors[0]);
+
+  global $base_url;
+
+  $node_link = $item->addChild('link', $review->link);
+  $node_link->addAttribute('type', 'content');
+
+  // Make sure we have cover.
+  ting_covers_load(array($ting_object->id));
+
+  $cover_uri = file_create_url(ting_covers_object_path($ting_object->id));
+
+  $thumb_link = $item->addChild('link', $cover_uri);
+  $thumb_link->addAttribute('type', 'thumbnail');
+
+  $isbn = $item->addChild('isbn', reol_base_get_isbn($ting_object->localId));
+  $isbn->addAttribute('cover', $cover_uri);
 }
