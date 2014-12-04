@@ -7,15 +7,15 @@ var settings = {
   sampleStreamingServiceBaseUri: url + '/samplestreaming_v2/v2/',
   sessionKeyUrl: '/reol_use_loan/reader/session/renew/{0}',
   imageBasePath: imagesUrl + '/images/1.4.4/'
-}
+};
 
 var isbn = document.getElementById('reader-container').getAttribute('data-isbn');
-if (isbn != undefined) {
+if (isbn !== undefined) {
   settings.isbn = isbn;
 }
 
 var order = document.getElementById('reader-container').getAttribute('data-id');
-if (order != undefined) {
+if (order !== undefined) {
   settings.orderId = order;
 }
 Reader.init(settings);
