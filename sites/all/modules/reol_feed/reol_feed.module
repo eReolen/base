@@ -97,7 +97,7 @@ function reol_feed_get_feeds() {
     array(
       'name' => 'categories',
       'callback' => 'reol_feed_feeds_categories',
-      'file' => $file,
+      'file' => $path . '/reol_feed.categories.inc',
       'files' => array(
         array(
           'type' => 'ebook',
