@@ -196,12 +196,12 @@ function reol_feed_deliver() {
 function reol_feed_get_latest($type, $ting_type, $count = 2) {
   $query = db_select('node', 'n')
     ->fields('n', array('nid'))
-    ->condition('n.type', 'article')
+    ->condition('n.type', $type)
     ->condition(db_or()
       ->condition('t.field_reol_entity_type_value', $ting_type)
       ->isNull('t.field_reol_entity_type_value')
     )
-    ->range(0, 2)
+    ->range(0, $count)
     ->orderBy('n.created', 'DESC');
   $query->leftJoin('field_data_field_reol_entity_type', 't', 'n.nid = t.entity_id');
   $results = $query->execute()
