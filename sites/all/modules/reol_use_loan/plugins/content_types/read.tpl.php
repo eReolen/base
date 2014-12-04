@@ -19,5 +19,9 @@ drupal_add_js(drupal_get_path('module', 'reol_use_loan') . '/js/reader.js');
     </div>
     <span class="tooltip"><?php echo t('View in fullscreen'); ?></span>
   </div>
-  <iframe src="/reol_use_loan/reader/<?php echo $retailer_order_number; ?>"></iframe>
+  <?php if (isset($retailer_order_number)) : ?>
+    <iframe src="/reol_use_loan/reader/<?php echo $retailer_order_number; ?>"></iframe>
+  <?php else : ?>
+    <iframe src="/reol_use_loan/reader/<?php echo $isbn; ?>/try"></iframe>
+  <?php endif; ?>
 </div>

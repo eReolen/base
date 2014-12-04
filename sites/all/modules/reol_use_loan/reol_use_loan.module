@@ -19,7 +19,7 @@ function reol_use_loan_menu() {
 
   $items['reol_use_loan/reader'] = array(
     'page callback' => 'reol_use_loan_reader',
-    'page arguments' => array(2),
+    'page arguments' => array(2, 3),
     'access callback' => 'user_is_logged_in',
   );
 
@@ -141,10 +141,16 @@ function reol_use_loan_get_reader_session($url, $retailer_order, $client_id, $re
  * @param string $id
  *   The retailer order number.
  */
-function reol_use_loan_reader($id) {
-  echo theme('reol_use_loan_reader', array(
-    'retailer_order_number' => $id,
-  ));
+function reol_use_loan_reader($id, $try = FALSE) {
+  $vars = array();
+  if ($try) {
+    $vars['isbn'] = $id;
+  }
+  else {
+    $vars['retailer_order_number'] = $id;
+  }
+
+  echo theme('reol_use_loan_reader', $vars);
   drupal_exit();
 }
 
@@ -214,4 +220,31 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
     }
   }
   return $buttons;
+}
+
+/**
+ * Try to get an order for a title.
+ *
+ * @param string $local_id
+ *   The local id of the title to get order for.
+ *
+ * @return array
+ *   Array containing retailer and internal order numbers.
+ *   FALSE on error.
+ */
+function reol_use_loan_get_order($local_id) {
+  global $user;
+  $no_order = FALSE;
+  try {
+    $order = ding_provider_invoke('loan', 'get', $user, $local_id);
+  }
+  catch (DingProviderAuthException $e) {
+    $no_order = TRUE;
+  }
+
+  if ($no_order || empty($order)) {
+    return FALSE;
+  }
+
+  return $order;
 }
