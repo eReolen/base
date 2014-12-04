@@ -12,14 +12,6 @@ function reol_feed_cron() {
 }
 
 /**
- * Implements hook_flush_caches().
- */
-function reol_feed_flush_caches() {
-  // Force rebuild of feeds after cache has been cleared.
-  variable_set('reol_feed_rebuild_feeds', TRUE);
-}
-
-/**
  * Ensure that all feeds are updated.
  */
 function reol_feed_ensure_feeds() {
