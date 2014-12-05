@@ -22,8 +22,6 @@ $aliases['test'] = array(
     'dump-dir' => '/home/reload/backup/ereolen',
     'restart-apache2' => TRUE,
     'no-offline' => TRUE,
-    'no-updb' => TRUE,
-    'no-cc-all' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
   ),
 );
@@ -37,8 +35,6 @@ $aliases['test-test'] = array(
     'dump-dir' => '/home/reload/backup/ereolen',
     'restart-apache2' => TRUE,
     'no-offline' => TRUE,
-    'no-updb' => TRUE,
-    'no-cc-all' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
   ),
 );
