@@ -141,7 +141,8 @@ function reol_feed_get_filename($file) {
  *   Path to the directory relative to Drupal root.
  */
 function reol_feed_get_feeds_directory() {
-  return variable_get('file_public_path', conf_path() . '/files') . '/feeds';
+  $default_path = variable_get('file_public_path', conf_path() . '/files') . '/feeds';
+  return variable_get('reol_feed_feed_directory', $default_path);
 }
 
 /**
