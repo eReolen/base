@@ -72,7 +72,6 @@ function reol_category_form_submit(&$form, &$form_state) {
   $category = entity_ui_form_submit_build_entity($form, $form_state);
   // Save and go back.
   $category->save();
-  menu_rebuild();
   $form_state['redirect'] = 'admin/structure/reol_category';
 }
 
@@ -80,7 +79,6 @@ function reol_category_form_submit(&$form, &$form_state) {
  * Form API submit callback for the delete button.
  */
 function reol_category_form_submit_delete(&$form, &$form_state) {
-  menu_rebuild();
   $form_state['redirect'] = 'admin/structure/reol_category/manage/' . $form_state['reol_category']->name . '/delete';
 }
 

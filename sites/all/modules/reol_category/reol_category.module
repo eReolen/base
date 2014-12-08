@@ -52,7 +52,7 @@ function reol_category_entity_info() {
   $items['reol_category'] = array(
     'label' => t('eReolen category'),
     'plural label' => t('eReolen categories'),
-    'controller class' => 'EntityAPIController',
+    'controller class' => 'ReolCategoryController',
     'entity class' => 'ReolCategory',
     'base table' => 'reol_category',
     'fieldable' => FALSE,
@@ -85,26 +85,6 @@ function reol_category_page() {
   if ($category = _reol_category(current_path())) {
     drupal_goto($category->targetPath());
   }
-}
-
-/**
- * Form alter function.
- *
- * Adds a submit handler to rebuild the menu to the delete category form.
- */
-function reol_category_form_reol_category_operation_form_alter(&$form, &$form_state) {
-  if ($form_state['op'] == 'delete') {
-    $form['#submit'][] = 'reol_category_menu_rebuild';
-  }
-}
-
-/**
- * Submit handler.
- *
- * Rebuilds the menu.
- */
-function reol_category_menu_rebuild($form, &$form_state) {
-  menu_rebuild();
 }
 
 /**
@@ -168,27 +148,4 @@ function _reol_category_get_feed_items($tree) {
 function _reol_category($path) {
   $category = entity_load('reol_category', FALSE, array('path' => $path));
   return $category ? reset($category) : NULL;
-}
-
-/**
- * Category entity.
- */
-class ReolCategory extends Entity {
-  public $title;
-  public $path;
-  public $query;
-
-  /**
-   * Get the category path.
-   */
-  public function categoryPath() {
-    return $this->path;
-  }
-
-  /**
-   * Get the search page path.
-   */
-  public function targetPath() {
-    return 'search/ting/' . $this->query;
-  }
 }
