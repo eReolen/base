@@ -154,3 +154,14 @@
     }
   }
 }
+
+@include x-large() {
+  .search-results .article-teaser {
+    width: 750px;
+
+    .article-right {
+      width: 480px;
+      padding-top: 40px;
+    }
+  }
+}
