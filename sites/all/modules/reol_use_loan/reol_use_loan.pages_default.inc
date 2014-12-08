@@ -183,7 +183,7 @@ function reol_use_loan_default_page_manager_pages() {
     $pane->access = array();
     $pane->configuration = array(
       'context' => array(
-        0 => 'argument_entity_id:ting_object_1',
+        0 => 'argument_ting_object_id_1',
       ),
       'override_title' => 0,
       'override_title_text' => '',
