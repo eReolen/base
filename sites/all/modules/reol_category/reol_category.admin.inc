@@ -48,7 +48,7 @@ function reol_category_form($form, &$form_state, $category, $op = 'edit') {
     '#value' => t('Delete'),
     '#weight' => 45,
     '#limit_validation_errors' => array(),
-    '#submit' => array('reol_category_form_submit_delete')
+    '#submit' => array('reol_category_form_submit_delete'),
   );
 
   return $form;
