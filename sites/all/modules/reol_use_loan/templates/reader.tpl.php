@@ -20,7 +20,14 @@
   <script src="<?php echo variable_get('publizon_reader_url', ''); ?>/scripts/reader-1.4.4/js" type="text/javascript"></script>
 </head>
 <body>
-<div <?php if (isset($retailer_order_number)) : ?>data-id="<?php echo $retailer_order_number; ?>"<?php endif; if (isset($isbn)) : ?>data-isbn="<?php echo $isbn; ?>"<?php endif; ?> id="reader-container" data-url="<?php echo variable_get('publizon_reader_stream_url', ''); ?>" data-images-url="<?php echo variable_get('publizon_reader_url', ''); ?>"></div>
+<div
+  <?php if (isset($retailer_order_number)) : ?>
+    data-id="<?php echo $retailer_order_number; ?>"
+  <?php elseif (isset($isbn)) : ?>
+    data-isbn="<?php echo $isbn; ?>"
+  <?php endif; ?>
+  id="reader-container" data-url="<?php echo variable_get('publizon_reader_stream_url', ''); ?>" data-images-url="<?php echo variable_get('publizon_reader_url', ''); ?>"></div>
+
   <script src="/<?php echo drupal_get_path('module', 'reol_use_loan') . '/js/reader_standalone.js'; ?>" type="text/javascript"></script>
 </body>
 </html>
