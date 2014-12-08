@@ -20,7 +20,7 @@ function reol_use_loan_menu() {
   $items['reol_use_loan/reader'] = array(
     'page callback' => 'reol_use_loan_reader',
     'page arguments' => array(2, 3),
-    'access callback' => 'user_is_logged_in',
+    'access callback' => TRUE,
   );
 
   return $items;
@@ -175,51 +175,48 @@ function reol_use_loan_theme($existing, $type, $theme, $path) {
  * Add read/listen buttons on entity view page for audiobook or ebook.
  */
 function reol_use_loan_ding_entity_buttons($type, $entity) {
-  $buttons = array();
   if (reol_loan_is_right_type($entity)) {
     global $user;
     drupal_add_library('system', 'drupal.ajax');
     list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
-    if (_reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED) {
-      switch (reol_base_get_type_name($entity->type)) {
-        case "ebook":
-          $buttons[] = array(
-            '#theme' => 'link',
-            '#text' => t('Read'),
-            '#path' => 'ting/object/' . $entity->id . '/read',
-            '#options' => array(
-              'attributes' => array(
-                'class' => array(
-                  'action-button',
-                ),
-                'id' => 'read-' . $entity->id,
-              ),
-              'html' => FALSE,
-            ),
-          );
-          break;
+    $text = t('Try');
+    $link = '';
+    switch (reol_base_get_type_name($entity->type)) {
+      case "ebook":
+        if (_reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED) {
+          $text = t('Read');
+        }
+        $link = 'ting/object/' . $entity->id . '/read';
+        break;
 
-        case "audiobook":
-          $buttons[] = array(
-            '#theme' => 'link',
-            '#text' => t('Listen'),
-            '#path' => 'ting/object/' . $entity->id . '/listen',
-            '#options' => array(
-              'attributes' => array(
-                'class' => array(
-                  'action-button',
-                ),
-                'id' => 'listen-' . $entity->id,
-              ),
-              'html' => FALSE,
-            ),
-          );
-          break;
-      }
+      case "audiobook":
+        if (_reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED) {
+          $text = t('Listen');
+        }
+        $link = 'ting/object/' . $entity->id . '/listen';
+        break;
     }
+
+    // Return the button.
+    return array(
+      array(
+        '#theme' => 'link',
+        '#text' => $text,
+        '#path' => $link,
+        '#options' => array(
+          'attributes' => array(
+            'class' => array(
+              'action-button',
+            ),
+            'id' => 'read-' . $entity->id,
+          ),
+          'html' => FALSE,
+        ),
+      ),
+    );
   }
-  return $buttons;
+  return array();
 }
 
 /**
