@@ -23,6 +23,13 @@ function reol_use_loan_menu() {
     'access callback' => TRUE,
   );
 
+  $items['ting/object/%ting_object/%/ajax'] = array(
+    'page callback' => 'reol_use_loan_use_loan_ajax',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+    'delivery callback' => 'ajax_deliver',
+  );
+
   return $items;
 }
 
@@ -182,39 +189,46 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
 
     $text = t('Try');
     $link = '';
+    $loaned = _reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED;
     switch (reol_base_get_type_name($entity->type)) {
       case "ebook":
-        if (_reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED) {
+        if ($loaned) {
           $text = t('Read');
         }
         $link = 'ting/object/' . $entity->id . '/read';
         break;
 
       case "audiobook":
-        if (_reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED) {
+        if ($loaned) {
           $text = t('Listen');
         }
         $link = 'ting/object/' . $entity->id . '/listen';
         break;
     }
 
-    // Return the button.
-    return array(
-      array(
-        '#theme' => 'link',
-        '#text' => $text,
-        '#path' => $link,
-        '#options' => array(
-          'attributes' => array(
-            'class' => array(
-              'action-button',
-            ),
-            'id' => 'read-' . $entity->id,
+    // Create the button.
+    $return = array(
+      '#theme' => 'link',
+      '#text' => $text,
+      '#path' => $link,
+      '#options' => array(
+        'attributes' => array(
+          'class' => array(
+            'action-button',
           ),
-          'html' => FALSE,
+          'id' => 'read-' . $entity->id,
         ),
+        'html' => FALSE,
       ),
     );
+
+    // If we are displaying try button, load content in modal.
+    if (!$loaned) {
+      $return['#path'] .= '/ajax';
+      $return['#options']['attributes']['class'][] = 'use-ajax';
+    }
+
+    return array($return);
   }
   return array();
 }
@@ -244,4 +258,36 @@ function reol_use_loan_get_order($local_id) {
   }
 
   return $order;
+}
+
+function reol_use_loan_use_loan_ajax($ting_object, $type) {
+  module_load_include('inc', 'page_manager', 'plugins/tasks/page');
+  module_load_include('inc', 'ctools', 'includes/context');
+  $commands = array();
+
+  // Figure out which page to load.
+  if ($type == "read") {
+    $subtask_id = "read_ebook";
+    $class = 'try-ebook';
+  }
+  elseif ($type == "listen") {
+    $subtask_id = "listen_to_audiobook";
+    $class = 'try-audiobook';
+  }
+  else {
+    return;
+  }
+
+  // Load page argument context.
+  $page = page_manager_page_load($subtask_id);
+  $arg = $page->arguments['ting_object'];
+  $arg['keyword'] = '%ting_object';
+  $context = ctools_context_get_context_from_argument($arg, $ting_object);
+
+  // Return page html in popup.
+  $output = page_manager_page_execute($subtask_id, $context);
+  $commands[] = ajax_command_ding_popup('reol_use_loan', t('Try'), $output, array('class' => array($class)));
+
+  // Return the ajax commands as an render array.
+  return array('#type' => 'ajax', '#commands' => $commands);
 }
