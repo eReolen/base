@@ -260,6 +260,17 @@ function reol_use_loan_get_order($local_id) {
   return $order;
 }
 
+/**
+ * Deliver read/listen pages using ajax.
+ *
+ * @param TingEntity $ting_object
+ *   The ting object from menu hook.
+ * @param string $type
+ *   Either read or listen.
+ *
+ * @return array
+ *   Array as expected by ajax_deliver.
+ */
 function reol_use_loan_use_loan_ajax($ting_object, $type) {
   module_load_include('inc', 'page_manager', 'plugins/tasks/page');
   module_load_include('inc', 'ctools', 'includes/context');
