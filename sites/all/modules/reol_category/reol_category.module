@@ -191,6 +191,6 @@ class ReolCategory extends Entity {
    * Get the search page path.
    */
   public function targetPath() {
-    return 'search/ting/' . drupal_encode_path($this->query);
+    return 'search/ting/' . $this->query;
   }
 }
