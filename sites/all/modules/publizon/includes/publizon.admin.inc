@@ -205,9 +205,9 @@ function publizon_settings_form($form, &$form_state) {
   $messages = _publizon_error_messages();
   $form['publizon']['error_messages']['default'] = array(
     '#type' => 'textfield',
-    '#title' => t('Mapping'),
+    '#title' => t('Default error message'),
     '#default_value' => $messages[-1],
-    '#description' => t('Enter one message per line, in the format <em>code|message</em>.'),
+    '#description' => t('Default error message if a specific is not found below.'),
   );
 
   unset($messages[-1]);
