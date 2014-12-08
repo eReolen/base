@@ -73,7 +73,8 @@ function reol_frontend_preprocess_node(&$variables) {
 
     // Change text for read more link.
     $variables['readmore_text'] = t('Read entire article');
-    $variables['readmore'] = url('node/' . $node->nid);
+    $uri = entity_uri('node', $node);
+    $variables['readmore'] = url($uri['path'], $uri['options']);
   }
 
   elseif ($variables['node']->type == "author_portrait") {
