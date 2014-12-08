@@ -59,7 +59,7 @@
       top: 33%;
       margin-top: -1em;
       right: 0;
-      z-index: 100;
+      z-index: 5;
       height: 0;
       width: 0;
     }
@@ -151,6 +151,17 @@
     .pane-content {
       @extend .default-layout-inside;
       padding-bottom: 20px;
+    }
+  }
+}
+
+@include x-large() {
+  .search-results .article-teaser {
+    width: 750px;
+
+    .article-right {
+      width: 480px;
+      padding-top: 40px;
     }
   }
 }
