@@ -85,3 +85,10 @@ function reol_base_update_7106() {
 function reol_base_update_7107() {
   module_enable(array('reol_category'), TRUE);
 }
+
+/**
+ * Enable reol_feed module.
+ */
+function reol_base_update_7108() {
+  module_enable(array('reol_feed'), TRUE);
+}
