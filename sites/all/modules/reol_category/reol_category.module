@@ -1,0 +1,192 @@
+<?php
+
+/**
+ * @file
+ * Handles eReolen categories.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function reol_category_init() {
+  if ($category = _reol_category(current_path())) {
+    menu_set_active_item($category->targetPath());
+    menu_tree_set_path('main-menu', $category->categoryPath());
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reol_category_menu() {
+  $items = array();
+
+  $items['admin/structure/reol_category/feeds'] = array(
+    'title' => 'Feeds',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reol_category_feed_settings'),
+    'access arguments' => array('administer menu'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'reol_category.admin.inc',
+  );
+
+  // Create a suggested menu item for each category.
+  foreach (entity_load('reol_category') as $category) {
+    $items[$category->categoryPath()] = array(
+      'title' => $category->title,
+      'page callback' => 'reol_category_page',
+      'access callback' => TRUE,
+      'type' => MENU_SUGGESTED_ITEM,
+      'menu_name' => 'main-menu',
+    );
+  }
+
+  return $items;
+}
+
+/**
+ * Implements hook_entity_info().
+ */
+function reol_category_entity_info() {
+  $items = array();
+  $items['reol_category'] = array(
+    'label' => t('eReolen category'),
+    'plural label' => t('eReolen categories'),
+    'controller class' => 'EntityAPIController',
+    'entity class' => 'ReolCategory',
+    'base table' => 'reol_category',
+    'fieldable' => FALSE,
+    'entity keys' => array(
+      'id' => 'rcid',
+      'label' => 'path',
+    ),
+    'exportable' => FALSE,
+    'module' => 'reol_category',
+    'metadata controller class' => 'EntityDefaultMetadataController',
+    'access callback' => 'og_membership_type_access',
+    'entity cache' => module_exists('entitycache'),
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/structure/reol_category',
+      'file' => 'reol_category.admin.inc',
+    ),
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback.
+ *
+ * This shouldn't be reached, but as a safety measure it redirects to the target
+ * page.
+ */
+function reol_category_page() {
+  if ($category = _reol_category(current_path())) {
+    drupal_goto($category->targetPath());
+  }
+}
+
+/**
+ * Form alter function.
+ *
+ * Adds a submit handler to rebuild the menu to the delete category form.
+ */
+function reol_category_form_reol_category_operation_form_alter(&$form, &$form_state) {
+  if ($form_state['op'] == 'delete') {
+    $form['#submit'][] = 'reol_category_menu_rebuild';
+  }
+}
+
+/**
+ * Submit handler.
+ *
+ * Rebuilds the menu.
+ */
+function reol_category_menu_rebuild($form, &$form_state) {
+  menu_rebuild();
+}
+
+function reol_category_feed($type) {
+  if ($mlid = variable_get('reol_category_' . $type . '_mlid', NULL)) {
+    $tree = menu_build_tree('main-menu', array());
+
+    // menu_parent_options() uses odd format, quick fix.
+    $mlid = explode(':', $mlid);
+    $mlid = $mlid[1];
+
+    if ($tree = _reol_category_find_tree($tree, $mlid)) {
+      $items = _reol_category_get_feed_items($tree);
+      return reset($items);
+    }
+  }
+  return array();
+}
+
+/**
+ * Find a specific mlid in a menu tree.
+ */
+function _reol_category_find_tree($tree, $mlid) {
+  foreach ($tree as $item) {
+    if ($item['link']['mlid'] == $mlid) {
+      return array($item);
+    }
+    if (count($item['below'])) {
+      if ($found = _reol_category_find_tree($item['below'], $mlid)) {
+        return $found;
+      }
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Recursively get items for feed.
+ */
+function _reol_category_get_feed_items($tree) {
+  $items = array();
+  foreach ($tree as $item) {
+    if ($item['link']['page_callback'] == 'reol_category_page') {
+      $items[$item['link']['link_title']] = _reol_category($item['link']['link_path']);
+    }
+    else {
+      if (count($item['below'])) {
+        $items[$item['link']['link_title']] = _reol_category_get_feed_items($item['below']);
+      }
+    }
+  }
+
+  // Weed out empty values.
+  return array_filter($items);
+}
+
+/**
+ * Find the category for a path.
+ */
+function _reol_category($path) {
+  $category = entity_load('reol_category', FALSE, array('path' => $path));
+  return $category ? reset($category) : NULL;
+}
+
+/**
+ * Category entity.
+ */
+class ReolCategory extends Entity {
+  public $title;
+  public $path;
+  public $query;
+
+  /**
+   * Get the category path.
+   */
+  public function categoryPath() {
+    return $this->path;
+  }
+
+  /**
+   * Get the search page path.
+   */
+  public function targetPath() {
+    return 'search/ting/' . drupal_encode_path($this->query);
+  }
+}

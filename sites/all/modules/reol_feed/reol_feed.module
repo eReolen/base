@@ -94,6 +94,23 @@ function reol_feed_get_feeds() {
       ),
       'lifetime' => 24 * 60 * 60,
     ),
+    array(
+      'name' => 'categories',
+      'callback' => 'reol_feed_feeds_categories',
+      'file' => $path . '/reol_feed.categories.inc',
+      'files' => array(
+        array(
+          'type' => 'ebook',
+          'filename' => 'categories.xml',
+        ),
+        array(
+          'type' => 'audiobook',
+          'filename' => 'categories.xml',
+        ),
+      ),
+      'lifetime' => 60 * 60,
+    ),
+
   );
 }
 
@@ -124,7 +141,8 @@ function reol_feed_get_filename($file) {
  *   Path to the directory relative to Drupal root.
  */
 function reol_feed_get_feeds_directory() {
-  return variable_get('reol_feed_feed_directory', drupal_get_path('module', 'reol_feed') . '/feeds');
+  $default_path = variable_get('file_public_path', conf_path() . '/files') . '/feeds';
+  return variable_get('reol_feed_feed_directory', $default_path);
 }
 
 /**
@@ -160,6 +178,8 @@ function reol_feed_menu() {
  * Deliver a feed.
  */
 function reol_feed_deliver() {
+  // Ensure that feeds are up to date.
+  reol_feed_ensure_feeds();
   $feed_path = array();
   $i = 1;
   while (($p = arg($i)) != NULL) {

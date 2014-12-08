@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the reol_category module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function reol_category_schema() {
+  $schema = array();
+
+  $schema['reol_category'] = array(
+    'description' => 'Table for eReolen categories',
+    'fields' => array(
+      'rcid' => array(
+        'description' => 'Primary Key: ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'path' => array(
+        'description' => 'Drupal path.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'title' => array(
+        'description' => 'Title for the link.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'query' => array(
+        'description' => 'Search query.',
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('rcid'),
+    'unique keys' => array(
+      'path' => array('path'),
+    ),
+  );
+
+  return $schema;
+}
