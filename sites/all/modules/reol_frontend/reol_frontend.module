@@ -50,7 +50,7 @@ function reol_frontend_menu() {
  */
 function reol_frontend_preprocess_node(&$variables) {
   // Add background image on teaser for article.
-  if ($variables['node']->type == 'article' && $variables['view_mode'] == 'teaser') {
+  if ($variables['node']->type == 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
     $node_wrapper = entity_metadata_wrapper('node', $variables['node']);
 
     // Get image info.
