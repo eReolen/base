@@ -19,8 +19,15 @@ function reol_use_loan_menu() {
 
   $items['reol_use_loan/reader'] = array(
     'page callback' => 'reol_use_loan_reader',
-    'page arguments' => array(2),
-    'access callback' => 'user_is_logged_in',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+  );
+
+  $items['ting/object/%ting_object/%/ajax'] = array(
+    'page callback' => 'reol_use_loan_use_loan_ajax',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+    'delivery callback' => 'ajax_deliver',
   );
 
   return $items;
@@ -141,10 +148,16 @@ function reol_use_loan_get_reader_session($url, $retailer_order, $client_id, $re
  * @param string $id
  *   The retailer order number.
  */
-function reol_use_loan_reader($id) {
-  echo theme('reol_use_loan_reader', array(
-    'retailer_order_number' => $id,
-  ));
+function reol_use_loan_reader($id, $try = FALSE) {
+  $vars = array();
+  if ($try) {
+    $vars['isbn'] = $id;
+  }
+  else {
+    $vars['retailer_order_number'] = $id;
+  }
+
+  echo theme('reol_use_loan_reader', $vars);
   drupal_exit();
 }
 
@@ -169,49 +182,123 @@ function reol_use_loan_theme($existing, $type, $theme, $path) {
  * Add read/listen buttons on entity view page for audiobook or ebook.
  */
 function reol_use_loan_ding_entity_buttons($type, $entity) {
-  $buttons = array();
   if (reol_loan_is_right_type($entity)) {
     global $user;
     drupal_add_library('system', 'drupal.ajax');
     list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
-    if (_reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED) {
-      switch (reol_base_get_type_name($entity->type)) {
-        case "ebook":
-          $buttons[] = array(
-            '#theme' => 'link',
-            '#text' => t('Read'),
-            '#path' => 'ting/object/' . $entity->id . '/read',
-            '#options' => array(
-              'attributes' => array(
-                'class' => array(
-                  'action-button',
-                ),
-                'id' => 'read-' . $entity->id,
-              ),
-              'html' => FALSE,
-            ),
-          );
-          break;
+    $text = t('Try');
+    $link = '';
+    $loaned = _reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED;
+    switch (reol_base_get_type_name($entity->type)) {
+      case "ebook":
+        if ($loaned) {
+          $text = t('Read');
+        }
+        $link = 'ting/object/' . $entity->id . '/read';
+        break;
 
-        case "audiobook":
-          $buttons[] = array(
-            '#theme' => 'link',
-            '#text' => t('Listen'),
-            '#path' => 'ting/object/' . $entity->id . '/listen',
-            '#options' => array(
-              'attributes' => array(
-                'class' => array(
-                  'action-button',
-                ),
-                'id' => 'listen-' . $entity->id,
-              ),
-              'html' => FALSE,
-            ),
-          );
-          break;
-      }
+      case "audiobook":
+        if ($loaned) {
+          $text = t('Listen');
+        }
+        $link = 'ting/object/' . $entity->id . '/listen';
+        break;
     }
+
+    // Create the button.
+    $return = array(
+      '#theme' => 'link',
+      '#text' => $text,
+      '#path' => $link,
+      '#options' => array(
+        'attributes' => array(
+          'class' => array(
+            'action-button',
+          ),
+          'id' => 'read-' . $entity->id,
+        ),
+        'html' => FALSE,
+      ),
+    );
+
+    // If we are displaying try button, load content in modal.
+    if (!$loaned) {
+      $return['#path'] .= '/ajax';
+      $return['#options']['attributes']['class'][] = 'use-ajax';
+    }
+
+    return array($return);
   }
-  return $buttons;
+  return array();
+}
+
+/**
+ * Try to get an order for a title.
+ *
+ * @param string $local_id
+ *   The local id of the title to get order for.
+ *
+ * @return array
+ *   Array containing retailer and internal order numbers.
+ *   FALSE on error.
+ */
+function reol_use_loan_get_order($local_id) {
+  global $user;
+  $no_order = FALSE;
+  try {
+    $order = ding_provider_invoke('loan', 'get', $user, $local_id);
+  }
+  catch (DingProviderAuthException $e) {
+    $no_order = TRUE;
+  }
+
+  if ($no_order || empty($order)) {
+    return FALSE;
+  }
+
+  return $order;
+}
+
+/**
+ * Deliver read/listen pages using ajax.
+ *
+ * @param TingEntity $ting_object
+ *   The ting object from menu hook.
+ * @param string $type
+ *   Either read or listen.
+ *
+ * @return array
+ *   Array as expected by ajax_deliver.
+ */
+function reol_use_loan_use_loan_ajax($ting_object, $type) {
+  module_load_include('inc', 'page_manager', 'plugins/tasks/page');
+  module_load_include('inc', 'ctools', 'includes/context');
+  $commands = array();
+
+  // Figure out which page to load.
+  if ($type == "read") {
+    $subtask_id = "read_ebook";
+    $class = 'try-ebook';
+  }
+  elseif ($type == "listen") {
+    $subtask_id = "listen_to_audiobook";
+    $class = 'try-audiobook';
+  }
+  else {
+    return;
+  }
+
+  // Load page argument context.
+  $page = page_manager_page_load($subtask_id);
+  $arg = $page->arguments['ting_object'];
+  $arg['keyword'] = '%ting_object';
+  $context = ctools_context_get_context_from_argument($arg, $ting_object);
+
+  // Return page html in popup.
+  $output = page_manager_page_execute($subtask_id, $context);
+  $commands[] = ajax_command_ding_popup('reol_use_loan', t('Try'), $output, array('class' => array($class)));
+
+  // Return the ajax commands as an render array.
+  return array('#type' => 'ajax', '#commands' => $commands);
 }

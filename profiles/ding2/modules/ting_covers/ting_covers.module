@@ -146,10 +146,7 @@ function ting_covers_load($requested_covers) {
     // If we we already have a valid cover image, use it.
     $path = ting_covers_object_path($id);
     if (file_exists($path)) {
-      $covers[$id] = array(
-        'image_style' => $cover_info['image_style'],
-        'url' => image_style_url($cover_info['image_style'], $path),
-      );
+      $covers[$id] = $path;
       continue;
     }
 

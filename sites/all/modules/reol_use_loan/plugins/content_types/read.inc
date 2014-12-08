@@ -27,16 +27,18 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
 
   $ting_entity = $context[0]->data;
 
-  global $user;
-  $order = ding_provider_invoke('loan', 'get', $user, $ting_entity->localId);
+  $order = reol_use_loan_get_order($ting_entity->localId);
+
+  $vars = array();
+  // If there is no order, start player in preview mode.
   if (!$order) {
-    return new StdClass();
+    $vars['isbn'] = reol_base_get_isbn($ting_entity->localId);
+  }
+  else {
+    $vars['retailer_order_number'] = $order['retailer_order_number'];
   }
 
-  $block->content = theme('read', array(
-    // TODO Do not hardcode.
-    'retailer_order_number' => $order['retailer_order_number'],
-  ));
+  $block->content = theme('read', $vars);
 
   return $block;
 }

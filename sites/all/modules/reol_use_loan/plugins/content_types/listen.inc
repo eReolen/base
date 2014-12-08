@@ -27,16 +27,21 @@ function listen_content_type_render($subtype, $conf, $panel_args, $context) {
 
   $ting_entity = $context[0]->data;
 
-  global $user;
-  $order = ding_provider_invoke('loan', 'get', $user, $ting_entity->localId);
+  $vars = array(
+    'player_client_id' => variable_get('publizon_player_client_id', ''),
+  );
+
+  $order = reol_use_loan_get_order($ting_entity->localId);
+
+  // If there is no order, start player in preview mode.
   if (!$order) {
-    return new StdClass();
+    $vars['isbn'] = reol_base_get_isbn($ting_entity->localId);
+  }
+  else {
+    $vars['internal_order_number'] = $order['internal_order_number'];
   }
 
-  $block->content = theme('listen', array(
-    'internal_order_number' => $order['internal_order_number'],
-    'player_client_id' => variable_get('publizon_player_client_id', ''),
-  ));
+  $block->content = theme('listen', $vars);
 
   return $block;
 }
