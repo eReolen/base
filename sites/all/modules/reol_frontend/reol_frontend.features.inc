@@ -8,6 +8,9 @@
  * Implements hook_ctools_plugin_api().
  */
 function reol_frontend_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "file_entity" && $api == "file_default_displays") {
+    return array("version" => "1");
+  }
   if ($module == "menu_block" && $api == "menu_block") {
     return array("version" => "1");
   }
