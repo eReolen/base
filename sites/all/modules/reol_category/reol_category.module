@@ -107,6 +107,9 @@ function reol_category_menu_rebuild($form, &$form_state) {
   menu_rebuild();
 }
 
+/**
+ * Get category items for feed.
+ */
 function reol_category_feed($type) {
   if ($mlid = variable_get('reol_category_' . $type . '_mlid', NULL)) {
     $tree = menu_build_tree('main-menu', array());
@@ -120,6 +123,7 @@ function reol_category_feed($type) {
       return reset($items);
     }
   }
+
   return array();
 }
 
