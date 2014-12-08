@@ -1,0 +1,31 @@
+.rs-carousel-title,
+.rs-carousel-item-title {
+  display: none;
+}
+
+.rs-carousel-inner {
+  padding-bottom: 20px;
+  padding-top: 0;
+}
+
+.rs-carousel-mask {
+  li {
+    width: 170px;
+
+    a {
+      width: 170px;
+      max-height: 220px;
+    }
+  }
+}
+
+.rs-carousel-tabs .rs-carousel-list-tabs .rs-carousel-item {
+  a {
+    @include header-menu-gradient();
+    color: #404040;
+  }
+
+  &.active a {
+    @include header-menu-selected-gradient();
+  }
+}
