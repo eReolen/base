@@ -45,17 +45,14 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
   );
 
   foreach ($bookmarks as $bookmark) {
-    $ting_object = ding_entity_load($bookmark->ding_entity_id);
+    $ting_object = ding_entity_load($bookmark);
     // Create title that links to the object.
     $uri = entity_uri('ting_object', $ting_object);
     $title = l($ting_object->getTitle(), $uri['path']);
 
     // Create basic information.
-    $author = field_view_field('ting_object', $ting_entity, 'ting_author', 'user_list');
-    $type = field_view_field('ting_object', $ting_entity, 'ting_type', 'user_list');
-
-    // Reservation button.
-    $button = ding_reservation_ding_entity_buttons('ding_entity', $ting_object, 'ajax');
+    $author = field_view_field('ting_object', $ting_object, 'ting_author', 'user_list');
+    $type = field_view_field('ting_object', $ting_object, 'ting_type', 'user_list');
 
     // Build the material item element.
     $item = array(
@@ -75,11 +72,6 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
           'data' => drupal_render($type),
           'class' => 'type',
           '#weight' => 0,
-        ),
-        'reserve' => array(
-          'class' => 'reserve',
-          'data' => drupal_render($button),
-          '#weight' => 4,
         ),
       ),
     );

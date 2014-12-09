@@ -166,7 +166,6 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
           'attributes' => array(
             'class' => array(
               'action-button',
-              'bookmark-button',
               'use-ajax',
             ),
             'id' => 'bookmark-' . $entity->id,
