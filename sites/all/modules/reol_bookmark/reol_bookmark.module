@@ -44,14 +44,15 @@ function reol_bookmark_menu() {
  *   Whether or not action was successful.
  */
 function reol_bookmark_bookmark($id, $remove = FALSE) {
+  global $user;
   $ting_object = ding_entity_load($id);
 
   try {
     if (!$remove) {
-      ding_provider_invoke('bookmark', 'create', $ting_object->localId);
+      ding_provider_invoke('bookmark', 'create', $user, $ting_object->localId);
     }
     else {
-      ding_provider_invoke('bookmark', 'delete', $ting_object->localId);
+      ding_provider_invoke('bookmark', 'delete', $user, $ting_object->localId);
     }
   }
   catch (DingProviderException $e) {
