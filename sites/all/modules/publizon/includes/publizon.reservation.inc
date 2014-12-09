@@ -28,7 +28,6 @@ function publizon_reservation_list($account) {
   $client = PublizonClient::getClient();
   $reservations = $client->listReservations($retailer_id, $creds['name']);
 
-  module_load_include('client.inc', 'ting');
   foreach ($reservations as $reservation) {
     $ding_id = reol_base_ding_entity_get_id($reservation->isbn);
     $ting_entity = ding_entity_load($ding_id);

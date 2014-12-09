@@ -25,7 +25,6 @@ function publizon_loan_list($account) {
   $client = PublizonClient::getClient();
   $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
 
-  module_load_include('client.inc', 'ting');
   foreach ($loans as $loan) {
     $id = reol_base_ding_entity_get_id($loan->isbn);
 

@@ -14,7 +14,24 @@
  *   Array containing the bookmarks for the user.
  */
 function publizon_bookmark_list($account) {
-  return array();
+  $result = array();
+
+  // Throw exception if we're not logged in.
+  $creds = ding_user_get_creds($account);
+
+  $retailer_id = publizon_get_retailer_id($account);
+
+  // Get checklist from Publizon.
+  $client = PublizonClient::getClient();
+  $checklist = $client->getChecklist($retailer_id, $creds['name']);
+
+  foreach ($checklist as $item) {
+    $id = reol_base_ding_entity_get_id($item->isbn);
+
+    $result[] = $id;
+  }
+
+  return $result;
 }
 
 /**

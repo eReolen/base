@@ -28,6 +28,7 @@ class PublizonClient {
     'removed_product_list' => 'getremovedproductlist.asmx',
     'library_profile' => 'getlibraryinfo.asmx',
     'loan_status' => 'getproductloanstatus.asmx',
+    'checklist' => 'Checklists.asmx',
   );
 
   // Holds the object instance (part of the singleton pattern).
@@ -602,8 +603,20 @@ class PublizonClient {
    * @throws PublizonException
    */
   public function getChecklist($retailer_id, $card_number) {
+    // Make request to the web-service for the checklist.
+    $response = $this->call('checklist', 'GetCheckList', $retailer_id, array(
+      'pub:cardnumber' => $card_number,
+    ), array('pub' => 'http://pubhub.dk/'));
 
-    return array();
+    // Check if any data was returned.
+    $data = $response->xpath('//data/checklist');
+    $checklist = array();
+    if (isset($data[0])) {
+      while (list(, $chk) = each($data)) {
+        $checklist[] = new PublizonChecklistItem($chk);
+      }
+    }
+    return $checklist;
   }
 
   /**

@@ -29,7 +29,7 @@ class PublizonLoanStatus extends Publizon {
    */
   private function parse(SimpleXMLElement $item) {
     $this->loanStatus = (int) $item->loanstatus;
-    $this->onChecklist = $item->onchecklist === 'true' ? TRUE : FALSE;
+    $this->onChecklist = ((string) $item->onchecklist) === 'true' ? TRUE : FALSE;
     $this->isbn = (string) $item->ebookid;
   }
 }
