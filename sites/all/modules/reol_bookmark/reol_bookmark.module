@@ -24,7 +24,7 @@ function reol_bookmark_menu() {
 
   $items['ting/object/%ting_object/bookmark'] = array(
     'page callback' => 'reol_bookmark_create_ajax',
-    'page arguments' => array(2),
+    'page arguments' => array(2, 4),
     'delivery callback' => 'ajax_deliver',
     'access arguments' => array('perform bookmark'),
   );
@@ -136,4 +136,131 @@ function reol_bookmark_ctools_plugin_directory($module, $plugin) {
   if ($module == 'ctools' && !empty($plugin)) {
     return "plugins/$plugin";
   }
+}
+
+/**
+ * Implements hook_ding_entity_buttons().
+ */
+function reol_bookmark_ding_entity_buttons($type, $entity) {
+  $buttons = array();
+  if (reol_loan_is_right_type($entity)) {
+    global $user;
+    drupal_add_library('system', 'drupal.ajax');
+    list($availability) = array_values(ding_availability_items(array($entity->localId)));
+
+    $link = 'ting/object/' . $entity->id . '/bookmark';
+    if ($availability['bookmarked']) {
+      $text = t('Delete from bookmarks');
+      $link .= '/delete';
+    }
+    else {
+      $text = t('Bookmark');
+    }
+
+    $buttons[] = array(
+      array(
+        '#theme' => 'link',
+        '#text' => $text,
+        '#path' => $link,
+        '#options' => array(
+          'attributes' => array(
+            'class' => array(
+              'action-button',
+              'bookmark-button',
+              'use-ajax',
+            ),
+            'id' => 'bookmark-' . $entity->id,
+          ),
+          'html' => FALSE,
+        ),
+      ),
+    );
+  }
+  return $buttons;
+}
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to perform a loan.
+ */
+function reol_bookmark_secure_permissions($role) {
+  $permissions = array(
+    'provider' => array(
+      'perform bookmark',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/**
+ * Ajax entry callback.
+ *
+ * Bookmark ting object/entity with ajax callback.
+ *
+ * @param TingEntity $entity
+ *   Ting entity object.
+ * @param string $remove
+ *   Last argument from path. If filled in, remove
+ *   instead of add.
+ *
+ * @return array
+ *   Render array with Ajax commands.
+ */
+function reol_bookmark_create_ajax($entity, $remove = FALSE) {
+  $commands = array();
+
+  // Check if the logged in user is a library user.
+  global $user;
+  if (user_is_logged_in()) {
+    if (ding_user_is_provider_user($user)) {
+      if (is_object($entity) && $entity instanceof TingEntity) {
+        // Try to add bookmark to the users list.
+        $form_state = array('values' => array());
+        $res = reol_bookmark_bookmark($entity->id, (bool) $remove);
+
+        $html = theme('status_messages');
+
+        $html .= '<p>';
+        if (!$remove) {
+          if (!$res) {
+            $html .= t('An unknown error occurred while adding <em>@title</em> to bookmarks', array('@title' => $entity->title));
+          }
+          else {
+            $html .= t('<em>@title</em> added to bookmarks', array('@title' => $entity->title));
+          }
+        }
+        else {
+          if (!$res) {
+            $html .= t('An unknown error occurred while removing <em>@title</em> from bookmarks', array('@title' => $entity->title));
+          }
+          else {
+            $html .= t('<em>@title</em> removed from bookmarks', array('@title' => $entity->title));
+          }
+        }
+        $html .= '</p>';
+
+        // Display pop-up.
+        $commands[] = ajax_command_ding_popup('ding_bookmark', t('Bookmark'), $html, array('refresh' => TRUE));
+      }
+      else {
+        // Error not ting entity.
+        $commands[] = ajax_command_ding_popup('ding_bookmark', t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>');
+      }
+    }
+    else {
+      // Error not library user.
+      $commands[] = ajax_command_ding_popup('ding_bookmark', t('Error'), '<p>' . t('Only library user can make bookmarks.') . '</p>');
+    }
+  }
+  else {
+    // Trigger log-in (the bookmark link will be triggered on success).
+    $commands[] = ajax_command_ding_user_authenticate('');
+  }
+
+  // Return the ajax commands as an render array.
+  return array('#type' => 'ajax', '#commands' => $commands);
 }
