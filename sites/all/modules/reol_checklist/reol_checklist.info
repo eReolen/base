@@ -1,0 +1,7 @@
+name = eReolen checklist module
+description = Module handling checklists for eReolen.dk
+core = 7.x
+package = ereolen.dk
+dependencies[] = features
+dependencies[] = reol_base
+features[features_api][] = api:2
