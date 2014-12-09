@@ -219,43 +219,6 @@ class PublizonClient {
   }
 
   /**
-   * Validata a library user.
-   *
-   * Validates that a given user is allowed to login to the publizon
-   * web-service.
-   *
-   * @param string $card_number
-   *   User card_number / CPR also known as login id.
-   * @param string $pincode
-   *   The users pin code.
-   *
-   * @return bool
-   *   If the user is valid TRUE is return else FALSE.
-   */
-  public function validateLibraryUser($card_number, $pincode, $retailer_id) {
-    try {
-      $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, array(
-        'pub:cardnumber' => $card_number,
-        'pub:pincode' => $pincode,
-      ), array('pub' => 'http://pubhub.dk/'));
-    }
-    catch (PublizonException $e) {
-      $this->logger->log($e->getMessage(), 'ERROR');
-      return FALSE;
-    }
-
-    // Check if this is a special testcard and set by pass cache session. There
-    // is no problem in using the session here, in relation to revers proxy, as
-    // sessions will be used for logged in user any way.
-    $data = $response->xpath('//data');
-    $_SESSION['by_pass_cache'] = FALSE;
-    if ((string) $data[0]->testcard == 'true') {
-      $_SESSION['by_pass_cache'] = TRUE;
-    }
-    return TRUE;
-  }
-
-  /**
    * Get basic information about a given library as registered at Publizon.
    *
    * It will fallback on the clients retailer id and retailer key code defined
