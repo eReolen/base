@@ -43,7 +43,14 @@ function publizon_bookmark_list($account) {
  *   The local id to bookmark.
  */
 function publizon_bookmark_create($account, $local_id) {
+  // Throw exception if we're not logged in.
+  $creds = ding_user_get_creds($account);
 
+  $retailer_id = publizon_get_retailer_id($account);
+
+  // Add to checklist in Publizon.
+  $client = PublizonClient::getClient();
+  $checklist = $client->addChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
 }
 
 /**
@@ -55,5 +62,12 @@ function publizon_bookmark_create($account, $local_id) {
  *   The local id to delete bookmark for.
  */
 function publizon_bookmark_delete($account, $local_id) {
+  // Throw exception if we're not logged in.
+  $creds = ding_user_get_creds($account);
 
+  $retailer_id = publizon_get_retailer_id($account);
+
+  // Delete from checklist in Publizon.
+  $client = PublizonClient::getClient();
+  $checklist = $client->deleteChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
 }

@@ -570,7 +570,19 @@ class PublizonClient {
    * @throws PublizonException
    */
   public function addChecklistItem($retailer_id, $card_number, $isbn) {
+    // Make request to the web-service for the checklist.
+    $response = $this->call('checklist', 'AddCheckListItem', $retailer_id, array(
+      'pub:cardnumber' => $card_number,
+      'pub:ebookid' => $isbn,
+    ), array('pub' => 'http://pubhub.dk/'));
 
+    $data = $response->xpath('//data');
+    if (isset($data[0]) && $data[0][0] == $card_number) {
+      return TRUE;
+    }
+
+    $this->logger->log('Add checklist item request returned no/invalid data (' . $isbn . ').', 'ERROR');
+    throw new PublizonException('Add checklist item request returned no/invalid data (' . $isbn . ').');
   }
 
   /**
@@ -586,7 +598,19 @@ class PublizonClient {
    * @throws PublizonException
    */
   public function deleteChecklistItem($retailer_id, $card_number, $isbn) {
+    // Make request to the web-service for the checklist.
+    $response = $this->call('checklist', 'DeleteCheckListItem', $retailer_id, array(
+      'pub:cardnumber' => $card_number,
+      'pub:ebookid' => $isbn,
+    ), array('pub' => 'http://pubhub.dk/'));
 
+    $data = $response->xpath('//data');
+    if (isset($data[0]) && $data[0][0] == $card_number) {
+      return TRUE;
+    }
+
+    $this->logger->log('Delete checklist item request returned no/invalid data (' . $isbn . ').', 'ERROR');
+    throw new PublizonException('Delete checklist item request returned no/invalid data (' . $isbn . ').');
   }
 
   /**
