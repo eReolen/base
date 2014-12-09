@@ -30,6 +30,7 @@ files[] = lib/Publizon.class.inc
 ; Client classes.
 files[] = lib/client/PublizonLoanClient.class.inc
 files[] = lib/client/PublizonUserClient.class.inc
+files[] = lib/client/PublizonReservationClient.class.inc
 ; Storage classes.
 files[] = lib/storage/PublizonLoan.class.inc
 files[] = lib/storage/PublizonReservation.class.inc
