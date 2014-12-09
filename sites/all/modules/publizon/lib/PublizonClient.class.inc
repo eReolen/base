@@ -557,6 +557,56 @@ class PublizonClient {
   }
 
   /**
+   * Add a title to the users checklist.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer to add to checklist for.
+   * @param string $card_number
+   *   The card number whos checklist to add to.
+   * @param string $isbn
+   *   The ISBN-number of the title.
+   *
+   * @throws PublizonException
+   */
+  public function addChecklistItem($retailer_id, $card_number, $isbn) {
+
+  }
+
+  /**
+   * Delete a title from the users checklist.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer to delete from checklist for.
+   * @param string $card_number
+   *   The card number whos checklist to delete from.
+   * @param string $isbn
+   *   The ISBN-number of the title.
+   *
+   * @throws PublizonException
+   */
+  public function deleteChecklistItem($retailer_id, $card_number, $isbn) {
+
+  }
+
+  /**
+   * Get a users checklist.
+   *
+   * @param string $retailer_id
+   *   The id of the retailer to add to checklist for.
+   * @param string $card_number
+   *   The card number whos checklist to add to.
+   *
+   * @return array
+   *   Array of PublizonChecklistItem objects.
+   *
+   * @throws PublizonException
+   */
+  public function getChecklist($retailer_id, $card_number) {
+
+    return array();
+  }
+
+  /**
    * Call method on endpoint.
    *
    * Wrapper function for preforming of call to Publizon's web-service via the
