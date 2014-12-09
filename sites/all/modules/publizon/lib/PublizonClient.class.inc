@@ -5,15 +5,7 @@
  * web-service.
  */
 
-/**
- * This is a single ton class that is used to communicate with the Publizon
- * web-service.
- *
- * You get a instances of the object by calling PublizonClient::getClient();
- */
-class PublizonClient {
-  private $retailerId;
-  private $retailerKeyCode;
+abstract class PublizonClient {
   private $logger;
 
   private $baseUrl = '';
@@ -41,20 +33,8 @@ class PublizonClient {
    * calls into this object. This is a private constructor as the object is
    * implemented as a singleton pattern, use PublizonClient::getClient() to get
    * an instance.
-   *
-   * If the parameters is not set (NULL) the object will try to use user provied
-   * information stored in the users current session. If there non given and no
-   * session it will fallback to the information given in the administration
-   * form.
-   *
-   * @param string $retailer_id
-   *   An id that represents the library at publizon.
-   * @param string $retailer_key_code
-   *   An hash value validating the library as publizon.
-   * @param PublizonLogger $logger
-   *   Publizon logger class.
    */
-  private function __construct($retailer_id, $retailer_key_code, $logger) {
+  private function __construct() {
     // Get publizon url.
     $publizon_url = variable_get('publizon_base_url', FALSE);
     if (!$publizon_url) {
@@ -64,15 +44,10 @@ class PublizonClient {
     // Set base URL.
     $this->baseUrl = $publizon_url;
 
-    // Encode retailer key code (if needed).
-    $retailer_key_code = isset($retailer_key_code) ? md5($retailer_key_code) : NULL;
-
     // Set logger.
     $this->logger = new PublizonVoidLogger();
-    if (!isset($logger)) {
-      if (variable_get('publizon_logging', FALSE)) {
-        $this->logger = new PublizonWatchDogLogger();
-      }
+    if (variable_get('publizon_logging', FALSE)) {
+      $this->logger = new PublizonWatchDogLogger();
     }
   }
 
@@ -83,140 +58,13 @@ class PublizonClient {
    * communicate with the Publizon web-service.
    *
    * @see PublizonClient()
-   *
-   * @param string $retailer_id
-   *   An id that represents the library at publizon.
-   * @param string $retailer_key_code
-   *   An hash value validating the library as publizon.
-   * @param PublizonLogger $logger
-   *   Publizon logger class.
    */
-  public static function getClient($retailer_id = NULL, $retailer_key_code = NULL, $logger = NULL) {
+  public static function getClient() {
     if (!isset(self::$instance)) {
       $class = __CLASS__;
-      self::$instance = new $class($retailer_id, $retailer_key_code, $logger);
+      self::$instance = new $class();
     }
     return self::$instance;
-  }
-
-  /**
-   * Get last loans.
-   *
-   * Not implemented.
-   */
-  public function getLastLoans() {
-    throw new PublizonException('Not implemented yet');
-  }
-
-  /**
-   * Get last loans by a library.
-   *
-   * Not implemented.
-   */
-  public function getLastLoansByLibrary() {
-    throw new PublizonException('Not implemented yet');
-  }
-
-  /**
-   * Get list of last loaned products.
-   *
-   * @todo Get Publizon to make it possible to limit the number of elements in
-   *       the response.
-   *
-   * @param int $limit
-   *   The number of products that should be returned. If the limit can not be
-   *   reached, the number available will be returned.
-   *
-   * @return array
-   *   Array with PublizonProduct objects
-   */
-  public function getLastLoansForAll($limit = 7) {
-    // Make request to the web-service for the loans.
-    $response = $this->call('libraray_list', 'GetLastLoansForAll', array(), array('pub' => 'http://pubhub.dk/'));
-
-    $products = array();
-    $items_found = 0;
-
-    // Convert XML into PublizonProduct objects, if data was returned.
-    $data = $response->xpath('//data');
-    if (isset($data[0])) {
-      $data = $data[0];
-      foreach ($data->orderinformationitem as $item) {
-        $product = new PublizonProduct((string) $item->identifier);
-        if (isset($product->status)) {
-          $products[] = $product;
-          $items_found++;
-        }
-        // If we found the number of products we are looking for, break.
-        if ($items_found == $limit) {
-          break;
-        }
-      }
-    }
-
-    return $products;
-  }
-
-  /**
-   * Get top list.
-   *
-   * Not implemented.
-   */
-  public function getTopList() {
-    throw new PublizonException('Not implemented yet');
-  }
-
-  /**
-   * Get product list.
-   *
-   * Not implemented.
-   */
-  public function getProductList() {
-    throw new Exception('Not implemented yet');
-  }
-
-  /**
-   * Get removed products list.
-   *
-   * Not implemented.
-   */
-  public function getRemovedProductList() {
-    throw new Exception('Not implemented yet');
-  }
-
-  /**
-   * Get basic information about a given library as registered at Publizon.
-   *
-   * It will fallback on the clients retailer id and retailer key code defined
-   * in the current instance of the client if non is given as arguments.
-   *
-   * @param string $retailer_id
-   *   The libraries ID at Publizon.
-   * @param string $retailer_key_code
-   *   The libraries access code at Publizon.
-   *
-   * @return array
-   *   The information about the library.
-   */
-  public function getLibraryProfile($retailer_id = NULL, $retailer_key_code = NULL) {
-    // Try to get parameters and fallback to default.
-    $retailer_id = isset($retailer_id) ? $retailer_id : $this->retailerId;
-    $retailer_key_code = isset($retailer_key_code) ? $retailer_key_code : $this->retailerKeyCcode;
-
-    // Make the web-service call.
-    $response = $this->call('library_profile', 'GetLibraryProfile', array(
-        'pub:retailerid' => $retailer_id,
-        'pub:retailerkeycode' => $retailer_key_code,
-    ), array('pub' => 'http://pubhub.dk/'));
-
-    // Check if any data was returned.
-    $data = $response->xpath('//data');
-    if (isset($data[0])) {
-      return $data[0];
-    }
-
-    $this->logger->log('The library profile with id (' . $retailer_id . ') did not return any data', 'WARNING');
-    return FALSE;
   }
 
   /**
@@ -304,41 +152,6 @@ class PublizonClient {
       'reservation',
       'loan_status',
     );
-  }
-
-  /**
-   * Set a setting.
-   *
-   * Used to set a object setting for communication with the Publizon
-   * web-service. If value is given it's used, if non is given the session will
-   * be checked and then the default configuration.
-   *
-   * Data in the session indicates that the current use is logged in, hence this
-   * should be used.
-   *
-   * @param string $name
-   *   Name of the setting that should be set.
-   * @param string $value
-   *   The value that should be set.
-   *
-   * @throws PublizonException
-   *   If the function falls back to using administration setting and this could
-   *   not be found exception is throw.
-   */
-  private function setSetting($name, $value = NULL) {
-    if (isset($value)) {
-      $this->$name = $value;
-    }
-    elseif (isset($_SESSION[$name])) {
-      $this->$name = $_SESSION[$name];
-    }
-    else {
-      $value = variable_get('publizon_' . $name, FALSE);
-      if (!$value) {
-        throw new PublizonException('Publizon client could not load default settings for "' . $name . '".');
-      }
-      $this->$name = $value;
-    }
   }
 }
 
