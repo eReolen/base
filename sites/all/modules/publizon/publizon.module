@@ -40,6 +40,10 @@ function publizon_ding_provider() {
         'prefix' => 'debt',
         'file' => $path . '/publizon.debt.inc',
       ),
+      'bookmark' => array(
+        'prefix' => 'bookmark',
+        'file' => $path . '/publizon.bookmark.inc',
+      ),
     ),
   );
 }
