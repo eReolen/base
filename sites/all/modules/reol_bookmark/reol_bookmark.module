@@ -5,9 +5,31 @@
  */
 
 /**
- * Implements hook_flag().
+ * Implements hook_menu().
  */
-function reol_bookmark_flag($op, $flag, $content_id, $account, $fcid) {
+function reol_bookmark_menu() {
+  $items = array();
+
+  $items['user/%user/bookmarks'] = array(
+    'title' => 'Bookmarks',
+    'title callback' => 'reol_bookmark_menu_item_title',
+    'title arguments' => array('Bookmarks', 1),
+    'page callback' => 'reol_bookmark_user_bookmark_page',
+    'page arguments' => array(1),
+    'access callback' => 'reol_bookmark_view_access',
+    'access arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'reol_bookmark.pages.inc',
+  );
+
+  $items['ting/object/%ting_object/bookmark'] = array(
+    'page callback' => 'reol_bookmark_create_ajax',
+    'page arguments' => array(2),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('perform bookmark'),
+  );
+
+  return $items;
 }
 
 /**
@@ -17,7 +39,101 @@ function reol_bookmark_flag($op, $flag, $content_id, $account, $fcid) {
  *   The id of the ting object.
  * @param bool $remove
  *   Whether or not to remove bookmark. Default FALSE
+ *
+ * @return bool
+ *   Whether or not action was successful.
  */
 function reol_bookmark_bookmark($id, $remove = FALSE) {
+  $ting_object = ding_entity_load($id);
 
+  try {
+    if (!$remove) {
+      ding_provider_invoke('bookmark', 'create', $ting_object->localId);
+    }
+    else {
+      ding_provider_invoke('bookmark', 'delete', $ting_object->localId);
+    }
+  }
+  catch (DingProviderException $e) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/**
+ * Get all bookmarks for a user.
+ * @TODO Static + DB cache.
+ *
+ * @param StdClass $account
+ *   The user to get bookmarks for.
+ *
+ * @return array
+ *   Array of bookmarks from provider.
+ */
+function reol_bookmark_get_bookmarks($account) {
+  try {
+    return ding_provider_invoke('bookmark', 'list', $account);
+  }
+  catch (DingProviderException $e) {
+    return array();
+  }
+}
+
+/**
+ * Implements hook_views_default_views_alter().
+ *
+ * Kill the views for the default bookmarks flag. They clash with our
+ * paths. Disabling them does not seem to be enough.
+ */
+function reol_bookmark_views_default_views_alter(&$views) {
+  if (!empty($views['flag_bookmarks'])) {
+    unset($views['flag_bookmarks']);
+  }
+  if (!empty($views['flag_bookmarks_tab'])) {
+    unset($views['flag_bookmarks_tab']);
+  }
+}
+
+/**
+ * Alter title to add count items number.
+ *
+ * @param string $title
+ *   Untranslated title.
+ * @param StdClass $account
+ *   User account object, for counting bookmark items.
+ *
+ * @return string
+ *   The bookmark item title.
+ */
+function reol_bookmark_menu_item_title($title, $account = NULL) {
+  $bookmarks = $account ? count(reol_bookmark_get_bookmarks($account)) : 0;
+  return t($title) . ' (' . $bookmarks . ')';
+}
+
+/**
+ * Access callback; Check user access to bookmark.
+ */
+function reol_bookmark_view_access($account) {
+  global $user;
+  return $user->uid == $account->uid || $user->uid == 1;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function reol_bookmark_menu_alter(&$items) {
+  foreach ($items as $path => $item) {
+    if ($path == 'user/%user/bookmarks' || $path == 'user/%pm_arg/bookmarks') {
+      $items[$path]['title callback'] = 'reol_bookmark_menu_item_title';
+    }
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_bookmark_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
 }
