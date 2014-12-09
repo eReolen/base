@@ -1,0 +1,23 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen bookmark module feature.
+ */
+
+/**
+ * Implements hook_flag().
+ */
+function reol_bookmark_flag($op, $flag, $content_id, $account, $fcid) {
+}
+
+/**
+ * Bookmark (or remove bookmark) a ting_object.
+ *
+ * @param string $id
+ *   The id of the ting object.
+ * @param bool $remove
+ *   Whether or not to remove bookmark. Default FALSE
+ */
+function reol_bookmark_bookmark($id, $remove = FALSE) {
+
+}

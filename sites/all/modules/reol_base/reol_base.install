@@ -96,8 +96,8 @@ function reol_base_update_7108() {
 }
 
 /**
- * Enable reol_checklist module.
+ * Enable reol_bookmark module.
  */
 function reol_base_update_7109() {
-  module_enable(array('reol_checklist'), TRUE);
+  module_enable(array('reol_bookmark'), TRUE);
 }
