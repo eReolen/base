@@ -48,6 +48,7 @@ function publizon_availability_items($local_ids) {
         'reservable' => $status == 5,
         'loaned' => $status == 1,
         'reserved' => $status == 2,
+        'bookmarked' => $result->onChecklist,
       );
     }
     return $return;
