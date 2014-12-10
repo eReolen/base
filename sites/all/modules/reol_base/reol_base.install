@@ -110,7 +110,6 @@ function reol_base_update_7110() {
   _reol_base_remove_node_type('ding_event');
   _reol_base_remove_node_type('ding_library');
   _reol_base_remove_node_type('ding_news');
-  _reol_base_remove_node_type('ding_group');
   _reol_base_remove_node_type('ding_rolltab');
 }
 
