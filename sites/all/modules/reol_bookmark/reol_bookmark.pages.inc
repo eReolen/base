@@ -96,7 +96,7 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
 
   // Add the delete button to both top and bottom.
   $form['actions_top']['delete'] = array(
-    '#prefix' => '<div class="delete-bookmarks action-button">',
+    '#prefix' => '<div class="delete-bookmarks">',
     '#suffix' => '</div>',
     '#type' => 'submit',
     '#value' => t('Delete selected (@count)', array('@count' => 0)),
