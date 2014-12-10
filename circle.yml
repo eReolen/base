@@ -45,4 +45,4 @@ deployment:
   demo:
     branch: develop
     commands:
-      - drush deploy @dev -y
+      - drush deploy @circle-dev -y
