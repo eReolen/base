@@ -1,10 +1,10 @@
 <?php
-
-include_once 'reol_help.features.inc';
 /**
  * @file
- * Code for the eReolen help feature.
+ * Code for the eReolen help feature module.
  */
+
+include_once 'reol_help.features.inc';
 
 /**
  * Implements hook_secure_permissions().
