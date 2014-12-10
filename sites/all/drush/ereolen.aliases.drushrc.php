@@ -8,6 +8,53 @@
 // Shut up phpcs.
 $aliases = array();
 
+$aliases['p01'] = array(
+  'remote-host' => 'p01.ereolen.dk',
+  'remote-user' => 'deploy',
+);
+
+$aliases['prod'] = array(
+  'parent' => '@p01',
+  'uri' => 'prod.ereolen.dk',
+  'root' => '/data/prod_ereolen_dk',
+  'deployotron' => array(
+    'branch' => 'develop',
+    'dump-dir' => '/home/deploy/backup/prod',
+    'restart-apache2' => TRUE,
+    // Updb clears the cache.
+    'no-cc-all' => TRUE,
+    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+  ),
+);
+
+$aliases['stg'] = array(
+  'parent' => '@p01',
+  'uri' => 'stg.ereolen.dk',
+  'root' => '/data/stg_ereolen_dk',
+  'deployotron' => array(
+    'branch' => 'develop',
+    'dump-dir' => '/home/deploy/backup/stg',
+    'restart-apache2' => TRUE,
+    // Updb clears the cache.
+    'no-cc-all' => TRUE,
+    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+  ),
+);
+
+$aliases['dev'] = array(
+  'parent' => '@p01',
+  'uri' => 'dev.ereolen.dk',
+  'root' => '/data/dev_ereolen_dk',
+  'deployotron' => array(
+    'branch' => 'develop',
+    'dump-dir' => '/home/deploy/backup/dev',
+    'restart-apache2' => TRUE,
+    // Updb clears the cache.
+    'no-cc-all' => TRUE,
+    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+  ),
+);
+
 $aliases['test1404'] = array(
   'remote-host' => 'test1404.reload.dk',
   'remote-user' => 'reload',
