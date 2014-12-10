@@ -203,7 +203,7 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
 /**
  * Implements hook_secure_permissions().
  *
- * Define which users should be able to perform a loan.
+ * Define which users should be able to bookmark.
  */
 function reol_bookmark_secure_permissions($role) {
   $permissions = array(
