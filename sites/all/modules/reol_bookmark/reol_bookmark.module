@@ -63,7 +63,6 @@ function reol_bookmark_bookmark($id, $remove = FALSE) {
 
 /**
  * Get all bookmarks for a user.
- * @TODO Static + DB cache.
  *
  * @param StdClass $account
  *   The user to get bookmarks for.
@@ -72,12 +71,29 @@ function reol_bookmark_bookmark($id, $remove = FALSE) {
  *   Array of bookmarks from provider.
  */
 function reol_bookmark_get_bookmarks($account) {
-  try {
-    return ding_provider_invoke('bookmark', 'list', $account);
+  // First look in static for bookmarks.
+  $bookmarks = &drupal_static(__FUNCTION__);
+  if (!isset($bookmarks)) {
+    // Second, use ding_session_cache.
+    if (module_exists('ding_session_cache')) {
+      $bookmarks = ding_session_cache_get('reol_bookmark', 'bookmarks');
+    }
+    // If all else fails, fetch from provider.
+    if (empty($bookmarks)) {
+      try {
+        $bookmarks = ding_provider_invoke('bookmark', 'list', $account);
+      }
+      catch (DingProviderException $e) {
+        $bookmarks = array();
+      }
+
+      // Save in session cache.
+      if (module_exists('ding_session_cache')) {
+        ding_session_cache_set('reol_bookmark', 'bookmarks', $bookmarks);
+      }
+    }
   }
-  catch (DingProviderException $e) {
-    return array();
-  }
+  return $bookmarks;
 }
 
 /**
@@ -265,4 +281,27 @@ function reol_bookmark_create_ajax($entity, $remove = FALSE) {
 
   // Return the ajax commands as an render array.
   return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Implements hook_ding_session_cache_defaults().
+ *
+ * Set default ding_session_cache settings and tell ding_session_cache that this
+ * module supports it.
+ */
+function reol_bookmark_ding_session_cache_defaults() {
+  return array(
+    'titel' => 'Reol bookmark',
+    'enabled' => TRUE,
+    'expire' => 3600,
+  );
+}
+
+/**
+ * Clears the bookmark cache if ding_session_cache is active.
+ */
+function reol_bookmark_cache_clear() {
+  if (module_exists('ding_session_cache')) {
+    ding_session_cache_clear('reol_bookmark', 'bookmarks');
+  }
 }
