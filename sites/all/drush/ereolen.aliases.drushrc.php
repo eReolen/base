@@ -11,6 +11,8 @@ $aliases = array();
 $aliases['p01'] = array(
   'remote-host' => 'p01.ereolen.dk',
   'remote-user' => 'deploy',
+  // Need to suppress the sshd Banner.
+  'ssh-options' => "-o PasswordAuthentication=no -o LogLevel=Error",
 );
 
 $aliases['prod'] = array(
