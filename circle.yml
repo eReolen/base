@@ -40,3 +40,9 @@ test:
     - drush --nocolor drake check-css
     # Run Drupal's simpletests and unittest (if any).
     #- drush --nocolor drake run-tests
+
+deployment:
+  demo:
+    branch: develop
+    commands:
+      - drush deploy @dev -y
