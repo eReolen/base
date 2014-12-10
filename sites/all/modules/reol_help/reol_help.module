@@ -1,11 +1,27 @@
 <?php
-/**
- * @file
- * Code for the eReolen help module feature.
- */
 
 include_once 'reol_help.features.inc';
 /**
  * @file
  * Code for the eReolen help feature.
  */
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to perform a loan.
+ */
+function reol_help_secure_permissions($role) {
+  $permissions = array(
+    'anonymous user' => array(
+      'view faq page',
+    ),
+    'authenticated user' => array(
+      'view faq page',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
