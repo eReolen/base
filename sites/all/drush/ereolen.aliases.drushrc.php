@@ -91,7 +91,7 @@ $aliases['test-test'] = array(
 // The server only allows certain IPs to log in, so we hack up an
 // alias for the jump server here.
 $aliases['circle'] = $aliases['p01'];
-$aliases['circle']['ssh-options'] .= " -o 'ProxyCommand  ssh circleci@ding.reload.dk nc %h %p'";
+$aliases['circle']['ssh-options'] .= " -o ForwardAgent=yes -o 'ProxyCommand  ssh circleci@ding.reload.dk nc %h %p'";
 
 $aliases['circle-dev'] = $aliases['dev'];
 $aliases['circle-dev']['parent'] = '@circle';
