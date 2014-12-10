@@ -33,6 +33,18 @@ function reol_bookmark_menu() {
 }
 
 /**
+ * Implements hook_permission().
+ */
+function reol_bookmark_permission() {
+  return array(
+    'perform bookmark' => array(
+      'title' => t('Perform bookmark'),
+      'description' => t('Perform bookmark of ting objects.'),
+    ),
+  );
+}
+
+/**
  * Bookmark (or remove bookmark) a ting_object.
  *
  * @param string $id
