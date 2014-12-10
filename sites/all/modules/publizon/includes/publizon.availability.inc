@@ -36,7 +36,7 @@ function publizon_availability_items($local_ids) {
       $to_check[$isbn] = $local_id;
     }
 
-    $client = PublizonClient::getClient();
+    $client = PublizonLoanClient::getClient();
     $results = $client->getProductLoanStatusList($retailer_id, $creds['name'], array_keys($to_check));
     $return = array();
     foreach ($results as $result) {

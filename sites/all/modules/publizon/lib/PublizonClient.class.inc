@@ -24,7 +24,18 @@ abstract class PublizonClient {
   );
 
   // Holds the object instance (part of the singleton pattern).
-  private static $instance = NULL;
+  private static $instances = array();
+
+  /**
+   * Get the singleton client.
+   */
+  public static function getClient() {
+    $class = get_called_class();
+    if (!isset(self::$instances[$class])) {
+      self::$instances[$class] = new $class();
+    }
+    return self::$instances[$class];
+  }
 
   /**
    * Constructor.
@@ -34,7 +45,7 @@ abstract class PublizonClient {
    * implemented as a singleton pattern, use PublizonClient::getClient() to get
    * an instance.
    */
-  private function __construct() {
+  protected function __construct() {
     // Get publizon url.
     $publizon_url = variable_get('publizon_base_url', FALSE);
     if (!$publizon_url) {
@@ -49,22 +60,6 @@ abstract class PublizonClient {
     if (variable_get('publizon_logging', FALSE)) {
       $this->logger = new PublizonWatchDogLogger();
     }
-  }
-
-  /**
-   * Get the singleton client.
-   *
-   * Returns an instances of the PublizonClient object that can be used to
-   * communicate with the Publizon web-service.
-   *
-   * @see PublizonClient()
-   */
-  public static function getClient() {
-    if (!isset(self::$instance)) {
-      $class = __CLASS__;
-      self::$instance = new $class();
-    }
-    return self::$instance;
   }
 
   /**
@@ -91,7 +86,7 @@ abstract class PublizonClient {
    * @throws PublizonException
    *   If the response dose not have a 101 status.
    */
-  private function call($endpoint, $action, $retailer_id, $parameters, $namespace) {
+  protected function call($endpoint, $action, $retailer_id, $parameters, $namespace) {
     // Get retailer information.
     $retailer = publizon_get_library($retailer_id);
 

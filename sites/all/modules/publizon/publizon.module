@@ -258,7 +258,7 @@ function publizon_get_product_cover($local_id) {
   }
 
   // Get the cover image from Publizon.
-  $client = PublizonClient::getClient();
+  $client = PublizonProductClient::getClient();
 
   return $client->getCoverUri($isbn);
 }

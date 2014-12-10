@@ -9,7 +9,8 @@ class PublizonLoanClient extends PublizonClient {
    * Create a loan.
    *
    * Create a new loan at Publizon. It throws an exception if the loan is not
-   * successfull, otherwise the retailer orderno and internal orderno is returned.
+   * successfull, otherwise the retailer orderno and internal orderno is
+   * returned.
    *
    * @param string $retailer_id
    *   The id of the retailer to loan for.
