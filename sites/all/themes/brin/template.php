@@ -44,3 +44,26 @@ function brin_preprocess_node(&$variables, $hook) {
 function brin_menu_tree__menu_block__main_menu($vars) {
   return '<ul class="main-menu">' . $vars['tree'] . '</ul>';
 }
+
+/**
+ * Implements theme_faq_page().
+ */
+function brin_faq_page($variables) {
+  $content = $variables['content'];
+  $answers = $variables['answers'];
+  $description = $variables['description'];
+  $output = '<div class="faq-content"><div class="faq">';
+  if (!empty($description)) {
+    $output .= '<div class="faq-description">' . $description . "</div>\n";
+  }
+  if (variable_get('faq_show_expand_all', FALSE)) {
+    $output .= '<div id="faq-expand-all">';
+    $output .= '<a class="faq-expand-all-link" href="#faq-expand-all-link">[' . t('expand all') . ']</a>';
+    $output .= '<a class="faq-collapse-all-link" href="#faq-collapse-all-link">[' . t('collapse all') . ']</a>';
+    $output .= "</div>\n";
+  }
+
+  $output .= '<div class="faq-questions">' . $content . '</div>';
+  $output .= '<div class="faq-answers">' . $answers . "</div></div></div>\n";
+  return $output;
+}
