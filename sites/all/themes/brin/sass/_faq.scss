@@ -7,3 +7,13 @@
     margin-top: 30px;
   }
 }
+
+.faq-search-result {
+  a {
+    color: black;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
