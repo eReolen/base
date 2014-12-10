@@ -40,6 +40,10 @@ function publizon_ding_provider() {
         'prefix' => 'debt',
         'file' => $path . '/publizon.debt.inc',
       ),
+      'bookmark' => array(
+        'prefix' => 'bookmark',
+        'file' => $path . '/publizon.bookmark.inc',
+      ),
     ),
   );
 }
@@ -254,7 +258,7 @@ function publizon_get_product_cover($local_id) {
   }
 
   // Get the cover image from Publizon.
-  $client = PublizonClient::getClient();
+  $client = PublizonProductClient::getClient();
 
   return $client->getCoverUri($isbn);
 }

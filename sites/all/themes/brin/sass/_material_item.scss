@@ -36,8 +36,23 @@
       color: red;
     }
   }
+
+  .right-column {
+    padding-left: 40px;
+  }
+
+  .material-buttons {
+    float: right;
+
+    a {
+      margin-right: 20px;
+    }
+    a:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
-.pane-reservations .material-item .right-column {
-  padding-left: 40px;
+.pane-loans .material-item .right-column {
+  padding-left: 10px;
 }

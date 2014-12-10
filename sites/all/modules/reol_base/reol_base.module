@@ -280,6 +280,7 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
  *   The Ding entity id.
  */
 function reol_base_ding_entity_get_id($isbn) {
+  module_load_include('client.inc', 'ting');
   // Get the id from a search in Ting.
   $res = ting_do_search("term.identifier=" . $isbn);
   list($id) = array_keys($res->collections);

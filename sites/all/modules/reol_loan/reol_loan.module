@@ -133,7 +133,6 @@ function reol_loan_ding_entity_buttons($type, $entity) {
             'attributes' => array(
               'class' => array(
                 'action-button',
-                'reserve-button',
                 'use-ajax',
               ),
               'id' => 'loan-' . $entity->id,

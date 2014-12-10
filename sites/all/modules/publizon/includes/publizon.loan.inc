@@ -22,10 +22,9 @@ function publizon_loan_list($account) {
   $retailer_id = publizon_get_retailer_id($account);
 
   // Get list of loans from Publizon.
-  $client = PublizonClient::getClient();
+  $client = PublizonLoanClient::getClient();
   $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
 
-  module_load_include('client.inc', 'ting');
   foreach ($loans as $loan) {
     $id = reol_base_ding_entity_get_id($loan->isbn);
 
@@ -70,7 +69,7 @@ function publizon_loan_create($account, $local_id) {
   $isbn = reol_base_get_isbn($local_id);
 
   try {
-    $client = PublizonClient::getClient();
+    $client = PublizonLoanClient::getClient();
     // This will throw exception if loan does not go through.
     $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
   }
@@ -99,7 +98,7 @@ function publizon_loan_get($account, $local_id) {
 
   $isbn = reol_base_get_isbn($local_id);
 
-  $client = PublizonClient::getClient();
+  $client = PublizonLoanClient::getClient();
   // This will throw exception if loan does not go through.
   $result = $client->getLibraryUserOrder($retailer_id, $creds['name'], $isbn);
 

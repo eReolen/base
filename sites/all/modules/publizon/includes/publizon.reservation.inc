@@ -25,10 +25,9 @@ function publizon_reservation_list($account) {
   $retailer_id = publizon_get_retailer_id($account);
 
   // Get list of reservations from Publizon.
-  $client = PublizonClient::getClient();
+  $client = PublizonReservationClient::getClient();
   $reservations = $client->listReservations($retailer_id, $creds['name']);
 
-  module_load_include('client.inc', 'ting');
   foreach ($reservations as $reservation) {
     $ding_id = reol_base_ding_entity_get_id($reservation->isbn);
     $ting_entity = ding_entity_load($ding_id);
@@ -97,7 +96,7 @@ function publizon_reservation_create($account, $local_id, $options) {
   }
 
   try {
-    $client = PublizonClient::getClient();
+    $client = PublizonReservationClient::getClient();
     // This will throw exception if reservation does not go through.
     $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $isbn, $email, $phone);
   }
@@ -129,7 +128,7 @@ function publizon_reservation_delete($account, $local_id) {
   // Get the retailer id on the user.
   $retailer_id = publizon_get_retailer_id($account);
 
-  $client = PublizonClient::getClient();
+  $client = PublizonReservationClient::getClient();
   // This will throw exception if reservation is not deleted.
   $client->deleteReservation($retailer_id, $creds['name'], $isbn);
 }

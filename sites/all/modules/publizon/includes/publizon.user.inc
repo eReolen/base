@@ -57,7 +57,7 @@ function publizon_user_authenticate_form_alter($form, $form_state) {
 function publizon_user_authenticate($name, $pass, $values) {
   $res = array();
 
-  $client = PublizonClient::getClient();
+  $client = PublizonUserClient::getClient();
 
   if ($client->validateLibraryUser($name, $pass, $values['retailer_id'])) {
     $res = array(
