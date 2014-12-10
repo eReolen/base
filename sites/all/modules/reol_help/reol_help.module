@@ -25,3 +25,22 @@ function reol_help_secure_permissions($role) {
     return $permissions[$role];
   }
 }
+
+/**
+ * Implements hook_page_alter().
+ *
+ * Redirect FAQ node view pages to the faq page with right hash.
+ */
+function reol_help_page_alter(&$page) {
+  $node = menu_get_object('node');
+  if ($node && $node->type == 'faq') {
+    $node_wrapper = entity_metadata_wrapper('node', $node);
+    $category_tid = $node_wrapper->field_category->value()->tid;
+    // FAQ generates id in the following format:
+    // t[tid]n[nid] where tid is the category term id and
+    // nid is the FAQ node id. Redirect to show this one.
+    drupal_goto('faq-page', array(
+      'fragment' => 't' . $category_tid . 'n' . $node->nid,
+    ));
+  }
+}
