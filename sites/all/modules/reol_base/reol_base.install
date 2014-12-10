@@ -113,3 +113,10 @@ function reol_base_update_7110() {
   _reol_base_remove_node_type('ding_group');
   _reol_base_remove_node_type('ding_rolltab');
 }
+
+/**
+ * Enable reol_help module.
+ */
+function reol_base_update_7111() {
+  module_enable(array('reol_help'), TRUE);
+}
