@@ -107,6 +107,7 @@ function reol_bookmark_views_default_views_alter(&$views) {
  *   The bookmark item title.
  */
 function reol_bookmark_menu_item_title($title, $account = NULL) {
+  $account = isset($account->data) ? $account->data : $account;
   $bookmarks = $account ? count(reol_bookmark_get_bookmarks($account)) : 0;
   return t($title) . ' (' . $bookmarks . ')';
 }
@@ -126,6 +127,7 @@ function reol_bookmark_menu_alter(&$items) {
   foreach ($items as $path => $item) {
     if ($path == 'user/%user/bookmarks' || $path == 'user/%pm_arg/bookmarks') {
       $items[$path]['title callback'] = 'reol_bookmark_menu_item_title';
+      $items[$path]['title arguments'] = array($items[$path]['title'], 1);
     }
   }
 }
