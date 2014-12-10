@@ -45,6 +45,9 @@ function reol_bookmark_menu() {
  */
 function reol_bookmark_bookmark($id, $remove = FALSE) {
   global $user;
+  // Make sure cache is cleared.
+  reol_bookmark_cache_clear();
+
   $ting_object = ding_entity_load($id);
 
   try {
