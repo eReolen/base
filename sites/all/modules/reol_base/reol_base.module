@@ -286,3 +286,16 @@ function reol_base_ding_entity_get_id($isbn) {
   list($id) = array_keys($res->collections);
   return $id;
 }
+
+/**
+ * Remove a node type, that was previously supplied from a feature.
+ *
+ * Mainly used in .install file, but left here for convenience.
+ *
+ * @param string $type
+ *   The machine name of the type to remove.
+ */
+function _reol_base_remove_node_type($type) {
+  db_query("UPDATE node_type SET module = 'node', custom = 1, modified = 1, locked = 0 WHERE type = '%type';", array('%type' => $type));
+  node_type_delete($type);
+}

@@ -183,7 +183,7 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
     list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
     $link = 'ting/object/' . $entity->id . '/bookmark';
-    if ($availability['bookmarked']) {
+    if (@$availability['bookmarked']) {
       $text = t('Delete from bookmarks');
       $link .= '/delete';
     }

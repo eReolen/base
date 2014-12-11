@@ -85,6 +85,12 @@ function reol_frontend_preprocess_node(&$variables) {
     drupal_add_library('system', 'drupal.ajax');
     $variables['link'] = 'video/' . $variables['node']->nid . '/view';
   }
+
+  elseif ($variables['node']->type == 'faq') {
+    $node = $variables['node'];
+    $uri = entity_uri('node', $node);
+    $variables['link'] = url($uri['path'], $uri['options']);
+  }
 }
 
 /**

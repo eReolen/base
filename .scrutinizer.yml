@@ -43,6 +43,8 @@ before_commands:
   - "rm -r profiles/minimal profiles/standard profiles/testing"
   # Don't analyze ding2.
   - "rm -r profiles/ding2"
+  # Don't analyze contributed modules.
+  - "rm -r sites/all/modules/contrib"
   # No need to analyze deployotron.
   - "rm -r sites/all/drush/deployotron"
   # Remove generated code, we don't want to analyze that.
