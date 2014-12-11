@@ -179,11 +179,13 @@ function reol_frontend_flush_caches() {
 
   // Create aliases for the type frontpages.
   foreach ($types as $type) {
-    $path = array(
-      'source' => 'reol_frontpage/' . $type['int_name'],
-      'alias' => $type['int_name'],
-    );
-    path_save($path);
+    if (!path_load('reol_frontpage/' . $type['int_name'])) {
+      $path = array(
+        'source' => 'reol_frontpage/' . $type['int_name'],
+        'alias' => $type['path'],
+      );
+      path_save($path);
+    }
   }
 }
 

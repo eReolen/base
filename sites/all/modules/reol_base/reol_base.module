@@ -238,11 +238,13 @@ function _reol_base_get_types() {
       'ext_name' => 'lydbog (net)',
       'int_name' => 'audiobook',
       'title' => t('Audiobook'),
+      'path' => 'lydboeger',
     ),
     'ebook' => array(
       'ext_name' => 'ebog',
       'int_name' => 'ebook',
       'title' => t('E-book'),
+      'path' => 'eboeger',
     ),
   );
 }

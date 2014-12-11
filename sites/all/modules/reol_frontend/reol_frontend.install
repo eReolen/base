@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the reol_frontend module.
+ */
+
+/**
+ * Delete duplicated paths.
+ */
+function reol_frontend_update_7101() {
+  $types = reol_base_get_type_name();
+
+  // Delete the old aliases.
+  foreach ($types as $type) {
+    db_delete('url_alias')
+      ->condition('source', 'reol_frontpage/' . $type['int_name'])
+      ->condition('alias', $type['int_name'])
+      ->execute();
+  }
+
+  // Ensure the new is properly build.
+  reol_frontend_flush_caches();
+}
