@@ -98,7 +98,7 @@ function reol_bookmark_get_bookmarks($account) {
       try {
         $bookmarks = ding_provider_invoke('bookmark', 'list', $account);
       }
-      catch (DingProviderException $e) {
+      catch (Exception $e) {
         $bookmarks = array();
       }
 

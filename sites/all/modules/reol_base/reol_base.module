@@ -264,7 +264,7 @@ function reol_base_get_entity_types() {
  * Implements hook_field_widget_form_alter().
  */
 function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
-  if ($element['#field_name'] == 'field_reol_entity_type') {
+  if (isset($element['#field_name']) && $element['#field_name'] == 'field_reol_entity_type') {
     // By default, selecting no type means all types. Change label.
     $element['#options']['_none'] = t('- All -');
   }
