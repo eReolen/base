@@ -220,5 +220,23 @@ function reol_base_strongarm() {
   $strongarm->value = '0';
   $export['googleanalytics_visibility_roles'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'ting_online_types';
+  $strongarm->value = array();
+  $export['ting_online_types'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'ting_reservable_sources';
+  $strongarm->value = array(
+    0 => 'bibliotekskatalog',
+    1 => 'ereolen',
+    2 => 'netlydbog',
+  );
+  $export['ting_reservable_sources'] = $strongarm;
+
   return $export;
 }

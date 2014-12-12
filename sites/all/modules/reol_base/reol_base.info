@@ -49,5 +49,7 @@ features[variable][] = googleanalytics_trackuserid
 features[variable][] = googleanalytics_translation_set
 features[variable][] = googleanalytics_visibility_pages
 features[variable][] = googleanalytics_visibility_roles
+features[variable][] = ting_online_types
+features[variable][] = ting_reservable_sources
 mtime = 1418978030
 required = 1
