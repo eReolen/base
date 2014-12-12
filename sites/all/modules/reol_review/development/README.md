@@ -22,3 +22,5 @@ To use it, run:
 ```bash
 drush vset reol_review_litteratursiden_feed "[site-url]/sites/all/modules/reol_review/development/recommendations.json"
 ```
+
+Or set it to an empty string to disable fetching of reviews.

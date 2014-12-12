@@ -116,19 +116,23 @@ function reol_review_get_reviews() {
  *   The data returned from feed.
  */
 function reol_review_fetch_reviews($items, $start) {
-  $feed_url = drupal_parse_url(variable_get('reol_review_litteratursiden_feed', 'http://www.litteratursiden.dk/service/recommendations'));
-  $feed_url['query']['count'] = $items;
-  $feed_url['query']['offset'] = $start;
+  $feed_url = variable_get('reol_review_litteratursiden_feed', 'http://www.litteratursiden.dk/service/recommendations');
+  if ($feed_url) {
+    $feed_url = drupal_parse_url($feed_url);
+    $feed_url['query']['count'] = $items;
+    $feed_url['query']['offset'] = $start;
 
-  $ch = curl_init();
+    $ch = curl_init();
 
-  curl_setopt($ch, CURLOPT_HEADER, 0);
-  // Set curl to return the data instead of printing it to the browser.
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_URL, url($feed_url['path'], $feed_url));
-  $data = curl_exec($ch);
-  curl_close($ch);
-  return json_decode($data);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    // Set curl to return the data instead of printing it to the browser.
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, url($feed_url['path'], $feed_url));
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return json_decode($data);
+  }
+  return array();
 }
 
 /**
