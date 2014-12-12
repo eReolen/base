@@ -119,3 +119,10 @@ function reol_base_update_7110() {
 function reol_base_update_7111() {
   module_enable(array('reol_help'), TRUE);
 }
+
+/**
+ * Enable webform module.
+ */
+function reol_base_update_7112() {
+  module_enable(array('webform'), TRUE);
+}
