@@ -256,31 +256,39 @@ function reol_bookmark_create_ajax($entity, $remove = FALSE) {
       if (is_object($entity) && $entity instanceof TingEntity) {
         // Try to add bookmark to the users list.
         $form_state = array('values' => array());
-        $res = reol_bookmark_bookmark($entity->id, (bool) $remove);
+        try {
+          $res = reol_bookmark_bookmark($entity->id, (bool) $remove);
 
-        $html = theme('status_messages');
+          $html = theme('status_messages');
 
-        $html .= '<p>';
-        if (!$remove) {
-          if (!$res) {
-            $html .= t('An unknown error occurred while adding <em>@title</em> to bookmarks', array('@title' => $entity->title));
+          $html .= '<p>';
+          if (!$remove) {
+            if (!$res) {
+              $html .= t('An unknown error occurred while adding <em>@title</em> to bookmarks', array('@title' => $entity->title));
+            }
+            else {
+              $html .= t('<em>@title</em> added to bookmarks', array('@title' => $entity->title));
+            }
           }
           else {
-            $html .= t('<em>@title</em> added to bookmarks', array('@title' => $entity->title));
+            if (!$res) {
+              $html .= t('An unknown error occurred while removing <em>@title</em> from bookmarks', array('@title' => $entity->title));
+            }
+            else {
+              $html .= t('<em>@title</em> removed from bookmarks', array('@title' => $entity->title));
+            }
           }
-        }
-        else {
-          if (!$res) {
-            $html .= t('An unknown error occurred while removing <em>@title</em> from bookmarks', array('@title' => $entity->title));
-          }
-          else {
-            $html .= t('<em>@title</em> removed from bookmarks', array('@title' => $entity->title));
-          }
-        }
-        $html .= '</p>';
+          $html .= '</p>';
 
-        // Display pop-up.
-        $commands[] = ajax_command_ding_popup('ding_bookmark', t('Bookmark'), $html, array('refresh' => TRUE));
+          // Display pop-up.
+          $commands[] = ajax_command_ding_popup('ding_bookmark', t('Bookmark'), $html, array('refresh' => TRUE));
+        }
+        catch (DingProviderAuthException $exception) {
+          $commands[] = ajax_command_ding_user_authenticate('');
+        }
+        catch (DingProviderUserException $exception) {
+          $commands[] = ajax_command_ding_popup('ding_bookmark', t('Bookmark'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
+        }
       }
       else {
         // Error not ting entity.

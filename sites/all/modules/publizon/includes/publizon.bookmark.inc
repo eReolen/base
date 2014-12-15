@@ -48,9 +48,14 @@ function publizon_bookmark_create($account, $local_id) {
 
   $retailer_id = publizon_get_retailer_id($account);
 
-  // Add to checklist in Publizon.
-  $client = PublizonChecklistClient::getClient();
-  $checklist = $client->addChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+  try {
+    // Add to checklist in Publizon.
+    $client = PublizonChecklistClient::getClient();
+    $checklist = $client->addChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+  }
+  catch (PublizonException $e) {
+    DingPublizonException::convert($e);
+  }
 }
 
 /**
@@ -67,7 +72,12 @@ function publizon_bookmark_delete($account, $local_id) {
 
   $retailer_id = publizon_get_retailer_id($account);
 
-  // Delete from checklist in Publizon.
-  $client = PublizonChecklistClient::getClient();
-  $checklist = $client->deleteChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+  try {
+    // Delete from checklist in Publizon.
+    $client = PublizonChecklistClient::getClient();
+    $checklist = $client->deleteChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+  }
+  catch (PublizonException $e) {
+    DingPublizonException::convert($e);
+  }
 }
