@@ -59,28 +59,6 @@ function reol_frontend_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-e999c9e4-00d5-4222-8690-5c8e6f3d5339';
-    $pane->panel = 'bottom';
-    $pane->type = 'block';
-    $pane->subtype = 'block-1';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '<none>',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = 'e999c9e4-00d5-4222-8690-5c8e6f3d5339';
-    $display->content['new-e999c9e4-00d5-4222-8690-5c8e6f3d5339'] = $pane;
-    $display->panels['bottom'][0] = 'new-e999c9e4-00d5-4222-8690-5c8e6f3d5339';
-    $pane = new stdClass();
     $pane->pid = 'new-3c879038-1011-4427-8465-f638e18375e1';
     $pane->panel = 'branding';
     $pane->type = 'pane_header';
