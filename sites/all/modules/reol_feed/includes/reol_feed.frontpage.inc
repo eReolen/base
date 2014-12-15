@@ -28,14 +28,16 @@ function reol_feed_feeds_frontpage() {
   foreach ($reviews as $t => $type_reviews) {
     // Determine where to put it.
     $feed = $e_feed;
+    $source = 'ereolen';
     if ($t == 'audiobook') {
       $feed = $a_feed;
+      $source = 'netlydbog';
     }
 
     // Add x reviews.
     while (count($type_reviews) && $added < variable_get('reol_feed_frontpage_item_count', 2)) {
       $review_key = array_rand($type_reviews);
-      reol_feed_feeds_add_review($feed, $type_reviews[$review_key]);
+      reol_feed_feeds_add_review($feed, $source, $type_reviews[$review_key]);
       unset($type_reviews[$review_key]);
     }
   }
@@ -68,10 +70,12 @@ function reol_feed_feeds_add_items($type, $e_feed, $a_feed, $add_callback) {
   // Add item to feeds.
   $item_array = array(
     (object) array(
+      'source' => 'ereolen',
       'feed' => $e_feed,
       'items' => reol_feed_get_latest($type, 'ebook', $feed_item_count),
     ),
     (object) array(
+      'source' => 'netlydbog',
       'feed' => $a_feed,
       'items' => reol_feed_get_latest($type, 'audiobook', $feed_item_count),
     ),
@@ -80,7 +84,7 @@ function reol_feed_feeds_add_items($type, $e_feed, $a_feed, $add_callback) {
   // Add the videos found to feed.
   foreach ($item_array as $type) {
     foreach ($type->items as $node) {
-      $add_callback($type->feed, $node);
+      $add_callback($type->feed, $type->source, $node);
     }
   }
 }
@@ -90,10 +94,12 @@ function reol_feed_feeds_add_items($type, $e_feed, $a_feed, $add_callback) {
  *
  * @param SimpleXMLElement $feed
  *   The element to add news item to.
+ * @param string $source
+ *   The string source to put on item.
  * @param StdClass $node
  *   The news item object.
  */
-function reol_feed_feeds_add_news_item($feed, $node) {
+function reol_feed_feeds_add_news_item($feed, $source, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
@@ -101,6 +107,7 @@ function reol_feed_feeds_add_news_item($feed, $node) {
   $item->type = "news";
   $item->date = $node_wrapper->created->value();
   $item->title = $node_wrapper->title->value();
+  $item->source = $source;
 
   // To make sure that we get either summary, or trimmed body,
   // do it this way:
@@ -153,7 +160,7 @@ function reol_feed_feeds_add_news_item($feed, $node) {
  * @param StdClass $node
  *   The video object.
  */
-function reol_feed_feeds_add_video($feed, $node) {
+function reol_feed_feeds_add_video($feed, $source, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
@@ -161,6 +168,7 @@ function reol_feed_feeds_add_video($feed, $node) {
   $item->type = "video";
   $item->date = $node_wrapper->created->value();
   $item->title = $node_wrapper->title->value();
+  $item->source = $source;
 
   $body = $node_wrapper->body->value();
   $item->description = strip_tags($body['safe_value']);
@@ -189,7 +197,7 @@ function reol_feed_feeds_add_video($feed, $node) {
  * @param StdClass $node
  *   The author portrait object.
  */
-function reol_feed_feeds_add_author_portrait($feed, $node) {
+function reol_feed_feeds_add_author_portrait($feed, $source, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
@@ -197,6 +205,7 @@ function reol_feed_feeds_add_author_portrait($feed, $node) {
   $item->type = "author";
   $item->date = $node_wrapper->created->value();
   $item->title = $node_wrapper->title->value();
+  $item->source = $source;
 
   $body = $node_wrapper->body->value();
   $item->description = strip_tags($body['safe_value']);
@@ -221,7 +230,7 @@ function reol_feed_feeds_add_author_portrait($feed, $node) {
  * @param StdClass $review
  *   The review object.
  */
-function reol_feed_feeds_add_review($feed, $review) {
+function reol_feed_feeds_add_review($feed, $source, $review) {
   $item = $feed->addChild('item');
 
   $ting_object = ding_entity_load($review->ding_entity_id);
@@ -233,6 +242,7 @@ function reol_feed_feeds_add_review($feed, $review) {
   $item->description = $review->description;
   $authors = $ting_object->getCreators();
   $item->author = $authors[0];
+  $item->source = $source;
 
   global $base_url;
 
