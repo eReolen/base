@@ -1,6 +1,43 @@
-.rs-carousel-title,
-.rs-carousel-item-title {
+.rs-carousel-inner {
+  overflow: visible;
+}
+
+.rs-carousel-title {
   display: none;
+}
+
+.rs-carousel-mask li .rs-carousel-item-title {
+  bottom: auto;
+  display: none;
+  position: absolute;
+  z-index: 2;
+  margin-top: 15px;
+  &:after {
+    bottom: 100%;
+    left: 15%;
+    border: solid transparent;
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border-color: transparent;
+    border-bottom-color: rgba(0,0,0,0.75);
+    border-width: 10px;
+    margin-left: -10px;
+  }
+}
+
+.rs-carousel-mask li:hover .rs-carousel-item-title {
+  display: block;
+  background: rgba(0,0,0,0.75);
+}
+
+.rs-carousel-mask li .rs-carousel-item-image {
+  overflow: hidden;
+}
+
+.rs-carousel-mask, .rs-carousel-runner {
+  overflow: visible;
 }
 
 .rs-carousel-inner {
@@ -23,9 +60,67 @@
   a {
     @include header-menu-gradient();
     color: #404040;
+    margin-right: 0;
+    font-family: Oxygen, sans-serif;
+    font-size: 0.95em;
   }
 
   &.active a {
     @include header-menu-selected-gradient();
+    font-family: Oxygen, sans-serif;
+    font-weight: normal;
+
+    &:before {
+      border-bottom-color: #D8D8D8;
+      border-width: 16px;
+      top: -32px;
+      margin-left: -16px;
+    }
+  }
+}
+
+.rs-carousel-action {
+  opacity: 1;
+  height: 25px;
+  width: 25px;
+  border: 2px solid #000;
+  background: rgba(255,255,255,0.4);
+  border-radius: 100px;
+
+  &:hover {
+    background: #fff;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #000;
+    @include rotate(45deg);
+    text-align: center;
+  }
+
+  &.rs-carousel-action-prev {
+    left: -10px;
+    &:after {
+      border-right-width: 0;
+      border-top-width: 0;
+      margin-top: -5px;
+      margin-left: -3px;
+    }
+  }
+
+  &.rs-carousel-action-next {
+    right: -10px;
+    &:after {
+      border-left-width: 0;
+      border-bottom-width: 0;
+      margin-top: -5px;
+      margin-left: -6px;
+    }
   }
 }
