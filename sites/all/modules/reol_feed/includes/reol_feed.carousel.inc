@@ -34,6 +34,7 @@ function reol_feed_feeds_carousel() {
           $a_item->guid = "a_" . md5($search['query']);
           $a_item->title = $search['title'];
           $a_item->query = $search['query'];
+          $a_item->source = 'netlydbog';
           $a_books = $a_item->addChild('books');
         }
         $books = $a_books;
@@ -44,6 +45,7 @@ function reol_feed_feeds_carousel() {
           $e_item->guid = "e_" . md5($search['query']);
           $e_item->title = $search['title'];
           $e_item->query = $search['query'];
+          $e_item->source = 'ereolen';
           $e_books = $e_item->addChild('books');
         }
         $books = $e_books;
