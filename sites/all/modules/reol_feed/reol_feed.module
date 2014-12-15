@@ -18,8 +18,9 @@ function reol_feed_ensure_feeds() {
   // Go through all feeds.
   foreach (reol_feed_get_feeds() as $feed) {
     // Find out if feed needs to be updated.
-    // If variable is set, force rebuild of feeds.
-    $update = variable_get('reol_feed_rebuild_feeds', FALSE);
+    // If cache variable is removed, cache has been cleared,
+    // force rebuild of feeds.
+    $update = cache_get('reol_feed_do_not_force') ? FALSE : TRUE;
     if (!$update) {
       foreach ($feed['files'] as $file) {
         $file_path = reol_feed_get_filename($file);
@@ -49,7 +50,7 @@ function reol_feed_ensure_feeds() {
     }
   }
   // Reset rebuild status.
-  variable_del('reol_feed_rebuild_feeds');
+  cache_set('reol_feed_do_not_force', TRUE);
 }
 
 /**
