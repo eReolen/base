@@ -234,3 +234,28 @@ function reol_feed_get_latest($type, $ting_type, $count = 2) {
 
   return $latest;
 }
+/**
+ * Convert BR tags to newlines and carriage returns.
+ *
+ * @param string $string
+ *   The string to convert
+ *
+ * @return string
+ *   The converted string
+ */
+function _reol_feed_br2nl($string) {
+  return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, $string);
+}
+
+/**
+ * Convert HTML to XML text.
+ *
+ * @param string $html
+ *   The HTML to convert.
+ *
+ * @return string
+ *   The XML string.
+ */
+function reol_feed_convert_html($html) {
+  return strip_tags(_reol_feed_br2nl($html));
+}

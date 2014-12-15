@@ -113,10 +113,10 @@ function reol_feed_feeds_add_news_item($feed, $source, $node) {
   // do it this way:
   $body = field_get_items('node', $node, 'body');
   $summary = field_view_value('node', $node, 'body', $body[0], 'teaser');
-  $item->description = strip_tags($summary['#markup']);
+  $item->description = reol_feed_convert_html($summary['#markup']);
 
   $body = $node_wrapper->body->value();
-  $item->content = strip_tags($body['safe_value']);
+  $item->content = reol_feed_convert_html($body['safe_value']);
 
   global $base_url;
 
@@ -171,7 +171,7 @@ function reol_feed_feeds_add_video($feed, $source, $node) {
   $item->source = $source;
 
   $body = $node_wrapper->body->value();
-  $item->description = strip_tags($body['safe_value']);
+  $item->description = reol_feed_convert_html($body['safe_value']);
 
   global $base_url;
 
@@ -208,7 +208,7 @@ function reol_feed_feeds_add_author_portrait($feed, $source, $node) {
   $item->source = $source;
 
   $body = $node_wrapper->body->value();
-  $item->description = strip_tags($body['safe_value']);
+  $item->description = reol_feed_convert_html($body['safe_value']);
 
   global $base_url;
 
