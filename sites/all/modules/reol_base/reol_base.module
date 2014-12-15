@@ -301,3 +301,17 @@ function _reol_base_remove_node_type($type) {
   db_query("UPDATE node_type SET module = 'node', custom = 1, modified = 1, locked = 0 WHERE type = '%type';", array('%type' => $type));
   node_type_delete($type);
 }
+
+/**
+ * Implements hook_user_role_insert().
+ *
+ * Disable autologout for newly created role.
+ */
+function reol_base_user_role_insert($role) {
+  // Make sure role base timeout is enabled.
+  variable_set('autologout_role_logout', TRUE);
+
+  // Set autologout to 0 for this role.
+  variable_set('autologout_role_' . $role->rid, TRUE);
+  variable_set('autologout_role_' . $role->rid . '_timeout', 0);
+}

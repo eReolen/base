@@ -126,3 +126,15 @@ function reol_base_update_7111() {
 function reol_base_update_7112() {
   module_enable(array('webform'), TRUE);
 }
+
+/**
+ * Disable autologout for all roles.
+ */
+function reol_base_update_7113() {
+  $roles = user_roles();
+
+  foreach ($roles as $rid => $role) {
+    $role = user_role_load($rid);
+    reol_base_user_role_insert($role);
+  }
+}
