@@ -6,10 +6,10 @@
  */
 
 abstract class PublizonClient {
-  private $logger;
+  protected $logger;
 
-  private $baseUrl = '';
-  private $endpoints = array(
+  protected $baseUrl = '';
+  protected $endpoints = array(
     'product' => 'getproduct.asmx',
     'product_list' => 'getproductlist.asmx',
     'loan' => 'createloan.asmx',
