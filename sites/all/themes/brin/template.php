@@ -67,3 +67,58 @@ function brin_faq_page($variables) {
   $output .= '<div class="faq-answers">' . $answers . "</div></div></div>\n";
   return $output;
 }
+
+/**
+ * Returns HTML for a textfield form element.
+ *
+ * Basically theme_textfield with the size attribute removed.
+ */
+function brin_textfield($variables) {
+  $element = $variables['element'];
+  $element['#attributes']['type'] = 'text';
+  element_set_attributes($element, array('id', 'name', 'value', 'maxlength'));
+  _form_set_class($element, array('form-text'));
+
+  $extra = '';
+  if ($element['#autocomplete_path'] && drupal_valid_path($element['#autocomplete_path'])) {
+    drupal_add_library('system', 'drupal.autocomplete');
+    $element['#attributes']['class'][] = 'form-autocomplete';
+
+    $attributes = array();
+    $attributes['type'] = 'hidden';
+    $attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
+    $attributes['value'] = url($element['#autocomplete_path'], array('absolute' => TRUE));
+    $attributes['disabled'] = 'disabled';
+    $attributes['class'][] = 'autocomplete';
+    $extra = '<input' . drupal_attributes($attributes) . ' />';
+  }
+
+  $output = '<input' . drupal_attributes($element['#attributes']) . ' />';
+
+  return $output . $extra;
+}
+
+/**
+ * Theme function to render an webform email component.
+ *
+ * Basically theme_webform_email with the size attribute removed.
+ */
+function brin_webform_email($variables) {
+  $element = $variables['element'];
+
+  // This IF statement is mostly in place to allow our tests to set type="text"
+  // because SimpleTest does not support type="email".
+  if (!isset($element['#attributes']['type'])) {
+    $element['#attributes']['type'] = 'email';
+  }
+
+  // Convert properties to attributes on the element if set.
+  foreach (array('id', 'name', 'value') as $property) {
+    if (isset($element['#' . $property]) && $element['#' . $property] !== '') {
+      $element['#attributes'][$property] = $element['#' . $property];
+    }
+  }
+  _form_set_class($element, array('form-text', 'form-email'));
+
+  return '<input' . drupal_attributes($element['#attributes']) . ' />';
+}

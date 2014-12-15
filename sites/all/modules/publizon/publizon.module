@@ -89,6 +89,34 @@ function publizon_ting_find_object($isbn) {
 }
 
 /**
+ * Implements hook_webform_select_options_info().
+ *
+ * Provides library list as options for webform.
+ */
+function publizon_webform_select_options_info() {
+  $items = array();
+
+  $items['libraries'] = array(
+    'title' => t('Libraries'),
+    'options callback' => 'publizon_webform_select_options_libraries',
+  );
+
+  return $items;
+}
+
+/**
+ * Option list of libraries.
+ */
+function publizon_webform_select_options_libraries($compontent, $flat, $arguments) {
+  $libraries = publizon_get_libraries();
+  foreach ($libraries as $lib) {
+    $options[$lib['retailer_id']] = $lib['library_name'];
+  }
+
+  return $options;
+}
+
+/**
  * Get publizon libraries.
  *
  * Helper function that findes all libraries stored in the Publizon
