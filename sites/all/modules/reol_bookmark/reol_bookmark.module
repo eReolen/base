@@ -219,6 +219,9 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
  */
 function reol_bookmark_secure_permissions($role) {
   $permissions = array(
+    'anonymous user' => array(
+      'perform bookmark',
+    ),
     'provider' => array(
       'perform bookmark',
     ),
