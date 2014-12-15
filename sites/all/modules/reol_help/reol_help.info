@@ -40,4 +40,4 @@ features[variable][] = faq_show_node_links
 features[variable][] = faq_show_term_page_children
 features[variable][] = faq_use_categories
 features[variable][] = faq_use_teaser
-mtime = 1418221436
+mtime = 1418631995
