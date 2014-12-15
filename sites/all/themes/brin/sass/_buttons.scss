@@ -52,3 +52,29 @@ a.button,
     text-align: center;
   }
 }
+
+.availability .search-result--availability-link,
+.availability .search-result--availability-link {
+  &,
+  &:link,
+  &:visited,
+  &:focus,
+  &:active {
+    @extend %button-default;
+    // Should be invisible, but let's set it to a sane default.
+    background-color: #cfcfcf;
+
+    &.available {
+      background-color: #01b552;
+    }
+
+    &.reservable {
+      background-color: #ffb81e;
+    }
+
+    &.not-reservable,
+    &.unavailable {
+      display: none;
+    }
+  }
+}
