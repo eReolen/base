@@ -175,11 +175,11 @@ function reol_feed_feeds_add_video($feed, $source, $node) {
 
   global $base_url;
 
-  $node_link = $item->addChild('link');
-  $node_link->{0} = $base_url . '/node/' . $node->nid;
-  $node_link->addAttribute('type', 'content');
-
   $file_value = $node_wrapper->field_video->value();
+  $video_link = $item->addChild('link');
+  $video_link->{0} = file_create_url($file_value['uri']);
+  $video_link->addAttribute('type', 'content');
+
   $files = entity_load('file', array($file_value['fid']));
   $file = $files[$file_value['fid']];
 
