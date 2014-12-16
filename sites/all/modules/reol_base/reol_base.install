@@ -20,6 +20,10 @@ function reol_base_install() {
     reol_base_update_7108();
     reol_base_update_7109();
     reol_base_update_7110();
+    reol_base_update_7111();
+    reol_base_update_7112();
+    reol_base_update_7113();
+    reol_base_update_7114();
   }
 }
 
@@ -137,4 +141,11 @@ function reol_base_update_7113() {
     $role = user_role_load($rid);
     reol_base_user_role_insert($role);
   }
+}
+
+/**
+ * Enable reol_announcement module.
+ */
+function reol_base_update_7114() {
+  module_enable(array('reol_announcement'), TRUE);
 }
