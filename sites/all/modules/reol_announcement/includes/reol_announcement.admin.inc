@@ -16,7 +16,7 @@
  *   The finished form.
  */
 function reol_announcement_settings_form($form, &$form_state) {
-  $form['state'] = array(
+  $form['reol_announcement_state'] = array(
     '#type' => 'radios',
     '#title' => t('Announcement state'),
     '#description' => t('The state of the announcement.'),
@@ -29,12 +29,18 @@ function reol_announcement_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
-  $form['announcement'] = array(
+  $default = array(
+    'value' => '',
+    'format' => 'ding_wysiwyg',
+  );
+  $value = variable_get('reol_announcement_announcement', $default);
+
+  $form['reol_announcement_announcement'] = array(
     '#type' => 'text_format',
     '#title' => t('Announcement'),
     '#description' => t('The announcement to display'),
-    '#value' => variable_get('reol_announcement_announcement', ''),
-    '#format' => 'ding_wysiwyg',
+    '#default_value' => $value['value'],
+    '#format' => $value['format'],
   );
 
   // Make the form look like at system form.

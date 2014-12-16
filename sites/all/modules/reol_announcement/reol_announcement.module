@@ -54,3 +54,10 @@ function reol_announcement_secure_permissions($role) {
     return $permissions[$role];
   }
 }
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_announcement_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
