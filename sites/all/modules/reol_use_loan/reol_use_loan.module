@@ -297,7 +297,7 @@ function reol_use_loan_use_loan_ajax($ting_object, $type) {
 
   // Return page html in popup.
   $output = page_manager_page_execute($subtask_id, $context);
-  $commands[] = ajax_command_ding_popup('reol_use_loan', t('Try'), $output, array('class' => array($class)));
+  $commands[] = ajax_command_ding_popup('reol_use_loan', t('Try'), $output, array('class' => array($class), 'refresh' => TRUE));
 
   // Return the ajax commands as an render array.
   return array('#type' => 'ajax', '#commands' => $commands);
