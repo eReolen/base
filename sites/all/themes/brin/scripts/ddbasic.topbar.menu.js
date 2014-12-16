@@ -14,8 +14,7 @@
       var hash = window.location.hash;
       if (hash === "#login") {
         // Show login box.
-        $('.topbar-menu .leaf .topbar-link-user').toggleClass('active');
-        $('.js-topbar-user').toggle();
+        $('#login-link').trigger('click');
       }
     }
   };
