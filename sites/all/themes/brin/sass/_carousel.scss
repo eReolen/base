@@ -30,16 +30,30 @@
     border-width: 10px;
     margin-left: -10px;
   }
+
+  @include small() {
+    min-height: 220px;
+  }
 }
 
 .rs-carousel-mask li:hover .rs-carousel-item-title {
   display: block;
   background: #fff;
   opacity: 1;
+
+  @include small() {
+    display: none;
+  }
 }
 
 .rs-carousel-mask li .rs-carousel-item-image {
   overflow: hidden;
+}
+
+@include small() {
+  .rs-carousel {
+    background: none;
+  }
 }
 
 .rs-carousel-runner,
@@ -48,7 +62,8 @@
   overflow: visible;
 }
 
-.rs-carousel-mask {
+.rs-carousel-mask,
+.rs-carousel-inner {
   overflow: hidden;
 }
 
