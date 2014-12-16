@@ -7,5 +7,7 @@
 
 ?>
 <div class="announcement <?php echo $class; ?>">
-  <?php echo $announcement; ?>
+  <div class="announcement-inner">
+    <?php echo $announcement; ?>
+  </div>
 </div>

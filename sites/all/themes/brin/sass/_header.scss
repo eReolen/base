@@ -1,4 +1,7 @@
-
+.top {
+  background: #e6e6e6;
+  overflow: hidden;
+}
 .topbar {
   height: $header-height;
   @include header-menu-gradient();
