@@ -3,3 +3,54 @@
  * @file
  * Code for the eReolen announcement feature.
  */
+
+define('REOL_ANNOUNCEMENT_DISABLED', 0);
+define('REOL_ANNOUNCEMENT_ENABLED', 1);
+define('REOL_ANNOUNCEMENT_WARNING', 2);
+
+/**
+ * Implements hook_menu().
+ */
+function reol_announcement_menu() {
+  $items = array();
+
+  $items['admin/structure/reol_announcement'] = array(
+    'title' => 'Announcement settings',
+    'description' => 'Administer site announcement',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reol_announcement_settings_form'),
+    'access arguments' => array('administer announcement'),
+    'file' => 'includes/reol_announcement.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function reol_announcement_permission() {
+  return array(
+    'administer announcement' => array(
+      'title' => t('Administer annoucement'),
+      'description' => t('Administer the site announcement'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to administer annoucement.
+ */
+function reol_announcement_secure_permissions($role) {
+  $permissions = array(
+    'administrators' => array(
+      'administer announcement',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
