@@ -34,6 +34,28 @@ function reol_base_get_field_form($type, $bundle, $field_name, $entity, &$form, 
 }
 
 /**
+ * Implements hook_menu().
+ */
+function reol_base_menu() {
+  $items = array();
+
+  $items['login'] = array(
+    'page callback' => 'reol_base_login_ajax',
+    'delivery callback' => 'ajax_deliver',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function reol_base_menu_alter(&$items) {
+  $items['user']['access callback'] = 'user_is_logged_in';
+}
+
+/**
  * Implements hook_entity_load().
  *
  * As our provider uses ISBN-numbers, we wish to have localId be the
@@ -321,4 +343,23 @@ function reol_base_user_role_insert($role) {
  */
 function reol_base_ctools_plugin_directory($owner, $plugin_type) {
   return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Ajax callback for logging in.
+ */
+function reol_base_login_ajax() {
+  $commands = array();
+
+  // Check if the logged in user is a library user.
+  global $user;
+  if (!user_is_logged_in()) {
+    $commands[] = ajax_command_ding_user_authenticate('');
+  }
+  else {
+    module_load_include('inc', 'ctools', 'includes/ajax');
+    $commands[] = ctools_ajax_command_redirect('user');
+  }
+
+  return array('#type' => 'ajax', '#commands' => $commands);
 }
