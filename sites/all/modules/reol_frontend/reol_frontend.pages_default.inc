@@ -74,7 +74,7 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'restricted',
+      'css_class' => '',
     );
     $pane->extras = array();
     $pane->position = 0;
@@ -99,7 +99,7 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'restricted',
+      'css_class' => '',
     );
     $pane->extras = array();
     $pane->position = 1;
@@ -124,7 +124,7 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'js-topbar-menu restricted',
+      'css_class' => 'js-topbar-menu',
     );
     $pane->extras = array();
     $pane->position = 2;
