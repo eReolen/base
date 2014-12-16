@@ -315,3 +315,10 @@ function reol_base_user_role_insert($role) {
   variable_set('autologout_role_' . $role->rid, TRUE);
   variable_set('autologout_role_' . $role->rid . '_timeout', 0);
 }
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_base_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
