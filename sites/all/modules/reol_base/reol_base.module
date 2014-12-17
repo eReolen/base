@@ -4,6 +4,12 @@
  * Code for the eReolen base module feature.
  */
 
+include_once 'reol_base.features.inc';
+/**
+ * @file
+ * Code for the eReolen base module feature.
+ */
+
 define('REOL_BASE_LOCAL_ID_PREFIX', 'isbn_');
 
 /**
