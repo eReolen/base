@@ -38,7 +38,7 @@ function reol_frontend_default_page_manager_handlers() {
     'body_classes_to_add' => '',
   );
   $display = new panels_display();
-  $display->layout = 'ding2_site_template';
+  $display->layout = 'reol_site_template';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -51,6 +51,7 @@ function reol_frontend_default_page_manager_handlers() {
       'branding' => NULL,
       'bottom' => NULL,
       'navigation' => NULL,
+      'top' => NULL,
     ),
   );
   $display->cache = array();
@@ -71,7 +72,10 @@ function reol_frontend_default_page_manager_handlers() {
       'settings' => NULL,
       'style' => 'naked',
     );
-    $pane->css = array();
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => '',
+    );
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
@@ -343,14 +347,14 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0'] = $pane;
     $display->panels['header'][0] = 'new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
     $pane = new stdClass();
-    $pane->pid = 'new-d06617cf-6e7d-448e-a8b8-503dfa2bc59a';
-    $pane->panel = 'header';
-    $pane->type = 'block';
-    $pane->subtype = 'user-login';
+    $pane->pid = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
+    $pane->panel = 'top';
+    $pane->type = 'announcement';
+    $pane->subtype = 'announcement';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
+      'override_title' => 0,
       'override_title_text' => '',
     );
     $pane->cache = array();
@@ -359,11 +363,11 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'd06617cf-6e7d-448e-a8b8-503dfa2bc59a';
-    $display->content['new-d06617cf-6e7d-448e-a8b8-503dfa2bc59a'] = $pane;
-    $display->panels['header'][1] = 'new-d06617cf-6e7d-448e-a8b8-503dfa2bc59a';
+    $pane->uuid = 'bae52ec8-286d-435c-8d38-eb2e157996ac';
+    $display->content['new-bae52ec8-286d-435c-8d38-eb2e157996ac'] = $pane;
+    $display->panels['top'][0] = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

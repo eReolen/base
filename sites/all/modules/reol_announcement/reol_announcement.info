@@ -1,0 +1,5 @@
+name = eReolen announcement module
+description = Module handling the announcements for the site
+core = 7.x
+package = ereolen.dk
+features[features_api][] = api:2

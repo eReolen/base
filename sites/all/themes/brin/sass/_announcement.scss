@@ -1,0 +1,18 @@
+.announcement {
+  margin: 5px;
+  overflow: hidden;
+
+  .announcement-inner {
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  &.info {
+    border: 1px solid #00b7e7;
+    background: #b7dce5;
+  }
+  &.warning {
+    border: 1px solid #e7b700;
+    background: #e5dbb7;
+  }
+}
