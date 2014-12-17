@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * CTools Content Type for reading an ebook.
+ * CTools Content Type for displaying announcements.
  */
 
 $plugin = array(
