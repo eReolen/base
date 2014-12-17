@@ -30,8 +30,8 @@ function reol_loan_menu() {
   $items = array();
 
   $items['ting/object/%ting_object/loan'] = array(
-    'page callback' => 'reol_loan_loan_ajax',
-    'page arguments' => array(2),
+    'page callback' => 'reol_base_entity_ajax_form',
+    'page arguments' => array('reol_loan', 'reol_loan_loan_ajax', 2),
     'delivery callback' => 'ajax_deliver',
     'access arguments' => array('perform loan'),
   );
