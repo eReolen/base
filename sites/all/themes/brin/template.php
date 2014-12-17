@@ -124,3 +124,53 @@ function brin_webform_email($variables) {
 
   return '<input' . drupal_attributes($element['#attributes']) . ' />';
 }
+
+/**
+ * Theme menu links.
+ *
+ * Add use ajax to login links.
+ */
+function brin_menu_link($vars) {
+  $element = $vars['element'];
+
+  // Render any sub-links/menus.
+  $sub_menu = '';
+  if ($element['#below']) {
+    $sub_menu = drupal_render($element['#below']);
+  }
+
+  // Add default class to a tag.
+  $element['#localized_options']['attributes']['class'] = array(
+    'menu-item',
+  );
+
+  if (isset($element['#original_link'])) {
+    // If this element uses ajax, add class and load ajax.
+    if (isset($element['#original_link']['delivery_callback']) && $element['#original_link']['delivery_callback'] == "ajax_deliver") {
+      drupal_add_library('system', 'drupal.ajax');
+      $element['#localized_options']['attributes']['class'][] = 'use-ajax';
+    }
+
+    // If element is pointing to /login, and user is logged in, do not show.
+    if ($element['#original_link']['link_path'] == 'login') {
+      return '';
+    }
+  }
+
+  // Filter classes.
+  $element['#attributes']['class'] = ddbasic_remove_default_link_classes($element['#attributes']['class']);
+
+  // Make sure text string is treated as html by l function.
+  $element['#localized_options']['html'] = TRUE;
+
+  $link = l('<span>' . $element['#title'] . '</span>', $element['#href'], $element['#localized_options']);
+
+  return '<li' . drupal_attributes($element['#attributes']) . '>' . $link . $sub_menu . "</li>\n";
+}
+
+/**
+ * Add ajax for all pages.
+ */
+function brin_preprocess_html(&$variables) {
+  drupal_add_library('system', 'drupal.ajax');
+}
