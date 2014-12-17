@@ -1,3 +1,4 @@
+<?php echo l(t('Login'), 'login', array('attributes' => array('id' => 'login-link', 'class' => array('use-ajax')))); ?>
 <div id="page<?php print $css_id ? " $css_id" : ''; ?>" class="<?php print $classes; ?>">
   <?php if (!empty($content['branding']) || !empty($content['header']) || !empty($content['navigation']) || !empty($content['top'])): ?>
     <header class="site-header">
