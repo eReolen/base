@@ -54,6 +54,9 @@ function reol_loan_menu() {
  */
 function reol_loan_secure_permissions($role) {
   $permissions = array(
+    'anonymous user' => array(
+      'perform loan',
+    ),
     'provider' => array(
       'perform loan',
     ),
@@ -119,7 +122,6 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
 function reol_loan_ding_entity_buttons($type, $entity) {
   $buttons = array();
   if (reol_loan_is_right_type($entity)) {
-    global $user;
     drupal_add_library('system', 'drupal.ajax');
     list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
@@ -143,6 +145,7 @@ function reol_loan_ding_entity_buttons($type, $entity) {
         break;
 
       case REOL_LOAN_STATUS_RESERVED:
+        global $user;
         $buttons[] = array(
           '#theme' => 'link',
           '#text' => t('Delete reservation'),
