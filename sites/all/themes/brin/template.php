@@ -152,7 +152,7 @@ function brin_menu_link($vars) {
     }
 
     // If element is pointing to /login, and user is logged in, do not show.
-    if ($element['#original_link']['link_path'] == 'login') {
+    if ($element['#original_link']['link_path'] == 'login' && user_is_logged_in()) {
       return '';
     }
   }
