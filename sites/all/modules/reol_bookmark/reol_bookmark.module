@@ -24,7 +24,12 @@ function reol_bookmark_menu() {
 
   $items['ting/object/%ting_object/bookmark'] = array(
     'page callback' => 'reol_base_entity_ajax_form',
-    'page arguments' => array('reol_bookmark', 'reol_bookmark_create_ajax', 2, 4),
+    'page arguments' => array(
+      'reol_bookmark',
+      'reol_bookmark_create_ajax',
+      2,
+      4,
+    ),
     'delivery callback' => 'ajax_deliver',
     'access arguments' => array('perform bookmark'),
   );
