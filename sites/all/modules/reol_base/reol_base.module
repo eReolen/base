@@ -369,3 +369,80 @@ function reol_base_login_ajax() {
 
   return array('#type' => 'ajax', '#commands' => $commands);
 }
+
+/**
+ * Check entity ajax form.
+ *
+ * Check that all the prerequisites are fulfilled for
+ * showing a popup form in ajax for loaning, reserving or
+ * bookmarking entities.
+ *
+ * @param array $commands
+ *   The commands that should be added to.
+ *
+ * @return bool
+ *   Whether or not check did go through.
+ */
+function reol_base_check_entity_ajax_form(&$commands, $entity) {
+  global $user;
+
+  // If user is not logged in, fail.
+  if (!user_is_logged_in()) {
+    $commands[] = ajax_command_ding_user_authenticate('');
+    return FALSE;
+  }
+
+  // If user is not a provider user, fail.
+  if (!ding_user_is_provider_user($user)) {
+    // Error not library user.
+    $commands[] = ajax_command_ding_popup('reol_loan', t('Error'), '<p>' . t('Only library user can make reservations.') . '</p>');
+    return FALSE;
+  }
+
+  // If entity is not a TingEntity, fail.
+  if (!(is_object($entity) && $entity instanceof TingEntity)) {
+    $commands[] = ajax_command_ding_popup('reol_loan', t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>');
+    return FALSE;
+  }
+
+  // Success.
+  return TRUE;
+}
+
+/**
+ * Callback for ajax forms handling loans, reservations or bookmarks.
+ *
+ * @param callable $callback
+ *   The callback containing the functionality.
+ * @param StdClass $entity
+ *   The entity.
+ *
+ * @return array
+ *   ajax render array for ajax_deliver.
+ */
+function reol_base_entity_ajax_form($callback, $entity) {
+  $args = func_get_args();
+  array_shift($args);
+
+  $commands = array();
+
+  // Check validity of everything.
+  $valid = reol_base_check_entity_ajax_form($commands, $entity);
+  // If valid, run callback.
+  if ($valid) {
+    try {
+      $commands += call_user_func_array($callback, $args);
+    }
+    catch (DingProviderAuthException $exception) {
+      // Authenticate and return.
+      $commands[] = ajax_command_ding_user_authenticate('');
+    }
+    catch (DingProviderUserException $exception) {
+      // Some error occurred, show it.
+      $commands[] = ajax_command_ding_popup('ding_bookmark', t('Bookmark'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
+    }
+  }
+
+  // Return the ajax commands as an render array.
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
