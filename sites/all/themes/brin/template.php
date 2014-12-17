@@ -41,6 +41,38 @@ function brin_preprocess_node(&$variables, $hook) {
 }
 
 /**
+ * Implements hook_preprocess_ting_object().
+ */
+function brin_preprocess_ting_object(&$variables) {
+  // Remove the type prefix from the title of the first material of
+  // the collection.
+  if (!empty($variables['content']['ting_primary_object'][0]['ting_title'][0]['title']['#prefix'])) {
+    unset($variables['content']['ting_primary_object'][0]['ting_title'][0]['title']['#prefix']);
+  }
+
+
+  if ($variables['object'] instanceof TingCollection) {
+    // Move the availability field into the primary ting object
+    // render array to allow it to be printed as part of the object
+    // template. It's further processed in the else statement.
+    if (isset($variables['content']['ting_collection_types'])) {
+      $variables['content']['ting_primary_object'][0]['ting_collection_types'] = $variables['content']['ting_collection_types'];
+      unset($variables['content']['ting_collection_types']);
+    }
+  }
+  else {
+    // Move the availability field from above into the fieldgroup
+    // wrapper, now that fieldgroup has processed it.
+    if (isset($variables['content']['ting_collection_types']) && isset($variables['content']['group_ting_right_col_search'])) {
+
+      $variables['content']['group_ting_right_col_search']['ting_collection_types'] = $variables['content']['ting_collection_types'];
+      $variables['content']['group_ting_right_col_search']['ting_collection_types']['#weight'] = 100;
+      unset($variables['content']['ting_collection_types']);
+    }
+  }
+}
+
+/**
  * Implements theme_menu_tree().
  */
 function brin_menu_tree__menu_block__main_menu($vars) {
