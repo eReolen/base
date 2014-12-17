@@ -5,6 +5,15 @@
  */
 
 /**
+ * Implements hook_menu_alter().
+ */
+function reol_reservation_menu_alter(&$items) {
+  // Alter to use our version of the ajax callback.
+  $items['ting/object/%ting_object/reserve']['page callback'] = 'reol_base_entity_ajax_form';
+  $items['ting/object/%ting_object/reserve']['page arguments'] = array('ding_reservation', 'reol_reservation_reserve_ajax', 2);
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, &$form_state, $form_id) {
@@ -69,4 +78,104 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
       unset($reservation_element['#information']['pickup_id']);
     }
   }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_reservation_form_ding_reservation_reserve_form_alter(&$form, &$form_state) {
+  // Use our own submit handler instead of one from ding_reservation.
+  $form['#submit'] = array('reol_reservation_form_ding_reservation_reserve_form_submit');
+
+  // Use our own ajax callback instead of the one from ding_reservation.
+  $form['submit']['#ajax']['callback'] = 'reol_reservation_form_ding_reservation_reserve_form_callback';
+}
+
+/**
+ * Submit handler for reserve form.
+ *
+ * @see ding_reservation_reserve_form_submit()
+ */
+function reol_reservation_form_ding_reservation_reserve_form_submit($form, &$form_state) {
+  try {
+    global $user;
+    if (ding_provider_implements('reservation', 'options_submit')) {
+      ding_provider_invoke('reservation', 'options_submit', $user, $form_state['values']['provider_options']);
+    }
+    if ($form_state['values']['reservable']) {
+      $reservable = $form_state['values']['reservable'];
+      $reservation_result = ding_provider_invoke('reservation', 'create', $user, $reservable->getProviderId(), $form_state['values']['provider_options']);
+      $form_state['reserved'] = TRUE;
+      // @todo use profile
+      if (!empty($reservation_result['branch']) && ding_provider_implements('reservation', 'branch_name')) {
+        $branch_name = ding_provider_invoke('reservation', 'branch_name', $reservation_result['branch']);
+        drupal_set_message(t('"@title" reserved and will be available for pickup at @branch.', array('@title' => $reservable->getTitle(), '@branch' => $branch_name)));
+      }
+      else {
+        drupal_set_message(t('"@title" reserved.', array('@title' => $reservable->getTitle())));
+      }
+
+      if (is_array($reservation_result) and !empty($reservation_result['queue_number'])) {
+        drupal_set_message(t('You are number @number in queue.', array('@number' => $reservation_result['queue_number'])));
+      }
+
+      // Clear reservation session cache.
+      ding_reservation_cache_clear();
+    }
+  }
+  catch (Exception $e) {
+    $form_state['error'] = $e;
+  }
+}
+
+/**
+ * Ajax entry callback.
+ *
+ * Reserve the material.
+ *
+ * @see ding_reservation_reserve_ajax()
+ */
+function reol_reservation_reserve_ajax($entity, $reservable = NULL) {
+  $commands = array();
+
+  // Check if reservable object was passed.
+  if (is_null($reservable)) {
+    // If no object passed assume "normal" reservation (not periodical).
+    $reservable = new DingReservationReservableEntity($entity);
+  }
+
+  // Check if user have preferred branch and interest period, if so
+  // submit the reservation form. If not display another form for with
+  // the options to select branch and period.
+  $defaults = ding_provider_invoke('reservation', 'default_options', $user);
+  $matches = preg_grep("/preferred_branch$/", array_keys($defaults));
+  if (empty($defaults[array_shift($matches)])) {
+    $form = ding_provider_get_form('ding_reservation_reserve_form', $reservable, FALSE);
+    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), render($form));
+  }
+  else {
+    $form_state = array('values' => array());
+    drupal_form_submit('ding_reservation_reserve_form', $form_state, $reservable);
+
+    // Return any status messages set by the form.
+    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), theme('status_messages'));
+  }
+
+  // Return the ajax commands as an render array.
+  return $commands;
+}
+
+/**
+ * Ajax callback for reserve form.
+ */
+function reol_reservation_form_ding_reservation_reserve_form_callback($form, &$form_state) {
+  return reol_base_entity_ajax_form('ding_reservation', function ($entity, $form, $form_state) {
+    // If error occurred during submit, rethrow.
+    if (isset($form_state['error'])) {
+      throw $form_state['error'];
+    }
+
+    $res = ding_reservation_reserve_form_callback($form, $form_state);
+    return $res['#commands'];
+  }, $form_state['values']['reservable']->getEntity(), $form, $form_state);
 }
