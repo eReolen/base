@@ -10,7 +10,11 @@
 function reol_reservation_menu_alter(&$items) {
   // Alter to use our version of the ajax callback.
   $items['ting/object/%ting_object/reserve']['page callback'] = 'reol_base_entity_ajax_form';
-  $items['ting/object/%ting_object/reserve']['page arguments'] = array('ding_reservation', 'reol_reservation_reserve_ajax', 2);
+  $items['ting/object/%ting_object/reserve']['page arguments'] = array(
+    'ding_reservation',
+    'reol_reservation_reserve_ajax',
+    2,
+  );
 }
 
 /**
