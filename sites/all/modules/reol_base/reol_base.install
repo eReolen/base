@@ -24,6 +24,7 @@ function reol_base_install() {
     reol_base_update_7112();
     reol_base_update_7113();
     reol_base_update_7114();
+    reol_base_update_7115();
   }
 }
 
@@ -148,4 +149,11 @@ function reol_base_update_7113() {
  */
 function reol_base_update_7114() {
   module_enable(array('reol_announcement'), TRUE);
+}
+
+/**
+ * Enable webtrends module.
+ */
+function reol_base_update_7115() {
+  module_enable(array('ding_webtrends'), TRUE);
 }
