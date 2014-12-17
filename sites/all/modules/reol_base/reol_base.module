@@ -412,6 +412,8 @@ function reol_base_check_entity_ajax_form(&$commands, $entity) {
 /**
  * Callback for ajax forms handling loans, reservations or bookmarks.
  *
+ * @param string $popup_id
+ *   The ID of the ding popup.
  * @param callable $callback
  *   The callback containing the functionality.
  * @param StdClass $entity
@@ -420,8 +422,9 @@ function reol_base_check_entity_ajax_form(&$commands, $entity) {
  * @return array
  *   ajax render array for ajax_deliver.
  */
-function reol_base_entity_ajax_form($callback, $entity) {
+function reol_base_entity_ajax_form($popup_id, $callback, $entity) {
   $args = func_get_args();
+  array_shift($args);
   array_shift($args);
 
   $commands = array();
@@ -434,12 +437,12 @@ function reol_base_entity_ajax_form($callback, $entity) {
       $commands += call_user_func_array($callback, $args);
     }
     catch (DingProviderAuthException $exception) {
-      // Authenticate and return.
+      // Authenticate and rerun.
       $commands[] = ajax_command_ding_user_authenticate('');
     }
     catch (DingProviderUserException $exception) {
       // Some error occurred, show it.
-      $commands[] = ajax_command_ding_popup('ding_bookmark', t('Bookmark'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
+      $commands[] = ajax_command_ding_popup($popup_id, t('Bookmark'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
     }
   }
 
