@@ -184,6 +184,17 @@ function reol_base_ding_entity_fields() {
         'label' => t('E-book format'),
       ),
     ),
+    'ting_details_audiobook_reader' => array(
+      'field' => array(
+        'locked' => FALSE,
+        'storage' => array(
+          'type' => 'virtual_field',
+        ),
+      ),
+      'instance' => array(
+        'label' => t('Reader'),
+      ),
+    ),
   );
 }
 
