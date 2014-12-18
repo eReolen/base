@@ -80,6 +80,18 @@
   margin-bottom: 20px;
 }
 
+/**
+ * Fix up margins.
+ */
+.group_material_details,
+.group_holdings_available,
+.group_on_this_site,
+.group_periodical_issues {
+  h2, div {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
 .pane-search-result .search-results .list .search-result--availability,
 .view-node-search-result .search-results .list .search-result--availability,
 .ting-reference-reverse-list .search-results .list .search-result--availability,
