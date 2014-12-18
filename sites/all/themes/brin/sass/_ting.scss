@@ -11,7 +11,8 @@
 .view-node-search-result .search-results .list .list-item,
 .ting-reference-reverse-list .search-results .list .list-item,
 .pane-new-materials .search-results .list .list-item,
-.pane-ting-object .ting-object-wrapper {
+.pane-ting-object .ting-object-wrapper,
+.pane-ting-collection .ting-collection-wrapper {
   background: none;
   padding: 0;
 }
@@ -27,6 +28,7 @@
   border: none;
 }
 
+.pane-ting-collection .field.field-name-ting-abstract,
 .pane-ting-object .field.field-name-ting-abstract {
   border: 0;
   padding: 0;
