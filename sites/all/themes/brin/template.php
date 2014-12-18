@@ -41,6 +41,19 @@ function brin_preprocess_node(&$variables, $hook) {
 }
 
 /**
+ * Implements hook_ting_view_alter().
+ *
+ * Fix all fieldgroups to be open.
+ */
+function brin_ting_view_alter(&$build) {
+  foreach ($build['#groups'] as $group) {
+    if ($group->format_settings['formatter'] == 'collapsed') {
+      $group->format_settings['formatter'] = 'open';
+    }
+  }
+}
+
+/**
  * Implements hook_preprocess_ting_object().
  */
 function brin_preprocess_ting_object(&$variables) {
