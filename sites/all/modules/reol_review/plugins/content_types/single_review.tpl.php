@@ -11,7 +11,7 @@
     <div class="review-top">
       <h4><?php echo t('We review'); ?></h4>
       <h2><?php echo $ting_title; ?></h2>
-      <span class="author"><?php echo t('By @author', array('@author' => $review_author)); ?></span>
+      <span class="author"><?php echo t('By @author', array('@author' => $author)); ?></span>
     </div>
     <div class="review-bottom">
       <?php echo $ting_object; ?>
