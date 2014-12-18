@@ -58,7 +58,7 @@
 .group_periodical_issues,
 .ting-object-relation-group {
   float: right;
-  border-bottom: $border-seperator;
+  border-bottom: $border-separator;
   padding-bottom: 30px;
 
   .field-label,
@@ -71,7 +71,7 @@
 }
   h2 {
     padding-bottom: 20px;
-    border-bottom: $border-seperator;
+    border-bottom: $border-separator;
   }
 }
 
@@ -126,8 +126,8 @@
 
 // Series line.
 .ting-series {
-  border-top: $border-seperator;
-  border-bottom: $border-seperator;
+  border-top: $border-separator;
+  border-bottom: $border-separator;
   padding: 20px 0;
   margin: 20px 0;
   .field-label {
