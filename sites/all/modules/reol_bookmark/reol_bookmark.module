@@ -191,25 +191,26 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
       $text = t('Bookmark');
     }
 
-    $buttons[] = array(
-      array(
-        '#theme' => 'link',
-        '#text' => $text,
-        '#path' => $link,
-        '#options' => array(
-          'attributes' => array(
-            'class' => array(
-              'action-button',
-              'use-ajax',
-            ),
-            'id' => 'bookmark-' . $entity->id,
-          ),
-          'html' => FALSE,
-        ),
-      ),
-    );
+    $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id);
   }
   return $buttons;
+}
+
+/**
+ * Get the bookmark button.
+ *
+ * @param TingEntity $entity
+ *   The entity to get button for.
+ *
+ * @return array
+ *   Renderable array button.
+ */
+function reol_bookmark_get_bookmark_button($entity) {
+  list($availability) = array_values(ding_availability_items(array($entity->localId)));
+
+  if (!@$availability['bookmarked']) {
+    return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id);
+  }
 }
 
 /**

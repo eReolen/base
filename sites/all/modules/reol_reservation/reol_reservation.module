@@ -183,3 +183,18 @@ function reol_reservation_form_ding_reservation_reserve_form_callback($form, &$f
     return $res['#commands'];
   }, $form_state['values']['reservable']->getEntity(), $form, $form_state);
 }
+
+/**
+ * Get reserve button.
+ *
+ * @param TingEntity $entity
+ *   The entity to get button for.
+ */
+function reol_reservation_get_reserve_button($entity) {
+  list($availability) = array_values(ding_availability_items(array($entity->localId)));
+  $availability = _reol_loan_map_availability($availability);
+
+  if ($availability == REOL_LOAN_RESERVABLE) {
+    return reol_base_get_entity_button(t('Reserve'), 'ting/object/' . $entity->id . '/reserve', 'reserve-' . $entity->id);
+  }
+}
