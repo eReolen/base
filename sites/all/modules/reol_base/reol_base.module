@@ -440,12 +440,56 @@ function reol_base_entity_ajax_form($popup_id, $callback, $entity) {
       // Authenticate and rerun.
       $commands[] = ajax_command_ding_user_authenticate('');
     }
+    catch (DingPublizonException $exception) {
+      // Some error occurred, show it.
+      $html = $exception->getMessageT(array());
+      // If we should show bookmark button.
+      if ($exception->showBookmark()) {
+        $html .= render(reol_bookmark_get_bookmark_button($entity));
+      }
+      // If we should show reserve button.
+      if ($exception->showReserve()) {
+        $html .= render(reol_reservation_get_reserve_button($entity));
+      }
+      $commands[] = ajax_command_ding_popup($popup_id, t('Error'), $html, array('refresh' => TRUE));
+    }
     catch (DingProviderUserException $exception) {
       // Some error occurred, show it.
-      $commands[] = ajax_command_ding_popup($popup_id, t('Bookmark'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
+      $commands[] = ajax_command_ding_popup($popup_id, t('Error'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
     }
   }
 
   // Return the ajax commands as an render array.
   return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Get entity button.
+ *
+ * @param string $text
+ *   The text for the button.
+ * @param string $link
+ *   The link for the button.
+ * @param string $id
+ *   The id of the button.
+ *
+ * @return array
+ *   Themable button array.
+ */
+function reol_base_get_entity_button($text, $link, $id) {
+  return array(
+    '#theme' => 'link',
+    '#text' => $text,
+    '#path' => $link,
+    '#options' => array(
+      'attributes' => array(
+        'class' => array(
+          'action-button',
+          'use-ajax',
+        ),
+        'id' => $id,
+      ),
+      'html' => FALSE,
+    ),
+  );
 }
