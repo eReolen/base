@@ -252,4 +252,63 @@ function brin_menu_link($vars) {
  */
 function brin_preprocess_html(&$variables) {
   drupal_add_library('system', 'drupal.ajax');
+
+  // Add tags for ios-devices
+  $viewport = array(
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'viewport',
+      'content' => 'width=device-width,initial-scale=1.0,maximum-scale=1.0',
+    ),
+  );
+  $webapp = array(
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'apple-mobile-web-app-capable',
+      'content' => 'yes',
+    ),
+  );
+  $apple_touch_icon_57 = array(
+    '#type' => 'html_tag',
+    '#tag' => 'link',
+    '#attributes' => array(
+      'rel' => 'apple-touch-icon',
+      'href' => '/' . path_to_theme() . '/images/touch-icon-iphone.png',
+    ),
+  );
+  $apple_touch_icon_72 = array(
+    '#type' => 'html_tag',
+    '#tag' => 'link',
+    '#attributes' => array(
+      'rel' => 'apple-touch-icon',
+      'sizes' => '72x72',
+      'href' => '/' . path_to_theme() . '/images/touch-icon-ipad.png',
+    ),
+  );
+  $apple_touch_icon_114 = array(
+    '#type' => 'html_tag',
+    '#tag' => 'link',
+    '#attributes' => array(
+      'rel' => 'apple-touch-icon',
+      'sizes' => '114x114',
+      'href' => '/' . path_to_theme() . '/images/touch-icon-iphone4.png',
+    ),
+  );
+  $apple_itunes_app = array(
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'apple-itunes-app',
+      'content' => 'app-id=' . variable_get('supershop_itunes_app_id'),
+    ),
+  );
+
+  drupal_add_html_head($viewport, 'viewport');
+  drupal_add_html_head($webapp, 'webapp');
+  drupal_add_html_head($apple_touch_icon_57, 'apple-touch-icon_57');
+  drupal_add_html_head($apple_touch_icon_72, 'apple-touch-icon_72');
+  drupal_add_html_head($apple_touch_icon_114, 'apple-touch-icon_114');
+  drupal_add_html_head($apple_itunes_app, 'apple-itunes-app');
 }
