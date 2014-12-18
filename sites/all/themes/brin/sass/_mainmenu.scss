@@ -153,7 +153,7 @@
               text-transform: uppercase;
               font-weight: 600;
               font-size: 13px;
-              color: #404040;
+              color: $text-header-color;
               letter-spacing: .2px;
             }
           }
@@ -212,7 +212,7 @@
 
             span {
               font-family: 'Open Sans', sans-serif;
-              color: #404040;
+              color: $text-header-color;
               font-weight: 300;
               letter-spacing: .2px;
               text-transform: uppercase;

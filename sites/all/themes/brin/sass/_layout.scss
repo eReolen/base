@@ -33,7 +33,7 @@ label,
 .page-title,
 .ui-dialog-title {
   font-family: 'Open Sans', sans-serif;
-  color: #404040;
+  color: $text-header-color;
   font-weight: 300;
   letter-spacing: .2px;
   text-transform: uppercase;
@@ -42,7 +42,7 @@ label,
 .page-lead,
 strong {
   font-family: 'Open Sans', sans-serif;
-  color: #404040;
+  color: $text-header-color;
   font-weight: 600;
   letter-spacing: .2px;
 }
@@ -56,7 +56,7 @@ h1 ,
 
 .default-layout .default-layout-inside {
   clear: left;
-  background-color: #fff;
+  background-color: white;
   margin-right: 10px;
   margin-left: 10px;
   overflow: hidden;

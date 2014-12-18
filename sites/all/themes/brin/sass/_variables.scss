@@ -2,8 +2,16 @@
  * Comon variables.
  */
 
+$text-header-color: #404040;
 // General text color.
 $text-color: #666666;
+
+// Secondary text color.
+$text-secondary-color: #adadad;
+
+// Tertiary text color.
+$text-tertiary-color: #7c7c7c;
+
 // Default text color on dark background.
 $inverse-text-color: #c9c9c9;
 
@@ -28,6 +36,7 @@ $background-dark: #353535;
 
 $header-height: 90px;
 
+$border-separator: 1px solid #EFEFEF;
 
 // Breakpoints lifted verbatim from ddbasic.
 
