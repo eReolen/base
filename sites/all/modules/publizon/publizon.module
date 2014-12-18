@@ -467,9 +467,38 @@ function _publizon_error_messages() {
 }
 
 /**
+ * Get error message array.
+ *
+ * @param int $code
+ *   The error code to get message for.
+ *
+ * @return array
+ *   The message definition.
+ */
+function publizon_get_message($code) {
+  $messages = variable_get('publizon_error_messages', array());
+  $code = isset($messages[$code]) ? $code : -1;
+
+  if (!isset($messages[$code])) {
+    return array(
+      'error_text' => 'Error',
+      'show_bookmark' => FALSE,
+      'show_reserve' => FALSE,
+    );
+  }
+  else {
+    return $messages[$code];
+  }
+}
+
+/**
  * Publizon provider exception.
  */
 class DingPublizonException extends DingProviderUserException {
+  private $showBookmark;
+  private $showReserve;
+  private $exception;
+
   /**
    * Convert a PublizonException to a DingPublizonException.
    *
@@ -478,10 +507,34 @@ class DingPublizonException extends DingProviderUserException {
    * @throws DingPublizonException
    */
   static public function convert(PublizonException $publizon_exception) {
-    $messages = _publizon_error_messages();
     $code = $publizon_exception->getCode();
-    $code = isset($messages[$code]) ? $code : -1;
-    $message = $messages[$code];
-    throw new self($message, $code, $publizon_exception);
+    $message = publizon_get_message($code);
+
+    throw new self($message['error_text']['value'], $code, $message['show_bookmark'], $message['show_reserve'], $exception);
+  }
+
+  /**
+   * Constructor.
+   */
+  public function __construct($message, $code, $show_bookmark, $show_reserve, $exception) {
+    $this->message = $message;
+    $this->code = $code;
+    $this->showBookmark = $show_bookmark;
+    $this->showReserve = $show_reserve;
+    $this->exception = $exception;
+  }
+
+  /**
+   * Return whether or not to show bookmark button.
+   */
+  public function showBookmark() {
+    return (bool) $this->showBookmark;
+  }
+
+  /**
+   * Return whether or not to show reserve button.
+   */
+  public function showReserve() {
+    return (bool) $this->showReserve;
   }
 }
