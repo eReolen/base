@@ -38,4 +38,5 @@ files[] = lib/storage/PublizonLoan.class.inc
 files[] = lib/storage/PublizonReservation.class.inc
 files[] = lib/storage/PublizonLoanStatus.class.inc
 files[] = lib/storage/PublizonChecklistItem.class.inc
+files[] = lib/storage/PublizonProduct.class.inc
 mtime = 1416325540

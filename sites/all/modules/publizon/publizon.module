@@ -492,6 +492,27 @@ function publizon_get_message($code) {
 }
 
 /**
+ * Load publizon product.
+ *
+ * TODO Static and db cache!
+ *
+ * @param string $local_id
+ *   The local id of the entity to load publizon product for.
+ *
+ * @return PublizonProduct
+ *   The product.
+ */
+function publizon_load($local_id) {
+  try {
+    $client = PublizonProductClient::getClient();
+    return $client->getProduct(reol_base_get_isbn($local_id));
+  }
+  catch (Exception $e) {
+    return FALSE;
+  }
+}
+
+/**
  * Publizon provider exception.
  */
 class DingPublizonException extends DingProviderUserException {
