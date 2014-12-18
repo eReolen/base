@@ -47,14 +47,16 @@
 .group_material_details,
 .group_holdings_available,
 .group_on_this_site,
-.group_periodical_issues {
+.group_periodical_issues,
+.ting-object-relation-group {
   width: 70%;
 }
 
 .group_material_details,
 .group_holdings_available,
 .group_on_this_site,
-.group_periodical_issues {
+.group_periodical_issues,
+.ting-object-relation-group {
   float: right;
   border-bottom: $border-seperator;
   padding-bottom: 30px;
@@ -63,8 +65,10 @@
   .field-items {
     font-family: 'Open Sans', sans-serif;
     color: $text-header-color;
-    line-height: 2em;
   }
+  .field-items {
+      margin-bottom: 15px;
+}
   h2 {
     padding-bottom: 20px;
     border-bottom: $border-seperator;
@@ -154,10 +158,12 @@
   }
 }
 
-// Result selection/facet browser/alternatives.
+// Result selection/facet browser/alternatives/relation anchors.
 .pane-search-backends,
 .pane-ding-facetbrowser,
-.pane-ting-ting-object-types{
+.pane-ting-ting-object-types,
+.pane-ting-ting-collection-types,
+.pane-ting-ting-relation-anchors {
   h2 {
     text-transform: none;
   }
