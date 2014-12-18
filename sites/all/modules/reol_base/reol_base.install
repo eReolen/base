@@ -195,6 +195,17 @@ function reol_base_ding_entity_fields() {
         'label' => t('Reader'),
       ),
     ),
+    'ting_details_publizon_genre' => array(
+      'field' => array(
+        'locked' => FALSE,
+        'storage' => array(
+          'type' => 'virtual_field',
+        ),
+      ),
+      'instance' => array(
+        'label' => t('Genre'),
+      ),
+    ),
   );
 }
 

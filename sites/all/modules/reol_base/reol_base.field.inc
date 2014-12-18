@@ -23,6 +23,13 @@ function reol_base_field_info() {
       'default_formatter' => 'reol_base_audiobook_reader',
       'no_ui' => TRUE,
     ),
+    'ting_details_publizon_genre' => array(
+      'label' => t('Genre'),
+      'description' => t('The genre of the title'),
+      'default_widget' => 'hidden',
+      'default_formatter' => 'reol_base_genre',
+      'no_ui' => TRUE,
+    ),
   );
 }
 
@@ -41,6 +48,12 @@ function reol_base_field_formatter_info() {
       'label' => t('Default'),
       'field types' => array(
         'ting_details_audiobook_reader',
+      ),
+    ),
+    'reol_base_genre' => array(
+      'label' => t('Default'),
+      'field types' => array(
+        'ting_details_publizon_genre',
       ),
     ),
   );
@@ -75,6 +88,20 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
             '#markup' => $entity->reply->record['dc:contributor']['dkdcplus:dkind'][0],
           );
         }
+        break;
+
+      case 'reol_base_genre':
+        $pub_prod = publizon_load($entity->localId);
+        // If not on publizon, do nothing.
+        if (!$pub_prod) {
+          continue;
+        }
+        if (empty($pub_prod->category)) {
+          continue;
+        }
+        $element[$delta] = array(
+          '#markup' => $pub_prod->category,
+        );
         break;
     }
   }

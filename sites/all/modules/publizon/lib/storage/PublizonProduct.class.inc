@@ -8,7 +8,7 @@ class PublizonProduct extends Publizon {
   protected $properties = array(
     'coverImage' => NULL,
     'format' => NULL,
-    'contributors' => NULL,
+    'category' => NULL,
   );
 
   /**
@@ -35,16 +35,8 @@ class PublizonProduct extends Publizon {
     $this->format->id = (int) $item->formats->format_id;
     $this->format->name = (string) $item->formats->name;
     $this->format->size = (int) $item->formats->size_bytes;
-    $this->contributors = new StdClass();
-    foreach ($item->contributors as $contributor) {
-      $key = $this->convertContributorType((string) $contributor->type);
-      if (!$key) {
-        continue;
-      }
-
-      $obj = $this->contributors->$key = new StdClass();
-      $obj->firstName = (string) $contributor->first_name;
-      $obj->lastName = (string) $contributor->last_name;
+    if (isset($item->categories)) {
+      $this->category = (string) $item->categories->attributes()->desc;
     }
   }
 
