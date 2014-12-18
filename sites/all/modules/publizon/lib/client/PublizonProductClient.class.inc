@@ -11,10 +11,10 @@ class PublizonProductClient extends PublizonClient {
    * @param string $isbn
    *   Product id also know as ISBN number.
    *
-   * @return SimpleXmlElement
-   *   Raw XML object containing the product.
+   * @return PublizonProduct
+   *   The publizon product.
    */
-  private function getProduct($isbn, $retailer_id = FALSE) {
+  public function getProduct($isbn, $retailer_id = FALSE) {
     // Get default retailer id if none specified.
     $retailer_id = $retailer_id ? $retailer_id : variable_get('publizon_default_retailer', '');
 
@@ -26,7 +26,7 @@ class PublizonProductClient extends PublizonClient {
     // Check if any data was returned.
     $data = $response->xpath('//data');
     if (isset($data[0])) {
-      return $data[0];
+      return new PublizonProduct($data[0]);
     }
 
     $this->logger->log('The product with isbn (' . $isbn . ') did not return any data', 'WARNING');
@@ -46,7 +46,7 @@ class PublizonProductClient extends PublizonClient {
     try {
       $product = $this->getProduct($isbn);
 
-      return $product->coverimage ? $product->coverimage : FALSE;
+      return !empty($product->coverImage) ? $product->coverImage : FALSE;
     }
     catch (Exception $e) {
       return FALSE;
