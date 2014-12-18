@@ -23,8 +23,13 @@ function reol_bookmark_menu() {
   );
 
   $items['ting/object/%ting_object/bookmark'] = array(
-    'page callback' => 'reol_bookmark_create_ajax',
-    'page arguments' => array(2, 4),
+    'page callback' => 'reol_base_entity_ajax_form',
+    'page arguments' => array(
+      'reol_bookmark',
+      'reol_bookmark_create_ajax',
+      2,
+      4,
+    ),
     'delivery callback' => 'ajax_deliver',
     'access arguments' => array('perform bookmark'),
   );
@@ -62,16 +67,11 @@ function reol_bookmark_bookmark($id, $remove = FALSE) {
 
   $ting_object = ding_entity_load($id);
 
-  try {
-    if (!$remove) {
-      ding_provider_invoke('bookmark', 'create', $user, $ting_object->localId);
-    }
-    else {
-      ding_provider_invoke('bookmark', 'delete', $user, $ting_object->localId);
-    }
+  if (!$remove) {
+    ding_provider_invoke('bookmark', 'create', $user, $ting_object->localId);
   }
-  catch (DingProviderException $e) {
-    return FALSE;
+  else {
+    ding_provider_invoke('bookmark', 'delete', $user, $ting_object->localId);
   }
   return TRUE;
 }
@@ -191,25 +191,26 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
       $text = t('Bookmark');
     }
 
-    $buttons[] = array(
-      array(
-        '#theme' => 'link',
-        '#text' => $text,
-        '#path' => $link,
-        '#options' => array(
-          'attributes' => array(
-            'class' => array(
-              'action-button',
-              'use-ajax',
-            ),
-            'id' => 'bookmark-' . $entity->id,
-          ),
-          'html' => FALSE,
-        ),
-      ),
-    );
+    $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id);
   }
   return $buttons;
+}
+
+/**
+ * Get the bookmark button.
+ *
+ * @param TingEntity $entity
+ *   The entity to get button for.
+ *
+ * @return array
+ *   Renderable array button.
+ */
+function reol_bookmark_get_bookmark_button($entity) {
+  list($availability) = array_values(ding_availability_items(array($entity->localId)));
+
+  if (!@$availability['bookmarked']) {
+    return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id);
+  }
 }
 
 /**
@@ -249,64 +250,34 @@ function reol_bookmark_secure_permissions($role) {
 function reol_bookmark_create_ajax($entity, $remove = FALSE) {
   $commands = array();
 
-  // Check if the logged in user is a library user.
-  global $user;
-  if (user_is_logged_in()) {
-    if (ding_user_is_provider_user($user)) {
-      if (is_object($entity) && $entity instanceof TingEntity) {
-        // Try to add bookmark to the users list.
-        $form_state = array('values' => array());
-        try {
-          $res = reol_bookmark_bookmark($entity->id, (bool) $remove);
+  // Try to add bookmark to the users list.
+  $res = reol_bookmark_bookmark($entity->id, (bool) $remove);
 
-          $html = theme('status_messages');
+  $html = theme('status_messages');
 
-          $html .= '<p>';
-          if (!$remove) {
-            if (!$res) {
-              $html .= t('An unknown error occurred while adding <em>@title</em> to bookmarks', array('@title' => $entity->title));
-            }
-            else {
-              $html .= t('<em>@title</em> added to bookmarks', array('@title' => $entity->title));
-            }
-          }
-          else {
-            if (!$res) {
-              $html .= t('An unknown error occurred while removing <em>@title</em> from bookmarks', array('@title' => $entity->title));
-            }
-            else {
-              $html .= t('<em>@title</em> removed from bookmarks', array('@title' => $entity->title));
-            }
-          }
-          $html .= '</p>';
-
-          // Display pop-up.
-          $commands[] = ajax_command_ding_popup('ding_bookmark', t('Bookmark'), $html, array('refresh' => TRUE));
-        }
-        catch (DingProviderAuthException $exception) {
-          $commands[] = ajax_command_ding_user_authenticate('');
-        }
-        catch (DingProviderUserException $exception) {
-          $commands[] = ajax_command_ding_popup('ding_bookmark', t('Bookmark'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
-        }
-      }
-      else {
-        // Error not ting entity.
-        $commands[] = ajax_command_ding_popup('ding_bookmark', t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>');
-      }
+  $html .= '<p>';
+  if (!$remove) {
+    if (!$res) {
+      $html .= t('An unknown error occurred while adding <em>@title</em> to bookmarks', array('@title' => $entity->title));
     }
     else {
-      // Error not library user.
-      $commands[] = ajax_command_ding_popup('ding_bookmark', t('Error'), '<p>' . t('Only library user can make bookmarks.') . '</p>');
+      $html .= t('<em>@title</em> added to bookmarks', array('@title' => $entity->title));
     }
   }
   else {
-    // Trigger log-in (the bookmark link will be triggered on success).
-    $commands[] = ajax_command_ding_user_authenticate('');
+    if (!$res) {
+      $html .= t('An unknown error occurred while removing <em>@title</em> from bookmarks', array('@title' => $entity->title));
+    }
+    else {
+      $html .= t('<em>@title</em> removed from bookmarks', array('@title' => $entity->title));
+    }
   }
+  $html .= '</p>';
 
-  // Return the ajax commands as an render array.
-  return array('#type' => 'ajax', '#commands' => $commands);
+  // Display pop-up.
+  $commands[] = ajax_command_ding_popup('reol_bookmark', t('Bookmark'), $html, array('refresh' => TRUE));
+
+  return $commands;
 }
 
 /**

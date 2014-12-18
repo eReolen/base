@@ -207,20 +207,7 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
     }
 
     // Create the button.
-    $return = array(
-      '#theme' => 'link',
-      '#text' => $text,
-      '#path' => $link,
-      '#options' => array(
-        'attributes' => array(
-          'class' => array(
-            'action-button',
-          ),
-          'id' => 'read-' . $entity->id,
-        ),
-        'html' => FALSE,
-      ),
-    );
+    $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id);
 
     // If we are displaying try button, load content in modal.
     if (!$loaned) {

@@ -30,8 +30,8 @@ function reol_loan_menu() {
   $items = array();
 
   $items['ting/object/%ting_object/loan'] = array(
-    'page callback' => 'reol_loan_loan_ajax',
-    'page arguments' => array(2),
+    'page callback' => 'reol_base_entity_ajax_form',
+    'page arguments' => array('reol_loan', 'reol_loan_loan_ajax', 2),
     'delivery callback' => 'ajax_deliver',
     'access arguments' => array('perform loan'),
   );
@@ -54,6 +54,9 @@ function reol_loan_menu() {
  */
 function reol_loan_secure_permissions($role) {
   $permissions = array(
+    'anonymous user' => array(
+      'perform loan',
+    ),
     'provider' => array(
       'perform loan',
     ),
@@ -119,45 +122,17 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
 function reol_loan_ding_entity_buttons($type, $entity) {
   $buttons = array();
   if (reol_loan_is_right_type($entity)) {
-    global $user;
     drupal_add_library('system', 'drupal.ajax');
     list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
     switch (_reol_loan_map_availability($availability)) {
       case REOL_LOAN_STATUS_LOANABLE:
-        $buttons[] = array(
-          '#theme' => 'link',
-          '#text' => t('Loan'),
-          '#path' => 'ting/object/' . $entity->id . '/loan',
-          '#options' => array(
-            'attributes' => array(
-              'class' => array(
-                'action-button',
-                'use-ajax',
-              ),
-              'id' => 'loan-' . $entity->id,
-            ),
-            'html' => FALSE,
-          ),
-        );
+        $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id);
         break;
 
       case REOL_LOAN_STATUS_RESERVED:
-        $buttons[] = array(
-          '#theme' => 'link',
-          '#text' => t('Delete reservation'),
-          '#path' => 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax',
-          '#options' => array(
-            'attributes' => array(
-              'class' => array(
-                'action-button',
-                'use-ajax',
-              ),
-              'id' => 'delete-reservation-' . $entity->id,
-            ),
-            'html' => FALSE,
-          ),
-        );
+        global $user;
+        $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id);
         break;
     }
   }
