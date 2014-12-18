@@ -58,6 +58,9 @@ function reol_frontend_preprocess_node(&$variables) {
     $image_field = $node_wrapper->field_ding_news_list_image->value();
     $image_uri = $image_field['uri'];
     $image_for_sizing = image_style_path('reol_article_teaser_background', $image_uri);
+    // Make sure image has been generated.
+    image_style_create_derivative(image_style_load('reol_article_teaser_background'), $image_uri, $image_for_sizing);
+
     list($image_w, $image_h) = getimagesize($image_for_sizing);
 
     // Add image style image.
