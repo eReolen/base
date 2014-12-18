@@ -17,7 +17,7 @@
     position: absolute;
     border-style: solid;
     border-width: 1em;
-    border-color: #FFF transparent transparent transparent;
+    border-color: white transparent transparent transparent;
     left: 50%;
     margin-left: -1em;
     top: 0;
@@ -38,7 +38,7 @@
 
   span.author {
     font-style: italic;
-    color: #404040;
+    color: $text-header-color;
   }
 
   .review-top {
