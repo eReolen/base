@@ -127,40 +127,12 @@ function reol_loan_ding_entity_buttons($type, $entity) {
 
     switch (_reol_loan_map_availability($availability)) {
       case REOL_LOAN_STATUS_LOANABLE:
-        $buttons[] = array(
-          '#theme' => 'link',
-          '#text' => t('Loan'),
-          '#path' => 'ting/object/' . $entity->id . '/loan',
-          '#options' => array(
-            'attributes' => array(
-              'class' => array(
-                'action-button',
-                'use-ajax',
-              ),
-              'id' => 'loan-' . $entity->id,
-            ),
-            'html' => FALSE,
-          ),
-        );
+        $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id);
         break;
 
       case REOL_LOAN_STATUS_RESERVED:
         global $user;
-        $buttons[] = array(
-          '#theme' => 'link',
-          '#text' => t('Delete reservation'),
-          '#path' => 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax',
-          '#options' => array(
-            'attributes' => array(
-              'class' => array(
-                'action-button',
-                'use-ajax',
-              ),
-              'id' => 'delete-reservation-' . $entity->id,
-            ),
-            'html' => FALSE,
-          ),
-        );
+        $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id);
         break;
     }
   }
