@@ -68,5 +68,71 @@ function reol_base_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'ting_details_audiobook_reader'
+  $field_bases['ting_details_audiobook_reader'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'ting_details_audiobook_reader',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'reol_base',
+    'settings' => array(),
+    'storage' => array(
+      'active' => 1,
+      'module' => 'virtual_field',
+      'settings' => array(),
+      'type' => 'virtual_field',
+    ),
+    'translatable' => 0,
+    'type' => 'ting_details_audiobook_reader',
+  );
+
+  // Exported field_base: 'ting_details_ebook_format'
+  $field_bases['ting_details_ebook_format'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'ting_details_ebook_format',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'reol_base',
+    'settings' => array(),
+    'storage' => array(
+      'active' => 1,
+      'module' => 'virtual_field',
+      'settings' => array(),
+      'type' => 'virtual_field',
+    ),
+    'translatable' => 0,
+    'type' => 'ting_details_ebook_format',
+  );
+
+  // Exported field_base: 'ting_details_publizon_genre'
+  $field_bases['ting_details_publizon_genre'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'ting_details_publizon_genre',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'reol_base',
+    'settings' => array(),
+    'storage' => array(
+      'active' => 1,
+      'module' => 'virtual_field',
+      'settings' => array(),
+      'type' => 'virtual_field',
+    ),
+    'translatable' => 0,
+    'type' => 'ting_details_publizon_genre',
+  );
+
   return $field_bases;
 }
