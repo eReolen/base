@@ -36,6 +36,12 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
     return;
   }
 
+  // Remove update bulk button.
+  unset($form['actions_top']['update']);
+  // Change styling of delete button.
+  $form['actions_top']['delete']['#prefix'] = '';
+  $form['actions_top']['delete']['#suffix'] = '';
+
   foreach ($form['reservations'] as &$reservation_element) {
     $reservation = $reservation_element['#reservation'];
 
