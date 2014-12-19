@@ -1,0 +1,5 @@
+patches:
+  -
+    patch: 'https://www.drupal.org/files/wysiwyg-1802394-4.patch'
+    home: 'https://www.drupal.org/node/1802394'
+    reason: 'Fixes error where wysiwyg would try to fetch local file using absolute url.'
