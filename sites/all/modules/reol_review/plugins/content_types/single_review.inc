@@ -28,7 +28,7 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
   if (isset($conf['type'])) {
     $type = ctools_context_keyword_substitute($conf['type'], array(), $context);
   }
-  $review = reol_review_get_random_review($type);
+  $review = reol_review_get_random_review(empty($type) ? FALSE : $type);
 
   $ting_entity = ding_entity_load($review->ding_entity_id);
   $ting_object_view = ting_object_view($ting_entity, 'review');
@@ -54,7 +54,7 @@ function single_review_content_type_edit_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Type'),
     '#description' => t('Select which type to show review for.'),
-    '#default_value' => isset($conf['type']) ? $conf['type'] : '_all',
+    '#default_value' => isset($conf['type']) ? $conf['type'] : '',
   );
 
   return $form;
