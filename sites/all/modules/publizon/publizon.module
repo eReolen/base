@@ -494,8 +494,6 @@ function publizon_get_message($code) {
 /**
  * Load publizon product.
  *
- * TODO Static and db cache!
- *
  * @param string $local_id
  *   The local id of the entity to load publizon product for.
  *
@@ -503,12 +501,52 @@ function publizon_get_message($code) {
  *   The product.
  */
 function publizon_load($local_id) {
-  try {
-    $client = PublizonProductClient::getClient();
-    return $client->getProduct(reol_base_get_isbn($local_id));
+  $products = &drupal_static(__FUNCTION__) || array();
+  // If product is not in cache, get it.
+  if (!isset($products[$local_id])) {
+    // Try getting from db cache.
+    if (module_exists('ding_session_cache') && $cache = ding_session_cache_get('publizon', 'publizon_products:' . $local_id)) {
+      $products[$local_id] = $cache->data;
+    }
+    else {
+      // Try to get product from Publizon.
+      try {
+        $client = PublizonProductClient::getClient();
+        $products[$local_id] = $client->getProduct(reol_base_get_isbn($local_id));
+      }
+      catch (Exception $e) {
+        $products[$local_id] = FALSE;
+      }
+      // Save in db cache.
+      if (module_exists('ding_session_cache')) {
+        ding_session_cache_set('publizon', 'publizon_products:' . $local_id, $products);
+      }
+    }
   }
-  catch (Exception $e) {
-    return FALSE;
+
+  return $products[$local_id];
+}
+
+/**
+ * Implements hook_ding_session_cache_defaults().
+ *
+ * Set default ding_session_cache settings and tell ding_session_cache that this
+ * module supports it.
+ */
+function publizon_ding_session_cache_defaults() {
+  return array(
+    'titel' => 'Publizon product cache',
+    'enabled' => TRUE,
+    'expire' => 2 * 60 * 60,
+  );
+}
+
+/**
+ * Clears the product cache if ding_session_cache is active.
+ */
+function publizon_cache_clear() {
+  if (module_exists('ding_session_cache')) {
+    ding_session_cache_clear('publizon', 'publizon_products');
   }
 }
 
