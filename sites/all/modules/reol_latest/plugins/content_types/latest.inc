@@ -30,7 +30,10 @@ function latest_content_type_render($subtype, $conf, $panel_args, $context) {
 
   $ting_rendered = array();
   foreach ($ting_entities as $ting_entity) {
-    $ting_rendered[] = ting_object_view($ting_entity, 'latest');
+    $ting_rendered[] = array(
+      'link' => 'ting/object/' . $ting_entity->id,
+      'view' => ting_object_view($ting_entity, 'latest'),
+    );
   }
 
   $block->content = theme('latest', array(

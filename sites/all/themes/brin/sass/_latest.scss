@@ -14,5 +14,10 @@
     &.first {
       border-top: $border-separator;
     }
+
+    &:hover {
+      text-decoration: none;
+      background: #f3f3f3;
+    }
   }
 }
