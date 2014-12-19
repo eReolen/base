@@ -1,0 +1,17 @@
+.pane-latest .pane-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.latest-titles {
+  text-align: center;
+
+  .latest-title {
+    border-bottom: $border-separator;
+    padding: 20px;
+
+    &.first {
+      border-top: $border-separator;
+    }
+  }
+}
