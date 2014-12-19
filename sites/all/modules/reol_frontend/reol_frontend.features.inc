@@ -182,11 +182,11 @@ function reol_frontend_image_default_styles() {
 function reol_frontend_node_info() {
   $items = array(
     'article' => array(
-      'name' => t('Article'),
+      'name' => t('Artikel'),
       'base' => 'node_content',
       'description' => t('Contains articles written for the frontpage, and for either ebook or audiobook site (or both)'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Titel'),
       'help' => '',
     ),
     'author_portrait' => array(
@@ -202,7 +202,7 @@ function reol_frontend_node_info() {
       'base' => 'node_content',
       'description' => t('Contains videos as shown on type frontpages.'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Titel'),
       'help' => '',
     ),
   );
