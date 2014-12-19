@@ -46,15 +46,17 @@
 .pane-ting-object .ting-object-right,
 .group_material_details,
 .group_holdings_available,
-.group_on_this_site,
 .group_periodical_issues,
 .ting-object-relation-group {
   width: 70%;
 }
 
+.ting-object-wrapper {
+  clear: both;
+}
+
 .group_material_details,
 .group_holdings_available,
-.group_on_this_site,
 .group_periodical_issues,
 .ting-object-relation-group {
   float: right;
@@ -87,7 +89,6 @@
  */
 .group_material_details,
 .group_holdings_available,
-.group_on_this_site,
 .group_periodical_issues {
   h2, div {
     margin-left: 10px;
