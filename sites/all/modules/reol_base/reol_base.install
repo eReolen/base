@@ -26,6 +26,7 @@ function reol_base_install() {
     reol_base_update_7114();
     reol_base_update_7115();
     reol_base_update_7116();
+    reol_base_update_7118();
   }
 }
 
@@ -214,4 +215,11 @@ function reol_base_ding_entity_fields() {
  */
 function reol_base_update_7117() {
   ding_entity_modules_enabled(array('reol_base'));
+}
+
+/**
+ * Enable reol_latest module.
+ */
+function reol_base_update_7118() {
+  module_enable(array('reol_latest'), TRUE);
 }
