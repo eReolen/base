@@ -39,22 +39,4 @@ class PublizonProduct extends Publizon {
       $this->category = (string) $item->categories->attributes()->desc;
     }
   }
-
-  /**
-   * Convert a contributor type to internal representation.
-   *
-   * @param string $type
-   *   The name of the type.
-   *
-   * @return string
-   *   Internal representation of the type or FALSE if not found.
-   */
-  private function convertContributorType($type) {
-    $map = array(
-      'by (author)' => 'author',
-      'read by' => 'reader',
-    );
-
-    return isset($map[strtolower($type)]) ? $map[strtolower($type)] : FALSE;
-  }
 }
