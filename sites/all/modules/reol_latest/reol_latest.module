@@ -95,7 +95,8 @@ function reol_latest_get_latest($query) {
   if (!isset($latest[$key])) {
     // If we are keeping this query updated using cron,
     // return empty result set for now. Cron will update eventually.
-    if (reol_latest_keeping_updated($query)) {
+    if (reol_latest_keeping_updated($query) && !variable_get('reol_latest_user_allowed_to_wait', FALSE)) {
+      // Try to look like the object we should return.
       $latest[$key] = new StdClass();
       $latest[$key]->collections = array();
     }
