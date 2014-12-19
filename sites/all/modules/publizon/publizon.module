@@ -505,7 +505,7 @@ function publizon_load($local_id) {
   // If product is not in cache, get it.
   if (!isset($products[$local_id])) {
     // Try getting from db cache.
-    if (module_exists('ding_session_cache') && $cache = ding_session_cache_get('publizon', 'publizon_products:' . $local_id)) {
+    if ($cache = cache_get('publizon_products:' . $local_id)) {
       $products[$local_id] = $cache->data;
     }
     else {
@@ -518,36 +518,11 @@ function publizon_load($local_id) {
         $products[$local_id] = FALSE;
       }
       // Save in db cache.
-      if (module_exists('ding_session_cache')) {
-        ding_session_cache_set('publizon', 'publizon_products:' . $local_id, $products);
-      }
+      cache_set('publizon_products:' . $local_id, $products, 'cache', time() + 3 * 60 * 60);
     }
   }
 
   return $products[$local_id];
-}
-
-/**
- * Implements hook_ding_session_cache_defaults().
- *
- * Set default ding_session_cache settings and tell ding_session_cache that this
- * module supports it.
- */
-function publizon_ding_session_cache_defaults() {
-  return array(
-    'titel' => 'Publizon product cache',
-    'enabled' => TRUE,
-    'expire' => 2 * 60 * 60,
-  );
-}
-
-/**
- * Clears the product cache if ding_session_cache is active.
- */
-function publizon_cache_clear() {
-  if (module_exists('ding_session_cache')) {
-    ding_session_cache_clear('publizon', 'publizon_products');
-  }
 }
 
 /**
