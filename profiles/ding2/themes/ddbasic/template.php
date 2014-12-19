@@ -921,6 +921,7 @@ function ddbasic_preprocess_ting_object(&$vars) {
               'left_column' => $content['group_ting_object_left_column'],
               'right_column' => $content['group_ting_object_right_column'],
             ),
+            '#weight' => $content['group_ting_object_left_column']['#weight'],
           );
 
           unset($content['group_ting_object_left_column']);
@@ -936,6 +937,7 @@ function ddbasic_preprocess_ting_object(&$vars) {
               '#suffix' => '</div>',
               'details' => $content['group_material_details'],
             ),
+            '#weight' => $content['group_material_details']['#weight'],
           );
           unset($content['group_material_details']);
         }
@@ -949,6 +951,7 @@ function ddbasic_preprocess_ting_object(&$vars) {
               '#suffix' => '</div>',
               'details' => $content['group_holdings_available'],
             ),
+            '#weight' => $content['group_holdings_available']['#weight'],
           );
           unset($content['group_holdings_available']);
         }
@@ -962,6 +965,7 @@ function ddbasic_preprocess_ting_object(&$vars) {
               '#suffix' => '</div>',
               'details' => $content['group_periodical_issues'],
             ),
+            '#weight' => $content['group_periodical_issues']['#weight'],
           );
           unset($content['group_periodical_issues']);
         }
@@ -975,6 +979,7 @@ function ddbasic_preprocess_ting_object(&$vars) {
               '#suffix' => '</div>',
               'details' => $content['group_on_this_site'],
             ),
+            '#weight' => $content['group_on_this_site']['#weight'],
           );
           unset($content['group_on_this_site']);
         }
@@ -984,6 +989,7 @@ function ddbasic_preprocess_ting_object(&$vars) {
             'content' => array(
               'details' => $content['ting_relations'],
             ),
+            '#weight' => $content['ting_relations']['#weight'],
           );
           unset($content['ting_relations']);
         }
