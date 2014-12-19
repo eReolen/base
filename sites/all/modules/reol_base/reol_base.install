@@ -165,3 +165,53 @@ function reol_base_update_7115() {
 function reol_base_update_7116() {
   module_enable(array('googleanalytics'), TRUE);
 }
+
+/**
+ * Field definitions.
+ *
+ * Implements hook_ding_entity_fields().
+ */
+function reol_base_ding_entity_fields() {
+  return array(
+    'ting_details_ebook_format' => array(
+      'field' => array(
+        'locked' => FALSE,
+        'storage' => array(
+          'type' => 'virtual_field',
+        ),
+      ),
+      'instance' => array(
+        'label' => t('E-book format'),
+      ),
+    ),
+    'ting_details_audiobook_reader' => array(
+      'field' => array(
+        'locked' => FALSE,
+        'storage' => array(
+          'type' => 'virtual_field',
+        ),
+      ),
+      'instance' => array(
+        'label' => t('Reader'),
+      ),
+    ),
+    'ting_details_publizon_genre' => array(
+      'field' => array(
+        'locked' => FALSE,
+        'storage' => array(
+          'type' => 'virtual_field',
+        ),
+      ),
+      'instance' => array(
+        'label' => t('Genre'),
+      ),
+    ),
+  );
+}
+
+/**
+ * Register ding entity fields.
+ */
+function reol_base_update_7117() {
+  ding_entity_modules_enabled(array('reol_base'));
+}
