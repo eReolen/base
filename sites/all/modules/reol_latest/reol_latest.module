@@ -37,7 +37,7 @@ function reol_latest_get_latest_count($count = 5, $type = FALSE) {
   }
 
   // Get results from query.
-  $query = $ting_type == 'all' ? '*' : 'facet.type=' . $ting_type;
+  $query = $ting_type == 'all' ? '*' : 'facet.type="' . $ting_type . '"';
   $ting_results = reol_latest_get_latest($query);
 
   // Pick $count random ones.
@@ -133,8 +133,8 @@ function reol_latest_get_query_key($query) {
 function reol_latest_keep_updated() {
   // We know these queries are used.
   $fixed_queries = array(
-    'facet.type=' . reol_base_get_ting_type('ebook'),
-    'facet.type=' . reol_base_get_ting_type('audiobook'),
+    'facet.type="' . reol_base_get_ting_type('ebook') . '"',
+    'facet.type="' . reol_base_get_ting_type('audiobook') . '"',
   );
   $queries = variable_get('reol_latest_used_queries', array());
   foreach ($fixed_queries as $fq) {
