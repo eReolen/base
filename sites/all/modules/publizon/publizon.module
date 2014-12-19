@@ -518,7 +518,7 @@ function publizon_load($local_id) {
         $products[$local_id] = FALSE;
       }
       // Save in db cache.
-      cache_set('publizon_products:' . $local_id, $products, 'cache', time() + 3 * 60 * 60);
+      cache_set('publizon_products:' . $local_id, $products[$local_id], 'cache', time() + 3 * 60 * 60);
     }
   }
 
