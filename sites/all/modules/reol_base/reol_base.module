@@ -220,7 +220,7 @@ function reol_base_get_type($type = FALSE) {
   // Find type.
   foreach ($types as $n => $t) {
     if ($t['ext_name'] == strtolower($type)) {
-      return $n;
+      return $t;
     }
   }
 
