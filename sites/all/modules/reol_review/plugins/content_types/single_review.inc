@@ -36,7 +36,7 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
   $block->content = theme('single_review', array(
     'ting_title' => $ting_entity->title,
     'ting_object' => drupal_render($ting_object_view),
-    'review_author' => $review->author,
+    'author' => implode($ting_entity->creators, ', '),
     'review_uri' => $review->link,
   ));
 
