@@ -49,6 +49,14 @@ function reol_base_menu() {
     'access callback' => TRUE,
   );
 
+  $items['user/%user/logout'] = array(
+    'title' => 'Log out',
+    'page callback' => 'reol_base_logout',
+    'access callback' => 'user_is_logged_in',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 1000,
+  );
+
   return $items;
 }
 
@@ -490,4 +498,12 @@ function reol_base_get_entity_button($text, $link, $id) {
       'html' => FALSE,
     ),
   );
+}
+
+/**
+ * Logout.
+ */
+function reol_base_logout() {
+  module_load_include('inc', 'user', 'user.pages');
+  user_logout();
 }
