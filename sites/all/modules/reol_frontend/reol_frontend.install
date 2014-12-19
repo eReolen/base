@@ -9,7 +9,7 @@
  * Delete duplicated paths.
  */
 function reol_frontend_update_7101() {
-  $types = reol_base_get_type_name();
+  $types = reol_base_get_type();
 
   // Delete the old aliases.
   foreach ($types as $type) {

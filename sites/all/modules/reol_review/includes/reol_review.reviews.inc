@@ -27,7 +27,7 @@ function reol_review_get_reviews() {
   }
 
   // Make sure we have arrays for each type.
-  $types = reol_base_get_type_name();
+  $types = reol_base_get_type();
   foreach ($types as $type => $n) {
     if (!isset($found[$type])) {
       $found[$type] = array();
