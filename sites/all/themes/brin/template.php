@@ -63,7 +63,6 @@ function brin_preprocess_ting_object(&$variables) {
     unset($variables['content']['ting_primary_object'][0]['ting_title'][0]['title']['#prefix']);
   }
 
-
   if ($variables['object'] instanceof TingCollection) {
     // Move the availability field into the primary ting object
     // render array to allow it to be printed as part of the object
@@ -71,6 +70,13 @@ function brin_preprocess_ting_object(&$variables) {
     if (isset($variables['content']['ting_collection_types'])) {
       $variables['content']['ting_primary_object'][0]['ting_collection_types'] = $variables['content']['ting_collection_types'];
       unset($variables['content']['ting_collection_types']);
+    }
+
+    // Only do this if we only have one entity to look at.
+    if (count($variables['object']->entities) == 1) {
+      $ting_entity = ding_entity_load($variables['object']->ting_primary_object['und'][0]['id']);
+      $variables['content']['ting_primary_object'][0]['ting_cover']['#prefix'] = '<div class="type-icon type-icon-' . reol_base_get_type_name($ting_entity->type) . '">';
+      $variables['content']['ting_primary_object'][0]['ting_cover']['#suffix'] = '</div>';
     }
   }
   else {
@@ -81,6 +87,21 @@ function brin_preprocess_ting_object(&$variables) {
       $variables['content']['group_ting_right_col_search']['ting_collection_types'] = $variables['content']['ting_collection_types'];
       $variables['content']['group_ting_right_col_search']['ting_collection_types']['#weight'] = 100;
       unset($variables['content']['ting_collection_types']);
+    }
+
+    $ting_entity = $variables['object'];
+    $prefix = '<div class="type-icon type-icon-' . reol_base_get_type_name($ting_entity->type) . '">';
+    $suffix = '</div>';
+    // For ting_object page.
+    if (isset($variables['content']['ting-object'])) {
+      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#prefix'] = $prefix;
+      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#suffix'] = $suffix;
+    }
+
+    // For referenced materials on article.
+    if (isset($variables['content']['group_ting_object_teaser_left'])) {
+      $variables['content']['group_ting_object_teaser_left']['ting_cover']['#prefix'] = $prefix;
+      $variables['content']['group_ting_object_teaser_left']['ting_cover']['#suffix'] = $suffix;
     }
   }
 }

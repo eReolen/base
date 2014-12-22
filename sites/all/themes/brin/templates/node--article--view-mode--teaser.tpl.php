@@ -6,7 +6,7 @@
  */
 ?>
 
-<div class="article-teaser">
+<div class="article-teaser<?php if (isset($type)) : echo ' type-icon type-icon-' . $type; endif; ?>">
   <a href="<?php echo $readmore; ?>">
     <div class="article-left">
       <?php echo render($content['field_ding_news_list_image']); ?>

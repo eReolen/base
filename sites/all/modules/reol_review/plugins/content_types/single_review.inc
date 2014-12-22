@@ -38,6 +38,7 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
     'ting_object' => drupal_render($ting_object_view),
     'author' => implode($ting_entity->creators, ', '),
     'review_uri' => $review->link,
+    'type' => reol_base_get_type_name($ting_entity->type),
   ));
 
   return $block;
