@@ -213,10 +213,3 @@ function reol_frontend_view_video($node) {
 
   return array('#type' => 'ajax', '#commands' => $commands);
 }
-
-/**
- * Implements hook_preprocess_ting_search_carousel().
- */
-function reol_frontend_process_ting_search_carousel(&$variables) {
-  dpm($variables);
-}
