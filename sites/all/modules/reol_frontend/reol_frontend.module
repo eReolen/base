@@ -78,6 +78,12 @@ function reol_frontend_preprocess_node(&$variables) {
     $variables['readmore_text'] = t('Read entire article');
     $uri = entity_uri('node', $node);
     $variables['readmore'] = url($uri['path'], $uri['options']);
+
+    // Add type icon.
+    $type = $node_wrapper->field_reol_entity_type->value();
+    if ($type) {
+      $variables['type'] = $type;
+    }
   }
 
   elseif ($variables['node']->type == "author_portrait") {
