@@ -184,9 +184,6 @@ function reol_base_preprocess_material_item(&$variables) {
 /**
  * Get the name of a type from the type returned from Ting.
  *
- * If type is not input, it returns an array of names of
- * types we support.
- *
  * @param string $type
  *   The string type from Ting.
  *
@@ -195,7 +192,24 @@ function reol_base_preprocess_material_item(&$variables) {
  *   keyed by our internal name of the type.
  *   If type is not found, FALSE is returned.
  */
-function reol_base_get_type_name($type = FALSE) {
+function reol_base_get_type_name($type) {
+  $type = reol_base_get_type($type);
+  return $type ? $type['int_name'] : FALSE;
+}
+
+/**
+ * Get the definition of a type from the type returned from Ting.
+ *
+ * If type is not input, it returns an array of names of
+ * types we support.
+ *
+ * @param string $type
+ *   The string type from Ting or FALSE/empty to return all.
+ *
+ * @return array
+ *   Type definition.
+ */
+function reol_base_get_type($type = FALSE) {
   $types = _reol_base_get_types();
 
   // If no argument received, return all types.
@@ -206,12 +220,26 @@ function reol_base_get_type_name($type = FALSE) {
   // Find type.
   foreach ($types as $n => $t) {
     if ($t['ext_name'] == strtolower($type)) {
-      return $n;
+      return $t;
     }
   }
 
   // If we end up here, type not found.
   return FALSE;
+}
+
+/**
+ * Get the ting type for a machine name.
+ *
+ * @param string $machine_name
+ *   The machine name to get ting type for.
+ *
+ * @return string
+ *   The ting type for the machine name or FALSE if not found.
+ */
+function reol_base_get_ting_type($machine_name) {
+  $types = _reol_base_get_types();
+  return isset($types[$machine_name]) ? $types[$machine_name]['ext_name'] : FALSE;
 }
 
 /**
@@ -264,12 +292,14 @@ function _reol_base_get_types() {
       'ext_name' => 'lydbog (net)',
       'int_name' => 'audiobook',
       'title' => t('Audiobook'),
+      'title_plural' => t('Audiobooks'),
       'path' => 'lydboeger',
     ),
     'ebook' => array(
       'ext_name' => 'ebog',
       'int_name' => 'ebook',
       'title' => t('E-book'),
+      'title_plural' => t('E-books'),
       'path' => 'eboeger',
     ),
   );

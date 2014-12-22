@@ -531,6 +531,30 @@ function reol_frontend_default_page_manager_pages() {
     $display->content['new-bddea60b-3c78-4338-8ac3-4caf87e5a482'] = $pane;
     $display->panels['left'][0] = 'new-bddea60b-3c78-4338-8ac3-4caf87e5a482';
     $pane = new stdClass();
+    $pane->pid = 'new-338b79a7-00fa-4342-b1c6-f9612e022ede';
+    $pane->panel = 'right';
+    $pane->type = 'latest';
+    $pane->subtype = 'latest';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'type' => '%type:raw',
+      'count' => '5',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '338b79a7-00fa-4342-b1c6-f9612e022ede';
+    $display->content['new-338b79a7-00fa-4342-b1c6-f9612e022ede'] = $pane;
+    $display->panels['right'][0] = 'new-338b79a7-00fa-4342-b1c6-f9612e022ede';
+    $pane = new stdClass();
     $pane->pid = 'new-a6d6657b-4a1f-4838-9716-ce70c61afb1d';
     $pane->panel = 'right';
     $pane->type = 'single_review';
@@ -548,11 +572,11 @@ function reol_frontend_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = 'a6d6657b-4a1f-4838-9716-ce70c61afb1d';
     $display->content['new-a6d6657b-4a1f-4838-9716-ce70c61afb1d'] = $pane;
-    $display->panels['right'][0] = 'new-a6d6657b-4a1f-4838-9716-ce70c61afb1d';
+    $display->panels['right'][1] = 'new-a6d6657b-4a1f-4838-9716-ce70c61afb1d';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
