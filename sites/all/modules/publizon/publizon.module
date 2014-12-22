@@ -242,7 +242,7 @@ function publizon_ting_covers($entities) {
     }
 
     // Try to save the file.
-    $file = file_unmanaged_save_data($result->data, $filename, FILE_EXISTS_REPLACE);
+    $file = file_save_data($result->data, $filename, FILE_EXISTS_REPLACE);
 
     // If successfull, return file object for this one.
     if ($file) {
