@@ -244,9 +244,9 @@ function publizon_ting_covers($entities) {
     // Try to save the file.
     $file = file_save_data($result->data, $filename, FILE_EXISTS_REPLACE);
 
-    // If successfull, return file object for this one.
+    // If successfull, return file path for this one.
     if ($file) {
-      $covers[$id] = $file;
+      $covers[$id] = $file->uri;
     }
   }
 
