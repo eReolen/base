@@ -212,7 +212,10 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
     // If we are displaying try button, load content in modal.
     if (!$loaned) {
       $return['#path'] .= '/ajax';
-      $return['#options']['attributes']['class'][] = 'use-ajax';
+    }
+    else {
+      // Remove ajax on this one.
+      $return['#options']['attributes']['class'] = array('action-button');
     }
 
     return array($return);
