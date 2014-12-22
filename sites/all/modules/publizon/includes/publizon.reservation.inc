@@ -12,7 +12,7 @@
  *
  * @TODO
  */
-function publizon_reservation_list($account) {
+function publizon_reservation_list($account, $get_type = FALSE) {
   $result = array(
     DING_RESERVATION_READY => array(),
     DING_RESERVATION_NOT_READY => array(),
@@ -35,7 +35,6 @@ function publizon_reservation_list($account) {
     $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
     $data = array(
       'order_id' => $id,
-      // TODO Hardcoding this until API is ready.
       'ding_entity_id' => $ding_id,
       'ready_for_pickup' => $reservation->status == 2,
       'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
@@ -54,7 +53,7 @@ function publizon_reservation_list($account) {
     $result[$type][$id] = new DingProviderReservation($id, $data);
   }
 
-  return $result;
+  return $get_type ? $result[$get_type] : $result;
 }
 
 /**
