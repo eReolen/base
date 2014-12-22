@@ -89,10 +89,19 @@ function brin_preprocess_ting_object(&$variables) {
       unset($variables['content']['ting_collection_types']);
     }
 
+    $ting_entity = $variables['object'];
+    $prefix = '<div class="type-icon type-icon-' . reol_base_get_type_name($ting_entity->type) . '">';
+    $suffix = '</div>';
+    // For ting_object page.
     if (isset($variables['content']['ting-object'])) {
-      $ting_entity = $variables['object'];
-      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#prefix'] = '<div class="type-icon type-icon-' . reol_base_get_type_name($ting_entity->type) . '">';
-      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#suffix'] = '</div>';
+      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#prefix'] = $prefix;
+      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#suffix'] = $suffix;
+    }
+
+    // For referenced materials on article.
+    if (isset($variables['content']['group_ting_object_teaser_left'])) {
+      $variables['content']['group_ting_object_teaser_left']['ting_cover']['#prefix'] = $prefix;
+      $variables['content']['group_ting_object_teaser_left']['ting_cover']['#suffix'] = $suffix;
     }
   }
 }
