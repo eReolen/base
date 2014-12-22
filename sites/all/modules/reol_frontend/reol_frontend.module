@@ -49,10 +49,11 @@ function reol_frontend_menu() {
  * Implements hook_preprocess_node().
  */
 function reol_frontend_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+
   // Add background image on teaser for article.
-  if ($variables['node']->type == 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
-    $node = $variables['node'];
-    $node_wrapper = entity_metadata_wrapper('node', $node);
+  if ($node->type == 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
 
     // Get image info.
     $image_field = $node_wrapper->field_ding_news_list_image->value();
@@ -78,27 +79,28 @@ function reol_frontend_preprocess_node(&$variables) {
     $variables['readmore_text'] = t('Read entire article');
     $uri = entity_uri('node', $node);
     $variables['readmore'] = url($uri['path'], $uri['options']);
+  }
 
+  elseif ($node->type == "author_portrait") {
+    $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
+  }
+
+  elseif ($node->type == "video" && $variables['view_mode'] == 'teaser') {
+    drupal_add_library('system', 'drupal.ajax');
+    $variables['link'] = 'video/' . $node->nid . '/view';
+  }
+
+  elseif ($node->type == 'faq') {
+    $uri = entity_uri('node', $node);
+    $variables['link'] = url($uri['path'], $uri['options']);
+  }
+
+  if ($node->type == 'article' || $node->type == 'author_portrait' || $node->type == 'video') {
     // Add type icon.
     $type = $node_wrapper->field_reol_entity_type->value();
     if ($type) {
       $variables['type'] = $type;
     }
-  }
-
-  elseif ($variables['node']->type == "author_portrait") {
-    $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
-  }
-
-  elseif ($variables['node']->type == "video" && $variables['view_mode'] == 'teaser') {
-    drupal_add_library('system', 'drupal.ajax');
-    $variables['link'] = 'video/' . $variables['node']->nid . '/view';
-  }
-
-  elseif ($variables['node']->type == 'faq') {
-    $node = $variables['node'];
-    $uri = entity_uri('node', $node);
-    $variables['link'] = url($uri['path'], $uri['options']);
   }
 }
 
