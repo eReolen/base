@@ -89,9 +89,11 @@ function brin_preprocess_ting_object(&$variables) {
       unset($variables['content']['ting_collection_types']);
     }
 
-    $ting_entity = $variables['object'];
-    $variables['content']['ting-object']['content']['left_column']['ting_cover']['#prefix'] = '<div class="type-icon type-icon-' . reol_base_get_type_name($ting_entity->type) . '">';
-    $variables['content']['ting-object']['content']['left_column']['ting_cover']['#suffix'] = '</div>';
+    if (isset($variables['content']['ting-object'])) {
+      $ting_entity = $variables['object'];
+      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#prefix'] = '<div class="type-icon type-icon-' . reol_base_get_type_name($ting_entity->type) . '">';
+      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#suffix'] = '</div>';
+    }
   }
 }
 
