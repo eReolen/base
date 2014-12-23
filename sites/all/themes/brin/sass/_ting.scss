@@ -166,7 +166,8 @@
 }
 
 // Ting object buttons.
-.pane-ting-object .field-name-ding-entity-buttons {
+.pane-ting-object .field-name-ding-entity-buttons,
+.pane-ting-collection .field-name-ding-entity-buttons {
   float: none;
   a {
     display: inline-block;
