@@ -48,6 +48,9 @@
 
 
   .topbar-menu {
+    .menu-item.active {
+      background: none;
+    }
     @include large-x-large() {
       display: none;
     }
