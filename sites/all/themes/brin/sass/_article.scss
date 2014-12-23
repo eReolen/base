@@ -219,6 +219,10 @@
         &:first-child a {
           border-top: $border-separator;
         }
+
+        &.selected a {
+          background: #f3f3f3;
+        }
       }
     }
   }
