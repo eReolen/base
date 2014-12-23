@@ -139,8 +139,12 @@
 .page-reol-frontpage-ebook,
 .page-reol-frontpage-audiobook {
   .view-author-portraits {
+    width: auto;
     @include medium-large() {
       width: 50%;
+    }
+    @include small() {
+      width: 100%;
     }
 
     .view-content > div {
