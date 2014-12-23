@@ -21,6 +21,7 @@ abstract class PublizonClient {
     'library_profile' => 'getlibraryinfo.asmx',
     'loan_status' => 'getproductloanstatus.asmx',
     'checklist' => 'Checklists.asmx',
+    'library_profile' => 'getlibraryinfo.asmx',
   );
 
   // Holds the object instance (part of the singleton pattern).
