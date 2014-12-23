@@ -128,6 +128,40 @@ function reol_frontend_views_default_views() {
   $handler = $view->new_display('page', 'Side', 'articles_page');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Articles';
+  $handler->display->display_options['defaults']['exposed_form'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'better_exposed_filters';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
+  $handler->display->display_options['exposed_form']['options']['autosubmit'] = TRUE;
+  $handler->display->display_options['exposed_form']['options']['bef'] = array(
+    'general' => array(
+      'allow_secondary' => 0,
+      'secondary_label' => 'Avancerede indstillinger',
+    ),
+    'field_reol_entity_type_value' => array(
+      'bef_format' => 'bef_links',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
+  );
+  $handler->display->display_options['exposed_form']['options']['input_required'] = 0;
+  $handler->display->display_options['exposed_form']['options']['text_input_required_format'] = 'ding_wysiwyg';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
@@ -141,6 +175,12 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
   $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Overskrift: Global: Ufiltreret tekst */
+  $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['header']['area_text_custom']['content'] = 'Articles';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filterkriterie: Indhold: Udgivet */
@@ -166,7 +206,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['filters']['field_reol_entity_type_value']['group'] = 1;
   $handler->display->display_options['filters']['field_reol_entity_type_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['operator_id'] = 'field_reol_entity_type_value_op';
-  $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['label'] = 'Regarding:';
+  $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['label'] = 'Type';
   $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['operator'] = 'field_reol_entity_type_value_op';
   $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['identifier'] = 'type';
   $handler->display->display_options['filters']['field_reol_entity_type_value']['expose']['remember_roles'] = array(
@@ -203,6 +243,7 @@ function reol_frontend_views_default_views() {
     t('View panes'),
     t('Side'),
     t('Articles'),
+    t('Vælg et filter og klik på Anvend for at se resultater'),
     t('Antal elementer'),
     t('- Alle -'),
     t('Forskydning'),
@@ -210,7 +251,7 @@ function reol_frontend_views_default_views() {
     t('‹ forrige'),
     t('næste ›'),
     t('sidste »'),
-    t('Regarding:'),
+    t('Type'),
     t('Entity type (field_reol_entity_type)'),
   );
   $export['articles'] = $view;
