@@ -21,3 +21,9 @@
     }
   }
 }
+
+.page-reol-frontpage .pane-latest {
+  @include small() {
+    display: none;
+  }
+}
