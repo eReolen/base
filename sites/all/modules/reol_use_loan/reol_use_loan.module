@@ -189,36 +189,42 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
 
     $text = t('Try');
     $link = '';
-    $loaned = _reol_loan_map_availability($availability) == REOL_LOAN_STATUS_LOANED;
-    switch (reol_base_get_type_name($entity->type)) {
-      case "ebook":
-        if ($loaned) {
-          $text = t('Read');
-        }
-        $link = 'ting/object/' . $entity->id . '/read';
-        break;
+    $avail_mapped = _reol_loan_map_availability($availability);
+    $loaned = $avail_mapped == REOL_LOAN_STATUS_LOANED;
+    $available = $avail_mapped == REOL_LOAN_STATUS_LOANABLE || $avail_mapped == REOL_LOAN_STATUS_RESERVABLE;
 
-      case "audiobook":
-        if ($loaned) {
-          $text = t('Listen');
-        }
-        $link = 'ting/object/' . $entity->id . '/listen';
-        break;
+    // Only do something if title is in publizon.
+    if ($loaned || $available) {
+      switch (reol_base_get_type_name($entity->type)) {
+        case "ebook":
+          if ($loaned) {
+            $text = t('Read');
+          }
+          $link = 'ting/object/' . $entity->id . '/read';
+          break;
+
+        case "audiobook":
+          if ($loaned) {
+            $text = t('Listen');
+          }
+          $link = 'ting/object/' . $entity->id . '/listen';
+          break;
+      }
+
+      // Create the button.
+      $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id);
+
+      // If we are displaying try button, load content in modal.
+      if (!$loaned) {
+        $return['#path'] .= '/ajax';
+      }
+      else {
+        // Remove ajax on this one.
+        $return['#options']['attributes']['class'] = array('action-button');
+      }
+
+      return array($return);
     }
-
-    // Create the button.
-    $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id);
-
-    // If we are displaying try button, load content in modal.
-    if (!$loaned) {
-      $return['#path'] .= '/ajax';
-    }
-    else {
-      // Remove ajax on this one.
-      $return['#options']['attributes']['class'] = array('action-button');
-    }
-
-    return array($return);
   }
   return array();
 }
