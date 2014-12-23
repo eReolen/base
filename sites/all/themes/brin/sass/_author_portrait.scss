@@ -80,7 +80,9 @@
   }
 }
 
-.front .view-author-portraits {
+.page-reol-frontpage .view-author-portraits {
+  width: 100%;
+
   .view-content > div {
     float: left;
 
@@ -113,6 +115,11 @@
           -o-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
         }
+
+        span.portrait-link {
+          bottom: 20px;
+          top: auto;
+        }
       }
     }
 
@@ -124,6 +131,21 @@
       &.first,
       &.last {
         padding: 0;
+      }
+    }
+  }
+}
+
+.page-reol-frontpage-ebook,
+.page-reol-frontpage-audiobook {
+  .view-author-portraits {
+    @include medium-large() {
+      width: 50%;
+    }
+
+    .view-content > div {
+      @include small-large() {
+        width: 100%;
       }
     }
   }
