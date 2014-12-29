@@ -155,13 +155,11 @@
     text-shadow: none;
     color: $text-secondary-color;
     font-style: italic;
+    margin-right: 10px;
   }
   a:hover {
     color: $text-header-color;
     text-decoration: underline;
-  }
-  a:after {
-    content: '. ';
   }
 }
 
