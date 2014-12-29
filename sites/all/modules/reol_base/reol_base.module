@@ -68,6 +68,9 @@ function reol_base_menu_alter(&$items) {
 
   // Remove menu callback from user menu.
   $items['user/%user/status']['access callback'] = FALSE;
+
+  // Change title of user menu.
+  $items['user/%user/view']['title'] = "Loans and reservations";
 }
 
 /**
