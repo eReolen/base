@@ -14,7 +14,7 @@ class PublizonLibraryClient extends PublizonClient {
    * @return PublizonLibrary
    *   Library information object.
    */
-  public function getLibraryProfile($retailer_id = NULL, $retailer_key_code = NULL) {
+  public function getLibraryProfile($retailer_id = NULL) {
     // Make the web-service call.
     $response = $this->call('library_profile', 'GetLibraryProfile', $retailer_id, array(), array('pub' => 'http://pubhub.dk/'));
 
