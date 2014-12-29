@@ -215,3 +215,17 @@ function reol_frontend_view_video($node) {
 
   return array('#type' => 'ajax', '#commands' => $commands);
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &$form_state) {
+  // Hide retailer id.
+  $form['profile_provider_publizon']['field_publizon_retailer_id']['#access'] = FALSE;
+
+  // Hide pass change fieldset.
+  $form['pass']['#access'] = FALSE;
+
+  // Hide sms fee.
+  $form['ding_user_fee_sms']['#access'] = FALSE;
+}

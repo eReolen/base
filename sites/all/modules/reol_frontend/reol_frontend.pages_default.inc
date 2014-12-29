@@ -528,6 +528,127 @@ function reol_frontend_default_page_manager_handlers() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
+  $handler->name = 'user_edit_panel_context_3';
+  $handler->task = 'user_edit';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = -30;
+  $handler->conf = array(
+    'title' => 'Reol provider profile',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(
+      0 => array(
+        'identifier' => 'Profile2 type',
+        'keyword' => 'user_2',
+        'name' => 'profile2',
+        'type' => 'select',
+        'uid' => '',
+        'id' => 1,
+      ),
+    ),
+    'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'external_user',
+          'settings' => NULL,
+          'context' => array(
+            0 => 'argument_user_edit_1',
+          ),
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = '25_50_25';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left_sidebar' => NULL,
+      'main_content' => NULL,
+      'right_sidebar' => NULL,
+      'attachment_4_1' => NULL,
+      'attachment_4_2' => NULL,
+      'attachment_4_3' => NULL,
+      'attachment_4_4' => NULL,
+      'attachment_3_1' => NULL,
+      'attachment_3_2' => NULL,
+      'attachment_3_3' => NULL,
+      'attachment_2_1' => NULL,
+      'attachment_2_2' => NULL,
+      'attachment_1_1' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '87c1ede8-382a-4c1e-aed4-19f750af7522';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-121673e4-ec13-4123-88da-a3851e600028';
+    $pane->panel = 'left_sidebar';
+    $pane->type = 'user_menu';
+    $pane->subtype = 'user_menu';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => 'argument_user_edit_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '121673e4-ec13-4123-88da-a3851e600028';
+    $display->content['new-121673e4-ec13-4123-88da-a3851e600028'] = $pane;
+    $display->panels['left_sidebar'][0] = 'new-121673e4-ec13-4123-88da-a3851e600028';
+    $pane = new stdClass();
+    $pane->pid = 'new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+    $pane->panel = 'main_content';
+    $pane->type = 'profile2_form';
+    $pane->subtype = 'profile2_form';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => array(
+        0 => 'argument_user_edit_1',
+        1 => 'context_profile2_1',
+      ),
+      'override_title' => 1,
+      'override_title_text' => 'Edit user profile',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+    $display->content['new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d'] = $pane;
+    $display->panels['main_content'][0] = 'new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $export['user_edit_panel_context_3'] = $handler;
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
   $handler->name = 'user_view_panel_context_3';
   $handler->task = 'user_view';
   $handler->subtask = '';
