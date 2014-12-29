@@ -285,6 +285,28 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79'] = $pane;
     $display->panels['branding'][2] = 'new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
     $pane = new stdClass();
+    $pane->pid = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
+    $pane->panel = 'content';
+    $pane->type = 'announcement';
+    $pane->subtype = 'announcement';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'bae52ec8-286d-435c-8d38-eb2e157996ac';
+    $display->content['new-bae52ec8-286d-435c-8d38-eb2e157996ac'] = $pane;
+    $display->panels['content'][0] = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
+    $pane = new stdClass();
     $pane->pid = 'new-1769a64d-2cbe-490d-87aa-a2c3ee082997';
     $pane->panel = 'content';
     $pane->type = 'page_messages';
@@ -302,11 +324,11 @@ function reol_frontend_default_page_manager_handlers() {
       'css_class' => 'system-messages',
     );
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = '';
     $pane->uuid = '1769a64d-2cbe-490d-87aa-a2c3ee082997';
     $display->content['new-1769a64d-2cbe-490d-87aa-a2c3ee082997'] = $pane;
-    $display->panels['content'][0] = 'new-1769a64d-2cbe-490d-87aa-a2c3ee082997';
+    $display->panels['content'][1] = 'new-1769a64d-2cbe-490d-87aa-a2c3ee082997';
     $pane = new stdClass();
     $pane->pid = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
     $pane->panel = 'content';
@@ -347,11 +369,11 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '76338aa5-3ee9-4256-9414-eab9979db07b';
     $display->content['new-76338aa5-3ee9-4256-9414-eab9979db07b'] = $pane;
-    $display->panels['content'][1] = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
+    $display->panels['content'][2] = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
     $pane = new stdClass();
     $pane->pid = 'new-4637ed6a-8c15-46bb-ae3b-4de4089e860d';
     $pane->panel = 'content';
@@ -370,11 +392,11 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 3;
     $pane->locks = '';
     $pane->uuid = '4637ed6a-8c15-46bb-ae3b-4de4089e860d';
     $display->content['new-4637ed6a-8c15-46bb-ae3b-4de4089e860d'] = $pane;
-    $display->panels['content'][2] = 'new-4637ed6a-8c15-46bb-ae3b-4de4089e860d';
+    $display->panels['content'][3] = 'new-4637ed6a-8c15-46bb-ae3b-4de4089e860d';
     $pane = new stdClass();
     $pane->pid = 'new-fd6dbb4f-c7b5-4881-96d2-769a6c16bfc2';
     $pane->panel = 'footer';
@@ -498,28 +520,6 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->uuid = 'f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
     $display->content['new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0'] = $pane;
     $display->panels['header'][0] = 'new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
-    $pane = new stdClass();
-    $pane->pid = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
-    $pane->panel = 'top';
-    $pane->type = 'announcement';
-    $pane->subtype = 'announcement';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = 'bae52ec8-286d-435c-8d38-eb2e157996ac';
-    $display->content['new-bae52ec8-286d-435c-8d38-eb2e157996ac'] = $pane;
-    $display->panels['top'][0] = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
