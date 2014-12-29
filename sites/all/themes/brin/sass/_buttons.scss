@@ -44,4 +44,11 @@ a.button,
   &:focus {
     outline: none;
   }
+
+  @include small() {
+    display: block;
+    width: 80%;
+    margin: 10px 10%;
+    text-align: center;
+  }
 }
