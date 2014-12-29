@@ -537,3 +537,18 @@ function reol_base_logout() {
   module_load_include('inc', 'user', 'user.pages');
   user_logout();
 }
+
+/**
+ * Get the close button for a modal.
+ *
+ * @param string $text
+ *   The text for the button.
+ * @param string $modal
+ *   The name of the modal to close.
+ *
+ * @return string
+ *   HTML for the button.
+ */
+function reol_base_get_modal_close_button($text, $modal) {
+  return '<a class="action-button modal-close" data-modal-name="' . $modal . '" href="#">' . $text . '</a>';
+}

@@ -273,6 +273,7 @@ function reol_bookmark_create_ajax($entity, $remove = FALSE) {
     }
   }
   $html .= '</p>';
+  $html .= reol_base_get_modal_close_button(t('OK'), 'reol_bookmark');
 
   // Display pop-up.
   $commands[] = ajax_command_ding_popup('reol_bookmark', t('Bookmark'), $html, array('refresh' => TRUE));
