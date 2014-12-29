@@ -33,10 +33,12 @@ files[] = lib/client/PublizonUserClient.class.inc
 files[] = lib/client/PublizonReservationClient.class.inc
 files[] = lib/client/PublizonChecklistClient.class.inc
 files[] = lib/client/PublizonProductClient.class.inc
+files[] = lib/client/PublizonLibraryClient.class.inc
 ; Storage classes.
 files[] = lib/storage/PublizonLoan.class.inc
 files[] = lib/storage/PublizonReservation.class.inc
 files[] = lib/storage/PublizonLoanStatus.class.inc
 files[] = lib/storage/PublizonChecklistItem.class.inc
 files[] = lib/storage/PublizonProduct.class.inc
+files[] = lib/storage/PublizonLibrary.class.inc
 mtime = 1416325540

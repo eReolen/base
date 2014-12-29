@@ -373,6 +373,160 @@ function reol_frontend_default_page_manager_handlers() {
   $handler->conf['display'] = $display;
   $export['site_template_panel_context_2'] = $handler;
 
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'user_view_panel_context_3';
+  $handler->task = 'user_view';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = -30;
+  $handler->conf = array(
+    'title' => 'Reol provider profile',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(
+      0 => array(
+        'identifier' => 'Indlogget bruger',
+        'keyword' => 'logged_in_user',
+        'name' => 'user',
+        'type' => 'current',
+        'uid' => '',
+        'id' => 1,
+      ),
+    ),
+    'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'external_user',
+          'settings' => NULL,
+          'context' => array(
+            0 => 'argument_entity_id:user_1',
+          ),
+          'not' => FALSE,
+        ),
+        1 => array(
+          'name' => 'compare_users',
+          'settings' => array(
+            'equality' => '1',
+          ),
+          'context' => array(
+            0 => 'argument_entity_id:user_1',
+            1 => 'logged-in-user',
+          ),
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = '25_50_25';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left_sidebar' => NULL,
+      'main_content' => NULL,
+      'right_sidebar' => NULL,
+      'attachment_4_1' => NULL,
+      'attachment_4_2' => NULL,
+      'attachment_4_3' => NULL,
+      'attachment_4_4' => NULL,
+      'attachment_3_1' => NULL,
+      'attachment_3_2' => NULL,
+      'attachment_3_3' => NULL,
+      'attachment_2_1' => NULL,
+      'attachment_2_2' => NULL,
+      'attachment_1_1' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = 'Account';
+  $display->uuid = 'fe43030e-e78a-44f6-96fe-691a0cfe2a70';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-931a91cb-060f-420e-9e30-0c6730464a2e';
+    $pane->panel = 'left_sidebar';
+    $pane->type = 'user_menu';
+    $pane->subtype = 'user_menu';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'path' => '',
+      'context' => 'argument_entity_id:user_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '931a91cb-060f-420e-9e30-0c6730464a2e';
+    $display->content['new-931a91cb-060f-420e-9e30-0c6730464a2e'] = $pane;
+    $display->panels['left_sidebar'][0] = 'new-931a91cb-060f-420e-9e30-0c6730464a2e';
+    $pane = new stdClass();
+    $pane->pid = 'new-f5508570-df28-4583-9acc-59f70b1f1b2d';
+    $pane->panel = 'main_content';
+    $pane->type = 'library_info';
+    $pane->subtype = 'library_info';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => array(
+        0 => 'context_user_1',
+      ),
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'f5508570-df28-4583-9acc-59f70b1f1b2d';
+    $display->content['new-f5508570-df28-4583-9acc-59f70b1f1b2d'] = $pane;
+    $display->panels['main_content'][0] = 'new-f5508570-df28-4583-9acc-59f70b1f1b2d';
+    $pane = new stdClass();
+    $pane->pid = 'new-01091fba-b2d0-4729-98f7-bf712a8c39a5';
+    $pane->panel = 'main_content';
+    $pane->type = 'block';
+    $pane->subtype = 'ding_user_frontend-ding-user-loan-number';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '01091fba-b2d0-4729-98f7-bf712a8c39a5';
+    $display->content['new-01091fba-b2d0-4729-98f7-bf712a8c39a5'] = $pane;
+    $display->panels['main_content'][1] = 'new-01091fba-b2d0-4729-98f7-bf712a8c39a5';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $export['user_view_panel_context_3'] = $handler;
+
   return $export;
 }
 

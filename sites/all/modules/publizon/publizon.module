@@ -526,6 +526,40 @@ function publizon_load($local_id) {
 }
 
 /**
+ * Load publizon library.
+ *
+ * @param string $library_id
+ *   The id of the library to load info for.
+ *
+ * @return PublizonLibrary
+ *   The library.
+ */
+function publizon_library_load($library_id) {
+  $libraries = &drupal_static(__FUNCTION__) || array();
+  // If library is not in cache, get it.
+  if (!isset($libraries[$library_id])) {
+    // Try getting from db cache.
+    if ($cache = cache_get('publizon_libraries:' . $library_id)) {
+      $libraries[$library_id] = $cache->data;
+    }
+    else {
+      // Try to get library from Publizon.
+      try {
+        $client = PublizonLibraryClient::getClient();
+        $libraries[$library_id] = $client->getLibraryProfile($library_id);
+      }
+      catch (Exception $e) {
+        $libraries[$library_id] = FALSE;
+      }
+      // Save in db cache.
+      cache_set('publizon_libraries:' . $library_id, $libraries[$library_id], 'cache', time() + 24 * 60 * 60);
+    }
+  }
+
+  return $libraries[$library_id];
+}
+
+/**
  * Publizon provider exception.
  */
 class DingPublizonException extends DingProviderUserException {
