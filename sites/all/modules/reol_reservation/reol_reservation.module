@@ -204,3 +204,24 @@ function reol_reservation_get_reserve_button($entity) {
     return reol_base_get_entity_button(t('Reserve'), 'ting/object/' . $entity->id . '/reserve', 'reserve-' . $entity->id);
   }
 }
+
+/**
+ * Implements hook_page_build().
+ */
+function reol_reservation_page_build(&$page) {
+  global $user;
+
+  try {
+    $res = count(ding_provider_invoke('reservation', 'list', $user, DING_RESERVATION_READY));
+
+    // Display notif if user has reservations ready.
+    if ($res > 0) {
+      drupal_set_message(format_plural($res, 'You have one reservation ready. !reservation_link', 'You have @count reservations ready. !reservation_link', array(
+        '!reservation_link' => l(t('View reservations'), 'user'),
+      )));
+    }
+  }
+  // Exception is okay, do nothing.
+  catch (Exception $e) {
+  }
+}
