@@ -528,6 +528,127 @@ function reol_frontend_default_page_manager_handlers() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
+  $handler->name = 'user_edit_panel_context_3';
+  $handler->task = 'user_edit';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = -30;
+  $handler->conf = array(
+    'title' => 'Reol provider profile',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(
+      0 => array(
+        'identifier' => 'Profile2 type',
+        'keyword' => 'user_2',
+        'name' => 'profile2',
+        'type' => 'select',
+        'uid' => '',
+        'id' => 1,
+      ),
+    ),
+    'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'external_user',
+          'settings' => NULL,
+          'context' => array(
+            0 => 'argument_user_edit_1',
+          ),
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = '25_50_25';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left_sidebar' => NULL,
+      'main_content' => NULL,
+      'right_sidebar' => NULL,
+      'attachment_4_1' => NULL,
+      'attachment_4_2' => NULL,
+      'attachment_4_3' => NULL,
+      'attachment_4_4' => NULL,
+      'attachment_3_1' => NULL,
+      'attachment_3_2' => NULL,
+      'attachment_3_3' => NULL,
+      'attachment_2_1' => NULL,
+      'attachment_2_2' => NULL,
+      'attachment_1_1' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '87c1ede8-382a-4c1e-aed4-19f750af7522';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-121673e4-ec13-4123-88da-a3851e600028';
+    $pane->panel = 'left_sidebar';
+    $pane->type = 'user_menu';
+    $pane->subtype = 'user_menu';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => 'argument_user_edit_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '121673e4-ec13-4123-88da-a3851e600028';
+    $display->content['new-121673e4-ec13-4123-88da-a3851e600028'] = $pane;
+    $display->panels['left_sidebar'][0] = 'new-121673e4-ec13-4123-88da-a3851e600028';
+    $pane = new stdClass();
+    $pane->pid = 'new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+    $pane->panel = 'main_content';
+    $pane->type = 'profile2_form';
+    $pane->subtype = 'profile2_form';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => array(
+        0 => 'argument_user_edit_1',
+        1 => 'context_profile2_1',
+      ),
+      'override_title' => 1,
+      'override_title_text' => 'Edit user profile',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+    $display->content['new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d'] = $pane;
+    $display->panels['main_content'][0] = 'new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $export['user_edit_panel_context_3'] = $handler;
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
   $handler->name = 'user_view_panel_context_3';
   $handler->task = 'user_view';
   $handler->subtask = '';
@@ -653,15 +774,27 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-f5508570-df28-4583-9acc-59f70b1f1b2d'] = $pane;
     $display->panels['main_content'][0] = 'new-f5508570-df28-4583-9acc-59f70b1f1b2d';
     $pane = new stdClass();
-    $pane->pid = 'new-01091fba-b2d0-4729-98f7-bf712a8c39a5';
+    $pane->pid = 'new-9120a9cd-c9fa-47f1-91e8-90b0cfca810d';
     $pane->panel = 'main_content';
-    $pane->type = 'block';
-    $pane->subtype = 'ding_user_frontend-ding-user-loan-number';
+    $pane->type = 'reservations';
+    $pane->subtype = 'reservations';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
+      'context' => 'argument_entity_id:user_1',
+      'reservation_type_list' => array(
+        'ready_for_pickup' => 'ready_for_pickup',
+        'not_ready_for_pickup' => 0,
+        'interlibrary_loans' => 0,
+      ),
+      'reservation_title' => 'Redeemable reservations',
+      'reservation_form_id' => 'ding_reservation_reservations_ready_form',
+      'form_build_id' => 'form-4IgdX9lFV0Um3jtKg4JHixkkT4Zyiq4x-rUGltYiNOw',
+      'form_token' => 'ZeyaEkUO_YrkKw-kg15e6SkTPPC9H6w95aTL40LpBtg',
+      'form_id' => 'ding_reservation_reservations_content_type_edit_form',
+      'override_title' => 1,
+      'override_title_text' => 'Redeemable reservations',
+      'reservation_empty_text' => 'There are no reservations ready.',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -671,9 +804,66 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $pane->uuid = '01091fba-b2d0-4729-98f7-bf712a8c39a5';
-    $display->content['new-01091fba-b2d0-4729-98f7-bf712a8c39a5'] = $pane;
-    $display->panels['main_content'][1] = 'new-01091fba-b2d0-4729-98f7-bf712a8c39a5';
+    $pane->uuid = '9120a9cd-c9fa-47f1-91e8-90b0cfca810d';
+    $display->content['new-9120a9cd-c9fa-47f1-91e8-90b0cfca810d'] = $pane;
+    $display->panels['main_content'][1] = 'new-9120a9cd-c9fa-47f1-91e8-90b0cfca810d';
+    $pane = new stdClass();
+    $pane->pid = 'new-df2e8031-847f-4a40-80c6-1ed5ab31403b';
+    $pane->panel = 'main_content';
+    $pane->type = 'loans';
+    $pane->subtype = 'loans';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => 'argument_entity_id:user_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = 'df2e8031-847f-4a40-80c6-1ed5ab31403b';
+    $display->content['new-df2e8031-847f-4a40-80c6-1ed5ab31403b'] = $pane;
+    $display->panels['main_content'][2] = 'new-df2e8031-847f-4a40-80c6-1ed5ab31403b';
+    $pane = new stdClass();
+    $pane->pid = 'new-ca0fbda3-dfff-4828-8a16-8166dd7dd5b0';
+    $pane->panel = 'main_content';
+    $pane->type = 'reservations';
+    $pane->subtype = 'reservations';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => 'argument_entity_id:user_1',
+      'reservation_type_list' => array(
+        'not_ready_for_pickup' => 'not_ready_for_pickup',
+        'ready_for_pickup' => 0,
+        'interlibrary_loans' => 0,
+      ),
+      'reservation_title' => 'Reservations',
+      'reservation_empty_text' => 'There are no reservations.',
+      'reservation_form_id' => 'ding_reservation_reservations_notready_form',
+      'form_build_id' => 'form-9xiN3emIaNj9Ybn75gVRCdMJaKafWCbicJY7RhvzcbQ',
+      'form_token' => 'ZeyaEkUO_YrkKw-kg15e6SkTPPC9H6w95aTL40LpBtg',
+      'form_id' => 'ding_reservation_reservations_content_type_edit_form',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = 'ca0fbda3-dfff-4828-8a16-8166dd7dd5b0';
+    $display->content['new-ca0fbda3-dfff-4828-8a16-8166dd7dd5b0'] = $pane;
+    $display->panels['main_content'][3] = 'new-ca0fbda3-dfff-4828-8a16-8166dd7dd5b0';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
