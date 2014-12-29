@@ -83,3 +83,10 @@ h1 ,
 #login-link {
   display: none;
 }
+
+a.back-button {
+  display: block;
+  color: $text-secondary-color;
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
