@@ -3,3 +3,55 @@
  * @file
  * Installation of reol_bookmark_migration module.
  */
+
+/**
+ * Implements hook_schema().
+ */
+function reol_bookmark_migration_schema() {
+  $schema['reol_bookmark_migration_migrated_user'] = array(
+    'description' => 'Contains list of user uids that have been migrated.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'The uid of the user that have been migrated.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'foreign keys' => array(
+      'user' => array(
+        'table' => 'users',
+        'columns' => array('uid' => 'uid'),
+      ),
+    ),
+    'primary key' => array('uid'),
+  );
+
+  $schema['reol_bookmark_migration_migrated_isbn'] = array(
+    'description' => 'Contains list of user isbns that have been migrated.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'The uid of the user that have been migrated.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'isbn' => array(
+        'description' => 'The ISBN that have been migrated.',
+        'type' => 'int',
+        'size' => 'big',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'foreign keys' => array(
+      'user' => array(
+        'table' => 'users',
+        'columns' => array('uid' => 'uid'),
+      ),
+    ),
+    'primary key' => array('uid', 'isbn'),
+  );
+
+  return $schema;
+}

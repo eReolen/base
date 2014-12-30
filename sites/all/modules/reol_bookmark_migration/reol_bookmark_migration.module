@@ -4,3 +4,15 @@
  * Code for the eReolen bookmark migration feature.
  */
 
+module_load_include('inc', 'reol_bookmark_migration', 'includes/reol_bookmark_migration.migration');
+/**
+ * Implements hook_user_login().
+ *
+ * Migrate bookmarks from old sites to API when user logs in.
+ */
+function reol_bookmark_migration_user_login(&$edit, $account) {
+  $loaner_id = $edit['input']['name'];
+
+  module_load_include('inc', 'reol_bookmark_migration', 'includes/reol_bookmark_migration.migration');
+  reol_bookmark_migration_ensure_user($account->uid, $loaner_id);
+}
