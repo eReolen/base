@@ -165,7 +165,7 @@ function publizon_settings_form($form, &$form_state) {
     '#type' => 'submit',
     '#value' => t('Add more'),
     '#submit' => array('publizon_settings_form_add_library'),
-    '#name' => 'add',
+    '#name' => 'add-library',
     '#ajax' => array(
       'callback' => 'publizon_settings_form_libraries_callback',
       'wrapper' => 'libraries-fieldset-wrapper',
@@ -185,7 +185,7 @@ function publizon_settings_form($form, &$form_state) {
       '#type' => 'submit',
       '#value' => t('Remove last'),
       '#submit' => array('publizon_settings_form_remove_library'),
-      '#name' => 'remove',
+      '#name' => 'remove-library',
       '#ajax' => array(
         'callback' => 'publizon_settings_form_libraries_callback',
         'wrapper' => 'libraries-fieldset-wrapper',
@@ -282,7 +282,7 @@ function publizon_settings_form($form, &$form_state) {
     '#type' => 'submit',
     '#value' => t('Add more'),
     '#submit' => array('publizon_settings_form_add_error_message'),
-    '#name' => 'add',
+    '#name' => 'add-error-message',
     '#ajax' => array(
       'callback' => 'publizon_settings_form_error_messages_callback',
       'wrapper' => 'error-messages-fieldset-wrapper',
@@ -302,7 +302,7 @@ function publizon_settings_form($form, &$form_state) {
       '#type' => 'submit',
       '#value' => t('Remove last'),
       '#submit' => array('publizon_settings_form_remove_error_message'),
-      '#name' => 'remove',
+      '#name' => 'remove-error-message',
       '#ajax' => array(
         'callback' => 'publizon_settings_form_error_messages_callback',
         'wrapper' => 'error-messages-fieldset-wrapper',
@@ -412,7 +412,7 @@ function publizon_settings_form_error_messages_callback($form, $form_state) {
  */
 function publizon_settings_form_validate($form, &$form_state) {
   // Do not validate when we are trying to remove an element.
-  if ($form_state['triggering_element']['#name'] == 'remove') {
+  if ($form_state['triggering_element']['#name'] == 'remove-library' || $form_state['triggering_element']['#name'] == 'remove-error-message') {
     return;
   }
 
