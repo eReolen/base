@@ -27,6 +27,7 @@ function reol_base_install() {
     reol_base_update_7115();
     reol_base_update_7116();
     reol_base_update_7118();
+    reol_base_update_7119();
   }
 }
 
@@ -222,4 +223,11 @@ function reol_base_update_7117() {
  */
 function reol_base_update_7118() {
   module_enable(array('reol_latest'), TRUE);
+}
+
+/**
+ * Enable reol_bookmark_migration module.
+ */
+function reol_base_update_7119() {
+  module_enable(array('reol_bookmark_migration'), TRUE);
 }
