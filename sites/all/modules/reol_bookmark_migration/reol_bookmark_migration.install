@@ -17,6 +17,12 @@ function reol_bookmark_migration_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
+      'type' => array(
+        'description' => 'Which type of site this refers to. 1 = ereolen, 2 = netlydbog',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
     ),
     'foreign keys' => array(
       'user' => array(
@@ -24,7 +30,7 @@ function reol_bookmark_migration_schema() {
         'columns' => array('uid' => 'uid'),
       ),
     ),
-    'primary key' => array('uid'),
+    'primary key' => array('uid', 'type'),
   );
 
   $schema['reol_bookmark_migration_migrated_isbn'] = array(
@@ -43,6 +49,12 @@ function reol_bookmark_migration_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
+      'type' => array(
+        'description' => 'Which type of site this refers to. 1 = ereolen, 2 = netlydbog',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
     ),
     'foreign keys' => array(
       'user' => array(
@@ -50,7 +62,7 @@ function reol_bookmark_migration_schema() {
         'columns' => array('uid' => 'uid'),
       ),
     ),
-    'primary key' => array('uid', 'isbn'),
+    'primary key' => array('uid', 'isbn', 'type'),
   );
 
   return $schema;

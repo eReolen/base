@@ -16,19 +16,20 @@ define('REOL_BOOKMARK_MIGRATION_NETLYDBOG', 2);
  *   The login in of the loaner.
  */
 function reol_bookmark_migration_ensure_user($uid, $loaner_id) {
-  // Do nothing if user has already been migrated.
-  if (reol_bookmark_migration_user_is_migrated($uid)) {
-    return;
-  }
-
   // Perform migration.
   $user = user_load($uid);
-  $success_1 = reol_bookmark_migration_migrate_user(REOL_BOOKMARK_MIGRATION_EREOLEN, $user, $loaner_id);
-  $success_2 = reol_bookmark_migration_migrate_user(REOL_BOOKMARK_MIGRATION_NETLYDBOG, $user, $loaner_id);
-
-  // Mark this user as migrated.
-  if ($success_1 && $success_2) {
-    reol_bookmark_migration_mark_user_as_migrated($uid);
+  $types = array(
+    REOL_BOOKMARK_MIGRATION_EREOLEN,
+    REOL_BOOKMARK_MIGRATION_NETLYDBOG,
+  );
+  foreach ($types as $type) {
+    // Do nothing if user has already been migrated.
+    if (!reol_bookmark_migration_user_is_migrated($type, $uid)) {
+      // If migration migrates all, mark user as done.
+      if (reol_bookmark_migration_migrate_user($type, $user, $loaner_id)) {
+        reol_bookmark_migration_mark_user_as_migrated($type, $uid);
+      }
+    }
   }
 }
 
@@ -94,14 +95,17 @@ function reol_bookmark_migration_get_connection($type) {
 /**
  * Mark a user as migrated.
  *
+ * @param int $type
+ *   One of the constants above.
  * @param int $uid
  *   The user id of the user.
  */
-function reol_bookmark_migration_mark_user_as_migrated($uid) {
+function reol_bookmark_migration_mark_user_as_migrated($type, $uid) {
   try {
     db_insert('reol_bookmark_migration_migrated_user')
       ->fields(array(
         'uid' => $uid,
+        'type' => $type,
       ))
       ->execute();
   }
@@ -117,16 +121,19 @@ function reol_bookmark_migration_mark_user_as_migrated($uid) {
 /**
  * Check whether or not a user is already migrated.
  *
+ * @param int $type
+ *   One of the constants above.
  * @param int $uid
  *   The id of the user to check.
  *
  * @return bool
  *   Whether or not user is migrated.
  */
-function reol_bookmark_migration_user_is_migrated($uid) {
+function reol_bookmark_migration_user_is_migrated($type, $uid) {
   $res = db_select('reol_bookmark_migration_migrated_user', 'u')
     ->fields('u')
     ->condition('uid', $uid)
+    ->condition('type', $type)
     ->execute()
     ->fetch();
 
@@ -136,17 +143,20 @@ function reol_bookmark_migration_user_is_migrated($uid) {
 /**
  * Mark an isbn as migrated for the user.
  *
+ * @param int $type
+ *   One of the constants above.
  * @param int $uid
  *   The user id of the user that has this on bookmarks.
  * @param int $isbn
  *   The isbn of the book.
  */
-function reol_bookmark_migration_mark_isbn_as_migrated($uid, $isbn) {
+function reol_bookmark_migration_mark_isbn_as_migrated($type, $uid, $isbn) {
   try {
     db_insert('reol_bookmark_migration_migrated_isbn')
       ->fields(array(
         'uid' => $uid,
         'isbn' => $isbn,
+        'type' => $type,
       ))
       ->execute();
   }
@@ -162,6 +172,8 @@ function reol_bookmark_migration_mark_isbn_as_migrated($uid, $isbn) {
 /**
  * Check whether or not an isbn for a user is already migrated.
  *
+ * @param int $type
+ *   One of the constants above.
  * @param int $uid
  *   The id of the user to check.
  * @param int $isbn
@@ -170,11 +182,12 @@ function reol_bookmark_migration_mark_isbn_as_migrated($uid, $isbn) {
  * @return bool
  *   Whether or not isbn is migrated.
  */
-function reol_bookmark_migration_isbn_is_migrated($uid, $isbn) {
+function reol_bookmark_migration_isbn_is_migrated($type, $uid, $isbn) {
   $res = db_select('reol_bookmark_migration_migrated_isbn', 'i')
     ->fields('i')
     ->condition('uid', $uid)
     ->condition('isbn', $isbn)
+    ->condition('type', $type)
     ->execute()
     ->fetch();
 
@@ -200,11 +213,11 @@ function reol_bookmark_migration_migrate_user($type, $user, $loaner_id) {
 
     foreach ($bookmarks as $bookmark) {
       try {
-        if (!reol_bookmark_migration_isbn_is_migrated($user->uid, $bookmark)) {
+        if (!reol_bookmark_migration_isbn_is_migrated($type, $user->uid, $bookmark)) {
           ding_provider_invoke('bookmark', 'create_internal', $user, $bookmark, $loaner_id);
 
           // Mark isbn as migrated.
-          reol_bookmark_migration_mark_isbn_as_migrated($user->uid, $bookmark);
+          reol_bookmark_migration_mark_isbn_as_migrated($type, $user->uid, $bookmark);
         }
       }
       catch (DingPublizonException $e) {
@@ -212,7 +225,7 @@ function reol_bookmark_migration_migrate_user($type, $user, $loaner_id) {
         // duplicates are ok.
         if ($e->getCode() == 0) {
           // Mark isbn as migrated.
-          reol_bookmark_migration_mark_isbn_as_migrated($user->uid, $bookmark);
+          reol_bookmark_migration_mark_isbn_as_migrated($type, $user->uid, $bookmark);
         }
         else {
           $success = FALSE;

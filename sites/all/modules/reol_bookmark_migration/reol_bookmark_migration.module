@@ -16,3 +16,63 @@ function reol_bookmark_migration_user_login(&$edit, $account) {
   module_load_include('inc', 'reol_bookmark_migration', 'includes/reol_bookmark_migration.migration');
   reol_bookmark_migration_ensure_user($account->uid, $loaner_id);
 }
+
+/**
+ * Implements hook_menu().
+ */
+function reol_bookmark_migration_menu() {
+  $items = array();
+
+  $items['admin/reports/bookmark_migration'] = array(
+    'title' => 'Bookmark migration',
+    'description' => 'Show the status of the bookmark migration',
+    'page callback' => 'reol_bookmark_migration_status',
+    'file' => 'includes/reol_bookmark_migration.admin.inc',
+    'access arguments' => array('view bookmark migration status'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function reol_bookmark_migration_permission() {
+  return array(
+    'view bookmark migration status' => array(
+      'title' => t('View bookmark migration status'),
+      'description' => t('View the status of migration of the bookmarks'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_secure_permissions().
+ */
+function reol_bookmark_migration_secure_permissions($role) {
+  $permissions = array(
+    'administrators' => array(
+      'view bookmark migration status',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function reol_bookmark_migration_theme($existing, $type, $theme, $path) {
+  return array(
+    'reol_bookmark_migration_status' => array(
+      'variables' => array(
+        'migrated_users_progress' => NULL,
+        'migrated_isbns_progress' => NULL,
+      ),
+      'path' => drupal_get_path('module', 'reol_bookmark_migration') . '/templates',
+      'template' => 'migration-status',
+    ),
+  );
+}
