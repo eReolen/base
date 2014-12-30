@@ -79,6 +79,12 @@
     font-size: 1.25em;
     font-weight: bold;
   }
+
+  @include small() {
+    .content iframe {
+      width: 100%;
+    }
+  }
 }
 
 .page-reol-frontpage .view-videos {
