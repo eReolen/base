@@ -59,6 +59,31 @@ function publizon_bookmark_create($account, $local_id) {
 }
 
 /**
+ * Create a bookmark for a title and user.
+ *
+ * Only for use when creating bookmarks as the system.
+ *
+ * @param StdClass $account
+ *   The user to bookmark for.
+ * @param StdClass $isbn
+ *   The isbn to bookmark.
+ * @param string $loaner_id
+ *   The loaner id.
+ */
+function publizon_bookmark_create_internal($account, $isbn, $loaner_id) {
+  $retailer_id = publizon_get_retailer_id($account);
+
+  try {
+    // Add to checklist in Publizon.
+    $client = PublizonChecklistClient::getClient();
+    $checklist = $client->addChecklistItem($retailer_id, $loaner_id, $isbn);
+  }
+  catch (PublizonException $e) {
+    DingPublizonException::convert($e);
+  }
+}
+
+/**
  * Delete a bookmark for a title and user.
  *
  * @param StdClass $account
