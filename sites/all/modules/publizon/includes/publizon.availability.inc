@@ -18,7 +18,6 @@
  */
 function publizon_availability_items($local_ids) {
   global $user;
-  // We only have endpoint that requires login.
 
   $to_check = array();
   foreach ($local_ids as $local_id) {
@@ -53,8 +52,8 @@ function publizon_availability_items($local_ids) {
     }
     return $return;
   }
-  // If user is not logged in, return temporary values.
-  catch (Exception $e) {
+  // If no user is logged in, try with the default retailer.
+  catch (DingProviderAuthException $e) {
     $client = PublizonLoanClient::getClient();
     $retailer_id = variable_get('publizon_default_retailer', '');
     $results = $client->getProductLoanStatusList($retailer_id, array_keys($to_check));
