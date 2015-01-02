@@ -33,6 +33,13 @@ function brin_js_alter(&$javascript) {
     '/js/ding_availability_labels.js';
   if (isset($javascript[$avail_js])) {
     $javascript[$avail_js]['data'] = drupal_get_path('theme', 'brin') . '/scripts/ding_availability_labels.js';
+    $types = array();
+    foreach (_reol_base_get_types() as $type) {
+      $types[$type['ext_name']] = $type['title'];
+    }
+    $javascript['settings']['data'][] = array(
+      'ding_availability_type_mapping' => $types,
+    );
   }
 }
 

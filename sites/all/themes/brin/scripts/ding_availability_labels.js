@@ -48,7 +48,6 @@
             $.each(settings.ding_availability, function(id, entity_ids) {
               if (id.match(/^availability-/)) {
                 // Update availability indicators.
-                console.dir(id);;
                 update_availability(id, entity_ids);
               }
             });
@@ -147,9 +146,9 @@
       function update_availability_elements(element, btn, class_name) {
         element.addClass(class_name);
         // TODO: this is very fragile.
-        var type_name = element.text();
-        if (Drupal.dingAvailabilityTypeMapping[type_name]) {
-          type_name = Drupal.dingAvailabilityTypeMapping[type_name];
+        var type_name = element.text().toLowerCase();
+        if (Drupal.settings.ding_availability_type_mapping[type_name]) {
+          type_name = Drupal.settings.ding_availability_type_mapping[type_name];
         }
         if (class_name === 'available') {
           element.text(Drupal.t('@type can be borrowed', {'@type': type_name}));
