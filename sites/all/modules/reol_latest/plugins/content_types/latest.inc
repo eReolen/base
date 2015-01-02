@@ -26,22 +26,23 @@ function latest_content_type_render($subtype, $conf, $panel_args, $context) {
     $type = ctools_context_keyword_substitute($conf['type'], array(), $context);
   }
 
-  $ting_entities = reol_latest_get_latest_count($conf['count'] ? $conf['count'] : 5, !empty($type) ? $type : FALSE);
+  // There might be no latest.
+  if ($ting_entities = reol_latest_get_latest_count($conf['count'] ? $conf['count'] : 5, !empty($type) ? $type : FALSE)) {
+    $ting_rendered = array();
+    foreach ($ting_entities as $ting_entity) {
+      $ting_rendered[] = array(
+        'link' => 'ting/object/' . $ting_entity->id,
+        'view' => ting_object_view($ting_entity, 'latest'),
+      );
+    }
 
-  $ting_rendered = array();
-  foreach ($ting_entities as $ting_entity) {
-    $ting_rendered[] = array(
-      'link' => 'ting/object/' . $ting_entity->id,
-      'view' => ting_object_view($ting_entity, 'latest'),
-    );
+    $block->content = theme('latest', array(
+      'ting_objects' => $ting_rendered,
+    ));
+    $types = reol_base_get_type();
+    $type = $types[$type];
+    $block->title = t('Latest @type_plural', array('@type_plural' => $type['title_plural']));
   }
-
-  $block->content = theme('latest', array(
-    'ting_objects' => $ting_rendered,
-  ));
-  $types = reol_base_get_type();
-  $type = $types[$type];
-  $block->title = t('Latest @type_plural', array('@type_plural' => $type['title_plural']));
 
   return $block;
 }

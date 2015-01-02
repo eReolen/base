@@ -12,7 +12,7 @@
 function reol_review_cron() {
   // Fetch reviews, making sure they are cached.
   module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
-  reol_review_get_reviews();
+  reol_review_ensure_reviews();
 }
 
 /**
