@@ -161,14 +161,14 @@ function reol_reservation_reserve_ajax($entity, $reservable = NULL) {
   $matches = preg_grep("/preferred_branch$/", array_keys($defaults));
   if (empty($defaults[array_shift($matches)])) {
     $form = ding_provider_get_form('ding_reservation_reserve_form', $reservable, FALSE);
-    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), render($form));
+    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), render($form), array('refresh' => TRUE));
   }
   else {
     $form_state = array('values' => array());
     drupal_form_submit('ding_reservation_reserve_form', $form_state, $reservable);
 
     // Return any status messages set by the form.
-    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), theme('status_messages'));
+    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), theme('status_messages'), array('refresh' => TRUE));
   }
 
   // Return the ajax commands as an render array.
