@@ -28,18 +28,20 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
   if (isset($conf['type'])) {
     $type = ctools_context_keyword_substitute($conf['type'], array(), $context);
   }
-  $review = reol_review_get_random_review(empty($type) ? FALSE : $type);
 
-  $ting_entity = ding_entity_load($review->ding_entity_id);
-  $ting_object_view = ting_object_view($ting_entity, 'review');
+  // There might be no reviews.
+  if ($review = reol_review_get_random_review(empty($type) ? FALSE : $type)) {
+    $ting_entity = ding_entity_load($review->ding_entity_id);
+    $ting_object_view = ting_object_view($ting_entity, 'review');
 
-  $block->content = theme('single_review', array(
-    'ting_title' => $ting_entity->title,
-    'ting_object' => drupal_render($ting_object_view),
-    'author' => implode($ting_entity->creators, ', '),
-    'review_uri' => $review->link,
-    'type' => reol_base_get_type_name($ting_entity->type),
-  ));
+    $block->content = theme('single_review', array(
+      'ting_title' => $ting_entity->title,
+      'ting_object' => drupal_render($ting_object_view),
+      'author' => implode($ting_entity->creators, ', '),
+      'review_uri' => $review->link,
+      'type' => reol_base_get_type_name($ting_entity->type),
+    ));
+  }
 
   return $block;
 }

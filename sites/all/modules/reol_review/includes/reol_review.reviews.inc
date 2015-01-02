@@ -16,16 +16,26 @@ function reol_review_get_reviews() {
 
   // See if we have the results cached.
   $found = &drupal_static(__FUNCTION__);
-  if (isset($found)) {
-    return $found;
-  }
-  else {
+  if (!isset($found)) {
     if ($cache = cache_get('reol_review:reviews')) {
-      return $cache->data;
+      $found = $cache->data;
     }
-    $found = array();
+    else {
+      $found = array();
+    }
   }
+  reol_review_alter_found($found);
 
+  return $found;
+}
+
+/**
+ * Make sure that found array has one entry for each type.
+ *
+ * @param array $found
+ *   The found array.
+ */
+function reol_review_alter_found(&$found) {
   // Make sure we have arrays for each type.
   $types = reol_base_get_type();
   foreach ($types as $type => $n) {
@@ -33,6 +43,19 @@ function reol_review_get_reviews() {
       $found[$type] = array();
     }
   }
+}
+
+/**
+ * Ensure that reviews are updated.
+ */
+function reol_review_ensure_reviews() {
+  if ($cache = cache_get('reol_review:reviews') && time() < $cache->expire) {
+    return;
+  }
+
+  // Prepare found array.
+  $found = array();
+  reol_review_alter_found($found);
 
   $find_num = variable_get('reol_review_find_reviews_count_min', 2);
   $find_multiplier = variable_get('reol_review_find_reviews_count_multiplier', 10);
@@ -101,7 +124,6 @@ function reol_review_get_reviews() {
 
   // Cache result, but only for 12 hours.
   cache_set('reol_review:reviews', $found, 'cache', time() + 12 * 60 * 60);
-  return $found;
 }
 
 /**
@@ -157,5 +179,5 @@ function reol_review_get_random_review($type = FALSE) {
     $all_reviews = call_user_func_array('array_merge', array_values($reviews));
   }
 
-  return $all_reviews[array_rand($all_reviews)];
+  return count($all_reviews) ? $all_reviews[array_rand($all_reviews)] : FALSE;
 }
