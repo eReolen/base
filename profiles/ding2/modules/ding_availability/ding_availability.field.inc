@@ -218,10 +218,7 @@ function ding_availability_field_formatter_view($entity_type, $entity, $field, $
           }
 
           // Mark as available if it is an online resource.
-          // TODO: ereolen, removed "||
-          // $entities[0]->getOnline_url(FALSE)" from this to get
-          // availability check on online materials.
-          if (in_array(drupal_strtolower($type), $online_types)) {
+          if (in_array(drupal_strtolower($type), $online_types) || $entities[0]->getOnline_url(FALSE)) {
             if (!isset($output['#types']['online'])) {
               // Add label "online" to output.
               $output['#types']['online'] = array(
