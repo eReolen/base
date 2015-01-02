@@ -8,12 +8,6 @@
   // Cache of fetched availability information.
   Drupal.DADB = {};
 
-  // Map Well type names to human readable.
-  Drupal.dingAvailabilityTypeMapping = {
-    'Ebog': 'E-bog',
-    'Lydbog (net)': 'Lydbog'
-  };
-
   Drupal.behaviors.dingAvailabilityAttach = {
     attach: function(context, settings) {
       var ids = [];
