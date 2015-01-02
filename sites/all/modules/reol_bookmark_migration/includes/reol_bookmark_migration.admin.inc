@@ -15,11 +15,11 @@ function reol_bookmark_migration_status() {
 
   return theme('reol_bookmark_migration_status', array(
     'migrated_users_progress' => theme('progress_bar', array(
-      'percent' => $users_migrated / $users_total,
+      'percent' => $users_total > 0 ? $users_migrated / $users_total : 0,
       'message' => t('@count of @total users have been migrated', array('@count' => $users_migrated, '@total' => $users_total)),
     )),
     'migrated_isbns_progress' => theme('progress_bar', array(
-      'percent' => $isbns_migrated / $isbns_total,
+      'percent' => $isbns_total > 0 ? $isbns_migrated / $isbns_total : 0,
       'message' => t('@count of @total titles have been migrated', array('@count' => $isbns_migrated, '@total' => $isbns_total)),
     )),
   ));
@@ -55,14 +55,14 @@ function reol_bookmark_migration_get_users_total() {
 
   $sum = 0;
   foreach ($types as $type) {
-    $connection = reol_bookmark_migration_get_connection($type);
+    if ($connection = reol_bookmark_migration_get_connection($type)) {
+      $q = $connection->select('recall_list', 'l');
+      $q->addExpression('COUNT(distinct(uid))', 'count');
+      $res = $q->execute()
+        ->fetch();
 
-    $q = $connection->select('recall_list', 'l');
-    $q->addExpression('COUNT(distinct(uid))', 'count');
-    $res = $q->execute()
-      ->fetch();
-
-    $sum += $res->count;
+      $sum += $res->count;
+    }
   }
 
   return $sum;
@@ -98,15 +98,15 @@ function reol_bookmark_migration_get_isbns_total() {
 
   $sum = 0;
   foreach ($types as $type) {
-    $connection = reol_bookmark_migration_get_connection($type);
+    if ($connection = reol_bookmark_migration_get_connection($type)) {
+      // TODO Could be more efficient.
+      $q = $connection->select('recall_list', 'l');
+      $q->addExpression('COUNT(DISTINCT(CONCAT(uid,isbn)))', 'count');
+      $res = $q->execute()
+        ->fetch();
 
-    // TODO Could be more efficient.
-    $q = $connection->select('recall_list', 'l');
-    $q->addExpression('COUNT(DISTINCT(CONCAT(uid,isbn)))', 'count');
-    $res = $q->execute()
-      ->fetch();
-
-    $sum += $res->count;
+      $sum += $res->count;
+    }
   }
 
   return $sum;
