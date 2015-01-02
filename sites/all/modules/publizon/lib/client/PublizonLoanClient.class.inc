@@ -117,24 +117,28 @@ class PublizonLoanClient extends PublizonClient {
    *
    * @param string $retailer_id
    *   The id of the retailer to get status for.
-   * @param string $card_number
-   *   The users card number/CPR also known as login id.
    * @param array $isbns
    *   ISBN numbers on the products.
+   * @param string $card_number
+   *   The users card number/CPR also known as login id.
    *
    * @return array
    *   Array of PublizonLoanStatus objects.
    *
    * @throws PublizonException
    */
-  public function getProductLoanStatusList($retailer_id, $card_number, $isbns) {
+  public function getProductLoanStatusList($retailer_id, $isbns, $card_number = NULL) {
     // Make request to the web-service for the status.
-    $response = $this->call('loan_status', 'GetProductLoanStatusList', $retailer_id, array(
-      'pub:cardnumber' => $card_number,
+    $request = array(
       'pub:ebookids' => array(
         'pub:ebookid' => $isbns,
       ),
-    ), array('pub' => 'http://pubhub.dk/'));
+    );
+    if ($card_number) {
+      $request['pub:cardnumber'] = $card_number;
+    }
+
+    $response = $this->call('loan_status', 'GetProductLoanStatusList', $retailer_id, $request, array('pub' => 'http://pubhub.dk/'));
 
     // Check if any data was returned.
     $data = $response->xpath('//data/productloanstatus');

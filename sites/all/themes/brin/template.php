@@ -28,6 +28,19 @@ function brin_js_alter(&$javascript) {
   unset($javascript['profiles/ding2/themes/ddbasic/scripts/ddbasic.topbar.menu.min.js']);
   unset($javascript['profiles/ding2/themes/ddbasic/scripts/ddbasic.search.min.js']);
 
+  // Override script from ding_availability.
+  $avail_js = drupal_get_path('module', 'ding_availability') .
+    '/js/ding_availability_labels.js';
+  if (isset($javascript[$avail_js])) {
+    $javascript[$avail_js]['data'] = drupal_get_path('theme', 'brin') . '/scripts/ding_availability_labels.js';
+    $types = array();
+    foreach (_reol_base_get_types() as $type) {
+      $types[$type['ext_name']] = $type['title'];
+    }
+    $javascript['settings']['data'][] = array(
+      'ding_availability_type_mapping' => $types,
+    );
+  }
 }
 
 /**

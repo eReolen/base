@@ -18,26 +18,25 @@
  */
 function publizon_availability_items($local_ids) {
   global $user;
-  // We only have endpoint that requires login.
+
+  $to_check = array();
+  foreach ($local_ids as $local_id) {
+    $isbn = reol_base_get_isbn($local_id);
+    // If we do not have an ISBN number, we cannot get status.
+    if (!$isbn) {
+      continue;
+    }
+
+    $to_check[$isbn] = $local_id;
+  }
   try {
     // This will throw exception if not logged in.
     $creds = ding_user_get_creds($user);
 
     $retailer_id = publizon_get_retailer_id($user);
 
-    $to_check = array();
-    foreach ($local_ids as $local_id) {
-      $isbn = reol_base_get_isbn($local_id);
-      // If we do not have an ISBN number, we cannot get status.
-      if (!$isbn) {
-        continue;
-      }
-
-      $to_check[$isbn] = $local_id;
-    }
-
     $client = PublizonLoanClient::getClient();
-    $results = $client->getProductLoanStatusList($retailer_id, $creds['name'], array_keys($to_check));
+    $results = $client->getProductLoanStatusList($retailer_id, array_keys($to_check), $creds['name']);
     $return = array();
     foreach ($results as $result) {
       $isbn = $result->isbn;
@@ -53,13 +52,22 @@ function publizon_availability_items($local_ids) {
     }
     return $return;
   }
-  // If user is not logged in, return temporary values.
-  catch (Exception $e) {
+  // If no user is logged in, try with the default retailer.
+  catch (DingProviderAuthException $e) {
+    $client = PublizonLoanClient::getClient();
+    $retailer_id = variable_get('publizon_default_retailer', '');
+    $results = $client->getProductLoanStatusList($retailer_id, array_keys($to_check));
     $return = array();
-    foreach ($local_ids as $local_id) {
-      $return[$local_id] = array(
-        'available' => variable_get('publizon_temp_available', TRUE),
-        'reservable' => TRUE,
+    foreach ($results as $result) {
+      $isbn = $result->isbn;
+      $status = $result->loanStatus;
+
+      $return[$to_check[$isbn]] = array(
+        'available' => $status == 4 || $status == 3,
+        'reservable' => $status == 5,
+        'loaned' => $status == 1,
+        'reserved' => $status == 2,
+        'bookmarked' => $result->onChecklist,
       );
     }
     return $return;
