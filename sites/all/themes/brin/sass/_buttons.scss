@@ -1,18 +1,18 @@
 
 
-
 // Kick ddbasic in the nads...
-.field-name-ding-entity-buttons .reserve-button:link,
+.field-name-ding-entity-buttons .reserve-button.unavailable.reservable:link,
+.field-name-ding-entity-buttons .field-items .reserve-button:link,
 .form-submit,
 #edit-cancel,
 .action-button {
   @extend %button-default;
 }
 
-
 .button,
 a.button,
 %button-default {
+  position: static;
   @include border-radius(2px);
   color: #ffffff;
   background-color: #c7003d;
@@ -21,10 +21,13 @@ a.button,
   font-weight: 600;
   text-transform: uppercase;
   font-size: 13px;
+  line-height: 24px;
   letter-spacing: .2px;
   padding: 12px 20px;
+  margin-left: 0;
   margin-right: 16px;
   border: none;
+  vertical-align: baseline;
 
   &:link,
   &:visited,
