@@ -45,29 +45,28 @@ function reol_bookmark_migration_ensure_user($uid, $loaner_id) {
  *   The uid of the loaner or FALSE if user was not found in old system.
  */
 function reol_bookmark_migration_get_legacy_uid($type, $loaner_id) {
-  $connection = reol_bookmark_migration_get_connection($type);
+  if ($connection = reol_bookmark_migration_get_connection($type)) {
+    $secret_res = $connection->select('variable', 'v')
+      ->fields('v', array('value'))
+      ->condition('v.name', 'drupal_private_key')
+      ->execute()
+      ->fetch();
 
-  $secret_res = $connection->select('variable', 'v')
-    ->fields('v', array('value'))
-    ->condition('v.name', 'drupal_private_key')
-    ->execute()
-    ->fetch();
+    $secret = unserialize($secret_res->value);
 
-  $secret = unserialize($secret_res->value);
+    $key = md5($secret . $loaner_id);
 
-  $key = md5($secret . $loaner_id);
+    // Get uid from Publizon user table on legacy.
+    $uid_res = $connection->select('publizon_user', 'u')
+      ->fields('u', array('uid'))
+      ->condition('u.pid', $key)
+      ->execute()
+      ->fetch();
 
-  // Get uid from Publizon user table on legacy.
-  $uid_res = $connection->select('publizon_user', 'u')
-    ->fields('u', array('uid'))
-    ->condition('u.pid', $key)
-    ->execute()
-    ->fetch();
-
-  if ($uid_res) {
-    return $uid_res->uid;
+    if ($uid_res) {
+      return $uid_res->uid;
+    }
   }
-
   return FALSE;
 }
 
@@ -81,12 +80,16 @@ function reol_bookmark_migration_get_legacy_uid($type, $loaner_id) {
  *   The database connection for the legacy site database or FALSE on failure.
  */
 function reol_bookmark_migration_get_connection($type) {
-  switch ($type) {
-    case REOL_BOOKMARK_MIGRATION_EREOLEN:
-      return Database::getConnection('ereolen', 'legacy');
+  try {
+    switch ($type) {
+      case REOL_BOOKMARK_MIGRATION_EREOLEN:
+        return Database::getConnection('ereolen', 'legacy');
 
-    case REOL_BOOKMARK_MIGRATION_NETLYDBOG:
-      return Database::getConnection('netlydbog', 'legacy');
+      case REOL_BOOKMARK_MIGRATION_NETLYDBOG:
+        return Database::getConnection('netlydbog', 'legacy');
+    }
+  }
+  catch (Exception $e) {
   }
 
   return FALSE;
@@ -209,29 +212,33 @@ function reol_bookmark_migration_migrate_user($type, $user, $loaner_id) {
   $success = TRUE;
   // Get id in publizon_user table.
   if ($legacy_uid = reol_bookmark_migration_get_legacy_uid($type, $loaner_id)) {
-    $bookmarks = reol_bookmark_migration_get_bookmarks($type, $legacy_uid);
+    if ($bookmarks = reol_bookmark_migration_get_bookmarks($type, $legacy_uid)) {
 
-    foreach ($bookmarks as $bookmark) {
-      try {
-        if (!reol_bookmark_migration_isbn_is_migrated($type, $user->uid, $bookmark)) {
-          ding_provider_invoke('bookmark', 'create_internal', $user, $bookmark, $loaner_id);
+      foreach ($bookmarks as $bookmark) {
+        try {
+          if (!reol_bookmark_migration_isbn_is_migrated($type, $user->uid, $bookmark)) {
+            ding_provider_invoke('bookmark', 'create_internal', $user, $bookmark, $loaner_id);
 
-          // Mark isbn as migrated.
-          reol_bookmark_migration_mark_isbn_as_migrated($type, $user->uid, $bookmark);
+            // Mark isbn as migrated.
+            reol_bookmark_migration_mark_isbn_as_migrated($type, $user->uid, $bookmark);
+          }
         }
-      }
-      catch (DingPublizonException $e) {
-        // For now, duplicate in bookmarks will result in error 0,
-        // duplicates are ok.
-        if ($e->getCode() == 0) {
-          // Mark isbn as migrated.
-          reol_bookmark_migration_mark_isbn_as_migrated($type, $user->uid, $bookmark);
-        }
-        else {
-          $success = FALSE;
+        catch (DingPublizonException $e) {
+          // For now, duplicate in bookmarks will result in error 0,
+          // duplicates are ok.
+          if ($e->getCode() == 0) {
+            // Mark isbn as migrated.
+            reol_bookmark_migration_mark_isbn_as_migrated($type, $user->uid, $bookmark);
+          }
+          else {
+            $success = FALSE;
+          }
         }
       }
     }
+  }
+  else {
+    $success = FALSE;
   }
   return $success;
 }
@@ -243,18 +250,22 @@ function reol_bookmark_migration_migrate_user($type, $user, $loaner_id) {
  *   The type to get bookmarks for. One of the constants above.
  * @param int $legacy_uid
  *   The user id of the user on the old sites.
+ *
+ * @return array
+ *   Array of bookmarks or FALSE on failure.
  */
 function reol_bookmark_migration_get_bookmarks($type, $legacy_uid) {
-  $connection = reol_bookmark_migration_get_connection($type);
+  if ($connection = reol_bookmark_migration_get_connection($type)) {
+    $bookmark_res = $connection->select('recall_list', 'b')
+      ->fields('b', array('isbn'))
+      ->condition('b.uid', $legacy_uid)
+      ->execute()
+      ->fetchAll();
 
-  $bookmark_res = $connection->select('recall_list', 'b')
-    ->fields('b', array('isbn'))
-    ->condition('b.uid', $legacy_uid)
-    ->execute()
-    ->fetchAll();
-
-  // Return array of isbns, where duplicates have been removed.
-  return array_unique(array_map(function($elem) {
-    return $elem->isbn;
-  }, $bookmark_res));
+    // Return array of isbns, where duplicates have been removed.
+    return array_unique(array_map(function($elem) {
+      return $elem->isbn;
+    }, $bookmark_res));
+  }
+  return FALSE;
 }
