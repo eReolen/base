@@ -369,7 +369,6 @@ function publizon_form_ding_reservation_reserve_form_submit($form, &$form_state)
 
   // Check if fields have changed, and change them on the profile.
   foreach ($fields as $field => $checkbox) {
-    drupal_set_message($field);
     // To not confuse the user, we only save values that result in notification.
     // If they have not chosen notif for the field, do not save the value.
     if (!$values[$checkbox]) {

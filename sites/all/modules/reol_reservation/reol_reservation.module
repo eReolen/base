@@ -98,7 +98,12 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
  */
 function reol_reservation_form_ding_reservation_reserve_form_alter(&$form, &$form_state) {
   // Use our own submit handler instead of one from ding_reservation.
-  $form['#submit'] = array('reol_reservation_form_ding_reservation_reserve_form_submit');
+  foreach ($form['#submit'] as &$submit) {
+    if ($submit == 'ding_reservation_reserve_form_submit') {
+      $submit = 'reol_reservation_form_ding_reservation_reserve_form_submit';
+      break;
+    }
+  }
 
   // Use our own ajax callback instead of the one from ding_reservation.
   $form['submit']['#ajax']['callback'] = 'reol_reservation_form_ding_reservation_reserve_form_callback';
@@ -157,24 +162,8 @@ function reol_reservation_reserve_ajax($entity, $reservable = NULL) {
     $reservable = new DingReservationReservableEntity($entity);
   }
 
-  // Check if user have preferred branch and interest period, if so
-  // submit the reservation form. If not display another form for with
-  // the options to select branch and period.
-  $defaults = ding_provider_invoke('reservation', 'default_options', $user);
-  $matches = preg_grep("/preferred_branch$/", array_keys($defaults));
-  if (empty($defaults[array_shift($matches)])) {
-    $form = ding_provider_get_form('ding_reservation_reserve_form', $reservable, FALSE);
-    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), render($form), array('refresh' => TRUE));
-  }
-  else {
-    $form_state = array('values' => array());
-    drupal_form_submit('ding_reservation_reserve_form', $form_state, $reservable);
-
-    // Return any status messages set by the form.
-    $html = theme('status_messages');
-    $html .= reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
-    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), $html, array('refresh' => TRUE));
-  }
+  $form = ding_provider_get_form('ding_reservation_reserve_form', $reservable, FALSE);
+  $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), render($form), array('refresh' => TRUE));
 
   // Return the ajax commands as an render array.
   return $commands;
