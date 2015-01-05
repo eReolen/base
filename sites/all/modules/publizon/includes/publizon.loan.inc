@@ -19,15 +19,15 @@ function publizon_loan_list($account, $reset = FALSE) {
   // Throw exception if we're not logged in.
   $creds = ding_user_get_creds($account);
 
-  $results = &drupal_static(__FUNCTION__, FALSE);
-  if (!$results || $reset) {
+  $result = &drupal_static(__FUNCTION__, FALSE);
+  if (!$result || $reset) {
     // Check if ding_session_cache is available.
     if (module_exists('ding_session_cache') && !$reset) {
-      $results = ding_session_cache_get('publizon', 'loans');
+      $result = ding_session_cache_get('publizon', 'loans');
     }
 
     // If no caches have data, get from Publizon.
-    if (empty($results) || $reset) {
+    if (empty($result) || $reset) {
       $retailer_id = publizon_get_retailer_id($account);
 
       // Get list of loans from Publizon.
@@ -52,7 +52,7 @@ function publizon_loan_list($account, $reset = FALSE) {
 
       // Save into ding session cache.
       if (module_exists('ding_session_cache')) {
-        ding_session_cache_set('publizon', 'loans', $results);
+        ding_session_cache_set('publizon', 'loans', $result);
       }
     }
   }
