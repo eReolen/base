@@ -34,7 +34,7 @@
     float: left;
     overflow: hidden;
     @include small() {
-      height: auto;
+      display: inline-block;
       float: none;
     }
 
