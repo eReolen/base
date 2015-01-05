@@ -152,7 +152,7 @@
   }
 }
 
-@media only screen and (max-height: 700px) and (max-width: $breakpoint-small) {
+@include small() {
   .pane-carousel {
     display: none;
   }
