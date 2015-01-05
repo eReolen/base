@@ -219,6 +219,12 @@ function reol_reservation_page_build(&$page) {
     ));
   };
 
+  /*
+   * Page build might be triggered several times between displaying messages.
+   * The following code first checks to see if we have set the message notifying
+   * the user that they have reservations ready. If we have, we remove it.
+   */
+
   // Gather the two regex strings for determining
   // if message has been set earlier.
   $singular_string = preg_quote($translate(1));
