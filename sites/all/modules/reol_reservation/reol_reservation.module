@@ -213,14 +213,43 @@ function reol_reservation_get_reserve_button($entity) {
 function reol_reservation_page_build(&$page) {
   global $user;
 
+  // To allow only having string literals in format_plural, create a function,
+  // that translates. This allows us to have less code duplication.
+  $translate = function($count) {
+    return format_plural($count, 'You have one reservation ready. !reservation_link', 'You have @count reservations ready. !reservation_link', array(
+      '!reservation_link' => l(t('View reservations'), 'user'),
+    ));
+  };
+
+  // Gather the two regex strings for determining
+  // if message has been set earlier.
+  $singular_string = preg_quote($translate(1));
+  $plural_num = 123456789;
+  $plural = $translate($plural_num);
+  $plural_pos = strpos($plural, "$plural_num");
+  $plural_string = preg_quote(substr($plural, 0, $plural_pos)) . '\d*' . preg_quote(substr($plural, $plural_pos + strlen($plural_num)));
+
+  // Delimiter for regexes.
+  $d = '~';
+
+  // Go through all messages, to remove old ones.
+  $all_messages = drupal_get_messages();
+  foreach ($all_messages as $level => $messages) {
+    foreach ($messages as $message) {
+      // If message is not the one set by this code, re-set it.
+      if (preg_match($d . $singular_string . $d, $message) == 0 && preg_match($d . $plural_string . $d, $message) == 0) {
+        drupal_set_message($message, $level);
+      }
+    }
+  }
+
+  // Add message displaying reservations ready.
   try {
     $res = count(ding_provider_invoke('reservation', 'list', $user, DING_RESERVATION_READY));
 
     // Display notif if user has reservations ready.
     if ($res > 0) {
-      drupal_set_message(format_plural($res, 'You have one reservation ready. !reservation_link', 'You have @count reservations ready. !reservation_link', array(
-        '!reservation_link' => l(t('View reservations'), 'user'),
-      )));
+      drupal_set_message($translate($res));
     }
   }
   // Exception is okay, do nothing.
