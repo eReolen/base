@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * This file defines the site template layout for eReolen.
+ */
+
 $plugin = array(
   'title'     => t('eReolen Site template'),
   'theme'     => 'reol_site_template',
