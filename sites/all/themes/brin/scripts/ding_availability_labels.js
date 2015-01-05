@@ -80,8 +80,8 @@
         // true save that value.
         $.each(entity_ids, function(index, entity_id) {
           if (Drupal.DADB[entity_id]) {
-            available = available || Drupal.DADB[entity_id]['available'];
-            reservable = reservable || Drupal.DADB[entity_id]['reservable'];
+            available = available || Drupal.DADB[entity_id].available;
+            reservable = reservable || Drupal.DADB[entity_id].reservable;
           }
         });
 
