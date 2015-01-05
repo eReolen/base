@@ -168,7 +168,9 @@ function reol_reservation_reserve_ajax($entity, $reservable = NULL) {
     drupal_form_submit('ding_reservation_reserve_form', $form_state, $reservable);
 
     // Return any status messages set by the form.
-    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), theme('status_messages'), array('refresh' => TRUE));
+    $html = theme('status_messages');
+    $html .= reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
+    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), $html, array('refresh' => TRUE));
   }
 
   // Return the ajax commands as an render array.
@@ -224,4 +226,26 @@ function reol_reservation_page_build(&$page) {
   // Exception is okay, do nothing.
   catch (Exception $e) {
   }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_reservation_form_ding_reservation_delete_reservations_form_alter(&$form, &$form_state) {
+  $form['submit']['#ajax']['callback'] = 'reol_reservation_form_ding_reservation_delete_reservations_form_callback';
+}
+
+/**
+ * New delete reservation ajax callback.
+ */
+function reol_reservation_form_ding_reservation_delete_reservations_form_callback($form, &$form_state) {
+  $response = array(
+    '#type' => 'ajax',
+    '#commands' => array(),
+  );
+
+  $html = theme('status_messages') . t('Your reservations have been deleted.') . reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
+  $response['#commands'][] = ajax_command_ding_popup('ding_reservation', t('Delete reservations'), $html, array('refresh' => TRUE));
+
+  return $response;
 }
