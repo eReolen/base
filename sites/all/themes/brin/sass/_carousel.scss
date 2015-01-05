@@ -151,3 +151,9 @@
     }
   }
 }
+
+@media only screen and (max-height: 700px) and (max-width: $breakpoint-small) {
+  .pane-carousel {
+    display: none;
+  }
+}
