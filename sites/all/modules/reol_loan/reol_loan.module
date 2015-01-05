@@ -107,6 +107,9 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
       // Change format of the two other dates.
       $form['all_loans'][$child]['#information']['loan_date']['data'] = format_date(strtotime(check_plain($loan->loan_date)), 'reol_base_material_lists_date');
       $form['all_loans'][$child]['#information']['expiry']['data'] = format_date(strtotime(check_plain($loan->expiry)), 'reol_base_material_lists_date');
+
+      // Hide message stating that the loan cannot be renewed.
+      unset($form['all_loans'][$child]['#material_message']);
     }
   }
 
