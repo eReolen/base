@@ -28,6 +28,11 @@ function publizon_bookmark_list($account) {
   foreach ($checklist as $item) {
     $id = reol_base_ding_entity_get_id($item->isbn);
 
+    // Title might not be found, do nothing.
+    if (!$id) {
+      continue;
+    }
+
     $result[] = $id;
   }
 

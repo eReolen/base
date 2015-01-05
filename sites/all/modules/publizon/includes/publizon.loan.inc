@@ -28,6 +28,11 @@ function publizon_loan_list($account) {
   foreach ($loans as $loan) {
     $id = reol_base_ding_entity_get_id($loan->isbn);
 
+    // Title might not be found, do nothing.
+    if (!$id) {
+      continue;
+    }
+
     $result[$id] = new DingProviderLoan($id, array(
       'ding_entity_id' => $id,
       'loan_date' => date('Y-m-d H:i:s', $loan->order_date),

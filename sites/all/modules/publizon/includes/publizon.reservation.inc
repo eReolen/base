@@ -30,6 +30,12 @@ function publizon_reservation_list($account, $get_type = FALSE) {
 
   foreach ($reservations as $reservation) {
     $ding_id = reol_base_ding_entity_get_id($reservation->isbn);
+
+    // Title might not be found, do nothing.
+    if (!$ding_id) {
+      continue;
+    }
+
     $ting_entity = ding_entity_load($ding_id);
     $id = $ting_entity->localId;
     $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
