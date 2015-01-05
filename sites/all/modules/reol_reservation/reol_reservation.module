@@ -63,6 +63,9 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
           'class' => '',
         );
       }
+
+      // Remove queue number for now.
+      unset($reservation_element['#information']['queue_number']);
     }
 
     // Logic for when reservation is ready.
