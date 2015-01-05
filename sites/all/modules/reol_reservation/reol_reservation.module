@@ -193,7 +193,9 @@ function reol_reservation_form_ding_reservation_reserve_form_callback($form, &$f
     $res = ding_reservation_reserve_form_callback($form, $form_state);
 
     // Add OK button.
-    $res['#commands'][0]['data'] .= reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
+    if (!form_get_errors()) {
+      $res['#commands'][0]['data'] .= reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
+    }
 
     return $res['#commands'];
   }, $form_state['values']['reservable']->getEntity(), $form, $form_state);

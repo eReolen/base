@@ -210,6 +210,13 @@ function publizon_reservation_branch_name($branch_id) {
 }
 
 /**
+ * Ding requires this function. We do not need it.
+ */
+function publizon_reservation_default_interest_period() {
+  return 0;
+}
+
+/**
  * Returns whether or not deletions are enabled.
  *
  * @return bool
