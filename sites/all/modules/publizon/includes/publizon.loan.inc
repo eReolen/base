@@ -55,6 +55,7 @@ function publizon_loan_list($account, $reset = FALSE) {
         ding_session_cache_set('publizon', 'loans', $results);
       }
     }
+  }
 
   return $result;
 }
