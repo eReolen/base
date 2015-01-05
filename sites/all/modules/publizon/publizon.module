@@ -49,46 +49,6 @@ function publizon_ding_provider() {
 }
 
 /**
- * Search the T!NG data well for information based on ISBN.
- *
- * If more than one match is found only the first match is returned.
- *
- * TODO Not tested. Should problably be rewritten for newer Ding.
- *
- * @param string $isbn
- *   ISBN number for the product that is searched.
- *
- * @return TingObject
- *   Datawell object for the product found, if non is found FALSE will be
- *   returned.
- */
-function publizon_ting_find_object($isbn) {
-  // Ensure that the ting client is available.
-  module_load_include('client.inc', 'ting');
-
-  // Build ting request.
-  $request = ting_get_request_factory()->getSearchRequest();
-  $request = ting_add_agency($request);
-  $request = ting_add_profile($request);
-
-  // Try to fetch ting object based on ISBN number. Sadly not all object in
-  // ebooks or net sound have ISBN, but uses oss:PROVIDER-ID, which we can not
-  // search directly on (so no dc.identifier=*). Also therefor it have been
-  // renamed, because it does not only find object by ISBN.
-  $request->setQuery($isbn);
-  $request->setNumResults(1);
-
-  // Execute the fetch.
-  $response = ting_execute($request);
-  $object = FALSE;
-  if (isset($response->collections[0]->objects[0])) {
-    $object = $response->collections[0]->objects[0];
-  }
-
-  return $object;
-}
-
-/**
  * Implements hook_webform_select_options_info().
  *
  * Provides library list as options for webform.
