@@ -28,6 +28,9 @@ function reol_base_install() {
     reol_base_update_7116();
     reol_base_update_7118();
     reol_base_update_7119();
+    reol_base_update_7120();
+    reol_base_update_7121();
+    reol_base_update_7122();
   }
 }
 
@@ -237,4 +240,59 @@ function reol_base_update_7119() {
  */
 function reol_base_update_7120() {
   variable_set('cron_safe_threshold', 0);
+}
+
+/**
+ * Enable shortcut per role module.
+ */
+function reol_base_update_7121() {
+  module_enable(array('shortcutperrole'), TRUE);
+}
+
+/**
+ * Create shortcuts for staff.
+ */
+function reol_base_update_7122() {
+  $shortcut_set = new stdClass();
+  $shortcut_set->title = 'Staff';
+  $shortcut_set->set_name = 'staff';
+  $shortcut_set->links = array(
+    array(
+      'link_path' => 'node/add',
+      'link_title' => 'Add content',
+      'weight' => 0,
+    ),
+    array(
+      'link_path' => 'admin/content',
+      'link_title' => 'Content',
+      'weight' => 1,
+    ),
+    array(
+      'link_path' => 'admin/config/regional/translate',
+      'link_title' => 'Manage translations',
+      'weight' => 2,
+    ),
+    array(
+      'link_path' => 'admin/structure/reol_announcement',
+      'link_title' => 'Site announcement',
+      'weight' => 3,
+    ),
+    array(
+      'link_path' => 'admin/config/ting/ting_search_carousel',
+      'link_title' => 'Frontpage carousel',
+      'weight' => 4,
+    ),
+    array(
+      'link_path' => 'admin/reports/bookmark_migration',
+      'link_title' => 'Bookmark migration status',
+      'weight' => 5,
+    ),
+  );
+
+  shortcut_set_save($shortcut_set);
+
+  // Set shortcutperrole to choose staff set for role staff (rid = 9).
+  variable_set('shortcutperrole', array(
+    9 => 'staff',
+  ));
 }
