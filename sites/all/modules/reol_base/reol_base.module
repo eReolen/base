@@ -569,3 +569,11 @@ function reol_base_logout() {
 function reol_base_get_modal_close_button($text, $modal) {
   return '<a class="action-button modal-close" data-modal-name="' . $modal . '" href="#">' . $text . '</a>';
 }
+
+/**
+ * Implements hook_cron().
+ */
+function reol_base_cron() {
+  // Rebuild permissions on cron.
+  secure_permissions_rebuild();
+}
