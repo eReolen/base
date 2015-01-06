@@ -63,6 +63,9 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
           'class' => '',
         );
       }
+
+      // Remove queue number for now.
+      unset($reservation_element['#information']['queue_number']);
     }
 
     // Logic for when reservation is ready.
@@ -95,7 +98,12 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
  */
 function reol_reservation_form_ding_reservation_reserve_form_alter(&$form, &$form_state) {
   // Use our own submit handler instead of one from ding_reservation.
-  $form['#submit'] = array('reol_reservation_form_ding_reservation_reserve_form_submit');
+  foreach ($form['#submit'] as &$submit) {
+    if ($submit == 'ding_reservation_reserve_form_submit') {
+      $submit = 'reol_reservation_form_ding_reservation_reserve_form_submit';
+      break;
+    }
+  }
 
   // Use our own ajax callback instead of the one from ding_reservation.
   $form['submit']['#ajax']['callback'] = 'reol_reservation_form_ding_reservation_reserve_form_callback';
@@ -154,22 +162,8 @@ function reol_reservation_reserve_ajax($entity, $reservable = NULL) {
     $reservable = new DingReservationReservableEntity($entity);
   }
 
-  // Check if user have preferred branch and interest period, if so
-  // submit the reservation form. If not display another form for with
-  // the options to select branch and period.
-  $defaults = ding_provider_invoke('reservation', 'default_options', $user);
-  $matches = preg_grep("/preferred_branch$/", array_keys($defaults));
-  if (empty($defaults[array_shift($matches)])) {
-    $form = ding_provider_get_form('ding_reservation_reserve_form', $reservable, FALSE);
-    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), render($form), array('refresh' => TRUE));
-  }
-  else {
-    $form_state = array('values' => array());
-    drupal_form_submit('ding_reservation_reserve_form', $form_state, $reservable);
-
-    // Return any status messages set by the form.
-    $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), theme('status_messages'), array('refresh' => TRUE));
-  }
+  $form = ding_provider_get_form('ding_reservation_reserve_form', $reservable, FALSE);
+  $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), render($form), array('refresh' => TRUE));
 
   // Return the ajax commands as an render array.
   return $commands;
@@ -186,6 +180,12 @@ function reol_reservation_form_ding_reservation_reserve_form_callback($form, &$f
     }
 
     $res = ding_reservation_reserve_form_callback($form, $form_state);
+
+    // Add OK button.
+    if (!form_get_errors()) {
+      $res['#commands'][0]['data'] .= reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
+    }
+
     return $res['#commands'];
   }, $form_state['values']['reservable']->getEntity(), $form, $form_state);
 }
@@ -211,17 +211,43 @@ function reol_reservation_get_reserve_button($entity) {
 function reol_reservation_page_build(&$page) {
   global $user;
 
+  // Add message displaying reservations ready.
   try {
     $res = count(ding_provider_invoke('reservation', 'list', $user, DING_RESERVATION_READY));
 
     // Display notif if user has reservations ready.
-    if ($res > 0) {
+    if ($res > 0 || TRUE) {
       drupal_set_message(format_plural($res, 'You have one reservation ready. !reservation_link', 'You have @count reservations ready. !reservation_link', array(
         '!reservation_link' => l(t('View reservations'), 'user'),
-      )));
+      )), 'status', FALSE);
     }
   }
   // Exception is okay, do nothing.
   catch (Exception $e) {
   }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_reservation_form_ding_reservation_delete_reservations_form_alter(&$form, &$form_state) {
+  $form['submit']['#ajax']['callback'] = 'reol_reservation_form_ding_reservation_delete_reservations_form_callback';
+}
+
+/**
+ * New delete reservation ajax callback.
+ */
+function reol_reservation_form_ding_reservation_delete_reservations_form_callback($form, &$form_state) {
+  $response = array(
+    '#type' => 'ajax',
+    '#commands' => array(),
+  );
+
+  $html = theme('status_messages');
+  $html .= '<p>' . t('Your reservations have been deleted.') . '</p>';
+  $html .= reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
+
+  $response['#commands'][] = ajax_command_ding_popup('ding_reservation', t('Delete reservations'), $html, array('refresh' => TRUE));
+
+  return $response;
 }

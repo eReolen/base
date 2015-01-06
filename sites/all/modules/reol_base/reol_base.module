@@ -349,14 +349,18 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
  *   The ISBN number to search for.
  *
  * @return string
- *   The Ding entity id.
+ *   The Ding entity id or FALSE if not found.
  */
 function reol_base_ding_entity_get_id($isbn) {
   module_load_include('client.inc', 'ting');
   // Get the id from a search in Ting.
   $res = ting_do_search("term.identifier=" . $isbn);
-  list($id) = array_keys($res->collections);
-  return $id;
+  if (!$res) {
+    return FALSE;
+  }
+
+  $ids = array_keys($res->collections);
+  return count($ids) ? $ids[0] : FALSE;
 }
 
 /**
@@ -419,13 +423,17 @@ function reol_base_login_ajax() {
  * showing a popup form in ajax for loaning, reserving or
  * bookmarking entities.
  *
+ * @param string $modal_id
+ *   The id of the modal.
  * @param array $commands
  *   The commands that should be added to.
+ * @param StdClass $entity
+ *   The entity.
  *
  * @return bool
  *   Whether or not check did go through.
  */
-function reol_base_check_entity_ajax_form(&$commands, $entity) {
+function reol_base_check_entity_ajax_form($modal_id, &$commands, $entity) {
   global $user;
 
   // If user is not logged in, fail.
@@ -434,16 +442,17 @@ function reol_base_check_entity_ajax_form(&$commands, $entity) {
     return FALSE;
   }
 
+  $close = reol_base_get_modal_close_button(t('OK'), $modal_id);
   // If user is not a provider user, fail.
   if (!ding_user_is_provider_user($user)) {
     // Error not library user.
-    $commands[] = ajax_command_ding_popup('reol_loan', t('Error'), '<p>' . t('Only library user can make reservations.') . '</p>');
+    $commands[] = ajax_command_ding_popup($modal_id, t('Error'), '<p>' . t('Only library user can make reservations.') . '</p>' . $close);
     return FALSE;
   }
 
   // If entity is not a TingEntity, fail.
   if (!(is_object($entity) && $entity instanceof TingEntity)) {
-    $commands[] = ajax_command_ding_popup('reol_loan', t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>');
+    $commands[] = ajax_command_ding_popup($modal_id, t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>' . $close);
     return FALSE;
   }
 
@@ -472,7 +481,7 @@ function reol_base_entity_ajax_form($popup_id, $callback, $entity) {
   $commands = array();
 
   // Check validity of everything.
-  $valid = reol_base_check_entity_ajax_form($commands, $entity);
+  $valid = reol_base_check_entity_ajax_form($popup_id, $commands, $entity);
   // If valid, run callback.
   if ($valid) {
     try {
@@ -493,6 +502,8 @@ function reol_base_entity_ajax_form($popup_id, $callback, $entity) {
       if ($exception->showReserve()) {
         $html .= render(reol_reservation_get_reserve_button($entity));
       }
+
+      $html .= reol_base_get_modal_close_button(t('OK'), $popup_id);
       $commands[] = ajax_command_ding_popup($popup_id, t('Error'), $html, array('refresh' => TRUE));
     }
     catch (DingProviderUserException $exception) {

@@ -9,45 +9,53 @@
  *
  * @param StdClass $account
  *   The account to get loan list for.
+ * @param bool $reset
+ *   Whether or not to force get.
  *
  * @return array
  *   Array containing the loans for the user.
  */
-function publizon_loan_list($account) {
-  $result = array();
-
+function publizon_loan_list($account, $reset = FALSE) {
   // Throw exception if we're not logged in.
   $creds = ding_user_get_creds($account);
 
-  $retailer_id = publizon_get_retailer_id($account);
+  $result = &drupal_static(__FUNCTION__, FALSE);
+  if (!$result || $reset) {
+    // Check if ding_session_cache is available.
+    if (module_exists('ding_session_cache') && !$reset) {
+      $result = ding_session_cache_get('publizon', 'loans');
+    }
 
-  // Get list of loans from Publizon.
-  $client = PublizonLoanClient::getClient();
-  $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
+    // If no caches have data, get from Publizon.
+    if (empty($result) || $reset) {
+      $retailer_id = publizon_get_retailer_id($account);
 
-  foreach ($loans as $loan) {
-    $id = reol_base_ding_entity_get_id($loan->isbn);
+      // Get list of loans from Publizon.
+      $client = PublizonLoanClient::getClient();
+      $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
 
-    $result[$id] = new DingProviderLoan($id, array(
-      'ding_entity_id' => $id,
-      'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
-      'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
-      'renewable' => FALSE,
-    ));
+      foreach ($loans as $loan) {
+        $id = reol_base_ding_entity_get_id($loan->isbn);
+
+        // Title might not be found, do nothing.
+        if (!$id) {
+          continue;
+        }
+
+        $result[$id] = new DingProviderLoan($id, array(
+          'ding_entity_id' => $id,
+          'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
+          'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
+          'renewable' => FALSE,
+        ));
+      }
+
+      // Save into ding session cache.
+      if (module_exists('ding_session_cache')) {
+        ding_session_cache_set('publizon', 'loans', $result);
+      }
+    }
   }
-
-  return $result;
-}
-
-/**
- * Renew loan.
- *
- * @TODO
- */
-function publizon_loan_renew($account, $ids) {
-  ding_user_get_creds($account);
-
-  $result = array();
 
   return $result;
 }
@@ -77,10 +85,17 @@ function publizon_loan_create($account, $local_id) {
     DingPublizonException::convert($e);
   }
 
+  // Clear ding session cache.
+  if (module_exists('ding_session_cache')) {
+    ding_session_cache_clear('publizon', 'loans');
+  }
+
 }
 
 /**
  * Get a single loan.
+ *
+ * @TODO Should we cache this, or is it okay not to?
  *
  * @param StdClass $account
  *   The account to get loan for.
