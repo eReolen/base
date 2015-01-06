@@ -569,3 +569,91 @@ function reol_base_logout() {
 function reol_base_get_modal_close_button($text, $modal) {
   return '<a class="action-button modal-close" data-modal-name="' . $modal . '" href="#">' . $text . '</a>';
 }
+
+/**
+ * Implements hook_cron().
+ */
+function reol_base_cron() {
+  // Rebuild permissions on cron.
+  secure_permissions_rebuild();
+}
+
+/**
+ * Implements hook_secure_permissions().
+ */
+function reol_base_secure_permissions($role) {
+  $permissions = array(
+    'staff' => array(
+      'access administration pages',
+      'access all webform results',
+      'access content',
+      'access content overview',
+      'access overlay',
+      'access own webform results',
+      'access own webform submissions',
+      'access site in maintenance mode',
+      'access site reports',
+      'access toolbar',
+      'access user profiles',
+      'administer announcement',
+      'administer url aliases',
+      'clone node',
+      'clone own nodes',
+      'create article content',
+      'create author_portrait content',
+      'create ding_page content',
+      'create faq content',
+      'create url aliases',
+      'create video content',
+      'create webform content',
+      'delete all webform submissions',
+      'delete any article content',
+      'delete any author_portrait content',
+      'delete any ding_page content',
+      'delete any faq content',
+      'delete any video content',
+      'delete any webform content',
+      'delete own article content',
+      'delete own author_portrait content',
+      'delete own ding_page content',
+      'delete own faq content',
+      'delete own video content',
+      'delete own webform content',
+      'delete own webform submissions',
+      'delete revisions',
+      'delete terms in 8',
+      'edit all webform submissions',
+      'edit any article content',
+      'edit any author_portrait content',
+      'edit any ding_page content',
+      'edit any faq content',
+      'edit any video content',
+      'edit any webform content',
+      'edit own article content',
+      'edit own author_portrait content',
+      'edit own ding_page content',
+      'edit own ding_staff_profile profile',
+      'edit own faq content',
+      'edit own video content',
+      'edit own webform content',
+      'edit own webform submissions',
+      'edit terms in 8',
+      'edit webform components',
+      'revert revisions',
+      'schedule (un)publishing of nodes',
+      'translate admin strings',
+      'translate content',
+      'translate interface',
+      'translate user-defined strings',
+      'view bookmark migration status',
+      'view own unpublished content',
+      'view revisions',
+      'view the administration theme',
+      'use text format ding_wysiwyg',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
