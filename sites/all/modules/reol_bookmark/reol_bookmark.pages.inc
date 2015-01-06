@@ -67,12 +67,6 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
           'class' => 'author',
           '#weight' => 2,
         ),
-        'type' => array(
-          'label' => t('Type'),
-          'data' => drupal_render($type),
-          'class' => 'type',
-          '#weight' => 0,
-        ),
       ),
     );
 

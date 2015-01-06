@@ -45,6 +45,11 @@
 .ting-object-left,
 .pane-ting-object .ting-object-left {
   width: 30%;
+
+  @include x-small() {
+    width: 100%;
+    float: none;
+  }
 }
 .ting-object-right,
 .pane-ting-object .ting-object-right,
@@ -53,6 +58,19 @@
 .group_periodical_issues,
 .ting-object-relation-group {
   width: 70%;
+
+  @include x-small() {
+    width: 100%;
+    float: none;
+    margin-left: 0;
+  }
+}
+
+.pane-ting-object .group-material-details {
+  @include x-small() {
+    width: 100%;
+    float: none;
+  }
 }
 
 .ting-object-wrapper {
@@ -173,6 +191,7 @@
   float: none;
   a {
     display: inline-block;
+    @include box-sizing(border-box);
   }
 }
 

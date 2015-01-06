@@ -151,3 +151,9 @@
     }
   }
 }
+
+@include small() {
+  .pane-carousel {
+    display: none;
+  }
+}
