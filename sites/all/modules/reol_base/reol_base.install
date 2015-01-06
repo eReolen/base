@@ -231,3 +231,10 @@ function reol_base_update_7118() {
 function reol_base_update_7119() {
   module_enable(array('reol_bookmark_migration'), TRUE);
 }
+
+/**
+ * Disable built-in cron.
+ */
+function reol_base_update_7120() {
+  variable_set('cron_safe_threshold', 0);
+}
