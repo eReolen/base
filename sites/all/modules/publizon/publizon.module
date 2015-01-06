@@ -203,6 +203,8 @@ function publizon_ting_covers($entities) {
 
     // Try to save the file.
     $file = file_save_data($result->data, $filename, FILE_EXISTS_REPLACE);
+    // Add usage to file, to keep cron from deleting them.
+    file_usage_add($file, 'publizon', 'ting_object', $entity->tid);
 
     // If successfull, return file path for this one.
     if ($file) {

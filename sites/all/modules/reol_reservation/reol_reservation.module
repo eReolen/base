@@ -216,7 +216,7 @@ function reol_reservation_page_build(&$page) {
     $res = count(ding_provider_invoke('reservation', 'list', $user, DING_RESERVATION_READY));
 
     // Display notif if user has reservations ready.
-    if ($res > 0 || TRUE) {
+    if ($res > 0) {
       drupal_set_message(format_plural($res, 'You have one reservation ready. !reservation_link', 'You have @count reservations ready. !reservation_link', array(
         '!reservation_link' => l(t('View reservations'), 'user'),
       )), 'status', FALSE);

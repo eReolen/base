@@ -239,3 +239,39 @@ function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &
 function reol_frontend_ting_online_url_alter(&$url, $entity) {
   $url = "";
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @see ting_search_backend_engines_content_type_render()
+ */
+function reol_frontend_form_ting_search_backend_engines_form_alter(&$form, &$form_state) {
+  $backends = search_get_info();
+  $default = search_get_default_module_info();
+
+  $options = &$form['backends']['searches']['#options'];
+  foreach ($backends as $name => $backend) {
+
+    // Create new title for better translations.
+    switch ($backend['path']) {
+      case 'ting':
+        $title = t('Search Ting');
+        break;
+
+      case 'node':
+        $title = t('Search content');
+        break;
+    }
+
+    // Create old title for replacing.
+    $old_title = t('Search @backend', array('@backend' => $backend['title']));
+
+    // Replace title with new one.
+    if (isset($options[$backend['module']])) {
+      $options[$backend['module']] = str_replace($old_title, $title, $options[$backend['module']]);
+    }
+    elseif ($default['module'] == $backend['module']) {
+      $options[0] = str_replace($old_title, $title, $options[0]);
+    }
+  }
+}
