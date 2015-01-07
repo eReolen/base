@@ -58,9 +58,6 @@ sub vcl_recv {
     return (pipe);
   }
 
-  # Allow the backend to serve up stale content if it is responding slowly.
-  set req.grace = 6h;
-
   # Use anonymous, cached pages if all backends are down.
   if (!req.backend.healthy) {
     unset req.http.Cookie;
