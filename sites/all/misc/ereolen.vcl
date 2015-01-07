@@ -136,7 +136,7 @@ sub vcl_recv {
 
   # Look up in the cache. ding_varnish sets the appropiate Vary
   # headers to make Varnish give each role its own cache bin.
-  return (lookup);
+  return (hash);
 }
 
 sub vcl_backend_response {
