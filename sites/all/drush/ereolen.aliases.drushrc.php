@@ -26,6 +26,8 @@ $aliases['prod'] = array(
     // Updb clears the cache.
     'no-cc-all' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'newrelic-api-key' => '36372beaa3607d3b8082f6ed3d1ed986609d7359def9a47',
+    'newrelic-app-name' => 'ereolen.dk',
   ),
 );
 
