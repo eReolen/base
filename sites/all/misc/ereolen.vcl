@@ -39,6 +39,18 @@ sub vcl_recv {
     else {
       set req.http.X-Forwarded-For = client.ip;
     }
+
+    # Ignore any X-Drupal-Roles from the client.
+    unset req.http.X-Drupal-Roles;
+
+    # Lookup Drupal Roles.
+    # We're going to change the URL to x-drupal-roles so we'll need to save
+    # the original one first.
+    set req.http.X-Original-URL = req.url;
+    set req.url = "/varnish/roles";
+
+    return (lookup);
+
   }
 
   # Patterns to pass through un-cached.
