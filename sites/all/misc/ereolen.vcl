@@ -63,7 +63,7 @@ sub vcl_recv {
   }
 
   # Use anonymous, cached pages if all backends are down.
-  if (!std.healthy(resp.backend_hint)) {
+  if (!std.healthy(req.backend_hint)) {
     unset req.http.Cookie;
   }
 
