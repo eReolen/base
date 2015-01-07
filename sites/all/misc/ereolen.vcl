@@ -31,6 +31,10 @@ acl upstream_proxy {
 }
 
 sub vcl_recv {
+  # Remove HTTP Authentication. Assume that any basic auth is handled
+  # before reaching us and remove the header, as it messes with
+  # caching.
+  unset req.http.Authorization;
   # Make sure that the client ip is forwarded to the client.
   if (req.restarts == 0) {
     if (client.ip ~ upstream_proxy && req.http.x-forwarded-for) {
@@ -171,10 +175,20 @@ sub vcl_backend_response {
     unset beresp.http.set-cookie;
   }
 
-  # If ding_varnish has marked the page as cachable simeply deliver is to make
+  # If ding_varnish has marked the page as cachable simply deliver is to make
   # sure that it's cached.
   if (beresp.http.X-Drupal-Varnish-Cache) {
     return (deliver);
+  }
+
+  # Varnish actually honors Cache-Control: no-cache, despite the
+  # number of Google hits claiming that it doesn't (3 didn't). Drupal
+  # set no-cache in order to stop browsers from caching too much, so
+  # we need to pass it through. We do this by copying it here and
+  # fudge it. It's then restored in vcl_deliver.
+  if (beresp.http.Cache-Control) {
+    set beresp.http.X-Orig-Cache-Control = beresp.http.Cache-Control;
+    set beresp.http.Cache-Control = regsuball(beresp.http.Cache-Control, "no-cache", "");
   }
 }
 
@@ -186,6 +200,12 @@ sub vcl_deliver {
     set req.url = req.http.X-Original-URL;
     unset req.http.X-Original-URL;
     return (restart);
+  }
+
+  # Restore the unfudged Cache-Control.
+  if (resp.http.X-Orig-Cache-Control) {
+    set resp.http.Cache-Control = resp.http.X-Orig-Cache-Control;
+    unset resp.http.X-Orig-Cache-Control;
   }
 
   # If response X-Drupal-Roles is not set, move it from the request.
