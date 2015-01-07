@@ -49,7 +49,7 @@ sub vcl_recv {
     set req.http.X-Original-URL = req.url;
     set req.url = "/varnish/roles";
 
-    return (lookup);
+    return (hash);
 
   }
 
