@@ -155,7 +155,7 @@ sub vcl_backend_response {
   # is possible for files generated dynamically by Drupal. Those
   # cookies are unnecessary, but could prevent files from being
   # cached.
-  if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js)(\?[\w\d=\.\-]+)?$") {
+  if (beresp.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js)(\?[\w\d=\.\-]+)?$") {
     unset beresp.http.set-cookie;
   }
 
