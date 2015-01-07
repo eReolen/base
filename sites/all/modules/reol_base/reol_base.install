@@ -31,6 +31,7 @@ function reol_base_install() {
     reol_base_update_7120();
     reol_base_update_7121();
     reol_base_update_7122();
+    reol_base_update_7123();
   }
 }
 
@@ -295,4 +296,11 @@ function reol_base_update_7122() {
   variable_set('shortcutperrole', array(
     9 => 'staff',
   ));
+}
+
+/**
+ * Enable ding_varnish module.
+ */
+function reol_base_update_7123() {
+  module_enable(array('ding_varnish'), TRUE);
 }
