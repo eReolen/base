@@ -176,7 +176,7 @@ sub vcl_deliver {
     return (restart);
   }
 
-  # If responces X-Drupal-Roles is not set, move it from the request.
+  # If response X-Drupal-Roles is not set, move it from the request.
   if (!resp.http.X-Drupal-Roles) {
     set resp.http.X-Drupal-Roles = req.http.X-Drupal-Roles;
   }
