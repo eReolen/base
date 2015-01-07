@@ -14,6 +14,10 @@
 # new 4.0 format.
 vcl 4.0;
 
+# Import VMod's
+# Used for std.healthy.
+import std;
+
 # Default backend definition. Set this to point to your content server.
 backend default {
     .host = "127.0.0.1";
@@ -59,7 +63,7 @@ sub vcl_recv {
   }
 
   # Use anonymous, cached pages if all backends are down.
-  if (!req.backend.healthy) {
+  if (!std.healthy(resp.backend_hint)) {
     unset req.http.Cookie;
   }
 
