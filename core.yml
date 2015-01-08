@@ -19,3 +19,7 @@ patches:
     patch: 'https://www.drupal.org/files/fix-shortcut-set-save-1175700-10.patch'
     home: 'https://www.drupal.org/node/1175700'
     reason: 'Fix shortcut_set_save when set does not exist.'
+  -
+    patch: 'https://www.drupal.org/files/issues/protoindependent.patch'
+    home: 'https://www.drupal.org/node/646862'
+    reason: 'Allow for protocol independent URLs in CSS @imports.'
