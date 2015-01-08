@@ -43,18 +43,6 @@ sub vcl_recv {
     else {
       set req.http.X-Forwarded-For = client.ip;
     }
-
-    # Ignore any X-Drupal-Roles from the client.
-    unset req.http.X-Drupal-Roles;
-
-    # Lookup Drupal Roles.
-    # We're going to change the URL to x-drupal-roles so we'll need to save
-    # the original one first.
-    set req.http.X-Original-URL = req.url;
-    set req.url = "/varnish/roles";
-
-    return (hash);
-
   }
 
   # Patterns to pass through un-cached.
@@ -68,7 +56,8 @@ sub vcl_recv {
       req.url ~ "^.*/ajax/.*$" ||
       req.url ~ "^.*/ahah/.*$" || 
       req.url ~ "^.*/edit.*$" ||
-      req.url ~ "^.*/ding_availability.*$") {
+      req.url ~ "^.*/ding_availability.*$" ||
+      req.http.X-Requested-With ~ "XMLHttpRequest") {
         return (pass);
   }
 
@@ -87,6 +76,20 @@ sub vcl_recv {
   if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js)(\?[\w\d=\.\-]+)?$") {
     unset req.http.Cookie;
   }
+
+  if (req.restarts == 0) {
+    # Ignore any X-Drupal-Roles from the client.
+    unset req.http.X-Drupal-Roles;
+
+    # Lookup Drupal Roles.
+    # We're going to change the URL to x-drupal-roles so we'll need to save
+    # the original one first.
+    set req.http.X-Original-URL = req.url;
+    set req.url = "/varnish/roles";
+
+    return (hash);
+  }
+
 
   # Remove all cookies that are not necessary for Drupal to work
   # properly. Since it would be cumbersome to REMOVE certain
@@ -186,6 +189,7 @@ sub vcl_backend_response {
   # set no-cache in order to stop browsers from caching too much, so
   # we need to pass it through. We do this by copying it here and
   # fudge it. It's then restored in vcl_deliver.
+  # See https://www.varnish-ca che.org/trac/browser/bin/varnishd/default.vcl?rev=791321739fccc7fe5bfaabbad99b0d81b792c1f8&order=name
   if (beresp.http.Cache-Control) {
     set beresp.http.X-Orig-Cache-Control = beresp.http.Cache-Control;
     set beresp.http.Cache-Control = regsuball(beresp.http.Cache-Control, "no-cache", "");
