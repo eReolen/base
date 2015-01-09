@@ -52,7 +52,7 @@ sub vcl_recv {
     return (pipe);
   }
 
-  if (req.request != "GET" && req.request != "HEAD") {
+  if (req.method != "GET" && req.method != "HEAD") {
     # We only deal with GET and HEAD by default.
     return (pass);
   }
