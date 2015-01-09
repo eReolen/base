@@ -35,14 +35,26 @@ sub vcl_recv {
   # before reaching us and remove the header, as it messes with
   # caching.
   unset req.http.Authorization;
-  # Make sure that the client ip is forwarded to the client.
-  if (req.restarts == 0) {
-    if (client.ip ~ upstream_proxy && req.http.x-forwarded-for) {
-      set req.http.X-Forwarded-For = req.http.X-Forwarded-For + ", " + client.ip;
-    }
-    else {
-      set req.http.X-Forwarded-For = client.ip;
-    }
+
+  # The search-blank hack in ting_search doesn't work. Remove it for
+  # the moment.
+  if (req.url ~ "\?q=search-blank") {
+    set req.url = regsuball(req.url, "\?q=search-blank", "");
+  }
+
+  # Ensure that ding_wayf and SimpleSAMLphp is not cached.
+  if (req.url ~ "^/simplesaml" || req.url ~ "^/wayf") {
+    return (pipe);
+  }
+
+  # Pipe these paths directly to Apache/NginX for streaming.
+  if (req.url ~ "^/admin/content/backup_migrate/export") {
+    return (pipe);
+  }
+
+  if (req.request != "GET" && req.request != "HEAD") {
+    # We only deal with GET and HEAD by default.
+    return (pass);
   }
 
   # Patterns to pass through un-cached.
@@ -56,15 +68,8 @@ sub vcl_recv {
       req.url ~ "^.*/ajax/.*$" ||
       req.url ~ "^.*/ahah/.*$" || 
       req.url ~ "^.*/edit.*$" ||
-      req.url ~ "^.*/ding_availability.*$" ||
-      req.http.X-Requested-With ~ "XMLHttpRequest") {
+      req.url ~ "^.*/ding_availability.*$") {
         return (pass);
-  }
-
-
-  # Pipe these paths directly to Apache/NginX for streaming.
-  if (req.url ~ "^/admin/content/backup_migrate/export") {
-    return (pipe);
   }
 
   # Use anonymous, cached pages if all backends are down.
@@ -77,19 +82,17 @@ sub vcl_recv {
     unset req.http.Cookie;
   }
 
-  if (req.restarts == 0) {
+  if (req.restarts == 0 && (req.method == "GET" || req.method == "HEAD")) {
     # Ignore any X-Drupal-Roles from the client.
     unset req.http.X-Drupal-Roles;
 
-    # Lookup Drupal Roles.
-    # We're going to change the URL to x-drupal-roles so we'll need to save
-    # the original one first.
+    # Lookup Drupal Roles. We're going to change the URL to
+    # x-drupal-roles so we'll need to save the original one first.
     set req.http.X-Original-URL = req.url;
     set req.url = "/varnish/roles";
 
     return (hash);
   }
-
 
   # Remove all cookies that are not necessary for Drupal to work
   # properly. Since it would be cumbersome to REMOVE certain
