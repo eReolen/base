@@ -24,12 +24,6 @@ backend default {
     .port = "80";
 }
 
-# List of upstream proxies we trust to set X-Forwarded-For correctly.
-acl upstream_proxy {
-  "127.0.0.1";
-  "172.21.0.0"/24;
-}
-
 sub vcl_recv {
   # Remove HTTP Authentication. Assume that any basic auth is handled
   # before reaching us and remove the header, as it messes with
