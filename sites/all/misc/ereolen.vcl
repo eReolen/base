@@ -55,14 +55,14 @@ sub vcl_recv {
   if (req.url ~ "^/status\.php$" ||
       req.url ~ "^/update\.php$" ||
       req.url ~ "^/admin$" ||
-      req.url ~ "^/admin/.*$" ||
+      req.url ~ "^/admin/" ||
       req.url ~ "^/user$" ||
-      req.url ~ "^/user/.*$" ||
-      req.url ~ "^/flag/.*$" ||
-      req.url ~ "^.*/ajax/.*$" ||
-      req.url ~ "^.*/ahah/.*$" || 
-      req.url ~ "^.*/edit.*$" ||
-      req.url ~ "^.*/ding_availability.*$" ||
+      req.url ~ "^/user/" ||
+      req.url ~ "^/flag/" ||
+      req.url ~ "^.*/ajax/" ||
+      req.url ~ "/ahah/" || 
+      req.url ~ "/edit" ||
+      req.url ~ "/ding_availability" ||
       req.url ~ "^/feeds/") {
         return (pass);
   }
