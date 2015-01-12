@@ -62,7 +62,8 @@ sub vcl_recv {
       req.url ~ "^.*/ajax/.*$" ||
       req.url ~ "^.*/ahah/.*$" || 
       req.url ~ "^.*/edit.*$" ||
-      req.url ~ "^.*/ding_availability.*$") {
+      req.url ~ "^.*/ding_availability.*$" ||
+      req.url ~ "^/feeds/") {
         return (pass);
   }
 
