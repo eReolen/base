@@ -40,7 +40,44 @@ function reol_help_page_alter(&$page) {
     // t[tid]n[nid] where tid is the category term id and
     // nid is the FAQ node id. Redirect to show this one.
     drupal_goto('faq-page', array(
-      'fragment' => 't' . $category_tid . 'n' . $node->nid,
+      'fragment' => 'category-' . $category_tid . ':answer-' . $node->nid,
     ));
   }
+}
+
+/**
+ * Implements hook_preprocess_faq_category_questions_top_answers().
+ *
+ * Code borrowed from contrib/faq/includes/faq.questions_top.inc
+ *
+ * @see template_preprocess_faq_category_questions_top_answers()
+ */
+function reol_help_preprocess_faq_category_questions_top_answers(&$variables) {
+  $data = $variables['data'];
+  $category_display = $variables['category_display'];
+  $term = $variables['term'];
+
+  // Fetch configuration.
+  $teaser = variable_get('faq_use_teaser', FALSE);
+  $links = variable_get('faq_show_node_links', FALSE);
+
+  $this_page = $_GET['q'];
+
+  // Configure "back to top" link.
+  $back_to_top = faq_init_back_to_top($this_page);
+
+  $nodes = array();
+  foreach ($data as $node) {
+    $node_var = array();
+    $anchor = 't' . $term->tid . 'n' . $node->nid;
+    faq_view_question($node_var, $node, NULL, $anchor);
+    faq_view_answer($node_var, $node, $back_to_top, $teaser, $links);
+
+    // Added.
+    $node_var['nid'] = $node->nid;
+    $node_var['question'] = $node->title;
+
+    $nodes[] = $node_var;
+  }
+  $variables['nodes'] = $nodes;
 }
