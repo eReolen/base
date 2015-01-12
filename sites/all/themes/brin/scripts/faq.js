@@ -1,7 +1,9 @@
 (function($) {
   Drupal.behaviors.faq = {
     attach : function() {
-      Drupal.behaviors.faq.setActive(window.location.hash);
+      if (window.location.hash) {
+        Drupal.behaviors.faq.setActive(window.location.hash);
+      }
 
       $('.faq-header-link, .faq-question-link').click(function() {
         // Allow clicking again to collapse.
