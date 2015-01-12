@@ -11,7 +11,7 @@
   <h2><?php echo $category_name; ?></h2>
 
   <?php foreach ($nodes as $i => $node): ?>
-    <div class="faq-item" id="answer-<?php echo $node['nid']; ?>">
+    <div class="faq-item" id="category-<?php echo $term->tid; ?>:answer-<?php echo $node['nid']; ?>">
       <a class="faq-question-link" href="#category-<?php echo $term->tid; ?>:answer-<?php echo $node['nid']; ?>">
         <div class="faq-question">
           <?php print $node['question']; ?>
