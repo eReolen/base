@@ -1,7 +1,9 @@
 (function($) {
   Drupal.behaviors.faq = {
     attach : function() {
-      Drupal.behaviors.faq.setActive(window.location.hash);
+      if (window.location.hash) {
+        Drupal.behaviors.faq.setActive(window.location.hash);
+      }
 
       $('.faq-header-link, .faq-question-link').click(function() {
         // Allow clicking again to collapse.
@@ -25,14 +27,8 @@
         second = false;
       }
 
-      var split, elem;
-      if (hash) {
-        split = hash.split(':');
-        elem = $(split[0]);
-      }
-      else {
-        elem = [];
-      }
+      var split = hash.split(':');
+      var elem = $(split[0]);
 
       if (elem.length) {
         // Set active class on questions container.
