@@ -49,7 +49,7 @@ function reol_review_alter_found(&$found) {
  * Ensure that reviews are updated.
  */
 function reol_review_ensure_reviews() {
-  if ($cache = cache_get('reol_review:reviews') && time() < $cache->expire) {
+  if (($cache = cache_get('reol_review:reviews')) && (time() < $cache->expire)) {
     return;
   }
 

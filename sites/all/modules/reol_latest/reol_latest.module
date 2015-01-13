@@ -17,7 +17,7 @@ function reol_latest_ctools_plugin_directory($module, $plugin) {
  * Get latest items for a type (or all).
  *
  * @param int $count
- *   The number of items to get. Function will get 
+ *   The number of items to get. Function will get
  *   the last x items (configurable), and random return $count of them.
  * @param string $type
  *   The type to get latest for, or FALSE to get for all types.
@@ -212,7 +212,7 @@ function reol_latest_maintenance() {
 function reol_latest_ensure_query($query) {
   $key = reol_latest_get_query_key($query);
   // If cache is updated, do nothing.
-  if ($cache = cache_get('reol_latest_latest:' . $key) && time() < $cache->expire) {
+  if (($cache = cache_get('reol_latest_latest:' . $key)) && (time() < $cache->expire)) {
     return;
   }
 
