@@ -113,8 +113,9 @@ function ting_search_carousel_cron() {
       foreach ($index as $item) {
         $path = ting_covers_object_path($item->id);
         if (file_exists($path)) {
-          // Touch the file to keep ting_cover_cron() from deleting it.
-          touch($path);
+          // Touch the file to keep ting_cover_cron() from deleting it. The
+          // Drupal stream wrapper doesn't support touch, so get the real path.
+          touch(drupal_realpath($path));
         }
         else {
           // Fetch the cover.
@@ -124,7 +125,8 @@ function ting_search_carousel_cron() {
     }
 
     if ($ids) {
-      ting_covers_load(array_flip($ids));
+      $entities = ting_object_load_multiple($ids);
+      ting_covers_load($entities);
     }
   }
 }
