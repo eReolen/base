@@ -23,7 +23,6 @@ function reol_feed_feeds_frontpage() {
   reol_feed_feeds_add_items('author_portrait', $e_feed, $a_feed, 'reol_feed_feeds_add_author_portrait');
 
   // Add review to feeds.
-  module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
   $reviews = reol_review_get_reviews();
   foreach ($reviews as $t => $type_reviews) {
     // Determine where to put it.
@@ -35,10 +34,12 @@ function reol_feed_feeds_frontpage() {
     }
 
     // Add x reviews.
+    $added = 0;
     while (count($type_reviews) && $added < variable_get('reol_feed_frontpage_item_count', 2)) {
       $review_key = array_rand($type_reviews);
       reol_feed_feeds_add_review($feed, $source, $type_reviews[$review_key]);
       unset($type_reviews[$review_key]);
+      $added++;
     }
   }
 
@@ -131,6 +132,7 @@ function reol_feed_feeds_add_news_item($feed, $source, $node) {
   $isbns = $item->addChild('isbns');
 
   $lang = field_language('node', $node, 'field_ding_news_materials');
+  $materials = array();
   if (isset($node->field_ding_news_materials[$lang])) {
     $materials = $node->field_ding_news_materials[$lang];
   }
