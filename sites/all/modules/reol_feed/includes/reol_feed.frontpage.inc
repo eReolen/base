@@ -131,7 +131,9 @@ function reol_feed_feeds_add_news_item($feed, $source, $node) {
   $isbns = $item->addChild('isbns');
 
   $lang = field_language('node', $node, 'field_ding_news_materials');
-  $materials = $node->field_ding_news_materials[$lang];
+  if (isset($node->field_ding_news_materials[$lang])) {
+    $materials = $node->field_ding_news_materials[$lang];
+  }
 
   if ($materials) {
     // Add referenced materials.
