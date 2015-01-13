@@ -141,14 +141,14 @@
         element.addClass(class_name);
         // TODO: this is very fragile.
         var type_name = element.text().toLowerCase();
+        var string;
         if (Drupal.settings.ding_availability_type_mapping[type_name]) {
           type_name = Drupal.settings.ding_availability_type_mapping[type_name];
         }
-        if (class_name === 'available') {
-          element.text(Drupal.t('@type can be borrowed', {'@type': type_name}));
-        }
-        else if (class_name === 'reservable') {
-          element.text(Drupal.t('@type can be reserved', {'@type': type_name}));
+
+        if (Drupal.settings.ding_availability_type_strings[class_name]) {
+          string = Drupal.settings.ding_availability_type_strings[class_name];
+          element.text(Drupal.formatString(string, {'@type': type_name}));
         }
         if (btn.length) {
           btn.addClass(class_name);
