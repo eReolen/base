@@ -109,14 +109,12 @@ function reol_feed_feeds_add_news_item($feed, $source, $node) {
   $item->title = $node_wrapper->title->value();
   $item->source = $source;
 
-  // To make sure that we get either summary, or trimmed body,
-  // do it this way:
+  // Get the body untrimmed.
   $body = field_get_items('node', $node, 'body');
-  $summary = field_view_value('node', $node, 'body', $body[0], 'teaser');
-  $item->description = reol_feed_convert_html($summary['#markup']);
 
   $body = $node_wrapper->body->value();
   $item->content = reol_feed_convert_html($body['safe_value']);
+  $item->description = reol_feed_convert_html($body['safe_value']);
 
   global $base_url;
 
