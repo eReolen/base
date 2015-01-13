@@ -12,6 +12,34 @@ function reol_feed_cron() {
 }
 
 /**
+ * Implements hook_node_insert().
+ *
+ * Trigger feed rebuild when nodes are created.
+ */
+function reol_feed_node_insert($node) {
+  cache_clear_all('reol_feed_do_not_force', 'cache');
+}
+
+/**
+ * Implements hook_node_update().
+ *
+ * Trigger feed rebuild when nodes are updated.
+ */
+function reol_feed_node_update($node) {
+  cache_clear_all('reol_feed_do_not_force', 'cache');
+}
+
+/**
+ * Implements hook_node_delete().
+ *
+ * Trigger feed rebuild when nodes are deleted.
+ */
+function reol_feed_node_delete($node) {
+  cache_clear_all('reol_feed_do_not_force', 'cache');
+}
+
+
+/**
  * Ensure that all feeds are updated.
  */
 function reol_feed_ensure_feeds() {
