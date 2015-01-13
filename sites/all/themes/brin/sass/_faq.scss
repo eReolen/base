@@ -1,107 +1,30 @@
+.faq-answers {
+  margin: 100px 0;
+
+  .faq-question {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 30px;
+    position: relative;
+
+    a:target {
+      position: absolute;
+      left: 0;
+      top: 0.25em;
+      z-index: -1;
+      border-style: solid;
+      border-width: 10px 8px;
+      border-color: transparent transparent transparent #C7003D;
+    }
+  }
+}
+
 .faq-search-result {
   a {
     color: black;
 
     &:hover {
       text-decoration: none;
-    }
-  }
-}
-
-#faq-show-all {
-  font-size: 0.75em;
-  color: $text-tertiary-color;
-}
-
-.faq-content {
-  @extend .default-layout;
-
-  .faq {
-    @extend .default-layout-inside;
-    padding-bottom: 20px;
-
-    .faq-questions {
-      width: 25%;
-      display: inline-block;
-      vertical-align: top;
-      font-family: 'Open Sans', sans-serif;
-      text-transform: uppercase;
-
-      > div {
-        border-bottom: 1px solid #dadada;
-        margin-right: 20px;
-
-        &.active {
-          background: #e8e8e8;
-        }
-      }
-
-      .faq-header-link {
-        color: $text-color;
-        display: block;
-        padding: 10px;
-      }
-    }
-
-    .faq-answers {
-      width: 75%;
-      display: inline-block;
-
-      > .faq-category-answers {
-        display: none;
-
-        &.active {
-          display: block;
-        }
-
-        .faq-item {
-          border: 1px solid #dedede;
-          margin: 20px 0;
-          padding: 10px;
-          position: relative;
-
-          &:after {
-            display: block;
-            height: 25px;
-            width: 25px;
-            line-height: 22.5px;
-            border-radius: 30px;
-            border: 1px solid black;
-            content: "+";
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 25px;
-            text-align: center;
-            color: black;
-          }
-          &.active:after {
-            content: "-";
-          }
-
-          a:hover {
-            text-decoration: none;
-          }
-
-          .faq-question {
-            font-weight: bold;
-            font-size: 1.2em;
-            cursor: pointer;
-            margin: 0;
-            color: $text-color;
-          }
-
-          .faq-answer {
-            display: none
-          }
-
-          &.active {
-            .faq-answer {
-              display: block;
-            }
-          }
-        }
-      }
     }
   }
 }
