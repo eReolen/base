@@ -8,7 +8,6 @@ stylesheets[all][] = css/brin.styles.css
 ; Add our own override.
 scripts[] = scripts/ddbasic.topbar.menu.js
 scripts[] = scripts/brin.js
-scripts[] = scripts/faq.js
 
 ;----------// Regions
 regions[header] = Header
