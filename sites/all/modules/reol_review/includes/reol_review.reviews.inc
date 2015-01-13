@@ -6,50 +6,11 @@
  */
 
 /**
- * Get reviews.
- *
- * @return array
- *   Array of titles found for each type.
- */
-function reol_review_get_reviews() {
-  module_load_include('client.inc', 'ting');
-
-  // See if we have the results cached.
-  $found = &drupal_static(__FUNCTION__);
-  if (!isset($found)) {
-    if ($cache = cache_get('reol_review:reviews')) {
-      $found = $cache->data;
-    }
-    else {
-      $found = array();
-    }
-  }
-  reol_review_alter_found($found);
-
-  return $found;
-}
-
-/**
- * Make sure that found array has one entry for each type.
- *
- * @param array $found
- *   The found array.
- */
-function reol_review_alter_found(&$found) {
-  // Make sure we have arrays for each type.
-  $types = reol_base_get_type();
-  foreach ($types as $type => $n) {
-    if (!isset($found[$type])) {
-      $found[$type] = array();
-    }
-  }
-}
-
-/**
  * Ensure that reviews are updated.
  */
-function reol_review_ensure_reviews() {
-  if (($cache = cache_get('reol_review:reviews')) && (time() < $cache->expire)) {
+function _reol_review_ensure_reviews() {
+  // Refresh every 12 hours.
+  if (($cache = cache_get('reol_review:reviews')) && (($cache->created + 12 * 60 * 60) > REQUEST_TIME)) {
     return;
   }
 
@@ -128,8 +89,9 @@ function reol_review_ensure_reviews() {
     }
   }
 
-  // Cache result, but only for 12 hours.
-  cache_set('reol_review:reviews', $found, 'cache', time() + 12 * 60 * 60);
+  // Set caching to permanent, so cache clearing wont leave us without any data.
+  // We'll check for stale data ourselves.
+  cache_set('reol_review:reviews', $found, 'cache', CACHE_PERMANENT);
 }
 
 /**
