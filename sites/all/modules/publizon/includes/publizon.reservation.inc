@@ -106,17 +106,19 @@ function publizon_reservation_create($account, $local_id, $options) {
   // Get the retailer id on the user.
   $retailer_id = publizon_get_retailer_id($account);
 
+  // Get user profile.
+  $profile = profile2_load_by_user($account->uid, 'provider_publizon');
+  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
+
   // Get the email and phone for notifications.
   // Only if user has selected to get notifications.
   $email = '';
   if ($options['email_notification']) {
-    $email_lang = field_language('profile2', $profile, 'field_email');
-    $email = $options['field_email'][$email_lang][0]['email'];
+    $email = $profile_wrapper->field_email->value();
   }
   $phone = '';
   if ($options['phone_notification']) {
-    $phone_lang = field_language('profile2', $profile, 'field_phone');
-    $phone = $options['field_phone'][$phone_lang][0]['value'];
+    $phone = $profile_wrapper->field_phone->value();
   }
 
   try {

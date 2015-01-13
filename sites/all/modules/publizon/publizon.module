@@ -311,7 +311,7 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
 
   $form['publizon']['#weight'] = 0;
 
-  array_unshift($form['#validate'], 'publizon_form_ding_reservation_reserve_form_validate');
+  $form['#validate'][] = 'publizon_form_ding_reservation_reserve_form_validate';
   $form['#submit'][] = 'publizon_form_ding_reservation_reserve_form_submit';
   return $form;
 }
@@ -330,15 +330,24 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
 function publizon_form_ding_reservation_reserve_form_validate($form, &$form_state) {
   $entity = (object) $form_state['values']['publizon'];
   $entity->type = 'provider_publizon';
+  $options = array(
+    'email_notification' => TRUE,
+    'phone_notification' => TRUE,
+  );
 
   // Do not validate phone if it is not selected.
   if (!$form_state['values']['publizon']['phone_notification']) {
     unset($entity->field_phone);
+    $options['email_notification'] = FALSE;
   }
   // Do not validate email if it is not selected.
   if (!$form_state['values']['publizon']['email_notification']) {
     unset($entity->field_email);
+    $options['phone_notification'] = FALSE;
   }
+
+  // Set the provider options that's passed to the reserve callback.
+  form_set_value($form['provider_options'], $options, $form_state);
 
   field_attach_form_validate('profile2', $entity, $form, $form_state);
 }

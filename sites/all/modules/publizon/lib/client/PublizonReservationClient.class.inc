@@ -30,7 +30,6 @@ class PublizonReservationClient extends PublizonClient {
    * @throws PublizonException
    */
   public function createReservation($retailer_id, $card_number, $pincode, $isbn, $email = '', $phone = '') {
-           drupal_debug(array($retailer_id, $card_number, $pincode, $isbn, $email = '', $phone = ''));
     // Call the webservice, throwing exception on failure.
     $response = $this->call('reservation', 'Create', $retailer_id, array(
       'pub:ebookid' => $isbn,
