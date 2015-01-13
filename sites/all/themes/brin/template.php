@@ -40,6 +40,13 @@ function brin_js_alter(&$javascript) {
     $javascript['settings']['data'][] = array(
       'ding_availability_type_mapping' => $types,
     );
+
+    // For some reason the Drupal.t() doesn't get picked up from
+    // ding_availability_labels.js. The reason might be that we're loading it
+    // dynamically. So we'll just include the strings here for the benefit of
+    // locale.module.
+    t('@type can be reserved');
+    t('@type can be borrowed');
   }
 }
 
