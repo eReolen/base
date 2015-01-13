@@ -103,7 +103,7 @@ function reol_feed_feeds_add_news_item($feed, $source, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
-  $item->guid = $node->nid;
+  $item->guid = $node->nid . '.' . $node->changed;
   $item->type = "news";
   $item->date = $node_wrapper->created->value();
   $item->title = $node_wrapper->title->value();
@@ -164,7 +164,7 @@ function reol_feed_feeds_add_video($feed, $source, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
-  $item->guid = $node->nid;
+  $item->guid = $node->nid . '.' . $node->changed;
   $item->type = "video";
   $item->date = $node_wrapper->created->value();
   $item->title = $node_wrapper->title->value();
@@ -201,7 +201,7 @@ function reol_feed_feeds_add_author_portrait($feed, $source, $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
-  $item->guid = $node->nid;
+  $item->guid = $node->nid . '.' . $node->changed;
   $item->type = "author";
   $item->date = $node_wrapper->created->value();
   $item->title = $node_wrapper->title->value();
@@ -235,7 +235,7 @@ function reol_feed_feeds_add_review($feed, $source, $review) {
 
   $ting_object = ding_entity_load($review->ding_entity_id);
 
-  $item->guid = 'r_' . $review->nid;
+  $item->guid = 'r_' . $review->nid . '.' . $review->changed;
   $item->type = "review";
   $item->title = $ting_object->title;
   $item->date = $review->credate;
