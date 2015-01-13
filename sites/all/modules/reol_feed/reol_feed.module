@@ -218,6 +218,7 @@ function reol_feed_get_latest($type, $ting_type, $count = 2) {
   $query = db_select('node', 'n')
     ->fields('n', array('nid'))
     ->condition('n.type', $type)
+    ->condition('n.status', 1)
     ->condition(db_or()
       ->condition('t.field_reol_entity_type_value', $ting_type)
       ->isNull('t.field_reol_entity_type_value')
