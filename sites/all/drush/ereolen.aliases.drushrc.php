@@ -22,7 +22,7 @@ $aliases['prod'] = array(
   'deployotron' => array(
     'branch' => 'develop',
     'dump-dir' => '/home/deploy/backup/prod',
-    'restart-apache2' => TRUE,
+    'restart-varnish' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
