@@ -39,15 +39,7 @@ function reol_review_get_reviews() {
   module_load_include('client.inc', 'ting');
 
   // See if we have the results cached.
-  $found = &drupal_static(__FUNCTION__);
-  if (!isset($found)) {
-    if ($cache = cache_get('reol_review:reviews')) {
-      $found = $cache->data;
-    }
-    else {
-      $found = array();
-    }
-  }
+  $found = variable_get('reol_review_reviews', array());
   reol_review_alter_found($found);
 
   return $found;

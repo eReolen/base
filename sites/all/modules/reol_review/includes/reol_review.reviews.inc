@@ -14,84 +14,86 @@ function _reol_review_ensure_reviews() {
     return;
   }
 
-  // Prepare found array.
-  $found = array();
-  reol_review_alter_found($found);
+  $outdated = (variable_get('reol_review_reviews_next_update', 0)) > REQUEST_TIME;
+  if ($outdated || !variable_get('reol_review_reviews', FALSE)) {
+    // Prepare found array.
+    $found = array();
+    reol_review_alter_found($found);
 
-  $find_num = variable_get('reol_review_find_reviews_count_min', 2);
-  $find_multiplier = variable_get('reol_review_find_reviews_count_multiplier', 10);
-  $call_max = variable_get('reol_review_feed_try_limit', 25);
-  $call_count = 0;
+    $find_num = variable_get('reol_review_find_reviews_count_min', 2);
+    $find_multiplier = variable_get('reol_review_find_reviews_count_multiplier', 10);
+    $call_max = variable_get('reol_review_feed_try_limit', 25);
+    $call_count = 0;
 
-  // We define a function for determining whether or not
-  // we are done. This allows for a prettier while statement.
-  $done = function($found, $find_num, $call_count, $call_max) {
-    if ($call_count >= $call_max) {
-      return TRUE;
-    }
-    foreach ($found as $f) {
-      // If we have not found enough for this type.
-      if (count($f) < $find_num) {
-        return FALSE;
-      }
-    }
-    return TRUE;
-  };
+    // We define a function for determining whether or not
+    // we are done. This allows for a prettier while statement.
+    $done = function($found, $find_num, $call_count, $call_max) {
+              if ($call_count >= $call_max) {
+                return TRUE;
+              }
+              foreach ($found as $f) {
+                // If we have not found enough for this type.
+                if (count($f) < $find_num) {
+                  return FALSE;
+                }
+              }
+              return TRUE;
+            };
 
-  // Keep looking while we have not found enough items yet.
-  while (!$done($found, $find_num, $call_count, $call_max)) {
-    $results = reol_review_fetch_reviews($find_num * $find_multiplier, $call_count * $find_num * $find_multiplier);
-    $call_count++;
+    // Keep looking while we have not found enough items yet.
+    while (!$done($found, $find_num, $call_count, $call_max)) {
+      $results = reol_review_fetch_reviews($find_num * $find_multiplier, $call_count * $find_num * $find_multiplier);
+      $call_count++;
 
-    // Go through results, only adding the ones that we can find in our data.
-    foreach ($results as $result) {
-      // Malformed results might appear, ignore them.
-      if (!isset($result->isbn)) {
-        continue;
-      }
-      $isbn = reol_base_convert_to_isbn($result->isbn);
-      if (!$isbn) {
-        continue;
-      }
+      // Go through results, only adding the ones that we can find in our data.
+      foreach ($results as $result) {
+        // Malformed results might appear, ignore them.
+        if (!isset($result->isbn)) {
+          continue;
+        }
+        $isbn = reol_base_convert_to_isbn($result->isbn);
+        if (!$isbn) {
+          continue;
+        }
 
-      // We have to explicitly search for each title, instead
-      // of searching for more at a time, as the ISBN-number they are
-      // found on is not necessarily their own, it could be the physical
-      // books ISBN. Therefore there is no way to map a result to the
-      // one fetched from Ding, if searches are not done on each result.
-      module_load_include('client.inc', 'ting');
-      $ting_result = ting_do_search($isbn);
-      if ($ting_result) {
-        // If we have found exactly one.
-        // If more have been found we cannot count on the results.
-        if ($ting_result->numTotalObjects == 1) {
-          list($result->ding_entity_id) = array_keys($ting_result->collections);
-          $ting_entity = ding_entity_load($result->ding_entity_id);
+        // We have to explicitly search for each title, instead
+        // of searching for more at a time, as the ISBN-number they are
+        // found on is not necessarily their own, it could be the physical
+        // books ISBN. Therefore there is no way to map a result to the
+        // one fetched from Ding, if searches are not done on each result.
+        module_load_include('client.inc', 'ting');
+        $ting_result = ting_do_search($isbn);
+        if ($ting_result) {
+          // If we have found exactly one.
+          // If more have been found we cannot count on the results.
+          if ($ting_result->numTotalObjects == 1) {
+            list($result->ding_entity_id) = array_keys($ting_result->collections);
+            $ting_entity = ding_entity_load($result->ding_entity_id);
 
-          // Make sure the title does exist in publizon
-          // and that the title has a cover.
-          $product = publizon_get_product_cover($ting_entity->localId);
+            // Make sure the title does exist in publizon
+            // and that the title has a cover.
+            $product = publizon_get_product_cover($ting_entity->localId);
 
-          // If not, we ignore this one.
-          if (!$product) {
-            continue;
-          }
+            // If not, we ignore this one.
+            if (!$product) {
+              continue;
+            }
 
-          $type = reol_base_get_type_name($ting_entity->type);
-          if ($type) {
-            $found[reol_base_get_type_name($ting_entity->type)][] = $result;
+            $type = reol_base_get_type_name($ting_entity->type);
+            if ($type) {
+              $found[reol_base_get_type_name($ting_entity->type)][] = $result;
+            }
           }
         }
-      }
-      else {
-        watchdog('reol_review', 'Ting search failed.', array(), WATCHDOG_WARNING);
+        else {
+          watchdog('reol_review', 'Ting search failed.', array(), WATCHDOG_WARNING);
+        }
       }
     }
-  }
 
-  // Set caching to permanent, so cache clearing wont leave us without any data.
-  // We'll check for stale data ourselves.
-  cache_set('reol_review:reviews', $found, 'cache', CACHE_PERMANENT);
+    variable_set('reol_review_reviews', $found);
+    variable_set('reol_review_reviews_next_update', REQUEST_TIME + 12 * 60 * 60);
+  }
 }
 
 /**
