@@ -333,15 +333,34 @@ function publizon_form_ding_reservation_reserve_form_validate($form, &$form_stat
     'phone_notification' => TRUE,
   );
 
-  // Do not validate phone if it is not selected.
-  if (!$form_state['values']['publizon']['phone_notification']) {
-    unset($entity->field_phone);
-    $options['email_notification'] = FALSE;
+  $wrapper = entity_metadata_wrapper('profile2', $entity);
+
+  if ($form_state['values']['publizon']['phone_notification']) {
+    if (!$wrapper->field_phone->value()) {
+      // The field is not required, so we check here.
+      $element = $form['publizon']['field_phone'];
+      form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
+    }
   }
-  // Do not validate email if it is not selected.
-  if (!$form_state['values']['publizon']['email_notification']) {
-    unset($entity->field_email);
+  else {
+    // Do not validate phone if it is not selected.
+    // unset($entity->field_phone);
+    $wrapper->field_phone->set(NULL);
     $options['phone_notification'] = FALSE;
+  }
+
+  if ($form_state['values']['publizon']['email_notification']) {
+    if (!$wrapper->field_email->value()) {
+      // The field is not required, so we check here.
+      $element = $form['publizon']['field_email'];
+      form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
+    }
+  }
+  else {
+    // Do not validate email if it is not selected.
+    // unset($entity->field_email);
+    $wrapper->field_email->set(NULL);
+    $options['email_notification'] = FALSE;
   }
 
   // Set the provider options that's passed to the reserve callback.
