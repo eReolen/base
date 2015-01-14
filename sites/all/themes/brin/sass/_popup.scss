@@ -22,3 +22,12 @@
   top: 100px !important;
   position: absolute !important;
 }
+
+.ui-widget {
+  font-family: 'Oxygen', sans-serif;
+
+  input.form-submit,
+  #edit-cancel {
+    margin-top: 2em;
+  }
+}

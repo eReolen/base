@@ -4,7 +4,9 @@
 .field-name-ding-entity-buttons .reserve-button.unavailable.reservable:link,
 .field-name-ding-entity-buttons .field-items .reserve-button:link,
 .form-submit,
+.ui-widget .form-submit,
 #edit-cancel,
+.ui-widget #edit-cancel,
 .action-button {
   @extend %button-default;
 }
@@ -13,11 +15,13 @@
 a.button,
 %button-default {
   position: static;
+  display: inline-block;
   @include border-radius(2px);
   color: #ffffff;
   background-color: #c7003d;
   background-image: none;
   text-decoration: none;
+  font-family: 'Oxygen', sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 13px;
