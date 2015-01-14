@@ -70,12 +70,19 @@ h1 ,
 }
 
 @include small() {
-  .page-reol-frontpage {
+  .page-reol-frontpage,
+  .pane-page-content {
     .panels-flexible-region-default-layout-left {
       width: 100%;
       .panels-flexible-region-inside {
         padding-right: 0;
       }
+    }
+  }
+
+  .pane-page-content {
+    .panels-flexible-region-default-layout-right {
+      display: none;
     }
   }
 }
