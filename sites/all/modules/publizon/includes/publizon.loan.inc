@@ -34,13 +34,21 @@ function publizon_loan_list($account, $reset = FALSE) {
       $client = PublizonLoanClient::getClient();
       $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
 
+      $isbns = array();
       foreach ($loans as $loan) {
-        $id = reol_base_ding_entity_get_id($loan->isbn);
+        $isbns[] = $loan->isbn;
+      }
 
+      if ($isbns) {
+        $mapping = reol_base_ding_entity_get_ids($isbns);
+      }
+
+      foreach ($loans as $loan) {
         // Title might not be found, do nothing.
-        if (!$id) {
+        if (!isset($mapping[$loan->isbn])) {
           continue;
         }
+        $id = $mapping[$loan->isbn];
 
         $result[$id] = new DingProviderLoan($id, array(
           'ding_entity_id' => $id,

@@ -25,13 +25,21 @@ function publizon_bookmark_list($account) {
   $client = PublizonChecklistClient::getClient();
   $checklist = $client->getChecklist($retailer_id, $creds['name']);
 
+  $isbns = array();
   foreach ($checklist as $item) {
-    $id = reol_base_ding_entity_get_id($item->isbn);
+    $isbns[] = $item->isbn;
+  }
 
+  if ($isbns) {
+    $mapping = reol_base_ding_entity_get_ids($isbns);
+  }
+
+  foreach ($checklist as $item) {
     // Title might not be found, do nothing.
-    if (!$id) {
+    if (!isset($mapping[$item->isbn])) {
       continue;
     }
+    $id = $mapping[$item->isbn];
 
     $result[] = $id;
   }

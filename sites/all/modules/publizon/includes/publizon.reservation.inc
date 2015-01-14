@@ -40,13 +40,21 @@ function publizon_reservation_list($account, $get_type = FALSE) {
       $client = PublizonReservationClient::getClient();
       $reservations = $client->listReservations($retailer_id, $creds['name']);
 
+      $isbns = array();
       foreach ($reservations as $reservation) {
-        $ding_id = reol_base_ding_entity_get_id($reservation->isbn);
+        $isbns[] = $reservation->isbn;
+      }
 
+      if ($isbns) {
+        $mapping = reol_base_ding_entity_get_ids($isbns);
+      }
+
+      foreach ($reservations as $reservation) {
         // Title might not be found, do nothing.
-        if (!$ding_id) {
+        if (!isset($mapping[$reservation->isbn])) {
           continue;
         }
+        $ding_id = $mapping[$reservation->isbn];
 
         $ting_entity = ding_entity_load($ding_id);
         $id = $ting_entity->localId;

@@ -343,24 +343,35 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
 }
 
 /**
- * Get ding entity id from an ISBN number.
+ * Get ding entity ids from multiple ISBN numbers.
  *
- * @param string $isbn
- *   The ISBN number to search for.
+ * Only does one request to the well.
  *
- * @return string
- *   The Ding entity id or FALSE if not found.
+ * @param string $isbns
+ *   The ISBN numbers to search for.
+ *
+ * @return array
+ *   isbn => ding entity ids array.
  */
-function reol_base_ding_entity_get_id($isbn) {
+function reol_base_ding_entity_get_ids($isbns) {
   module_load_include('client.inc', 'ting');
   // Get the id from a search in Ting.
-  $res = ting_do_search("term.identifier=" . $isbn);
+  $search = implode(" OR term.identifier=", $isbns);
+  $res = ting_do_search("term.identifier=" . $search);
   if (!$res) {
     return FALSE;
   }
 
-  $ids = array_keys($res->collections);
-  return count($ids) ? $ids[0] : FALSE;
+  $mapping = array();
+  foreach ($res->collections as $id => $collection) {
+    foreach ($collection->getEntities() as $entity) {
+      foreach ($entity->getIsbn() as $isbn) {
+        $mapping[$isbn] = $id;
+      }
+    }
+  }
+  return $mapping;
+
 }
 
 /**
