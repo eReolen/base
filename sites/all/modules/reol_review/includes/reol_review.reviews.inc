@@ -14,7 +14,7 @@ function _reol_review_ensure_reviews() {
     return;
   }
 
-  $outdated = (variable_get('reol_review_reviews_next_update', 0)) > REQUEST_TIME;
+  $outdated = (variable_get('reol_review_reviews_next_update', 0)) < REQUEST_TIME;
   if ($outdated || !variable_get('reol_review_reviews', FALSE)) {
     // Prepare found array.
     $found = array();
