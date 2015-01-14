@@ -9,12 +9,7 @@
  * Ensure that reviews are updated.
  */
 function _reol_review_ensure_reviews() {
-  // Refresh every 12 hours.
-  if (($cache = cache_get('reol_review:reviews')) && (($cache->created + 12 * 60 * 60) > REQUEST_TIME)) {
-    return;
-  }
-
-  $outdated = (variable_get('reol_review_reviews_next_update', 0)) < REQUEST_TIME;
+  $outdated = variable_get('reol_review_reviews_next_update', 0) < REQUEST_TIME;
   if ($outdated || !variable_get('reol_review_reviews', FALSE)) {
     // Prepare found array.
     $found = array();
@@ -91,8 +86,10 @@ function _reol_review_ensure_reviews() {
       }
     }
 
-    variable_set('reol_review_reviews', $found);
-    variable_set('reol_review_reviews_next_update', REQUEST_TIME + 12 * 60 * 60);
+    if (!empty($found)) {
+      variable_set('reol_review_reviews', $found);
+      variable_set('reol_review_reviews_next_update', REQUEST_TIME + 12 * 60 * 60);
+    }
   }
 }
 
