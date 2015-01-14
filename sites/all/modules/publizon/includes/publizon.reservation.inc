@@ -77,6 +77,7 @@ function publizon_reservation_list($account, $get_type = FALSE) {
         }
 
         $result[$type][$id] = new DingProviderReservation($id, $data);
+        $result[$type][$id]->expected_date = date('Y-m-d H:i:s', $reservation->expectedRedeemDateUtc);
       }
 
       // Store the reservations into ding session cache.
