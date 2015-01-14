@@ -336,12 +336,12 @@ function publizon_form_ding_reservation_reserve_form_validate($form, &$form_stat
   // Do not validate phone if it is not selected.
   if (!$form_state['values']['publizon']['phone_notification']) {
     unset($entity->field_phone);
-    $options['email_notification'] = FALSE;
+    $options['phone_notification'] = FALSE;
   }
   // Do not validate email if it is not selected.
   if (!$form_state['values']['publizon']['email_notification']) {
     unset($entity->field_email);
-    $options['phone_notification'] = FALSE;
+    $options['email_notification'] = FALSE;
   }
 
   // Set the provider options that's passed to the reserve callback.
