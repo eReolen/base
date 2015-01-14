@@ -28,6 +28,8 @@ function publizon_loan_list($account, $reset = FALSE) {
 
     // If no caches have data, get from Publizon.
     if (empty($result) || $reset) {
+      // In case ding_session_cache_get() returned crap.
+      $result = array();
       $retailer_id = publizon_get_retailer_id($account);
 
       // Get list of loans from Publizon.
