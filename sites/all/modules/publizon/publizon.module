@@ -310,7 +310,7 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
   $form['publizon']['#weight'] = 0;
 
   $form['#validate'][] = 'publizon_form_ding_reservation_reserve_form_validate';
-  $form['#submit'][] = 'publizon_form_ding_reservation_reserve_form_submit';
+  array_unshift($form['#submit'], 'publizon_form_ding_reservation_reserve_form_submit');
   return $form;
 }
 
@@ -403,7 +403,6 @@ function publizon_form_ding_reservation_reserve_form_submit($form, &$form_state)
       continue;
     }
 
-    $lang = field_language('profile2', $profile, $field);
     if ($profile->$field != $values[$field]) {
       $profile->$field = $values[$field];
       $changed = TRUE;
