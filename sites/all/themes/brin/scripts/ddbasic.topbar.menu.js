@@ -52,11 +52,21 @@
 
       // Handler for menu items triggering dropdown.
       lis.find('> a').click(function(e) {
-        lis.removeClass('active');
+        var current = $(this).closest('li').first();
+        var active = current.hasClass('active');
+        $(this).closest('ul').children('li').removeClass('active');
+        if (!active) {
+          current.addClass('active');
+        }
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // Expand first level menu items by default, for reasons of UX.
+      var roots = $('.js-topbar-menu > .main-menu').children('li:not(.leaf)');
+      roots.find('> a').each(function () {
         var li = $(this).closest('li').first();
-        li.toggleClass('active');
-          e.preventDefault();
-          e.stopPropagation();
+        li.addClass('active-sm');
       });
     }
   };

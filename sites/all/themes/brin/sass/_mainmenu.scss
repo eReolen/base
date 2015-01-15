@@ -79,7 +79,8 @@
               text-decoration: none;
             }
 
-            &.active {
+            &.active,
+            &.active-sm {
               text-decoration: none;
             }
           }
@@ -93,6 +94,7 @@
         }
         // Second level, mobile, active trail.
         .active .main-menu,
+        .active-sm .main-menu,
         .active-trail .main-menu {
           display: block;
         }
@@ -103,7 +105,8 @@
         }
 
         // Third level, mobile, active.
-        .main-menu .active .main-menu {
+        .main-menu .active .main-menu,
+        .main-menu .active-sm .main-menu {
           display: block;
         }
 
