@@ -13,8 +13,10 @@ module_load_include('inc', 'reol_bookmark_migration', 'includes/reol_bookmark_mi
 function reol_bookmark_migration_user_login(&$edit, $account) {
   $loaner_id = $edit['input']['name'];
 
-  module_load_include('inc', 'reol_bookmark_migration', 'includes/reol_bookmark_migration.migration');
-  reol_bookmark_migration_ensure_user($account->uid, $loaner_id);
+  if (variable_get('reol_bookmark_migration_enabled', TRUE)) {
+    module_load_include('inc', 'reol_bookmark_migration', 'includes/reol_bookmark_migration.migration');
+    reol_bookmark_migration_ensure_user($account->uid, $loaner_id);
+  }
 }
 
 /**
