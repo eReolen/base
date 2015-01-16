@@ -20,7 +20,7 @@ $aliases['prod'] = array(
   'uri' => 'prod.ereolen.dk',
   'root' => '/data/www/prod_ereolen_dk',
   'deployotron' => array(
-    'branch' => 'develop',
+    'branch' => 'master',
     'dump-dir' => '/home/deploy/backup/prod',
     'restart-varnish' => TRUE,
     // Updb clears the cache.
