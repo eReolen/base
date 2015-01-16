@@ -47,6 +47,46 @@ function publizon_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['publizon']['settings']['publizon_default_retailer'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Default library id'),
+    '#description' => t('The default librarys id to use for fetching covers. Note: Must be available in list below.'),
+    '#default_value' => variable_get('publizon_default_retailer', ''),
+    '#required' => TRUE,
+  );
+
+  $form['publizon']['settings']['publizon_player_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Player URL'),
+    '#description' => t('The URL for the Publizon player.'),
+    '#default_value' => variable_get('publizon_player_url', 'https://play.pubhub.dk'),
+    '#required' => TRUE,
+  );
+
+  $form['publizon']['settings']['publizon_player_client_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Client ID for the player API'),
+    '#description' => t('The Client ID for the player to use on the player API'),
+    '#default_value' => variable_get('publizon_player_client_id', ''),
+    '#required' => TRUE,
+  );
+
+  $form['publizon']['settings']['publizon_reader_stream_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Reader stream URL'),
+    '#description' => t('The URL for the Publizon reader stream.'),
+    '#default_value' => variable_get('publizon_reader_stream_url', 'https://streaming.pubhub.dk'),
+    '#required' => TRUE,
+  );
+
+  $form['publizon']['settings']['publizon_reader_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Reader URL'),
+    '#description' => t('The URL for the Publizon reader.'),
+    '#default_value' => variable_get('publizon_reader_url', 'https://reader.pubhub.dk'),
+    '#required' => TRUE,
+  );
+
   $form['publizon']['settings']['publizon_logging'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable logging'),
@@ -125,7 +165,7 @@ function publizon_settings_form($form, &$form_state) {
     '#type' => 'submit',
     '#value' => t('Add more'),
     '#submit' => array('publizon_settings_form_add_library'),
-    '#name' => 'add',
+    '#name' => 'add-library',
     '#ajax' => array(
       'callback' => 'publizon_settings_form_libraries_callback',
       'wrapper' => 'libraries-fieldset-wrapper',
@@ -145,10 +185,127 @@ function publizon_settings_form($form, &$form_state) {
       '#type' => 'submit',
       '#value' => t('Remove last'),
       '#submit' => array('publizon_settings_form_remove_library'),
-      '#name' => 'remove',
+      '#name' => 'remove-library',
       '#ajax' => array(
         'callback' => 'publizon_settings_form_libraries_callback',
         'wrapper' => 'libraries-fieldset-wrapper',
+      ),
+    );
+  }
+
+  // Add messages fieldset.
+  $form['publizon']['error_messages'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Custom error messages'),
+    '#description' => t('Customize the error messages for loan/reservation/bookmark.'),
+    '#prefix' => '<div id="error-messages-fieldset-wrapper">',
+    '#suffix' => '</div>',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+
+  // Find the number of elements (messages) to show, based on the current state.
+  $error_messages = variable_get('publizon_error_messages', array());
+  $num_error_messages = count($error_messages) ? count($error_messages) : 1;
+  if (isset($form_state['values']['publizon']['num_error_messages'])) {
+    $num_error_messages = $form_state['values']['publizon']['num_error_messages'];
+  }
+
+  // Store the number of libraries to ahah callbacks (add one more).
+  $form['publizon']['num_error_messages'] = array(
+    '#type' => 'value',
+    '#value' => $num_error_messages,
+  );
+
+  $defaults = array(
+    'value' => '',
+    'format' => 'ding_wysiwyg',
+  );
+  // Add form elements.
+  $no_default = TRUE;
+  // If there is no default error message, add one.
+  if (!isset($error_messages[-1])) {
+    $num_error_messages++;
+  }
+
+  for ($i = 0; $i < $num_error_messages; $i++) {
+    $error_message = array_shift($error_messages);
+    $default = $error_message ? $error_message['error_code'] == -1 : ($i == $num_error_messages - 1 && $no_default);
+    $no_default = $no_default ? ($default ? FALSE : TRUE) : FALSE;
+
+    $form['publizon']['error_messages']['e'][$i] = array(
+      '#type' => 'fieldset',
+      '#title' => $default ? t('Default error') : (t('Error @code', array('@code' => $error_message ? $error_message['error_code'] : '[new]'))),
+      '#collapsible' => TRUE,
+      '#collapsed' => (bool) $error_message,
+      '#attributes' => array(
+        'class' => array('error-message-settings'),
+      ),
+    );
+
+    $form['publizon']['error_messages']['e'][$i]['error_code'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Code'),
+      '#size' => 6,
+      '#default_value' => $default ? '-1' : ($error_message ? $error_message['error_code'] : ''),
+      '#access' => !$default,
+    );
+
+    $form['publizon']['error_messages']['e'][$i]['show_bookmark'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show bookmark button'),
+      '#default_value' => $error_message ? $error_message['show_bookmark'] : '',
+    );
+
+    $form['publizon']['error_messages']['e'][$i]['show_reserve'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show reserve button'),
+      '#default_value' => $error_message ? $error_message['show_bookmark'] : '',
+    );
+
+    $message = $error_message ? $error_message['error_text'] : $defaults;
+    $form['publizon']['error_messages']['e'][$i]['error_text'] = array(
+      '#type' => 'text_format',
+      '#title' => t('Error message'),
+      '#size' => 50,
+      '#default_value' => $message['value'],
+      '#format' => $message['format'],
+    );
+  }
+
+  $form['publizon']['error_messages']['spacer'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="spacer"></div>',
+  );
+
+  $form['publizon']['error_messages']['add'] = array(
+    '#type' => 'submit',
+    '#value' => t('Add more'),
+    '#submit' => array('publizon_settings_form_add_error_message'),
+    '#name' => 'add-error-message',
+    '#ajax' => array(
+      'callback' => 'publizon_settings_form_error_messages_callback',
+      'wrapper' => 'error-messages-fieldset-wrapper',
+    ),
+    '#prefix' => '<div class="add">',
+  );
+
+  $form['publizon']['error_messages']['add_count'] = array(
+    '#type' => 'textfield',
+    '#size' => 1,
+    '#default_value' => isset($form_state['values']['publizon']['error_messages']['add_count']) ? $form_state['values']['publizon']['error_messages']['add_count'] : 1,
+    '#suffix' => '</div>',
+  );
+
+  if ($num_error_messages > 1) {
+    $form['publizon']['error_messages']['remove'] = array(
+      '#type' => 'submit',
+      '#value' => t('Remove last'),
+      '#submit' => array('publizon_settings_form_remove_error_message'),
+      '#name' => 'remove-error-message',
+      '#ajax' => array(
+        'callback' => 'publizon_settings_form_error_messages_callback',
+        'wrapper' => 'error-messages-fieldset-wrapper',
       ),
     );
   }
@@ -203,6 +360,46 @@ function publizon_settings_form_libraries_callback($form, $form_state) {
 }
 
 /**
+ * Callback for adding one more error message.
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The form state at submit.
+ */
+function publizon_settings_form_add_error_message($form, &$form_state) {
+  $form_state['values']['publizon']['num_error_messages'] = $form_state['values']['publizon']['num_error_messages'] + $form_state['values']['publizon']['error_messages']['add_count'];
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Callback for removing an error message.
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The form state at submit.
+ */
+function publizon_settings_form_remove_error_message($form, &$form_state) {
+  if ($form_state['values']['publizon']['num_error_messages'] > 1) {
+    $form_state['values']['publizon']['num_error_messages']--;
+  }
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Ajax callback for error messages altering.
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The form state at submit.
+ */
+function publizon_settings_form_error_messages_callback($form, $form_state) {
+  return $form['publizon']['error_messages'];
+}
+
+/**
  * Validate the publizon settings form.
  *
  * This makes sure that if something is entered in one of the fields,
@@ -215,7 +412,7 @@ function publizon_settings_form_libraries_callback($form, $form_state) {
  */
 function publizon_settings_form_validate($form, &$form_state) {
   // Do not validate when we are trying to remove an element.
-  if ($form_state['triggering_element']['#name'] == 'remove') {
+  if ($form_state['triggering_element']['#name'] == 'remove-library' || $form_state['triggering_element']['#name'] == 'remove-error-message') {
     return;
   }
 
@@ -268,6 +465,20 @@ function publizon_settings_form_submit($form, &$form_state) {
   foreach ($form_state['values']['publizon']['settings'] as $name => $value) {
     variable_set($name, $value);
   }
+
+  $error_messages = array();
+  // Go through the libraries submitted.
+  foreach ($form_state['values']['publizon']['error_messages']['e'] as $error_message) {
+    // If no error code is defined, do not save it.
+    if (empty($error_message['error_code'])) {
+      continue;
+    }
+
+    // Save this one.
+    $error_messages[$error_message['error_code']] = $error_message;
+  }
+
+  variable_set('publizon_error_messages', $error_messages);
 
   drupal_set_message(t('The configuration options have been saved.'));
 }

@@ -1,0 +1,305 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen bookmark module feature.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function reol_bookmark_menu() {
+  $items = array();
+
+  $items['user/%user/bookmarks'] = array(
+    'title' => 'Bookmarks',
+    'title callback' => 'reol_bookmark_menu_item_title',
+    'title arguments' => array('Bookmarks', 1),
+    'page callback' => 'reol_bookmark_user_bookmark_page',
+    'page arguments' => array(1),
+    'access callback' => 'reol_bookmark_view_access',
+    'access arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'reol_bookmark.pages.inc',
+  );
+
+  $items['ting/object/%ting_object/bookmark'] = array(
+    'page callback' => 'reol_base_entity_ajax_form',
+    'page arguments' => array(
+      'reol_bookmark',
+      'reol_bookmark_create_ajax',
+      2,
+      4,
+    ),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('perform bookmark'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function reol_bookmark_permission() {
+  return array(
+    'perform bookmark' => array(
+      'title' => t('Perform bookmark'),
+      'description' => t('Perform bookmark of ting objects.'),
+    ),
+  );
+}
+
+/**
+ * Bookmark (or remove bookmark) a ting_object.
+ *
+ * @param string $id
+ *   The id of the ting object.
+ * @param bool $remove
+ *   Whether or not to remove bookmark. Default FALSE
+ *
+ * @return bool
+ *   Whether or not action was successful.
+ */
+function reol_bookmark_bookmark($id, $remove = FALSE) {
+  global $user;
+  // Make sure cache is cleared.
+  reol_bookmark_cache_clear();
+
+  $ting_object = ding_entity_load($id);
+
+  if (!$remove) {
+    ding_provider_invoke('bookmark', 'create', $user, $ting_object->localId);
+  }
+  else {
+    ding_provider_invoke('bookmark', 'delete', $user, $ting_object->localId);
+  }
+  return TRUE;
+}
+
+/**
+ * Get all bookmarks for a user.
+ *
+ * @param StdClass $account
+ *   The user to get bookmarks for.
+ *
+ * @return array
+ *   Array of bookmarks from provider.
+ */
+function reol_bookmark_get_bookmarks($account) {
+  // First look in static for bookmarks.
+  $bookmarks = &drupal_static(__FUNCTION__);
+  if (!isset($bookmarks)) {
+    // Second, use ding_session_cache.
+    if (module_exists('ding_session_cache')) {
+      $bookmarks = ding_session_cache_get('reol_bookmark', 'bookmarks');
+    }
+    // If all else fails, fetch from provider.
+    if (empty($bookmarks)) {
+      try {
+        $bookmarks = ding_provider_invoke('bookmark', 'list', $account);
+      }
+      catch (Exception $e) {
+        $bookmarks = array();
+      }
+
+      // Save in session cache.
+      if (module_exists('ding_session_cache')) {
+        ding_session_cache_set('reol_bookmark', 'bookmarks', $bookmarks);
+      }
+    }
+  }
+  return $bookmarks;
+}
+
+/**
+ * Implements hook_views_default_views_alter().
+ *
+ * Kill the views for the default bookmarks flag. They clash with our
+ * paths. Disabling them does not seem to be enough.
+ */
+function reol_bookmark_views_default_views_alter(&$views) {
+  if (!empty($views['flag_bookmarks'])) {
+    unset($views['flag_bookmarks']);
+  }
+  if (!empty($views['flag_bookmarks_tab'])) {
+    unset($views['flag_bookmarks_tab']);
+  }
+}
+
+/**
+ * Alter title to add count items number.
+ *
+ * @param string $title
+ *   Untranslated title.
+ * @param StdClass $account
+ *   User account object, for counting bookmark items.
+ *
+ * @return string
+ *   The bookmark item title.
+ */
+function reol_bookmark_menu_item_title($title, $account = NULL) {
+  $account = isset($account->data) ? $account->data : $account;
+  $bookmarks = $account ? count(reol_bookmark_get_bookmarks($account)) : 0;
+  return t($title) . ' (' . $bookmarks . ')';
+}
+
+/**
+ * Access callback; Check user access to bookmark.
+ */
+function reol_bookmark_view_access($account) {
+  global $user;
+  return $user->uid == $account->uid || $user->uid == 1;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function reol_bookmark_menu_alter(&$items) {
+  foreach ($items as $path => $item) {
+    if ($path == 'user/%user/bookmarks' || $path == 'user/%pm_arg/bookmarks') {
+      $items[$path]['title callback'] = 'reol_bookmark_menu_item_title';
+      $items[$path]['title arguments'] = array($items[$path]['title'], 1);
+    }
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_bookmark_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}
+
+/**
+ * Implements hook_ding_entity_buttons().
+ */
+function reol_bookmark_ding_entity_buttons($type, $entity) {
+  $buttons = array();
+  if (reol_loan_is_right_type($entity)) {
+    global $user;
+    drupal_add_library('system', 'drupal.ajax');
+    list($availability) = array_values(ding_availability_items(array($entity->localId)));
+
+    $link = 'ting/object/' . $entity->id . '/bookmark';
+    if (@$availability['bookmarked']) {
+      $text = t('Delete from bookmarks');
+      $link .= '/delete';
+    }
+    else {
+      $text = t('Bookmark');
+    }
+
+    $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id);
+  }
+  return $buttons;
+}
+
+/**
+ * Get the bookmark button.
+ *
+ * @param TingEntity $entity
+ *   The entity to get button for.
+ *
+ * @return array
+ *   Renderable array button.
+ */
+function reol_bookmark_get_bookmark_button($entity) {
+  list($availability) = array_values(ding_availability_items(array($entity->localId)));
+
+  if (!@$availability['bookmarked']) {
+    return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id);
+  }
+}
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to bookmark.
+ */
+function reol_bookmark_secure_permissions($role) {
+  $permissions = array(
+    'anonymous user' => array(
+      'perform bookmark',
+    ),
+    'provider' => array(
+      'perform bookmark',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/**
+ * Ajax entry callback.
+ *
+ * Bookmark ting object/entity with ajax callback.
+ *
+ * @param TingEntity $entity
+ *   Ting entity object.
+ * @param string $remove
+ *   Last argument from path. If filled in, remove
+ *   instead of add.
+ *
+ * @return array
+ *   Render array with Ajax commands.
+ */
+function reol_bookmark_create_ajax($entity, $remove = FALSE) {
+  $commands = array();
+
+  // Try to add bookmark to the users list.
+  $res = reol_bookmark_bookmark($entity->id, (bool) $remove);
+
+  $html = theme('status_messages');
+
+  $html .= '<p>';
+  if (!$remove) {
+    if (!$res) {
+      $html .= t('An unknown error occurred while adding <em>@title</em> to bookmarks', array('@title' => $entity->title));
+    }
+    else {
+      $html .= t('<em>@title</em> added to bookmarks', array('@title' => $entity->title));
+    }
+  }
+  else {
+    if (!$res) {
+      $html .= t('An unknown error occurred while removing <em>@title</em> from bookmarks', array('@title' => $entity->title));
+    }
+    else {
+      $html .= t('<em>@title</em> removed from bookmarks', array('@title' => $entity->title));
+    }
+  }
+  $html .= '</p>';
+  $html .= reol_base_get_modal_close_button(t('OK'), 'reol_bookmark');
+
+  // Display pop-up.
+  $commands[] = ajax_command_ding_popup('reol_bookmark', t('Bookmark'), $html, array('refresh' => TRUE));
+
+  return $commands;
+}
+
+/**
+ * Implements hook_ding_session_cache_defaults().
+ *
+ * Set default ding_session_cache settings and tell ding_session_cache that this
+ * module supports it.
+ */
+function reol_bookmark_ding_session_cache_defaults() {
+  return array(
+    'titel' => 'Reol bookmark',
+    'enabled' => TRUE,
+    'expire' => 3600,
+  );
+}
+
+/**
+ * Clears the bookmark cache if ding_session_cache is active.
+ */
+function reol_bookmark_cache_clear() {
+  if (module_exists('ding_session_cache')) {
+    ding_session_cache_clear('reol_bookmark', 'bookmarks');
+  }
+}

@@ -2,4 +2,7 @@ name = eReolen loan module
 description = Module handling loans for eReolen.dk
 core = 7.x
 package = ereolen.dk
+dependencies[] = features
+dependencies[] = reol_base
 features[features_api][] = api:2
+mtime = 1416322956

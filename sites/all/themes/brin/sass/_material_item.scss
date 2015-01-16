@@ -1,0 +1,58 @@
+.material-item {
+  .item-title {
+    position: relative;
+
+    &:after {
+      content: "";
+      display: block;
+      height: 0.925em;
+      width: 1em;
+      position: absolute;
+      left: -1.5em;
+      bottom: 0;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      top: 0.25em;
+    }
+  }
+  &.ebook .item-title:after {
+    background-image: url("../images/icon-ebook.png");
+  }
+  &.audiobook .item-title:after {
+    background-image: url("../images/icon-audiobook.png");
+  }
+
+  .expires-in,
+  .pickup-date{
+    font-weight: bold;
+
+    &.high {
+      color: green;
+    }
+    &.medium {
+      color: #F0CB28;
+    }
+    &.low {
+      color: red;
+    }
+  }
+
+  .right-column {
+    padding-left: 40px;
+  }
+
+  .material-buttons {
+    float: right;
+
+    a {
+      margin-right: 20px;
+    }
+    a:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.pane-loans .material-item .right-column {
+  padding-left: 10px;
+}

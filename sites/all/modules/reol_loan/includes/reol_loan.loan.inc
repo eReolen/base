@@ -6,60 +6,6 @@
  */
 
 /**
- * Implements hook_ding_entity_buttons().
- *
- * Add loan button on entity view page for audiobook or ebook.
- */
-function reol_loan_ding_entity_buttons($type, $entity) {
-  // Types that should have this button.
-  $types = array(
-    'lydbog (net)',
-    'ebog',
-  );
-
-  if ($entity instanceof TingEntity && in_array(strtolower($entity->type), $types)) {
-    drupal_add_library('system', 'drupal.ajax');
-
-    $button = array(
-      array(
-        '#theme' => 'link',
-        '#text' => t('Loan'),
-        '#path' => 'ting/object/' . $entity->id . '/loan',
-        '#options' => array(
-          'attributes' => array(
-            'class' => array(
-              'action-button',
-              'reserve-button',
-              'use-ajax',
-            ),
-            'id' => 'reservation-' . $entity->id,
-          ),
-          'html' => FALSE,
-        ),
-      ),
-    );
-
-    return $button;
-  }
-}
-
-/**
- * Implements hook_ding_entity_menu().
- *
- * Create menu callback for loaning an audiobook or ebook.
- */
-function reol_loan_ding_entity_menu(&$items, $type, $path, $index) {
-  if ($type == 'ding_entity') {
-    $items[$path . '/loan'] = array(
-      'title' => 'Loan',
-      'page callback' => 'ding_provider_get_form',
-      'page arguments' => array('reol_loan_loan_form', $index),
-      'access callback' => TRUE,
-    );
-  }
-}
-
-/**
  * Form for loaning an audiobook or ebook.
  *
  * @param array $form
@@ -120,91 +66,72 @@ function reol_loan_loan_form($form, &$form_state, $loanable) {
  *   The state of the form including values.
  */
 function reol_loan_loan_form_submit($form, &$form_state) {
-  // Only do something if user agrees.
-  if ($form_state['triggering_element']['#name'] != 'no') {
-    global $user;
-    if ($form_state['values']['loanable']) {
-      $loanable = $form_state['values']['loanable'];
-      try {
-        $loan_result = ding_provider_invoke('loan', 'create', $user, $loanable->ding_entity_id);
+  try {
+    // Only do something if user agrees.
+    if ($form_state['triggering_element']['#name'] != 'no') {
+      global $user;
+      if ($form_state['values']['loanable']) {
+        $loanable = $form_state['values']['loanable'];
+        // Throws exception in case of error.
+        ding_provider_invoke('loan', 'create', $user, $loanable->localId);
         $form_state['loaned'] = TRUE;
         drupal_set_message(t('"@title" loaned.', array('@title' => $loanable->getTitle())));
 
         // TODO Clear loan session cache (availability etc.).
       }
-      catch (DingProviderUserException $e) {
-        drupal_set_message($e->getMessageT(array('@title' => $reservable->getTitle())), 'error');
-      }
-      catch (DingProviderAuthException $e) {
-        // Just rethrow.
-        throw $e;
-      }
-      catch (Exception $e) {
-        drupal_set_message(t('An error occurred while loaning item. Please try again later.'), 'error');
-        watchdog('reol_loan', 'Error while loaning, message: @message', array('@message', $e->getMessage()), WATCHDOG_ERROR);
-      }
     }
+  }
+  catch (Exception $e) {
+    $form_state['error'] = $e;
   }
 }
 
 /**
  * Ajax entry callback.
  *
- * Try display the form for loaning the material, if the user is not logged in
- * trigger a ajax login.
+ * Display the form for loaning the material.
  *
- * @param TingEntity $entity
+ * @param TingEntity $loanable
  *   Ting entity object.
  *
  * @return array
  *   Render array with Ajax commands.
  */
-function reol_loan_loan_ajax($entity) {
+function reol_loan_loan_ajax($loanable, $form = array(), $form_state = array()) {
   $commands = array();
 
-  // Check if the logged in user is a library user.
-  global $user;
-  if (user_is_logged_in()) {
-    if (ding_user_is_provider_user($user)) {
-      if (is_object($entity) && $entity instanceof TingEntity) {
-        $loanable = $entity;
-
-        // Try to create loan form.
-        try {
-          $form = ding_provider_get_form('reol_loan_loan_form', $loanable, FALSE);
-          $commands[] = ajax_command_ding_popup('reol_loan', t('Loan'), render($form));
-        }
-        catch (DingProviderAuthException $exception) {
-          // The form may have thrown an Auth exception, so display login. (the
-          // reservation link will be triggered on success).
-          $commands[] = ajax_command_ding_user_authenticate('');
-        }
-        catch (Exception $exception) {
-          // The form may have thrown an auth exception as the login may have
-          // timed-out (the reservation link will be triggered on success).
-          $commands[] = ajax_command_ding_popup('reol_loan', t('Error'), '<p>' . t('Unknown error in loan, please contact the library.') . '</p>');
-
-          // Log exception.
-          watchdog_exception('reol_loan', $exception);
-        }
-      }
-      else {
-        // Error not ting entity.
-        $commands[] = ajax_command_ding_popup('reol_loan', t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>');
-      }
-    }
-    else {
-      // Error not library user.
-      $commands[] = ajax_command_ding_popup('reol_loan', t('Error'), '<p>' . t('Only library user can make reservations.') . '</p>');
-    }
+  // If no form is defined, load confirmation form.
+  if (empty($form)) {
+    $form = ding_provider_get_form('reol_loan_loan_form', $loanable, FALSE);
+    $commands[] = ajax_command_ding_popup('reol_loan', t('Loan'), render($form), array('refresh' => TRUE));
   }
   else {
-    // Trigger log-in (the reservation link will be triggered on success).
-    $commands[] = ajax_command_ding_user_authenticate('');
+    // If error occurred during submit, rethrow.
+    if (isset($form_state['error'])) {
+      throw $form_state['error'];
+    }
+
+    // If user clicked no, do nothing.
+    if ($form_state['triggering_element']['#name'] == 'no') {
+      $commands[] = ajax_command_ding_popup_close('reol_loan');
+    }
+    // Otherwise, reshow form if needed.
+    else {
+      $html = theme('status_messages');
+      // If we have loaned the item, display completed form.
+      if ($form_state['loaned']) {
+        $html .= drupal_render(ding_provider_build_form('reol_loan_loan_completed_form', $form_state));
+      }
+      elseif ($form_state['rebuild'] || form_get_errors()) {
+        // Redisplay form.
+        $html .= drupal_render($form);
+      }
+
+      $commands[] = ajax_command_ding_popup('reol_loan', t('Loan'), $html);
+    }
   }
 
-  // Return the ajax commands as an render array.
-  return array('#type' => 'ajax', '#commands' => $commands);
+  return $commands;
 }
 
 /**
@@ -221,31 +148,7 @@ function reol_loan_loan_ajax($entity) {
  *   Response array.
  */
 function reol_loan_loan_form_callback($form, &$form_state) {
-  $response = array(
-    '#type' => 'ajax',
-    '#commands' => array(),
-  );
-
-  // If user clicked no, do nothing.
-  if ($form_state['triggering_element']['#name'] == 'no') {
-    $response['#commands'][] = ajax_command_ding_popup_close('reol_loan');
-  }
-  // Otherwise, reshow form if needed.
-  else {
-    $html = theme('status_messages');
-    // If we have loaned the item, display completed form.
-    if ($form_state['loaned']) {
-      $html .= drupal_render(ding_provider_build_form('reol_loan_loan_completed_form', $form_state));
-    }
-    elseif ($form_state['rebuild'] || form_get_errors()) {
-      // Redisplay form.
-      $html .= drupal_render($form);
-    }
-
-    $response['#commands'][] = ajax_command_ding_popup('reol_loan', t('Loan'), $html);
-  }
-
-  return $response;
+  return reol_base_entity_ajax_form('reol_loan', 'reol_loan_loan_ajax', $form_state['values']['loanable'], $form, $form_state);
 }
 
 /**

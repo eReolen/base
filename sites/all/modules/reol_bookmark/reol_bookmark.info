@@ -1,0 +1,7 @@
+name = eReolen bookmark module
+description = Module handling bookmarks for eReolen.dk
+core = 7.x
+package = ereolen.dk
+dependencies[] = features
+dependencies[] = reol_base
+features[features_api][] = api:2

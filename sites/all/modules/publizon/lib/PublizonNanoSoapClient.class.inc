@@ -27,15 +27,23 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
    *   The method/action to be called.
    * @param array $parameters
    *   The parameters to send with the SOAP request.
+   * @param bool $soap11
+   *   Whether or not the endpoint is SOAP 1.1.
    *
    * @return string
    *   The SOAP response.
    */
-  public function call($action, $parameters = array()) {
+  public function call($action, $parameters = array(), $soap11 = TRUE) {
     // Set content type and send the SOAP action as a header.
     $headers = array(
       'Content-Type: text/xml',
     );
+
+    // For SOAP 1.1 we need to include SOAPAction header.
+    if ($soap11) {
+      list($action_ns, $action_txt) = explode(':', $action, 2);
+      $headers[] = 'SOAPAction: ' . trim($this->namespaces[$action_ns], '/') . '/' . $action_txt;
+    }
 
     // Make a DOM document from the envelope and get the Body tag so we
     // can add our request data to it.

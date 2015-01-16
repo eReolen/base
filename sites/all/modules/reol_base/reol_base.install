@@ -1,0 +1,314 @@
+<?php
+/**
+ * @file
+ * Installation of reol_base module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function reol_base_install() {
+  if (module_exists('ding_library')) {
+    // Run the update hooks from before the module was enabled on "prod".
+    reol_base_update_7101();
+    reol_base_update_7102();
+    reol_base_update_7103();
+    reol_base_update_7104();
+    reol_base_update_7105();
+    reol_base_update_7106();
+    reol_base_update_7107();
+    reol_base_update_7108();
+    reol_base_update_7109();
+    reol_base_update_7110();
+    reol_base_update_7111();
+    reol_base_update_7112();
+    reol_base_update_7113();
+    reol_base_update_7114();
+    reol_base_update_7115();
+    reol_base_update_7116();
+    reol_base_update_7118();
+    reol_base_update_7119();
+    reol_base_update_7120();
+    reol_base_update_7121();
+    reol_base_update_7122();
+    reol_base_update_7123();
+    reol_base_update_7124();
+  }
+}
+
+
+/**
+ * Disable unused modules.
+ */
+function reol_base_update_7101() {
+  $modules = array(
+    'ding_bookmark',
+    'ding_frontpage',
+    'ding_groups',
+    'ding_news',
+    'ding_tabroll',
+    'ding_library',
+    'ding_staff',
+    'ding_event',
+  );
+
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
+
+/**
+ * Enable modules and theme.
+ */
+function reol_base_update_7102() {
+  module_enable(array('reol_frontend', 'publizon', 'reol_loan'), TRUE);
+  theme_enable(array('brin'));
+  variable_set('theme_default', 'brin');
+}
+
+/**
+ * Enable date format.
+ */
+function reol_base_update_7103() {
+  $formats = system_get_date_formats();
+  variable_set('date_format_reol_base_material_lists_date', array_shift(array_keys($formats['reol_base_material_lists_date'])));
+}
+
+/**
+ * Enable reol_review module.
+ */
+function reol_base_update_7104() {
+  module_enable(array('reol_review'), TRUE);
+}
+
+/**
+ * Enable reol_reservation module.
+ */
+function reol_base_update_7105() {
+  module_enable(array('reol_reservation'), TRUE);
+}
+
+/**
+ * Enable reol_use_loan module.
+ */
+function reol_base_update_7106() {
+  module_enable(array('reol_use_loan'), TRUE);
+}
+
+
+/**
+ * Enable reol_category module.
+ */
+function reol_base_update_7107() {
+  module_enable(array('reol_category'), TRUE);
+}
+
+/**
+ * Enable reol_feed module.
+ */
+function reol_base_update_7108() {
+  module_enable(array('reol_feed'), TRUE);
+}
+
+/**
+ * Enable reol_bookmark module.
+ */
+function reol_base_update_7109() {
+  module_enable(array('reol_bookmark'), TRUE);
+}
+
+/**
+ * Remove node types from disabled features.
+ */
+function reol_base_update_7110() {
+  _reol_base_remove_node_type('ding_event');
+  _reol_base_remove_node_type('ding_library');
+  _reol_base_remove_node_type('ding_news');
+  _reol_base_remove_node_type('ding_rolltab');
+}
+
+/**
+ * Enable reol_help module.
+ */
+function reol_base_update_7111() {
+  module_enable(array('reol_help'), TRUE);
+}
+
+/**
+ * Enable webform module.
+ */
+function reol_base_update_7112() {
+  module_enable(array('webform'), TRUE);
+}
+
+/**
+ * Disable autologout for all roles.
+ */
+function reol_base_update_7113() {
+  $roles = user_roles();
+
+  foreach ($roles as $rid => $role) {
+    $role = user_role_load($rid);
+    reol_base_user_role_insert($role);
+  }
+}
+
+/**
+ * Enable reol_announcement module.
+ */
+function reol_base_update_7114() {
+  module_enable(array('reol_announcement'), TRUE);
+}
+
+/**
+ * Enable webtrends module.
+ */
+function reol_base_update_7115() {
+  module_enable(array('ding_webtrends'), TRUE);
+}
+
+/**
+ * Enable Google analytics module.
+ */
+function reol_base_update_7116() {
+  module_enable(array('googleanalytics'), TRUE);
+}
+
+/**
+ * Field definitions.
+ *
+ * Implements hook_ding_entity_fields().
+ */
+function reol_base_ding_entity_fields() {
+  return array(
+    'ting_details_ebook_format' => array(
+      'field' => array(
+        'locked' => FALSE,
+        'storage' => array(
+          'type' => 'virtual_field',
+        ),
+      ),
+      'instance' => array(
+        'label' => t('E-book format'),
+      ),
+    ),
+    'ting_details_audiobook_reader' => array(
+      'field' => array(
+        'locked' => FALSE,
+        'storage' => array(
+          'type' => 'virtual_field',
+        ),
+      ),
+      'instance' => array(
+        'label' => t('Reader'),
+      ),
+    ),
+    'ting_details_publizon_genre' => array(
+      'field' => array(
+        'locked' => FALSE,
+        'storage' => array(
+          'type' => 'virtual_field',
+        ),
+      ),
+      'instance' => array(
+        'label' => t('Genre'),
+      ),
+    ),
+  );
+}
+
+/**
+ * Register ding entity fields.
+ */
+function reol_base_update_7117() {
+  ding_entity_modules_enabled(array('reol_base'));
+}
+
+/**
+ * Enable reol_latest module.
+ */
+function reol_base_update_7118() {
+  module_enable(array('reol_latest'), TRUE);
+}
+
+/**
+ * Enable reol_bookmark_migration module.
+ */
+function reol_base_update_7119() {
+  module_enable(array('reol_bookmark_migration'), TRUE);
+}
+
+/**
+ * Disable built-in cron.
+ */
+function reol_base_update_7120() {
+  variable_set('cron_safe_threshold', 0);
+}
+
+/**
+ * Enable shortcut per role module.
+ */
+function reol_base_update_7121() {
+  module_enable(array('shortcutperrole'), TRUE);
+}
+
+/**
+ * Create shortcuts for staff.
+ */
+function reol_base_update_7122() {
+  $shortcut_set = new stdClass();
+  $shortcut_set->title = 'Staff';
+  $shortcut_set->set_name = 'staff';
+  $shortcut_set->links = array(
+    array(
+      'link_path' => 'node/add',
+      'link_title' => 'Add content',
+      'weight' => 0,
+    ),
+    array(
+      'link_path' => 'admin/content',
+      'link_title' => 'Content',
+      'weight' => 1,
+    ),
+    array(
+      'link_path' => 'admin/config/regional/translate',
+      'link_title' => 'Manage translations',
+      'weight' => 2,
+    ),
+    array(
+      'link_path' => 'admin/structure/reol_announcement',
+      'link_title' => 'Site announcement',
+      'weight' => 3,
+    ),
+    array(
+      'link_path' => 'admin/config/ting/ting_search_carousel',
+      'link_title' => 'Frontpage carousel',
+      'weight' => 4,
+    ),
+    array(
+      'link_path' => 'admin/reports/bookmark_migration',
+      'link_title' => 'Bookmark migration status',
+      'weight' => 5,
+    ),
+  );
+
+  shortcut_set_save($shortcut_set);
+
+  // Set shortcutperrole to choose staff set for role staff (rid = 9).
+  variable_set('shortcutperrole', array(
+    9 => 'staff',
+  ));
+}
+
+/**
+ * Enable ding_varnish module.
+ */
+function reol_base_update_7123() {
+  module_enable(array('ding_varnish'), TRUE);
+}
+
+/**
+ * Enable redirect and globalredirect modules.
+ */
+function reol_base_update_7124() {
+  module_enable(array('redirect', 'globalredirect'), TRUE);
+}

@@ -1,0 +1,670 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen base module feature.
+ */
+
+include_once 'reol_base.features.inc';
+
+module_load_include('inc', 'reol_base', 'reol_base.field');
+
+define('REOL_BASE_LOCAL_ID_PREFIX', 'isbn_');
+
+/**
+ * Get the field form for a field.
+ *
+ * @param string $type
+ *   The entity type to get field for.
+ * @param string $bundle
+ *   The entity bundle for the entity.
+ * @param string $field_name
+ *   The name of the field.
+ * @param StdClass $entity
+ *   The entity to get field for.
+ * @param array $form
+ *   The form to attach field to.
+ * @param array $form_state
+ *   The state of the form.
+ *
+ * @return array
+ *   The field form.
+ */
+function reol_base_get_field_form($type, $bundle, $field_name, $entity, &$form, &$form_state) {
+  $field = field_info_field($field_name);
+  $instance = field_info_instance($type, $field_name, $bundle);
+  $lang_code = field_language($type, $entity, $field_name);
+  $items = field_get_items($type, $entity, $field_name);
+  return field_default_form($type, $entity, $field, $instance, $lang_code, $items, $form, $form_state);
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reol_base_menu() {
+  $items = array();
+
+  $items['login'] = array(
+    'page callback' => 'reol_base_login_ajax',
+    'delivery callback' => 'ajax_deliver',
+    'access callback' => TRUE,
+  );
+
+  $items['user/%user/logout'] = array(
+    'title' => 'Log out',
+    'page callback' => 'reol_base_logout',
+    'access callback' => 'user_is_logged_in',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 1000,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function reol_base_menu_alter(&$items) {
+  $items['user']['access callback'] = 'user_is_logged_in';
+
+  // Remove menu callback from user menu.
+  $items['user/%user/status']['access callback'] = FALSE;
+
+  // Change title of user menu.
+  $items['user/%user/view']['title'] = "Loans and reservations";
+}
+
+/**
+ * Implements hook_entity_load().
+ *
+ * As our provider uses ISBN-numbers, we wish to have localId be the
+ * ISBN-number of the object.
+ */
+function reol_base_entity_load($entities, $type) {
+  // Only act on our own type.
+  if ($type != 'ting_object') {
+    return;
+  }
+
+  foreach ($entities as $entity) {
+    $entity->online_url = FALSE;
+
+    if (!($entity instanceof TingEntity)) {
+      continue;
+    }
+    // When have to check all the way down, as chain might be broken
+    // somwhere. Only touch localId if we have the right value for it.
+    if (isset($entity->reply) &&
+      isset($entity->reply->record) &&
+      isset($entity->reply->record['dc:identifier'])) {
+      $local_id = FALSE;
+
+      // Try to find the id we need in oss:PROVIDER-ID.
+      if (isset($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) &&
+        count($entity->reply->record['dc:identifier']['oss:PROVIDER-ID'] == 1)) {
+        $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']);
+      }
+      // If not found there, look in dkdcplus:ISBN.
+      elseif (isset($entity->reply->record['dc:identifier']['dkdcplus:ISBN']) &&
+        count($entity->reply->record['dc:identifier']['dkdcplus:ISBN'])) {
+        $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['dkdcplus:ISBN']);
+      }
+
+      if ($local_id) {
+        $entity->localId = $local_id;
+      }
+    }
+  }
+}
+
+/**
+ * Convert an array of ISBN-numbers to a local id.
+ *
+ * @param mixed $isbns
+ *   The ISBN number array to convert.
+ *
+ * @return string
+ *   The localId string.
+ */
+function reol_base_get_local_id($isbns) {
+  // Make sure it is array,
+  if (!is_array($isbns)) {
+    $isbns = array($isbns);
+  }
+
+  $num = FALSE;
+  foreach ($isbns as $isbn) {
+    $isbn = str_replace('-', '', $isbn);
+    // ISBN is the first 13-length number found.
+    if (strlen($isbn) == 13) {
+      $num = $isbn;
+      break;
+    }
+  }
+
+  // We have no ISBN-number to use.
+  if (!$num) {
+    return FALSE;
+  }
+
+  // Add our prefix and remove dashes that might appear.
+  // We add the prefix to avoid strange conflicts with entities
+  // that have their local id defined as the ISBN-number.
+  return REOL_BASE_LOCAL_ID_PREFIX . $num;
+}
+
+/**
+ * Convert the local id to an ISBN number.
+ *
+ * @param string $local_id
+ *   The local id.
+ *
+ * @return string
+ *   The ISBN number.
+ */
+function reol_base_get_isbn($local_id) {
+  // Remove prefix in front, if found.
+  // If not, it is not an ISBN-number.
+  if (strpos($local_id, REOL_BASE_LOCAL_ID_PREFIX) === 0) {
+    return substr($local_id, strlen(REOL_BASE_LOCAL_ID_PREFIX));
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ *
+ * Change material_item to use our template instead.
+ */
+function reol_base_theme_registry_alter(&$theme_registry) {
+  $theme_registry['material_item']['template'] = drupal_get_path('module', 'reol_base') . '/templates/material_item';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function reol_base_preprocess_material_item(&$variables) {
+  $element = $variables['element'];
+  // TODO Can we rely on this?
+  $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
+  $ting_entity = ding_entity_load($ding_entity_id);
+
+  $variables['type'] = reol_base_get_type_name($ting_entity->type);
+
+  // Put buttons from entity view on list.
+  $buttons = field_view_field('ting_object', $ting_entity, 'ding_entity_buttons', 'default');
+  $variables['buttons'] = drupal_render($buttons);
+}
+
+/**
+ * Get the name of a type from the type returned from Ting.
+ *
+ * @param string $type
+ *   The string type from Ting.
+ *
+ * @return string
+ *   Our own name for the type, or array of type names if no type is input,
+ *   keyed by our internal name of the type.
+ *   If type is not found, FALSE is returned.
+ */
+function reol_base_get_type_name($type) {
+  $type = reol_base_get_type($type);
+  return $type ? $type['int_name'] : FALSE;
+}
+
+/**
+ * Get the definition of a type from the type returned from Ting.
+ *
+ * If type is not input, it returns an array of names of
+ * types we support.
+ *
+ * @param string $type
+ *   The string type from Ting or FALSE/empty to return all.
+ *
+ * @return array
+ *   Type definition.
+ */
+function reol_base_get_type($type = FALSE) {
+  $types = _reol_base_get_types();
+
+  // If no argument received, return all types.
+  if (!$type) {
+    return $types;
+  }
+
+  // Find type.
+  foreach ($types as $n => $t) {
+    if ($t['ext_name'] == strtolower($type)) {
+      return $t;
+    }
+  }
+
+  // If we end up here, type not found.
+  return FALSE;
+}
+
+/**
+ * Get the ting type for a machine name.
+ *
+ * @param string $machine_name
+ *   The machine name to get ting type for.
+ *
+ * @return string
+ *   The ting type for the machine name or FALSE if not found.
+ */
+function reol_base_get_ting_type($machine_name) {
+  $types = _reol_base_get_types();
+  return isset($types[$machine_name]) ? $types[$machine_name]['ext_name'] : FALSE;
+}
+
+/**
+ * Implements hook_date_format_Types().
+ */
+function reol_base_date_format_types() {
+  return array(
+    'reol_base_material_lists_date' => t('Reol material lists date'),
+  );
+}
+/**
+ * Implements hook_date_formats().
+ */
+function reol_base_date_formats() {
+  return array(
+    array(
+      'type' => 'reol_base_material_lists_date',
+      'format' => 'j. F Y H:i:s',
+      'locales' => array(),
+    ),
+  );
+}
+
+/**
+ * Convert a string to an ISBN-13 number.
+ *
+ * @param string $isbn
+ *   The isbn-number to convert.
+ *
+ * @return string|bool
+ *   The ISBN-numer if input is an ISBN-13 number. False otherwise.
+ */
+function reol_base_convert_to_isbn($isbn) {
+  $isbn = str_replace(array(' ', '-'), '', $isbn);
+  return preg_match('/^[0-9]{13}$/', $isbn) ? $isbn : FALSE;
+}
+
+/**
+ * Get definition of types we support.
+ *
+ * @return array
+ *   Array of types keyed by our internal name. Containing the following info:
+ *     External name (ext_name)
+ *     Internal name (int_name)
+ *     Title (title)
+ */
+function _reol_base_get_types() {
+  return array(
+    'audiobook' => array(
+      'ext_name' => 'lydbog (net)',
+      'int_name' => 'audiobook',
+      'title' => t('Audiobook'),
+      'title_plural' => t('Audiobooks'),
+      'path' => 'lydboeger',
+    ),
+    'ebook' => array(
+      'ext_name' => 'ebog',
+      'int_name' => 'ebook',
+      'title' => t('E-book'),
+      'title_plural' => t('E-books'),
+      'path' => 'eboeger',
+    ),
+  );
+}
+
+/**
+ * Get array of types you can choose from in field_reol_entity_type.
+ *
+ * @return array
+ *   Array of types to choose from.
+ */
+function reol_base_get_entity_types() {
+  return array_reduce(_reol_base_get_types(), function($carry, $elem) {
+    $carry[$elem['int_name']] = $elem['title'];
+    return $carry;
+  }, array());
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
+  if (isset($element['#field_name']) && $element['#field_name'] == 'field_reol_entity_type') {
+    // By default, selecting no type means all types. Change label.
+    $element['#options']['_none'] = t('- All -');
+  }
+}
+
+/**
+ * Get ding entity ids from multiple ISBN numbers.
+ *
+ * Only does one request to the well.
+ *
+ * @param string $isbns
+ *   The ISBN numbers to search for.
+ *
+ * @return array
+ *   isbn => ding entity ids array.
+ */
+function reol_base_ding_entity_get_ids($isbns) {
+  module_load_include('client.inc', 'ting');
+  // Get the id from a search in Ting.
+  $search = implode(" OR term.identifier=", $isbns);
+  $res = ting_do_search("term.identifier=" . $search);
+  if (!$res) {
+    return FALSE;
+  }
+
+  $mapping = array();
+  foreach ($res->collections as $id => $collection) {
+    foreach ($collection->getEntities() as $entity) {
+      foreach ($entity->getIsbn() as $isbn) {
+        $mapping[$isbn] = $id;
+      }
+    }
+  }
+  return $mapping;
+
+}
+
+/**
+ * Remove a node type, that was previously supplied from a feature.
+ *
+ * Mainly used in .install file, but left here for convenience.
+ *
+ * @param string $type
+ *   The machine name of the type to remove.
+ */
+function _reol_base_remove_node_type($type) {
+  db_query("UPDATE node_type SET module = 'node', custom = 1, modified = 1, locked = 0 WHERE type = '%type';", array('%type' => $type));
+  node_type_delete($type);
+}
+
+/**
+ * Implements hook_user_role_insert().
+ *
+ * Disable autologout for newly created role.
+ */
+function reol_base_user_role_insert($role) {
+  // Make sure role base timeout is enabled.
+  variable_set('autologout_role_logout', TRUE);
+
+  // Set autologout to 0 for this role.
+  variable_set('autologout_role_' . $role->rid, TRUE);
+  variable_set('autologout_role_' . $role->rid . '_timeout', 0);
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_base_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Ajax callback for logging in.
+ */
+function reol_base_login_ajax() {
+  $commands = array();
+
+  // Check if the logged in user is a library user.
+  global $user;
+  if (!user_is_logged_in()) {
+    $commands[] = ajax_command_ding_user_authenticate('');
+  }
+  else {
+    module_load_include('inc', 'ctools', 'includes/ajax');
+    $commands[] = ctools_ajax_command_redirect('user');
+  }
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Check entity ajax form.
+ *
+ * Check that all the prerequisites are fulfilled for
+ * showing a popup form in ajax for loaning, reserving or
+ * bookmarking entities.
+ *
+ * @param string $modal_id
+ *   The id of the modal.
+ * @param array $commands
+ *   The commands that should be added to.
+ * @param StdClass $entity
+ *   The entity.
+ *
+ * @return bool
+ *   Whether or not check did go through.
+ */
+function reol_base_check_entity_ajax_form($modal_id, &$commands, $entity) {
+  global $user;
+
+  // If user is not logged in, fail.
+  if (!user_is_logged_in()) {
+    $commands[] = ajax_command_ding_user_authenticate('');
+    return FALSE;
+  }
+
+  $close = reol_base_get_modal_close_button(t('OK'), $modal_id);
+  // If user is not a provider user, fail.
+  if (!ding_user_is_provider_user($user)) {
+    // Error not library user.
+    $commands[] = ajax_command_ding_popup($modal_id, t('Error'), '<p>' . t('Only library user can make reservations.') . '</p>' . $close);
+    return FALSE;
+  }
+
+  // If entity is not a TingEntity, fail.
+  if (!(is_object($entity) && $entity instanceof TingEntity)) {
+    $commands[] = ajax_command_ding_popup($modal_id, t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>' . $close);
+    return FALSE;
+  }
+
+  // Success.
+  return TRUE;
+}
+
+/**
+ * Callback for ajax forms handling loans, reservations or bookmarks.
+ *
+ * @param string $popup_id
+ *   The ID of the ding popup.
+ * @param callable $callback
+ *   The callback containing the functionality.
+ * @param StdClass $entity
+ *   The entity.
+ *
+ * @return array
+ *   ajax render array for ajax_deliver.
+ */
+function reol_base_entity_ajax_form($popup_id, $callback, $entity) {
+  $args = func_get_args();
+  array_shift($args);
+  array_shift($args);
+
+  $commands = array();
+
+  // Check validity of everything.
+  $valid = reol_base_check_entity_ajax_form($popup_id, $commands, $entity);
+  // If valid, run callback.
+  if ($valid) {
+    try {
+      $commands += call_user_func_array($callback, $args);
+    }
+    catch (DingProviderAuthException $exception) {
+      // Authenticate and rerun.
+      $commands[] = ajax_command_ding_user_authenticate('');
+    }
+    catch (DingPublizonException $exception) {
+      // Some error occurred, show it.
+      $html = $exception->getMessageT(array());
+      // If we should show bookmark button.
+      if ($exception->showBookmark()) {
+        $html .= render(reol_bookmark_get_bookmark_button($entity));
+      }
+      // If we should show reserve button.
+      if ($exception->showReserve()) {
+        $html .= render(reol_reservation_get_reserve_button($entity));
+      }
+
+      $html .= reol_base_get_modal_close_button(t('OK'), $popup_id);
+      $commands[] = ajax_command_ding_popup($popup_id, t('Error'), $html, array('refresh' => TRUE));
+    }
+    catch (DingProviderUserException $exception) {
+      // Some error occurred, show it.
+      $commands[] = ajax_command_ding_popup($popup_id, t('Error'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
+    }
+  }
+
+  // Return the ajax commands as an render array.
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Get entity button.
+ *
+ * @param string $text
+ *   The text for the button.
+ * @param string $link
+ *   The link for the button.
+ * @param string $id
+ *   The id of the button.
+ *
+ * @return array
+ *   Themable button array.
+ */
+function reol_base_get_entity_button($text, $link, $id) {
+  return array(
+    '#theme' => 'link',
+    '#text' => $text,
+    '#path' => $link,
+    '#options' => array(
+      'attributes' => array(
+        'class' => array(
+          'action-button',
+          'use-ajax',
+        ),
+        'id' => $id,
+      ),
+      'html' => FALSE,
+    ),
+  );
+}
+
+/**
+ * Logout.
+ */
+function reol_base_logout() {
+  module_load_include('inc', 'user', 'user.pages');
+  user_logout();
+}
+
+/**
+ * Get the close button for a modal.
+ *
+ * @param string $text
+ *   The text for the button.
+ * @param string $modal
+ *   The name of the modal to close.
+ *
+ * @return string
+ *   HTML for the button.
+ */
+function reol_base_get_modal_close_button($text, $modal) {
+  return '<a class="action-button modal-close" data-modal-name="' . $modal . '" href="#">' . $text . '</a>';
+}
+
+/**
+ * Implements hook_cron().
+ */
+function reol_base_cron() {
+  // Rebuild permissions on cron.
+  secure_permissions_rebuild();
+}
+
+/**
+ * Implements hook_secure_permissions().
+ */
+function reol_base_secure_permissions($role) {
+  $permissions = array(
+    'staff' => array(
+      'access administration pages',
+      'access all webform results',
+      'access content',
+      'access content overview',
+      'access overlay',
+      'access own webform results',
+      'access own webform submissions',
+      'access site in maintenance mode',
+      'access site reports',
+      'access toolbar',
+      'access user profiles',
+      'administer announcement',
+      'administer url aliases',
+      'clone node',
+      'clone own nodes',
+      'create article content',
+      'create author_portrait content',
+      'create ding_page content',
+      'create faq content',
+      'create url aliases',
+      'create video content',
+      'create webform content',
+      'delete all webform submissions',
+      'delete any article content',
+      'delete any author_portrait content',
+      'delete any ding_page content',
+      'delete any faq content',
+      'delete any video content',
+      'delete any webform content',
+      'delete own article content',
+      'delete own author_portrait content',
+      'delete own ding_page content',
+      'delete own faq content',
+      'delete own video content',
+      'delete own webform content',
+      'delete own webform submissions',
+      'delete revisions',
+      'delete terms in 8',
+      'edit all webform submissions',
+      'edit any article content',
+      'edit any author_portrait content',
+      'edit any ding_page content',
+      'edit any faq content',
+      'edit any video content',
+      'edit any webform content',
+      'edit own article content',
+      'edit own author_portrait content',
+      'edit own ding_page content',
+      'edit own ding_staff_profile profile',
+      'edit own faq content',
+      'edit own video content',
+      'edit own webform content',
+      'edit own webform submissions',
+      'edit terms in 8',
+      'edit webform components',
+      'revert revisions',
+      'schedule (un)publishing of nodes',
+      'translate admin strings',
+      'translate content',
+      'translate interface',
+      'translate user-defined strings',
+      'view bookmark migration status',
+      'view own unpublished content',
+      'view revisions',
+      'view the administration theme',
+      'use text format ding_wysiwyg',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}

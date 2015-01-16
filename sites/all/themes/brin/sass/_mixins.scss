@@ -1,0 +1,112 @@
+/**
+ * Usefull mixins.
+ */
+
+@mixin header-gradient($flat, $one, $two) {
+  background-color: $flat;
+  @include background(linear-gradient(to bottom, $one, $two));
+}
+
+@mixin header-logo-gradient {
+  @include header-gradient($logo-header-flat, $logo-header-one, $logo-header-two);
+}
+
+@mixin header-menu-gradient {
+  @include header-gradient($menu-header-flat, $menu-header-one, $menu-header-two);
+}
+
+@mixin header-menu-selected-gradient {
+  @include header-gradient($menu-selected-flat, $menu-selected-one, $menu-selected-two);
+}
+
+// Media queries and breakpoints lifted verbatim off ddbasic.
+
+/* Media query
+   ========================================================================== */
+
+@mixin respond-to($media) {
+  // Sizes
+  @if $media == x-small {
+    @media only screen and (max-width: $breakpoint-x-small) { @content; }
+  }
+
+  @if $media == small {
+    @media only screen and (max-width: $breakpoint-small) { @content; }
+  }
+
+  @else if $media == small-medium {
+    @media only screen and (max-width: $breakpoint-medium) { @content; }
+  }
+
+  @else if $media == small-large {
+    @media only screen and (max-width: $breakpoint-large) { @content; }
+  }
+
+  @if $media == small-medium-low {
+    @media only screen and (max-height: $breakpoint-low) and (max-width: $breakpoint-medium) { @content; }
+  }
+
+  @else if $media == medium {
+    @media only screen and (min-width: $breakpoint-small + 1) and (max-width: $breakpoint-medium) { @content; }
+  }
+
+  @else if $media == medium-large {
+    @media only screen and (min-width: $breakpoint-small + 1) and (max-width: $breakpoint-large) { @content; }
+  }
+
+  @else if $media == large {
+    @media only screen and (min-width: $breakpoint-medium + 1) and (max-width: $breakpoint-large) { @content; }
+  }
+
+  @else if $media == x-large {
+    @media only screen and (min-width: $breakpoint-large + 1) { @content; }
+  }
+
+  @else if $media == large-x-large {
+    @media only screen and (min-width: $breakpoint-medium + 1) { @content; }
+  }
+}
+
+
+/* Breakpoints
+   ========================================================================== */
+
+@mixin x-small {
+  @include respond-to(x-small) { @content; }
+}
+
+@mixin small {
+  @include respond-to(small) { @content; }
+}
+
+@mixin small-medium {
+  @include respond-to(small-medium) { @content; }
+}
+
+@mixin small-large {
+  @include respond-to(small-large) { @content; }
+}
+
+@mixin small-medium-low {
+  @include respond-to(small-medium-low) { @content; }
+}
+
+@mixin medium {
+  @include respond-to(medium) { @content; }
+}
+
+@mixin medium-large {
+  @include respond-to(medium-large) { @content; }
+}
+
+@mixin large {
+  @include respond-to(large) { @content; }
+}
+
+@mixin x-large {
+  @include respond-to(x-large) { @content; }
+}
+
+@mixin large-x-large {
+  @include respond-to(large-x-large) { @content; }
+}

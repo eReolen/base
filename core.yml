@@ -15,3 +15,11 @@ patches:
     patch: 'https://drupal.org/files/issues/autocomplete-1232416-17-7x.patch'
     home: 'https://www.drupal.org/node/1232416'
     reason: 'This patch that ensures that Ajax errors only are displayed when not in readystate 4. So when the user presses enter to perform a search before auto-complete Ajax is call is completed an error will not be displayed.'
+  -
+    patch: 'https://www.drupal.org/files/fix-shortcut-set-save-1175700-10.patch'
+    home: 'https://www.drupal.org/node/1175700'
+    reason: 'Fix shortcut_set_save when set does not exist.'
+  -
+    patch: 'https://www.drupal.org/files/issues/protoindependent.patch'
+    home: 'https://www.drupal.org/node/646862'
+    reason: 'Allow for protocol independent URLs in CSS @imports.'

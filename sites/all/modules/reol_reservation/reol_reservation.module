@@ -1,0 +1,266 @@
+<?php
+/**
+ * @file
+ * Code for the loan module for eReolen.
+ */
+
+/**
+ * Implements hook_menu_alter().
+ */
+function reol_reservation_menu_alter(&$items) {
+  // Alter to use our version of the ajax callback.
+  $items['ting/object/%ting_object/reserve']['page callback'] = 'reol_base_entity_ajax_form';
+  $items['ting/object/%ting_object/reserve']['page arguments'] = array(
+    'ding_reservation',
+    'reol_reservation_reserve_ajax',
+    2,
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, &$form_state, $form_id) {
+  $type = NULL;
+  switch ($form_id) {
+    case 'ding_reservation_reservations_notready_form':
+      $type = DING_RESERVATION_NOT_READY;
+      break;
+
+    case 'ding_reservation_reservations_ready_form':
+      $type = DING_RESERVATION_READY;
+      break;
+  }
+  // We only wish to modify the two forms for ready and not ready.
+  if (!$type) {
+    return;
+  }
+
+  // Remove update bulk button.
+  unset($form['actions_top']['update']);
+  // Change styling of delete button.
+  $form['actions_top']['delete']['#prefix'] = '';
+  $form['actions_top']['delete']['#suffix'] = '';
+
+  foreach ($form['reservations'] as &$reservation_element) {
+    $reservation = $reservation_element['#reservation'];
+
+    $reservation_element['#information']['created']['data'] = format_date(strtotime(check_plain($reservation->created)), 'reol_base_material_lists_date');
+
+    // Remove the information we do not have.
+    unset($reservation_element['#information']['pickup_branch']);
+    unset($reservation_element['#information']['order_nr']);
+
+    // Logic for when reservation is not ready.
+    if ($type == DING_RESERVATION_NOT_READY) {
+      unset($reservation_element['#information']['expiry']);
+
+      // Remove expires soon message.
+      // TODO Do something different than this, i do not like comparing text.
+      if ($reservation_element['#material_message']['message'] == t('This reservation is about to expire.')) {
+        $reservation_element['#material_message'] = array(
+          'message' => '',
+          'class' => '',
+        );
+      }
+
+      // Remove queue number for now.
+      unset($reservation_element['#information']['queue_number']);
+    }
+
+    // Logic for not ready reservations.
+    if ($type == DING_RESERVATION_NOT_READY) {
+      // Add note about expected date.
+      if (!empty($reservation->expected_date)) {
+        $reservation_element['#information']['expected_date'] = array(
+          'label' => t('Expected ready date'),
+          'data' => $reservation->expected_date ? format_date(strtotime(check_plain($reservation->expected_date)), 'ding_material_lists_date') : '',
+          'class' => 'expected-date',
+          '#weight' => 4,
+        );
+      }
+    }
+
+    // Logic for when reservation is ready.
+    if ($type == DING_RESERVATION_READY) {
+      $time = strtotime(check_plain($reservation->pickup_date));
+      $time_diff = $time - time();
+      // Add class according to how long time there is left.
+      $class = " ";
+      if ($time_diff < variable_get('reol_reservation_low_time_max', 18000)) {
+        $class .= 'low';
+      }
+      elseif ($time_diff < variable_get('reol_reservation_medium_time_max', 86400)) {
+        $class .= 'medium';
+      }
+      else {
+        $class .= 'high';
+      }
+
+      $reservation_element['#information']['pickup_date']['label'] = t('Loan before');
+      $reservation_element['#information']['pickup_date']['data'] = format_date(strtotime(check_plain($reservation->pickup_date)), 'reol_base_material_lists_date') . '<br />(' . format_interval($time - time(), 2) . ')';
+      $reservation_element['#information']['pickup_date']['class'] .= $class;
+
+      unset($reservation_element['#information']['pickup_id']);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_reservation_form_ding_reservation_reserve_form_alter(&$form, &$form_state) {
+  // Use our own submit handler instead of one from ding_reservation.
+  foreach ($form['#submit'] as &$submit) {
+    if ($submit == 'ding_reservation_reserve_form_submit') {
+      $submit = 'reol_reservation_form_ding_reservation_reserve_form_submit';
+      break;
+    }
+  }
+
+  // Use our own ajax callback instead of the one from ding_reservation.
+  $form['submit']['#ajax']['callback'] = 'reol_reservation_form_ding_reservation_reserve_form_callback';
+}
+
+/**
+ * Submit handler for reserve form.
+ *
+ * @see ding_reservation_reserve_form_submit()
+ */
+function reol_reservation_form_ding_reservation_reserve_form_submit($form, &$form_state) {
+  try {
+    global $user;
+    if (ding_provider_implements('reservation', 'options_submit')) {
+      ding_provider_invoke('reservation', 'options_submit', $user, $form_state['values']['provider_options']);
+    }
+    if ($form_state['values']['reservable']) {
+      $reservable = $form_state['values']['reservable'];
+      $reservation_result = ding_provider_invoke('reservation', 'create', $user, $reservable->getProviderId(), $form_state['values']['provider_options']);
+      $form_state['reserved'] = TRUE;
+      // @todo use profile
+      if (!empty($reservation_result['branch']) && ding_provider_implements('reservation', 'branch_name')) {
+        $branch_name = ding_provider_invoke('reservation', 'branch_name', $reservation_result['branch']);
+        drupal_set_message(t('"@title" reserved and will be available for pickup at @branch.', array('@title' => $reservable->getTitle(), '@branch' => $branch_name)));
+      }
+      else {
+        drupal_set_message(t('"@title" reserved.', array('@title' => $reservable->getTitle())));
+      }
+
+      if (is_array($reservation_result) and !empty($reservation_result['queue_number'])) {
+        drupal_set_message(t('You are number @number in queue.', array('@number' => $reservation_result['queue_number'])));
+      }
+
+      // Clear reservation session cache.
+      ding_reservation_cache_clear();
+    }
+  }
+  catch (Exception $e) {
+    $form_state['error'] = $e;
+  }
+}
+
+/**
+ * Ajax entry callback.
+ *
+ * Reserve the material.
+ *
+ * @see ding_reservation_reserve_ajax()
+ */
+function reol_reservation_reserve_ajax($entity, $reservable = NULL) {
+  $commands = array();
+
+  // Check if reservable object was passed.
+  if (is_null($reservable)) {
+    // If no object passed assume "normal" reservation (not periodical).
+    $reservable = new DingReservationReservableEntity($entity);
+  }
+
+  $form = ding_provider_get_form('ding_reservation_reserve_form', $reservable, FALSE);
+  $commands[] = ajax_command_ding_popup('ding_reservation', t('Reservation'), render($form), array('refresh' => TRUE));
+
+  // Return the ajax commands as an render array.
+  return $commands;
+}
+
+/**
+ * Ajax callback for reserve form.
+ */
+function reol_reservation_form_ding_reservation_reserve_form_callback($form, &$form_state) {
+  return reol_base_entity_ajax_form('ding_reservation', function ($entity, $form, $form_state) {
+    // If error occurred during submit, rethrow.
+    if (isset($form_state['error'])) {
+      throw $form_state['error'];
+    }
+
+    $res = ding_reservation_reserve_form_callback($form, $form_state);
+
+    // Add OK button.
+    if (!form_get_errors()) {
+      $res['#commands'][0]['data'] .= reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
+    }
+
+    return $res['#commands'];
+  }, $form_state['values']['reservable']->getEntity(), $form, $form_state);
+}
+
+/**
+ * Get reserve button.
+ *
+ * @param TingEntity $entity
+ *   The entity to get button for.
+ */
+function reol_reservation_get_reserve_button($entity) {
+  list($availability) = array_values(ding_availability_items(array($entity->localId)));
+  $availability = _reol_loan_map_availability($availability);
+
+  if ($availability == REOL_LOAN_RESERVABLE) {
+    return reol_base_get_entity_button(t('Reserve'), 'ting/object/' . $entity->id . '/reserve', 'reserve-' . $entity->id);
+  }
+}
+
+/**
+ * Implements hook_page_build().
+ */
+function reol_reservation_page_build(&$page) {
+  global $user;
+
+  // Add message displaying reservations ready.
+  try {
+    $res = count(ding_provider_invoke('reservation', 'list', $user, DING_RESERVATION_READY));
+
+    // Display notif if user has reservations ready.
+    if ($res > 0) {
+      drupal_set_message(format_plural($res, 'You have one reservation ready. !reservation_link', 'You have @count reservations ready. !reservation_link', array(
+        '!reservation_link' => l(t('View reservations'), 'user'),
+      )), 'status', FALSE);
+    }
+  }
+  // Exception is okay, do nothing.
+  catch (Exception $e) {
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_reservation_form_ding_reservation_delete_reservations_form_alter(&$form, &$form_state) {
+  $form['submit']['#ajax']['callback'] = 'reol_reservation_form_ding_reservation_delete_reservations_form_callback';
+}
+
+/**
+ * New delete reservation ajax callback.
+ */
+function reol_reservation_form_ding_reservation_delete_reservations_form_callback($form, &$form_state) {
+  $response = array(
+    '#type' => 'ajax',
+    '#commands' => array(),
+  );
+
+  $html = theme('status_messages');
+  $html .= '<p>' . t('Your reservations have been deleted.') . '</p>';
+  $html .= reol_base_get_modal_close_button(t('OK'), 'ding_reservation');
+
+  $response['#commands'][] = ajax_command_ding_popup('ding_reservation', t('Delete reservations'), $html, array('refresh' => TRUE));
+
+  return $response;
+}

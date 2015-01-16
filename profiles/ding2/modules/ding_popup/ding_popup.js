@@ -35,6 +35,9 @@ Drupal.ding_popup = {
     if (this.dialogs[response.name] == undefined) {
       this.dialogs[response.name] = $('<div class="ding-popup-content"></div>').dialog({
           autoOpen: false,
+          width: 'auto',
+          resizable: false,
+          dialogClass: response.class.join(' '),
           modal: true,
           draggable: false,
           closeText : Drupal.t('close'),

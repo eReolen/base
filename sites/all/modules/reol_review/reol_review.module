@@ -1,0 +1,62 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen review module feature.
+ */
+
+/**
+ * Implements hook_cron().
+ *
+ * Make sure we have reviews fetched and cached.
+ */
+function reol_review_cron() {
+  // Fetch reviews, making sure they are cached.
+  reol_review_ensure_reviews();
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_review_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Ensure that reviews are updated.
+ */
+function reol_review_ensure_reviews() {
+  module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
+  _reol_review_ensure_reviews();
+}
+
+/**
+ * Get reviews.
+ *
+ * @return array
+ *   Array of titles found for each type.
+ */
+function reol_review_get_reviews() {
+  module_load_include('client.inc', 'ting');
+
+  // See if we have the results cached.
+  $found = variable_get('reol_review_reviews', array());
+  reol_review_alter_found($found);
+
+  return $found;
+}
+
+/**
+ * Make sure that found array has one entry for each type.
+ *
+ * @param array $found
+ *   The found array.
+ */
+function reol_review_alter_found(&$found) {
+  // Make sure we have arrays for each type.
+  $types = reol_base_get_type();
+  foreach ($types as $type => $n) {
+    if (!isset($found[$type])) {
+      $found[$type] = array();
+    }
+  }
+}

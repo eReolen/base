@@ -6,19 +6,72 @@
 
 /**
  * Available items.
+ *
  * @TODO
+ *
+ * @param array $local_ids
+ *   Array of local ids to check.
+ *
+ * @return array
+ *   Result array containing the keys; available, reservable,
+ *   loaned, reserved. Array is keyed by local id.
  */
-function publizon_availability_items($provider_ids) {
-  $res = array();
+function publizon_availability_items($local_ids) {
+  global $user;
 
-  // For now, everything is reservable and available.
-  foreach ($provider_ids as $id) {
-    $res[$id] = array(
-      'available' => TRUE,
-      'reservable' => TRUE,
-    );
+  $to_check = array();
+  foreach ($local_ids as $local_id) {
+    $isbn = reol_base_get_isbn($local_id);
+    // If we do not have an ISBN number, we cannot get status.
+    if (!$isbn) {
+      continue;
+    }
+
+    $to_check[$isbn] = $local_id;
   }
-  return $res;
+  try {
+    // This will throw exception if not logged in.
+    $creds = ding_user_get_creds($user);
+
+    $retailer_id = publizon_get_retailer_id($user);
+
+    $client = PublizonLoanClient::getClient();
+    $results = $client->getProductLoanStatusList($retailer_id, array_keys($to_check), $creds['name']);
+    $return = array();
+    foreach ($results as $result) {
+      $isbn = $result->isbn;
+      $status = $result->loanStatus;
+
+      $return[$to_check[$isbn]] = array(
+        'available' => $status == 4 || $status == 3,
+        'reservable' => $status == 5,
+        'loaned' => $status == 1,
+        'reserved' => $status == 2,
+        'bookmarked' => $result->onChecklist,
+      );
+    }
+    return $return;
+  }
+  // If no user is logged in, try with the default retailer.
+  catch (DingProviderAuthException $e) {
+    $client = PublizonLoanClient::getClient();
+    $retailer_id = variable_get('publizon_default_retailer', '');
+    $results = $client->getProductLoanStatusList($retailer_id, array_keys($to_check));
+    $return = array();
+    foreach ($results as $result) {
+      $isbn = $result->isbn;
+      $status = $result->loanStatus;
+
+      $return[$to_check[$isbn]] = array(
+        'available' => $status == 4 || $status == 3,
+        'reservable' => $status == 5,
+        'loaned' => $status == 1,
+        'reserved' => $status == 2,
+        'bookmarked' => $result->onChecklist,
+      );
+    }
+    return $return;
+  }
 }
 
 /**

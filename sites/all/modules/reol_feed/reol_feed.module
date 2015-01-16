@@ -1,0 +1,291 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen feed feature.
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function reol_feed_cron() {
+  reol_feed_ensure_feeds();
+}
+
+/**
+ * Implements hook_node_insert().
+ *
+ * Trigger feed rebuild when nodes are created.
+ */
+function reol_feed_node_insert($node) {
+  cache_clear_all('reol_feed_do_not_force', 'cache');
+}
+
+/**
+ * Implements hook_node_update().
+ *
+ * Trigger feed rebuild when nodes are updated.
+ */
+function reol_feed_node_update($node) {
+  cache_clear_all('reol_feed_do_not_force', 'cache');
+}
+
+/**
+ * Implements hook_node_delete().
+ *
+ * Trigger feed rebuild when nodes are deleted.
+ */
+function reol_feed_node_delete($node) {
+  cache_clear_all('reol_feed_do_not_force', 'cache');
+}
+
+
+/**
+ * Ensure that all feeds are updated.
+ */
+function reol_feed_ensure_feeds() {
+  // Go through all feeds.
+  foreach (reol_feed_get_feeds() as $feed) {
+    // Find out if feed needs to be updated.
+    // If cache variable is removed, cache has been cleared,
+    // force rebuild of feeds.
+    $update = cache_get('reol_feed_do_not_force') ? FALSE : TRUE;
+    if (!$update) {
+      foreach ($feed['files'] as $file) {
+        $file_path = reol_feed_get_filename($file);
+
+        if (!file_exists($file_path)) {
+          $update = TRUE;
+        }
+        elseif (filemtime($file_path) < time() - $feed['lifetime']) {
+          $update = TRUE;
+        }
+
+        // We have found out, we need to update feed.
+        // No need to continue.
+        if ($update) {
+          break;
+        }
+      }
+    }
+
+    // If feed needs to be updated, do it.
+    if ($update) {
+      // If file is specified, we require it.
+      if (isset($feed['file'])) {
+        require_once $feed['file'];
+      }
+      call_user_func_array($feed['callback'], array());
+    }
+  }
+  // Reset rebuild status.
+  cache_set('reol_feed_do_not_force', TRUE);
+}
+
+/**
+ * Get an array of all feeds.
+ *
+ * @return array
+ *   Array defining the feeds that exist.
+ */
+function reol_feed_get_feeds() {
+  $path = drupal_get_path('module', 'reol_feed') . '/includes';
+
+  return array(
+    array(
+      'name' => 'carousel',
+      'callback' => 'reol_feed_feeds_carousel',
+      'file' => $path . '/reol_feed.carousel.inc',
+      'files' => array(
+        array(
+          'type' => 'ebook',
+          'filename' => 'carousel.xml',
+        ),
+        array(
+          'type' => 'audiobook',
+          'filename' => 'carousel.xml',
+        ),
+      ),
+      'lifetime' => 24 * 60 * 60,
+    ),
+    array(
+      'name' => 'frontpage',
+      'callback' => 'reol_feed_feeds_frontpage',
+      'file' => $path . '/reol_feed.frontpage.inc',
+      'files' => array(
+        array(
+          'type' => 'ebook',
+          'filename' => 'frontpage.xml',
+        ),
+        array(
+          'type' => 'audiobook',
+          'filename' => 'frontpage.xml',
+        ),
+      ),
+      'lifetime' => 24 * 60 * 60,
+    ),
+    array(
+      'name' => 'categories',
+      'callback' => 'reol_feed_feeds_categories',
+      'file' => $path . '/reol_feed.categories.inc',
+      'files' => array(
+        array(
+          'type' => 'ebook',
+          'filename' => 'categories.xml',
+        ),
+        array(
+          'type' => 'audiobook',
+          'filename' => 'categories.xml',
+        ),
+      ),
+      'lifetime' => 60 * 60,
+    ),
+
+  );
+}
+
+/**
+ * Get the filename for a file definition from feed array.
+ *
+ * @param array $file
+ *   File definition, containing at least 'type' and 'filename' keys.
+ *
+ * @return string
+ *   Path for the file.
+ */
+function reol_feed_get_filename($file) {
+  $feed_directory = reol_feed_get_feeds_directory() . '/' . $file['type'];
+
+  // Make sure dir exists.
+  if (!file_exists($feed_directory)) {
+    mkdir($feed_directory, 0777, TRUE);
+  }
+
+  return $feed_directory . '/' . $file['filename'];
+}
+
+/**
+ * Get the directory for storing feeds.
+ *
+ * @return string
+ *   Path to the directory relative to Drupal root.
+ */
+function reol_feed_get_feeds_directory() {
+  $default_path = variable_get('file_public_path', conf_path() . '/files') . '/feeds';
+  return variable_get('reol_feed_feed_directory', $default_path);
+}
+
+/**
+ * Write a feed.
+ *
+ * @param array $file
+ *   File definition, containing at least 'type' and 'filename' keys.
+ * @param string $contents
+ *   File contents to write.
+ *
+ * @return bool
+ *   Whether or not write was successfull.
+ */
+function reol_feed_write_feed($file, $contents) {
+  return file_put_contents(reol_feed_get_filename($file), $contents) !== FALSE;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reol_feed_menu() {
+  $items = array();
+
+  $items['feeds'] = array(
+    'page callback' => 'reol_feed_deliver',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Deliver a feed.
+ */
+function reol_feed_deliver() {
+  // Ensure that feeds are up to date.
+  reol_feed_ensure_feeds();
+  $feed_path = array();
+  $i = 1;
+  while (($p = arg($i)) != NULL) {
+    $feed_path[] = $p;
+    $i++;
+  }
+
+  // Find the feed.
+  $feed_path = implode($feed_path, '/');
+  $feed_file = reol_feed_get_feeds_directory() . '/' . $feed_path;
+
+  // Set content type as the one from the file.
+  $finfo = finfo_open(FILEINFO_MIME_TYPE);
+  $type = finfo_file($finfo, $feed_file);
+  finfo_close($finfo);
+  header('Content-Type: ' . $type);
+
+  // Pass through file.
+  readfile($feed_file);
+  drupal_exit();
+}
+
+/**
+ * Get the latest nodes of a type limiting by count.
+ *
+ * @param string $type
+ *   The content type to get nodes for.
+ * @param int $count
+ *   The number of items to return.
+ *
+ * @return array
+ *   Array of loaded nodes.
+ */
+function reol_feed_get_latest($type, $ting_type, $count = 2) {
+  $query = db_select('node', 'n')
+    ->fields('n', array('nid'))
+    ->condition('n.type', $type)
+    ->condition('n.status', 1)
+    ->condition(db_or()
+      ->condition('t.field_reol_entity_type_value', $ting_type)
+      ->isNull('t.field_reol_entity_type_value')
+    )
+    ->range(0, $count)
+    ->orderBy('n.created', 'DESC');
+  $query->leftJoin('field_data_field_reol_entity_type', 't', 'n.nid = t.entity_id');
+  $results = $query->execute()
+    ->fetchAll();
+
+  $latest = array();
+  foreach ($results as $res) {
+    $latest[] = node_load($res->nid);
+  }
+
+  return $latest;
+}
+/**
+ * Convert BR tags to newlines and carriage returns.
+ *
+ * @param string $string
+ *   The string to convert
+ *
+ * @return string
+ *   The converted string
+ */
+function _reol_feed_br2nl($string) {
+  return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, $string);
+}
+
+/**
+ * Convert HTML to XML text.
+ *
+ * @param string $html
+ *   The HTML to convert.
+ *
+ * @return string
+ *   The XML string.
+ */
+function reol_feed_convert_html($html) {
+  return strip_tags(_reol_feed_br2nl($html));
+}

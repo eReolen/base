@@ -5,12 +5,6 @@
  */
 
 include_once 'publizon.features.inc';
-/**
- * @file
- * Main module implementation which defines functions used in the administration
- * interface and a few helper functions.
- */
-
 require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
 
 /**
@@ -46,48 +40,40 @@ function publizon_ding_provider() {
         'prefix' => 'debt',
         'file' => $path . '/publizon.debt.inc',
       ),
+      'bookmark' => array(
+        'prefix' => 'bookmark',
+        'file' => $path . '/publizon.bookmark.inc',
+      ),
     ),
   );
 }
 
 /**
- * Search the T!NG data well for information based on ISBN.
+ * Implements hook_webform_select_options_info().
  *
- * If more than one match is found only the first match is returned.
- *
- * TODO Not tested. Should problably be rewritten for newer Ding.
- *
- * @param string $isbn
- *   ISBN number for the product that is searched.
- *
- * @return TingObject
- *   Datawell object for the product found, if non is found FALSE will be
- *   returned.
+ * Provides library list as options for webform.
  */
-function publizon_ting_find_object($isbn) {
-  // Ensure that the ting client is available.
-  module_load_include('client.inc', 'ting');
+function publizon_webform_select_options_info() {
+  $items = array();
 
-  // Build ting request.
-  $request = ting_get_request_factory()->getSearchRequest();
-  $request = ting_add_agency($request);
-  $request = ting_add_profile($request);
+  $items['libraries'] = array(
+    'title' => t('Libraries'),
+    'options callback' => 'publizon_webform_select_options_libraries',
+  );
 
-  // Try to fetch ting object based on ISBN number. Sadly not all object in
-  // ebooks or net sound have ISBN, but uses oss:PROVIDER-ID, which we can not
-  // search directly on (so no dc.identifier=*). Also therefor it have been
-  // renamed, because it does not only find object by ISBN.
-  $request->setQuery($isbn);
-  $request->setNumResults(1);
+  return $items;
+}
 
-  // Execute the fetch.
-  $response = ting_execute($request);
-  $object = FALSE;
-  if (isset($response->collections[0]->objects[0])) {
-    $object = $response->collections[0]->objects[0];
+/**
+ * Option list of libraries.
+ */
+function publizon_webform_select_options_libraries($compontent, $flat, $arguments) {
+  $libraries = publizon_get_libraries();
+  foreach ($libraries as $lib) {
+    $options[$lib['retailer_id']] = $lib['library_name'];
   }
 
-  return $object;
+  return $options;
 }
 
 /**
@@ -178,4 +164,442 @@ function publizon_get_libraries_list() {
   return array_map(function ($elem) {
     return $elem['library_name'];
   }, publizon_get_libraries());
+}
+
+/**
+ * Implements hook_ting_covers().
+ *
+ * Fetch covers from Publizon.
+ */
+function publizon_ting_covers($entities) {
+  $covers = array();
+
+  foreach ($entities as $id => $entity) {
+    $local_id = $entity->localId;
+
+    $uri = publizon_get_product_cover($local_id);
+
+    // If no cover was found, continue.
+    if (!$uri || empty($uri)) {
+      continue;
+    }
+
+    // Try to download the image.
+    $result = drupal_http_request($uri);
+
+    // If download failed, continue.
+    if ($result->code != 200) {
+      continue;
+    }
+
+    $filename = ting_covers_object_path($entity->id);
+    $directory = dirname($filename);
+
+    // Build the destination folder tree if it doesn't already exist.
+    if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+      watchdog('ting_covers', 'Failed to create directory: %directory', array('%directory' => $directory), WATCHDOG_ERROR);
+      continue;
+    }
+
+    // Try to save the file.
+    $file = file_unmanaged_save_data($result->data, $filename, FILE_EXISTS_REPLACE);
+
+    // If successfull, return file path for this one.
+    if ($file) {
+      $covers[$id] = $file;
+    }
+  }
+
+  return $covers;
+}
+
+/**
+ * Get the retailer id for a user.
+ *
+ * @param StdClass $account
+ *   The user object.
+ *
+ * @return string
+ *   The retailer id.
+ */
+function publizon_get_retailer_id($account) {
+  // Get the retailer id on the user.
+  $profile = profile2_load_by_user($account, 'provider_publizon');
+  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
+  return $profile_wrapper->field_publizon_retailer_id->value();
+}
+
+/**
+ * Get the cover URI from a local id.
+ *
+ * @param string $local_id
+ *   The local id of the ding object.
+ *
+ * @return string
+ *   The URI or FALSE if no cover found.
+ */
+function publizon_get_product_cover($local_id) {
+  $isbn = reol_base_get_isbn($local_id);
+  // If we do not have an ISBN, no cover can be found.
+  if (!$isbn) {
+    return FALSE;
+  }
+
+  // Get the cover image from Publizon.
+  $client = PublizonProductClient::getClient();
+
+  return $client->getCoverUri($isbn);
+}
+
+/**
+ * Alter reserve form.
+ *
+ * As we are adding field widgets we cannot use the options form
+ * from provider. Instead we have to use alter.
+ *
+ * @see publizon_reservation_options()
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The state of the form.
+ */
+function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state) {
+  if (!isset($form['#parents'])) {
+    $form['#parents'] = array();
+  }
+
+  // This should be OK, as you would always reserve as the logged in user.
+  global $user;
+  $profile = profile2_load_by_user($user, 'provider_publizon');
+
+  $form['publizon']['#tree'] = TRUE;
+
+  // Add phone field.
+  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone', $profile, $field_form, $form_state);
+  $form['publizon']['phone_notification'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Send notification to my phone'),
+    '#default_value' => TRUE,
+    '#weight' => 0,
+  );
+  // Only show this field when the 'phone_notification' checkbox is enabled.
+  $form['publizon']['field_phone']['#states'] = array(
+    'visible' => array(
+      ':input[name="publizon[phone_notification]"]' => array('checked' => TRUE),
+    ),
+  );
+  $form['publizon']['field_phone']['#weight'] = 10;
+
+  // Add email field.
+  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $field_form, $form_state);
+  $form['publizon']['email_notification'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Send notification to my email'),
+    '#default_value' => TRUE,
+    '#weight' => 20,
+  );
+  // Only show this field when the 'email_notification' checkbox is enabled.
+  $form['publizon']['field_email']['#states'] = array(
+    'visible' => array(
+      ':input[name="publizon[email_notification]"]' => array('checked' => TRUE),
+    ),
+  );
+  $form['publizon']['field_email']['#weight'] = 30;
+
+  $form['publizon']['#weight'] = 0;
+
+  $form['#validate'][] = 'publizon_form_ding_reservation_reserve_form_validate';
+  array_unshift($form['#submit'], 'publizon_form_ding_reservation_reserve_form_submit');
+  return $form;
+}
+
+/**
+ * Validate reserve form.
+ *
+ * As this for is not actually the profile2 form we have to manually
+ * add the field validations.
+ *
+ * @param array $form
+ *   The form to validate
+ * @param array $form_state
+ *   The state of the form at submit.
+ */
+function publizon_form_ding_reservation_reserve_form_validate($form, &$form_state) {
+  $entity = (object) $form_state['values']['publizon'];
+  $entity->type = 'provider_publizon';
+  $options = array(
+    'email_notification' => TRUE,
+    'phone_notification' => TRUE,
+  );
+
+  $wrapper = entity_metadata_wrapper('profile2', $entity);
+
+  if ($form_state['values']['publizon']['phone_notification']) {
+    if (!$wrapper->field_phone->value()) {
+      // The field is not required, so we check here.
+      $element = $form['publizon']['field_phone'];
+      form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
+    }
+  }
+  else {
+    // Do not validate phone if it is not selected.
+    // unset($entity->field_phone);
+    $wrapper->field_phone->set(NULL);
+    $options['phone_notification'] = FALSE;
+  }
+
+  if ($form_state['values']['publizon']['email_notification']) {
+    if (!$wrapper->field_email->value()) {
+      // The field is not required, so we check here.
+      $element = $form['publizon']['field_email'];
+      form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
+    }
+  }
+  else {
+    // Do not validate email if it is not selected.
+    // unset($entity->field_email);
+    $wrapper->field_email->set(NULL);
+    $options['email_notification'] = FALSE;
+  }
+
+  // Set the provider options that's passed to the reserve callback.
+  form_set_value($form['provider_options'], $options, $form_state);
+
+  field_attach_form_validate('profile2', $entity, $form, $form_state);
+}
+
+/**
+ * Submit reserve form.
+ *
+ * Save the (changed) values from form on the user.
+ *
+ * We cannot use options_submit here, as Ding checks the values
+ * submitted from form. If the value is empty, and the default value
+ * is empty, it sets and error on the form. An unchecked checkbox (FALSE)
+ * will return true in empty() call, and so will the default value NULL.
+ *
+ * @param array $form
+ *   The form to validate
+ * @param array $form_state
+ *   The state of the form at submit.
+ */
+function publizon_form_ding_reservation_reserve_form_submit($form, &$form_state) {
+  global $user;
+  $profile = profile2_load_by_user($user, 'provider_publizon');
+  $values = $form_state['values']['publizon'];
+
+  $changed = FALSE;
+  $fields = array(
+    'field_phone' => 'phone_notification',
+    'field_email' => 'email_notification',
+  );
+
+  // Check if fields have changed, and change them on the profile.
+  foreach ($fields as $field => $checkbox) {
+    // To not confuse the user, we only save values that result in notification.
+    // If they have not chosen notif for the field, do not save the value.
+    if (!$values[$checkbox]) {
+      continue;
+    }
+
+    if ($profile->$field != $values[$field]) {
+      $profile->$field = $values[$field];
+      $changed = TRUE;
+    }
+  }
+
+  // Save if we have changes.
+  if ($changed) {
+    $profile->save();
+  }
+}
+
+/**
+ * Implements hook_init().
+ *
+ * Add javascript settings.
+ */
+function publizon_init() {
+  drupal_add_js(array(
+    'publizon' => array(
+      'player' => array(
+        'clientId' => variable_get('publizon_player_client_id', ''),
+        'url' => variable_get('publizon_player_url', ''),
+      ),
+    ),
+  ), 'setting');
+}
+/**
+ * Get custom error messages for publizon error codes.
+ */
+function _publizon_error_messages() {
+  $messages = variable_get('publizon_error_messages', array());
+  if (empty($messages)) {
+    // Return default messages.
+    $messages = array(
+      -1 => t('Unknown error.'),
+      // Doesn't make sense to include:
+      // 101 => 'OK',
+      105 => 'ebookid er ikke er gyldigt isbn nummer (#105).',
+      114 => 'Ugyldigt kortnummer og/eller pinkode (#114).',
+      118 => 'Biblioteket kunne ikke autoriseres (#118).',
+      120 => 'Antallet af samtidige lån er overskredet (#120).',
+      125 => 'Biblioteket har nået forbrugsgrænsen i indeværende måned. Kontakt evt. dit lokale bibliotek for yderligere oplysninger (#125).',
+      126 => 'Biblioteket har nået grænsen for antal udlån i indeværende måned. Kontakt evt. dit lokale bibliotek for yderligere oplysninger (#126).',
+      128 => 'Bogen er ikke tilgængelig for udlån (#128).',
+      129 => 'Bogen kan højst genlånes én gang (#129).',
+      130 => 'Bogen kan først lånes igen 90 dage efter sidste låns udløb (#130).',
+      131 => 'Bogen kan ikke lånes (#131).',
+      134 => 'Kortet er midlertidigt blokeret (#134)',
+      135 => 'Grænsen for antal tilladte lån på bogen er nået (#135)',
+      136 => 'De opkøbte klip er alle taget i brug (#136).',
+      137 => 'Dit bibliotek tillader kun op til X samtidige reserveringer (#137).',
+      138 => 'Der skete en uventet fejl. (#138).',
+      139 => 'Ugyldigt clientid. (#139).',
+    );
+  }
+
+  return $messages;
+}
+
+/**
+ * Get error message array.
+ *
+ * @param int $code
+ *   The error code to get message for.
+ *
+ * @return array
+ *   The message definition.
+ */
+function publizon_get_message($code) {
+  $messages = variable_get('publizon_error_messages', array());
+  $code = isset($messages[$code]) ? $code : -1;
+
+  if (!isset($messages[$code])) {
+    return array(
+      'error_text' => 'Error',
+      'show_bookmark' => FALSE,
+      'show_reserve' => FALSE,
+    );
+  }
+  else {
+    return $messages[$code];
+  }
+}
+
+/**
+ * Load publizon product.
+ *
+ * @param string $local_id
+ *   The local id of the entity to load publizon product for.
+ *
+ * @return PublizonProduct
+ *   The product.
+ */
+function publizon_load($local_id) {
+  $products = &drupal_static(__FUNCTION__) || array();
+  // If product is not in cache, get it.
+  if (!isset($products[$local_id])) {
+    // Try getting from db cache.
+    if ($cache = cache_get('publizon_products:' . $local_id)) {
+      $products[$local_id] = $cache->data;
+    }
+    else {
+      // Try to get product from Publizon.
+      try {
+        $client = PublizonProductClient::getClient();
+        $products[$local_id] = $client->getProduct(reol_base_get_isbn($local_id));
+      }
+      catch (Exception $e) {
+        $products[$local_id] = FALSE;
+      }
+      // Save in db cache.
+      cache_set('publizon_products:' . $local_id, $products[$local_id], 'cache', time() + 3 * 60 * 60);
+    }
+  }
+
+  return $products[$local_id];
+}
+
+/**
+ * Load publizon library.
+ *
+ * @param string $library_id
+ *   The id of the library to load info for.
+ *
+ * @return PublizonLibrary
+ *   The library.
+ */
+function publizon_library_load($library_id) {
+  $libraries = &drupal_static(__FUNCTION__) || array();
+  // If library is not in cache, get it.
+  if (!isset($libraries[$library_id])) {
+    // Try getting from db cache.
+    if ($cache = cache_get('publizon_libraries:' . $library_id)) {
+      $libraries[$library_id] = $cache->data;
+    }
+    else {
+      // Try to get library from Publizon.
+      try {
+        $client = PublizonLibraryClient::getClient();
+        $libraries[$library_id] = $client->getLibraryProfile($library_id);
+      }
+      catch (Exception $e) {
+        $libraries[$library_id] = FALSE;
+      }
+      // Save in db cache.
+      cache_set('publizon_libraries:' . $library_id, $libraries[$library_id], 'cache', time() + 24 * 60 * 60);
+    }
+  }
+
+  return $libraries[$library_id];
+}
+
+/**
+ * Publizon provider exception.
+ */
+class DingPublizonException extends DingProviderUserException {
+  private $showBookmark;
+  private $showReserve;
+  private $exception;
+
+  /**
+   * Convert a PublizonException to a DingPublizonException.
+   *
+   * Rethrows the new exception.
+   *
+   * @throws DingPublizonException
+   */
+  static public function convert(PublizonException $publizon_exception) {
+    $code = $publizon_exception->getCode();
+    $message = publizon_get_message($code);
+
+    throw new self($message['error_text']['value'], $code, $message['show_bookmark'], $message['show_reserve'], $exception);
+  }
+
+  /**
+   * Constructor.
+   */
+  public function __construct($message, $code, $show_bookmark, $show_reserve, $exception) {
+    $this->message = $message;
+    $this->code = $code;
+    $this->showBookmark = $show_bookmark;
+    $this->showReserve = $show_reserve;
+    $this->exception = $exception;
+  }
+
+  /**
+   * Return whether or not to show bookmark button.
+   */
+  public function showBookmark() {
+    return (bool) $this->showBookmark;
+  }
+
+  /**
+   * Return whether or not to show reserve button.
+   */
+  public function showReserve() {
+    return (bool) $this->showReserve;
+  }
 }

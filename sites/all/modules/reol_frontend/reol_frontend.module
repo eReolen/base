@@ -1,0 +1,277 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen frontend feature.
+ */
+
+include_once 'reol_frontend.features.inc';
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function reol_frontend_entity_info_alter(&$entity_info) {
+  $entity_info['ting_object']['view modes'] += array(
+    'review' => array(
+      'label' => t('Review'),
+      'custom settings' => TRUE,
+    ),
+  );
+
+  $entity_info['file']['view modes'] += array(
+    'video_frontpage' => array(
+      'label' => t('Video on frontpage'),
+      'custom settings' => TRUE,
+    ),
+    'video_show' => array(
+      'label' => t('Video player'),
+      'custom settings' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reol_frontend_menu() {
+  $items = array();
+
+  $items['video/%node/view'] = array(
+    'page callback' => 'reol_frontend_view_video',
+    'page arguments' => array(1),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function reol_frontend_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+
+  // Add background image on teaser for article.
+  if ($node->type == 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
+
+    // Get image info.
+    $image_field = $node_wrapper->field_ding_news_list_image->value();
+    $image_uri = $image_field['uri'];
+    $image_for_sizing = image_style_path('reol_article_teaser_background', $image_uri);
+    // Make sure image has been generated.
+    image_style_create_derivative(image_style_load('reol_article_teaser_background'), $image_uri, $image_for_sizing);
+
+    list($image_w, $image_h) = getimagesize($image_for_sizing);
+
+    // Add image style image.
+    $variables['image_background'] = theme('image_style', array(
+      'style_name' => 'reol_article_teaser_background',
+      'path' => $image_uri,
+      'getsize' => TRUE,
+      'attributes' => array(
+        'width' => $image_w,
+        'height' => $image_h,
+      ),
+    ));
+
+    // Change text for read more link.
+    $variables['readmore_text'] = t('Read entire article');
+    $uri = entity_uri('node', $node);
+    $variables['readmore'] = url($uri['path'], $uri['options']);
+  }
+
+  elseif ($node->type == "author_portrait") {
+    $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
+  }
+
+  elseif ($node->type == "video" && $variables['view_mode'] == 'teaser') {
+    drupal_add_library('system', 'drupal.ajax');
+    $variables['link'] = 'video/' . $node->nid . '/view';
+  }
+
+  elseif ($node->type == 'faq') {
+    $uri = entity_uri('node', $node);
+    $variables['link'] = url($uri['path'], $uri['options']);
+  }
+
+  if ($node->type == 'article' || $node->type == 'author_portrait' || $node->type == 'video') {
+    // Add type icon.
+    $type = $node_wrapper->field_reol_entity_type->value();
+    if ($type) {
+      $variables['type'] = $type;
+    }
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_frontend_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_frontend_form_ding_page_node_form_alter(&$form, &$form_state) {
+  $value = variable_get('reol_frontend_quick_guide_nid', 0) == (isset($form['#node']->nid) ? $form['#node']->nid : -1);
+  $form['options']['quick_guide'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use as quick guide'),
+    '#description' => t('Use this page as the quick guide page. If another one has been set earlier, this one takes over.'),
+    '#default_value' => $value,
+  );
+
+  $form['actions']['submit']['#submit'][] = 'reol_frontend_form_ding_page_node_form_submit';
+}
+
+/**
+ * Custom submit handler for saving the quick guide nid.
+ */
+function reol_frontend_form_ding_page_node_form_submit($form, &$form_state) {
+  if ($form_state['values']['quick_guide']) {
+    variable_set('reol_frontend_quick_guide_nid', $form_state['nid']);
+  }
+  elseif (variable_get('reol_frontend_quick_guide_nid', 0) == $form_state['nid']) {
+    variable_del('reol_frontend_quick_guide_nid');
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ *
+ * When the field reol_entity_type is present in the where
+ * statement of a views query we have to alter it. By default
+ * the views query will only find exact matches, but this field
+ * works differently. When nothing is selected, it means that
+ * everything is selected. We alter query to find all elements
+ * that match the value, or where the field is empty.
+ */
+function reol_frontend_views_query_alter(&$view, &$query) {
+  // Find out if the field 'reol_entity_type is present in query.
+  $found = FALSE;
+  foreach ($query->where as $wk => $where) {
+    foreach ($where['conditions'] as $ck => $condition) {
+      if (is_string($condition['field']) && $condition['field'] == 'field_data_field_reol_entity_type.field_reol_entity_type_value') {
+        $found = $condition;
+        // If it is present, remove it. We add it ourself in a group below.
+        unset($query->where[$wk]['conditions'][$ck]);
+      }
+    }
+  }
+
+  // If we have found it. We add a group finding elements that either
+  // match the value, or that has no value in the field.
+  if ($found) {
+    $query->where[] = array(
+      'args' => array(),
+      'type' => 'OR',
+      'conditions' => array(
+        $found,
+        array(
+          'field' => 'field_data_field_reol_entity_type.field_reol_entity_type_value',
+          'value' => '',
+          'operator' => 'IS NULL',
+        ),
+      ),
+    );
+    // By default, Views does inner joins. This means that results
+    // where the field is empty will not appear. Change to left instead.
+    $query->table_queue['field_data_field_reol_entity_type']['join']->type = "LEFT";
+  }
+}
+
+/**
+ * Implements hook_flush_caches().
+ */
+function reol_frontend_flush_caches() {
+  $types = reol_base_get_type();
+
+  // Create aliases for the type frontpages.
+  foreach ($types as $type) {
+    if (!path_load('reol_frontpage/' . $type['int_name'])) {
+      $path = array(
+        'source' => 'reol_frontpage/' . $type['int_name'],
+        'alias' => $type['path'],
+      );
+      path_save($path);
+    }
+  }
+}
+
+/**
+ * View a video from modal.
+ *
+ * @param StdClass $node
+ *   The video node.
+ *
+ * @return array
+ *   Ajax render array.
+ */
+function reol_frontend_view_video($node) {
+  $commands = array();
+  $commands[] = ajax_command_ding_popup('reol_frontend', t('View video'), drupal_render(node_view($node, 'full')), array('refresh' => TRUE, 'class' => array('video-modal')));
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &$form_state) {
+  // Hide retailer id.
+  $form['profile_provider_publizon']['field_publizon_retailer_id']['#access'] = FALSE;
+
+  // Hide pass change fieldset.
+  $form['pass']['#access'] = FALSE;
+
+  // Hide sms fee.
+  $form['ding_user_fee_sms']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_ting_online_url_alter().
+ *
+ * Remove the online URL so ding_availability doesn't skip the availability
+ * check.
+ */
+function reol_frontend_ting_online_url_alter(&$url, $entity) {
+  $url = "";
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @see ting_search_backend_engines_content_type_render()
+ */
+function reol_frontend_form_ting_search_backend_engines_form_alter(&$form, &$form_state) {
+  $backends = search_get_info();
+  $default = search_get_default_module_info();
+
+  $options = &$form['backends']['searches']['#options'];
+  foreach ($backends as $name => $backend) {
+
+    // Create new title for better translations.
+    switch ($backend['path']) {
+      case 'ting':
+        $title = t('Search Ting');
+        break;
+
+      case 'node':
+        $title = t('Search content');
+        break;
+    }
+
+    // Create old title for replacing.
+    $old_title = t('Search @backend', array('@backend' => $backend['title']));
+
+    // Replace title with new one.
+    if (isset($options[$backend['module']])) {
+      $options[$backend['module']] = str_replace($old_title, $title, $options[$backend['module']]);
+    }
+    elseif ($default['module'] == $backend['module']) {
+      $options[0] = str_replace($old_title, $title, $options[0]);
+    }
+  }
+}

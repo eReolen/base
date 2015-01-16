@@ -1,0 +1,25 @@
+/**
+ * @file
+ * Styles for webforms.
+ */
+
+.node-webform {
+  .webform-component.form-item {
+    margin-top: 2em;
+  }
+
+  select {
+    min-width: 0;
+  }
+
+  .webform-datepicker {
+    // Arrange datepicker selects on one line.
+    .form-type-select {
+      display: inline;
+      float: left;
+    }
+    .webform-calendar {
+      padding: 10px;
+    }
+  }
+}

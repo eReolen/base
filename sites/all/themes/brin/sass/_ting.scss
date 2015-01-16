@@ -1,0 +1,219 @@
+/**
+ * @file
+ * Search result styles.
+ */
+
+/*
+ * Hardcore resetting.
+ */
+
+.pane-search-result .search-results .list .list-item,
+.view-node-search-result .search-results .list .list-item,
+.ting-reference-reverse-list .search-results .list .list-item,
+.pane-new-materials .search-results .list .list-item,
+.pane-ting-object .ting-object-wrapper,
+.pane-ting-collection .ting-collection-wrapper {
+  background: none;
+  padding: 0;
+}
+
+.pane-search-result .search-results .list .search-result--availability,
+.view-node-search-result .search-results .list .search-result--availability,
+.ting-reference-reverse-list .search-results .list .search-result--availability,
+.pane-new-materials .search-results .list .search-result--availability,
+.pane-search-result .search-results .list .search-result--series,
+.view-node-search-result .search-results .list .search-result--series,
+.ting-reference-reverse-list .search-results .list .search-result--series,
+.pane-new-materials .search-results .list .search-result--series {
+  border: none;
+}
+
+.pane-ting-collection .field.field-name-ting-abstract,
+.pane-ting-object .field.field-name-ting-abstract {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * Proper styles.
+ */
+
+.pane-search-result .search-results .list .ting-object .search-result--availability {
+  margin-top: 20px;
+}
+
+.ting-object-left,
+.pane-ting-object .ting-object-left {
+  width: 30%;
+
+  @include x-small() {
+    width: 100%;
+    float: none;
+  }
+}
+.ting-object-right,
+.pane-ting-object .ting-object-right,
+.group_material_details,
+.group_holdings_available,
+.group_periodical_issues,
+.ting-object-relation-group {
+  width: 70%;
+
+  @include x-small() {
+    width: 100%;
+    float: none;
+    margin-left: 0;
+  }
+}
+
+.pane-ting-object .group-material-details {
+  @include x-small() {
+    width: 100%;
+    float: none;
+  }
+}
+
+.ting-object-wrapper {
+  clear: both;
+}
+
+.group_material_details,
+.group_holdings_available,
+.group_periodical_issues,
+.ting-object-relation-group {
+  float: right;
+  border-bottom: $border-separator;
+  padding-bottom: 30px;
+
+  .field-label,
+  .field-items {
+    font-family: 'Open Sans', sans-serif;
+    color: $text-header-color;
+  }
+
+  .field-items {
+    margin-bottom: 15px;
+  }
+
+  h2 {
+    padding-bottom: 20px;
+    border-bottom: $border-separator;
+  }
+}
+
+// Need to be more specific to override ddbasic here.
+.pane-ting-object .ting-object-inner-wrapper h2 {
+  margin-bottom: 20px;
+}
+
+/**
+ * Fix up margins.
+ */
+.group_material_details,
+.group_holdings_available,
+.group_periodical_issues {
+  h2, div {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+.pane-search-result .search-results .list .search-result--availability,
+.view-node-search-result .search-results .list .search-result--availability,
+.ting-reference-reverse-list .search-results .list .search-result--availability,
+.pane-new-materials .search-results .list .search-result--availability {
+  width: auto;
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Materials title.
+.pane-search-result .search-results .list .heading h2 {
+  font-size: 28px;
+}
+
+// Material type. Hide it.
+.field-type-ting-type {
+  display: none;
+}
+
+// Author line.
+.ting-author {
+  &,
+  & a,
+  & a:visited,
+  & a:link, {
+    color: $text-secondary-color;
+    font-style: italic;
+    font-size: 14px;
+  }
+}
+
+// Series line.
+.ting-series {
+  border-top: $border-separator;
+  border-bottom: $border-separator;
+  padding: 20px 0;
+  margin: 20px 0;
+  .field-label {
+    color: $text-header-color;
+  }
+}
+
+// Subjects.
+.subjects {
+  .pane-ting-object & {
+    margin: 20px 0;
+  }
+
+  a,
+  a:link,
+  a:visited  {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    background: none;
+    text-shadow: none;
+    color: $text-secondary-color;
+    font-style: italic;
+    margin-right: 10px;
+  }
+  a:hover {
+    color: $text-header-color;
+    text-decoration: underline;
+  }
+}
+
+// Ting object buttons.
+.pane-ting-object .field-name-ding-entity-buttons,
+.pane-ting-collection .field-name-ding-entity-buttons {
+  float: none;
+  a {
+    display: inline-block;
+    @include box-sizing(border-box);
+  }
+}
+
+// Result selection/facet browser/alternatives/relation anchors.
+.pane-search-backends,
+.pane-ding-facetbrowser,
+.pane-ting-ting-object-types,
+.pane-ting-ting-collection-types,
+.pane-ting-ting-relation-anchors {
+  h2 {
+    text-transform: none;
+  }
+
+  label {
+    font-family: "SourceSansProSemibold", "Helvetica Neue", Helvetica, "Lucida Sans Unicode", Arial, sans-serif;
+    text-transform: none;
+  }
+
+  &,
+  & a,
+  & a:visited,
+  & a:link, {
+    color: $text-tertiary-color;
+  }
+}

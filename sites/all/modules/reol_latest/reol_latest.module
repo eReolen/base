@@ -1,0 +1,263 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen latest feature.
+ */
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_latest_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}
+
+/**
+ * Get latest items for a type (or all).
+ *
+ * @param int $count
+ *   The number of items to get. Function will get
+ *   the last x items (configurable), and random return $count of them.
+ * @param string $type
+ *   The type to get latest for, or FALSE to get for all types.
+ *
+ * @return array
+ *   Array of random from latest x titles.
+ */
+function reol_latest_get_latest_count($count = 5, $type = FALSE) {
+  // If type is not defined, show all.
+  $ting_type = $type ? reol_base_get_ting_type($type) : 'all';
+
+  // If ting type is not found, do nothing.
+  if (!$ting_type) {
+    // Log this, it should not happen.
+    watchdog('reol_latest', 'Type for showing latest not found: @type', array('@type' => $type), WATCHDOG_ERROR);
+    return FALSE;
+  }
+
+  // Get results from query.
+  $query = $ting_type == 'all' ? '*' : 'facet.type="' . $ting_type . '"';
+  $ting_results = reol_latest_get_latest($query);
+
+  // Pick $count random ones.
+  $results = $ting_results->collections;
+  $res_count = count($results);
+  // If no results, return no results.
+  if ($res_count == 0) {
+    return array();
+  }
+  $count = $count > $res_count ? $res_count : $count;
+
+  return array_map(function($elem) {
+    return ding_entity_load($elem);
+  }, array_rand($results, $count));
+}
+
+/**
+ * Fetch the lastest using a query from Ting.
+ *
+ * Should not be used, use reol_latest_get_latest().
+ *
+ * @param string $query
+ *   Query for Ting.
+ *
+ * @return TingClientSearchResult
+ *   Ting result.
+ */
+function reol_latest_fetch_latest($query) {
+  module_load_include('inc', 'ting', 'ting.client');
+  return ting_do_search($query, 1, variable_get('reol_latest_fetch_count', 50), array(
+    'sort' => 'date_descending',
+  ));
+}
+
+/**
+ * Get the lastest using a query from ting.
+ *
+ * This is the cached version of reol_latest_fetch_latest().
+ *
+ * @param string $query
+ *   Query for Ting.
+ *
+ * @return TingClientSearchResult
+ *   Ting result.
+ */
+function reol_latest_get_latest($query) {
+  $latest = &drupal_static(__FUNCTION__) || array();
+  $key = reol_latest_get_query_key($query);
+
+  // If not in static cache, load from db cache.
+  if (!isset($latest[$key]) && $cache = cache_get('reol_latest_latest:' . $key)) {
+    $latest[$key] = $cache->data;
+  }
+
+  if (!isset($latest[$key])) {
+    // If we are keeping this query updated using cron,
+    // return empty result set for now. Cron will update eventually.
+    if (reol_latest_keeping_updated($query) && !variable_get('reol_latest_user_allowed_to_wait', FALSE)) {
+      // Try to look like the object we should return.
+      $latest[$key] = new StdClass();
+      $latest[$key]->collections = array();
+    }
+    // Otherwise, user will have to wait for us to fetch the result.
+    else {
+      $latest[$key] = reol_latest_fetch_latest($query);
+    }
+  }
+
+  // Query is used, mark it.
+  reol_latest_query_used($query);
+  return $latest[$key];
+}
+
+/**
+ * Get the key for storing query results in cache.
+ *
+ * @param string $query
+ *   The query to get key for.
+ *
+ * @return string
+ *   The key to use for caching results.
+ */
+function reol_latest_get_query_key($query) {
+  return md5($query);
+}
+
+/**
+ * Returns an array of queries to keep updated using cron.
+ *
+ * @return array
+ *   Array of queries to keep updated.
+ */
+function reol_latest_keep_updated() {
+  // We know these queries are used.
+  $fixed_queries = array(
+    'facet.type="' . reol_base_get_ting_type('ebook') . '"',
+    'facet.type="' . reol_base_get_ting_type('audiobook') . '"',
+  );
+  $queries = variable_get('reol_latest_used_queries', array());
+  foreach ($fixed_queries as $fq) {
+    $queries[reol_latest_get_query_key($fq)] = array(
+      'query' => $fq,
+    );
+  }
+
+  // Return array of queries.
+  return array_map(function($elem) {
+    return $elem['query'];
+  }, $queries);
+}
+
+/**
+ * Register a query as used, them keeping it updated using cron.
+ *
+ * @param string $query
+ *   The query that is used.
+ */
+function reol_latest_query_used($query) {
+  $queries = variable_get('reol_latest_used_queries');
+  $queries[reol_latest_get_query_key($query)] = array(
+    'accessed' => time(),
+    'query' => $query,
+  );
+  // Possible race condition, but this should not get called that often,
+  // so we should be ok.
+  variable_set('reol_latest_used_queries', $queries);
+}
+
+/**
+ * Check whether or not cron is keeping a query updated.
+ *
+ * @param string $query
+ *   The query to check.
+ *
+ * @return bool
+ *   Whether or not query is being kept updated using cron.
+ */
+function reol_latest_keeping_updated($query) {
+  $queries = reol_latest_keep_updated();
+  return array_search($query, $queries) !== FALSE;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function reol_latest_cron() {
+  reol_latest_maintenance();
+}
+
+/**
+ * Perform maintenance for reol_latest.
+ *
+ * Make sure that all latest that should be kept updated are updated.
+ */
+function reol_latest_maintenance() {
+  // First make sure we delete queries that have not been accessed
+  // in x days.
+  reol_latest_clean_keep_updated();
+
+  $queries = reol_latest_keep_updated();
+  foreach ($queries as $query) {
+    reol_latest_ensure_query($query);
+  }
+}
+
+/**
+ * Ensure that query result is updated.
+ *
+ * @param string $query
+ *   The query to ensure.
+ */
+function reol_latest_ensure_query($query) {
+  $key = reol_latest_get_query_key($query);
+  // If cache is updated, do nothing.
+  if (($cache = cache_get('reol_latest_latest:' . $key)) && (time() < $cache->expire)) {
+    return;
+  }
+
+  // If not, update result.
+  $res = reol_latest_fetch_latest($query);
+  cache_set('reol_latest_latest:' . $key, $res, 'cache', time() + 24 * 60 * 60);
+}
+
+/**
+ * Clean up in queries.
+ *
+ * Remove queries from keep updated, that have not been accessed
+ * in the last x days (configurable)
+ */
+function reol_latest_clean_keep_updated() {
+  $queries = variable_get('reol_latest_used_queries', array());
+
+  foreach ($queries as $key => $query) {
+    if ($query['accessed'] < time() - (variable_get('reol_latest_cleanup_after_days', 30) * 24 * 60 * 60)) {
+      unset($queries[$key]);
+    }
+  }
+
+  variable_set('reol_latest_used_queries', $queries);
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function reol_latest_entity_info_alter(&$entity_info) {
+  $entity_info['ting_object']['view modes'] += array(
+    'latest' => array(
+      'label' => t('Latest'),
+      'custom settings' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_preprocess_ting_object().
+ */
+function reol_latest_preprocess_ting_object(&$variables) {
+  // Only do something on latest view mode.
+  if ($variables['elements']['#view_mode'] == 'latest') {
+    // Links inside links fail, remove link on author.
+    $variables['content']['ting_author'][0]['#markup'] = strip_tags($variables['content']['ting_author'][0]['#markup']);
+  }
+}
