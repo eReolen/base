@@ -20,7 +20,7 @@ dependencies:
     - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --prefer-source --no-interaction global update drush/drush ; fi
     - mkdir ~/.drush
     - cd ~/.drush && drush dl drush_drake
-    - cd ~/.drush && drush dl coder
+    - cd ~/.drush && drush dl coder-7.x-2.4
     - git clone git@github.com:reload/drake_ci.git ~/.drush/drake_ci
     # Install csslint.
     - npm install -g csslint
