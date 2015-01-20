@@ -587,6 +587,17 @@ function reol_base_get_modal_close_button($text, $modal) {
 function reol_base_cron() {
   // Rebuild permissions on cron.
   secure_permissions_rebuild();
+
+  // Assign all available permissions to the administrator role. User module
+  // only does this on module install, so we do it generally here.
+  $rid = variable_get('user_admin_role', 0);
+  if ($rid) {
+    $permissions = module_invoke_all('permission');
+    if (!empty($permissions)) {
+      user_role_grant_permissions($rid, array_keys($permissions));
+    }
+  }
+
 }
 
 /**
