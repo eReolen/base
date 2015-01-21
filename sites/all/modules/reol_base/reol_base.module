@@ -208,7 +208,7 @@ function reol_base_preprocess_material_item(&$variables) {
  */
 function reol_base_get_type_name($type) {
   $type = reol_base_get_type($type);
-  return $type ? $type['int_name'] : FALSE;
+  return isset($type['int_name']) ? $type['int_name'] : FALSE;
 }
 
 /**
