@@ -37,7 +37,8 @@ test:
     # support, so we can't check for debug statements.
     # - drush --nocolor drake php-debug
     - drush --nocolor drake check-js
-    - drush --nocolor drake check-css
+    # Who cares anyway?
+    # - drush --nocolor drake check-css
     # Run Drupal's simpletests and unittest (if any).
     #- drush --nocolor drake run-tests
 
