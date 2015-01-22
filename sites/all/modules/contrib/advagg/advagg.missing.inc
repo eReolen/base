@@ -567,7 +567,11 @@ function advagg_get_css_aggregate_contents($files, $aggregate_settings) {
       $regexp = '/@import[^;]+;/i';
       preg_match_all($regexp, $contents, $matches);
       $contents = preg_replace($regexp, '', $contents);
-      $import_statements[] = array($last_media, $matches[0]);
+      // Add the import statements with the media query of the current file.
+      $import_media = isset($settings['media']) ? $settings['media'] : '';
+      $import_media = str_replace('all', '', $import_media);
+      $import_media = trim($import_media);
+      $import_statements[] = array($import_media, $matches[0]);
 
       // Close any open comment blocks.
       $contents .= '/**/';
