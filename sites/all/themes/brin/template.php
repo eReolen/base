@@ -45,7 +45,7 @@ function brin_js_alter(&$javascript) {
   $avail_js = drupal_get_path('module', 'ding_availability') .
     '/js/ding_availability_labels.js';
   $new_aval_js = drupal_get_path('theme', 'brin') .
-    '/scripts/ding_availability_labels.js'
+    '/scripts/ding_availability_labels.js';
   if (isset($javascript[$avail_js])) {
     $javascript[$avail_js]['data'] = $new_aval_js;
     $types = array();
