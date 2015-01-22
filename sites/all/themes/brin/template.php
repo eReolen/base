@@ -21,6 +21,18 @@ function brin_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ * Implements hook_css_alter().
+ */
+function brin_css_alter(&$css) {
+  // Fix tipsy to use the same media for its CSS as all the rest, so advagg will
+  // be able to aggregate it all together.
+  $tipsy = drupal_get_path('module', 'tipsy') . '/stylesheets/tipsy.css';
+  if (isset($css[$tipsy])) {
+    $css[$tipsy]['media'] = 'all';
+  }
+}
+
+/**
  * Implements hook_js_alter().
  */
 function brin_js_alter(&$javascript) {
