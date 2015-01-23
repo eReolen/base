@@ -35,6 +35,16 @@
 }
 
 /**
+ * Reset z-index on ting cover image, it overlaps our menu, and
+ * shouldn't be needed as the cover comes after the ::before element
+ * it's trying to overlap, so the stacking order should take care of
+ * that.
+ */
+.ting-cover img {
+  z-index: auto;
+}
+
+/**
  * Proper styles.
  */
 

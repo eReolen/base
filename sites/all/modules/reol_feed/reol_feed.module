@@ -38,6 +38,33 @@ function reol_feed_node_delete($node) {
   cache_clear_all('reol_feed_do_not_force', 'cache');
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Add submit handler to carousel admin page trigger feed rebuild on save.
+ */
+function reol_feed_form_ting_search_carousel_admin_form_alter(&$form, $form_id) {
+  $form['#submit'][] = 'reol_feed_submit_rebuild';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Add submit handler to reol_category form to trigger feed rebuild when saving
+ * a category.
+ */
+function reol_feed_form_reol_category_form_alter(&$form, $form_id) {
+  $form['#submit'][] = 'reol_feed_submit_rebuild';
+}
+
+/**
+ * Submit handler.
+ *
+ * Triggers rebuilding of feeds.
+ */
+function reol_feed_submit_rebuild($form, &$form_state) {
+  cache_clear_all('reol_feed_do_not_force', 'cache');
+}
 
 /**
  * Ensure that all feeds are updated.

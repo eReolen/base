@@ -21,18 +21,33 @@ function brin_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ * Implements hook_css_alter().
+ */
+function brin_css_alter(&$css) {
+  // Fix tipsy to use the same media for its CSS as all the rest, so advagg will
+  // be able to aggregate it all together.
+  $tipsy = drupal_get_path('module', 'tipsy') . '/stylesheets/tipsy.css';
+  if (isset($css[$tipsy])) {
+    $css[$tipsy]['media'] = 'all';
+  }
+}
+
+/**
  * Implements hook_js_alter().
  */
 function brin_js_alter(&$javascript) {
   // Remove minified version of scripts we have overridden.
-  unset($javascript['profiles/ding2/themes/ddbasic/scripts/ddbasic.topbar.menu.min.js']);
-  unset($javascript['profiles/ding2/themes/ddbasic/scripts/ddbasic.search.min.js']);
+  $ddbasic = drupal_get_path('theme', 'ddbasic');
+  unset($javascript[$ddbasic . '/scripts/ddbasic.topbar.menu.min.js']);
+  unset($javascript[$ddbasic . '/scripts/ddbasic.search.min.js']);
 
   // Override script from ding_availability.
   $avail_js = drupal_get_path('module', 'ding_availability') .
     '/js/ding_availability_labels.js';
+  $new_aval_js = drupal_get_path('theme', 'brin') .
+    '/scripts/ding_availability_labels.js';
   if (isset($javascript[$avail_js])) {
-    $javascript[$avail_js]['data'] = drupal_get_path('theme', 'brin') . '/scripts/ding_availability_labels.js';
+    $javascript[$avail_js]['data'] = $new_aval_js;
     $types = array();
     foreach (_reol_base_get_types() as $type) {
       $types[$type['ext_name']] = $type['title'];

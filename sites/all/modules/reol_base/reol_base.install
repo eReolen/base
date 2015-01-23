@@ -312,3 +312,10 @@ function reol_base_update_7123() {
 function reol_base_update_7124() {
   module_enable(array('redirect', 'globalredirect'), TRUE);
 }
+
+/**
+ * Enable advagg module.
+ */
+function reol_base_update_7125() {
+  module_enable(array('advagg'), TRUE);
+}

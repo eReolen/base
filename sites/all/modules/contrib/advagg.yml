@@ -1,0 +1,5 @@
+patches:
+  -
+    patch: 'https://www.drupal.org/files/issues/advagg-import-media-2412213-2.patch'
+    home: 'https://www.drupal.org/node/2412213#comment-9541945'
+    reason: 'Wrong media query on @import. Fix.'
