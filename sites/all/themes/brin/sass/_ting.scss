@@ -123,23 +123,6 @@
   padding: 20px 0px; 
 }
 
-// Tabs on search result
-.tabs.primary {
-  li a {
-    background-color: #e6e6e6;
-    border-radius: 3px 3px 0 0;
-    line-height: 40px;
-    padding: 0 30px;
-
-    &.active {
-      background-color: #ffffff;
-      border-radius: 3px 3px 0 0;
-      line-height: 40px;
-      padding: 0 30px;
-    }
-  }
-}
-
 /**
  * Fix up margins.
  */
@@ -249,5 +232,33 @@
   & a:visited,
   & a:link, {
     color: $text-tertiary-color;
+  }
+}
+
+// Ting overwrites
+.page-search-ting, .page-search {
+  * {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  h2 {
+    font-weight: 300;
+  }
+
+  // Tabs on search result
+  .tabs.primary {
+    li a {
+      background-color: #e6e6e6;
+      border-radius: 3px 3px 0 0;
+      line-height: 40px;
+      padding: 0 30px;
+
+      &.active {
+        background-color: #ffffff;
+        border-radius: 3px 3px 0 0;
+        line-height: 40px;
+        padding: 0 30px;
+      }
+    }
   }
 }
