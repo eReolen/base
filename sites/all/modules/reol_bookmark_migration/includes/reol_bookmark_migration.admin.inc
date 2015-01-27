@@ -15,11 +15,11 @@ function reol_bookmark_migration_status() {
 
   return theme('reol_bookmark_migration_status', array(
     'migrated_users_progress' => theme('progress_bar', array(
-      'percent' => $users_total > 0 ? $users_migrated / $users_total : 0,
+      'percent' => $users_total > 0 ? $users_migrated / $users_total * 100 : 0,
       'message' => t('@count of @total users have been migrated', array('@count' => $users_migrated, '@total' => $users_total)),
     )),
     'migrated_isbns_progress' => theme('progress_bar', array(
-      'percent' => $isbns_total > 0 ? $isbns_migrated / $isbns_total : 0,
+      'percent' => $isbns_total > 0 ? $isbns_migrated / $isbns_total * 100 : 0,
       'message' => t('@count of @total titles have been migrated', array('@count' => $isbns_migrated, '@total' => $isbns_total)),
     )),
   ));
