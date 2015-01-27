@@ -116,6 +116,13 @@
   margin-bottom: 20px;
 }
 
+.pane-search-result .search-results .list .view-mode-teaser, 
+.view-node-search-result .search-results .list .view-mode-teaser, 
+.ting-reference-reverse-list .search-results .list .view-mode-teaser, 
+.pane-new-materials .search-results .list .view-mode-teaser {
+  padding: 20px 0px; 
+}
+
 /**
  * Fix up margins.
  */
