@@ -198,6 +198,7 @@
           background-color: $background-light;
 
           li {
+            width: auto;
             position: relative;
             margin: 0;
             opacity: 1;
@@ -207,6 +208,10 @@
             &.active {
               // Reset the height from the first levels "push down" size.
               height: auto;
+            }
+
+            &.active {
+              background-color: rgba(0,0,0,0.05);
             }
 
             a {
@@ -238,6 +243,7 @@
           left: 27px;
           background-color: white;
           padding: 35px 0;
+          z-index: 100;
 
           @include box-shadow(black 0px 5px 50px -20px);
 
@@ -245,12 +251,14 @@
             display: block;
             width: auto;
             line-height: 16px;
+            float: none;
 
             a {
               padding: 10px 20px;
               display: block;
               font-size: 16px;
               height: auto;
+              text-align: left;
             }
             span {
               text-transform: none;
