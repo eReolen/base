@@ -44,8 +44,11 @@
   }
 
   .review-top {
-    padding-top: 50px;
-    padding-bottom: 70px;
+    padding: 50px 10px 80px 10px;
+    background-image: url("../images/logo-litteratursiden.png");
+    background-size: contain;
+    background-position: center bottom;
+    background-repeat: no-repeat;
   }
 
   &:hover {
