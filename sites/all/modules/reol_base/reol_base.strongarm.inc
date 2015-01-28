@@ -99,7 +99,6 @@ function reol_base_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'googleanalytics_roles';
   $strongarm->value = array(
-    8 => '8',
     1 => 0,
     2 => 0,
     3 => 0,
@@ -107,6 +106,7 @@ function reol_base_strongarm() {
     5 => 0,
     6 => 0,
     7 => 0,
+    8 => 0,
     9 => 0,
   );
   $export['googleanalytics_roles'] = $strongarm;
@@ -136,7 +136,7 @@ function reol_base_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'googleanalytics_tracker_anonymizeip';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['googleanalytics_tracker_anonymizeip'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -217,7 +217,7 @@ function reol_base_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'googleanalytics_visibility_roles';
-  $strongarm->value = '0';
+  $strongarm->value = '1';
   $export['googleanalytics_visibility_roles'] = $strongarm;
 
   $strongarm = new stdClass();

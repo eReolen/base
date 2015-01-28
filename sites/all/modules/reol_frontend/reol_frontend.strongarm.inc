@@ -188,13 +188,16 @@ function reol_frontend_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'flag' => array(
-          'weight' => '5',
+          'weight' => '6',
         ),
         'title' => array(
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '6',
+          'weight' => '7',
+        ),
+        'redirect' => array(
+          'weight' => '8',
         ),
       ),
       'display' => array(),

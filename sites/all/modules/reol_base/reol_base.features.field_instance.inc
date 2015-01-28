@@ -35,7 +35,7 @@ function reol_base_field_default_field_instances() {
         'module' => 'reol_base',
         'settings' => array(),
         'type' => 'reol_base_audiobook_reader',
-        'weight' => 70,
+        'weight' => 66,
       ),
       'latest' => array(
         'label' => 'above',
@@ -114,7 +114,7 @@ function reol_base_field_default_field_instances() {
         'module' => 'reol_base',
         'settings' => array(),
         'type' => 'reol_base_ebook_format',
-        'weight' => 69,
+        'weight' => 68,
       ),
       'latest' => array(
         'label' => 'above',
@@ -193,7 +193,7 @@ function reol_base_field_default_field_instances() {
         'module' => 'reol_base',
         'settings' => array(),
         'type' => 'reol_base_genre',
-        'weight' => 76,
+        'weight' => 67,
       ),
       'latest' => array(
         'label' => 'above',

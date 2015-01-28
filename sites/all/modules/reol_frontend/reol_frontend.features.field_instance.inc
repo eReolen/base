@@ -60,7 +60,7 @@ function reol_frontend_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -74,7 +74,7 @@ function reol_frontend_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 4,
       ),
       'search_result' => array(
         'label' => 'hidden',
@@ -138,7 +138,7 @@ function reol_frontend_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'media_generic',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -156,7 +156,7 @@ function reol_frontend_field_default_field_instances() {
           'view_mode' => 'teaser',
         ),
         'type' => 'ting_reference_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'search_result' => array(
         'label' => 'hidden',
@@ -183,7 +183,7 @@ function reol_frontend_field_default_field_instances() {
       'module' => 'ting_reference',
       'settings' => array(),
       'type' => 'ting_reference_advanced',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -198,7 +198,7 @@ function reol_frontend_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 3,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -225,6 +225,54 @@ function reol_frontend_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-article-field_show_in_app'
+  $field_instances['node-article-field_show_in_app'] = array(
+    'bundle' => 'article',
+    'default_value' => array(
+      0 => array(
+        'value' => 1,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 2,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_show_in_app',
+    'label' => 'Show in app',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
       'weight' => 1,
     ),
   );
@@ -590,6 +638,7 @@ function reol_frontend_field_default_field_instances() {
   t('List image');
   t('Materials');
   t('Portrait');
+  t('Show in app');
   t('Video');
 
   return $field_instances;
