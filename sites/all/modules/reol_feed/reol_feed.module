@@ -280,7 +280,20 @@ function reol_feed_get_latest($type, $ting_type, $count = 2) {
     )
     ->range(0, $count)
     ->orderBy('n.created', 'DESC');
+
+  // If the node type is article, check that the article is supposed to go to
+  // the app.
+  if ($type == 'article') {
+    $query->leftJoin('field_data_field_show_in_app', 'a', 'n.nid = a.entity_id');
+    // Allow null, to get pre-field articles to show up.
+    $query->condition(db_or()
+      ->condition('a.field_show_in_app_value', 1)
+      ->isNull('a.field_show_in_app_value')
+    );
+  }
+
   $query->leftJoin('field_data_field_reol_entity_type', 't', 'n.nid = t.entity_id');
+
   $results = $query->execute()
     ->fetchAll();
 
