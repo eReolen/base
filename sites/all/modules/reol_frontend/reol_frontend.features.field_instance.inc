@@ -74,7 +74,7 @@ function reol_frontend_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 4,
       ),
       'search_result' => array(
         'label' => 'hidden',
@@ -156,7 +156,7 @@ function reol_frontend_field_default_field_instances() {
           'view_mode' => 'teaser',
         ),
         'type' => 'ting_reference_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'search_result' => array(
         'label' => 'hidden',
@@ -198,7 +198,7 @@ function reol_frontend_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 3,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -242,10 +242,9 @@ function reol_frontend_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 3,
+        'type' => 'hidden',
+        'weight' => 2,
       ),
       'search_result' => array(
         'label' => 'above',
