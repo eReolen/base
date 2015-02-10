@@ -215,7 +215,7 @@ function reol_feed_feeds_add_author_portrait($feed, $source, $node) {
   global $base_url;
 
   $node_link = $item->addChild('link');
-  $node_link->{0} = $base_url . '/node/' . $node->nid;
+  $node_link->{0} = $node_wrapper->field_link->value()['url'];
   $node_link->addAttribute('type', 'content');
 
   $thumb = $node_wrapper->field_portrait->value();
