@@ -3,3 +3,105 @@
  * @file
  * Installation of reol_review module.
  */
+
+/**
+ * Implements hook_install().
+ */
+function reol_review_install() {
+  variable_set('reol_review_fetch_offset', 0);
+}
+
+
+/**
+ * Implements hook_schema().
+ */
+function reol_review_schema() {
+  return _reol_review_schema_0();
+}
+
+/**
+ * Initial version of schema.
+ *
+ * Moved to helper function as hook_update_N() shouldn't call
+ * hook_schema().
+ */
+function _reol_review_schema_0() {
+  $schema = array();
+
+  $schema['reol_review_reviews'] = array(
+    'description' => 'Table for eReolen reviews',
+    'fields' => array(
+      'rrid' => array(
+        'description' => 'Primary Key: ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'isbn' => array(
+        'description' => 'ISBN number of reviewed material.',
+        'type' => 'varchar',
+        'length' => 13,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'link' => array(
+        'description' => 'Link to review.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'ding_entity_id' => array(
+        'description' => 'The ting object id.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'type' => array(
+        'description' => 'Type of material.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'process' => array(
+        'description' => 'Whether this has been scheduled fer processing.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'tiny',
+      ),
+      'processed' => array(
+        'description' => 'Timestamp when this was last processed.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+
+    ),
+    'indexes' => array(
+      'ding_entity_id' => array('ding_entity_id'),
+      'processed' => array('processed'),
+      'lookup' => array('processed', 'link'),
+    ),
+    'unique keys' => array(
+      'link' => array('link'),
+    ),
+    'primary key' => array('rrid'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Create the database tables.
+ */
+function reol_review_update_7101() {
+  $schema = _reol_review_schema_0();
+  foreach ($schema as $table_name => $definition) {
+    db_create_table($table_name, $definition);
+  }
+
+  variable_set('reol_review_fetch_offset', 0);
+}
