@@ -109,12 +109,12 @@ function reol_review_fetch_reviews($items, $start) {
  * @return StdClass
  *   The review randomly chosen.
  */
-function reol_review_get_random_review($type = FALSE) {
+function reol_review_get_random_reviews($type = NULL, $count = 1) {
   $query = db_select('reol_review_reviews', 'r')
          ->fields('r')
          ->condition('processed', 0, '<>')
          ->condition('ding_entity_id', '', '<>')
-         ->range(0, 1)
+         ->range(0, $count)
          ->orderRandom();
 
   if ($type) {
