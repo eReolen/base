@@ -23,23 +23,20 @@ function reol_feed_feeds_frontpage() {
   reol_feed_feeds_add_items('author_portrait', $e_feed, $a_feed, 'reol_feed_feeds_add_author_portrait');
 
   // Add review to feeds.
-  $reviews = reol_review_get_reviews();
-  foreach ($reviews as $t => $type_reviews) {
-    // Determine where to put it.
-    $feed = $e_feed;
-    $source = 'ereolen';
-    if ($t == 'audiobook') {
-      $feed = $a_feed;
-      $source = 'netlydbog';
-    }
-
-    // Add x reviews.
-    $added = 0;
-    while (count($type_reviews) && $added < variable_get('reol_feed_frontpage_item_count', 2)) {
-      $review_key = array_rand($type_reviews);
-      reol_feed_feeds_add_review($feed, $source, $type_reviews[$review_key]);
-      unset($type_reviews[$review_key]);
-      $added++;
+  $mapping = array(
+    'ebook' => array(
+      'source' => 'ereolen',
+      'feed' => $e_feed,
+    ),
+    'audiobook' => array(
+      'source' => 'netlydbog',
+      'feed' => $a_feed,
+    ),
+  );
+  foreach ($mapping as $type => $map) {
+    $reviews = reol_review_get_random_reviews($type, variable_get('reol_feed_frontpage_item_count', 2));
+    foreach ($reviews as $review) {
+      reol_feed_feeds_add_review($map['feed'], $map['source'], $review);
     }
   }
 
@@ -215,7 +212,7 @@ function reol_feed_feeds_add_author_portrait($feed, $source, $node) {
   global $base_url;
 
   $node_link = $item->addChild('link');
-  $node_link->{0} = $base_url . '/node/' . $node->nid;
+  $node_link->{0} = $node_wrapper->field_link->value()['url'];
   $node_link->addAttribute('type', 'content');
 
   $thumb = $node_wrapper->field_portrait->value();

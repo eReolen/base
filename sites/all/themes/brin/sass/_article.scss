@@ -183,11 +183,10 @@
 
 @include x-large() {
   .search-results .article-teaser {
-    width: 750px;
+    width: 810px;
 
     .article-right {
-      width: 480px;
-      padding-top: 40px;
+      width: 525px;
     }
   }
 }
@@ -273,4 +272,12 @@
       width: 100%;
     }
   }
+}
+
+#ting_reference .article-teaser h2 {
+  margin: 0 0 10px;
+}
+
+.search-results p {
+  margin-top: 1em;
 }
