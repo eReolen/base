@@ -30,7 +30,8 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
   }
 
   // There might be no reviews.
-  if ($review = reol_review_get_random_reviews(empty($type) ? NULL : $type)) {
+  if ($reviews = reol_review_get_random_reviews(empty($type) ? NULL : $type)) {
+    $review = reset($reviews);
     $ting_entity = ding_entity_load($review->ding_entity_id);
     $ting_object_view = ting_object_view($ting_entity, 'review');
 

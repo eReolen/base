@@ -121,7 +121,7 @@ function reol_review_get_random_reviews($type = NULL, $count = 1) {
     $query->condition('type', $type);
   }
 
-  return $query->execute()->fetch();
+  return $query->execute()->fetchAll();
 }
 
 /**
