@@ -234,7 +234,7 @@ function reol_feed_feeds_add_review($feed, $source, $review) {
 
   $ting_object = ding_entity_load($review->ding_entity_id);
 
-  $item->guid = 'r_' . $review->nid . '.' . $review->changed;
+  $item->guid = 'r_' . md5($review->link);
   $item->type = "review";
   $item->title = $ting_object->title;
   $item->date = $review->credate;
