@@ -21,7 +21,7 @@ $aliases['prod'] = array(
   'root' => '/data/www/prod_ereolen_dk',
   'deployotron' => array(
     'branch' => 'master',
-    'dump-dir' => '/home/deploy/backup/prod',
+    'dump-dir' => '/data/backup/prod',
     'restart-varnish' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
@@ -37,7 +37,7 @@ $aliases['stg'] = array(
   'root' => '/data/www/stg_ereolen_dk',
   'deployotron' => array(
     'branch' => 'develop',
-    'dump-dir' => '/home/deploy/backup/stg',
+    'dump-dir' => '/data/backup/stg',
     'restart-apache2' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
@@ -51,7 +51,7 @@ $aliases['dev'] = array(
   'root' => '/data/www/dev_ereolen_dk',
   'deployotron' => array(
     'branch' => 'develop',
-    'dump-dir' => '/home/deploy/backup/dev',
+    'dump-dir' => '/data/backup/dev',
     'restart-apache2' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
