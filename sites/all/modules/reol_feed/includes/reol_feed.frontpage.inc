@@ -237,13 +237,11 @@ function reol_feed_feeds_add_review($feed, $source, $review) {
   $item->guid = 'r_' . md5($review->link);
   $item->type = "review";
   $item->title = $ting_object->title;
-  $item->date = $review->credate;
+  $item->date = $review->created;
   $item->description = $review->description;
   $authors = $ting_object->getCreators();
   $item->author = $authors[0];
   $item->source = $source;
-
-  global $base_url;
 
   $node_link = $item->addChild('link');
   $node_link->{0} = $review->link;
