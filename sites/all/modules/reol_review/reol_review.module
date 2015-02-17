@@ -178,11 +178,19 @@ function reol_review_fetch_and_queue($count, $offset, $queue_name = 'reol_review
         empty($review->link)) {
       continue;
     }
+    $isbn = trim($review->isbn);
+    $link = trim($review->link);
+
+    // Skip if they're too long. Not using drupal_strlen() as we want
+    // the ASCII length, not multibyte length.
+    if (strlen($isbn) > 13 || strlen($link) >255) {
+      continue;
+    }
 
     $id = db_insert('reol_review_reviews')
       ->fields(array(
-        'isbn' => $review->isbn,
-        'link' => $review->link,
+        'isbn' => $isbn,
+        'link' => $link,
         'process' => 1,
       ))
       ->execute();
