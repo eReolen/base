@@ -16,7 +16,7 @@ function reol_review_install() {
  * Implements hook_schema().
  */
 function reol_review_schema() {
-  return _reol_review_schema_0();
+  return _reol_review_schema_1();
 }
 
 /**
@@ -78,7 +78,6 @@ function _reol_review_schema_0() {
         'not null' => TRUE,
         'default' => 0,
       ),
-
     ),
     'indexes' => array(
       'ding_entity_id' => array('ding_entity_id'),
@@ -95,6 +94,31 @@ function _reol_review_schema_0() {
 }
 
 /**
+ * Second schema version.
+ */
+function _reol_review_schema_1() {
+  $schema = _reol_review_schema_0();
+
+  $schema['reol_review_reviews']['fields']['description'] = array(
+    'description' => 'Description of review.',
+    'type' => 'text',
+    'not null' => FALSE,
+    'size' => 'medium',
+    'translatable' => TRUE,
+  );
+
+  $schema['reol_review_reviews']['fields']['created'] = array(
+    'description' => 'Creation date of review..',
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => TRUE,
+    'default' => 0,
+  );
+
+  return $schema;
+}
+
+/**
  * Create the database tables.
  */
 function reol_review_update_7101() {
@@ -103,5 +127,21 @@ function reol_review_update_7101() {
     db_create_table($table_name, $definition);
   }
 
+  variable_set('reol_review_fetch_offset', 0);
+}
+
+/**
+ * Update schema.
+ */
+function reol_review_update_7102() {
+  // Yes, this is OK, and I'll tell you why if you ask me...
+  $schema = _reol_review_schema_1();
+  db_add_field('reol_review_reviews', 'description', $schema['reol_review_reviews']['fields']['description']);
+  db_add_field('reol_review_reviews', 'created', $schema['reol_review_reviews']['fields']['created']);
+
+  // Clear out reviews.
+  db_query('TRUNCATE TABLE {reol_review_reviews}');
+
+  // And start over.
   variable_set('reol_review_fetch_offset', 0);
 }

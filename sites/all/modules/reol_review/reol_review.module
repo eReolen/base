@@ -192,6 +192,8 @@ function reol_review_fetch_and_queue($count, $offset, $queue_name = 'reol_review
         'isbn' => $isbn,
         'link' => $link,
         'process' => 1,
+        'created' => $review->credate,
+        'description' => $review->description,
       ))
       ->execute();
 
@@ -212,6 +214,11 @@ function reol_review_process_queue($rrid) {
     ->condition('rrid', $rrid)
     ->execute()
     ->fetch();
+
+  if (!$review) {
+    watchdog('reol_review', 'Could not load queued review rrid @rrid', array('@rrid' => $rid), WATCHDOG_ERROR);
+    return;
+  }
 
   $isbn = reol_base_convert_to_isbn($review->isbn);
 
