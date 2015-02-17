@@ -148,7 +148,7 @@ function reol_feed_get_feeds() {
           'filename' => 'frontpage.xml',
         ),
       ),
-      'lifetime' => 24 * 60 * 60,
+      'lifetime' => 60 * 60,
     ),
     array(
       'name' => 'categories',
