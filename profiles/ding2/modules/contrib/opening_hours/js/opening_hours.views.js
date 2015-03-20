@@ -374,7 +374,7 @@ Drupal.OpeningHours.InstanceEditView = Backbone.View.extend({
     this.$('.start_time, .end_time').timeEntry({
       show24Hours: true,
       spinnerImage: false,
-      timeSteps: [1, 15, 1]
+      timeSteps: [1, 1, 1]
     });
 
     return this;

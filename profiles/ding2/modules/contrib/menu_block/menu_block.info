@@ -7,9 +7,7 @@ dependencies[] = menu (>7.11)
 
 configure = admin/config/user-interface/menu-block
 
-
-; Information added by drush on 2014-11-17
+; Information added by drush on 2015-03-20
 version = "32ab1cf08b729c93302455d67dd05f64ad2fc056"
 project = "menu_block"
-datestamp = "1416222766"
-
+datestamp = "1426836821"

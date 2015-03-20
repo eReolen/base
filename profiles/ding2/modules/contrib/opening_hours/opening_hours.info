@@ -5,10 +5,3 @@ dependencies[] = tipsy
 core = 7.x
 php = 5.2.5
 
-
-
-; Information added by drush on 2014-11-17
-version = "81146d1e8ab63ca70976596d928e4ec46dfdfd57"
-project = "opening_hours"
-datestamp = "1416222909"
-

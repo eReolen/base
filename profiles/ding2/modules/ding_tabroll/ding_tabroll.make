@@ -10,11 +10,6 @@ projects[nodequeue][version] = "2.0-beta1"
 projects[entityreference][subdir] = "contrib"
 projects[entityreference][version] = "1.1"
 
-projects[ding_library][type] = "module"
-projects[ding_library][download][type] = "git"
-projects[ding_library][download][url] = "git@github.com:ding2tal/ding_library.git"
-projects[ding_library][download][tag] = "7.x-1.0.1"
-
 projects[features][subdir] = "contrib"
 projects[features][version] = "2.0"
 
@@ -24,6 +19,8 @@ projects[media][subdir] = "contrib"
 projects[media][download][type] = "git"
 projects[media][download][url] = "http://git.drupal.org/project/media.git"
 projects[media][download][revision] = "c3cda2b"
+; Fixed issue where "insert" fails, see https://www.drupal.org/node/2184475.
+projects[media][patch][] = "https://www.drupal.org/files/issues/media_popup_trigger_some_js-2184475-6.patch"
 
 projects[file_entity][subdir] = "contrib"
 projects[file_entity][version] = "2.0-alpha3"
@@ -33,3 +30,8 @@ projects[views][version] = "3.8"
 
 projects[strongarm][subdir] = "contrib"
 projects[strongarm][version] = "2.0"
+
+projects[ding_library][type] = "module"
+projects[ding_library][download][type] = "git"
+projects[ding_library][download][url] = "git@github.com:ding2/ding_library.git"
+projects[ding_library][download][tag] = "v2.0.0"

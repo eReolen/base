@@ -353,6 +353,9 @@ Drupal.media.popups.overlayDisplace = function (dialog) {
  *  The element which has .dialog() attached to it.
  */
 Drupal.media.popups.sizeDialog = function (dialogElement) {
+  if (!dialogElement.is(':visible')) {
+    return;
+  }
   var windowWidth = $(window).width();
   var dialogWidth = windowWidth * 0.8;
   var windowHeight = $(window).height();
@@ -386,6 +389,9 @@ Drupal.media.popups.resizeDialog = function (dialogElement) {
 Drupal.media.popups.scrollDialog = function (dialogElement) {
   // Keep the dialog window centered when scrolling.
   $(window).scroll(function() {
+    if (!dialogElement.is(':visible')) {
+      return;
+    }
     dialogElement.dialog("option", "position", 'center');
   });
 }

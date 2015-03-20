@@ -1,6 +1,9 @@
 <?php
 namespace Bpi\Sdk\Template;
 
+/**
+ * TODO please add a general description about the purpose of this class.
+ */
 class Field
 {
     /**
