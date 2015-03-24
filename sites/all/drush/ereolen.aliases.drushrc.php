@@ -17,7 +17,7 @@ $aliases['p01'] = array(
 
 $aliases['prod'] = array(
   'parent' => '@p01',
-  'uri' => 'prod.ereolen.dk',
+  'uri' => 'ereolen.dk',
   'root' => '/data/www/prod_ereolen_dk',
   'deployotron' => array(
     'branch' => 'master',
