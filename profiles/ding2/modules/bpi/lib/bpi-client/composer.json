@@ -16,7 +16,6 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "doctrine/common": "2.3.0",
         "fabpot/goutte": "v1.0.1"
     },
     "autoload": {

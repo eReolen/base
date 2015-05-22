@@ -3,6 +3,9 @@ namespace Bpi\Sdk\Item;
 
 use Bpi\Sdk\Document;
 
+/**
+ * TODO please add a documentation for this class.
+ */
 class BaseItem
 {
     protected $document;

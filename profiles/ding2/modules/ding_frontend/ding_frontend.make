@@ -9,13 +9,17 @@ projects[cs_adaptive_image][subdir] = "contrib"
 projects[cs_adaptive_image][version] = "1.0"
 
 projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.4"
+projects[ctools][version] = "1.5"
 
 projects[conditional_styles][subdir] = "contrib"
 projects[conditional_styles][version] = "2.2"
 
+// The patch ensures that file upload patch is created on file upload. It normally
+// created on settings form save, but as we use feature this do not work.
+// See https://www.drupal.org/node/2410241
 projects[dynamic_background][subdir] = "contrib"
 projects[dynamic_background][version] = "2.0-rc4"
+projects[dynamic_background][patch][] = "https://www.drupal.org/files/issues/create_file_path-2410241-1.patch"
 
 projects[features][subdir] = "contrib"
 projects[features][version] = "2.0"
@@ -80,10 +84,10 @@ projects[l10n_update][version] = "1.0"
 
 projects[ding_campaign][type] = "module"
 projects[ding_campaign][download][type] = "git"
-projects[ding_campaign][download][url] = "git@github.com:ding2tal/ding_campaign.git"
-projects[ding_campaign][download][tag] = "7.x-1.0.1"
+projects[ding_campaign][download][url] = "git@github.com:ding2/ding_campaign.git"
+projects[ding_campaign][download][tag] = "v2.0.0"
 
 projects[ding_page][type] = "module"
 projects[ding_page][download][type] = "git"
-projects[ding_page][download][url] = "git@github.com:ding2tal/ding_page.git"
-projects[ding_page][download][tag] = "7.x-1.0.1"
+projects[ding_page][download][url] = "git@github.com:ding2/ding_page.git"
+projects[ding_page][download][tag] = "v2.0.0"

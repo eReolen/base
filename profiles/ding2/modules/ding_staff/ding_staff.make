@@ -2,25 +2,25 @@ api = 2
 core = 7.x
 
 projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.4"
+projects[ctools][version] = "1.5"
 
 projects[cs_adaptive_image][subdir] = "contrib"
 projects[cs_adaptive_image][version] = "1.0"
 
 projects[ding_base][type] = "module"
 projects[ding_base][download][type] = "git"
-projects[ding_base][download][url] = "git@github.com:ding2tal/ding_base.git"
-projects[ding_base][download][tag] = "7.x-1.0.1"
+projects[ding_base][download][url] = "git@github.com:ding2/ding_base.git"
+projects[ding_base][download][tag] = "v2.0.0"
 
 projects[ding_content][type] = "module"
 projects[ding_content][download][type] = "git"
-projects[ding_content][download][url] = "git@github.com:ding2tal/ding_content.git"
-projects[ding_content][download][tag] = "7.x-1.0.1"
+projects[ding_content][download][url] = "git@github.com:ding2/ding_content.git"
+projects[ding_content][download][tag] = "v2.0.0"
 
 projects[ding_event][type] = "module"
 projects[ding_event][download][type] = "git"
-projects[ding_event][download][url] = "git@github.com:ding2tal/ding_event.git"
-projects[ding_event][download][tag] = "7.x-1.0.1"
+projects[ding_event][download][url] = "git@github.com:ding2/ding_event.git"
+projects[ding_event][download][tag] = "v2.0.0"
 
 projects[email][subdir] = "contrib"
 projects[email][version] = "1.3"
@@ -49,9 +49,12 @@ projects[media][subdir] = "contrib"
 projects[media][download][type] = "git"
 projects[media][download][url] = "http://git.drupal.org/project/media.git"
 projects[media][download][revision] = "c3cda2b"
+; Fixed issue where "insert" fails, see https://www.drupal.org/node/2184475.
+projects[media][patch][] = "https://www.drupal.org/files/issues/media_popup_trigger_some_js-2184475-6.patch"
 
 projects[og][subdir] = "contrib"
 projects[og][version] = "2.5"
+projects[og][patch][] = "https://www.drupal.org/files/issues/entityreference_fields_do_not_validate-2249261-10.patch"
 
 projects[profile2][subdir] = "contrib"
 projects[profile2][version] = "1.3"

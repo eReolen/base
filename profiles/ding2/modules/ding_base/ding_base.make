@@ -6,7 +6,7 @@ projects[autologout][subdir] = "contrib"
 projects[autologout][version] = "4.3"
 
 projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.4"
+projects[ctools][version] = "1.5"
 
 projects[features][subdir] = "contrib"
 projects[features][version] = "2.0"
@@ -20,6 +20,7 @@ projects[jquery_update][version] = "2.4"
 
 projects[og][subdir] = "contrib"
 projects[og][version] = "2.7"
+projects[og][patch][] = "https://www.drupal.org/files/issues/entityreference_fields_do_not_validate-2249261-10.patch"
 
 projects[og_menu][subdir] = "contrib"
 projects[og_menu][version] = "3.0-rc5"

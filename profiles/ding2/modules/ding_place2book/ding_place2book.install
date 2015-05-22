@@ -33,6 +33,13 @@ function ding_place2book_schema() {
           'not null' => TRUE,
           'default' => 0,
         ),
+        'entry_price' => array(
+          'description' => 'The entry price (in DKR) for the ticket type ADGANG on the Place2Book event.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+        ),
         'maintain_copy' => array(
           'description' => 'Event is created and updated on Place2Book',
           'type' => 'int',
@@ -54,6 +61,11 @@ function ding_place2book_schema() {
           'not null' => TRUE,
           'default' => 0,
         ),
+        'kultunaut_category' => array(
+          'description' => 'Category used when Place2book forwards event to Kultunaut',
+          'type' => 'varchar',
+          'length' => 128,
+        ),
       ),
       'primary key' => array('nid'),
     ),
@@ -65,6 +77,7 @@ function ding_place2book_schema() {
  */
 function ding_place2book_install() {
   // Update moduel weight to make it heavier then CCK field groups.
+  // See update_6200() below.
   db_query("UPDATE {system} SET weight = 10 WHERE name = 'ding_place2book';");
 }
 

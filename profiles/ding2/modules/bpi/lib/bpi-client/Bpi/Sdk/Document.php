@@ -4,6 +4,9 @@ namespace Bpi\Sdk;
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
+/**
+ * TODO please add a general description about the purpose of this class.
+ */
 class Document implements \Iterator, \Countable
 {
     /**

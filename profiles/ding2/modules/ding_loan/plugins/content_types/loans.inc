@@ -129,8 +129,8 @@ function ding_loan_loans_form($form, &$form_state, $account, $loans = array()) {
 
       $item = array(
         '#type' => 'material_item',
-        '#loan' => $loan,
         '#id' => $loan->id,
+        '#loan' => $loan,
         '#title' => $title,
         '#cover' => field_view_field('ting_object', $entity, 'ting_cover', 'user_list'),
         '#information' => array(

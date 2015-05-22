@@ -8,9 +8,7 @@ core = 7.x
 
 files[] = view_unpublished_handler_filter_node_status.inc
 
-
-; Information added by drush on 2014-11-17
+; Information added by drush on 2015-03-20
 version = "e9df1d3"
 project = "view_unpublished"
-datestamp = "1416222981"
-
+datestamp = "1426837109"

@@ -3,6 +3,9 @@ namespace Bpi\Sdk;
 
 use Bpi\Sdk\Document;
 
+/**
+ * TODO please add a general description about the purpose of this class.
+ */
 class NodeList implements \Iterator, \Countable
 {
     /**

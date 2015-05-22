@@ -57,12 +57,15 @@ projects[media][subdir] = "contrib"
 projects[media][download][type] = "git"
 projects[media][download][url] = "http://git.drupal.org/project/media.git"
 projects[media][download][revision] = "c3cda2b"
+; Fixed issue where "insert" fails, see https://www.drupal.org/node/2184475.
+projects[media][patch][] = "https://www.drupal.org/files/issues/media_popup_trigger_some_js-2184475-6.patch"
 
 projects[file_entity][subdir] = "contrib"
 projects[file_entity][version] = "2.0-alpha3"
 
 projects[og][subdir] = "contrib"
 projects[og][version] = "2.7"
+projects[og][patch][] = "https://www.drupal.org/files/issues/entityreference_fields_do_not_validate-2249261-10.patch"
 
 projects[og_menu][subdir] = "contrib"
 projects[og_menu][version] = "3.0-rc5"
@@ -77,6 +80,7 @@ projects[opening_hours][download][url] = "http://git.drupal.org/project/opening_
 projects[opening_hours][download][revision] = "81146d1e8ab63ca70976596d928e4ec46dfdfd57"
 projects[opening_hours][patch][] = "http://drupal.org/files/issues/is-string-check-2260505-2.patch"
 projects[opening_hours][patch][] = "http://drupal.org/files/issues/change-path-2270935-2.patch"
+projects[opening_hours][patch][] = "http://www.drupal.org/files/issues/Issue620-single-minute-opening-hours.patch"
 
 projects[strongarm][subdir] = "contrib"
 projects[strongarm][version] = "2.0"

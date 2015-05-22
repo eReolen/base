@@ -4,19 +4,19 @@ api = 2
 ; Projects
 projects[ding_base][type] = "module"
 projects[ding_base][download][type] = "git"
-projects[ding_base][download][url] = "git@github.com:ding2tal/ding_base.git"
-projects[ding_base][download][tag] = "7.x-1.0.1"
+projects[ding_base][download][url] = "git@github.com:ding2/ding_base.git"
+projects[ding_base][download][tag] = "v2.0.0"
 
 projects[ting_reference][type] = "module"
 projects[ting_reference][download][type] = "git"
-projects[ting_reference][download][url] = "git@github.com:ding2tal/ting_reference.git"
-projects[ting_reference][download][tag] = "7.x-1.0.1"
+projects[ting_reference][download][url] = "git@github.com:ding2/ting_reference.git"
+projects[ting_reference][download][tag] = "v2.0.0"
 
 projects[cache_actions][subdir] = "contrib"
 projects[cache_actions][version] = "2.0-alpha5"
 
 projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.4"
+projects[ctools][version] = "1.5"
 
 projects[features][subdir] = "contrib"
 projects[features][version] = "2.0"
@@ -29,6 +29,7 @@ projects[field_group][version] = "1.1"
 
 projects[og][subdir] = "contrib"
 projects[og][version] = "2.7"
+projects[og][patch][] = "https://www.drupal.org/files/issues/entityreference_fields_do_not_validate-2249261-10.patch"
 
 projects[og_menu][subdir] = "contrib"
 projects[og_menu][version] = "3.0-rc5"
@@ -44,6 +45,9 @@ projects[media][subdir] = "contrib"
 projects[media][download][type] = "git"
 projects[media][download][url] = "http://git.drupal.org/project/media.git"
 projects[media][download][revision] = "c3cda2b"
+; Fixed issue where "insert" fails, see https://www.drupal.org/node/2184475.
+projects[media][patch][] = "https://www.drupal.org/files/issues/media_popup_trigger_some_js-2184475-6.patch"
+
 
 projects[file_entity][subdir] = "contrib"
 projects[file_entity][version] = "2.0-alpha3"
