@@ -363,15 +363,15 @@ function reol_base_ding_entity_get_ids($isbns) {
   }
 
   $mapping = array();
-  foreach ($res->collections as $id => $collection) {
+  foreach ($res->collections as $collection) {
     foreach ($collection->getEntities() as $entity) {
       foreach ($entity->getIsbn() as $isbn) {
-        $mapping[$isbn] = $id;
+        $mapping[$isbn] = $entity->getId();
       }
     }
   }
-  return $mapping;
 
+  return $mapping;
 }
 
 /**
