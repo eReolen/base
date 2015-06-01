@@ -1,5 +1,0 @@
-name = eReolen bookmark migration module
-description = Module handling the migration of bookmarks from old sites to API when user logs in.
-core = 7.x
-package = ereolen.dk
-features[features_api][] = api:2
