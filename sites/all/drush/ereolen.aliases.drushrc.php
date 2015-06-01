@@ -37,10 +37,12 @@ $aliases['stg'] = array(
   'root' => '/data/www/stg_ereolen_dk',
   'deployotron' => array(
     'branch' => 'develop',
-    'dump-dir' => '/data/backup/stg',
+    // 'dump-dir' => '/data/backup/stg',
     'restart-apache2' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
+    // Don't bother with db.
+    'no-dump' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
   ),
 );
