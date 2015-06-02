@@ -604,7 +604,7 @@ function reol_frontend_field_default_field_instances() {
       'module' => 'media',
       'settings' => array(
         'allowed_schemes' => array(
-          'public' => 0,
+          'public' => 'public',
           'vimeo' => 'vimeo',
           'youtube' => 'youtube',
         ),
@@ -618,11 +618,9 @@ function reol_frontend_field_default_field_instances() {
           'ding_content' => 0,
           'media_default--media_browser_1' => 0,
           'media_default--media_browser_my_files' => 0,
-          'media_internet' => 0,
+          'media_internet' => 'media_internet',
           'upload' => 0,
-          'youtube' => 'youtube',
         ),
-        'progress_indicator' => 'throbber',
       ),
       'type' => 'media_generic',
       'weight' => 4,
