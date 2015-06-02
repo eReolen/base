@@ -36,10 +36,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
               data.node = data.node.$;
             }
             if (selection.getType() == CKEDITOR.SELECTION_TEXT) {
-              if (CKEDITOR.env.ie) {
+              if (CKEDITOR.env.ie && CKEDITOR.env.version < 10) {
                 data.content = selection.getNative().createRange().text;
               }
-
               else {
                 data.content = selection.getNative().toString();
               }
@@ -75,9 +74,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
       CKEDITOR.dtd.$nonEditable['mediawrapper'] = 1;
       if (ckeditorversion >= 4.1) {
         // Register allowed tag for advanced filtering.
-        editor.filter.allow( 'mediawrapper[!data]', 'MediaWrapper' );
+        editor.filter.allow( 'mediawrapper[!data]', 'mediawrapper', true);
         // Don't remove the data-file_info attribute added by media!
-        editor.filter.allow( '*[!data-file_info]', 'MediaWrapper' );
+        editor.filter.allow( '*[!data-file_info]', 'mediawrapper', true);
+        // Ensure image tags accept all kinds of attributes.
+        editor.filter.allow( 'img[*]{*}(*)', 'mediawrapper', true);
         // Objects should be selected as a whole in the editor.
         CKEDITOR.dtd.$object['mediawrapper'] = 1;
       }
