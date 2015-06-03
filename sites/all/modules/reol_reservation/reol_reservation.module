@@ -72,13 +72,18 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
     if ($type == DING_RESERVATION_NOT_READY) {
       // Add note about expected date.
       if (!empty($reservation->expected_date)) {
-        $reservation_element['#information']['expected_date'] = array(
-          'label' => t('Expected ready date'),
-          'data' => $reservation->expected_date ? format_date(strtotime(check_plain($reservation->expected_date)), 'ding_material_lists_date') : '',
-          'class' => 'expected-date',
-          '#weight' => 4,
-        );
+        $expected_date = format_date(strtotime(check_plain($reservation->expected_date)), 'ding_material_lists_date');
       }
+      else {
+        $expected_date = t('You are in line for this item');
+      }
+
+      $reservation_element['#information']['expected_date'] = array(
+        'label' => t('Expected ready date'),
+        'data' => $expected_date,
+        'class' => 'expected-date',
+        '#weight' => 4,
+      );
     }
 
     // Logic for when reservation is ready.
