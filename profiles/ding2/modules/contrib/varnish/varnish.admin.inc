@@ -2,7 +2,6 @@
 
 /**
  * @file
- *
  * Administrative functions for Varnish integration.
  */
 
@@ -18,7 +17,6 @@ function varnish_admin_settings_form() {
   }
 
   // Begin socket-dependent configuration.
-
   // Decide whether or not to flush caches on cron runs.
   $form['varnish_flush_cron'] = array(
     '#type' => 'radios',
@@ -108,20 +106,14 @@ function varnish_admin_settings_form() {
     ),
   );
 
-  // Option to change connection warnings type.
-  $form['varnish_notification_type'] = array(
-    '#type' => 'select',
-    '#title' => 'Communication errors logging level',
-    '#default_value' => variable_get('varnish_notification_type', VARNISH_DEFAULT_NOTIFICATION_TYPE),
-    '#description' => t('The type of notification logging level to use to when not able to communicate with varnish. Default "error".'),
-    '#options' => watchdog_severity_levels(),
-  );
-
   // Check status.
   $form['varnish_stats'] = array(
     '#type' => 'item',
     '#title' => t('Status'),
-    '#markup' => theme('varnish_status', varnish_get_status(), floatval(variable_get('varnish_version', 2.1))),
+    '#markup' => theme('varnish_status', array(
+      'status' => varnish_get_status(),
+      'version' => floatval(variable_get('varnish_version', 2.1)),
+    )),
   );
 
   return system_settings_form($form);

@@ -203,6 +203,20 @@ function publizon_ting_covers($entities) {
 
     // Try to save the file.
     $file = file_unmanaged_save_data($result->data, $filename, FILE_EXISTS_REPLACE);
+    // Publizon sometimes returns images in print quality, which makes
+    // imagecache run out of memory in the attempt to resize it. So we check the
+    // image size and scale it down to 1200px-ish using the Imagemagick shell
+    // command which gets around the memory limit.
+    if ($file) {
+      $realpath = drupal_realpath($filename);
+      $size = getimagesize($realpath);
+      if ($size[0] > 1200 || $size[1] > 1200) {
+        exec('convert ' . $realpath . ' -resize 1200x ' . $realpath . '.tmp', $output, $rc);
+        if ($rc == 0) {
+          rename($realpath . '.tmp', $realpath);
+        }
+      }
+    }
 
     // If successfull, return file path for this one.
     if ($file) {

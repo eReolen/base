@@ -1,5 +1,0 @@
-patches:
-  -
-    patch: 'https://www.drupal.org/files/issues/make_module_compatible-2235433-35.patch'
-    home: 'https://www.drupal.org/node/2235433'
-    reason: 'Make Varnish 4 compatible.'

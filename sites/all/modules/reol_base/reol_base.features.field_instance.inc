@@ -35,7 +35,7 @@ function reol_base_field_default_field_instances() {
         'module' => 'reol_base',
         'settings' => array(),
         'type' => 'reol_base_audiobook_reader',
-        'weight' => 66,
+        'weight' => 63,
       ),
       'latest' => array(
         'label' => 'above',
@@ -193,7 +193,7 @@ function reol_base_field_default_field_instances() {
         'module' => 'reol_base',
         'settings' => array(),
         'type' => 'reol_base_genre',
-        'weight' => 67,
+        'weight' => 66,
       ),
       'latest' => array(
         'label' => 'above',

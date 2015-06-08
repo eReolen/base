@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Actions for Deployotron!
+ * Actions for Deployotron.
  */
 
 namespace Deployotron {
@@ -11,6 +11,9 @@ namespace Deployotron {
   define('COLOR_GREEN', "\033[1;32;40m\033[1m");
   define('COLOR_RESET', "\033[0m");
 
+  /**
+   * Creates actions to run.
+   */
   class ActionFactory {
     static protected $actionMapping = array(
       'deploy' => array(
@@ -19,13 +22,10 @@ namespace Deployotron {
         'BackupDatabase',
         'DeployCode',
         'CreateVersionTxt',
-        'RestartApache2',
         'UpdateDatabase',
-        'RunDrakePostUpdate',
         'ClearCache',
         'SiteOnline',
         'PurgeDatabaseBackups',
-        'RestartVarnish',
         'FlowdockNotificaton',
         'NewRelicNotificaton',
       ),
@@ -45,7 +45,24 @@ namespace Deployotron {
         foreach (static::$actionMapping[$name] as $class_name) {
           $class_name = '\\Deployotron\\Actions\\' . $class_name;
           $action = new $class_name($site);
+          // @todo drush_get_option_list() doesn't play well with commas.
+          if ($action->enabled()) {
+            if ($commands = drush_get_option_list('pre-' . $action->getSwitchSuffix(), FALSE)) {
+              foreach ($commands as $command) {
+                $actions[] = new Actions\CommandAction($site, $command);
+              }
+            }
+          }
+
           $actions[] = $action;
+
+          if ($action->enabled()) {
+            if ($commands = drush_get_option_list('post-' . $action->getSwitchSuffix(), FALSE)) {
+              foreach ($commands as $command) {
+                $actions[] = new Actions\CommandAction($site, $command);
+              }
+            }
+          }
         }
         return $actions;
       }
@@ -75,11 +92,12 @@ namespace Deployotron {
       foreach ($all_actions as $class_name) {
         drush_print($class_name . ':');
         $class_name = '\\Deployotron\\Actions\\' . $class_name;
-        drush_print($class_name::getHelp());
+        $action = new $class_name('@self');
+        drush_print($action->getHelp());
         drush_print();
 
         // Print options.
-        $options = $class_name::getOptions();
+        $options = $action->getOptions();
         if ($options) {
           drush_print_table(drush_format_help_section($options, 'options'));
           drush_print();
@@ -97,17 +115,17 @@ namespace Deployotron {
     /**
      * Set a default short description.
      */
-    static protected $short = "incompletely implemented";
+    protected $short = "incompletely implemented";
 
     /**
      * Default run message.
      */
-    static protected $runMessage = "Running action.";
+    protected $runMessage = "Running action.";
 
     /**
      * Options for this action.
      */
-    static protected $options = array();
+    protected $options = array();
 
     /**
      * The site this action works on.
@@ -135,14 +153,29 @@ namespace Deployotron {
     static protected $headShas = array();
 
     /**
+     * Construct a new Action object.
+     */
+    public function __construct($site) {
+      $this->site = $site;
+
+      if ($this->short == "incompletely implemented") {
+        drush_log(dt('Incomplete action, missing short description: @action', array('@action' => get_class($this))), 'warning');
+      }
+
+      if (!isset($this->runMessage)) {
+        $this->runMessage = 'Running ' . $this->short;
+      }
+    }
+
+    /**
      * Get help description.
      */
-    public static function getHelp() {
-      if (isset(static::$help)) {
-        return static::$help;
+    public function getHelp() {
+      if (isset($this->help)) {
+        return $this->help;
       }
-      if (isset(static::$description)) {
-        return static::$description;
+      if (isset($this->description)) {
+        return $this->description;
       }
       return "No description.";
     }
@@ -157,49 +190,62 @@ namespace Deployotron {
      * @return array
      *   Options and sub-options as defined on commands in hook_drush_command().
      */
-    public static function getOptions() {
+    public function getOptions() {
       $options = array();
-      if (isset(static::$killSwitch)) {
+      if (isset($this->killSwitch)) {
         $options += array(
-          static::$killSwitch => "Don't " . static::$short . (isset(static::$enableSwitch) ? ' (overrides --' . static::$enableSwitch . ')' : '') . '.',
+          $this->killSwitch => "Don't " . $this->short . (isset($this->enableSwitch) ? ' (overrides --' . $this->enableSwitch . ')' : '') . '.',
         );
       }
 
-      $options += static::$options;
+      $options += $this->options;
 
-      if (isset(static::$enableSwitch)) {
+      $prest_options = array(
+        'pre/post-*' => array(
+          'pre-' . $this->getSwitchSuffix() => "Before " . $this->short . ".",
+          'post-' . $this->getSwitchSuffix() => "After " . $this->short . ".",
+        ),
+      );
+
+      if (isset($this->enableSwitch)) {
         $sub_options = $options;
         $options = array();
         // If the action options defines the enable switch, use it so
-        // description and possible examle-values propergate.
-        if (isset($sub_options[static::$enableSwitch])) {
-          $options[static::$enableSwitch] = $sub_options[static::$enableSwitch];
-          unset($sub_options[static::$enableSwitch]);
+        // description and possible example-values propergate.
+        if (isset($sub_options[$this->enableSwitch])) {
+          $options[$this->enableSwitch] = $sub_options[$this->enableSwitch];
+          unset($sub_options[$this->enableSwitch]);
         }
         else {
-          $options[static::$enableSwitch] = ucfirst(static::$short) . '.';
+          $options[$this->enableSwitch] = ucfirst($this->short) . '.';
         }
+        $options['pre/post-*'] = "Commands to run before/after action.";
         return array(
           'options' => $options,
-          'sub-options' => !empty($sub_options) ? array(static::$enableSwitch => $sub_options) : array(),
+          'sub-options' => (!empty($sub_options) ? array($this->enableSwitch => $sub_options) : array()) + $prest_options,
         );
       }
 
-      return array('options' => $options, 'sub-options' => array());
+      $options['pre/post-*'] = "Commands to run before/after action.";
+      return array('options' => $options, 'sub-options' => $prest_options);
     }
 
     /**
-     * Construct a new Action object.
+     * Get the switch suffix for --pre-/--post- switches.
      */
-    public function __construct($site) {
-      $this->site = $site;
-
-      // Note the devious use of static/self.
-      if (static::$short == self::$short) {
-        drush_log(dt('Incomplete action, missing short description: @action', array('@action' => get_class($this))), 'warning');
+    public function getSwitchSuffix() {
+      if (isset($this->switchSuffix)) {
+        return $this->switchSuffix;
       }
-
-      self::$runMessage = 'Running ' . static::$short;
+      elseif (isset($this->enableSwitch)) {
+        return $this->enableSwitch;
+      }
+      elseif (isset($this->killSwitch)) {
+        return preg_replace('/^no-/', '', $this->killSwitch);
+      }
+      else {
+        return preg_replace(array('/[^a-z0-9 ]/', '/ /'), array('', '-'), strtolower($this->short));
+      }
     }
 
     /**
@@ -211,7 +257,7 @@ namespace Deployotron {
      *   Human readable short description of action taken.
      */
     public function getShort() {
-      return static::$short;
+      return $this->short;
     }
 
     /**
@@ -221,7 +267,7 @@ namespace Deployotron {
      *   The Message (by Grandmaster Flash).
      */
     public function getRunMessage() {
-      return static::$runMessage;
+      return $this->runMessage;
     }
 
     /**
@@ -240,10 +286,10 @@ namespace Deployotron {
      *   Description of the action.
      */
     public function getDescription() {
-      if (isset(static::$description)) {
-        return static::$description;
+      if (isset($this->description)) {
+        return $this->description;
       }
-      return dt("Run the @short action.", array('@short' => static::$short));
+      return dt("Run the @short action.", array('@short' => $this->short));
     }
 
     /**
@@ -266,7 +312,7 @@ namespace Deployotron {
      * @return bool
      *   Success or failure.
      */
-    public function run($state) {
+    public function run(array $state) {
       return FALSE;
     }
 
@@ -282,16 +328,16 @@ namespace Deployotron {
      */
     public function enabled() {
       // Incomplete actions are always disabled.
-      if (static::$short == self::$short) {
+      if ($this->short == "incompletely implemented") {
         return FALSE;
       }
       // Disable if there is a killswitch and it is set.
-      if (isset(static::$killSwitch) && drush_get_option(static::$killSwitch, FALSE)) {
+      if (isset($this->killSwitch) && drush_get_option($this->killSwitch, FALSE)) {
         return FALSE;
       }
       // If there is an enable switch, let that decide.
-      if (isset(static::$enableSwitch)) {
-        return drush_get_option(static::$enableSwitch, FALSE);
+      if (isset($this->enableSwitch)) {
+        return drush_get_option($this->enableSwitch, FALSE);
       }
       // Else default to enabled.
       return TRUE;
@@ -428,11 +474,12 @@ namespace Deployotron {
      *   The SHA to deploy.
      */
     protected function pickSha($options = array()) {
-      $options += array(
-        'branch' => NULL,
-        'tag' => NULL,
-        'sha' => NULL,
+      $options = array(
+        'branch' => drush_get_option('branch', NULL),
+        'tag' => drush_get_option('tag', NULL),
+        'sha' => drush_get_option('sha', NULL),
       );
+
       $branch = $options['branch'];
       $tag = $options['tag'];
       $sha = $options['sha'];
@@ -445,9 +492,11 @@ namespace Deployotron {
         return drush_set_error(dt('You must provide at least one of --branch, --tag or --sha.'));
       }
 
-      // Even if we already have a SHA, we let it through rev-parse. Easy way to
-      // check for existence and get it normalized to a full SHA.
-      if ($this->shLocal('git rev-parse ' . end($posibilities))) {
+      // Use rev-list to ensure we get a full SHA rather than branch/tag/partial
+      // SHA. Ensures the existence of the branch/tag/SHA, and transforms
+      // annotated tag SHAs to the commit they're based on (so the repo will
+      // actually have the SHA we asked for checked out).
+      if ($this->shLocal('git rev-list -1 ' . end($posibilities) . ' --')) {
         $sha = trim($this->shOutput());
       }
       else {
@@ -495,14 +544,46 @@ namespace Deployotron\Actions {
   use Deployotron\Action;
 
   /**
+   * Generic command action.
+   *
+   * Automatically instantiated from pre/post-* options.
+   */
+  class CommandAction extends Action {
+    /**
+     * Create action.
+     */
+    public function __construct($site, $command) {
+      $this->description = 'Run command: ' . $command;
+      $this->runMessage = 'Running command: ' . $command;
+      $this->short = 'run ' . $command;
+
+      $this->command = $command;
+      parent::__construct($site);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function run(array $state) {
+      $success = $this->sh($this->command);
+      drush_print($this->shOutput());
+      if (!$success) {
+        return drush_set_error(dt('Error running command "@command"', array('@command' => $this->command)));
+      }
+      return TRUE;
+    }
+  }
+
+  /**
    * Sanity check.
    *
    * Check for locally modified files and do a dry-run checkout.
    */
   class SanityCheck extends Action {
-    static protected $runMessage = 'Sanity checking';
-    static protected $short = 'sanity check';
-    static protected $options = array(
+    protected $runMessage = 'Fetching and sanity checking';
+    protected $short = 'sanity check';
+    protected $help = 'Fetches the new code and checks that the repository is clean.';
+    protected $options = array(
       'insanity' => "Don't check that the server repository is clean. Might cause data loss.",
     );
 
@@ -514,13 +595,46 @@ namespace Deployotron\Actions {
         return COLOR_YELLOW . dt('Skipping sanity check of deployed repo. Might cause data loss or Git failures.') . COLOR_RESET;
       }
 
-      return dt('Check that the deployed git repository is clean.');
+      return dt('Run git fetch and check that the deployed git repository is clean.');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function validate() {
+      if ($this->sha = $this->pickSha()) {
+        return TRUE;
+      }
+      return FALSE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function run(array $state) {
+      // Fetch the latest changes from upstream.
+      if (!$this->sh('git fetch')) {
+        $message = $this->shOutput();
+        if (preg_match('/Permission denied \(publickey\)/', $message)) {
+          drush_log(dt('Access denied to repository URL.'), 'error');
+          drush_log(dt('Ensure that either that the user on the server has access to the repository, or use "ForwardAgent yes" in .ssh/config.'), 'error');
+        }
+        else {
+          drush_print($message);
+        }
+        return drush_set_error(dt("Could not fetch from remote repository."));
+      }
+
+      // Check that we can see the sha we want to deploy.
+      if (!$this->sh('git log -1 ' . $this->sha . ' --')) {
+        $message = $this->shOutput();
+        if (preg_match('/^fatal: bad object/', $message)) {
+          return drush_set_error(dt('Could not find SHA, did you forget to push?'));
+        }
+        drush_print($message);
+        return drush_set_error(dt('Could not find SHA remotely.'));
+      }
+
       if (drush_get_option('insanity', FALSE)) {
         drush_log(dt('Skipping sanity check of deployed repo.'), 'warning');
         return TRUE;
@@ -562,11 +676,11 @@ namespace Deployotron\Actions {
    * Deploy code.
    */
   class DeployCode extends Action {
-    static protected $runMessage = 'Deploying';
-    static protected $killSwitch = 'no-deploy';
-    static protected $short = 'deploy code';
-    static protected $help = 'Checks out a specified branch/tag/sha on the site.';
-    static protected $options = array(
+    protected $runMessage = 'Deploying';
+    protected $killSwitch = 'no-deploy';
+    protected $short = 'deploy code';
+    protected $help = 'Checks out a specified branch/tag/sha on the site.';
+    protected $options = array(
       'branch' => 'Branch to check out.',
       'tag' => 'Tag to check out.',
       'sha' => 'SHA to check out.',
@@ -598,7 +712,7 @@ namespace Deployotron\Actions {
         $stat = array_merge(array_slice($stat, 0, 8), array('', ' ...', ''), array_slice($stat, -8));
       }
 
-      $desc = dt("Run git fetch and check out @sha:\n", array('@sha' => $this->sha));
+      $desc = dt("Check out @sha:\n", array('@sha' => $this->sha));
       $desc .= $commit_info . "\n\n";
 
       $desc .= dt("Currently deployed: @sha\n", array('@sha' => $head));
@@ -613,12 +727,7 @@ namespace Deployotron\Actions {
      * {@inheritdoc}
      */
     public function validate() {
-      $options = array(
-        'branch' => drush_get_option('branch', NULL),
-        'tag' => drush_get_option('tag', NULL),
-        'sha' => drush_get_option('sha', NULL),
-      );
-      if ($this->sha = $this->pickSha($options)) {
+      if ($this->sha = $this->pickSha()) {
         return TRUE;
       }
       return FALSE;
@@ -627,32 +736,14 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       // Some useful information for other actions.
       $state['requested_branch'] = drush_get_option('branch', NULL);
       $state['requested_tag'] = drush_get_option('tag', NULL);
       $state['requested_sha'] = drush_get_option('sha', NULL);
 
-      if (!$this->sh('git fetch')) {
-        $message = $this->shOutput();
-        if (preg_match('/Permission denied \(publickey\)/', $message)) {
-          drush_log(dt('Access denied to repository URL.'), 'error');
-          drush_log(dt('Ensure that either that the user on the server has access to the repository, or use "ForwardAgent yes" in .ssh/config.'), 'error');
-        }
-        else {
-          drush_print($message);
-        }
-        return drush_set_error(dt("Could not fetch from remote repository."));
-      }
-
       if (!$this->sh('git checkout ' . $this->sha)) {
-        $message = $this->shOutput();
-        if (preg_match('/^fatal: reference is not a tree/', $message)) {
-          drush_log(dt('Could not find SHA, did you forget to push?'), 'error');
-        }
-        else {
-          drush_print($message);
-        }
+        drush_print($this->shOutput());
         return drush_set_error(dt('Could not checkout code.'));
       }
 
@@ -680,15 +771,15 @@ namespace Deployotron\Actions {
    * Set site offline.
    */
   class SiteOffline extends Action {
-    static protected $description = 'Set the site offline.';
-    static protected $runMessage = 'Setting site offline';
-    static protected $killSwitch = 'no-offline';
-    static protected $short = 'set site offline';
+    protected $description = 'Set the site offline.';
+    protected $runMessage = 'Setting site offline';
+    protected $killSwitch = 'no-offline';
+    protected $short = 'set site offline';
 
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!$this->drush('variable-set', array('maintainance_mode', 1))) {
         return drush_set_error(dt('Error setting site offline.'));
       }
@@ -709,15 +800,16 @@ namespace Deployotron\Actions {
    * Set site online.
    */
   class SiteOnline extends Action {
-    static protected $description = 'Set the site online.';
-    static protected $runMessage = 'Setting site online';
-    static protected $killSwitch = 'no-offline';
-    static protected $short = 'set site online';
+    protected $description = 'Set the site online.';
+    protected $runMessage = 'Setting site online';
+    protected $killSwitch = 'no-offline';
+    protected $short = 'set site online';
+    protected $switchSuffix = 'online';
 
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!$this->drush('variable-set', array('maintainance_mode', 0))) {
         return drush_set_error(dt('Error setting site online.'));
       }
@@ -738,11 +830,11 @@ namespace Deployotron\Actions {
    * Backup database.
    */
   class BackupDatabase extends Action {
-    static protected $runMessage = 'Dumping database';
-    static protected $killSwitch = 'no-dump';
-    static protected $short = 'dump database';
-    static protected $help = 'Makes a SQL dump of the site database.';
-    static protected $options = array(
+    protected $runMessage = 'Dumping database';
+    protected $killSwitch = 'no-dump';
+    protected $short = 'dump database';
+    protected $help = 'Makes a SQL dump of the site database.';
+    protected $options = array(
       'dump-dir' => array(
         'description' => 'Directory for database dumps, defaults to /tmp.',
         'example-value' => 'path',
@@ -752,8 +844,8 @@ namespace Deployotron\Actions {
     /**
      * Get the name of a dump.
      */
-    public static function filename($date_str, $sha) {
-      return sprintf("%s/deploy.%s.%s.sql", drush_get_option('dump-dir', '/tmp'), $date_str, $sha);
+    public static function filename($alias, $date_str, $sha) {
+      return sprintf("%s/deploy.%s.%s.%s.sql", drush_get_option('dump-dir', '/tmp'), $alias, $date_str, $sha);
     }
 
     /**
@@ -766,7 +858,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!$this->drush('sql-dump', array(), array('no-ordered-dump' => TRUE, 'result-file' => $this->dumpFilename()))) {
         return drush_set_error('Error dumping database.');
       }
@@ -785,7 +877,7 @@ namespace Deployotron\Actions {
         $date = date('Y-m-d\TH:i:s');
       }
 
-      return static::filename($date, $this->getHead());
+      return static::filename($this->site['#name'], $date, $this->getHead());
     }
   }
 
@@ -793,9 +885,9 @@ namespace Deployotron\Actions {
    * Restore database.
    */
   class RestoreDatabase extends Action {
-    static protected $runMessage = 'Restoring database';
-    static protected $short = 'restore database';
-    static protected $options = array(
+    protected $runMessage = 'Restoring database';
+    protected $short = 'restore database';
+    protected $options = array(
       'file' => array(
         'description' => 'Database dump file to restore.',
         'example-value' => 'filename',
@@ -823,7 +915,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!$this->drush('sql-connect', array(), array('pipe' => TRUE))) {
         return drush_set_error('Error getting database connection setup.');
       }
@@ -843,18 +935,22 @@ namespace Deployotron\Actions {
     }
   }
 
+  /**
+   * Purge old backups.
+   */
   class PurgeDatabaseBackups extends Action {
-    static protected $runMessage = 'Purging old database dumps.';
-    static protected $short = 'purge old dumps';
-    static protected $options = array(
+    protected $runMessage = 'Purging old database dumps.';
+    protected $short = 'purge old dumps';
+    protected $options = array(
       'num-dumps' => array(
         'description' => 'Number of database dumps to keep. 0 for unlimited.',
         'example-value' => '5',
       ),
     );
+    protected $switchSuffix = 'purge';
 
     /**
-     * Dumps to delete;
+     * Dumps to delete.
      */
     protected $deleteDumps = array();
 
@@ -872,7 +968,7 @@ namespace Deployotron\Actions {
         // If we're dumping a new dump, we need to keep one less than the max to
         // make room for the new one.
         $keep = $max_dumps - ($dumping ? 1 : 0);
-        $this->sh('ls ' . BackupDatabase::filename('*', '*'));
+        $this->sh('ls ' . BackupDatabase::filename($this->site['#name'], '*', '*'));
         $dumps = $this->shOutputArray();
         if (count($dumps) > $keep) {
           // Reverse sort to get the newest first.
@@ -898,7 +994,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (count($this->deleteDumps)) {
         $this->sh('rm ' . implode(" ", array_map('drush_escapeshellarg', $this->deleteDumps)));
       }
@@ -910,72 +1006,18 @@ namespace Deployotron\Actions {
   }
 
   /**
-   * Restart Apache2.
-   */
-  class RestartApache2 extends Action {
-    static protected $description = 'Restart Apache2.';
-    static protected $runMessage = 'Restarting Apache2';
-    static protected $enableSwitch = 'restart-apache2';
-    static protected $killSwitch = 'no-restart-apache2';
-    static protected $short = 'restart apache2';
-    static protected $options = array(
-      'restart-apache2-command' => array(
-        'description' => 'Override command used to restart Apache2.',
-        'example-value' => 'command',
-      ),
-    );
-
-    /**
-     * {@inheritdoc}
-     */
-    public function run($state) {
-      if (!$this->sh(drush_get_option('restart-apache2-command', 'sudo service apache2 graceful'))) {
-        return drush_set_error(dt('Error restarting apache2.'));
-      }
-      return TRUE;
-    }
-  }
-
-  /**
-   * Restart Varnish.
-   */
-  class RestartVarnish extends Action {
-    static protected $description = 'Restart Varnish.';
-    static protected $runMessage = 'Restarting Varnish';
-    static protected $enableSwitch = 'restart-varnish';
-    static protected $killSwitch = 'no-restart-varnish';
-    static protected $short = 'restart varnish';
-    static protected $options = array(
-      'restart-varnish-command' => array(
-        'description' => 'Override command used to restart Varnish.',
-        'example-value' => 'path',
-      ),
-    );
-
-    /**
-     * {@inheritdoc}
-     */
-    public function run($state) {
-      if (!$this->sh(drush_get_option('restart-varnish-command', 'sudo service varnish restart'))) {
-        return drush_set_error(dt('Error restarting varnish.'));
-      }
-      return TRUE;
-    }
-  }
-
-  /**
    * Update database.
    */
   class UpdateDatabase extends Action {
-    static protected $description = 'Runs database updates (as with update.php).';
-    static protected $runMessage = 'Running database updates';
-    static protected $killSwitch = 'no-updb';
-    static protected $short = 'update database schema';
+    protected $description = 'Runs database updates (as with update.php).';
+    protected $runMessage = 'Running database updates';
+    protected $killSwitch = 'no-updb';
+    protected $short = 'update database schema';
 
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!$this->drush('updb', array(), array('yes' => TRUE))) {
         return drush_set_error(dt('Error running database updates.'));
       }
@@ -987,15 +1029,15 @@ namespace Deployotron\Actions {
    * Clear cache.
    */
   class ClearCache extends Action {
-    static protected $description = 'Clear all Drupal caches.';
-    static protected $runMessage = 'Clearing caches';
-    static protected $short = 'cache clear';
-    static protected $killSwitch = 'no-cc-all';
+    protected $description = 'Clear all Drupal caches.';
+    protected $runMessage = 'Clearing caches';
+    protected $short = 'cache clear';
+    protected $killSwitch = 'no-cc-all';
 
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!$this->drush('cc', array('all'), array())) {
         return drush_set_error(dt('Error clearing cache.'));
       }
@@ -1007,23 +1049,24 @@ namespace Deployotron\Actions {
    * Prepare OMG.
    */
   class OMGPrepare extends Action {
-    static protected $description = 'Prepare restore.';
-    static protected $runMessage = 'Preparing';
-    static protected $short = 'preparing';
-    static protected $help = 'Prepares restoring by looking for dumps to import.';
-    static protected $options = array(
+    protected $description = 'Prepare restore.';
+    protected $runMessage = 'Preparing';
+    protected $short = 'preparing';
+    protected $help = 'Prepares restoring by looking for dumps to import.';
+    protected $options = array(
       'dump-dir' => array(
         'description' => 'Directory for database dumps.',
         'example-value' => 'path',
       ),
     );
+    protected $switchSuffix = 'prepare';
 
     /**
      * {@inheritdoc}
      */
     public function validate() {
       // Try to find some dumps and give them as options for restoring.
-      $regex = '{^deploy\.(\d+-\d+-\d+T\d+:\d+:\d+)\.([0-9a-f]+)\.sql$}';
+      $regex = '{^deploy\.' . preg_quote($this->site['#name']) . '\.(\d+-\d+-\d+T\d+:\d+:\d+)\.([0-9a-f]+)\.sql$}';
       $this->sh('ls ' . drush_get_option('dump-dir', '/tmp'));
       $listing = $this->shOutput();
       $dumps = array();
@@ -1037,7 +1080,7 @@ namespace Deployotron\Actions {
         $date = drush_choice($dumps, dt('Please select a dump.'), '!key (!value)');
         if ($date) {
           $sha = $dumps[$date];
-          $file = 'deploy.' . $date . '.' . $sha . '.sql';
+          $file = 'deploy.' . $this->site['#name'] . '.' . $date . '.' . $sha . '.sql';
           // We simply set the options so the other actions will see them. The
           // DeployCode action will check that the SHA is available locally
           // before validating, so we'll avoid the worst if dumps get mixed up.
@@ -1057,28 +1100,8 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       // Doing nothing.
-      return TRUE;
-    }
-  }
-
-  /**
-   * Run Drake.
-   */
-  class RunDrakePostUpdate extends Action {
-    static protected $description = 'Run drake post-update.';
-    static protected $runMessage = 'Running drake post-update';
-    static protected $short = 'run drake post-update';
-    static protected $enableSwitch = 'drake-post-update';
-
-    /**
-     * {@inheritdoc}
-     */
-    public function run($state) {
-      if (!$this->drush('drake', array('post-update'), array('no-task-ok' => TRUE))) {
-        return drush_set_error(dt('Error runninng drake.'));
-      }
       return TRUE;
     }
   }
@@ -1087,16 +1110,16 @@ namespace Deployotron\Actions {
    * Create a VERSION.txt file.
    */
   class CreateVersionTxt extends Action {
-    static protected $description = 'Create VERSION.txt.';
-    static protected $runMessage = 'Creating VERSION.txt';
-    static protected $short = 'create VERSION.txt';
-    static protected $killSwitch = 'no-create-version-txt';
-    static protected $versionTxt = NULL;
+    protected $description = 'Create VERSION.txt.';
+    protected $runMessage = 'Creating VERSION.txt';
+    protected $short = 'create VERSION.txt';
+    protected $killSwitch = 'no-create-version-txt';
+    protected $switchSuffix = 'version-txt';
 
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!empty($state['deployed_sha'])) {
         // Ask git which tags points to this commit.
         $this->shLocal('git tag --points-at ' . $state['deployed_sha']);
@@ -1135,21 +1158,22 @@ namespace Deployotron\Actions {
    * Send a notification to Flowdock.
    */
   class FlowdockNotificaton extends Action {
-    static protected $description = 'Send Flowdock notification.';
-    static protected $runMessage = 'Sending Flowdock notification.';
-    static protected $short = 'send Flowdock notification';
-    static protected $enableSwitch = 'flowdock-token';
-    static protected $options = array(
+    protected $description = 'Send Flowdock notification.';
+    protected $runMessage = 'Sending Flowdock notification.';
+    protected $short = 'send Flowdock notification';
+    protected $enableSwitch = 'flowdock-token';
+    protected $options = array(
       'flowdock-token' => array(
         'description' => 'Flowdock token.',
         'example-value' => 'token',
       ),
     );
+    protected $switchSuffix = 'flowdock';
 
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!empty($state['deployed_sha'])) {
         $this->shLocal('git tag --points-at ' . $state['deployed_sha']);
         $tags = implode(', ', $this->shOutputArray());
@@ -1166,7 +1190,7 @@ namespace Deployotron\Actions {
           'from_address' => 'deployotron@reload.dk',
           'subject' => $subject,
           'content' => $body,
-          'tags' => array('deployotron', $this->site['#name']),
+          'tags' => array('deployotron', $this->getFlowdockTag()),
         );
         $data = json_encode($data);
 
@@ -1193,17 +1217,24 @@ namespace Deployotron\Actions {
       }
       return TRUE;
     }
+
+    /**
+     * Get a Flowdock tag for the site.
+     */
+    private function getFlowdockTag() {
+      return preg_replace('/[^[:alnum:]_\-]/', '_', $this->site['#name']);
+    }
   }
 
   /**
    * Send a notification to New Relic.
    */
   class NewRelicNotificaton extends Action {
-    static protected $description = 'Send New Relic notification.';
-    static protected $runMessage = 'Sending New Relic notification.';
-    static protected $short = 'send new relic notification';
-    static protected $enableSwitch = 'newrelic-api-key';
-    static protected $options = array(
+    protected $description = 'Send New Relic notification.';
+    protected $runMessage = 'Sending New Relic notification.';
+    protected $short = 'send new relic notification';
+    protected $enableSwitch = 'newrelic-api-key';
+    protected $options = array(
       'newrelic-app-name' => array(
         'description' => 'New Relic application name.',
         'example-value' => 'name',
@@ -1217,6 +1248,7 @@ namespace Deployotron\Actions {
         'example-value' => 'key',
       ),
     );
+    protected $switchSuffix = 'newrelic';
 
     /**
      * {@inheritdoc}
@@ -1232,7 +1264,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run($state) {
+    public function run(array $state) {
       if (!empty($state['deployed_sha'])) {
         $this->shLocal('git tag --points-at ' . $state['deployed_sha']);
         $tags = implode(', ', $this->shOutputArray());

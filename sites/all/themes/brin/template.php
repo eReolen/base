@@ -271,45 +271,68 @@ function brin_menu_link($vars) {
 }
 
 /**
- * Add ajax for all pages.
+ * Preprocess HTML.
+ *
+ * Add ajax for all pages. Add icons and meta tags.
  */
 function brin_preprocess_html(&$variables) {
   drupal_add_library('system', 'drupal.ajax');
 
-  // Add tags for mobile devices.
-  $viewport = array(
-    '#type' => 'html_tag',
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'name' => 'viewport',
-      'content' => 'width=device-width,initial-scale=1.0,maximum-scale=1.0',
+  $tags = array(
+    // Add tags for mobile devices.
+    'viewport' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'viewport',
+        'content' => 'width=device-width,initial-scale=1.0,maximum-scale=1.0',
+      ),
+    ),
+
+    // iOS.
+    'webapp' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'apple-mobile-web-app-capable',
+        'content' => 'yes',
+      ),
+    ),
+
+    // Microsoft.
+    'ms_name' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'application-name',
+        'content' => variable_get('site_name', ''),
+      ),
+    ),
+    'ms_tile_color' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'msapplication-TileColor',
+        'content' => '#FFFFFF',
+      ),
+    ),
+    'ms_tile_image' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'msapplication-TileImage',
+        'content' => '/' . path_to_theme() . '/images/favicon/mstile-square144x144.png',
+      ),
     ),
   );
-  drupal_add_html_head($viewport, 'viewport');
 
-  // iOS.
-  $apple_webapp = array(
-    '#type' => 'html_tag',
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'name' => 'apple-mobile-web-app-capable',
-      'content' => 'yes',
-    ),
-  );
-  drupal_add_html_head($apple_webapp, 'webapp');
-
+  // Apple iTunes app id.
   if ($app_id = variable_get('reol_base_itunes_app_id', FALSE)) {
-    $apple_itunes_app = array(
-      '#type' => 'html_tag',
-      '#tag' => 'meta',
-      '#attributes' => array(
+    $tags['apple-itunes-app'] = array(
+      'type' => 'meta',
+      'attributes' => array(
         'name' => 'apple-itunes-app',
         'content' => 'app-id=' . variable_get('reol_base_itunes_app_id'),
       ),
     );
-    drupal_add_html_head($apple_itunes_app, 'apple-itunes-app');
   }
 
+  // Apple icons.
   $apple_icons = array(
     '57x57',
     '114x114',
@@ -321,16 +344,14 @@ function brin_preprocess_html(&$variables) {
     '152x152',
   );
   foreach ($apple_icons as $size) {
-    $icon = array(
-      '#type' => 'html_tag',
-      '#tag' => 'link',
-      '#attributes' => array(
+    $tags['apple_icon_' . $size] = array(
+      'type' => 'link',
+      'attributes' => array(
         'rel' => 'apple-touch-icon-precomposed',
         'href' => '/' . path_to_theme() . '/images/favicon/apple-touch-icon-' . $size . '.png',
         'sizes' => $size,
       ),
     );
-    drupal_add_html_head($icon, 'apple_icon_' . $size);
   }
 
   // Favicon.
@@ -342,47 +363,18 @@ function brin_preprocess_html(&$variables) {
     '128x128',
   );
   foreach ($favicons as $size) {
-    $icon = array(
-      '#type' => 'html_tag',
-      '#tag' => 'link',
-      '#attributes' => array(
+    $tags['favicon_' . $size] = array(
+      'type' => 'link',
+      'attributes' => array(
         'rel' => 'icon',
         'href' => '/' . path_to_theme() . '/images/favicon/favicon-' . $size . '.png',
         'sizes' => $size,
       ),
+
     );
-    drupal_add_html_head($icon, 'favicon_' . $size);
   }
 
-  // Microsoft.
-  $ms_name = array(
-    '#type' => 'html_tag',
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'name' => 'application-name',
-      'content' => variable_get('site_name', ''),
-    ),
-  );
-  drupal_add_html_head($ms_name, 'ms_name');
-  $ms_tile_color = array(
-    '#type' => 'html_tag',
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'name' => 'msapplication-TileColor',
-      'content' => '#FFFFFF',
-    ),
-  );
-  drupal_add_html_head($ms_tile_color, 'ms_tile_color');
-  $ms_tile_image = array(
-    '#type' => 'html_tag',
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'name' => 'msapplication-TileImage',
-      'content' => '/' . path_to_theme() . '/images/favicon/mstile-square144x144.png',
-    ),
-  );
-  drupal_add_html_head($ms_tile_image, 'ms_tile_image');
-
+  // Microsoft icons.
   $favicons = array(
     'square70x70',
     'square150x150',
@@ -390,14 +382,21 @@ function brin_preprocess_html(&$variables) {
     'square310x310',
   );
   foreach ($favicons as $size) {
-    $icon = array(
-      '#type' => 'html_tag',
-      '#tag' => 'meta',
-      '#attributes' => array(
+    $tags['msfavicon_' . $size] = array(
+      'type' => 'meta',
+      'attributes' => array(
         'name' => 'msapplication-' . $size . 'logo',
         'content' => '/' . path_to_theme() . '/images/favicon/mstile-' . $size . '.png',
       ),
     );
-    drupal_add_html_head($icon, 'favicon_' . $size);
+  }
+
+  foreach ($tags as $name => $tag) {
+    $html_tag = array(
+      '#type' => 'html_tag',
+      '#tag' => $tag['type'],
+      '#attributes' => $tag['attributes'],
+    );
+    drupal_add_html_head($html_tag, $name);
   }
 }

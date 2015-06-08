@@ -22,12 +22,14 @@ $aliases['prod'] = array(
   'deployotron' => array(
     'branch' => 'master',
     'dump-dir' => '/data/backup/prod',
-    'restart-varnish' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
     'newrelic-api-key' => '36372beaa3607d3b8082f6ed3d1ed986609d7359def9a47',
     'newrelic-app-name' => 'ereolen.dk',
+    'post-deploy' => array(
+      'sudo service varnish restart',
+    ),
   ),
 );
 
@@ -37,10 +39,10 @@ $aliases['stg'] = array(
   'root' => '/data/www/stg_ereolen_dk',
   'deployotron' => array(
     'branch' => 'develop',
-    'dump-dir' => '/data/backup/stg',
-    'restart-apache2' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
+    // Don't bother with db.
+    'no-dump' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
   ),
 );
@@ -51,8 +53,7 @@ $aliases['dev'] = array(
   'root' => '/data/www/dev_ereolen_dk',
   'deployotron' => array(
     'branch' => 'develop',
-    'dump-dir' => '/data/backup/dev',
-    'restart-apache2' => TRUE,
+    'no-dump' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
@@ -71,7 +72,6 @@ $aliases['test'] = array(
   'deployotron' => array(
     'branch' => 'develop',
     'dump-dir' => '/home/reload/backup/ereolen',
-    'restart-apache2' => TRUE,
     'no-offline' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
   ),
@@ -84,7 +84,6 @@ $aliases['test-test'] = array(
   'deployotron' => array(
     'branch' => 'develop',
     'dump-dir' => '/home/reload/backup/ereolen',
-    'restart-apache2' => TRUE,
     'no-offline' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
   ),
