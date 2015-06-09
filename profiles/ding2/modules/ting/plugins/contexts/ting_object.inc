@@ -33,11 +33,6 @@ function ting_ting_object_create($empty, $data = NULL, $conf = FALSE) {
   }
 
   if (!empty($data)) {
-    // Make sure we have a TingObject.
-    if ($data instanceof TingClientObject) {
-      $data = ding_entity_load($data->id);
-    }
-
     $context->data     = $data;
     $context->argument = $object_id;
     if (!empty($data->creators_string)) {
