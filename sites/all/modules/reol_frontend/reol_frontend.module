@@ -94,14 +94,6 @@ function reol_frontend_preprocess_node(&$variables) {
     $uri = entity_uri('node', $node);
     $variables['link'] = url($uri['path'], $uri['options']);
   }
-
-  if ($node->type == 'article' || $node->type == 'author_portrait' || $node->type == 'video') {
-    // Add type icon.
-    $type = $node_wrapper->field_reol_entity_type->value();
-    if ($type) {
-      $variables['type'] = $type;
-    }
-  }
 }
 
 /**

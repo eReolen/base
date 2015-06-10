@@ -74,6 +74,18 @@ function brin_preprocess_node(&$variables, $hook) {
   if (isset($variables['view_mode'])) {
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
   }
+
+  $node = $variables['node'];
+  if ($node->type == 'article' || $node->type == 'author_portrait' || $node->type == 'video') {
+    // Add type icon.
+    $node_wrapper = entity_metadata_wrapper('node', $node);
+    $type = $node_wrapper->field_reol_entity_type->value();
+    if ($type) {
+      // We default to quota icons when we really can't tell.
+      $variables['classes_array'] = array_merge($variables['classes_array'],
+                                    _brin_type_icon_classes_array($type, TRUE));
+    }
+  }
 }
 
 /**
@@ -417,12 +429,39 @@ function brin_preprocess_html(&$variables) {
 }
 
 /**
+ * Preprocess single_review.
+ *
+ * Adds type icon.
+ */
+function brin_preprocess_single_review(&$variables) {
+  $ting_entity = $variables['#object'];
+  $classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+  $variables['classes_array'] = array_merge($variables['classes_array'], explode(' ', $classes));
+}
+
+/**
  * Return classes for type icon.
+ *
+ * @return string
+ *   Classes as a string.
  */
 function _brin_type_icon_classes($type, $quota = NULL) {
-  $classes = 'type-icon type-icon-' . $type;
+  return implode(' ', _brin_type_icon_classes_array($type, $quota));
+}
+
+/**
+ * Return classes for type icon.
+ *
+ * @return array
+ *   Classes as array.
+ */
+function _brin_type_icon_classes_array($type, $quota = NULL) {
+  $classes = array(
+    'type-icon',
+    'type-icon-' . $type,
+  );
   if (is_bool($quota)) {
-    $classes .= ' type-icon-' . ($quota ? 'quota' : 'noquota');
+    $classes[] = 'type-icon-' . ($quota ? 'quota' : 'noquota');
   }
   return $classes;
 }
