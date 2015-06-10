@@ -21,4 +21,16 @@
   &.type-icon-ebook:before {
     background-image: url('../images/ebook.png');
   }
+  &.type-icon-audiobook.type-icon-noquota:before {
+    background-image: url('../images/audiobook-noquota.png');
+  }
+  &.type-icon-ebook.type-icon-noquota:before {
+    background-image: url('../images/ebook-noquota.png');
+  }
+  &.type-icon-audiobook.type-icon-quota:before {
+    background-image: url('../images/audiobook-quota.png');
+  }
+  &.type-icon-ebook.type-icon-quota:before {
+    background-image: url('../images/ebook-quota.png');
+  }
 }
