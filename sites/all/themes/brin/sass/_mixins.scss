@@ -26,6 +26,10 @@
 
 @mixin respond-to($media) {
   // Sizes
+  @if $media == xx-small {
+    @media only screen and (max-width: $breakpoint-x-small) { @content; }
+  }
+
   @if $media == x-small {
     @media only screen and (max-width: $breakpoint-x-small) { @content; }
   }
@@ -70,6 +74,10 @@
 
 /* Breakpoints
    ========================================================================== */
+
+@mixin xx-small {
+  @include respond-to(xx-small) { @content; }
+}
 
 @mixin x-small {
   @include respond-to(x-small) { @content; }
