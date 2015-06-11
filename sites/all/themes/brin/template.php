@@ -76,7 +76,7 @@ function brin_preprocess_node(&$variables, $hook) {
   }
 
   $node = $variables['node'];
-  if ($node->type == 'article' || $node->type == 'author_portrait' || $node->type == 'video') {
+  if (($node->type == 'article' || $node->type == 'author_portrait' || $node->type == 'video') && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
     // Add type icon.
     $node_wrapper = entity_metadata_wrapper('node', $node);
     $type = $node_wrapper->field_reol_entity_type->value();
