@@ -83,7 +83,7 @@ function brin_preprocess_node(&$variables, $hook) {
     if ($type) {
       // We default to quota icons when we really can't tell.
       $variables['classes_array'] = array_merge($variables['classes_array'],
-                                    _brin_type_icon_classes_array($type, TRUE));
+                                    _brin_type_icon_classes($type, TRUE));
     }
   }
 }
@@ -119,31 +119,6 @@ function brin_preprocess_ting_object(&$variables) {
       $variables['content']['ting_primary_object'][0]['ting_collection_types'] = $variables['content']['ting_collection_types'];
       unset($variables['content']['ting_collection_types']);
     }
-
-    // Only add type icon to primary object if there's only one object in the
-    // collection. The primary object is used to represent the whole collection
-    // (primarily in search results), and as such should represent the state of
-    // all objects. So if there's more than one, we cop out, as we don't have
-    // icons that span types (which is the most likely difference).
-    if (count($variables['object']->entities) == 1 &&
-      isset($variables['content']['ting_primary_object'])) {
-      $object_element = &$variables['content']['ting_primary_object'][0];
-      $ting_entity = $object_element['#object'];
-      _brin_add_type_icon($object_element['ting_cover'], $ting_entity);
-    }
-    // Add type icons to each object.
-    if ($variables['content']['ting_entities']) {
-      foreach (element_children($variables['content']['ting_entities']) as $item_index) {
-        foreach ($variables['content']['ting_entities'][$item_index] as $type => $group) {
-          foreach (element_children($group) as $key) {
-
-            $object_element = &$variables['content']['ting_entities'][$item_index][$type][$key];
-            $ting_entity = $object_element['#object'];
-            _brin_add_type_icon($object_element['ting_cover'], $ting_entity);
-          }
-        }
-      }
-    }
   }
   else {
     // Move the availability field from above into the fieldgroup
@@ -153,18 +128,6 @@ function brin_preprocess_ting_object(&$variables) {
       $variables['content']['group_ting_right_col_search']['ting_collection_types'] = $variables['content']['ting_collection_types'];
       $variables['content']['group_ting_right_col_search']['ting_collection_types']['#weight'] = 100;
       unset($variables['content']['ting_collection_types']);
-    }
-
-    $ting_entity = $variables['object'];
-
-    // For ting_object page.
-    if (isset($variables['content']['ting-object'])) {
-      _brin_add_type_icon($variables['content']['ting-object']['content']['left_column']['ting_cover'], $ting_entity);
-    }
-
-    // For referenced materials on article.
-    if (isset($variables['content']['group_ting_object_teaser_left'])) {
-      _brin_add_type_icon($variables['content']['group_ting_object_teaser_left']['ting_cover'], $ting_entity);
     }
   }
 }
@@ -436,17 +399,42 @@ function brin_preprocess_html(&$variables) {
 function brin_preprocess_single_review(&$variables) {
   $ting_entity = $variables['#object'];
   $classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
-  $variables['classes_array'] = array_merge($variables['classes_array'], explode(' ', $classes));
+  $variables['classes_array'] = array_merge($variables['classes_array'], $classes);
 }
 
 /**
- * Return classes for type icon.
+ * Implements hook_ting_collection_view_alter().
  *
- * @return string
- *   Classes as a string.
+ * Suppress the type icon on the material in the ting_primary_object when the
+ * collection contains more than one material. This removes the type-icon in
+ * search results where the cover represents more than one material (likely of
+ * different types).
  */
-function _brin_type_icon_classes($type, $quota = NULL) {
-  return implode(' ', _brin_type_icon_classes_array($type, $quota));
+function brin_ting_collection_view_alter(&$build) {
+  if (isset($build['ting_primary_object'])) {
+    foreach (element_children($build['ting_primary_object']) as $key) {
+      $collection = $build['ting_primary_object']['#object'];
+      if (count($collection->entities) > 1) {
+        if (isset($build['ting_primary_object'][$key]['ting_cover'])) {
+          $build['ting_primary_object'][$key]['ting_cover'][0]['#suppress_type_icon'] = TRUE;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_ting_object_cover().
+ *
+ * Adds type icon to ting object covers.
+ */
+function brin_preprocess_ting_object_cover(&$variables) {
+  if (!isset($variables['elements']['#suppress_type_icon']) ||
+    !$variables['elements']['#suppress_type_icon']) {
+    $ting_entity = $variables['object'];
+    $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+    $variables['classes'] = array_merge($variables['classes'], $add_classes);
+  }
 }
 
 /**
@@ -455,7 +443,7 @@ function _brin_type_icon_classes($type, $quota = NULL) {
  * @return array
  *   Classes as array.
  */
-function _brin_type_icon_classes_array($type, $quota = NULL) {
+function _brin_type_icon_classes($type, $quota = NULL) {
   $classes = array(
     'type-icon',
     'type-icon-' . $type,
@@ -464,17 +452,4 @@ function _brin_type_icon_classes_array($type, $quota = NULL) {
     $classes[] = 'type-icon-' . ($quota ? 'quota' : 'noquota');
   }
   return $classes;
-}
-
-/**
- * Adds the type icon to a render array.
- *
- * @param array $element
- *   Element to add on. Usually 'ting_cover' render array.
- * @param TingEntity $ting_entity
- *   The material.
- */
-function _brin_add_type_icon(&$element, TingEntity $ting_entity) {
-  $element['#prefix'] = '<div class="' . _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota) . '">';
-  $element['#suffix'] = '</div>';
 }
