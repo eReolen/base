@@ -4,7 +4,7 @@
  * Material item template.
  */
 ?>
-<div class="material-item <?php print $zebra; ?> <?php echo $type; ?>">
+<div class="material-item <?php print $zebra; ?> <?php print $classes; ?> ">
   <div class="left-column">
     <div class="item-checkbox"><?php print $checkbox; ?></div>
     <?php print $cover; ?>
