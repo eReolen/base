@@ -1,7 +1,7 @@
 .type-icon{
   position: relative;
 
-  &:before {
+  &:after {
     display: block;
     content: "";
     right: 0;
@@ -15,22 +15,22 @@
     background-size: contain;
   }
 
-  &.type-icon-audiobook:before {
+  &.type-icon-audiobook:after {
     background-image: url('../images/audiobook.png');
   }
-  &.type-icon-ebook:before {
+  &.type-icon-ebook:after {
     background-image: url('../images/ebook.png');
   }
-  &.type-icon-audiobook.type-icon-noquota:before {
+  &.type-icon-audiobook.type-icon-noquota:after {
     background-image: url('../images/audiobook-noquota.png');
   }
-  &.type-icon-ebook.type-icon-noquota:before {
+  &.type-icon-ebook.type-icon-noquota:after {
     background-image: url('../images/ebook-noquota.png');
   }
-  &.type-icon-audiobook.type-icon-quota:before {
+  &.type-icon-audiobook.type-icon-quota:after {
     background-image: url('../images/audiobook-quota.png');
   }
-  &.type-icon-ebook.type-icon-quota:before {
+  &.type-icon-ebook.type-icon-quota:after {
     background-image: url('../images/ebook-quota.png');
   }
 }
