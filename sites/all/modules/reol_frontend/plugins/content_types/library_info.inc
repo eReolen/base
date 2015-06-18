@@ -37,7 +37,7 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
       '@url' => url('search/ting/*', array(
         'query' => array(
           'facets' => array(
-            'facet.extraTitles:ekstra titler'
+            'facet.extraTitles:ekstra titler',
           ),
         ),
       )),
