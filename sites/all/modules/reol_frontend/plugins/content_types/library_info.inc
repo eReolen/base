@@ -34,7 +34,7 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
     'max_audiobook_loans' => t('You are allowed to loan @loans audiobooks simultaneously.', array('@loans' => $library->maxAudiobookLoans)),
     'max_reservations' => t('You are allowed to reserve @reservations titles simultaneously.', array('@reservations' => $library->maxReservations)),
     'extra_info' => t('<a href="@url">Titles exempt from quotas.</a>', array(
-      '@url' => url('ting/search/*', array(
+      '@url' => url('search/ting/*', array(
         'query' => array(
           'facets' => array(
             'facet.extraTitles:ekstra titler'
