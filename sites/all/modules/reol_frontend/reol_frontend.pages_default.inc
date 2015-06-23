@@ -30,7 +30,7 @@ function reol_frontend_default_page_manager_handlers() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'flexible:reol_frontpage_layout';
+  $display->layout = 'reol_frontpage';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
