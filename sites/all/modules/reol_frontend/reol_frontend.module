@@ -332,20 +332,28 @@ function reol_frontend_ting_post_execute($request, $response, $raw_response) {
  *
  * According to the given marcxchange data.
  */
-function _reol_frontend_is_quotaed($marc_record) {
-  // Records with the MARC code "032*xERAxxxxxx" is not on quota.
-  // Very defensive coding here...
-  if (isset($marc_record->datafield)) {
-    foreach ($marc_record->datafield as $datafield) {
-      if (isset($datafield->{'@tag'}->{'$'}) &&
-        $datafield->{'@tag'}->{'$'} == '032' &&
-        isset($datafield->subfield)) {
-        foreach ($datafield->subfield as $subfield) {
-          if (isset($subfield->{'@code'}->{'$'}) &&
-            $subfield->{'@code'}->{'$'} == 'x' &&
-            isset($subfield->{'$'}) &&
-            strpos($subfield->{'$'}, 'ERA') === 0) {
-            return FALSE;
+function _reol_frontend_is_quotaed($marc_records) {
+  if (!is_array($marc_records)) {
+    $marc_records = array($marc_records);
+  }
+
+  foreach ($marc_records as $marc_record) {
+    // Records with the MARC code "032*xERAxxxxxx" is not on quota.
+    // Very defensive coding here...
+    if (isset($marc_record->{'@type'}->{'$'}) &&
+      $marc_record->{'@type'}->{'$'} == 'Bibliographic' &&
+      isset($marc_record->datafield)) {
+      foreach ($marc_record->datafield as $datafield) {
+        if (isset($datafield->{'@tag'}->{'$'}) &&
+          $datafield->{'@tag'}->{'$'} == '032' &&
+          isset($datafield->subfield)) {
+          foreach ($datafield->subfield as $subfield) {
+            if (isset($subfield->{'@code'}->{'$'}) &&
+              $subfield->{'@code'}->{'$'} == 'x' &&
+              isset($subfield->{'$'}) &&
+              strpos($subfield->{'$'}, 'ERA') === 0) {
+              return FALSE;
+            }
           }
         }
       }
