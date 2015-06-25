@@ -33,3 +33,19 @@ a.global-banner {
     color: white;
   }
 }
+
+// Add in extra padding so the banners are the same size.
+a.nonquota-banner div.nonquota-banner {
+  padding: 11px 0;
+}
+
+// Same for small, but the other way around.
+@include small() {
+  a.nonquota-banner div.nonquota-banner {
+    padding: 0;
+  }
+
+  a.global-banner div.global-banner {
+    padding: 4px 0;
+  }
+}
