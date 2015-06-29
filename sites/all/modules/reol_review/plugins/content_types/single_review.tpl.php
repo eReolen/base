@@ -4,9 +4,8 @@
  * single_review.tpl.php
  * This template shows a single review.
  */
-
 ?>
-<div class="single-review type-icon type-icon-<?php echo $type; ?>">
+<div class="<?php print $classes; ?>">
   <a href="<?php echo $review_uri; ?>" target="_blank">
     <div class="review-top">
       <h4><?php echo t('We review'); ?></h4>

@@ -1,25 +1,6 @@
 .material-item {
   .item-title {
     position: relative;
-
-    &:after {
-      content: "";
-      display: block;
-      height: 0.925em;
-      width: 1em;
-      position: absolute;
-      left: -1.5em;
-      bottom: 0;
-      background-repeat: no-repeat;
-      background-size: 100% auto;
-      top: 0.25em;
-    }
-  }
-  &.ebook .item-title:after {
-    background-image: url("../images/icon-ebook.png");
-  }
-  &.audiobook .item-title:after {
-    background-image: url("../images/icon-audiobook.png");
   }
 
   .expires-in,
@@ -51,8 +32,39 @@
       margin-right: 0;
     }
   }
+
+  // Hide the type icon on the material per default.
+  &.type-icon::after {
+    display: none;
+  }
 }
 
 .pane-loans .material-item .right-column {
   padding-left: 10px;
+}
+
+// Reset ddbasic.
+.pane-reservations .ting-cover,
+.pane-loans .ting-cover,
+.pane-bookmarks .ting-cover {
+  max-width: inherit;
+}
+
+// Completely hide the left column on very small screens.
+@include xx-small() {
+  .material-item {
+    .left-column {
+      display:none;
+    }
+
+    .right-column {
+      width: 100%;
+    }
+
+    // Display the material type icon now the one on the cover is hidden.
+    &.type-icon::after {
+      display: block;
+    }
+
+  }
 }

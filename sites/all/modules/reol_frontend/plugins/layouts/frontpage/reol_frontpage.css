@@ -1,0 +1,37 @@
+
+.reol-frontpage {
+  margin: 0 10px 20px;
+  clear: left;
+  overflow: hidden;
+}
+
+.reol-frontpage .top,
+.reol-frontpage .middle,
+.reol-frontpage .bottom {
+  background-color: white;
+}
+
+.reol-frontpage .top .pane-content {
+  padding-top: 20px;
+}
+
+.reol-frontpage .middle {
+  margin-top: 30px;
+  padding-top: .5em;
+}
+
+.reol-frontpage .left {
+  float: left;
+  width: 75%;
+}
+
+.reol-frontpage .highlight,
+.reol-frontpage .right {
+  float: right;
+  width: 25%;
+}
+.reol-frontpage .highlight .inner,
+.reol-frontpage .left .inner,
+.reol-frontpage .right .inner {
+  margin: .5em;
+}

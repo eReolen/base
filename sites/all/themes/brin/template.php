@@ -74,6 +74,18 @@ function brin_preprocess_node(&$variables, $hook) {
   if (isset($variables['view_mode'])) {
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
   }
+
+  $node = $variables['node'];
+  if (($node->type == 'article' || $node->type == 'author_portrait' || $node->type == 'video') && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
+    // Add type icon.
+    $node_wrapper = entity_metadata_wrapper('node', $node);
+    $type = $node_wrapper->field_reol_entity_type->value();
+    if ($type) {
+      // We default to quota icons when we really can't tell.
+      $variables['classes_array'] = array_merge($variables['classes_array'],
+                                    _brin_type_icon_classes($type, TRUE));
+    }
+  }
 }
 
 /**
@@ -107,13 +119,6 @@ function brin_preprocess_ting_object(&$variables) {
       $variables['content']['ting_primary_object'][0]['ting_collection_types'] = $variables['content']['ting_collection_types'];
       unset($variables['content']['ting_collection_types']);
     }
-
-    // Only do this if we only have one entity to look at.
-    if (count($variables['object']->entities) == 1) {
-      $ting_entity = ding_entity_load($variables['object']->ting_primary_object['und'][0]['id']);
-      $variables['content']['ting_primary_object'][0]['ting_cover']['#prefix'] = '<div class="type-icon type-icon-' . reol_base_get_type_name($ting_entity->type) . '">';
-      $variables['content']['ting_primary_object'][0]['ting_cover']['#suffix'] = '</div>';
-    }
   }
   else {
     // Move the availability field from above into the fieldgroup
@@ -123,21 +128,6 @@ function brin_preprocess_ting_object(&$variables) {
       $variables['content']['group_ting_right_col_search']['ting_collection_types'] = $variables['content']['ting_collection_types'];
       $variables['content']['group_ting_right_col_search']['ting_collection_types']['#weight'] = 100;
       unset($variables['content']['ting_collection_types']);
-    }
-
-    $ting_entity = $variables['object'];
-    $prefix = '<div class="type-icon type-icon-' . reol_base_get_type_name($ting_entity->type) . '">';
-    $suffix = '</div>';
-    // For ting_object page.
-    if (isset($variables['content']['ting-object'])) {
-      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#prefix'] = $prefix;
-      $variables['content']['ting-object']['content']['left_column']['ting_cover']['#suffix'] = $suffix;
-    }
-
-    // For referenced materials on article.
-    if (isset($variables['content']['group_ting_object_teaser_left'])) {
-      $variables['content']['group_ting_object_teaser_left']['ting_cover']['#prefix'] = $prefix;
-      $variables['content']['group_ting_object_teaser_left']['ting_cover']['#suffix'] = $suffix;
     }
   }
 }
@@ -399,4 +389,81 @@ function brin_preprocess_html(&$variables) {
     );
     drupal_add_html_head($html_tag, $name);
   }
+}
+
+/**
+ * Preprocess single_review.
+ *
+ * Adds type icon.
+ */
+function brin_preprocess_single_review(&$variables) {
+  $ting_entity = $variables['#object'];
+  $classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+  $variables['classes_array'] = array_merge($variables['classes_array'], $classes);
+}
+
+/**
+ * Implements hook_ting_collection_view_alter().
+ *
+ * Suppress the type icon on the material in the ting_primary_object when the
+ * collection contains more than one material. This removes the type-icon in
+ * search results where the cover represents more than one material (likely of
+ * different types).
+ */
+function brin_ting_collection_view_alter(&$build) {
+  if (isset($build['ting_primary_object'])) {
+    foreach (element_children($build['ting_primary_object']) as $key) {
+      $collection = $build['ting_primary_object']['#object'];
+      if (count($collection->entities) > 1) {
+        if (isset($build['ting_primary_object'][$key]['ting_cover'])) {
+          $build['ting_primary_object'][$key]['ting_cover'][0]['#suppress_type_icon'] = TRUE;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_preprocess_material_item().
+ */
+function brin_preprocess_material_item(&$variables) {
+  $element = $variables['element'];
+  // TODO Can we rely on this?
+  $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
+  $ting_entity = ding_entity_load($ding_entity_id);
+
+  $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+  $variables['classes_array'] = array_merge($variables['classes_array'], $add_classes);
+}
+
+
+/**
+ * Implements hook_preprocess_ting_object_cover().
+ *
+ * Adds type icon to ting object covers.
+ */
+function brin_preprocess_ting_object_cover(&$variables) {
+  if (!isset($variables['elements']['#suppress_type_icon']) ||
+    !$variables['elements']['#suppress_type_icon']) {
+    $ting_entity = $variables['object'];
+    $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+    $variables['classes'] = array_merge($variables['classes'], $add_classes);
+  }
+}
+
+/**
+ * Return classes for type icon.
+ *
+ * @return array
+ *   Classes as array.
+ */
+function _brin_type_icon_classes($type, $quota = NULL) {
+  $classes = array(
+    'type-icon',
+    'type-icon-' . $type,
+  );
+  if (is_bool($quota)) {
+    $classes[] = 'type-icon-' . ($quota ? 'quota' : 'noquota');
+  }
+  return $classes;
 }

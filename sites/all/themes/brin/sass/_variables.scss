@@ -38,11 +38,10 @@ $header-height: 90px;
 
 $border-separator: 1px solid #d2d2d2;
 
-// Breakpoints lifted verbatim from ddbasic.
-
 /* Breakpoints
    ========================================================================== */
 
+$breakpoint-xx-small:            480px;
 $breakpoint-x-small:             630px;
 $breakpoint-small:               768px;
 $breakpoint-medium:              940px;

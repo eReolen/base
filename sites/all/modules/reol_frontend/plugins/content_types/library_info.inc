@@ -33,6 +33,15 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
     'max_ebook_loans' => t('You are allowed to loan @loans e-books simultaneously.', array('@loans' => $library->maxEbookLoans)),
     'max_audiobook_loans' => t('You are allowed to loan @loans audiobooks simultaneously.', array('@loans' => $library->maxAudiobookLoans)),
     'max_reservations' => t('You are allowed to reserve @reservations titles simultaneously.', array('@reservations' => $library->maxReservations)),
+    'extra_info' => t('<a href="@url">Titles exempt from quotas.</a>', array(
+      '@url' => url('search/ting/*', array(
+        'query' => array(
+          'facets' => array(
+            'facet.extraTitles:ekstra titler',
+          ),
+        ),
+      )),
+    )),
   ));
 
   return $block;
