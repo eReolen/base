@@ -1,0 +1,22 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      base_url: http://ereolen.dev
+    Drupal\DrupalExtension:
+      blackbox: ~
+
+debug: 
+  extensions:
+    Behat\MinkExtension:
+      selenium2: ~
+      default_session: selenium2
+      browser_name: chrome
