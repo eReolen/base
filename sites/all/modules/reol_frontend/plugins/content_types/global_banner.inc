@@ -25,7 +25,7 @@ function reol_frontend_global_banner_content_type_render($subtype, $conf, $panel
   // XHTML standard, which wont allow the a element around a block element.
   $block->content = '<a href="http://www.ereolenglobal.dk" class="frontpage-banner global-banner">
 <div class="global-banner">
-<h3>Udenlandsk literatur</h3>
+<h3>Udenlandsk litteratur</h3>
 <img src="/' . path_to_theme() . '/images/ereolen-global-logo.png" />
 </div>
 </a>';
