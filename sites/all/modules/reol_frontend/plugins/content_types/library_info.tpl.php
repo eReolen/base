@@ -12,6 +12,7 @@
     <li><?php echo $max_ebook_loans; ?></li>
     <li><?php echo $max_audiobook_loans; ?></li>
     <li><?php echo $max_reservations; ?></li>
+    <li><?php echo $extra_info; ?></li>
   </ul>
   <div>&nbsp;</div>
 </div>

@@ -94,14 +94,6 @@ function reol_frontend_preprocess_node(&$variables) {
     $uri = entity_uri('node', $node);
     $variables['link'] = url($uri['path'], $uri['options']);
   }
-
-  if ($node->type == 'article' || $node->type == 'author_portrait' || $node->type == 'video') {
-    // Add type icon.
-    $type = $node_wrapper->field_reol_entity_type->value();
-    if ($type) {
-      $variables['type'] = $type;
-    }
-  }
 }
 
 /**
@@ -286,4 +278,86 @@ function reol_frontend_form_article_node_form_alter(&$form, &$form_state) {
     $form['options']['field_show_in_app'] = $form['field_show_in_app'];
     unset($form['field_show_in_app']);
   }
+}
+
+/**
+ * Implements hook_ting_pre_execute().
+ */
+function reol_frontend_ting_pre_execute($request) {
+  // Request both dkabm and marcxchange formats for all queries. DKABM data is
+  // needed for regular ting object display, and we need to look into MARC data
+  // to figure out if this is a quota or free material.
+  return array('objectFormat' => array('dkabm', 'marcxchange'));
+}
+
+/**
+ * Implements hook_ting_post_execute().
+ *
+ * Adds the quota status to the ting object response.
+ */
+function reol_frontend_ting_post_execute($request, $response, $raw_response) {
+  switch (get_class($response)) {
+    case 'TingClientObject':
+      $response->on_quota = TRUE;
+      if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record)) {
+        $response->on_quota = _reol_frontend_is_quotaed($raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record);
+      }
+
+      break;
+
+    case 'TingClientObjectCollection':
+      foreach ($response->objects as $key => $object) {
+        $object->on_quota = TRUE;
+        if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
+          $object->on_quota = _reol_frontend_is_quotaed($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
+        }
+      }
+      break;
+
+    case 'TingClientSearchResult':
+      foreach ($response->collections as $col_key => $object_collection) {
+        foreach ($object_collection->objects as $key => $object) {
+          $object->on_quota = TRUE;
+          if (isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
+            $object->on_quota = _reol_frontend_is_quotaed($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
+          }
+        }
+      }
+      break;
+  }
+}
+
+/**
+ * Return whether the material is on quota.
+ *
+ * According to the given marcxchange data.
+ */
+function _reol_frontend_is_quotaed($marc_records) {
+  if (!is_array($marc_records)) {
+    $marc_records = array($marc_records);
+  }
+
+  foreach ($marc_records as $marc_record) {
+    // Records with the MARC code "032*xERAxxxxxx" is not on quota.
+    // Very defensive coding here...
+    if (isset($marc_record->{'@type'}->{'$'}) &&
+      $marc_record->{'@type'}->{'$'} == 'Bibliographic' &&
+      isset($marc_record->datafield)) {
+      foreach ($marc_record->datafield as $datafield) {
+        if (isset($datafield->{'@tag'}->{'$'}) &&
+          $datafield->{'@tag'}->{'$'} == '032' &&
+          isset($datafield->subfield)) {
+          foreach ($datafield->subfield as $subfield) {
+            if (isset($subfield->{'@code'}->{'$'}) &&
+              $subfield->{'@code'}->{'$'} == 'x' &&
+              isset($subfield->{'$'}) &&
+              strpos($subfield->{'$'}, 'ERA') === 0) {
+              return FALSE;
+            }
+          }
+        }
+      }
+    }
+  }
+  return TRUE;
 }

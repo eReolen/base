@@ -1,0 +1,17 @@
+project:
+  type: git
+  origin: 'git@github.com:ding2/ting.git'
+  revision: 565aec83dda8b85e5ce40ae1de6af366aee8c014
+patches:
+  -
+    patch: 'https://patch-diff.githubusercontent.com/raw/ding2/ting/pull/33.patch'
+    home: 'https://github.com/ding2/ting/pull/33'
+    reason: 'Make ting object types configurable.'
+  -
+    patch: 'https://patch-diff.githubusercontent.com/raw/ding2/ting/pull/32.patch'
+    home: 'https://github.com/ding2/ting/pull/32'
+    reason: 'The ting object CTools argument didn''t return the rigth kind of object.'
+  -
+    patch: 'https://patch-diff.githubusercontent.com/raw/ding2/ting/pull/31.patch'
+    home: 'https://github.com/ding2/ting/pull/31'
+    reason: 'Support ting_cache_lifetime of zero.'

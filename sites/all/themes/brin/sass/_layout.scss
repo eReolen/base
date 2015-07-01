@@ -70,18 +70,20 @@ h1 ,
 }
 
 @include small() {
-  .page-reol-frontpage,
-  .pane-page-content {
-    .panels-flexible-region-default-layout-left {
+  .page-reol-frontpage {
+    .reol-frontpage .left {
       width: 100%;
-      .panels-flexible-region-inside {
+      .inner {
         padding-right: 0;
       }
     }
-  }
 
-  .pane-page-content {
-    .panels-flexible-region-default-layout-right {
+    .reol-frontpage .highlight {
+      float: none;
+      width: 100%;
+    }
+
+    .reol-frontpage .right{
       display: none;
     }
   }
