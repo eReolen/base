@@ -48,7 +48,7 @@ function publizon_loan_list($account, $reset = FALSE) {
       foreach ($loans as $loan) {
         // Title might not be found, do nothing.
         if (!isset($mapping[$loan->isbn])) {
-          continue;
+          $id = '';
         }
         $id = $mapping[$loan->isbn];
 
@@ -57,6 +57,7 @@ function publizon_loan_list($account, $reset = FALSE) {
           'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
           'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
           'renewable' => FALSE,
+          'display_name' => $loan->title,
         ));
       }
 
