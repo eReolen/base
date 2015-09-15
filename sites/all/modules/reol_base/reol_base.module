@@ -91,9 +91,14 @@ function reol_base_entity_load($entities, $type) {
     if (!($entity instanceof TingEntity)) {
       continue;
     }
+    // Provide a 'isbn_' local id if the ding_entity_id matches our own fake ID.
+    if (isset($entity->ding_entity_id) &&
+      preg_match('/^publizon:(.*)$/', $entity->ding_entity_id, $matches)) {
+      $local_id = 'isbn_' . $matches[1];
+    }
     // When have to check all the way down, as chain might be broken
     // somwhere. Only touch localId if we have the right value for it.
-    if (isset($entity->reply) &&
+    elseif (isset($entity->reply) &&
       isset($entity->reply->record) &&
       isset($entity->reply->record['dc:identifier'])) {
       $local_id = FALSE;
@@ -109,9 +114,9 @@ function reol_base_entity_load($entities, $type) {
         $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['dkdcplus:ISBN']);
       }
 
-      if ($local_id) {
-        $entity->localId = $local_id;
-      }
+    }
+    if ($local_id) {
+      $entity->localId = $local_id;
     }
   }
 }
@@ -184,10 +189,14 @@ function reol_base_theme_registry_alter(&$theme_registry) {
  */
 function reol_base_preprocess_material_item(&$variables) {
   $element = $variables['element'];
-  // TODO Can we rely on this?
-  $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
+  $ding_entity_id = $element['#loan']->ding_entity_id;
   $ting_entity = ding_entity_load($ding_entity_id);
 
+  // Make a note of the loan type if it's one of our fake IDs.
+  // reol_use_loan_ding_entity_buttons will use this.
+  if (preg_match('/^publizon:/', $ting_entity->ding_entity_id)) {
+    $ting_entity->publizon_type = $element['#loan']->publizon_type;
+  }
   // Put buttons from entity view on list.
   $buttons = field_view_field('ting_object', $ting_entity, 'ding_entity_buttons', 'default');
   $variables['buttons'] = drupal_render($buttons);
@@ -306,6 +315,7 @@ function _reol_base_get_types() {
       'title' => t('Audiobook'),
       'title_plural' => t('Audiobooks'),
       'path' => 'lydboeger',
+      'publizon_formats' => array(71),
     ),
     'ebook' => array(
       'ext_name' => 'ebog',
@@ -313,6 +323,7 @@ function _reol_base_get_types() {
       'title' => t('E-book'),
       'title_plural' => t('E-books'),
       'path' => 'eboeger',
+      'publizon_formats' => array(50, 58),
     ),
   );
 }
@@ -328,6 +339,18 @@ function reol_base_get_entity_types() {
     $carry[$elem['int_name']] = $elem['title'];
     return $carry;
   }, array());
+}
+
+/**
+ * Return the internal type for a given Publizon format.
+ */
+function reol_base_get_type_from_format($format) {
+  foreach (_reol_base_get_types() as $type => $spec) {
+    if (in_array($format, $spec['publizon_formats'])) {
+      return $type;
+    }
+  }
+  return '';
 }
 
 /**
