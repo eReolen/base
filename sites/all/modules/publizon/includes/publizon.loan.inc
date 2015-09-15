@@ -20,6 +20,7 @@ function publizon_loan_list($account, $reset = FALSE) {
   $creds = ding_user_get_creds($account);
 
   $result = &drupal_static(__FUNCTION__, array());
+  $reset = true;
   if (!$result || $reset) {
     // Check if ding_session_cache is available.
     if (module_exists('ding_session_cache') && !$reset) {
@@ -46,11 +47,13 @@ function publizon_loan_list($account, $reset = FALSE) {
       }
 
       foreach ($loans as $loan) {
-        // Title might not be found, do nothing.
+        // Title might not be found, use an fake ID.
         if (!isset($mapping[$loan->isbn])) {
-          $id = '';
+          $id = 'publizon:' . $loan->isbn;
         }
-        $id = $mapping[$loan->isbn];
+        else {
+          $id = $mapping[$loan->isbn];
+        }
 
         $result[$id] = new DingProviderLoan($id, array(
           'ding_entity_id' => $id,
@@ -59,6 +62,8 @@ function publizon_loan_list($account, $reset = FALSE) {
           'renewable' => FALSE,
           'display_name' => $loan->title,
         ));
+
+        $result[$id]->publizon_type = reol_base_get_ting_type(reol_base_get_type_from_format($loan->format));
       }
 
       // Save into ding session cache.
@@ -132,4 +137,22 @@ function publizon_loan_get($account, $local_id) {
     'internal_order_number' => $result->internal_order_number,
     'retailer_order_number' => $result->retailer_order_number,
   ) : array();
+}
+
+/**
+ * Add a fake cover field to pseudo entities to get publizon covers shown.
+ */
+function publizon_loan_populate_pseudo_entity($ting_entity) {
+  if (isset($ting_entity->ding_entity_id) &&
+    preg_match('/^publizon:(.*)$/', $ting_entity->ding_entity_id, $matches)) {
+    $ting_entity->ting_cover = array(
+      LANGUAGE_NONE => array(
+        0 => array(
+          'local_id' => $matches[1],
+        ),
+      ),
+    );
+  }
+
+  return $ting_entity;
 }

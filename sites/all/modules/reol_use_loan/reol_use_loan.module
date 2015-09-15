@@ -182,20 +182,31 @@ function reol_use_loan_theme($existing, $type, $theme, $path) {
  * Add read/listen buttons on entity view page for audiobook or ebook.
  */
 function reol_use_loan_ding_entity_buttons($type, $entity) {
-  if (reol_loan_is_right_type($entity)) {
+  // Materials might be deleted in the well, but still loaned by a user. We need
+  // to still make it available for use until it expires.
+  $deleted = preg_match('/^publizon:/', $entity->ding_entity_id);
+  if (reol_loan_is_right_type($entity) || $deleted) {
     global $user;
     drupal_add_library('system', 'drupal.ajax');
-    list($availability) = array_values(ding_availability_items(array($entity->localId)));
-
     $text = t('Try');
     $link = '';
-    $avail_mapped = _reol_loan_map_availability($availability);
-    $loaned = $avail_mapped == REOL_LOAN_STATUS_LOANED;
-    $available = $avail_mapped == REOL_LOAN_STATUS_LOANABLE || $avail_mapped == REOL_LOAN_STATUS_RESERVABLE;
+    if (!$deleted) {
+      list($availability) = array_values(ding_availability_items(array($entity->localId)));
+
+      $avail_mapped = _reol_loan_map_availability($availability);
+      $loaned = $avail_mapped == REOL_LOAN_STATUS_LOANED;
+      $available = $avail_mapped == REOL_LOAN_STATUS_LOANABLE || $avail_mapped == REOL_LOAN_STATUS_RESERVABLE;
+      $entity_type = reol_base_get_type_name($entity->type);
+    }
+    else {
+      $loaned = TRUE;
+      $available = FALSE;
+      $entity_type = reol_base_get_type_name($entity->publizon_type);
+    }
 
     // Only do something if title is in publizon.
     if ($loaned || $available) {
-      switch (reol_base_get_type_name($entity->type)) {
+      switch ($entity_type) {
         case "ebook":
           if ($loaned) {
             $text = t('Read');
