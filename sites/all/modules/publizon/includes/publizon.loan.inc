@@ -138,3 +138,21 @@ function publizon_loan_get($account, $local_id) {
     'retailer_order_number' => $result->retailer_order_number,
   ) : array();
 }
+
+/**
+ * Add a fake cover field to pseudo entities to get publizon covers shown.
+ */
+function publizon_loan_populate_pseudo_entity($ting_entity) {
+  if (isset($ting_entity->ding_entity_id) &&
+    preg_match('/^publizon:(.*)$/', $ting_entity->ding_entity_id, $matches)) {
+    $ting_entity->ting_cover = array(
+      LANGUAGE_NONE => array(
+        0 => array(
+          'local_id' => $matches[1],
+        ),
+      ),
+    );
+  }
+
+  return $ting_entity;
+}
