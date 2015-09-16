@@ -20,7 +20,6 @@ function publizon_loan_list($account, $reset = FALSE) {
   $creds = ding_user_get_creds($account);
 
   $result = &drupal_static(__FUNCTION__, array());
-  $reset = true;
   if (!$result || $reset) {
     // Check if ding_session_cache is available.
     if (module_exists('ding_session_cache') && !$reset) {
