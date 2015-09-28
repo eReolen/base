@@ -315,7 +315,9 @@ function _reol_base_get_types() {
       'title' => t('Audiobook'),
       'title_plural' => t('Audiobooks'),
       'path' => 'lydboeger',
-      'publizon_formats' => array(71),
+      // 0 format is a bug in publizon, we assume they must be audiobooks. Ref
+      // REOL-253.
+      'publizon_formats' => array(0, 71),
     ),
     'ebook' => array(
       'ext_name' => 'ebog',
