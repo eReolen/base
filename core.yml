@@ -1,6 +1,6 @@
 patches:
   -
-    patch: 'http://drupal.org/files/menu-get-item-rebuild-1232346-22_0.patch'
+    patch: 'https://www.drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch'
     home: 'https://drupal.org/node/1232346'
     reason: 'This patch fixes a problem with recursive menu rebuilds.'
   -
@@ -12,14 +12,10 @@ patches:
     home: 'https://drupal.org/node/1879970'
     reason: 'This patch ensure that communication with web-services that runs OpenSSL v1.0.x or newer works.'
   -
-    patch: 'https://drupal.org/files/issues/autocomplete-1232416-17-7x.patch'
+    patch: 'https://www.drupal.org/files/issues/autocomplete-1232416-232-7x.patch'
     home: 'https://www.drupal.org/node/1232416'
     reason: 'This patch that ensures that Ajax errors only are displayed when not in readystate 4. So when the user presses enter to perform a search before auto-complete Ajax is call is completed an error will not be displayed.'
   -
     patch: 'https://www.drupal.org/files/fix-shortcut-set-save-1175700-10.patch'
     home: 'https://www.drupal.org/node/1175700'
     reason: 'Fix shortcut_set_save when set does not exist.'
-  -
-    patch: 'https://www.drupal.org/files/issues/protoindependent.patch'
-    home: 'https://www.drupal.org/node/646862'
-    reason: 'Allow for protocol independent URLs in CSS @imports.'
