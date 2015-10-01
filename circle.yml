@@ -8,8 +8,6 @@ machine:
     version: 5.4.21
 
 dependencies:
-  cache_directories:
-    - "~/.composer"
   pre:
     # Install Drush. We need these two lines to not install Drush dev
     # dependencies, and not update any Circle installed composer
