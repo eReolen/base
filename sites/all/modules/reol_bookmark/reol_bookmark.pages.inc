@@ -44,8 +44,7 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
     '#weight' => -10,
   );
 
-  foreach ($bookmarks as $bookmark) {
-    $ting_object = ding_entity_load($bookmark);
+  foreach (ding_entity_load_multiple($bookmarks) as $ting_object) {
     // Create title that links to the object.
     $uri = entity_uri('ting_object', $ting_object);
     $title = l($ting_object->getTitle(), $uri['path']);
