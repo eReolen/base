@@ -8,16 +8,12 @@ machine:
     version: 5.4.21
 
 dependencies:
-  cache_directories:
-    - "~/.composer"
   pre:
-    # Install Drush.
-    - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --prefer-source --no-interaction global require drush/drush:6.2.0 ; fi
-    # Waving a dead chicken. For some unfathomable reason, the above
-    # composer command decides to ignore drush and not update it (!)
-    # because it's not installed (!). But as it's added drush to the
-    # composer.json, we can just ask it to update it, which works (!!!).
-    - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --prefer-source --no-interaction global update drush/drush ; fi
+    # Install Drush. We need these two lines to not install Drush dev
+    # dependencies, and not update any Circle installed composer
+    # libraries.
+    - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --no-interaction --no-update global require drush/drush:6.2.0 ; fi
+    - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --prefer-source --no-interaction global update ; fi
     - mkdir ~/.drush
     - cd ~/.drush && drush dl drush_drake
     - cd ~/.drush && drush dl coder-7.x-2.4
