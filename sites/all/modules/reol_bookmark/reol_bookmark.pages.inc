@@ -26,6 +26,9 @@ function reol_bookmark_user_bookmark_page($account) {
  * Bookmark manage form.
  */
 function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
+  $per_page = 10;
+  $pager_id = 0;
+
   $form['bookmarks'] = array(
     '#tree' => TRUE,
   );
@@ -44,7 +47,11 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
     '#weight' => -10,
   );
 
-  foreach (ding_entity_load_multiple($bookmarks) as $ting_object) {
+  $page = pager_default_initialize(count($bookmarks), $per_page, $pager_id);
+  $bookmarks = array_slice($bookmarks, $page * $per_page, $per_page);
+  $ting_objects = ding_entity_load_multiple(reol_base_ding_entity_get_ids($bookmarks));
+
+  foreach ($ting_objects as $ting_object) {
     // Create title that links to the object.
     $uri = entity_uri('ting_object', $ting_object);
     $title = l($ting_object->getTitle(), $uri['path']);
@@ -72,6 +79,10 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
     // Add the reservation to the form.
     $form['bookmarks'][$ting_object->id] = $item;
   }
+
+  $form['bookmarks']['pager'] = array(
+    '#markup' => theme('pager', array('element' => $pager_id)),
+  );
 
   // Add action buttons to the top of the form.
   $form['actions_top'] = array(
