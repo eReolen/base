@@ -11,7 +11,7 @@
  *   The account to get bookmarks for.
  *
  * @return array
- *   Array containing the bookmarks for the user.
+ *   Array of ISBN numbers of the bookmarks for the user.
  */
 function publizon_bookmark_list($account) {
   $result = array();
@@ -30,21 +30,7 @@ function publizon_bookmark_list($account) {
     $isbns[] = $item->isbn;
   }
 
-  if ($isbns) {
-    $mapping = reol_base_ding_entity_get_ids($isbns);
-  }
-
-  foreach ($checklist as $item) {
-    // Title might not be found, do nothing.
-    if (!isset($mapping[$item->isbn])) {
-      continue;
-    }
-    $id = $mapping[$item->isbn];
-
-    $result[] = $id;
-  }
-
-  return $result;
+  return $isbns;
 }
 
 /**

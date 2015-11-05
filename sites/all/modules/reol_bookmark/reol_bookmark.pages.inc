@@ -47,9 +47,9 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
     '#weight' => -10,
   );
 
-  $ting_objects = ding_entity_load_multiple($bookmarks);
-  $page = pager_default_initialize(count($ting_objects), $per_page, $pager_id);
-  $ting_objects = array_slice($ting_objects, $page * $per_page, $per_page);
+  $page = pager_default_initialize(count($bookmarks), $per_page, $pager_id);
+  $bookmarks = array_slice($bookmarks, $page * $per_page, $per_page);
+  $ting_objects = ding_entity_load_multiple(reol_base_ding_entity_get_ids($bookmarks));
 
   foreach ($ting_objects as $ting_object) {
     // Create title that links to the object.
