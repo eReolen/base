@@ -335,8 +335,8 @@ function reol_base_update_7127() {
 }
 
 /**
- * Enable reol_newsletter module.
+ * Enable reol_newsletter and reol_user module.
  */
 function reol_base_update_7127() {
-  module_enable(['reol_newsletter'], TRUE);
+  module_enable(['reol_newsletter', 'reol_user'], TRUE);
 }

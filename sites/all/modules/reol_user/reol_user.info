@@ -1,0 +1,10 @@
+name = eReolen user module
+description = Module containing user functionality
+core = 7.x
+package = ereolen.dk
+dependencies[] = features
+dependencies[] = mailchimp_lists
+features[features_api][] = api:2
+features[field_base][] = field_newsletter
+features[field_instance][] = profile2-provider_publizon-field_newsletter
+mtime = 1448633385
