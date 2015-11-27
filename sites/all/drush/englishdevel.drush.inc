@@ -1,7 +1,11 @@
 <?php
+/**
+ * @file
+ * Contains drush hack for keeping language english.
+ */
 
 /**
- * Hack to switch language to i18n source language or English when running drush.
+ * Hack to switch language to i18n source language or English in drush.
  */
 function englishdevel_drush_init() {
   if (function_exists('language_list')) {
