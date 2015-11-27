@@ -1,0 +1,11 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen newsletter module feature.
+ */
+
+include_once 'reol_newsletter.features.inc';
+/**
+ * @file
+ * Code for the eReolen newsletter module feature.
+ */

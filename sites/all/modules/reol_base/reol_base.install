@@ -333,3 +333,10 @@ function reol_base_update_7126() {
 function reol_base_update_7127() {
   module_enable(['mailchimp', 'mailchimp_signup', 'mailchimp_lists'], TRUE);
 }
+
+/**
+ * Enable reol_newsletter module.
+ */
+function reol_base_update_7127() {
+  module_enable(['reol_newsletter'], TRUE);
+}
