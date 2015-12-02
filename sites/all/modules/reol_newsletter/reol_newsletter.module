@@ -5,3 +5,67 @@
  */
 
 include_once 'reol_newsletter.features.inc';
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_newsletter_form_profile2_edit_provider_publizon_form_alter(&$form, &$form_state) {
+  // Hide newsletter part of profile form. It has been moved to a separate page.
+  $form['profile_provider_publizon']['field_newsletter']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_newsletter_form_mailchimp_signup_subscribe_block_newsletter_signup_form_alter(&$form, &$form_state) {
+  // Hide the signup field, and prefill it.
+  $form['mergevars']['SIGNUP']['#type'] = 'hidden';
+  unset($form['mergevars']['SIGNUP']['#default_value']);
+  unset($form['mergevars']['SIGNUP']['#size']);
+  unset($form['mergevars']['SIGNUP']['#weight']);
+  $form['mergevars']['SIGNUP']['#value'] = 'www';
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_newsletter_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Form callback for newsletter status form.
+ */
+function reol_newsletter_status_form($form, &$form_state, $uid) {
+  // Load field from profile form.
+  $profile = profile2_load_by_user($uid, 'provider_publizon');
+  $field = field_info_field('field_newsletter');
+  $instance = field_info_instance('profile2', 'field_newsletter', 'provider_publizon');
+  $items = field_get_items('profile2', $profile, 'field_newsletter');
+  $form += field_default_form('profile2', $profile, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+
+  // For loading profile2-profile in submit-function.
+  $form['uid'] = [
+    '#type' => 'value',
+    '#value' => $uid,
+  ];
+
+  // Add a submit-button.
+  $form['submit'] = [
+    '#type' => 'submit',
+    '#value' => t('Save signup status'),
+    '#weight' => 100,
+  ];
+
+  return $form;
+}
+
+/**
+ * Form submit function for reol_newsletter_status_form.
+ */
+function reol_newsletter_status_form_submit($form, &$form_state) {
+  // Just let mailchimp module handle everything.
+  $profile2 = profile2_load_by_user($form_state['values']['uid'], 'provider_publizon');
+  $profile2->field_newsletter = $form_state['values']['field_newsletter'];
+  $profile2->save();
+}
