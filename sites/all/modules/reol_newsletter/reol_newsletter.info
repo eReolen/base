@@ -6,4 +6,4 @@ dependencies[] = entity
 dependencies[] = mailchimp_signup
 features[features_api][] = api:2
 features[mailchimp_signup][] = newsletter_signup
-mtime = 1448627773
+mtime = 1448628066

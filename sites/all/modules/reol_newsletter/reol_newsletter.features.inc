@@ -36,7 +36,7 @@ function reol_newsletter_default_mailchimp_signup() {
         "SIGNUP" : 0
       },
       "description" : "",
-      "doublein" : 0,
+      "doublein" : 1,
       "send_welcome" : 0,
       "include_interest_groups" : 0
     }

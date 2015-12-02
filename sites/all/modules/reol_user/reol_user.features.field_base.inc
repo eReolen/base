@@ -22,7 +22,7 @@ function reol_user_field_default_field_bases() {
     'locked' => 0,
     'module' => 'mailchimp_lists',
     'settings' => array(
-      'double_opt_in' => 0,
+      'double_opt_in' => 1,
       'mc_list_id' => '4bc9190fe1',
       'profile2_private' => 0,
       'send_welcome' => 0,

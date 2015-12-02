@@ -7,4 +7,4 @@ dependencies[] = mailchimp_lists
 features[features_api][] = api:2
 features[field_base][] = field_newsletter
 features[field_instance][] = profile2-provider_publizon-field_newsletter
-mtime = 1448633385
+mtime = 1448633548
