@@ -71,14 +71,14 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['defaults']['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_always'] = TRUE;
   $handler->display->display_options['defaults']['use_more_text'] = FALSE;
-  $handler->display->display_options['use_more_text'] = 'Show all articles';
+  $handler->display->display_options['use_more_text'] = 'Vis alle nyheder';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '4';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['footer'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Entity type (field_reol_entity_type) */
+  /* Contextual filter: Indholdselement: Entity type (field_reol_entity_type) */
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
@@ -127,7 +127,7 @@ function reol_frontend_views_default_views() {
   /* Display: Side */
   $handler = $view->new_display('page', 'Side', 'articles_page');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Articles';
+  $handler->display->display_options['title'] = 'Nyheder';
   $handler->display->display_options['defaults']['exposed_form'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'better_exposed_filters';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
@@ -180,7 +180,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = 'Articles';
+  $handler->display->display_options['header']['area_text_custom']['content'] = 'Nyheder';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -238,14 +238,14 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['defaults']['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_always'] = TRUE;
   $handler->display->display_options['defaults']['use_more_text'] = FALSE;
-  $handler->display->display_options['use_more_text'] = 'Show all articles';
+  $handler->display->display_options['use_more_text'] = 'Vis alle nyheder';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '5';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['footer'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Entity type (field_reol_entity_type) */
+  /* Contextual filter: Indholdselement: Entity type (field_reol_entity_type) */
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
@@ -299,11 +299,11 @@ function reol_frontend_views_default_views() {
     t('Stigende'),
     t('Faldende'),
     t('Section frontpage articles'),
-    t('Show all articles'),
+    t('Vis alle nyheder'),
     t('Alle'),
     t('View panes'),
     t('Side'),
-    t('Articles'),
+    t('Nyheder'),
     t('more'),
     t('Select any filter and click on Apply to see results'),
     t('Antal elementer'),
@@ -404,7 +404,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '1';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Entity type (field_reol_entity_type) */
+  /* Contextual filter: Indholdselement: Entity type (field_reol_entity_type) */
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
@@ -514,7 +514,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '1';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Entity type (field_reol_entity_type) */
+  /* Contextual filter: Indholdselement: Entity type (field_reol_entity_type) */
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
