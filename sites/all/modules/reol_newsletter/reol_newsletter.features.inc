@@ -33,7 +33,19 @@ function reol_newsletter_default_mailchimp_signup() {
           "tag" : "EMAIL",
           "id" : 0
         },
-        "SIGNUP" : 0
+        "SIGNUP" : {
+          "name" : "SIGNUP",
+          "req" : false,
+          "field_type" : "text",
+          "public" : true,
+          "show" : true,
+          "order" : "4",
+          "default" : "",
+          "helptext" : "",
+          "size" : "25",
+          "tag" : "SIGNUP",
+          "id" : 3
+        }
       },
       "description" : "",
       "doublein" : 1,

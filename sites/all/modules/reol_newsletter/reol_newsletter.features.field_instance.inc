@@ -41,8 +41,8 @@ function reol_newsletter_field_default_field_instances() {
       'interest_groups_title' => 'Interest Groups',
       'mergefields' => array(
         'EMAIL' => '[profile2:field-email]',
-        'SIGNUP' => '',
-        'advanced' => 0,
+        'SIGNUP' => 'www',
+        'advanced' => 1,
       ),
       'options' => array(
         'interest_groups' => array(),
