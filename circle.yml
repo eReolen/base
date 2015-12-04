@@ -12,7 +12,7 @@ dependencies:
     # Install Drush. We need these two lines to not install Drush dev
     # dependencies, and not update any Circle installed composer
     # libraries.
-    - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --no-interaction --no-update global require drush/drush:6.2.0 ; fi
+    - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --no-interaction --no-update global require drush/drush:6.7.0 ; fi
     - if [[ ! -d ~/.composer/vendor/drush/drush ]]; then composer --prefer-source --no-interaction global update ; fi
     - mkdir ~/.drush
     - cd ~/.drush && drush dl drush_drake
