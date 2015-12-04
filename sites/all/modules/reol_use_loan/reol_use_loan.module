@@ -157,6 +157,8 @@ function reol_use_loan_reader($id, $try = FALSE) {
     $vars['retailer_order_number'] = $id;
   }
 
+  $vars['reader_version'] = variable_get('publizon_reader_version', '1.5.0');
+
   echo theme('reol_use_loan_reader', $vars);
   drupal_exit();
 }
