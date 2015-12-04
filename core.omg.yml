@@ -19,3 +19,7 @@ patches:
     patch: 'https://www.drupal.org/files/fix-shortcut-set-save-1175700-10.patch'
     home: 'https://www.drupal.org/node/1175700'
     reason: 'Fix shortcut_set_save when set does not exist.'
+  -
+    patch: 'https://www.drupal.org/files/search-info-alter-1911276--D7-16.patch'
+    home: 'https://www.drupal.org/node/1911276'
+    reason: 'search_get_info() in search.module should include an _alter hook.'
