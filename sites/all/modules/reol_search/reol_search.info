@@ -1,0 +1,5 @@
+name = eReolen search module
+description = Module containing search functionality
+core = 7.x
+package = ereolen.dk
+features[features_api][] = api:2
