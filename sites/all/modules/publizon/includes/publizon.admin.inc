@@ -87,6 +87,14 @@ function publizon_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['publizon']['settings']['publizon_reader_version'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Reader version'),
+    '#description' => t('The version of the Publizon reader to use.'),
+    '#default_value' => variable_get('publizon_reader_version', '1.5.0'),
+    '#required' => TRUE,
+  );
+
   $form['publizon']['settings']['publizon_logging'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable logging'),
