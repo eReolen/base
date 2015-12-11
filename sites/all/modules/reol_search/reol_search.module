@@ -27,7 +27,9 @@ function reol_search_conditions_callback(&$keys) {
   // CQL string. If not it will add 'and' between all words. We do not want and
   // added between the words. The detection function will report that the string
   // is already a CQL-string if it contains 'or', so we are safe.
-  $keys = ting_search_string_to_cql($keys) . ' or term.publisher="' . rawurldecode($keys) . '"';
+  $search_string = ting_search_string_to_cql($keys);
+  $search_keys = 'term.publisher="' . str_replace('"', '', $keys) . '"';
+  $keys = '(' . $search_string . ') or ' . $search_keys;
 
   return $conditions;
 }
