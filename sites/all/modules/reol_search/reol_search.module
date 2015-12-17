@@ -1,0 +1,35 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen search module feature.
+ */
+
+/**
+ * Implements hook_search_info_alter().
+ *
+ * Switch out the conditions callback for our own, for altering it.
+ */
+function reol_search_search_info_alter(&$search_hooks) {
+  $search_hooks['ting_search']['conditions_callback'] = 'reol_search_conditions_callback';
+}
+
+/**
+ * Custom conditions callback for ting_search.
+ *
+ * Use by-ref $keys, to allow us to alter the keys used for searching.
+ */
+function reol_search_conditions_callback(&$keys) {
+  $conditions = ting_search_conditions_callback($keys);
+
+  // $keys will be passed through 'ting_search_string_to_cql', during
+  // ting_search_search_execute().
+  // ting_search_string_to_cql will check whether or not the string is already a
+  // CQL string. If not it will add 'and' between all words. We do not want and
+  // added between the words. The detection function will report that the string
+  // is already a CQL-string if it contains 'or', so we are safe.
+  $search_string = ting_search_string_to_cql($keys);
+  $search_keys = 'term.publisher="' . str_replace('"', '', $keys) . '"';
+  $keys = '(' . $search_string . ') or ' . $search_keys;
+
+  return $conditions;
+}
