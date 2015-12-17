@@ -1,0 +1,8 @@
+assets:
+  - database.sql.gz
+steps:
+  - name: Build site
+    plugin: Drupal
+    database: database.sql.gz
+    databaseGzipped: true
+    databaseUpdates: true
