@@ -85,6 +85,7 @@ function reol_base_entity_load($entities, $type) {
     return;
   }
 
+  $local_id = NULL;
   foreach ($entities as $entity) {
     $entity->online_url = FALSE;
 

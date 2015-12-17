@@ -50,11 +50,13 @@ function publizon_reservation_list($account, $get_type = FALSE) {
       }
 
       foreach ($reservations as $reservation) {
-        // Title might not be found, do nothing.
+        // Title might not be found, use an fake ID.
         if (!isset($mapping[$reservation->isbn])) {
-          continue;
+          $ding_id = 'publizon:' . $reservation->isbn;
         }
-        $ding_id = $mapping[$reservation->isbn];
+        else {
+          $ding_id = $mapping[$reservation->isbn];
+        }
 
         $ting_entity = ding_entity_load($ding_id);
         $id = $ting_entity->localId;
@@ -69,6 +71,7 @@ function publizon_reservation_list($account, $get_type = FALSE) {
           'expiry' => date('Y-m-d H:i:s', 0),
           'renewable' => FALSE,
           'reservation_type' => $type,
+          'display_name' => $reservation->title,
         );
 
         // If reservation is ready, add pickup date.
