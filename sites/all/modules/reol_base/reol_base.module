@@ -190,13 +190,25 @@ function reol_base_theme_registry_alter(&$theme_registry) {
  */
 function reol_base_preprocess_material_item(&$variables) {
   $element = $variables['element'];
-  $ding_entity_id = $element['#loan']->ding_entity_id;
+
+  // Entity might be #loan, #reservation or not set.
+  if (isset($element['#loan'])) {
+    $entity = $element['#loan'];
+  }
+  elseif (isset($element['#reservation'])) {
+    $entity = $element['#reservation'];
+  }
+  else {
+    // If loan or reservation is not set, do nothing.
+    return;
+  }
+  $ding_entity_id = $entity->ding_entity_id;
   $ting_entity = ding_entity_load($ding_entity_id);
 
   // Make a note of the loan type if it's one of our fake IDs.
   // reol_use_loan_ding_entity_buttons will use this.
   if (preg_match('/^publizon:/', $ting_entity->ding_entity_id)) {
-    $ting_entity->publizon_type = $element['#loan']->publizon_type;
+    $ting_entity->publizon_type = $entity->publizon_type;
   }
   // Put buttons from entity view on list.
   $buttons = field_view_field('ting_object', $ting_entity, 'ding_entity_buttons', 'default');
