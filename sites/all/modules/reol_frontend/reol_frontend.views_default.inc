@@ -78,7 +78,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['footer'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Indholdselement: Entity type (field_reol_entity_type) */
+  /* Contextual filter: Content: Entity type (field_reol_entity_type) */
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
@@ -245,7 +245,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['footer'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Indholdselement: Entity type (field_reol_entity_type) */
+  /* Contextual filter: Content: Entity type (field_reol_entity_type) */
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
@@ -404,7 +404,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '1';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Indholdselement: Entity type (field_reol_entity_type) */
+  /* Contextual filter: Content: Entity type (field_reol_entity_type) */
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
@@ -514,7 +514,7 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '1';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Indholdselement: Entity type (field_reol_entity_type) */
+  /* Contextual filter: Content: Entity type (field_reol_entity_type) */
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['id'] = 'field_reol_entity_type_value';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['table'] = 'field_data_field_reol_entity_type';
   $handler->display->display_options['arguments']['field_reol_entity_type_value']['field'] = 'field_reol_entity_type_value';
