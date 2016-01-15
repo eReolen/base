@@ -6,7 +6,7 @@
 
 include_once 'reol_newsletter.features.inc';
 
-define('REOL_NEWSLETTER_SIGNUP_FIELD_NAME', REOL_NEWSLETTER_SIGNUP_FIELD_NAME);
+define('REOL_NEWSLETTER_SIGNUP_FIELD_NAME', 'SIGNUP');
 
 /**
  * Implements hook_form_FORM_ID_alter().
