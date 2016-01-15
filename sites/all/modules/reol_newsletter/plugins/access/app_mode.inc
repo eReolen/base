@@ -14,5 +14,5 @@ $plugin = array(
  * Check for access.
  */
 function reol_newsletter_app_mode_ctools_access_check($conf, $context) {
-  return drupal_static('app_mode', FALSE);
+  return reol_newsletter_is_app_mode();
 }
