@@ -6,6 +6,8 @@
 
 include_once 'reol_newsletter.features.inc';
 
+define('REOL_NEWSLETTER_SIGNUP_FIELD_NAME', REOL_NEWSLETTER_SIGNUP_FIELD_NAME);
+
 /**
  * Implements hook_form_FORM_ID_alter().
  */
@@ -15,21 +17,35 @@ function reol_newsletter_form_profile2_edit_provider_publizon_form_alter(&$form,
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_alter().
  */
-function reol_newsletter_form_mailchimp_signup_subscribe_block_newsletter_signup_form_alter(&$form, &$form_state) {
-  // Hide the signup field, and prefill it.
-  $form['mergevars']['SIGNUP']['#type'] = 'hidden';
-  unset($form['mergevars']['SIGNUP']['#default_value']);
-  unset($form['mergevars']['SIGNUP']['#size']);
-  unset($form['mergevars']['SIGNUP']['#weight']);
-  $form['mergevars']['SIGNUP']['#value'] = 'www';
+function reol_newsletter_form_alter(&$form, &$form_state, $form_id) {
+  // If this form is a mailchimp signup form, we might have to do something.
+  if (strpos($form_id, 'mailchimp_signup_subscribe') === 0) {
+    $signup_form_id = $form_state['build_info']['args'][0]->mcs_id;
+    $settings = reol_newsletter_get_signup_form_settings($signup_form_id);
+
+    // Hide the signup field, and prefill it.
+    $form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#type'] = 'hidden';
+    unset($form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#default_value']);
+    unset($form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#size']);
+    unset($form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#weight']);
+    if (!empty($settings['signup_value'])) {
+      $form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#value'] = $settings['signup_value'];
+    }
+
+    // If this form is on a page, we might have to hide header and footer.
+    if (strpos($form_id, 'mailchimp_signup_subscribe_page') === 0 && isset($settings['app_mode'])) {
+      $app_mode = &drupal_static('app_mode', FALSE);
+      $app_mode = (bool) $settings['app_mode'];
+    }
+  }
 }
 
 /**
  * Implements hook_form_FORM_ID_alter().
  *
- * Allow configuring the value to send to Mailchimp for the SIGNUP-field.
+ * Allow configuring the value to send to Mailchimp for the signup-field.
  *
  * Allow configuring the page to be without header/footer.
  */
@@ -41,21 +57,20 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
 
   // If this is an edit-form with an entity_id, reuse saved values.
   if (!empty($form_state['mailchimp_signup']->mcs_id)) {
-    $variable_name = 'reol_newsletter_mailchimp_settings:' . $form_state['mailchimp_signup']->mcs_id;
-    $default_values = variable_get($variable_name, $default_values);
+    $default_values = reol_newsletter_get_signup_form_settings($form_state['mailchimp_signup']->mcs_id, $default_values);
   }
 
-  // If the SIGNUP-field is set, allow configuring the value to send to
+  // If the signup-field is set, allow configuring the value to send to
   // Mailchimp.
-  if (!empty($form['mc_lists_config']['mergefields']['SIGNUP'])) {
-    $form['mc_lists_config']['mergefields']['SIGNUP_value'] = [
+  if (!empty($form['mc_lists_config']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME])) {
+    $form['mc_lists_config']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'] = [
       '#type' => 'textfield',
-      '#title' => t('SIGNUP value'),
-      '#description' => t('The value to send to Mailchimp for the SIGNUP-field'),
+      '#title' => t('@name value', ['@name' => REOL_NEWSLETTER_SIGNUP_FIELD_NAME]),
+      '#description' => t('The value to send to Mailchimp for the @name-field', ['@name' => REOL_NEWSLETTER_SIGNUP_FIELD_NAME]),
       '#default_value' => $default_values['signup_value'],
       '#states' => [
         'visible' => [
-          "input[name='mergefields[SIGNUP]']" => ["checked" => TRUE]
+          "input[name='mergefields[" . REOL_NEWSLETTER_SIGNUP_FIELD_NAME . "]']" => ["checked" => TRUE]
         ],
       ],
     ];
@@ -86,22 +101,22 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
  * Submit-handler for the mailchimp newsletter configuration form.
  */
 function reol_newsletter_form_mailchimp_signup_form_submit($form, &$form_state) {
-  // Get variable for storing extra settings.
-  $variable_name = 'reol_newsletter_mailchimp_settings:' . $form_state['mailchimp_signup']->mcs_id;
-  $variable_value = variable_get($variable_name, []);
+  // Get extra settings.
+  $signup_form_id = $form_state['mailchimp_signup']->mcs_id;
+  $settings = reol_newsletter_get_signup_form_settings($signup_form_id);
 
   // Save signup value if there is a value from form.
-  if (!empty($form_state['values']['mergefields']['SIGNUP_value'])) {
-    $variable_value['signup_value'] = $form_state['values']['mergefields']['SIGNUP_value'];
+  if (!empty($form_state['values']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'])) {
+    $settings['signup_value'] = $form_state['values']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'];
   }
   // If not, and a value has been set in config, remove it.
-  elseif (isset($variable_value['signup_value'])) {
-    unset($variable_value['signup_value']);
+  elseif (isset($settings['signup_value'])) {
+    unset($settings['signup_value']);
   }
 
-  $variable_value['app_mode'] = $form_state['values']['settings']['app_mode'];
+  $settings['app_mode'] = $form_state['values']['settings']['app_mode'];
 
-  variable_set($variable_name, $variable_value);
+  reol_newsletter_set_signup_form_settings($signup_form_id, $settings);
 }
 
 /**
@@ -146,4 +161,20 @@ function reol_newsletter_status_form_submit($form, &$form_state) {
   $profile2 = profile2_load_by_user($form_state['values']['uid'], 'provider_publizon');
   $profile2->field_newsletter = $form_state['values']['field_newsletter'];
   $profile2->save();
+}
+
+/**
+ * Get the settings for a mailchimp signup form.
+ */
+function reol_newsletter_get_signup_form_settings($signup_form_id, $default_values = []) {
+  $variable_name = 'reol_newsletter_mailchimp_settings:' . $signup_form_id;
+  return variable_get($variable_name, $default_values);
+}
+
+/**
+ * Set the settings for a mailchimp signup form.
+ */
+function reol_newsletter_set_signup_form_settings($signup_form_id, $settings) {
+  $variable_name = 'reol_newsletter_mailchimp_settings:' . $signup_form_id;
+  variable_set($variable_name, $settings);
 }
