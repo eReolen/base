@@ -27,6 +27,84 @@ function reol_newsletter_form_mailchimp_signup_subscribe_block_newsletter_signup
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Allow configuring the value to send to Mailchimp for the SIGNUP-field.
+ *
+ * Allow configuring the page to be without header/footer.
+ */
+function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) {
+  $default_values = [
+    'signup_value' => '',
+    'app_mode' => 0,
+  ];
+
+  // If this is an edit-form with an entity_id, reuse saved values.
+  if (!empty($form_state['mailchimp_signup']->mcs_id)) {
+    $variable_name = 'reol_newsletter_mailchimp_settings:' . $form_state['mailchimp_signup']->mcs_id;
+    $default_values = variable_get($variable_name, $default_values);
+  }
+
+  // If the SIGNUP-field is set, allow configuring the value to send to
+  // Mailchimp.
+  if (!empty($form['mc_lists_config']['mergefields']['SIGNUP'])) {
+    $form['mc_lists_config']['mergefields']['SIGNUP_value'] = [
+      '#type' => 'textfield',
+      '#title' => t('SIGNUP value'),
+      '#description' => t('The value to send to Mailchimp for the SIGNUP-field'),
+      '#default_value' => $default_values['signup_value'],
+      '#states' => [
+        'visible' => [
+          "input[name='mergefields[SIGNUP]']" => ["checked" => TRUE]
+        ],
+      ],
+    ];
+  }
+
+  // Allow configuring the page to be displayed in app-mode.
+  // This hides header and footer.
+  $form['settings']['app_mode'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Display page in app-mode'),
+    '#description' => t('Display the page in app-mode, hiding header and footer.'),
+    '#default_value' => $default_values['app_mode'],
+    '#weight' => -1,
+    '#states' => [
+      'visible' => [
+        "input[name='mode[2]']" => ["checked" => TRUE]
+      ],
+    ],
+  ];
+
+  // Inject our own submit-handler to handle the two new fields. Inject after
+  // submit from mailchimp to allow us to use the id of the (newly created)
+  // signup form.
+  $form['#submit'][] = 'reol_newsletter_form_mailchimp_signup_form_submit';
+}
+
+/**
+ * Submit-handler for the mailchimp newsletter configuration form.
+ */
+function reol_newsletter_form_mailchimp_signup_form_submit($form, &$form_state) {
+  // Get variable for storing extra settings.
+  $variable_name = 'reol_newsletter_mailchimp_settings:' . $form_state['mailchimp_signup']->mcs_id;
+  $variable_value = variable_get($variable_name, []);
+
+  // Save signup value if there is a value from form.
+  if (!empty($form_state['values']['mergefields']['SIGNUP_value'])) {
+    $variable_value['signup_value'] = $form_state['values']['mergefields']['SIGNUP_value'];
+  }
+  // If not, and a value has been set in config, remove it.
+  elseif (isset($variable_value['signup_value'])) {
+    unset($variable_value['signup_value']);
+  }
+
+  $variable_value['app_mode'] = $form_state['values']['settings']['app_mode'];
+
+  variable_set($variable_name, $variable_value);
+}
+
+/**
  * Implements hook_ctools_plugin_directory().
  */
 function reol_newsletter_ctools_plugin_directory($owner, $plugin_type) {
