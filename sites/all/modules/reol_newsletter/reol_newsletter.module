@@ -38,6 +38,19 @@ function reol_newsletter_form_alter(&$form, &$form_state, $form_id) {
     if (strpos($form_id, 'mailchimp_signup_subscribe_page') === 0 && isset($settings['app_mode'])) {
       $app_mode = &drupal_static('app_mode', FALSE);
       $app_mode = (bool) $settings['app_mode'];
+
+      // Remove cookie-control as well.
+      // This is a bit of a hackish-solution, but it allows us to dynamically
+      // define the paths that the cookie-control should not be shown for,
+      // instead of relying on saving it when saving the signup form.
+      global $conf;
+      $paths = &$conf['cookiecontrol_exclude_paths'];
+      if (!empty($paths)) {
+        $paths .= "\n" . current_path();
+      }
+      else {
+        $paths = current_path();
+      }
     }
   }
 }
