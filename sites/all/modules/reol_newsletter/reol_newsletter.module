@@ -178,3 +178,23 @@ function reol_newsletter_set_signup_form_settings($signup_form_id, $settings) {
   $variable_name = 'reol_newsletter_mailchimp_settings:' . $signup_form_id;
   variable_set($variable_name, $settings);
 }
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to sign up on mailchimp forms.
+ */
+function reol_newsletter_secure_permissions($role) {
+  $permissions = [
+    'anonymous user' => [
+      'access mailchimp signup pages',
+    ],
+    'authenticated user' => [
+      'access mailchimp signup pages',
+    ],
+  ];
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
