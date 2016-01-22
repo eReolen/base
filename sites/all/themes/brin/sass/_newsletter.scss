@@ -1,7 +1,6 @@
 .newsletter-signup {
   margin: 0 0 20px 0;
   padding: 10px;
-  border: 3px solid #cacaca;
   text-align: center;
 
   h2 {
@@ -21,13 +20,22 @@
     text-align: left;
   }
 
+  input[type="text"] {
+    width: 100%;
+  }
+
   .form-required {
     display: none;
   }
 }
 
-.front .newsletter-signup {
+.newsletter-signup {
   @include small() {
-    display: none;
+    .form-actions {
+      #edit-submit {
+        width: auto;
+        display: inline;
+      }
+    }
   }
 }
