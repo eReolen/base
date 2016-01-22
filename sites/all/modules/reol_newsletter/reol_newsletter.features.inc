@@ -22,7 +22,7 @@ function reol_newsletter_default_mailchimp_signup() {
       "app_mode" : 0,
       "mergefields" : {
         "EMAIL" : {
-          "name" : "Email Address",
+          "name" : "Email",
           "req" : true,
           "field_type" : "email",
           "public" : true,
@@ -35,10 +35,10 @@ function reol_newsletter_default_mailchimp_signup() {
           "id" : 0
         },
         "SIGNUP" : {
-          "name" : "Signup location",
+          "name" : "Signup location (private)",
           "req" : false,
           "field_type" : "text",
-          "public" : true,
+          "public" : false,
           "show" : true,
           "order" : "2",
           "default" : "",
