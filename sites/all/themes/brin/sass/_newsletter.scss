@@ -1,10 +1,28 @@
 .newsletter-signup {
-  margin: 0px auto 20px auto;
-  padding: 20px 0px;
-  max-width: 270px;
+  margin: 0 0 20px 0;
+  padding: 10px;
+  border: 3px solid #cacaca;
+  text-align: center;
 
   h2 {
     font-size: 160%;
+  }
+
+  .form-actions {
+    text-align: right;
+
+    #edit-submit {
+      padding: 6px 10px;
+      margin: 0;
+    }
+  }
+
+  .mailchimp-newsletter-mergefields {
+    text-align: left;
+  }
+
+  .form-required {
+    display: none;
   }
 }
 
