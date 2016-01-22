@@ -569,6 +569,25 @@ function reol_frontend_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
+    $pane->pid = 'new-0615016f-6be0-4782-a45e-6e3d23fcd679';
+    $pane->panel = 'middle';
+    $pane->type = 'pane_messages';
+    $pane->subtype = 'pane_messages';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '0615016f-6be0-4782-a45e-6e3d23fcd679';
+    $display->content['new-0615016f-6be0-4782-a45e-6e3d23fcd679'] = $pane;
+    $display->panels['middle'][0] = 'new-0615016f-6be0-4782-a45e-6e3d23fcd679';
+    $pane = new stdClass();
     $pane->pid = 'new-3e342f33-a104-4f07-a39e-5430fa6252b3';
     $pane->panel = 'middle';
     $pane->type = 'page_content';
@@ -586,11 +605,11 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '3e342f33-a104-4f07-a39e-5430fa6252b3';
     $display->content['new-3e342f33-a104-4f07-a39e-5430fa6252b3'] = $pane;
-    $display->panels['middle'][0] = 'new-3e342f33-a104-4f07-a39e-5430fa6252b3';
+    $display->panels['middle'][1] = 'new-3e342f33-a104-4f07-a39e-5430fa6252b3';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-3e342f33-a104-4f07-a39e-5430fa6252b3';
   $handler->conf['display'] = $display;
@@ -1292,7 +1311,7 @@ function reol_frontend_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
     );
     $pane->cache = array();

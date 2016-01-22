@@ -133,5 +133,5 @@ features[views_view][] = videos
 features_exclude[field_base][body] = body
 features_exclude[field_base][field_ding_news_list_image] = field_ding_news_list_image
 features_exclude[field_base][field_ding_news_materials] = field_ding_news_materials
-mtime = 1452861071
+mtime = 1452861410
 project path = sites/all/modules
