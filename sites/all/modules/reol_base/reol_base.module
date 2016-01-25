@@ -742,3 +742,18 @@ function reol_base_secure_permissions($role) {
     return $permissions[$role];
   }
 }
+
+/**
+ * Implements hook_field_attach_view_alter().
+ *
+ * Show all abstracts, instead of just the first one.
+ */
+function reol_base_field_attach_view_alter(&$output, &$context) {
+  if (isset($output['ting_abstract'])) {
+    $ting_abstract = &$output['ting_abstract'];
+
+    $entity = $ting_abstract['#object'];
+    $abstract = $entity->reply->record['dcterms:abstract'][''];
+    $ting_abstract[0]['#markup'] = implode('<br /><br />', $abstract);
+  }
+}
