@@ -46,4 +46,16 @@
 
 .app-mode {
   padding: 20px;
+
+  [id^="mailchimp-signup-subscribe-page-"] {
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+}
+
+[id^="mailchimp-signup-subscribe-page-"] {
+  margin: 50px 10px 20px 10px;
+  background-color: white;
+  padding: 10px;
 }
