@@ -189,7 +189,11 @@ function reol_loan_ding_entity_menu(&$items, $type, $path, $index) {
  *   Whether or not type is correct.
  */
 function reol_loan_is_right_type($entity) {
-  return (bool) reol_base_get_type_name($entity->type);
+  // If the entity is removed from the data-well the type of it will be FALSE.
+  // We have to support loaning titles that have been reserved before the entity
+  // was removed. Because of this, when the type === FALSE, we should handle the
+  // entity.
+  return (bool) reol_base_get_type_name($entity->type) || $entity->type === FALSE;
 }
 
 /**
