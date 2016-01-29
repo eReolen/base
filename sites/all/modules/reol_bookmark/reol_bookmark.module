@@ -177,21 +177,26 @@ function reol_bookmark_ctools_plugin_directory($module, $plugin) {
  */
 function reol_bookmark_ding_entity_buttons($type, $entity) {
   $buttons = array();
-  if (reol_loan_is_right_type($entity)) {
+  if (reol_loan_is_right_type($entity) && !$availability['notloanable']) {
     global $user;
     drupal_add_library('system', 'drupal.ajax');
     list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
-    $link = 'ting/object/' . $entity->id . '/bookmark';
-    if (@$availability['bookmarked']) {
-      $text = t('Delete from bookmarks');
-      $link .= '/delete';
-    }
-    else {
-      $text = t('Bookmark');
-    }
+    // Only show bookmark-button if title is not defined as 'not loanable'.
+    // This is not the same as the title being loanable. Not loanable is a
+    // special status that items get when they have been removed.
+    if (!$availability['notloanable']) {
+      $link = 'ting/object/' . $entity->id . '/bookmark';
+      if (@$availability['bookmarked']) {
+        $text = t('Delete from bookmarks');
+        $link .= '/delete';
+      }
+      else {
+        $text = t('Bookmark');
+      }
 
-    $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id);
+      $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id);
+    }
   }
   return $buttons;
 }
