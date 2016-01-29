@@ -35,7 +35,7 @@ function reol_newsletter_form_alter(&$form, &$form_state, $form_id) {
     }
 
     // If this form is on a page, we might have to hide header and footer.
-    if (strpos($form_id, 'mailchimp_signup_subscribe_page') === 0 && isset($settings['app_mode'])) {
+    if (strpos($form_id, 'mailchimp_signup_subscribe_page') === 0 && isset($settings['app_mode']) && $settings['app_mode']) {
       reol_newsletter_set_app_mode();
     }
 
@@ -100,6 +100,8 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
 
   // Enable Wysiwyg on description-field.
   $form['description']['#type'] = 'text_format';
+  $form['description']['#format'] = isset($form_state['signup']->settings['description']['format']) ? $form_state['signup']->settings['description']['format'] : 'ding_wysiwyg';
+  $form['description']['#default_value'] = isset($form_state['signup']->settings['description']['value']) ? $form_state['signup']->settings['description']['value'] : '';
 }
 
 /**
