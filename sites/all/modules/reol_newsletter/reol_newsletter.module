@@ -201,7 +201,7 @@ function reol_newsletter_secure_permissions($role) {
 /**
  * Implements hook_preprocess().
  */
-function reol_newsletter_preprocess(&$variables) {
+function reol_newsletter_preprocess(&$variables, $hook) {
   if (reol_newsletter_is_app_mode()) {
     // Remove cookie-control as well.
     // This is a bit of a hackish-solution, but it allows us to dynamically
@@ -214,6 +214,11 @@ function reol_newsletter_preprocess(&$variables) {
     }
     else {
       $paths = current_path();
+    }
+
+    // Add a class to body, when we are in app-mode.
+    if ($hook == 'html') {
+      $variables['classes_array'][] = 'app-mode';
     }
   }
 }
