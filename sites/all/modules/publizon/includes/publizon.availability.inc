@@ -48,6 +48,7 @@ function publizon_availability_items($local_ids) {
         'loaned' => $status == 1,
         'reserved' => $status == 2,
         'bookmarked' => $result->onChecklist,
+        'notloanable' => $status == 0,
       );
     }
     return $return;
@@ -68,6 +69,7 @@ function publizon_availability_items($local_ids) {
         'loaned' => $status == 1,
         'reserved' => $status == 2,
         'bookmarked' => $result->onChecklist,
+        'notloanable' => $status == 0,
       );
     }
     return $return;

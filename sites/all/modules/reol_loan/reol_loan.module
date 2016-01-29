@@ -6,6 +6,7 @@
 
 require_once 'includes/reol_loan.loan.inc';
 
+define('REOL_LOAN_STATUS_NOT_LOANABLE', -1);
 define('REOL_LOAN_STATUS_LOANED', 1);
 define('REOL_LOAN_STATUS_RESERVED', 2);
 define('REOL_LOAN_STATUS_LOANABLE', 4);
@@ -137,6 +138,13 @@ function reol_loan_ding_entity_buttons($type, $entity) {
         global $user;
         $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id);
         break;
+
+      case REOL_LOAN_STATUS_NOT_LOANABLE:
+        $buttons[] = [
+          '#type' => 'markup',
+          '#markup' => '<p class="notloanable">' . t('The title is not loanable') . '</p>',
+        ];
+        break;
     }
   }
   return $buttons;
@@ -198,6 +206,12 @@ function reol_loan_is_right_type($entity) {
  *   The status ints from the top of this file.
  */
 function _reol_loan_map_availability($availability) {
+  // Titles might have the special notloanable-status. This happens when titles
+  // are removed. This should trump everything.
+  if (@$availability['notloanable']) {
+    return REOL_LOAN_STATUS_NOT_LOANABLE;
+  }
+
   // Loaned and reserved indexes might not be set. It is okay,
   // to ignore errors, if they are not set, they should be FALSE.
   if (@$availability['loaned']) {
