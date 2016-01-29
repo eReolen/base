@@ -47,9 +47,12 @@ function reol_newsletter_default_mailchimp_signup() {
           "tag" : "SIGNUP",
           "id" : 1
         },
-        "SIGNUP_value" : null
+        "SIGNUP_value" : ""
       },
-      "description" : "Tilmeld dig eReolens\\u003Cbr \\/\\u003E\\r\\n\\u003Ch2\\u003ENyhedsbrev\\u003C\\/h2\\u003E",
+      "description" : {
+        "value" : "\\u003Cp\\u003ETilmeld dig eReolens\\u003C\\/p\\u003E\\u003Ch2\\u003ENyhedsbrev\\u003C\\/h2\\u003E",
+        "format" : "ding_wysiwyg"
+      },
       "doublein" : 1,
       "send_welcome" : 0,
       "include_interest_groups" : 0

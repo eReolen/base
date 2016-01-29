@@ -10,4 +10,4 @@ features[features_api][] = api:2
 features[field_base][] = field_newsletter
 features[field_instance][] = profile2-provider_publizon-field_newsletter
 features[mailchimp_signup][] = newsletter_signup
-mtime = 1453463009
+mtime = 1454054590
