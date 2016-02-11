@@ -12,33 +12,13 @@
  *   The form array to alter.
  * @param array $form_state
  *   The state of the form
- *
- * @return array
- *   The altered form array.
  */
-function publizon_user_user_login_form_alter($form, $form_state) {
+function publizon_user_form_alter(&$form, &$form_state) {
   $form['retailer_id'] = array(
     '#type' => 'select',
     '#title' => t('Select library'),
     '#options' => publizon_get_libraries_list(),
   );
-
-  return $form;
-}
-
-/**
- * Alter the authenticate form.
- *
- * @param array $form
- *   The form array to alter.
- * @param array $form_state
- *   The state of the form
- *
- * @return array
- *   The altered form array.
- */
-function publizon_user_authenticate_form_alter($form, $form_state) {
-  return publizon_user_user_login_form_alter($form, $form_state);
 }
 
 /**
