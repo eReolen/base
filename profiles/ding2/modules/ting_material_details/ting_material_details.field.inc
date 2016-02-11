@@ -30,7 +30,7 @@ function ting_material_details_field_info() {
       'label' => t('Available in'),
       'description' => t('dcterms:isPartOf'),
       'default_widget' => 'hidden',
-      'default_formatter' => 'ting_details_single',
+      'default_formatter' => 'ting_details_is_part_of_search',
       'no_ui' => TRUE,
     ),
     // Defines dc:language.
@@ -278,104 +278,32 @@ function ting_material_details_field_formatter_info() {
         'ting_details_pegi',
       ),
     ),
-
     'ting_details_creator_search' => array(
       'label' => t('Creator search link'),
       'field types' => array(
         'ting_details_contributor',
       ),
     ),
-
     'ting_details_subject_search' => array(
       'label' => t('Subject search link'),
       'field types' => array(
         'ting_details_subjects',
       ),
     ),
-
     'ting_details_seriesdescription_search' => array(
       'label' => t('Series search link'),
       'field types' => array(
         'ting_details_seriesdescription',
       ),
     ),
-
-    'ting_details_generic_search' => array(
-      'label' => t('Search link'),
+    'ting_details_is_part_of_search' => array(
+      'label' => t('Part of manifestation search link'),
       'field types' => array(
-        'ting_details_age',
-        'ting_details_audience',
-        'ting_details_classification',
-        'ting_details_contributor',
-        'ting_details_contributor',
-        'ting_details_description',
-        'ting_details_extent',
-        'ting_details_format',
-        'ting_details_genre',
-        'ting_details_isbn',
-        'ting_details_ispartof',
-        'ting_details_language',
-        'ting_details_musician',
-        'ting_details_pegi',
-        'ting_details_publisher',
-        'ting_details_referenced',
-        'ting_details_replaced_by',
-        'ting_details_replaces',
-        'ting_details_rights',
-        'ting_details_seriesdescription',
-        'ting_details_source',
-        'ting_details_spatial',
-        'ting_details_spoken',
-        'ting_details_subjects',
-        'ting_details_subjects',
-        'ting_details_subtitles',
-        'ting_details_tracks',
-        'ting_details_type',
-        'ting_details_version',
-      ),
-      'settings' => array(
-        'index' => 'term.default',
+        'ting_details_is_part_of',
       ),
     ),
   );
 }
-
-/**
- * Implements hook_field_formatter_settings_form().
- */
-function ting_material_details_field_formatter_settings_form($field, $instance, $view_mode, $form, $form_state) {
-  $display = $instance['display'][$view_mode];
-  $settings = $display['settings'];
-  $element = NULL;
-
-  if ($display['type'] == 'ting_details_generic_search') {
-    $element['index'] = array(
-      '#title' => t('Search index'),
-      '#type' => 'textfield',
-      '#size' => 20,
-      '#default_value' => $settings['index'],
-      '#required' => TRUE,
-      '#description' => t('OpenSearch index to search in.'),
-    );
-  }
-
-  return $element;
-}
-
-/**
- * Implements hook_field_formatter_settings_summary().
- */
-function ting_material_details_field_formatter_settings_summary($field, $instance, $view_mode) {
-  $display = $instance['display'][$view_mode];
-  $settings = $display['settings'];
-  $summary = '';
-  if ($display['type'] == 'ting_details_generic_search') {
-    $summary = t('Linked to search in @index index.', array('@index' => $settings['index']));
-  }
-
-  return $summary;
-}
-
 
 /**
  * Helper function for retrieving record-field.
@@ -536,17 +464,44 @@ function ting_material_details_field_formatter_view($entity_type, $entity, $fiel
           );
           break;
 
-        case 'ting_details_generic_search':
+        // Run through all isPartOfManifestion elements of entity.
+        // If the entity has a relation-uri; create a render array that
+        // renders a link to the relation.
+        // If not: use the text desribing the relation.
+        //
+        // NOTICE : Opensearch delivers one or MORE relation-uris; This
+        // formatter only handles one.
+        // @see #bug1109. (http://platform.dandigbib.org/issues/1109)
+        case 'ting_details_is_part_of_search':
+          $type = $uri = NULL;
+          foreach ($entity->getRelations() as $relation) {
+            $type = explode(':', $relation->getType());
+            // $relation have a namespace: dbcbib:isPartOfManifestation
+            if (isset($type[1]) && $type[1] == 'isPartOfManifestation') {
+              $uri = $relation->getURI();
+            }
+          }
+          $render['#prefix'] = '<span class="ting-material-detail ting-material-is-part-of">';
+          $render['#suffix'] = '</span>';
           if (!is_array($val)) {
             $val = array($val);
           }
-          $links = array();
-          foreach ($val as $value) {
-            $links[] = l($value, 'search/ting/' . $display['settings']['index'] . '=' . _ting_material_details_quote($value));
+          if ($uri) {
+            foreach ($val as $key => $detail) {
+              $render['part_of'][$key]['#theme'] = 'link';
+              $render['part_of'][$key]['#text'] = $detail;
+              $render['part_of'][$key]['#path'] = 'search/ting/' . $uri;
+              $render['part_of'][$key]['#options']['attributes'] = array();
+              $render['part_of'][$key]['#options']['html'] = 1;
+            }
           }
-          $element[$delta] = array(
-            '#markup' => implode(', ', $links),
-          );
+          else {
+            foreach ($val as $key => $detail) {
+              $render['part_of'][$key]['#markup'] = $detail;
+            }
+          }
+          // for now, we only use the first item.
+          $element[$delta]['part_of'] = reset($render['part_of']);
           break;
       }
     }
@@ -555,13 +510,44 @@ function ting_material_details_field_formatter_view($entity_type, $entity, $fiel
 }
 
 /**
- * Quote a string for index search, if it contains anything exotic.
+ * Process series information.
+ *
+ * This could be handled more elegantly if we had better structured data.
+ * For now we have to work with what we got to convert titles to links
+ * Series information appear in the following formats:
+ * - Samhørende: [title 1] ; [title 2] ; [title 3]
+ * - [volumne number]. del af: [title]
  */
-function _ting_material_details_quote($string) {
-  if (preg_match('/(\s+|"|=|\b(and|or|not|prox)\b)/', $string)) {
-    $string = '"' . strtr($string, array('"' => '\\"')) . '"';
+function process_series_info($series) {
+  $result = '';
+  $parts = explode(':', $series);
+
+  if (is_array($parts) && count($parts) >= 2) {
+    $prefix = $parts[0] . ': ';
+
+    if (stripos($prefix, 'del af:') !== FALSE) {
+      $title = $parts[1];
+      $result = $prefix . l($title, 'search/ting/"' . $title . '"');
+    }
+    elseif (stripos($prefix, 'Samhørende:') !== FALSE) {
+      $titles = $parts[1];
+      // Multiple titles are separated by ' ; '. Explode to iterate over them.
+      $titles = explode(' ; ', $titles);
+      foreach ($titles as &$title) {
+        $title = trim($title);
+        // Some title elements are actually volume numbers. Do not convert
+        // these to links.
+        if (!preg_match('/(nr.)? \d+/i', $title)) {
+          $title = l($title, 'search/ting/"' . $title . '"');
+        }
+      }
+      // Reassemble titles.
+      $titles = implode(', ', $titles);
+      $result = $prefix . ' ' . $titles;
+    }
   }
-  return $string;
+
+  return $result;
 }
 
 /**
@@ -598,3 +584,4 @@ function ting_material_details_field_formatter_prepare_view($entity_type, $entit
     );
   }
 }
+

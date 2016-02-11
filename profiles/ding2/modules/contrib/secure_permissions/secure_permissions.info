@@ -4,7 +4,9 @@ core = 7.x
 files[] = secure_permissions.module
 configure = admin/config/people/secure_permissions
 
-; Information added by drush on 2015-03-20
+
+; Information added by drush on 2016-02-11
 version = "ef5eec5"
 project = "secure_permissions"
-datestamp = "1426837038"
+datestamp = "1455194221"
+

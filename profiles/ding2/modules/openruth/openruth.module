@@ -35,11 +35,20 @@ function openruth_ding_provider() {
         'file' => drupal_get_path('module', 'openruth') . '/includes/openruth.debt.inc',
       ),
       'wayf' => array(
-        'prefix' => 'debt',
+        'prefix' => 'wayf',
         'file' => drupal_get_path('module', 'openruth') . '/includes/openruth.wayf.inc',
       ),
     ),
   );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter (ding_debts_form)
+ *
+ * Integra only suppurt payment of FULL amount. 
+ */
+function openruth_form_ding_debt_debts_form_alter(&$form, &$form_stats) {
+  unset($form['pay_selected']);
 }
 
 /**

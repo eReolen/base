@@ -877,6 +877,11 @@ function dynamic_background_save_image($file_field, $extension, $data = -1) {
   if ($file = file_save_upload($file_field, $validators)) {
     $destination = file_default_scheme() . '://' . $settings['path'] . '/' . $file->filename;
 
+    // Check that destination exists and try to create it if it don't exists.
+    if (!file_prepare_directory($destination, FILE_CREATE_DIRECTORY)) {
+      drupal_set_message(t('Dynamic backgroup could not create the upload path.'), WATCHDOG_ERROR);
+    }
+
     // Copy file and maybe rename it.
     if ($file = file_move($file, $destination, FILE_EXISTS_RENAME)) {
       // Mark file as permanent.

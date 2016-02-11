@@ -1,0 +1,6 @@
+name = Ask Vopros
+description = A popup for sending questions to a Vopros site.
+package = "Ding!"
+core = 7.x
+configure = admin/config/services/ask_vopros
+version = 1.1

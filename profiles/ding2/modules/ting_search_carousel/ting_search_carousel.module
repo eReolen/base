@@ -23,7 +23,7 @@ function ting_search_carousel_menu() {
     'description' => 'Manage content for frontpage carousel.',
     'page callback' => 'ting_search_carousel_admin_page',
     'page arguments' => array(),
-    'access arguments' => array('access administration pages'),
+    'access arguments' => array('configure carousel'),
     'file' => 'ting_search_carousel.admin.inc',
   );
 
@@ -39,13 +39,25 @@ function ting_search_carousel_menu() {
     'description' => 'Manage settings for the display of frontpage carousel',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ting_search_carousel_settings_admin_form'),
-    'access arguments' => array('access administration pages'),
+    'access arguments' => array('configure carousel'),
     'file' => 'ting_search_carousel.admin.inc',
     'type' => MENU_LOCAL_TASK,
     'weight' => 0,
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function ting_search_carousel_permission() {
+  return array(
+    'configure carousel' => array(
+      'title' => t('Configure carousel'),
+      'description' => t('Allow role to configure carousel.'),
+    ),
+  );
 }
 
 /**
@@ -94,45 +106,6 @@ function ting_search_carousel_block_view($delta) {
 }
 
 /**
- * Implements hook_cron().
- *
- * Touch all existing cover files, to stop ting_cover_cron() from deleting them,
- * or fetch missing covers (they must exists as they wouldn't have been cache
- * otherwise).
- *
- * An alternative would be to simply clear our own cache at the same time. Has
- * the advantage that the data doesn't grow stale for too long, in the case of
- * updates to the datawell, but means hitting the well harder.
- */
-function ting_search_carousel_cron() {
-  if ($cache = cache_get('ting_search_carousel_result')) {
-    $data = $cache->data;
-
-    $ids = array();
-    foreach ($data as $index) {
-      foreach ($index as $item) {
-        $path = ting_covers_object_path($item->id);
-        if (file_exists($path)) {
-          // Touch the file to keep ting_cover_cron() from deleting it. The
-          // Drupal stream wrapper doesn't support touch, so get the real path.
-          touch(drupal_realpath($path));
-        }
-        else {
-          // Fetch the cover.
-          $ids[] = $item->id;
-        }
-      }
-    }
-
-    if ($ids) {
-      $entities = ting_object_load_multiple($ids);
-      ting_covers_load($entities);
-    }
-  }
-}
-
-
-/**
  * Implements hook_ctools_plugin_directory().
  */
 function ting_search_carousel_ctools_plugin_directory($module, $plugin) {
@@ -172,15 +145,13 @@ function ting_search_carousel_do_request($index) {
   }
 
   // Loop over the search results collecting basic object information.
-  $ids = array();
+  $local_ids = array();
   $objects = array();
   foreach ($collections as $collection) {
     foreach ($collection->collections as $ting_collection) {
       foreach ($ting_collection->reply->objects as $object) {
-        $ids[$object->id] = array(
-          'image_style' => 'ting_search_carousel',
-        );
-        $objects[$object->id] = array(
+        $local_ids[] = $object->localId;
+        $objects[$object->localId] = array(
           'id' => $object->id,
           'title' => isset($object->record['dc:title'][''][0]) ? $object->record['dc:title'][''][0] : '',
           'creator' => isset($object->record['dc:creator']['oss:aut'][0]) ? $object->record['dc:creator']['oss:aut'][0] : '',
@@ -189,20 +160,49 @@ function ting_search_carousel_do_request($index) {
     }
   }
 
+  // Load helper function form the covers module.
+  module_load_include('pages.inc', 'ting_covers');
+
+  // Get cover service client.
+  $service = new AdditionalInformationService(
+          variable_get('addi_wsdl_url'),
+          variable_get('addi_username'),
+          variable_get('addi_group'),
+          variable_get('addi_password'));
+
   // Initialize items array.
   $items = array();
 
   // Get covers for the ids.
-  $covers = ting_covers_load($ids);
+  $covers = $service->getByFaustNumber($local_ids);
 
   // Loop over the fetched covers and build items.
-  foreach ($covers as $id => $cover_info) {
+  foreach ($covers as $local_id => $cover) {
+    // Build cover filename.
+    $filename = 'public://ting_search_carousel/' . md5($local_id) . '.jpg';
+
+    // Check if file have been downloaded.
+    if (!file_exists($filename)) {
+      // Extract the image source url.
+      $source_url = FALSE;
+      if ($cover->detailUrl) {
+        $source_url = $cover->detailUrl;
+      }
+      elseif ($cover->thumbnailUrl) {
+        $source_url = $cover->thumbnailUrl;
+      }
+
+      // Download the cover image and get local uri.
+      $file = _ting_covers_pages_fetch_image($filename, $source_url);
+      $filename = isset($file->uri) ? $file->uri : $filename;
+    }
+
     // Build object with the information collected.
     $item = new stdClass();
-    $item->id = $objects[$id]['id'];
-    $item->title = $objects[$id]['title'];
-    $item->creator = $objects[$id]['creator'];
-    $item->image = $cover_info['url'];
+    $item->id = $objects[$local_id]['id'];
+    $item->title = $objects[$local_id]['title'];
+    $item->creator = $objects[$local_id]['creator'];
+    $item->image = image_style_url('ting_search_carousel', $filename);
 
     $items[] = $item;
   }

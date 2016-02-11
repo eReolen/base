@@ -69,7 +69,7 @@ function profiler_system_info_alter(&$info, $file, $type) {
 
 /**
  * Complete the Profile installation.
- * @param $install_state 
+ * @param $install_state
  *   An array of information about the current installation state.
  */
 function profiler_install_profile_complete(&$install_state) {
@@ -120,7 +120,7 @@ function profiler_config_reduce($data) {
       $reduced[$key] = (bool) $value;
     }
   }
-  return array_keys(array_filter($reduced));
+  return array_reverse(array_keys(array_filter($reduced)));
 }
 
 /**

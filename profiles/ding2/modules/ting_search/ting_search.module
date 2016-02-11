@@ -4,6 +4,8 @@
  * Enables search integration with Ting.
  */
 
+require_once 'includes/TingSearchCqlDoctor.class.inc';
+
 /**
  * Implements hook_init().
  *
@@ -226,7 +228,7 @@ function ting_search_form_search_block_form_alter(&$form, &$form_state, $form_id
   // Set max length on search input. This is need when users uses CQL search
   // string as they can get very long. This length is base on experience from
   // ding1 as seams to be long enough.
-  $form['search_block_form']['#maxlength'] = 256;
+  $form['search_block_form']['#maxlength'] = 1024;
 
   // Add JS to handle spinner in the search form.
   $form['search_block_form']['#attached']['js'] = array(
@@ -307,6 +309,8 @@ function ting_search_extract_keys($search_query, $keys) {
     $search_query = preg_replace_callback($regexp, 'ting_search_extract_indexes', $search_query);
   }
 
+  // Remove any leading and's.
+  $search_query = preg_replace('/^ and \\(/', '(', $search_query);
   $indexes['q'] = $search_query;
   return $indexes;
 }
@@ -323,7 +327,7 @@ function ting_search_extract_indexes($matches, $set_keys = NULL) {
   $subexps = preg_split('/\s+and\s+/i', $matches[2], NULL, PREG_SPLIT_NO_EMPTY);
   $indexes = &drupal_static(__FUNCTION__, array());
   foreach ($subexps as $subexp) {
-    if ((preg_match('/^([^=]+)\=([^"]*)$/', $subexp, $rx) || preg_match('/^([^=]+)\="(.*)"$/', $subexp, $rx)) && array_key_exists(trim($rx[1]), $keys)) {
+    if ((preg_match('/^([^=]+)\=([^"]*)$/', $subexp, $rx) || preg_match('/^([^=]+)\="([^"]*)"$/', $subexp, $rx)) && array_key_exists(trim($rx[1]), $keys)) {
       $indexes[trim($rx[1])] = trim($rx[2]);
     }
     else {
@@ -977,70 +981,6 @@ function ting_search_submit($form, &$form_state) {
  * Make sure string is strict cql
  */
 function _ting_search_quote($string) {
-  return ting_search_string_to_cql($string);
+  $cqlDoc = new TingSearchCqlDoctor($string);
+  return $cqlDoc->string_to_cql($string);
 }
-
-/**
- * Method to convert a string to strict cql (Basically by adding quotes when needed)
- * @param string $string
- *   The search query
- * @return string
- *   cql compatible string
- */
-function ting_search_string_to_cql($string) {
-  $string = trim($string);
-  if (isset($string) && !_ting_search_string_is_cql($string)) {
-    $string = _ting_search_convert_string_to_cql($string);
-  }
-  return $string;
-}
-
-/**
- * Add quotes to string and escapes existing quotes
- * @param string $string
- *   The search query
- * @return string
- *   cql compatible string
- */
-function _ting_search_convert_string_to_cql($string) {
-  // Remove multiple whitespaces.
-  $string = preg_replace('/\s+/', ' ', $string);
-  // grab all qouted phrases
-  preg_match_all('$"([^"]*)"$', $string, $phrases);
-  if(!empty($phrases[0])) {
-    // generate a replacement key. We need the key to maintain order of phrases and strings in search string
-    $replace_key = 'zxcv';
-    $count = 1;
-    // replace phrases in search string with the replacement key
-    foreach ($phrases[0] as $phrase) {
-      $patterns[] = '/' . $replace_key . $count . '/';
-      $string = str_replace($phrase, $replace_key . $count++, $string);
-    }
-    // Explode string by whitespace.
-    $expressions = explode(' ', $string);
-    // replace the replacement key with the qouted phrase
-    $expressions = preg_replace($patterns, $phrases[0], $expressions);
-  }
-  else{
-    // no qouted phrase were found
-    $expressions = explode(' ', $string);
-  }
-
-  // Join elements in expressions array with 'and' operator.
-  return implode(' and ', $expressions);
-}
-
-/**
- * Tests if a string is cql
- * @param string $string
- *   The search query
- * @return bool|int
- *   Whether the string is valid cql(TRUE) or not(FALSE)
- */
-function _ting_search_string_is_cql($string) {
-  if(strpos($string, '"') !== false && (!preg_match('@ and | or | not |=@', $string) && !(substr($string, 0, 1) === '"' && substr($string, -1) === '"'))){
-    return false;
-  }
-  return preg_match('@"|\(|\)|=@', $string);
-}
-

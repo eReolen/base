@@ -1,0 +1,12 @@
+diff --git a/modules/ding_popup/ding_popup.js b/modules/ding_popup/ding_popup.js
+index 6f085df..185c1a5 100644
+--- a/modules/ding_popup/ding_popup.js
++++ b/modules/ding_popup/ding_popup.js
+@@ -36,6 +36,7 @@ Drupal.ding_popup = {
+       this.dialogs[response.name] = $('<div class="ding-popup-content"></div>').dialog({
+           autoOpen: false,
+           width: 'auto',
++          resizable: false,
+           modal: true,
+           draggable: false,
+           closeText : Drupal.t('close'),

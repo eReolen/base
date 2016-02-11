@@ -391,9 +391,7 @@ function opening_hours_repeat_instance_propagate(&$instance) {
     $end_date = strtotime($instance->repeat_end_date . 'T12:00:00');
 
     // If the end date is before the limit, it becomes the new limit.
-    if ($end_date && $end_date < $limit) {
-      $limit = $end_date;
-    }
+    $limit = $end_date + 365 * 86400;
   }
 
   // Bail if we don't have an increment.

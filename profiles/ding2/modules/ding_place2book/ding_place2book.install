@@ -33,13 +33,6 @@ function ding_place2book_schema() {
           'not null' => TRUE,
           'default' => 0,
         ),
-        'entry_price' => array(
-          'description' => 'The entry price (in DKR) for the ticket type ADGANG on the Place2Book event.',
-          'type' => 'int',
-          'unsigned' => TRUE,
-          'not null' => TRUE,
-          'default' => 0,
-        ),
         'maintain_copy' => array(
           'description' => 'Event is created and updated on Place2Book',
           'type' => 'int',
@@ -61,10 +54,12 @@ function ding_place2book_schema() {
           'not null' => TRUE,
           'default' => 0,
         ),
-        'kultunaut_category' => array(
-          'description' => 'Category used when Place2book forwards event to Kultunaut',
+        'ticket_type' => array(
+          'description' => t('Ticket type'),
           'type' => 'varchar',
-          'length' => 128,
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
         ),
       ),
       'primary key' => array('nid'),
@@ -76,8 +71,9 @@ function ding_place2book_schema() {
  * Implementation of hook_install().
  */
 function ding_place2book_install() {
+  // Set 'Maintain copy on Place2Book' as default.
+  variable_set('ding_place2book_event_nodes', array('defaults' => array('maintain_copy' => 'maintain_copy')));
   // Update moduel weight to make it heavier then CCK field groups.
-  // See update_6200() below.
   db_query("UPDATE {system} SET weight = 10 WHERE name = 'ding_place2book';");
 }
 
@@ -88,4 +84,26 @@ function ding_place2book_uninstall() {
   variable_del('ding_place2book');
   variable_del('ding_place2book_libraries');
   variable_del('ding_place2book_event_nodes');
+}
+
+/**
+ * Add column for storing ticket type
+ */
+function ding_place2book_update_7000() {
+  db_add_field('ding_place2book', 'ticket_type', array(
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+    'description' => t('Ticket type'),
+  ));
+}
+
+/**
+ * Update ticket_type in all existing place2book-settings to 'Adgang'.
+ */
+function ding_place2book_update_7001() {
+  $num_upd = db_update('ding_place2book')
+    ->fields(array('ticket_type' => 'Adgang'))
+    ->execute();
 }
