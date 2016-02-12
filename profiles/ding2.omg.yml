@@ -37,3 +37,6 @@ patches:
     patch: 'https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/142.patch'
     home: 'https://github.com/ding2/ding2/pull/142'
     reason: 'Allow provider to fiddle with user login form, so we can add the library selector.'
+  -
+    patch: ../sites/all/patches/ting_search_carousel-use-provider.patch
+    reason: 'Make the carousel use provider covers.'
