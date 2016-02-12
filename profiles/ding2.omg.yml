@@ -40,3 +40,7 @@ patches:
   -
     patch: ../sites/all/patches/ting_search_carousel-use-provider.patch
     reason: 'Make the carousel use provider covers.'
+  -
+    patch: ../sites/all/patches/ting_material_details-generic-search.patch
+    home: 'https://github.com/ding2/ding2/pull/143'
+    reason: 'Backport generic search field.'
