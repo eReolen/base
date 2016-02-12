@@ -120,21 +120,44 @@ abstract class PublizonClient {
       throw new PublizonConnectionException('Connection with the Publizon web-service failed.');
     }
 
-    // Check the response error codes.
-    $status = $response->xpath('//status');
-    if (isset($status[0]) && $status[0]->code != 101) {
-      if (isset($status[0]->message)) {
-        $this->logger->log(check_plain($status[0]->message));
+    // Check for SOAP faults.
+    $fault = $response->xpath('//soap:Fault');
+    if (isset($fault[0])) {
+      if (isset($fault[0]->faultstring)) {
+        $this->logger->log(check_plain($fault[0]->faultstring));
       }
       else {
-        $this->logger->log('Connection with the Publizon web-service failed.');
+        $this->logger->log('Fault from Publizon web-service.');
       }
 
       // Throw exception, it's translated in the exception.
-      throw new PublizonException($status[0]->message, intval($status[0]->code));
+      throw new PublizonException($fault[0]->faultstring);
     }
 
-    return $response;
+    // Check the response error codes.
+    $status = $response->xpath('//status');
+    if (isset($status[0])) {
+      if ($status[0]->code == 101) {
+        return $response;
+      }
+      else {
+        if (isset($status[0]->message)) {
+          $this->logger->log(check_plain($status[0]->message));
+        }
+        else {
+          $this->logger->log('Connection with the Publizon web-service failed.');
+        }
+
+        // Throw exception, it's translated in the exception.
+        throw new PublizonException($status[0]->message, intval($status[0]->code));
+      }
+    }
+    else {
+      $this->logger->log('No status code from Publizon web-service.');
+      throw new PublizonException('No status code from Publizon web-service.');
+    }
+
+    return FALSE;
   }
 
   /**

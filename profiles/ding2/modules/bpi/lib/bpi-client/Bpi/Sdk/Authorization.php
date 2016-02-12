@@ -30,7 +30,7 @@ class Authorization
      */
     protected function generateToken()
     {
-        $this->token = crypt($this->agency_id . $this->public_key . $this->secret_key);
+        $this->token = password_hash($this->agency_id . $this->public_key . $this->secret_key, PASSWORD_BCRYPT);
     }
 
     /**

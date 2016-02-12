@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ask_vopros module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function ask_vopros_uninstall() {
+  variable_del('ask_vopros_agency_id');
+  variable_del('ask_vopros_agency_mail');
+  variable_del('ask_vopros_visibility_type');
+  variable_del('ask_vopros_visibility_pages');
+  variable_del('ask_vopros_uri');
+  variable_del('ask_vopros_right');
+}

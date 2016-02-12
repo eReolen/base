@@ -3,13 +3,15 @@ Ding2 is a continuation of [ding.TING](http://ting.dk/content/om-dingting)
 [Drupal](http://drupal.org/project/drupal) distribution for libraries as part
 of the [TING concept](http://ting.dk).
 
+[![Circle CI](https://circleci.com/gh/ding2/ding2.svg?style=svg)](https://circleci.com/gh/ding2/ding2)
+
 # Installation
 This README assumes that you have install a configured your server with a
 working Apache/Nginx, APC, Memcached, PHP 5.4 and Varnish 3.x (optional). The
 stack should be optimized to run a Drupal site.
 
 ## Dependencies
-* [Drupal 7.26](https://drupal.org/drupal-7.26-release-notes) - latest stable
+* [Drupal 7.38](https://drupal.org/drupal-7.38-release-notes) - latest stable
   version of Drupal Core that ding2 have been tested on and the last stable
   release when this was written.
 * [Drush 6.1.0](https://github.com/drush-ops/drush) - latest release when this
@@ -19,26 +21,15 @@ stack should be optimized to run a Drupal site.
 The reset of this document explains how to download Drupal and patch the core
 to run a Ding2 based site.
 
-## Drush utils (this is a must)
-Ding2uses nested makefiles (each module have its own dependencies), which
-results in projects and libraries being download more than once with the
-default drush installation. You can work around this by cloning the
-[drush-ding2-utils](http://github.com/ding2/drush-ding2-utils) into your
-.drush folder.
-```sh
-  ~$ cd ~/.drush
-  ~$ git clone http://github.com/ding2/drush-ding2-utils.git drush-ding2-utils
-```
-
 ## Drupal
 Go into your web-root (from now on named DRUPAL) and execute this drush command
-to download a fresh copy of Drupal version 7.26. IF you omit the version number
+to download a fresh copy of Drupal version 7.38. If you omit the version number
 the newest version of Drupal will be downloaded.
 ```sh
-  ~$ drush dl drupal-7.26
-  ~$ mv drupal-7.26/* .
-  ~$ mv drupal-7.26/.* .
-  ~$ rm -r drupal-7.26
+  ~$ drush dl drupal-7.38
+  ~$ mv drupal-7.38/* .
+  ~$ mv drupal-7.38/.* .
+  ~$ rm -r drupal-7.38
 ```
 
 ### Patches
@@ -89,7 +80,7 @@ process using drush make. It will download all the modules and the theme from
 the different repositories at http://github.com/ding2
 ```sh
   ~$ cd DRUPAL/profiles/ding2
-  ~$ drush --ding2-only-once --strict=0 make --concurrency=1 --no-core --contrib-destination=. ding2.make
+  ~$ drush make --no-core --contrib-destination=. ding2.make
 ```
 
 ### Development
@@ -98,27 +89,18 @@ run this command instead. It is because drush automatically deletes _.git_
 folders after it has cloned the repositories and by adding _--working-copy_, it
 will not delete these.
 ```sh
-  ~$ drush --ding2-only-once --strict=0 make --concurrency=1 --no-core --working-copy --contrib-destination=. ding2.make
+  ~$ drush make --no-core --working-copy --contrib-destination=. ding2.make
 ```
 
 Next goto your sites URL and run the ding2 installation profile and fill out
 all the questions.
-
-### Note
-The fix in [drush-ding2-utils](http://github.com/ding2/drush-ding2-utils)
-uses drush cache and to build the site more than once within 10 min of each
-other you will need to clear the cache. This also applies if the build fails
-and you need to rebuild.
-```sh
-  ~$ drush cc drush
-```
 
 ## Alternative installation method
 If you are using an deployment system you may not want to patch Drupal core
 manually in a production environment.
 ```sh
   ~$ wget https://raw.github.com/ding2/ding2/release/drupal.make
-  ~$ drush --ding2-only-once --strict=0 make --concurrency=1 --working-copy --contrib-destination=profiles/ding2/ drupal.make htdocs
+  ~$ drush make --working-copy --contrib-destination=profiles/ding2/ drupal.make htdocs
 ```
 
 # Post installation
@@ -142,6 +124,34 @@ administration interface.
   // Ensure fast tracks for files not found.
   drupal_fast_404();
 ```
+
+## Theme development
+
+The base theme for the installation is DDBasic and is located within `themes/ddbasic`.
+
+The JavaScript and stylesheet files for the files are processed orchestracted by [Gulp](http://gulpjs.com/). To work with these aspects of the installation you must have Node.js, Gulp and a number of packages installed.
+
+### Install gulp
+
+Install [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) if it is not already available on your platform.
+
+Install Gulp and other packages:
+
+```sh
+  ~$ cd DRUPAL/profiles/ding2/themes/ddbasic
+  ~$ npm install
+```
+
+### Process files
+
+Gulp can watch your source files so they are processed on every change:
+
+```sh
+  ~$ cd DRUPAL/profiles/ding2/themes/ddbasic
+  ~$ gulp watch
+```
+
+Note that developers changing the source JavaScript and SCSS files are also responsible for changing the processed files in their commits.
 
 ## Varnish
 This project assumes that you are using Varnish as a revers proxy and the

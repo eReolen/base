@@ -1,0 +1,70 @@
+<?php
+/**
+ * @file
+ * Alert modules when the site is switched to or from maintenance mode.
+ * The main purpose of this module is to alert other modules of the change in
+ * maintenance-mode state.  By itself, this module provides no UI, and simply
+ * logs the state-change to Watchdog.
+ *
+ * @TODO: Add support for detecting when maintenance mode is activated as part
+ * of an update.php batch run. See update_batch() and update_finished().
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function maintenance_mode_api_form_system_site_maintenance_mode_alter(&$form) {
+  // Add a custom submit handler to respond when administrators change the
+  // maintenance mode.
+  array_unshift($form['#submit'], 'maintenance_mode_api_form_system_site_maintenance_mode__submit');
+}
+
+/**
+ * Custom submit handler for the system_site_maintenance_mode form.
+ */
+function maintenance_mode_api_form_system_site_maintenance_mode__submit($form, $form_state) {
+  $current_state = variable_get('maintenance_mode', 0);
+  $new_maintenance_mode = (bool) $form_state['values']['maintenance_mode'];
+
+  if ($current_state != $new_maintenance_mode) {
+    module_invoke_all('change_maintenance_mode', $new_maintenance_mode);
+  }
+}
+
+/**
+ * Implements hook_change_maintenance_mode().
+ * Logs the change of state to Watchdog.
+ */
+function maintenance_mode_api_change_maintenance_mode($maintenance_mode) {
+  if ($maintenance_mode) {
+    $msg = 'Site switched to maintenance mode by %username';
+  }
+  else {
+    $msg = 'Site switched to normal mode by %username';
+  }
+
+  if (drupal_is_cli()) {
+    // Detect the presence of Drush.
+    if (!empty($_SERVER['SCRIPT_FILENAME']) && basename($_SERVER['SCRIPT_FILENAME']) == 'drush.php') {
+      $msg .= ' via Drush.';
+    }
+    else {
+      $msg .= ' via command line.';
+    }
+
+    if (!empty($_SERVER['USER'])) {
+      $name = $_SERVER['USER'];
+    }
+    else {
+      $name = variable_get('anonymous', t('Anonymous'));
+    }
+  }
+  else {
+    // Normal use: changing maintenance mode via the admin page.
+    global $user;
+    $name = $user->name;
+    $msg .= '.';
+  }
+
+  watchdog('Maintenance mode', $msg, array('%username' => $name));
+}

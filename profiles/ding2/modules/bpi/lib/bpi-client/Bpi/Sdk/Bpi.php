@@ -74,7 +74,7 @@ class Bpi
         $nodes->firstItem('type', 'collection')
             ->query('refinement')
             ->send($nodes, $queries);
-
+        $nodes->setFacets();
         $this->current_document = $nodes;
 
         return new \Bpi\Sdk\NodeList($nodes);
@@ -94,9 +94,10 @@ class Bpi
         $nodes->firstItem('name', 'node')
             ->template('push')
             ->eachField(function ($field) use ($data) {
-                if (!empty($data[(string)$field]))
+                // nb: variable $data[(string)$field] may be empty.
+                if (!isset($data[(string)$field])) {
                     throw new \InvalidArgumentException(sprintf('Field [%s] is required', (string) $field));
-
+                }
                 $field->setValue($data[(string) $field]);
             })->post($node);
 

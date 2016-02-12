@@ -1,0 +1,10 @@
+name = Maintenance mode API
+description = "Alert modules when the site is switched to or from maintenance mode."
+core = 7.x
+
+; Information added by drupal.org packaging script on 2012-02-06
+version = "7.x-1.0-beta1"
+core = "7.x"
+project = "maintenance_mode_api"
+datestamp = "1328543149"
+

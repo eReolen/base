@@ -679,7 +679,7 @@ function ddbasic_menu_link__menu_tabs_menu($vars) {
       $title_prefix = '<i class="icon-user"></i>';
       // If a user is logged in we change the menu item title.
       if (user_is_logged_in()) {
-        $element['#title'] = t('My Account');
+        $element['#title'] = 'My Account';
         $element['#attributes']['class'][] = 'topbar-link-user-account';
         $element['#localized_options']['attributes']['class'][] = 'topbar-link-user-account';
       }
@@ -694,8 +694,6 @@ function ddbasic_menu_link__menu_tabs_menu($vars) {
       $element['#localized_options']['attributes']['class'][] = 'topbar-link-signout';
       $element['#attributes']['class'][] = 'topbar-link-signout';
 
-      // For some unknown issue translation fails for this title.
-      $element['#title'] = t($element['#title']);
       break;
 
     default:
@@ -704,6 +702,9 @@ function ddbasic_menu_link__menu_tabs_menu($vars) {
       $element['#attributes']['class'][] = 'topbar-link-menu';
       break;
   }
+
+   // For some unknown issue translation fails.
+  $element['#title'] = t($element['#title']);
 
   $output = l($title_prefix . '<span>' . $element['#title'] . '</span>', $element['#href'], $element['#localized_options']);
   return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
@@ -921,7 +922,6 @@ function ddbasic_preprocess_ting_object(&$vars) {
               'left_column' => $content['group_ting_object_left_column'],
               'right_column' => $content['group_ting_object_right_column'],
             ),
-            '#weight' => $content['group_ting_object_left_column']['#weight'],
           );
 
           unset($content['group_ting_object_left_column']);
@@ -937,7 +937,6 @@ function ddbasic_preprocess_ting_object(&$vars) {
               '#suffix' => '</div>',
               'details' => $content['group_material_details'],
             ),
-            '#weight' => $content['group_material_details']['#weight'],
           );
           unset($content['group_material_details']);
         }
@@ -951,7 +950,6 @@ function ddbasic_preprocess_ting_object(&$vars) {
               '#suffix' => '</div>',
               'details' => $content['group_holdings_available'],
             ),
-            '#weight' => $content['group_holdings_available']['#weight'],
           );
           unset($content['group_holdings_available']);
         }
@@ -965,7 +963,6 @@ function ddbasic_preprocess_ting_object(&$vars) {
               '#suffix' => '</div>',
               'details' => $content['group_periodical_issues'],
             ),
-            '#weight' => $content['group_periodical_issues']['#weight'],
           );
           unset($content['group_periodical_issues']);
         }
@@ -979,7 +976,6 @@ function ddbasic_preprocess_ting_object(&$vars) {
               '#suffix' => '</div>',
               'details' => $content['group_on_this_site'],
             ),
-            '#weight' => $content['group_on_this_site']['#weight'],
           );
           unset($content['group_on_this_site']);
         }
@@ -989,7 +985,6 @@ function ddbasic_preprocess_ting_object(&$vars) {
             'content' => array(
               'details' => $content['ting_relations'],
             ),
-            '#weight' => $content['ting_relations']['#weight'],
           );
           unset($content['ting_relations']);
         }

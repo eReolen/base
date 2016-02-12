@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "fabpot/goutte": "v1.0.1"
+        "fabpot/goutte": "v1.0.1",
+        "ircmaxell/password-compat": "~1.0"
     },
     "autoload": {
         "psr-0": { "Bpi\\Sdk": "." }

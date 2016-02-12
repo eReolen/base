@@ -14,7 +14,7 @@
     // Set variables
     var element = $('.js-opening-hours-toggle');
     var siteHeader = $('.site-header');
-    var scrollOffset;
+    var scrollOffset = 0;
     var scrollToTarget;
 
     // Attach click
@@ -31,10 +31,6 @@
         if ($('.site-header.js-fixed').length) {
           // If the site header is fixed use the height
           scrollOffset = $(siteHeader).height();
-        } else {
-          // Else the window is scrolled to the top and we have to multiply the
-          // height by 2 because it get's position fixed
-          scrollOffset = $(siteHeader).height()*2;
         }
 
         // Scroll to the top of the element
@@ -70,6 +66,21 @@
       var element = $(this).parent();
       $('.menu', element).toggle();
       $(this).toggleClass('js-toggled');
+    });
+
+    // Check an organic group and library content.
+    // If a group does not contain both news and events
+    // then add an additional class to the content lists.
+    [
+      '.ding-group-news,.ding-group-events',
+      '.ding-library-news,.ding-library-events'
+    ].forEach(function(e) {
+        var selector = e;
+        $(selector).each(function() {
+          if ($(this).parent().find(selector).size() < 2) {
+            $(this).addClass('js-og-single-content-type');
+          }
+      });
     });
   });
 

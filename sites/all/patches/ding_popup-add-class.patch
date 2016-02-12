@@ -1,0 +1,32 @@
+diff --git a/modules/ding_popup/ding_popup.js b/modules/ding_popup/ding_popup.js
+index 185c1a5..75ee74d 100644
+--- a/modules/ding_popup/ding_popup.js
++++ b/modules/ding_popup/ding_popup.js
+@@ -37,6 +37,7 @@ Drupal.ding_popup = {
+           autoOpen: false,
+           width: 'auto',
+           resizable: false,
++          dialogClass: response.class.join(' '),
+           modal: true,
+           draggable: false,
+           closeText : Drupal.t('close'),
+diff --git a/modules/ding_popup/ding_popup.module b/modules/ding_popup/ding_popup.module
+index 357c7f2..1a99948 100644
+--- a/modules/ding_popup/ding_popup.module
++++ b/modules/ding_popup/ding_popup.module
+@@ -14,6 +14,7 @@ function ajax_command_ding_popup($name, $title, $html, $options = array()) {
+     'resubmit' => FALSE,
+     'extra_data' => array(),
+     'refresh' => FALSE,
++    'class' => array(),
+   );
+   drupal_add_library('system', 'ui.dialog');
+   drupal_add_js(drupal_get_path('module', 'ding_popup') . '/ding_popup.js');
+@@ -26,6 +27,7 @@ function ajax_command_ding_popup($name, $title, $html, $options = array()) {
+     'resubmit' => (bool) $options['resubmit'],
+     'extra_data' => $options['extra_data'],
+     'refresh' => (bool) $options['refresh'],
++    'class' => $options['class'],
+   );
+ }
+ 
