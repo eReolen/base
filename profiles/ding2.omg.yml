@@ -44,3 +44,6 @@ patches:
     patch: ../sites/all/patches/ting_material_details-generic-search.patch
     home: 'https://github.com/ding2/ding2/pull/143'
     reason: 'Backport generic search field.'
+  -
+    patch: ../sites/all/patches/ding_loan-add-loan.patch
+    reason: 'Add loans to loan form so we can catch them in form_alter.'
