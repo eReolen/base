@@ -47,3 +47,6 @@ patches:
   -
     patch: ../sites/all/patches/ding_loan-add-loan.patch
     reason: 'Add loans to loan form so we can catch them in form_alter.'
+  -
+    patch: ../sites/all/patches/ding_reservation-add-reservation.patch
+    reason: 'Add reservations to reservation form so we can catch them in form_alter.'

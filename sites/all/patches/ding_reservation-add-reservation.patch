@@ -1,0 +1,28 @@
+diff --git a/modules/ding_reservation/ding_reservation.module b/modules/ding_reservation/ding_reservation.module
+index 142920c..25f351d 100644
+--- a/modules/ding_reservation/ding_reservation.module
++++ b/modules/ding_reservation/ding_reservation.module
+@@ -490,6 +490,7 @@ function ding_reservation_reservations_form($form, &$form_state, $reservations,
+       case DING_RESERVATION_READY:
+         $item = array(
+           '#type' => 'material_item',
++          '#reservation' => $reservation,
+           '#id' => $reservation->id,
+           '#title' => $title,
+           '#cover' => field_view_field('ting_object', $entity, 'ting_cover', 'user_list'),
+@@ -525,6 +526,7 @@ function ding_reservation_reservations_form($form, &$form_state, $reservations,
+       case DING_RESERVATION_NOT_READY:
+         $item = array(
+           '#type' => 'material_item',
++          '#reservation' => $reservation,
+           '#id' => $reservation->id,
+           '#title' => $title,
+           '#cover' => field_view_field('ting_object', $entity, 'ting_cover', 'user_list'),
+@@ -566,6 +568,7 @@ function ding_reservation_reservations_form($form, &$form_state, $reservations,
+       case DING_RESERVATION_INTERLIBRARY_LOANS:
+         $item = array(
+           '#type' => 'material_item',
++          '#reservation' => $reservation,
+           '#id' => $reservation->id,
+           '#title' => $title,
+           '#cover' => field_view_field('ting_object', $entity, 'ting_cover', 'user_list'),
