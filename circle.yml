@@ -27,6 +27,9 @@ dependencies:
 
 test:
   override:
+    # Remove vendor files that trip up our tests.
+    - rm -rf profiles/ding2/modules/fbs/vendor/phpunit/php-token-stream/tests/_fixture
+    - rm -rf profiles/ding2/modules/fbs/vendor/guzzlehttp/guzzle/tests
     # Run basic tests.
     - drush --nocolor drake php-lint
     # Whoops, ting.module actually contains custom devel.module
