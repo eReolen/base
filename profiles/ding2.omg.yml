@@ -45,8 +45,6 @@ patches:
     home: 'https://github.com/ding2/ding2/pull/143'
     reason: 'Backport generic search field.'
   -
-    patch: ../sites/all/patches/ding_loan-add-loan.patch
-    reason: 'Add loans to loan form so we can catch them in form_alter.'
-  -
-    patch: ../sites/all/patches/ding_reservation-add-reservation.patch
-    reason: 'Add reservations to reservation form so we can catch them in form_alter.'
+    patch: 'https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/144.patch'
+    home: 'https://github.com/ding2/ding2/pull/144'
+    reason: 'Add loans and reservations to their list form, so we can catch them in form_alter.'
