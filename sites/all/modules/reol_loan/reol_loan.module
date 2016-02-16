@@ -130,24 +130,27 @@ function reol_loan_ding_entity_buttons($type, $entity) {
   $buttons = array();
   if (reol_loan_is_right_type($entity)) {
     drupal_add_library('system', 'drupal.ajax');
-    list($availability) = array_values(ding_availability_items(array($entity->localId)));
+    $availability_list = ding_availability_items(array($entity->localId));
+    if ($availability_list) {
+      list($availability) = array_values($availability_list);
 
-    switch (_reol_loan_map_availability($availability)) {
-      case REOL_LOAN_STATUS_LOANABLE:
-        $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id);
-        break;
+      switch (_reol_loan_map_availability($availability)) {
+        case REOL_LOAN_STATUS_LOANABLE:
+          $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id);
+          break;
 
-      case REOL_LOAN_STATUS_RESERVED:
-        global $user;
-        $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id);
-        break;
+        case REOL_LOAN_STATUS_RESERVED:
+          global $user;
+          $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id);
+          break;
 
-      case REOL_LOAN_STATUS_NOT_LOANABLE:
-        $buttons[] = [
-          '#type' => 'markup',
-          '#markup' => '<p class="notloanable">' . t('The title is not loanable') . '</p>',
-        ];
-        break;
+        case REOL_LOAN_STATUS_NOT_LOANABLE:
+          $buttons[] = [
+            '#type' => 'markup',
+            '#markup' => '<p class="notloanable">' . t('The title is not loanable') . '</p>',
+          ];
+          break;
+      }
     }
   }
   return $buttons;
@@ -159,9 +162,12 @@ function reol_loan_ding_entity_buttons($type, $entity) {
 function reol_loan_ding_entity_is($entity, $is) {
   // If title is available, set reservable to false to hide Ding reserve button.
   if ($is == 'reservable' && reol_loan_is_right_type($entity)) {
-    list($availability) = array_values(ding_availability_items(array($entity->localId)));
-    if (_reol_loan_map_availability($availability) != REOL_LOAN_STATUS_RESERVABLE) {
-      return FALSE;
+    $availability_list = ding_availability_items(array($entity->localId));
+    if ($availability_list) {
+      list($availability) = array_values($availability_list);
+      if (_reol_loan_map_availability($availability) != REOL_LOAN_STATUS_RESERVABLE) {
+        return FALSE;
+      }
     }
   }
 }
