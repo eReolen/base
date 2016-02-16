@@ -337,6 +337,6 @@ function reol_base_update_7127() {
 /**
  * Enable reol_newsletter module.
  */
-function reol_base_update_7127() {
+function reol_base_update_7128() {
   module_enable(['reol_newsletter'], TRUE);
 }
