@@ -232,14 +232,12 @@ function reol_feed_feeds_add_author_portrait($feed, $source, $node) {
 function reol_feed_feeds_add_review($feed, $source, $review) {
   $item = $feed->addChild('item');
 
-  $ting_object = ding_entity_load($review->ding_entity_id);
-
   $item->guid = 'r_' . md5($review->link);
   $item->type = "review";
-  $item->title = $ting_object->title;
+  $item->title = $review->ting_entity->title;
   $item->date = $review->created;
   $item->description = $review->description;
-  $authors = $ting_object->getCreators();
+  $authors = $review->ting_entity->getCreators();
   $item->author = $authors[0];
   $item->source = $source;
 
@@ -248,15 +246,15 @@ function reol_feed_feeds_add_review($feed, $source, $review) {
   $node_link->addAttribute('type', 'content');
 
   // Make sure we have cover.
-  ting_covers_load(array($ting_object->id));
+  ting_covers_load(array($review->ting_entity->id));
 
-  $cover_uri = file_create_url(ting_covers_object_path($ting_object->id));
+  $cover_uri = file_create_url(ting_covers_object_path($review->ting_entity->id));
 
   $thumb_link = $item->addChild('link');
   $thumb_link->{0} = $cover_uri;
   $thumb_link->addAttribute('type', 'thumbnail');
 
   $isbn = $item->addChild('isbn');
-  $isbn->{0} = reol_base_get_isbn($ting_object->localId);
+  $isbn->{0} = reol_base_get_isbn($review->ting_entity->localId);
   $isbn->addAttribute('cover', $cover_uri);
 }
