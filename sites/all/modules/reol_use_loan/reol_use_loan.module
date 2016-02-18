@@ -193,50 +193,54 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
     $text = t('Try');
     $link = '';
     if (!$deleted) {
-      list($availability) = array_values(ding_availability_items(array($entity->localId)));
+      $availability_list = ding_availability_items(array($entity->localId));
+      // Cop out if publizon doesn't know the material.
+      if ($availability_list) {
+        list($availability) = array_values($availability_list);
 
-      $avail_mapped = _reol_loan_map_availability($availability);
-      $loaned = $avail_mapped == REOL_LOAN_STATUS_LOANED;
-      $available = $avail_mapped == REOL_LOAN_STATUS_LOANABLE || $avail_mapped == REOL_LOAN_STATUS_RESERVABLE;
-      $entity_type = reol_base_get_type_name($entity->type);
-    }
-    else {
-      $loaned = TRUE;
-      $available = FALSE;
-      $entity_type = reol_base_get_type_name($entity->publizon_type);
-    }
-
-    // Only do something if title is in publizon.
-    if ($loaned || $available) {
-      switch ($entity_type) {
-        case "ebook":
-          if ($loaned) {
-            $text = t('Read');
-          }
-          $link = 'ting/object/' . $entity->id . '/read';
-          break;
-
-        case "audiobook":
-          if ($loaned) {
-            $text = t('Listen');
-          }
-          $link = 'ting/object/' . $entity->id . '/listen';
-          break;
-      }
-
-      // Create the button.
-      $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id);
-
-      // If we are displaying try button, load content in modal.
-      if (!$loaned) {
-        $return['#path'] .= '/ajax';
+        $avail_mapped = _reol_loan_map_availability($availability);
+        $loaned = $avail_mapped == REOL_LOAN_STATUS_LOANED;
+        $available = $avail_mapped == REOL_LOAN_STATUS_LOANABLE || $avail_mapped == REOL_LOAN_STATUS_RESERVABLE;
+        $entity_type = reol_base_get_type_name($entity->type);
       }
       else {
-        // Remove ajax on this one.
-        $return['#options']['attributes']['class'] = array('action-button');
+        $loaned = TRUE;
+        $available = FALSE;
+        $entity_type = reol_base_get_type_name($entity->publizon_type);
       }
 
-      return array($return);
+      // Only do something if title is in publizon.
+      if ($loaned || $available) {
+        switch ($entity_type) {
+          case "ebook":
+            if ($loaned) {
+              $text = t('Read');
+            }
+            $link = 'ting/object/' . $entity->id . '/read';
+            break;
+
+          case "audiobook":
+            if ($loaned) {
+              $text = t('Listen');
+            }
+            $link = 'ting/object/' . $entity->id . '/listen';
+            break;
+        }
+
+        // Create the button.
+        $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id);
+
+        // If we are displaying try button, load content in modal.
+        if (!$loaned) {
+          $return['#path'] .= '/ajax';
+        }
+        else {
+          // Remove ajax on this one.
+          $return['#options']['attributes']['class'] = array('action-button');
+        }
+
+        return array($return);
+      }
     }
   }
   return array();

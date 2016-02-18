@@ -171,7 +171,7 @@ function ding_availability_field_formatter_view($entity_type, $entity, $field, $
           '#attached' => $attached,
           '#items' => array(
             array(
-              'data' => ting_type_label($entity->type),
+              'data' => $entity->type,
               'id' => $id,
               'class' => array(
                 'availability',
@@ -235,7 +235,7 @@ function ding_availability_field_formatter_view($entity_type, $entity, $field, $
               'link' => array(
                 // The online url can't be used with l(), has it will encode
                 // it.
-                '#markup' => '<a class="search-result--availability-link availability available" href="/' . $url['path'] . '">' . check_plain(ting_type_label($type)) . '</a>',
+                '#markup' => '<a id="' . $id . '" class="search-result--availability-link availability available" href="/' . $url['path'] . '">' . check_plain($type) . '</a>',
               ),
             );
           }
@@ -254,7 +254,7 @@ function ding_availability_field_formatter_view($entity_type, $entity, $field, $
               'type' => $type,
               'link' => array(
                 '#theme' => 'link',
-                '#text' => check_plain(ting_type_label($type)),
+                '#text' => check_plain($type),
                 '#path' => $url['path'],
                 '#options' => array(
                   'attributes' => array(

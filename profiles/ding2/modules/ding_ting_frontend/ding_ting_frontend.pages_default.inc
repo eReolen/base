@@ -82,6 +82,82 @@ function ding_ting_frontend_default_page_manager_handlers() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
+  $handler->name = 'pm_existing_pages_infomedia__panel_context_1538f85e-2f80-4ed9-bd22-3c38f8caefee';
+  $handler->task = 'pm_existing_pages';
+  $handler->subtask = 'infomedia';
+  $handler->handler = 'panel_context';
+  $handler->weight = 0;
+  $handler->conf = array(
+    'title' => 'Panel',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'name' => '',
+  );
+  $display = new panels_display();
+  $display->layout = '25_50_25';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left_sidebar' => NULL,
+      'main_content' => NULL,
+      'right_sidebar' => NULL,
+      'attachment_4_1' => NULL,
+      'attachment_4_2' => NULL,
+      'attachment_4_3' => NULL,
+      'attachment_4_4' => NULL,
+      'attachment_3_1' => NULL,
+      'attachment_3_2' => NULL,
+      'attachment_3_3' => NULL,
+      'attachment_2_1' => NULL,
+      'attachment_2_2' => NULL,
+      'attachment_1_1' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '187f6693-111c-4782-83b3-8a3e38b588cb';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-598ca7ff-43a4-4c49-9ab8-92df3e53c6b9';
+    $pane->panel = 'main_content';
+    $pane->type = 'pm_existing_pages';
+    $pane->subtype = 'pm_existing_pages';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      0 => 'task_id',
+      'task_id' => 'infomedia',
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '598ca7ff-43a4-4c49-9ab8-92df3e53c6b9';
+    $display->content['new-598ca7ff-43a4-4c49-9ab8-92df3e53c6b9'] = $pane;
+    $display->panels['main_content'][0] = 'new-598ca7ff-43a4-4c49-9ab8-92df3e53c6b9';
+  $display->hide_title = PANELS_TITLE_PANE;
+  $display->title_pane = 'new-598ca7ff-43a4-4c49-9ab8-92df3e53c6b9';
+  $handler->conf['display'] = $display;
+  $export['pm_existing_pages_infomedia__panel_context_1538f85e-2f80-4ed9-bd22-3c38f8caefee'] = $handler;
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
   $handler->name = 'search_ting_search_panel_context';
   $handler->task = 'search';
   $handler->subtask = 'ting_search';
@@ -325,7 +401,7 @@ search/ting
     $display->panels['main_content'][5] = 'new-7c02f708-c47f-4eb5-8958-d6279de6ade4';
     $pane = new stdClass();
     $pane->pid = 'new-07d2c562-f846-4241-b93f-7c1d723ff29d';
-    $pane->panel = 'right_sidebar';
+    $pane->panel = 'left_sidebar';
     $pane->type = 'campaign';
     $pane->subtype = 'campaign';
     $pane->shown = TRUE;
@@ -348,11 +424,11 @@ search/ting
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 2;
     $pane->locks = '';
     $pane->uuid = '07d2c562-f846-4241-b93f-7c1d723ff29d';
     $display->content['new-07d2c562-f846-4241-b93f-7c1d723ff29d'] = $pane;
-    $display->panels['right_sidebar'][0] = 'new-07d2c562-f846-4241-b93f-7c1d723ff29d';
+    $display->panels['left_sidebar'][2] = 'new-07d2c562-f846-4241-b93f-7c1d723ff29d';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -473,7 +549,7 @@ search/ting
     $display->panels['main_content'][0] = 'new-55cc4d0d-d8cd-46ae-96f7-18bb4fc809c8';
     $pane = new stdClass();
     $pane->pid = 'new-26a27e6c-f934-4169-a06e-04db0f61ebf6';
-    $pane->panel = 'right_sidebar';
+    $pane->panel = 'left_sidebar';
     $pane->type = 'campaign';
     $pane->subtype = 'campaign';
     $pane->shown = TRUE;
@@ -496,11 +572,11 @@ search/ting
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 2;
     $pane->locks = '';
     $pane->uuid = '26a27e6c-f934-4169-a06e-04db0f61ebf6';
     $display->content['new-26a27e6c-f934-4169-a06e-04db0f61ebf6'] = $pane;
-    $display->panels['right_sidebar'][0] = 'new-26a27e6c-f934-4169-a06e-04db0f61ebf6';
+    $display->panels['left_sidebar'][2] = 'new-26a27e6c-f934-4169-a06e-04db0f61ebf6';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -630,7 +706,7 @@ search/ting
     $display->panels['main_content'][0] = 'new-eda37090-d344-4baa-8c21-78573268da3d';
     $pane = new stdClass();
     $pane->pid = 'new-2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a';
-    $pane->panel = 'right_sidebar';
+    $pane->panel = 'left_sidebar';
     $pane->type = 'campaign';
     $pane->subtype = 'campaign';
     $pane->shown = TRUE;
@@ -653,11 +729,11 @@ search/ting
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 3;
     $pane->locks = '';
     $pane->uuid = '2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a';
     $display->content['new-2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a'] = $pane;
-    $display->panels['right_sidebar'][0] = 'new-2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a';
+    $display->panels['left_sidebar'][3] = 'new-2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

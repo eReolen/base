@@ -28,6 +28,12 @@ class Document implements \Iterator, \Countable
     protected $crawler;
 
     /**
+     * Array of available facets relatively current request
+     * @var array
+     */
+    protected $facets;
+
+    /**
      *
      * @param \Goutte\Client $client
      * @param \Bpi\Sdk\Authorization $authorization
@@ -170,6 +176,38 @@ class Document implements \Iterator, \Countable
     }
 
     /**
+     * Set facets based on current request
+     * @throws \Exception
+     */
+    public function setFacets()
+    {
+        try {
+            $query = $this->crawler
+                  ->filter("item[type='facet']")
+                  ->each(
+                        function ($e) {
+                          return simplexml_import_dom($e);
+                        }
+                  );
+
+            $facets = new Facets();
+            $facets->buildFacets($query);
+            $this->facets = $facets;
+        } catch (\InvalidArgumentException $e) {
+            throw new \Exception('There is no facets');
+        }
+    }
+
+    /**
+     * Get facets for current request
+     * @return array
+     */
+    public function getFacets()
+    {
+        return $this->facets;
+    }
+
+    /**
      * Send query.
      *
      * @param \Bpi\Sdk\Query $query
@@ -232,6 +270,18 @@ class Document implements \Iterator, \Countable
     {
         $crawler = new Crawler($this->crawler->current());
         return $crawler->filter('item property')->each(function($e) use($callback) {
+            $sxml = simplexml_import_dom($e);
+            $callback(current($sxml->attributes()) + array('@value' => (string) $sxml));
+        });
+    }
+
+    /**
+     * Iterates over all tags of current item
+     */
+    public function walkTags($callback)
+    {
+        $crawler = new Crawler($this->crawler->current());
+        return $crawler->filter('item tags tag')->each(function($e) use($callback) {
             $sxml = simplexml_import_dom($e);
             $callback(current($sxml->attributes()) + array('@value' => (string) $sxml));
         });

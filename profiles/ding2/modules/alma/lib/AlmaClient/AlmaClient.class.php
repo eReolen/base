@@ -347,7 +347,7 @@ class AlmaClient {
       }
 
       if ($reservation['status'] == 'fetchable') {
-        $reservation['pickup_number'] = (integer) $item->getAttribute('pickUpNo');
+        $reservation['pickup_number'] = $item->getAttribute('pickUpNo');
         $reservation['pickup_expire_date'] = $item->getAttribute('pickUpExpireDate');
       }
 
@@ -438,7 +438,7 @@ class AlmaClient {
     $params = array(
       'borrCard' => $borr_card,
       'pinCode' => $pin_code,
-      'reservable' => $reservation['id'],
+      'reservable' => rawurlencode($reservation['id']),
       'reservationPickUpBranch' => $reservation['pickup_branch'],
       'reservationValidFrom' => $reservation['valid_from'],
       'reservationValidTo' => $reservation['valid_to'],
@@ -544,7 +544,9 @@ class AlmaClient {
           // successful. Even if this is not the case any error in the current
           // renewal is irrelevant as the loan has previously been renewed so
           // don't report it as such.
-          if ($message == 'isRenewedToday' || $renewable == 'yes') {
+          // Also renewalIsDenied marked as 'no' is considered a successful
+          // renewal.
+          if ($message == 'isRenewedToday' || $renewable == 'yes' || ($message == 'renewalIsDenied' && $renewable == 'no')) {
             $reservations[$id] = TRUE;
           }
           elseif ($message == 'maxNofRenewals') {

@@ -8,16 +8,20 @@
 
 div.form-item-bpi-search-query {
   float: left;
-  padding-top: 5px;
-}
-
-.form-item-bpi-search-query input {
+  padding-top: 0;
   margin-right: 20px;
 }
 
-.edit-bpi-search-submit {
-  float: left;
-  margin-top: 10px;
+.bpi-filters {
+	clear: both;
+}
+
+#edit-bpi-search-paging-info {
+	float: left;
+}
+
+.form-item-bpi-search-amount {
+	float: right;
 }
 
 .bpi-filter-text {
@@ -55,4 +59,51 @@ div.form-item-bpi-search-query {
 
 .bpi-photo.not-editable {
   background: url('../images/not-editable.png') no-repeat center;
+}
+
+.bpi-query {
+	position: relative;
+}
+
+.bpi .loading {
+	display: none;
+	position: absolute;
+}
+
+.bpi.bpi-loading .loading {
+	display: block;
+	background: rgba(0, 0, 0, .75);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2000;
+}
+
+.bpi .loading .message {
+	position: absolute;
+	top: 10%;
+	width: 100%;
+	text-align: center;
+	color: white;
+}
+
+.bpi-facet {
+	display: inline-block;
+	width: 50%;
+	box-sizing: border-box;
+}
+
+.bpi-facet:nth-child(2n+1) {
+	padding-left: 1em;
+}
+
+.bpi-facet .form-item {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.bpi-facet .chosen-container,
+.bpi-facet .chosen-choices .default {
+	width: 100% !important;
 }

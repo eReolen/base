@@ -8,9 +8,7 @@ class TingClientTest extends DrupalWebTestCase {
    * WSDL URLs.
    */
   const SEARCH_URL = 'http://opensearch.addi.dk/1.1/';
-  const SCAN_URL = 'http://openscan.addi.dk/1.7/';
   const RECOMMENDATION_URL = 'http://openadhl.addi.dk/1.1/';
-  const SPELL_URL = 'http://openspell.addi.dk/1.2/';
   const INFOMEDIA_URL = 'http://didicas.dbc.dk/useraccessinfomedia_1.1/';
 
   /**
@@ -74,11 +72,9 @@ class TingClientTest extends DrupalWebTestCase {
 
     $this->requestFactory = new TingClientRequestFactory(array(
       'search' => self::SEARCH_URL,
-      'scan' => self::SCAN_URL,
       'collection' => self::SEARCH_URL,
       'object' => self::SEARCH_URL,
       'recommendation' => self::RECOMMENDATION_URL,
-      'spell' => self::SPELL_URL,
       'infomedia' => self::INFOMEDIA_URL,
     ));
 

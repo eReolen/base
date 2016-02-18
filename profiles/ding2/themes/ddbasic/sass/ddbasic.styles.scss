@@ -7,7 +7,7 @@
 
 
 // Include compass
-@import "compass/css3";
+@import "compass";
 
 
 // Grid - http://zengrids.com
@@ -61,6 +61,9 @@
 @import "module/_tabroll";
 @import "module/_groups";
 @import "module/_page";
+
+// Include print stylesheet
+@import "module/_print";
 
 // Custom font
 @import "../font/source-sans/stylesheet.css";

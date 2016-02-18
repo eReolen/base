@@ -30,7 +30,7 @@ function ting_material_details_field_info() {
       'label' => t('Available in'),
       'description' => t('dcterms:isPartOf'),
       'default_widget' => 'hidden',
-      'default_formatter' => 'ting_details_single',
+      'default_formatter' => 'ting_details_is_part_of_search',
       'no_ui' => TRUE,
     ),
     // Defines dc:language.
@@ -300,6 +300,13 @@ function ting_material_details_field_formatter_info() {
       ),
     ),
 
+    'ting_details_is_part_of_search' => array(
+      'label' => t('Part of manifestation search link'),
+      'field types' => array(
+        'ting_details_is_part_of',
+      ),
+    ),
+
     'ting_details_generic_search' => array(
       'label' => t('Search link'),
       'field types' => array(
@@ -375,7 +382,6 @@ function ting_material_details_field_formatter_settings_summary($field, $instanc
 
   return $summary;
 }
-
 
 /**
  * Helper function for retrieving record-field.
@@ -534,6 +540,46 @@ function ting_material_details_field_formatter_view($entity_type, $entity, $fiel
           $element[$delta] = array(
             '#markup' => $entity->serieDescription,
           );
+          break;
+
+        // Run through all isPartOfManifestion elements of entity.
+        // If the entity has a relation-uri; create a render array that
+        // renders a link to the relation.
+        // If not: use the text desribing the relation.
+        //
+        // NOTICE : Opensearch delivers one or MORE relation-uris; This
+        // formatter only handles one.
+        // @see #bug1109. (http://platform.dandigbib.org/issues/1109)
+        case 'ting_details_is_part_of_search':
+          $type = $uri = NULL;
+          foreach ($entity->getRelations() as $relation) {
+            $type = explode(':', $relation->getType());
+            // $relation have a namespace: dbcbib:isPartOfManifestation
+            if (isset($type[1]) && $type[1] == 'isPartOfManifestation') {
+              $uri = $relation->getURI();
+            }
+          }
+          $render['#prefix'] = '<span class="ting-material-detail ting-material-is-part-of">';
+          $render['#suffix'] = '</span>';
+          if (!is_array($val)) {
+            $val = array($val);
+          }
+          if ($uri) {
+            foreach ($val as $key => $detail) {
+              $render['part_of'][$key]['#theme'] = 'link';
+              $render['part_of'][$key]['#text'] = $detail;
+              $render['part_of'][$key]['#path'] = 'search/ting/' . $uri;
+              $render['part_of'][$key]['#options']['attributes'] = array();
+              $render['part_of'][$key]['#options']['html'] = 1;
+            }
+          }
+          else {
+            foreach ($val as $key => $detail) {
+              $render['part_of'][$key]['#markup'] = $detail;
+            }
+          }
+          // for now, we only use the first item.
+          $element[$delta]['part_of'] = reset($render['part_of']);
           break;
 
         case 'ting_details_generic_search':

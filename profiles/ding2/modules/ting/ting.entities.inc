@@ -22,9 +22,16 @@ class TingRelation extends DingEntityBase {
     }
   }
 
-
   public function getObject() {
     return $this->properties['object'];
+  }
+
+  public function getURI() {
+    return $this->properties['uri'];
+  }
+
+  public function getType() {
+    return $this->properties['type'];
   }
 }
 
@@ -130,29 +137,20 @@ class TingEntity extends DingEntity {
     return $title;
   }
 
-  function getSerieNumber() {
-    $serie = $this->splitSerie();
-    // Last part is the number.
-    if (empty($serie[1])) {
-      return FALSE;
-    }
-    return $serie[1];
-  }
 
   private function splitSerie() {
-    $serie = !empty($this->reply->record['dc:title']['dkdcplus:series'][0]) ? $this->reply->record['dc:title']['dkdcplus:series'][0] : '';
-    return explode(';', $serie);
+    $series = !empty($this->reply->record['dc:title']['dkdcplus:series']) ? $this->reply->record['dc:title']['dkdcplus:series'] : array();
+    $serie_titles = array();
+    foreach ($series as $serie) {
+      $serie_titles[] = explode(';', $serie);
+    }
+    return $serie_titles;
   }
 
   function getSerieTitle() {
-    $serie = $this->splitSerie();
-    // First part is the title.
-    if (empty($serie[0])) {
-      return FALSE;
-    }
-    return trim($serie[0]);
+    return $this->splitSerie();
   }
-  
+
  function getSerieDescription() {
     $serie = !empty($this->reply->record['dc:description']['dkdcplus:series'][0]) ? $this->reply->record['dc:description']['dkdcplus:series'][0] : '';
     return $this->process_series_description($serie);
@@ -299,9 +297,9 @@ class TingEntity extends DingEntity {
         foreach ($this->reply->relationsData as $data) {
           if ($data->relationType == 'dbcaddi:hasOnlineAccess') {
             $url = preg_replace('/^\[URL\]/', '', $data->relationUri);
-            // Check for correct url - some uri is only an id.
-            if (stripos($url, 'http') === 0) {
-              // Give ting_proxy a change to rewrite the url.
+            // Check for correct url or leading token - some uri is only an id.
+            if (stripos($url, 'http') === 0 || strpos($url, '[') === 0) {
+              // Give other modules a chance to rewrite the url.
               drupal_alter('ting_online_url', $url, $this);
             }
           }
@@ -367,26 +365,20 @@ class TingCollection extends DingEntityCollection {
 
   function getTitle() {
     foreach ($this->reply->objects as &$object) {
-      // Find the title of the object that was used to fetch this collection.
+      // Find the title of the object that was used to fetch this collection. We
+      // don't look at dkdcplus:full as it might be too specific ("1Q84. Book 1"
+      // for instance).
       if ($object->id == $this->ding_entity_id && !empty($object->record['dc:title'])) {
-        if (isset($object->record['dc:title']['dkdcplus:full'])) {
-          return $object->record['dc:title']['dkdcplus:full'][0];
-        }
-        else {
-          return $object->record['dc:title'][''][0];
-        }
+        return $object->record['dc:title'][''][0];
       }
     }
+
     // If we couldn't find the object, use the title of the first object.
     $title = FALSE;
     if (isset($this->reply->objects[0]->record['dc:title'])) {
-      if (isset($this->reply->objects[0]->record['dc:title']['dkdcplus:full'])) {
-        $title = $this->reply->objects[0]->record['dc:title']['dkdcplus:full'][''][0];
-      }
-      else {
-        $title = $this->reply->objects[0]->record['dc:title'][''][0];
-      }
+      $title = $this->reply->objects[0]->record['dc:title'][''][0];
     }
+
     return $title;
   }
 

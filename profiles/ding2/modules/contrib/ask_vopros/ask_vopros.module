@@ -1,0 +1,155 @@
+<?php
+
+/**
+ * @file
+ * Provide a static tab which triggers a popup for sending a question to
+ * Biblioteksvagten.dk.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function ask_vopros_menu() {
+  $items['admin/config/services/ask_vopros'] = array(
+    'title' => 'Ask Vopros',
+    'description' => 'Configure the tab for sending user questions to a Vopros site.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ask_vopros_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'ask_vopros.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Preprocess variables for html.tpl.php
+ *
+ * This adds in our bottom tab. Using hook_page_build() is no good, as
+ * panels_everywhere thoroughly disables it, so we use this instead.
+ */
+function ask_vopros_preprocess_html(&$vars) {
+  global $user;
+  $agency_id = variable_get('ask_vopros_agency_id', _ask_vopros_ting_agency_id());
+
+  if (!$agency_id) {
+    return;
+  }
+
+  // JavaScript settings var. Basic settings, id and mail.
+  $settings = array(
+    'agency_id' => $agency_id,
+    'agency_mail' => variable_get('ask_vopros_agency_mail', variable_get('site_mail', '')),
+  );
+
+  $answer_preference = variable_get('ask_vopros_answer_preference', 'mail');
+  if ($answer_preference !== 'mail') {
+    $settings['answer_preference'] = $answer_preference;
+  }
+
+  // Check if a ding user is logged in and add in their name/zip/mail/phone if
+  // they are.
+  if (function_exists('ding_user_provider_profile') && $profile = ding_user_provider_profile($user)) {
+    $module = ding_provider_get_provider_module_name('user');
+    $mapping = array(
+      'name' => 'full_name',
+      'zip' => 'postal_code',
+      'phone' => 'mobile_phone',
+    );
+
+    foreach ($mapping as $name => $field_suffix) {
+      $field_name = 'field_' . $module . '_' . $field_suffix;
+
+      $field_value = field_get_items('profile2', $profile, $field_name);
+      if (!empty($field_value[0]['value'])) {
+        $settings[$name] = $field_value[0]['value'];
+      }
+    }
+
+    // Seems that there's some trouble getting the mail address from the
+    // profile. It should've been copied to the mail of the Drupal user, so use
+    // that.
+    if (!empty($user->mail)) {
+      $settings['mail'] = $user->mail;
+    }
+  }
+
+  $settings_js = 'var ask_vopros = ' . json_encode($settings) . ';';
+
+  $base = rtrim(variable_get('ask_vopros_uri', 'http://adm.biblioteksvagten.dk'), '/') . '/embed/';
+
+  // Check visibility settings. We add the query argument to get
+  // question_modal.js to add the tab for us.
+  $visibility_type = variable_get('ask_vopros_visibility_type', 'not on');
+  $visibility_pages = variable_get('ask_vopros_visibility_pages', '');
+  // The default visibility in case $visibility_pages is empty.
+  $visible = $visibility_type == 'not on';
+
+  // If no pages are specified, show regardless of the type. This logic was
+  // lifted from block_block_list_alter(). Look there for comments.
+  if ($visibility_pages) {
+    $visibility_pages = drupal_strtolower($visibility_pages);
+    $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+    $page_match = drupal_match_path($path, $visibility_pages);
+    if ($path != $_GET['q']) {
+      $page_match = $page_match || drupal_match_path($_GET['q'], $visibility_pages);
+    }
+    if ($page_match xor ($visibility_type == 'on')) {
+      $visible = FALSE;
+    }
+  }
+
+  // We can't set the async attribute for an attached JS, so we build the script
+  // element by hand, in the same way drupal_get_js() does.
+  // Using async and defer is the currently recommend practice to avoid having
+  // the page hang on the script.
+  // @see https://www.igvita.com/2014/05/20/script-injected-async-scripts-considered-harmful/
+
+  $element = array(
+    '#tag' => 'script',
+    '#value' => '',
+    '#attributes' => array(
+      'type' => 'text/javascript',
+      'src' => $base . 'question_modal.js' . ($visible ? '?tab=true' : ''),
+      'defer' => 'defer',
+      'async' => 'async',
+    ),
+  );
+
+  // Add the settings.
+  $attachment = array(
+    '#attached' => array(
+      'js' => array(
+        $settings_js => array('type' => 'inline'),
+      ),
+    ),
+    '#markup' => theme('html_tag', array('element' => $element)),
+  );
+
+  $right = variable_get('ask_vopros_right', '');
+  if (!empty($right) || $right === '0') {
+    $attachment['#attached']['css'] = array(
+      'body .ask-vopros-tab {right: ' . $right . '}' => array('type' => 'inline'),
+    );
+  }
+
+  $vars['page']['page_bottom'][] = $attachment;
+
+}
+
+/**
+ * Glean agency_id from ting.module.
+ *
+ * Checks if ting.module has been configured with an agency, and use that to
+ * create ours.
+ *
+ * @return string|null
+ *   Agency id or null if not found.
+ */
+function _ask_vopros_ting_agency_id() {
+  if ($agency_id = variable_get('ting_agency', '')) {
+    return 'DK-' . $agency_id;
+  }
+
+  return NULL;
+}
