@@ -753,7 +753,9 @@ function reol_base_field_attach_view_alter(&$output, &$context) {
     $ting_abstract = &$output['ting_abstract'];
 
     $entity = $ting_abstract['#object'];
-    $abstract = $entity->reply->record['dcterms:abstract'][''];
-    $ting_abstract[0]['#markup'] = implode('<br /><br />', $abstract);
+    if (isset($entity->reply->record['dcterms:abstract'])) {
+      $abstract = $entity->reply->record['dcterms:abstract'][''];
+      $ting_abstract[0]['#markup'] = implode('<br /><br />', $abstract);
+    }
   }
 }

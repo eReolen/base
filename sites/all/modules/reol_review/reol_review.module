@@ -107,21 +107,48 @@ function reol_review_fetch_reviews($items, $start) {
  *   random result in all types.
  *
  * @return StdClass
- *   The review randomly chosen.
+ *   The review randomly chosen. The related ting_entity will be available on
+ *   $review->ting_entity.
  */
 function reol_review_get_random_reviews($type = NULL, $count = 1) {
   $query = db_select('reol_review_reviews', 'r')
          ->fields('r')
          ->condition('processed', 0, '<>')
          ->condition('ding_entity_id', '', '<>')
-         ->range(0, $count)
          ->orderRandom();
 
   if ($type) {
     $query->condition('type', $type);
   }
 
-  return $query->execute()->fetchAll();
+  $res = $query->execute();
+
+  $result = array();
+  while ($review = $res->fetch()) {
+    $review->ting_entity = ding_entity_load($review->ding_entity_id);
+    if ($review->ting_entity) {
+      $result[] = $review;
+    }
+    else {
+      // If we can't find the object anymore, remove the review from
+      // selection.
+      // $review->processed = REQUEST_TIME;
+      db_update('reol_review_reviews')
+        ->fields(array(
+          'process' => $review->process,
+          'processed' => $review->processed,
+          'type' => $review->type,
+          'ding_entity_id' => '',
+        ))
+        ->condition('rrid', $review->rrid)
+        ->execute();
+    }
+    if (count($result) >= $count) {
+      break;
+    }
+  }
+
+  return $result;
 }
 
 /**

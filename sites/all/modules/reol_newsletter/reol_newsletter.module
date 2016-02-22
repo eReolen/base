@@ -1,0 +1,247 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen newsletter module feature.
+ */
+
+include_once 'reol_newsletter.features.inc';
+
+define('REOL_NEWSLETTER_SIGNUP_FIELD_NAME', 'SIGNUP');
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_newsletter_form_profile2_edit_provider_publizon_form_alter(&$form, &$form_state) {
+  // Hide newsletter part of profile form. It has been moved to a separate page.
+  $form['profile_provider_publizon']['field_newsletter']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function reol_newsletter_form_alter(&$form, &$form_state, $form_id) {
+  // If this form is a mailchimp signup form, we might have to do something.
+  if (strpos($form_id, 'mailchimp_signup_subscribe') === 0) {
+    $signup_form_id = $form_state['build_info']['args'][0]->mcs_id;
+    $settings = reol_newsletter_get_signup_form_settings($signup_form_id);
+
+    // Hide the signup field, and prefill it.
+    $form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#type'] = 'hidden';
+    unset($form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#default_value']);
+    unset($form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#size']);
+    unset($form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#weight']);
+    if (!empty($settings['signup_value'])) {
+      $form['mergevars'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME]['#value'] = $settings['signup_value'];
+    }
+
+    // If this form is on a page, we might have to hide header and footer.
+    if (strpos($form_id, 'mailchimp_signup_subscribe_page') === 0 && isset($settings['app_mode']) && $settings['app_mode']) {
+      reol_newsletter_set_app_mode();
+    }
+
+    // Needed to support using wysiwyg-field on signup-forms.
+    $form['description']['#markup'] = $form['description']['#markup']['value'];
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Allow configuring the value to send to Mailchimp for the signup-field.
+ *
+ * Allow configuring the page to be without header/footer.
+ */
+function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) {
+  $default_values = [
+    'signup_value' => '',
+    'app_mode' => 0,
+  ];
+
+  // If this is an edit-form with an entity_id, reuse saved values.
+  if (!empty($form_state['mailchimp_signup']->mcs_id)) {
+    $default_values = reol_newsletter_get_signup_form_settings($form_state['mailchimp_signup']->mcs_id, $default_values);
+  }
+
+  // If the signup-field is set, allow configuring the value to send to
+  // Mailchimp.
+  if (!empty($form['mc_lists_config']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME])) {
+    $form['mc_lists_config']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'] = [
+      '#type' => 'textfield',
+      '#title' => t('@name value', ['@name' => REOL_NEWSLETTER_SIGNUP_FIELD_NAME]),
+      '#description' => t('The value to send to Mailchimp for the @name-field', ['@name' => REOL_NEWSLETTER_SIGNUP_FIELD_NAME]),
+      '#default_value' => $default_values['signup_value'],
+      '#states' => [
+        'visible' => [
+          "input[name='mergefields[" . REOL_NEWSLETTER_SIGNUP_FIELD_NAME . "]']" => ["checked" => TRUE]
+        ],
+      ],
+    ];
+  }
+
+  // Allow configuring the page to be displayed in app-mode.
+  // This hides header and footer.
+  $form['settings']['app_mode'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Display page in app-mode'),
+    '#description' => t('Display the page in app-mode, hiding header and footer.'),
+    '#default_value' => $default_values['app_mode'],
+    '#weight' => -1,
+    '#states' => [
+      'visible' => [
+        "input[name='mode[2]']" => ["checked" => TRUE]
+      ],
+    ],
+  ];
+
+  // Inject our own submit-handler to handle the two new fields. Inject after
+  // submit from mailchimp to allow us to use the id of the (newly created)
+  // signup form.
+  $form['#submit'][] = 'reol_newsletter_form_mailchimp_signup_form_submit';
+
+  // Enable Wysiwyg on description-field.
+  $form['description']['#type'] = 'text_format';
+  $form['description']['#format'] = isset($form_state['signup']->settings['description']['format']) ? $form_state['signup']->settings['description']['format'] : 'ding_wysiwyg';
+  $form['description']['#default_value'] = isset($form_state['signup']->settings['description']['value']) ? $form_state['signup']->settings['description']['value'] : '';
+}
+
+/**
+ * Submit-handler for the mailchimp newsletter configuration form.
+ */
+function reol_newsletter_form_mailchimp_signup_form_submit($form, &$form_state) {
+  // Get extra settings.
+  $signup_form_id = $form_state['mailchimp_signup']->mcs_id;
+  $settings = reol_newsletter_get_signup_form_settings($signup_form_id);
+
+  // Save signup value if there is a value from form.
+  if (!empty($form_state['values']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'])) {
+    $settings['signup_value'] = $form_state['values']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'];
+  }
+  // If not, and a value has been set in config, remove it.
+  elseif (isset($settings['signup_value'])) {
+    unset($settings['signup_value']);
+  }
+
+  $settings['app_mode'] = $form_state['values']['settings']['app_mode'];
+
+  reol_newsletter_set_signup_form_settings($signup_form_id, $settings);
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_newsletter_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Form callback for newsletter status form.
+ */
+function reol_newsletter_status_form($form, &$form_state, $uid) {
+  // Load field from profile form.
+  $profile = profile2_load_by_user($uid, 'provider_publizon');
+  $field = field_info_field('field_newsletter');
+  $instance = field_info_instance('profile2', 'field_newsletter', 'provider_publizon');
+  $items = field_get_items('profile2', $profile, 'field_newsletter');
+  $form += field_default_form('profile2', $profile, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+
+  // For loading profile2-profile in submit-function.
+  $form['uid'] = [
+    '#type' => 'value',
+    '#value' => $uid,
+  ];
+
+  // Add a submit-button.
+  $form['submit'] = [
+    '#type' => 'submit',
+    '#value' => t('Save signup status'),
+    '#weight' => 100,
+  ];
+
+  return $form;
+}
+
+/**
+ * Form submit function for reol_newsletter_status_form.
+ */
+function reol_newsletter_status_form_submit($form, &$form_state) {
+  // Just let mailchimp module handle everything.
+  $profile2 = profile2_load_by_user($form_state['values']['uid'], 'provider_publizon');
+  $profile2->field_newsletter = $form_state['values']['field_newsletter'];
+  $profile2->save();
+}
+
+/**
+ * Get the settings for a mailchimp signup form.
+ */
+function reol_newsletter_get_signup_form_settings($signup_form_id, $default_values = []) {
+  $variable_name = 'reol_newsletter_mailchimp_settings:' . $signup_form_id;
+  return variable_get($variable_name, $default_values);
+}
+
+/**
+ * Set the settings for a mailchimp signup form.
+ */
+function reol_newsletter_set_signup_form_settings($signup_form_id, $settings) {
+  $variable_name = 'reol_newsletter_mailchimp_settings:' . $signup_form_id;
+  variable_set($variable_name, $settings);
+}
+
+/**
+ * Implements hook_secure_permissions().
+ *
+ * Define which users should be able to sign up on mailchimp forms.
+ */
+function reol_newsletter_secure_permissions($role) {
+  $permissions = [
+    'anonymous user' => [
+      'access mailchimp signup pages',
+    ],
+    'authenticated user' => [
+      'access mailchimp signup pages',
+    ],
+  ];
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function reol_newsletter_preprocess(&$variables, $hook) {
+  if (reol_newsletter_is_app_mode()) {
+    // Remove cookie-control as well.
+    // This is a bit of a hackish-solution, but it allows us to dynamically
+    // define the paths that the cookie-control should not be shown for,
+    // instead of relying on saving it when saving the signup form.
+    global $conf;
+    $paths = &$conf['cookiecontrol_exclude_paths'];
+    if (!empty($paths)) {
+      $paths .= "\n" . current_path();
+    }
+    else {
+      $paths = current_path();
+    }
+
+    // Add a class to body, when we are in app-mode.
+    if ($hook == 'html') {
+      $variables['classes_array'][] = 'app-mode';
+    }
+  }
+}
+
+/**
+ * Is site in app mode.
+ */
+function reol_newsletter_is_app_mode() {
+  return drupal_static('app_mode', FALSE);
+}
+
+/**
+ * Set app mode.
+ */
+function reol_newsletter_set_app_mode($app_mode = TRUE) {
+  $app_mode_static = &drupal_static('app_mode', FALSE);
+  $app_mode_static = $app_mode;
+}
