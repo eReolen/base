@@ -59,8 +59,8 @@ function publizon_availability_items($local_ids) {
         'bookmarked' => $result->onChecklist,
         'notloanable' => $status == 0,
       );
-      return $return;
     }
+    return $return;
   }
   catch (PublizonException $e) {
     watchdog('publizon', 'Error getting availability from publizon, error message: @error', array('@error' => $e->getMessage()), WATCHDOG_ERROR);
