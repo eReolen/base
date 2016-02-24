@@ -215,7 +215,7 @@ function reol_base_preprocess_material_item(&$variables) {
     $ting_entity->localId = 'isbn_' . $ting_entity->tid;
   }
 
-// Make a note of the loan type if it's one of our fake IDs.
+  // Make a note of the loan type if it's one of our fake IDs.
   // reol_use_loan_ding_entity_buttons will use this.
   if (preg_match('/^publizon:/', $ting_entity->ding_entity_id)) {
     $ting_entity->publizon_type = $entity->publizon_type;
