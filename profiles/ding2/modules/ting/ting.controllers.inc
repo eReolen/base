@@ -134,7 +134,7 @@ class TingObjectController extends DrupalDefaultEntityController {
         $qe->reply = $objects[$qe->ding_entity_id];
       }
       else {
-        unset($queried_entities[$index]);
+        // unset($queried_entities[$index]);
       }
     }
     // Pass all entities loaded from the database through $this->attachLoad(),
