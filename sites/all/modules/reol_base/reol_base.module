@@ -205,13 +205,26 @@ function reol_base_preprocess_material_item(&$variables) {
   $ding_entity_id = $entity->ding_entity_id;
   $ting_entity = ding_entity_load($ding_entity_id);
 
-  // Make a note of the loan type if it's one of our fake IDs.
+  if (!$ting_entity) {
+    // Material not found in the well, fake it, we need it to call
+    // ding_entity_buttons. In retrospect, ding_entity_buttons isn't such a
+    // good fit as we've discovered we need to handle loans/reservations
+    // that's been deleted in the well, but that's how it is.
+    $ting_entity = ding_provider_get_pseudo_entity($entity->ding_entity_id);
+    $ting_entity->type = FALSE;
+    $ting_entity->localId = 'isbn_' . $ting_entity->tid;
+  }
+
+// Make a note of the loan type if it's one of our fake IDs.
   // reol_use_loan_ding_entity_buttons will use this.
   if (preg_match('/^publizon:/', $ting_entity->ding_entity_id)) {
     $ting_entity->publizon_type = $entity->publizon_type;
   }
-  // Put buttons from entity view on list.
-  $buttons = field_view_field('ting_object', $ting_entity, 'ding_entity_buttons', 'default');
+
+  // Calling field_view_field() would be more proper, but it doesn't like our
+  // fake objects. Really there should be hook_(loan|reservation)_buttons, but
+  // that's some refactoring.
+  $buttons = module_invoke_all('ding_entity_buttons', '', $ting_entity);
   $variables['buttons'] = drupal_render($buttons);
 }
 
