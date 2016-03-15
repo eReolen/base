@@ -14,10 +14,19 @@
  *   The state of the form
  */
 function publizon_user_form_alter(&$form, &$form_state) {
+  $default_value = NULL;
+
+  // Pre-select library if we have the cookie.
+  if (isset($_COOKIE['ereolen_last_library']) &&
+    preg_match('/^\d+$/', $_COOKIE['ereolen_last_library'])) {
+    $default_value = $_COOKIE['ereolen_last_library'];
+  }
+
   $form['retailer_id'] = array(
     '#type' => 'select',
     '#title' => t('Select library'),
     '#options' => publizon_get_libraries_list(),
+    '#default_value' => $default_value,
   );
 }
 
@@ -56,6 +65,10 @@ function publizon_user_authenticate($name, $pass, $values) {
         ),
       ),
     );
+
+    // Save cookie for publizon_user_form_alter().
+    setcookie('ereolen_last_library', $values['retailer_id'], time() + 3600 * 24 * 180, '/');
+
   }
   else {
     $res = array(
