@@ -21,8 +21,6 @@ function publizon_loan_list($account, $reset = FALSE) {
 
   $result = &drupal_static(__FUNCTION__, array());
   if (!$result || $reset) {
-    // In case ding_session_cache_get() returned crap.
-    $result = array();
     $retailer_id = publizon_get_retailer_id($account);
 
     // Get list of loans from Publizon.
@@ -57,11 +55,6 @@ function publizon_loan_list($account, $reset = FALSE) {
 
       $result[$id]->publizon_type = reol_base_get_ting_type(reol_base_get_type_from_format($loan->format));
     }
-
-    // Save into ding session cache.
-    if (module_exists('ding_session_cache')) {
-      ding_session_cache_set('publizon', 'loans', $result);
-    }
   }
 
   return $result;
@@ -91,13 +84,6 @@ function publizon_loan_create($account, $local_id) {
   catch (PublizonException $e) {
     DingPublizonException::convert($e);
   }
-
-  // Clear ding session cache.
-  if (module_exists('ding_session_cache')) {
-    ding_session_cache_clear('ding_reservation', 'reservations');
-    ding_session_cache_clear('ding_loan', 'list');
-  }
-
 }
 
 /**

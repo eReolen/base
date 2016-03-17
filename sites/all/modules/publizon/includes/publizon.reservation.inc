@@ -77,11 +77,6 @@ function publizon_reservation_list($account, $get_type = FALSE) {
         $result[$type][$id]->expected_date = date('Y-m-d H:i:s', $reservation->expectedRedeemDateUtc);
       }
     }
-
-    // Store the reservations into ding session cache.
-    if (module_exists('ding_session_cache')) {
-      ding_session_cache_set('publizon', 'reservations', $result);
-    }
   }
 
   return $get_type ? $result[$get_type] : $result;
@@ -232,14 +227,4 @@ function publizon_reservation_default_interest_period() {
  */
 function publizon_reservation_reservation_deletion_enabled() {
   return TRUE;
-}
-
-/**
- * Helper function for clearing the ding session cache for reservations.
- */
-function publizon_reservation_clear_cache() {
-  // Check if ding_session_cache is available.
-  if (module_exists('ding_session_cache')) {
-    ding_session_cache_clear('publizon', 'reservations');
-  }
 }
