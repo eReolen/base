@@ -21,54 +21,46 @@ function publizon_loan_list($account, $reset = FALSE) {
 
   $result = &drupal_static(__FUNCTION__, array());
   if (!$result || $reset) {
-    // Check if ding_session_cache is available.
-    if (module_exists('ding_session_cache') && !$reset) {
-      $result = ding_session_cache_get('publizon', 'loans');
+    // In case ding_session_cache_get() returned crap.
+    $result = array();
+    $retailer_id = publizon_get_retailer_id($account);
+
+    // Get list of loans from Publizon.
+    $client = PublizonLoanClient::getClient();
+    $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
+
+    $isbns = array();
+    foreach ($loans as $loan) {
+      $isbns[] = $loan->isbn;
     }
 
-    // If no caches have data, get from Publizon.
-    if (empty($result) || $reset) {
-      // In case ding_session_cache_get() returned crap.
-      $result = array();
-      $retailer_id = publizon_get_retailer_id($account);
+    if ($isbns) {
+      $mapping = reol_base_ding_entity_get_ids($isbns);
+    }
 
-      // Get list of loans from Publizon.
-      $client = PublizonLoanClient::getClient();
-      $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
-
-      $isbns = array();
-      foreach ($loans as $loan) {
-        $isbns[] = $loan->isbn;
+    foreach ($loans as $loan) {
+      // Title might not be found, use an fake ID.
+      if (!isset($mapping[$loan->isbn])) {
+        $id = 'publizon:' . $loan->isbn;
+      }
+      else {
+        $id = $mapping[$loan->isbn];
       }
 
-      if ($isbns) {
-        $mapping = reol_base_ding_entity_get_ids($isbns);
-      }
+      $result[$id] = new DingProviderLoan($id, array(
+                       'ding_entity_id' => $id,
+                       'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
+                       'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
+                       'renewable' => FALSE,
+                       'display_name' => $loan->title,
+                     ));
 
-      foreach ($loans as $loan) {
-        // Title might not be found, use an fake ID.
-        if (!isset($mapping[$loan->isbn])) {
-          $id = 'publizon:' . $loan->isbn;
-        }
-        else {
-          $id = $mapping[$loan->isbn];
-        }
+      $result[$id]->publizon_type = reol_base_get_ting_type(reol_base_get_type_from_format($loan->format));
+    }
 
-        $result[$id] = new DingProviderLoan($id, array(
-          'ding_entity_id' => $id,
-          'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
-          'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
-          'renewable' => FALSE,
-          'display_name' => $loan->title,
-        ));
-
-        $result[$id]->publizon_type = reol_base_get_ting_type(reol_base_get_type_from_format($loan->format));
-      }
-
-      // Save into ding session cache.
-      if (module_exists('ding_session_cache')) {
-        ding_session_cache_set('publizon', 'loans', $result);
-      }
+    // Save into ding session cache.
+    if (module_exists('ding_session_cache')) {
+      ding_session_cache_set('publizon', 'loans', $result);
     }
   }
 
@@ -102,8 +94,8 @@ function publizon_loan_create($account, $local_id) {
 
   // Clear ding session cache.
   if (module_exists('ding_session_cache')) {
-    ding_session_cache_clear('publizon', 'reservations');
-    ding_session_cache_clear('publizon', 'loans');
+    ding_session_cache_clear('ding_reservation', 'reservations');
+    ding_session_cache_clear('ding_loan', 'list');
   }
 
 }
