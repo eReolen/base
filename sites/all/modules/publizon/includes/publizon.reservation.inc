@@ -18,77 +18,69 @@
 function publizon_reservation_list($account, $get_type = FALSE) {
   $result = &drupal_static(__FUNCTION__);
   if (!isset($result)) {
-    // Check if ding_session_cache is available.
-    if (module_exists('ding_session_cache')) {
-      $result = ding_session_cache_get('publizon', 'reservations');
+    $result = array(
+      DING_RESERVATION_READY => array(),
+      DING_RESERVATION_NOT_READY => array(),
+      DING_RESERVATION_INTERLIBRARY_LOANS => array(),
+    );
+
+    // Throw exception if we're not logged in.
+    $creds = ding_user_get_creds($account);
+
+    $retailer_id = publizon_get_retailer_id($account);
+
+    // Get list of reservations from Publizon.
+    $client = PublizonReservationClient::getClient();
+    $reservations = $client->listReservations($retailer_id, $creds['name']);
+
+    $isbns = array();
+    foreach ($reservations as $reservation) {
+      $isbns[] = $reservation->isbn;
     }
 
-    // If results are in none of the caches.
-    if (empty($result)) {
-      $result = array(
-        DING_RESERVATION_READY => array(),
-        DING_RESERVATION_NOT_READY => array(),
-        DING_RESERVATION_INTERLIBRARY_LOANS => array(),
+    if ($isbns) {
+      $mapping = reol_base_ding_entity_get_ids($isbns);
+    }
+
+    foreach ($reservations as $reservation) {
+      // Title might not be found, use an fake ID.
+      if (!isset($mapping[$reservation->isbn])) {
+        $ding_id = 'publizon:' . $reservation->isbn;
+      }
+      else {
+        $ding_id = $mapping[$reservation->isbn];
+      }
+
+      $ting_entity = ding_entity_load($ding_id);
+      $id = $ting_entity->localId;
+      $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
+      $data = array(
+        'order_id' => $id,
+        'ding_entity_id' => $ding_id,
+        'ready_for_pickup' => $reservation->status == 2,
+        'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
+        // To avoid warnings, we have to set this, even though we remove
+        // it later.
+        'expiry' => date('Y-m-d H:i:s', 0),
+        'renewable' => FALSE,
+        'reservation_type' => $type,
+        'display_name' => $reservation->title,
       );
 
-      // Throw exception if we're not logged in.
-      $creds = ding_user_get_creds($account);
-
-      $retailer_id = publizon_get_retailer_id($account);
-
-      // Get list of reservations from Publizon.
-      $client = PublizonReservationClient::getClient();
-      $reservations = $client->listReservations($retailer_id, $creds['name']);
-
-      $isbns = array();
-      foreach ($reservations as $reservation) {
-        $isbns[] = $reservation->isbn;
+      // If reservation is ready, add pickup date.
+      if ($type == DING_RESERVATION_READY) {
+        $data['pickup_date'] = date('Y-m-d H:i:s', $reservation->expireUtc);
       }
 
-      if ($isbns) {
-        $mapping = reol_base_ding_entity_get_ids($isbns);
+      $result[$type][$id] = new DingProviderReservation($id, $data);
+      if ($reservation->expectedRedeemDateUtc) {
+        $result[$type][$id]->expected_date = date('Y-m-d H:i:s', $reservation->expectedRedeemDateUtc);
       }
+    }
 
-      foreach ($reservations as $reservation) {
-        // Title might not be found, use an fake ID.
-        if (!isset($mapping[$reservation->isbn])) {
-          $ding_id = 'publizon:' . $reservation->isbn;
-        }
-        else {
-          $ding_id = $mapping[$reservation->isbn];
-        }
-
-        $ting_entity = ding_entity_load($ding_id);
-        $id = $ting_entity->localId;
-        $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
-        $data = array(
-          'order_id' => $id,
-          'ding_entity_id' => $ding_id,
-          'ready_for_pickup' => $reservation->status == 2,
-          'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
-          // To avoid warnings, we have to set this, even though we remove
-          // it later.
-          'expiry' => date('Y-m-d H:i:s', 0),
-          'renewable' => FALSE,
-          'reservation_type' => $type,
-          'display_name' => $reservation->title,
-        );
-
-        // If reservation is ready, add pickup date.
-        if ($type == DING_RESERVATION_READY) {
-          $data['pickup_date'] = date('Y-m-d H:i:s', $reservation->expireUtc);
-        }
-
-        $result[$type][$id] = new DingProviderReservation($id, $data);
-        if ($reservation->expectedRedeemDateUtc) {
-          $result[$type][$id]->expected_date = date('Y-m-d H:i:s', $reservation->expectedRedeemDateUtc);
-        }
-      }
-
-      // Store the reservations into ding session cache.
-      if (module_exists('ding_session_cache')) {
-        ding_session_cache_set('publizon', 'reservations', $result);
-      }
+    // Store the reservations into ding session cache.
+    if (module_exists('ding_session_cache')) {
+      ding_session_cache_set('publizon', 'reservations', $result);
     }
   }
 
