@@ -138,21 +138,23 @@
        *   The class to add to the elements.
        */
       function update_availability_elements(element, btn, class_name) {
-        element.addClass(class_name);
-        // TODO: this is very fragile.
-        var type_name = element.text().toLowerCase();
-        var string;
-        if (Drupal.settings.ding_availability_type_mapping[type_name]) {
-          type_name = Drupal.settings.ding_availability_type_mapping[type_name];
-        }
+        $(element).once('reol-availability', function() {
+          element.addClass(class_name);
+          // TODO: this is very fragile.
+          var type_name = element.text().toLowerCase();
+          var string;
+          if (Drupal.settings.ding_availability_type_mapping[type_name]) {
+            type_name = Drupal.settings.ding_availability_type_mapping[type_name];
+          }
 
-        if (Drupal.settings.ding_availability_type_strings[class_name]) {
-          string = Drupal.settings.ding_availability_type_strings[class_name];
-          element.text(Drupal.formatString(string, {'@type': type_name}));
-        }
-        if (btn.length) {
-          btn.addClass(class_name);
-        }
+          if (Drupal.settings.ding_availability_type_strings[class_name]) {
+            string = Drupal.settings.ding_availability_type_strings[class_name];
+            element.text(Drupal.formatString(string, {'@type': type_name}));
+          }
+          if (btn.length) {
+            btn.addClass(class_name);
+          }
+        });
       }
     }
   };
