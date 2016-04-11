@@ -55,3 +55,7 @@ patches:
     patch: 'https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/146.patch'
     home: 'https://github.com/ding2/ding2/pull/146'
     reason: 'Objects deleted in the datawell should not be loaded.'
+  -
+    patch: 'https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/215.patch'
+    home: 'https://github.com/ding2/ding2/pull/215'
+    reason: 'Fix facet browser to not duplicate "show more" links when the logon popup shows.'
