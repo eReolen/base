@@ -62,3 +62,7 @@ patches:
     patch: ../sites/all/patches/ting_covers-2.patch
     home: 'https://github.com/ding2/ding2/pull/196'
     reason: 'Latest fixes to the above.'
+  -
+    patch: ../sites/all/patches/footer-icons.patch
+    home: 'https://github.com/ding2/ding2/pull/218'
+    reason: 'Hand applied footer icon fix.'
