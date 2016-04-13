@@ -58,3 +58,7 @@ patches:
     patch: ../sites/all/patches/ting_covers.patch
     home: 'https://github.com/ding2/ding2/pull/196'
     reason: 'Pluggable covers and carousel update. Applied manueally.'
+  -
+    patch: ../sites/all/patches/ting_covers-2.patch
+    home: 'https://github.com/ding2/ding2/pull/196'
+    reason: 'Latest fixes to the above.'
