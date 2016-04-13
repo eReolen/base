@@ -2,14 +2,16 @@
 
 abstract class TingClientRequest {
   private $wsdlUrl;
+  private $auth;
   private $parameters = array();
 
   abstract public function processResponse(stdClass $response);
 
   abstract protected function getRequest();
 
-  public function __construct($wsdlUrl) {
+  public function __construct($wsdlUrl, $auth = NULL) {
     $this->wsdlUrl = $wsdlUrl;
+    $this->auth = $auth;
   }
 
 
@@ -45,6 +47,24 @@ abstract class TingClientRequest {
 
   public function getParameters() {
     return $this->parameters;
+  }
+
+  public function getAuth() {
+    if ($this->auth) {
+      return array(
+        'userIdAut' => $this->auth['name'],
+        'passwordAut' => $this->auth['pass'],
+        'groupIdAut' => $this->auth['group'],
+      );
+    }
+    return array();
+  }
+
+  public function useAuth() {
+    $auth = $this->getAuth();
+    if ($auth) {
+      $this->setParameter('authentication', $auth);
+    }
   }
 
   public function execute(TingClientRequestAdapter $adapter) {
@@ -135,4 +155,3 @@ abstract class TingClientRequest {
   }
 
 }
-

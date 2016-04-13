@@ -39,6 +39,8 @@ class TingClientSearchRequest extends TingClientRequest {
   public function getRequest() {
     $parameters = $this->getParameters();
 
+    $this->useAuth();
+
     // These defaults are always needed.
     $this->setParameter('action', 'searchRequest');
     if (!isset($parameters['format']) || empty($parameters['format'])) {
@@ -329,4 +331,3 @@ class TingClientSearchRequest extends TingClientRequest {
     return new TingClientObjectCollection($objects);
   }
 }
-
