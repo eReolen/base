@@ -38,9 +38,6 @@ function reol_newsletter_form_alter(&$form, &$form_state, $form_id) {
     if (strpos($form_id, 'mailchimp_signup_subscribe_page') === 0 && isset($settings['app_mode']) && $settings['app_mode']) {
       reol_newsletter_set_app_mode();
     }
-
-    // Needed to support using wysiwyg-field on signup-forms.
-    $form['description']['#markup'] = $form['description']['#markup']['value'];
   }
 }
 
@@ -53,8 +50,12 @@ function reol_newsletter_form_alter(&$form, &$form_state, $form_id) {
  */
 function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) {
   $default_values = [
-    'signup_value' => '',
+    'SIGNUP_value' => '',
     'app_mode' => 0,
+    'reol_description' => array(
+      'format' => 'ding_wysiwyg',
+      'value' => '',
+    ),
   ];
 
   // If this is an edit-form with an entity_id, reuse saved values.
@@ -69,7 +70,7 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
       '#type' => 'textfield',
       '#title' => t('@name value', ['@name' => REOL_NEWSLETTER_SIGNUP_FIELD_NAME]),
       '#description' => t('The value to send to Mailchimp for the @name-field', ['@name' => REOL_NEWSLETTER_SIGNUP_FIELD_NAME]),
-      '#default_value' => $default_values['signup_value'],
+      '#default_value' => isset($default_values['SIGNUP_value']) ? $default_values['SIGNUP_value'] : '',
       '#states' => [
         'visible' => [
           "input[name='mergefields[" . REOL_NEWSLETTER_SIGNUP_FIELD_NAME . "]']" => ["checked" => TRUE]
@@ -93,19 +94,46 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
     ],
   ];
 
-  // Inject our own submit-handler to handle the two new fields. Inject after
-  // submit from mailchimp to allow us to use the id of the (newly created)
-  // signup form.
-  $form['#submit'][] = 'reol_newsletter_form_mailchimp_signup_form_submit';
+  // Wrap our submit handlers around the existing.
+  $form['#submit'] = array_merge(
+    array('reol_newsletter_form_mailchimp_signup_form_pre_submit'),
+    $form['#submit'],
+    array('reol_newsletter_form_mailchimp_signup_form_submit'));
 
-  // Enable Wysiwyg on description-field.
-  $form['description']['#type'] = 'text_format';
-  $form['description']['#format'] = isset($form_state['signup']->settings['description']['format']) ? $form_state['signup']->settings['description']['format'] : 'ding_wysiwyg';
-  $form['description']['#default_value'] = isset($form_state['signup']->settings['description']['value']) ? $form_state['signup']->settings['description']['value'] : '';
+  $form['reol_description'] = $form['description'];
+
+  // Hide the original description.
+  $form['description']['#type'] = 'value';
+  $form['description']['#value'] = $form['description']['#default_value'];
+
+  // Create a Wysiwyg description.
+  $form['reol_description']['#type'] = 'text_format';
+  $form['reol_description']['#rows'] = 4;
+  $form['reol_description']['#format'] = isset($default_values['reol_description']['format']) ? $default_values['reol_description']['format'] : 'ding_wysiwyg';
+  $form['reol_description']['#default_value'] = isset($default_values['reol_description']['value']) ? $default_values['reol_description']['value'] : '';
+
+  // Reorder so our description will be where the old was.
+  $form['title']['#weight'] = -10;
+  $form['machine_name']['#weight'] = -5;
+  $form['reol_description']['#weight'] = -1;
 }
 
 /**
  * Submit-handler for the mailchimp newsletter configuration form.
+ *
+ * This is run before mailchimp_signups submit handler. Set the description to
+ * the value of the WYSIWYG.
+ */
+function reol_newsletter_form_mailchimp_signup_form_pre_submit($form, &$form_state) {
+  $description = check_markup($form_state['values']['reol_description']['value'],
+                              $form_state['values']['reol_description']['format']);
+  form_set_value($form['description'], $description, $form_state);
+}
+
+/**
+ * Submit-handler for the mailchimp newsletter configuration form.
+ *
+ * This is run after mailchimp_signups submit handler.
  */
 function reol_newsletter_form_mailchimp_signup_form_submit($form, &$form_state) {
   // Get extra settings.
@@ -114,7 +142,7 @@ function reol_newsletter_form_mailchimp_signup_form_submit($form, &$form_state) 
 
   // Save signup value if there is a value from form.
   if (!empty($form_state['values']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'])) {
-    $settings['signup_value'] = $form_state['values']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'];
+    $settings['SIGNUP_value'] = $form_state['values']['mergefields'][REOL_NEWSLETTER_SIGNUP_FIELD_NAME . '_value'];
   }
   // If not, and a value has been set in config, remove it.
   elseif (isset($settings['signup_value'])) {
@@ -122,7 +150,7 @@ function reol_newsletter_form_mailchimp_signup_form_submit($form, &$form_state) 
   }
 
   $settings['app_mode'] = $form_state['values']['settings']['app_mode'];
-
+  $settings['reol_description'] = $form_state['values']['reol_description'];
   reol_newsletter_set_signup_form_settings($signup_form_id, $settings);
 }
 
