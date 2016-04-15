@@ -139,19 +139,19 @@ abstract class TingClientRequest {
    * Helper to reach JSON BadgerFish values with tricky attribute names.
    */
   protected static function getBadgerFishValue($badgerFishObject, $valueName) {
-    $properties = get_object_vars($badgerFishObject);
-    if (isset($properties[$valueName])) {
-      $value = $properties[$valueName];
-      if (is_string($value)) {
-        //some values contain html entities - decode these
-        $value = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
-      }
+    if (is_object($badgerFishObject)) {
+      $properties = get_object_vars($badgerFishObject);
+      if (isset($properties[$valueName])) {
+        $value = $properties[$valueName];
+        if (is_string($value)) {
+          // Some values contain html entities - decode these.
+          $value = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
+        }
 
-      return $value;
+        return $value;
+      }
     }
-    else {
-      return NULL;
-    }
+    return NULL;
   }
 
 }
