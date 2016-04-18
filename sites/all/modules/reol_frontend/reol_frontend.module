@@ -58,6 +58,12 @@ function reol_frontend_preprocess_node(&$variables) {
     // Get image info.
     $image_field = $node_wrapper->field_ding_news_list_image->value();
     $image_uri = $image_field['uri'];
+
+    // If stage_file proxy is enabled, give it a chance to download the file.
+    if (function_exists('stage_file_proxy_process_file_uri')) {
+      stage_file_proxy_process_file_uri($image_uri);
+    }
+
     $image_for_sizing = image_style_path('reol_article_teaser_background', $image_uri);
     // Make sure image has been generated.
     image_style_create_derivative(image_style_load('reol_article_teaser_background'), $image_uri, $image_for_sizing);
