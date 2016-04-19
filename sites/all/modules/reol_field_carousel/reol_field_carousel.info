@@ -1,0 +1,8 @@
+name = Reol Field Carousel
+description = Renders a field as a carousel.
+core = 7.x
+dependencies[] = text
+package = ereolen.dk
+; stylesheets[all][] = css/reol_field_carousel.base.css
+; scripts[] = scripts/reol_field_carousel.js
+; files[] = reol_field_carousel.test
