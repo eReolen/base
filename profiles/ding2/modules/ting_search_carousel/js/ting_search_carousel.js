@@ -179,7 +179,7 @@
               }
 
               // Right side reached.
-              if ($('.rs-carousel-mask', tab.wrapper).width() - $('.rs-carousel-runner', element).width() > left) {
+              if ($('.rs-carousel-mask', tab.wrapper).width() - $('.rs-carousel-runner', tab.wrapper).width() > left) {
                 var lastIndex = tab.carousel.carousel('getNoOfPages') - 1;
                 tab.carousel.carousel('goToPage', lastIndex);
               }
@@ -212,7 +212,6 @@
 
       // Add change event to selector.
       navigation.find('.rs-carousel-select-tabs').on('change', function() {
-        console.log($(this).find(':selected').index());
         _change_tab($(this).find(':selected').index());
       });
 
