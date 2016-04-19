@@ -70,22 +70,20 @@ h1 ,
 }
 
 @include small() {
-  .page-reol-frontpage {
-    .reol-frontpage .left {
-      width: 100%;
-      .inner {
-        padding-right: 0;
-      }
+  .reol-frontpage .left {
+    width: 100%;
+    .inner {
+      padding-right: 0;
     }
+  }
 
-    .reol-frontpage .highlight {
-      float: none;
-      width: 100%;
-    }
+  .reol-frontpage .highlight {
+    float: none;
+    width: 100%;
+  }
 
-    .reol-frontpage .right{
-      display: none;
-    }
+  .reol-frontpage .right{
+    display: none;
   }
 }
 
