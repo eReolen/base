@@ -1,8 +1,9 @@
 <?php
 
 class TingClientRequestFactory {
-  public function __construct($urls) {
+  public function __construct($urls, $auth = NULL) {
     $this->urls = $urls;
+    $this->auth = $auth;
   }
 
   /**
@@ -26,49 +27,49 @@ class TingClientRequestFactory {
    * @return TingClientSearchRequest
    */
   public function getSearchRequest() {
-    return new TingClientSearchRequest($this->urls['search']);
+    return new TingClientSearchRequest($this->urls['search'], $this->auth);
   }
 
   /**
    * @return TingClientCollectionRequest
    */
   public function getCollectionRequest() {
-    return new TingClientCollectionRequest($this->urls['collection']);
+    return new TingClientCollectionRequest($this->urls['collection'], $this->auth);
   }
 
   /**
    * @return TingClientObjectRequest
    */
   public function getObjectRequest() {
-    return new TingClientObjectRequest($this->urls['object']);
+    return new TingClientObjectRequest($this->urls['object'], $this->auth);
   }
 
   /**
    * @return TingClientObjectRecommendationRequest
    */
   function getObjectRecommendationRequest() {
-    return new TingClientObjectRecommendationRequest($this->urls['recommendation']);
+    return new TingClientObjectRecommendationRequest($this->urls['recommendation'], $this->auth);
   }
 
   /**
    * @ return TingClientInfomediaArticleRequest
    */
   function getInfomediaArticleRequest(){
-    return new TingClientInfomediaArticleRequest($this->urls['infomedia']);
+    return new TingClientInfomediaArticleRequest($this->urls['infomedia'], $this->auth);
   }
 
   /**
    * @return TingClientInfomediaReviewRequest
    */
   function getInfomediaReviewRequest(){
-    return new TingClientInfomediaReviewRequest($this->urls['infomedia']);
+    return new TingClientInfomediaReviewRequest($this->urls['infomedia'], $this->auth);
   }
 
   /**
    * @return TingFulltextRequest
    */
   function getFulltextRequest() {
-    return new TingFulltextRequest($this->urls['object']);
+    return new TingFulltextRequest($this->urls['object'], $this->auth);
   }
 
 }

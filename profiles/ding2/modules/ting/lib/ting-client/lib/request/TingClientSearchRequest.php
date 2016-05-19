@@ -39,6 +39,8 @@ class TingClientSearchRequest extends TingClientRequest {
   public function getRequest() {
     $parameters = $this->getParameters();
 
+    $this->useAuth();
+
     // These defaults are always needed.
     $this->setParameter('action', 'searchRequest');
     if (!isset($parameters['format']) || empty($parameters['format'])) {
@@ -212,7 +214,7 @@ class TingClientSearchRequest extends TingClientRequest {
     $searchResult->numTotalObjects = self::getValue($searchResponse->result->hitCount);
     $searchResult->numTotalCollections = self::getValue($searchResponse->result->collectionCount);
     $searchResult->more = (strcasecmp('true', self::getValue($searchResponse->result->more)) == 0);
-    $searchResult->sortUsed = self::getValue($searchResponse->result->sortUsed);
+    $searchResult->sortUsed = isset($searchResponse->result->sortUsed) ? self::getValue($searchResponse->result->sortUsed) : '';
 
     if (isset($searchResponse->result->searchResult) && is_array($searchResponse->result->searchResult)) {
       foreach ($searchResponse->result->searchResult as $entry => $result) {
@@ -329,4 +331,3 @@ class TingClientSearchRequest extends TingClientRequest {
     return new TingClientObjectCollection($objects);
   }
 }
-

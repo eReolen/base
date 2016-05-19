@@ -2,14 +2,16 @@
 
 abstract class TingClientRequest {
   private $wsdlUrl;
+  private $auth;
   private $parameters = array();
 
   abstract public function processResponse(stdClass $response);
 
   abstract protected function getRequest();
 
-  public function __construct($wsdlUrl) {
+  public function __construct($wsdlUrl, $auth = NULL) {
     $this->wsdlUrl = $wsdlUrl;
+    $this->auth = $auth;
   }
 
 
@@ -45,6 +47,24 @@ abstract class TingClientRequest {
 
   public function getParameters() {
     return $this->parameters;
+  }
+
+  public function getAuth() {
+    if ($this->auth) {
+      return array(
+        'userIdAut' => $this->auth['name'],
+        'passwordAut' => $this->auth['pass'],
+        'groupIdAut' => $this->auth['group'],
+      );
+    }
+    return array();
+  }
+
+  public function useAuth() {
+    $auth = $this->getAuth();
+    if ($auth) {
+      $this->setParameter('authentication', $auth);
+    }
   }
 
   public function execute(TingClientRequestAdapter $adapter) {
@@ -119,20 +139,19 @@ abstract class TingClientRequest {
    * Helper to reach JSON BadgerFish values with tricky attribute names.
    */
   protected static function getBadgerFishValue($badgerFishObject, $valueName) {
-    $properties = get_object_vars($badgerFishObject);
-    if (isset($properties[$valueName])) {
-      $value = $properties[$valueName];
-      if (is_string($value)) {
-        //some values contain html entities - decode these
-        $value = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
-      }
+    if (is_object($badgerFishObject)) {
+      $properties = get_object_vars($badgerFishObject);
+      if (isset($properties[$valueName])) {
+        $value = $properties[$valueName];
+        if (is_string($value)) {
+          // Some values contain html entities - decode these.
+          $value = html_entity_decode($value, ENT_COMPAT, 'UTF-8');
+        }
 
-      return $value;
+        return $value;
+      }
     }
-    else {
-      return NULL;
-    }
+    return NULL;
   }
 
 }
-

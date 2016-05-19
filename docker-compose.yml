@@ -1,0 +1,15 @@
+web:
+  build: ./private/docker/web
+  links:
+    - database
+  volumes:
+    - './:/var/www/html'
+    - './private/docker/docker.settings.php:/var/www/html/sites/default/settings.php:ro'
+
+database:
+  image: mariadb:5
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: drupal
+    MYSQL_USER: drupal
+    MYSQL_PASSWORD: drupal

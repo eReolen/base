@@ -90,6 +90,9 @@ class TingClientObjectRequest extends TingClientRequest {
 
   public function getRequest() {
     $parameters = $this->getParameters();
+
+    $this->useAuth();
+
     // These defaults are always needed.
     $this->setParameter('action', 'getObjectRequest');
 
@@ -146,4 +149,3 @@ class TingClientObjectRequest extends TingClientRequest {
     }
   }
 }
-

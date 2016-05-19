@@ -398,8 +398,10 @@ function brin_preprocess_html(&$variables) {
  */
 function brin_preprocess_single_review(&$variables) {
   $ting_entity = $variables['#object'];
-  $classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
-  $variables['classes_array'] = array_merge($variables['classes_array'], $classes);
+  if ($ting_entity && $ting_entity->reply) {
+    $classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+    $variables['classes_array'] = array_merge($variables['classes_array'], $classes);
+  }
 }
 
 /**
@@ -446,8 +448,10 @@ function brin_preprocess_ting_object_cover(&$variables) {
   if (!isset($variables['elements']['#suppress_type_icon']) ||
     !$variables['elements']['#suppress_type_icon']) {
     $ting_entity = $variables['object'];
-    $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
-    $variables['classes'] = array_merge($variables['classes'], $add_classes);
+    if ($ting_entity && $ting_entity->reply) {
+      $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+      $variables['classes'] = array_merge($variables['classes'], $add_classes);
+    }
   }
 }
 
