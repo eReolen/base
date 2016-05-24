@@ -39,3 +39,10 @@ function breol_base_update_7102() {
     node_type_delete($type);
   }
 }
+
+/**
+ * Enable modules and theme.
+ */
+function reol_base_update_7103() {
+  module_enable(array('breol_news'), TRUE);
+}
