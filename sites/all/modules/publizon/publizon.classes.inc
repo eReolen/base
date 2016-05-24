@@ -19,6 +19,7 @@ class PublizonDingProviderException extends DingProviderUserException {
    * Rethrows the new exception.
    *
    * @throws PublizonDingProviderException
+   *   The new exception.
    */
   static public function convert(PublizonException $publizon_exception) {
     $code = $publizon_exception->getCode();
