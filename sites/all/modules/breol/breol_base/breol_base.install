@@ -43,6 +43,6 @@ function breol_base_update_7102() {
 /**
  * Enable modules and theme.
  */
-function reol_base_update_7103() {
+function breol_base_update_7103() {
   module_enable(array('breol_news'), TRUE);
 }
