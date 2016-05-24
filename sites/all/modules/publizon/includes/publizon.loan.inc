@@ -82,7 +82,7 @@ function publizon_loan_create($account, $local_id) {
     $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
   }
   catch (PublizonException $e) {
-    DingPublizonException::convert($e);
+    PublizonDingProviderException::convert($e);
   }
 }
 

@@ -56,7 +56,7 @@ function publizon_bookmark_create($account, $local_id) {
     }
   }
   catch (PublizonException $e) {
-    DingPublizonException::convert($e);
+    PublizonDingProviderException::convert($e);
   }
 }
 
@@ -83,6 +83,6 @@ function publizon_bookmark_delete($account, $local_id) {
     }
   }
   catch (PublizonException $e) {
-    DingPublizonException::convert($e);
+    PublizonDingProviderException::convert($e);
   }
 }
