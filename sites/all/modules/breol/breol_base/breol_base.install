@@ -4,3 +4,38 @@
  * @file
  * Install, update and uninstall functions for the breol_base module.
  */
+
+/**
+ * Disable unused modules.
+ */
+function breol_base_update_7101() {
+  $modules = array(
+    'ding_bookmark',
+    'ding_frontpage',
+    'ding_groups',
+    'ding_news',
+    'ding_tabroll',
+    'ding_library',
+    'ding_staff',
+    'ding_event',
+  );
+
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
+
+/**
+ * Delete leftover ding node types.
+ */
+function breol_base_update_7102() {
+  $types = array(
+    'ding_event',
+    'ding_group',
+    'ding_library',
+    'ding_news',
+    'ding_rolltab',
+  );
+  foreach ($types as $type) {
+    node_type_delete($type);
+  }
+}
