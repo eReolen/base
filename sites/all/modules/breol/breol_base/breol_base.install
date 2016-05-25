@@ -44,5 +44,5 @@ function breol_base_update_7102() {
  * Enable modules and theme.
  */
 function breol_base_update_7103() {
-  module_enable(array('breol_news'), TRUE);
+  module_enable(array('breol_news', 'breol_video'), TRUE);
 }
