@@ -1,0 +1,20 @@
+base theme = ddbasic
+name = Wille
+description = Theme for eReolen.dk for kids.
+core = 7.x
+release = 7.x-1.x
+stylesheets[all][] = css/wille.main.css
+
+;----------// Regions
+regions[header] = Header
+regions[navigation] = Navigation
+regions[content_top] = Content top
+regions[content] = Primary content
+regions[secondary_content] = Secondary content
+regions[tertiary_content] = Tertiary content
+regions[attachment_first] = Attachment first
+regions[attachment_second] = Attachment second
+regions[attachment_third] = Attachment third
+regions[attachment_fourth] = Attachment fourth
+regions[footer] = Footer
+regions[bottom] = Bottom
