@@ -1,0 +1,14 @@
+// Header.
+.site-header__inner {
+  @include outer-container;
+}
+
+// Main content.
+.main-content__inner {
+  @include outer-container;
+}
+
+// Footer.
+.footer__inner {
+  @include outer-container;
+}
