@@ -1,0 +1,66 @@
+/**
+ * Colors.
+ */
+$red-light: rgb(235, 0, 85);
+$red-medium: rgb(215, 0, 75);
+$red-dark: rgb(160, 0, 60);
+
+$light-red-light: rgb(240, 170, 170);
+$light-red-medium: rgb(215, 130, 130);
+$light-red-dark: rgb(120, 70, 70);
+
+$black-light: rgb(150, 150, 150);
+$black-medium: rgb(100, 100, 100);
+$black: rgb(50, 50, 50);
+
+$white: rgb(255, 255, 255);
+$white-medium: rgb(235, 235, 235);
+$white-dark: rgb(213, 0, 73);
+
+$yellow-light: rgb(250, 230, 200);
+$yellow-medium: rgb(235, 200, 130);
+$yellow-dark: rgb(145, 120, 80);
+
+$brown-light: rgb(235, 225, 210);
+$brown-medium: rgb(205, 190, 170);
+$brown-dark: rgb(125, 115, 100);
+
+$blue-light: rgb(220, 230, 230);
+$blue-medium: rgb(175, 195, 195);
+$blue-dark: rgb(100, 100, 100);
+
+$green-light: rgb(225, 235, 190);
+$green-medium: rgb(195, 205, 150);
+$green-dark: rgb(115, 120, 90);
+
+/**
+ * Fonts.
+ */
+
+// Base font.
+@include font-face("OpenSans Light", "../fonts/OpenSans-Light", $file-formats: ttf);
+@include font-face("OpenSans Light Italic", "../fonts/OpenSans-LightItalic", $file-formats: ttf);
+@include font-face("OpenSans Regular", "../fonts/OpenSans-Regular", $file-formats: ttf);
+@include font-face("OpenSans Regular Italic", "../fonts/OpenSans-RegularItalic", $file-formats: ttf);
+@include font-face("OpenSans Bold", "../fonts/OpenSans-Bold", $file-formats: ttf);
+@include font-face("OpenSans Bold Italic", "../fonts/OpenSans-BoldItalic", $file-formats: ttf);
+
+$fallbackFontFamily: Arial, Helvetica, Sans-Serif;
+$font-regular: 'OpenSans Regular', $fallbackFontFamily;
+$font-regular-italic: 'OpenSans Regular Italic', $fallbackFontFamily;
+$font-light: 'OpenSans Light';
+$font-light-italic: 'OpenSans Light Italic', $fallbackFontFamily;
+$font-bold: 'OpenSans Bold', $fallbackFontFamily;
+$font-bold-italic: 'OpenSans Bold Italic', $fallbackFontFamily;
+
+// Icon font.
+@include font-face("Icons", "../fonts/icomoon", $file-formats: ttf woff svg eot);
+$font-icon: 'Icons';
+
+/**
+ * Breakpoints.
+ */
+$phone: new-breakpoint(max-width 650px);
+$tablet: new-breakpoint(max-width 930px);
+$screen: new-breakpoint(max-width 1100px);
+$bigscreen: new-breakpoint(max-width 1200px);
