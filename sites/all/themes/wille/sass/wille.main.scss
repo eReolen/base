@@ -3,6 +3,8 @@
 @import "base/functions";
 @import "base/vars";
 @import "base/mixins";
+@import "base/normalize";
+@import "base/base";
 
 // Components.
 @import "component/icons";
@@ -12,6 +14,6 @@
 
 // Layout.
 @import "layout/grid";
-@import "layout/page";
+@import "layout/page_layout";
 @import "layout/header";
 @import "layout/footer";
