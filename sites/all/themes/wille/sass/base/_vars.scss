@@ -55,8 +55,10 @@ $font-bold: 'OpenSans Bold', $fallbackFontFamily;
 $font-bold-italic: 'OpenSans Bold Italic', $fallbackFontFamily;
 
 // Icon font.
-@include font-face("Icons", "../fonts/icomoon", $file-formats: ttf woff svg eot);
-$font-icon: 'Icons';
+@include font-face("icomoon", "../fonts/icomoon", $file-formats: ttf woff svg eot);
+
+// Base font vars.
+$base-font-size: 14px;
 
 /**
  * Breakpoints.

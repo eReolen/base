@@ -1,4 +1,4 @@
-#base theme = ddbasic
+#base theme = brin
 name = Wille
 description = Theme for eReolen.dk for kids.
 core = 7.x
