@@ -11,6 +11,10 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
   padding-top: em(65, $base-font-size);
   padding-bottom: em(45, $base-font-size);
 
+  ul.menu {
+
+  }
+
   a {
     &:hover {
       text-decoration: underline;
@@ -55,7 +59,20 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     // Todo(ts) - maybe this should be handled by the global columns
     // in the grid, but that is not taking effect right now, so this will do,
     // but we leave the todo as a reminder.
-    padding-right: 40px;
+    padding-right: 30px;
+    padding-left: 10px;
+
+    @include media($tablet) {
+      .attachment-first,
+      .attachment-third {
+        clear: left;
+      }
+
+      .attachment-second,
+      .attachment-fourth {
+        clear: right;
+      }
+    }
   }
 
   .pane-title {
@@ -68,6 +85,35 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     font-family: $font-light;
     font-size: em(18, $base-font-size);
     margin-bottom: em(30, $base-font-size);
+
+    &:before {
+      @include icon('.icon-arrow-right');
+      float: right;
+      -webkit-transform: rotate(90deg);
+      transform: rotate(90deg);
+      transition: all 300ms ease-out;
+
+      @include media($tablet) {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+    }
+
+    &.closed {
+
+      &:before {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+    }
+
+    &.open {
+
+      &:before {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+    }
   }
 
   .menu-item {
@@ -81,3 +127,21 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
 
 }
 
+// Responsive.
+@media (max-width: 990px) {
+  .footer {
+    ul.menu {
+      display: none;
+    }
+  }
+
+  .attachment-first,
+  .attachment-third {
+    clear: left;
+  }
+
+  .attachment-second,
+  .attachment-fourth {
+    clear: right;
+  }
+}

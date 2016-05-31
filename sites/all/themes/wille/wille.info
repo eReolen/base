@@ -5,6 +5,9 @@ core = 7.x
 release = 7.x-1.x
 stylesheets[all][] = css/wille.main.css
 
+; Add our own override.
+scripts[] = scripts/wille.main.js
+
 ;----------// Regions
 regions[header] = Header
 regions[navigation] = Navigation
