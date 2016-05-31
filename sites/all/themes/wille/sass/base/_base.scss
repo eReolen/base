@@ -1,0 +1,29 @@
+body {
+  font-family: $font-regular;
+  font-size: $base-font-size;
+  font-weight: 400;
+  letter-spacing: em(1, $base-font-size);
+}
+
+ul {
+  li {
+    list-style-type: none;
+    list-style-image: none;
+    &.leaf {
+      list-style-type: none;
+      list-style-image: none;
+    }
+  }
+}
+
+h1 {
+  @include heading(1.4rem);
+}
+
+h2 {
+  @include heading(1.2rem);
+}
+
+h3 {
+  @include heading(1rem);
+}
