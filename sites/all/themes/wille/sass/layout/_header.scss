@@ -2,3 +2,15 @@
   height: 100px;
   background: $red;
 }
+
+.logo {
+  // Relative to main menu.
+  width: calc-percentage(4,12);
+  float: left;
+
+  line-height: 100px;
+  font-size: 30px;
+  text-align: center;
+  color: white;
+  font-family: $font-mikado;
+}

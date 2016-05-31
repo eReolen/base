@@ -14,7 +14,13 @@ ul {
       list-style-image: none;
     }
   }
+
+  &.menu li {
+    margin: 0;
+  }
 }
+
+
 
 h1 {
   @include heading(1.4rem);

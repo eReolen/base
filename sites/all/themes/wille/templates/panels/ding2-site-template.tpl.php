@@ -5,6 +5,9 @@
         <?php if (!empty($content['branding'])): ?>
           <section class="topbar">
             <div class="topbar-inner">
+              <div class="logo">
+                eReolen Go!
+              </div>
               <?php print render($content['branding']); ?>
             </div>
           </section>
