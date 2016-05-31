@@ -2,6 +2,9 @@
  * Main javascript file for Wille theme.
  */
 (function($) {
+  /**
+   * Toggle the footer menus.
+   */
   Drupal.behaviors.footerToggle = {
     attach : function() {
 
@@ -22,6 +25,17 @@
         }
       });
 
+    }
+  };
+
+  /**
+   * Toggle burger menu.
+   */
+  Drupal.behaviors.burgerMenu = {
+    attach : function() {
+      $('.icon-menu').click(function() {
+        $('.topbar .menu').slideToggle(300);
+      });
     }
   };
 })(jQuery);
