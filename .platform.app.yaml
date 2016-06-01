@@ -20,4 +20,5 @@ crons:
         cmd: "cd public ; drush core-cron"
 hooks:
     deploy: |
+      cd public
       drush -y updatedb
