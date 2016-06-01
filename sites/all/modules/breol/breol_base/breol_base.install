@@ -41,8 +41,15 @@ function breol_base_update_7102() {
 }
 
 /**
- * Enable modules and theme.
+ * Enable breol_news and breol_video.
  */
 function breol_base_update_7103() {
   module_enable(array('breol_news', 'breol_video'), TRUE);
+}
+
+/**
+ * Enable breol_search_frontend.
+ */
+function breol_base_update_7104() {
+  module_enable(array('breol_search_frontend'), TRUE);
 }

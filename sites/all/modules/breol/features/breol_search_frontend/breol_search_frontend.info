@@ -1,0 +1,15 @@
+name = BReol search frontend
+description = Search pane for BReol
+core = 7.x
+package = eReolen for kids
+version = 7.x-1.0
+project = breol_search_frontend
+dependencies[] = ctools
+dependencies[] = page_manager
+dependencies[] = panels_mini
+features[ctools][] = page_manager:pages_default:1
+features[ctools][] = panels_mini:panels_default:1
+features[features_api][] = api:2
+features[page_manager_handlers][] = search_ting_search__panel_context_8c346371-2680-4304-84f1-211870159d30
+features[panels_mini][] = search
+project path = sites/all/modules/breol/features
