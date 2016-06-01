@@ -1,11 +1,14 @@
-#base theme = brin
+;base theme = brin
 name = Wille
 description = Theme for eReolen.dk for kids.
 core = 7.x
 release = 7.x-1.x
 stylesheets[all][] = css/wille.main.css
 
-; Add our own override.
+;-----------//Override.
+stylesheets[all][] = system.menus.css
+
+;-----------//Javascript.
 scripts[] = scripts/wille.main.js
 
 ;----------// Regions

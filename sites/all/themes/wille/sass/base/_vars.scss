@@ -34,6 +34,9 @@ $green-light: rgb(225, 235, 190);
 $green-medium: rgb(195, 205, 150);
 $green-dark: rgb(115, 120, 90);
 
+// other colors.
+$menu-tablet-background: rgb(236, 3, 84);
+
 /**
  * Fonts.
  */
@@ -57,8 +60,13 @@ $font-bold-italic: 'OpenSans Bold Italic', $fallbackFontFamily;
 // Icon font.
 @include font-face("icomoon", "../fonts/icomoon", $file-formats: ttf woff svg eot);
 
+// Mikado font.
+@include font-face("Mikado", "../fonts/mikado", $file-formats: eot woff woff2 ttf);
+
+$font-mikado: "Mikado";
+
 // Base font vars.
-$base-font-size: 14px;
+$base-font-size: 16px;
 
 /**
  * Breakpoints.
@@ -67,3 +75,6 @@ $phone: new-breakpoint(max-width 650px);
 $tablet: new-breakpoint(max-width 930px);
 $screen: new-breakpoint(min-width 1100px);
 $bigscreen: new-breakpoint(min-width 1200px);
+
+// z-index's
+$z-index-menu: 2;
