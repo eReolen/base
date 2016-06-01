@@ -31,3 +31,7 @@ h2 {
 h3 {
   @include heading(1rem);
 }
+
+p {
+  line-height: 1.6em;
+}
