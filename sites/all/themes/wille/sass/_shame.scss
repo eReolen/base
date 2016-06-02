@@ -1,0 +1,28 @@
+// TODO(ts) - temporary fix. Must be removed in pane.
+.node-type-breol-news {
+  .main-content h2.pane-title {
+    display: none;
+  }
+}
+
+/**
+ * Tabs theming.
+ */
+.pane-page-tabs {
+  @include outer-container;
+}
+
+#tabs {
+  @include span-columns(12);
+
+  .tabs {
+
+    li {
+      float: left;
+      padding: 10px 20px;
+      margin: 0 5px;
+      background: $brown-light;
+
+    }
+  }
+}
