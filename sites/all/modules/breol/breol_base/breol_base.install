@@ -53,3 +53,10 @@ function breol_base_update_7103() {
 function breol_base_update_7104() {
   module_enable(array('breol_search_frontend'), TRUE);
 }
+
+/**
+ * Enable breol_link.
+ */
+function breol_base_update_7105() {
+  module_enable(array('breol_link'), TRUE);
+}
