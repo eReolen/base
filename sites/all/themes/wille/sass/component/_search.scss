@@ -1,0 +1,30 @@
+.search-results__item{
+  @include row();
+
+  color: $black-medium;
+  font-family: $font-light;
+  padding: 40px 0;
+  border-bottom: 1px solid $white-dark;
+}
+
+.search-results__item__image {
+  @include span-columns(2, 12);
+
+  padding-right: 15px;
+}
+
+.search-results__item__meta-data {
+  @include span-columns(10, 12);
+}
+
+.byline {
+  font-family: $font-light-italic;
+}
+
+.title {
+  font-size: em(29, $base-font-size);
+}
+
+.title--search {
+  margin: 0;
+}
