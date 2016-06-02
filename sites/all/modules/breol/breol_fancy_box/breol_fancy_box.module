@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Module for making lists of content with fancy theming.
+ */
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function breol_fancy_box_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function breol_fancy_box_theme($existing, $type, $theme, $path) {
+  return array(
+    'breol_fancy_box' => array(
+      'variables' => array(
+        'nodes' => array()
+      ),
+      'path' => drupal_get_path('module', 'breol_fancy_box') . '/templates',
+      'template' => 'fancy',
+    ),
+  );
+}
