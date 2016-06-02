@@ -12,3 +12,7 @@
 .footer__inner {
   @include outer-container;
 }
+
+.container {
+  @include outer-container;
+}

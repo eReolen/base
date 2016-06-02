@@ -16,7 +16,7 @@
   width: 100%;
 
   ul.menu {
-    width: calc-percentage(8,12);
+    width: calc-percentage(9,12);
     float: left;
 
     @include media($tablet) {

@@ -10,13 +10,11 @@ hide($content);
 ?>
 
 <div class="article article--breol-news">
-  <div class="article__cover">
-    <div class="article__cover__image" style="background-image: url(<?php print($file_uri); ?>)">
-      <div class="article__cover__image__overlay"></div>
-      <div class="article__content">
-        <h2><?php print($node->title); ?></h2>
-        <?php print render($content['body']); ?>
-      </div>
+  <div class="article__cover" style="background-image: url(<?php print($file_uri); ?>)">
+    <div class="article__cover__overlay"></div>
+    <div class="article__cover__content">
+      <h2><?php print($node->title); ?></h2>
+      <?php print render($content['body']); ?>
     </div>
   </div>
   <div class="article__carousel">
