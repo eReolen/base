@@ -17,7 +17,10 @@ function wille_preprocess_node(&$variables, $hook) {
   $node = $variables['node'];
   if ($node->type === 'breol_news') {
     // Get file url for cover image.
-    $file_uri = file_create_url($node->field_breol_cover_image[LANGUAGE_NONE][0]['uri']);
-    $variables['file_uri'] = $file_uri;
+    $variables['file_uri'] = null;
+    if (!empty($node->field_breol_cover_image[LANGUAGE_NONE][0])) {
+      $file_uri = file_create_url($node->field_breol_cover_image[LANGUAGE_NONE][0]['uri']);
+      $variables['file_uri'] = $file_uri;
+    }
   }
 }
