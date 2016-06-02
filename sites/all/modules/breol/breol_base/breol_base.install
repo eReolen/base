@@ -57,6 +57,6 @@ function breol_base_update_7104() {
 /**
  * Enable breol_link.
  */
-function breol_base_update_7105() {
+function breol_base_update_7106() {
   module_enable(array('breol_link'), TRUE);
 }
