@@ -8,6 +8,7 @@ stylesheets[all][] = css/wille.main.css
 ;-----------//Override.
 stylesheets[all][] = system.menus.css
 stylesheets[all][] = panels.css
+stylesheets[all][] = search.css
 
 ;-----------//Javascript.
 scripts[] = scripts/wille.main.js

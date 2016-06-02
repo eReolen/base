@@ -4,3 +4,24 @@
   font-weight: 400;
   margin: 0 0 20px 0;
 }
+
+// Button.
+@mixin button($color){
+  text-decoration: none;
+  background: $color;
+  border-radius: 25px;
+  padding: 18px 20px;
+  color: white;
+  min-width: 250px;
+  display: inline-block;
+  text-transform: uppercase;
+
+  &:hover {
+    background: lighten($color, 3);
+  }
+
+  &:before {
+    @include icon('.icon-arrow-right-funny');
+    float: right;
+  }
+}
