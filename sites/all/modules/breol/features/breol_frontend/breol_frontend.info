@@ -1,0 +1,12 @@
+name = BReol frontend
+description = Various frontend bits for eReolen for kids
+core = 7.x
+package = eReolen for kids
+version = 7.x-1.0
+project = breol_frontend
+dependencies[] = ctools
+dependencies[] = page_manager
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_handlers][] = site_template__breol-site-template
+project path = sites/all/modules/breol/features

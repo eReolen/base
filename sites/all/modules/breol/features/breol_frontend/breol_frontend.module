@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BReol frontend feature.
+ */
+
+include_once 'breol_frontend.features.inc';
