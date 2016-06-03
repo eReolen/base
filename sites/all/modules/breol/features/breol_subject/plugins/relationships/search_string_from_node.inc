@@ -24,7 +24,8 @@ function breol_subject_search_string_from_node_context($context, $conf) {
   // If unset it wants a generic, unfilled context, which is just NULL.
   if (!empty($context->data)) {
     $wrapper = entity_metadata_wrapper('node', $context->data);
-    if ($string = $wrapper->field_search_string->value()) {
+    if (isset($wrapper->field_search_string) &&
+      $string = $wrapper->field_search_string->value()) {
       return ctools_context_create('string', $string);
     }
   }
