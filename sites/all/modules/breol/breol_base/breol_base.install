@@ -67,3 +67,10 @@ function breol_base_update_7105() {
 function breol_base_update_7106() {
   module_enable(array('breol_link'), TRUE);
 }
+
+/**
+ * Enable breol_frontend.
+ */
+function breol_base_update_7107() {
+  module_enable(array('breol_frontend'), TRUE);
+}

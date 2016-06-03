@@ -21,7 +21,7 @@ function breol_subject_ctools_plugin_api($module = NULL, $api = NULL) {
  */
 function breol_subject_node_info() {
   $items = array(
-    'subject' => array(
+    'breol_subject' => array(
       'name' => t('Tema'),
       'base' => 'node_content',
       'description' => '',

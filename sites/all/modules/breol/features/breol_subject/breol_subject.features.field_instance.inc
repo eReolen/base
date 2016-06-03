@@ -10,9 +10,9 @@
 function breol_subject_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-subject-field_search_string'
-  $field_instances['node-subject-field_search_string'] = array(
-    'bundle' => 'subject',
+  // Exported field_instance: 'node-breol_subject-field_search_string'
+  $field_instances['node-breol_subject-field_search_string'] = array(
+    'bundle' => 'breol_subject',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -21,7 +21,7 @@ function breol_subject_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -45,7 +45,7 @@ function breol_subject_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 32,
+      'weight' => 1,
     ),
   );
 

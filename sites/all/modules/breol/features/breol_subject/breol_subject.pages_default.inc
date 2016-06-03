@@ -43,7 +43,7 @@ function breol_subject_default_page_manager_handlers() {
           'name' => 'node_type',
           'settings' => array(
             'type' => array(
-              'subject' => 'subject',
+              'breol_subject' => 'breol_subject',
             ),
           ),
           'context' => 'argument_entity_id:node_1',
