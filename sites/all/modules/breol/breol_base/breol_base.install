@@ -81,3 +81,10 @@ function breol_base_update_7107() {
 function breol_base_update_7108() {
   module_enable(array('breol_section'), TRUE);
 }
+
+/**
+ * Enable breol_page.
+ */
+function breol_base_update_7109() {
+  module_enable(array('breol_page'), TRUE);
+}
