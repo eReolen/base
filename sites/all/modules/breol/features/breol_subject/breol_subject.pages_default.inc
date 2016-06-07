@@ -44,6 +44,7 @@ function breol_subject_default_page_manager_handlers() {
           'settings' => array(
             'type' => array(
               'breol_subject' => 'breol_subject',
+              'breol_section' => 'breol_section',
             ),
           ),
           'context' => 'argument_entity_id:node_1',

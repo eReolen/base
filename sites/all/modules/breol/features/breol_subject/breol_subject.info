@@ -33,5 +33,5 @@ features[variable][] = node_options_breol_subject
 features[variable][] = node_preview_breol_subject
 features[variable][] = node_submitted_breol_subject
 features[variable][] = pathauto_node_breol_subject_pattern
-mtime = 1464934916
+mtime = 1464935191
 project path = sites/all/modules/breol/features
