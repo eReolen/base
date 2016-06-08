@@ -21,6 +21,10 @@ function breol_fancy_box_fancy_box_content_type_render($subtype, $conf, $panel_a
   // Get the queue by its machine so we can extract the id.
   $queue = nodequeue_load_queue_by_name('ereol_frontpage_queue');
 
+  if (empty($queue)) {
+    return;
+  }
+
   // Get all nodes in the queue.
   $nodes = nodequeue_load_nodes($queue->qid, FALSE, 0, $queue->size);
 
