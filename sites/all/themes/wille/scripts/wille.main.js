@@ -6,9 +6,9 @@
    * Toggle the footer menus.
    */
   Drupal.behaviors.footerToggle = {
-    attach : function() {
+    attach : function(context, settings) {
 
-      $('.footer .pane-title').click(function() {
+      $('.footer .pane-title', context).click(function() {
 
         var element = $(this).next().find('ul');
 
@@ -32,9 +32,9 @@
    * Toggle burger menu.
    */
   Drupal.behaviors.burgerMenu = {
-    attach : function() {
-      $('.icon-menu').click(function() {
-        $('.topbar .menu').slideToggle(300);
+    attach : function(context, settings) {
+      $('.icon-menu', context).click(function() {
+        $('.topbar .menu').slideToggle(200);
       });
     }
   };
