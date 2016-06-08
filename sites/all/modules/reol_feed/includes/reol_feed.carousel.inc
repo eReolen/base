@@ -16,14 +16,15 @@ function reol_feed_feeds_carousel() {
   $a_feed = new SimpleXMLElement('<feed></feed>');
 
   // Fetch all objects, and add to relevant feeds.
-  foreach ($searches as $index => $search) {
-    $results = _ting_search_carousel_get_content($index);
+  foreach ($searches as $search) {
+    $results = ting_search_carousel_get_covers($search['query'], 0, 50);
 
     $e_item = NULL;
     $e_books = NULL;
     $a_item = NULL;
     $a_books = NULL;
-    foreach ($results as $result) {
+    foreach ($results['collections'] as $result) {
+      error_log($result);
       $ting_object = ding_entity_load($result->id);
 
       // Determine where to put this book.
