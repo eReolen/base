@@ -32,6 +32,24 @@ function breol_video_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'teaser_medium' => array(
+        'label' => 'hidden',
+        'module' => 'file_entity',
+        'settings' => array(
+          'file_view_mode' => 'teaser_medium',
+        ),
+        'type' => 'file_rendered',
+        'weight' => 0,
+      ),
+      'teaser_small' => array(
+        'label' => 'hidden',
+        'module' => 'file_entity',
+        'settings' => array(
+          'file_view_mode' => 'teaser_small',
+        ),
+        'type' => 'file_rendered',
+        'weight' => 0,
+      ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_breol_video',
