@@ -51,7 +51,7 @@ function breol_fancy_box_install() {
     $nodequeue->show_in_tab = 1;
     $nodequeue->show_in_links = 1;
     $nodequeue->reference = '0';
-    $nodequeue->reverse = 1;
+    $nodequeue->reverse = 0;
     $nodequeue->i18n = 0;
     $nodequeue->roles = array();
     $nodequeue->types = array(
