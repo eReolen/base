@@ -5,3 +5,28 @@
  */
 
 include_once 'breol_frontend.features.inc';
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function breol_frontend_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['teaser_small'] = array(
+    'label' => t('Teaser Small'),
+    'custom settings' => TRUE,
+  );
+
+  $entity_info['node']['view modes']['teaser_medium'] = array(
+    'label' => t('Teaser Medium'),
+    'custom settings' => TRUE,
+  );
+
+  $entity_info['file']['view modes']['teaser_small'] = array(
+    'label' => t('Teaser Small'),
+    'custom settings' => TRUE,
+  );
+
+  $entity_info['file']['view modes']['teaser_medium'] = array(
+    'label' => t('Teaser Medium'),
+    'custom settings' => TRUE,
+  );
+}

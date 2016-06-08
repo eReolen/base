@@ -64,7 +64,7 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->panel = 'bottom';
     $pane->type = 'block';
     $pane->subtype = 'block-1';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 0,
@@ -86,7 +86,7 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->panel = 'branding';
     $pane->type = 'pane_header';
     $pane->subtype = 'pane_header';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array();
     $pane->cache = array();
@@ -106,7 +106,7 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->panel = 'branding';
     $pane->type = 'block';
     $pane->subtype = 'menu-menu-tabs-menu';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 1,
@@ -124,6 +124,29 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->uuid = '10bf5aa9-f209-42b0-bba4-cc6ba8aee079';
     $display->content['new-10bf5aa9-f209-42b0-bba4-cc6ba8aee079'] = $pane;
     $display->panels['branding'][1] = 'new-10bf5aa9-f209-42b0-bba4-cc6ba8aee079';
+    $pane = new stdClass();
+    $pane->pid = 'new-94a239e5-00e0-4807-917f-df52c53405e7';
+    $pane->panel = 'branding';
+    $pane->type = 'block';
+    $pane->subtype = 'menu_block-1';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+      'style' => 'default',
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = '94a239e5-00e0-4807-917f-df52c53405e7';
+    $display->content['new-94a239e5-00e0-4807-917f-df52c53405e7'] = $pane;
+    $display->panels['branding'][2] = 'new-94a239e5-00e0-4807-917f-df52c53405e7';
     $pane = new stdClass();
     $pane->pid = 'new-1769a64d-2cbe-490d-87aa-a2c3ee082997';
     $pane->panel = 'content';
@@ -320,7 +343,7 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->panel = 'header';
     $pane->type = 'block';
     $pane->subtype = 'search-form';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 1,
@@ -343,7 +366,7 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->panel = 'header';
     $pane->type = 'block';
     $pane->subtype = 'user-login';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 1,
@@ -362,34 +385,11 @@ function breol_frontend_default_page_manager_handlers() {
     $display->content['new-51d74d8b-0aeb-4c73-8c20-b5d4fdd40a39'] = $pane;
     $display->panels['header'][1] = 'new-51d74d8b-0aeb-4c73-8c20-b5d4fdd40a39';
     $pane = new stdClass();
-    $pane->pid = 'new-94a239e5-00e0-4807-917f-df52c53405e7';
-    $pane->panel = 'navigation';
-    $pane->type = 'block';
-    $pane->subtype = 'menu_block-1';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-      'style' => 'default',
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = '94a239e5-00e0-4807-917f-df52c53405e7';
-    $display->content['new-94a239e5-00e0-4807-917f-df52c53405e7'] = $pane;
-    $display->panels['navigation'][0] = 'new-94a239e5-00e0-4807-917f-df52c53405e7';
-    $pane = new stdClass();
     $pane->pid = 'new-e785bc73-a343-41ea-b6c3-be046d045b5d';
     $pane->panel = 'navigation';
     $pane->type = 'subject_menu';
     $pane->subtype = 'subject_menu';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array();
     $pane->cache = array();
@@ -398,11 +398,11 @@ function breol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 0;
     $pane->locks = array();
     $pane->uuid = 'e785bc73-a343-41ea-b6c3-be046d045b5d';
     $display->content['new-e785bc73-a343-41ea-b6c3-be046d045b5d'] = $pane;
-    $display->panels['navigation'][1] = 'new-e785bc73-a343-41ea-b6c3-be046d045b5d';
+    $display->panels['navigation'][0] = 'new-e785bc73-a343-41ea-b6c3-be046d045b5d';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
