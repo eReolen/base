@@ -66,3 +66,65 @@ function breol_fancy_box_install() {
     nodequeue_save($nodequeue);
   }
 }
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function breol_fancy_box_preprocess_node(&$variables, $hook) {
+  if (!empty($variables['field_color'][0]['rgb'])) {
+    $rgb = _breol_fancy_box_hex2rgb($variables['field_color'][0]['rgb']);
+    $variables['rgba_background'] = 'style="background:rgba(' . implode(",", $rgb) . ', 0.7);"';
+  }
+
+  $view_modes = array('teaser_small', 'teaser_medium');
+  $node_types = array('link', 'breol_video', 'breol_news');
+
+  if (in_array($variables['view_mode'], $view_modes) &&
+    in_array($variables['type'], $node_types)) {
+
+    $variables['teaser_title'] =  $variables['title'];
+
+    $node = $variables['node'];
+
+    switch ($variables['type']) {
+      case 'link':
+        $summary = strip_tags(render($variables['content']['body']));
+        $variables['teaser_type'] = t('link');
+        $variables['teaser_caption'] = $summary;
+        $variables['teaser_link'] = l(t('view more'), url($variables['field_breol_link'][0]['url']));
+        break;
+
+      case 'breol_video':
+        $variables['teaser_type'] = t('video');
+        $variables['teaser_caption'] = $variables['field_breol_video'][0]['filename'];
+        $variables['teaser_link'] = l(t('view more'), url($variables['node_url']));
+        break;
+
+      case 'breol_news':
+        $variables['teaser_type'] = t('news');
+        $summary = strip_tags(render($variables['content']['body']));
+        $variables['teaser_caption'] = $summary;
+        $variables['teaser_link'] = l(t('view more'), url($variables['node_url']));
+        break;
+    }
+  }
+}
+
+/**
+ * Convert hex to rgb color value.
+ */
+function _breol_fancy_box_hex2rgb($hex) {
+   $hex = str_replace("#", "", $hex);
+
+   if(strlen($hex) == 3) {
+      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+   } else {
+      $r = hexdec(substr($hex,0,2));
+      $g = hexdec(substr($hex,2,2));
+      $b = hexdec(substr($hex,4,2));
+   }
+   $rgb = array($r, $g, $b);
+   return $rgb; // returns an array with the rgb values
+}

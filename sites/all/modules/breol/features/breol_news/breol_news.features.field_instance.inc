@@ -36,15 +36,19 @@ function breol_news_field_default_field_instances() {
       'teaser_medium' => array(
         'label' => 'hidden',
         'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_plain',
+        'settings' => array(
+          'trim_length' => 50,
+        ),
+        'type' => 'text_summary_or_trimmed',
         'weight' => 1,
       ),
       'teaser_small' => array(
         'label' => 'hidden',
         'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_plain',
+        'settings' => array(
+          'trim_length' => 50,
+        ),
+        'type' => 'text_summary_or_trimmed',
         'weight' => 1,
       ),
     ),
