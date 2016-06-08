@@ -19,7 +19,7 @@
     width: calc-percentage(9,12);
     float: left;
 
-    @include media($tablet) {
+    @include media($tablet-l) {
       height: auto;
       float: left;
       width: 100%;

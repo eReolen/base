@@ -1,0 +1,68 @@
+// Layout.
+.article--teaser--medium {
+  @include span-columns(6);
+
+  @include media($tablet-p) {
+    @include span-columns(8);
+  }
+
+  @include media($phone) {
+    @include span-columns(12);
+  }
+}
+
+.article--teaser--small {
+  @include span-columns(3);
+
+  @include media($tablet-p) {
+    @include span-columns(4);
+
+  }
+
+  @include media($phone) {
+    @include span-columns(6);
+  }
+}
+
+.article--teaser__overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.article--teaser {
+  max-height: 295px;
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  margin: 0;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.fancy-box__push-left {
+
+  .article--teaser {
+    @include shift(3);
+
+    @include media($tablet-p) {
+      margin-left: 0;
+    }
+  }
+}
+
+.fancy-box__push-right {
+
+  .article--teaser {
+    margin-right: percentage(3/12);
+
+    @include media($tablet-p) {
+      margin-right: 0;
+    }
+  }
+}

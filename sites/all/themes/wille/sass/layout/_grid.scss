@@ -25,7 +25,7 @@ $visual-grid-index: front;
   }
 }
 
-@include media($tablet) {
+@include media($tablet-l) {
   [class*='span-'] {
     @include span-columns(12);
   }

@@ -25,3 +25,10 @@
     float: right;
   }
 }
+
+// Typo.
+@mixin reHeight($columns, $total){
+  $percentage: calc-percentage($columns, $total);
+  padding-bottom: $percentage / 2;
+  height: 0;
+}
