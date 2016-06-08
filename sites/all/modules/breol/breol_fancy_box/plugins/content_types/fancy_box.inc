@@ -8,7 +8,7 @@ $plugin = array(
   'title' => t('Fancy Box'),
   'description' => t('List of content with fancy theming'),
   'single' => TRUE,
-  'category' => t('BReol'),
+  'category' => 'eReolen for kids',
 );
 
 /**
@@ -33,6 +33,11 @@ function breol_fancy_box_fancy_box_content_type_render($subtype, $conf, $panel_a
 
   // Render the block.
   $block = new stdClass();
+
+  // Set title.
+  $block->title = t('Nyt og spændende');
+
+  // Set content.
   $block->content = theme('breol_fancy_box', array(
     'nodes' => $nodes,
     'layout' => $layout,

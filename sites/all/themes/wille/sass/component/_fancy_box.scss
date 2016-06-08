@@ -164,3 +164,16 @@
     }
   }
 }
+
+.pane-fancy-box {
+  @include outer-container;
+
+  padding: 100px 0;
+
+  > .pane-title {
+    font-size: em(26, $base-font-size);
+    font-family: $font-light;
+    color: $black-medium;
+    margin-bottom: 40px;
+  }
+}
