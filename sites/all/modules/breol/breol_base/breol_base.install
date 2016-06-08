@@ -81,3 +81,11 @@ function breol_base_update_7107() {
 function breol_base_update_7108() {
   module_enable(array('breol_fancy_box'), TRUE);
 }
+
+/**
+ * Enable and set Wille as default theme.
+ */
+function breol_base_update_7109() {
+  theme_enable(array('wille'));
+  variable_set('theme_default', 'wille');
+}
