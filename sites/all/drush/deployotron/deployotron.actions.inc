@@ -30,9 +30,13 @@ namespace Deployotron {
         'NewRelicNotificaton',
       ),
       'omg' => array(
+        'SiteOffline',
         'OMGPrepare',
         'DeployCode',
+        'CreateVersionTxt',
         'RestoreDatabase',
+        'SiteOnline',
+        'ClearCache',
       ),
     );
 
@@ -45,27 +49,33 @@ namespace Deployotron {
         foreach (static::$actionMapping[$name] as $class_name) {
           $class_name = '\\Deployotron\\Actions\\' . $class_name;
           $action = new $class_name($site);
-          // @todo drush_get_option_list() doesn't play well with commas.
-          if ($action->enabled()) {
-            if ($commands = drush_get_option_list('pre-' . $action->getSwitchSuffix(), FALSE)) {
-              foreach ($commands as $command) {
-                $actions[] = new Actions\CommandAction($site, $command);
-              }
-            }
-          }
-
-          $actions[] = $action;
-
-          if ($action->enabled()) {
-            if ($commands = drush_get_option_list('post-' . $action->getSwitchSuffix(), FALSE)) {
-              foreach ($commands as $command) {
-                $actions[] = new Actions\CommandAction($site, $command);
-              }
-            }
-          }
+          $actions = array_merge($actions,
+                                 static::getActionCommands('pre', $action, $site),
+                                 array($action),
+                                 static::getActionCommands('post', $action, $site));
         }
         return $actions;
       }
+    }
+
+    /**
+     * Gets pre/post commands for an action.
+     */
+    static protected function getActionCommands($type, $action, $site) {
+      $actions = array();
+      $switch = $type . '-' . $action->getSwitchSuffix();
+      if ($action->enabled() && !drush_get_option('no-' . $switch, FALSE)) {
+        // @todo drush_get_option_list() doesn't play well with commas.
+        if ($commands = drush_get_option_list($switch, FALSE)) {
+          foreach ($commands as $command) {
+            if (!empty($command)) {
+              $actions[] = new Actions\CommandAction($site, $command);
+            }
+          }
+        }
+      }
+
+      return $actions;
     }
 
     /**
@@ -312,7 +322,7 @@ namespace Deployotron {
      * @return bool
      *   Success or failure.
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       return FALSE;
     }
 
@@ -524,7 +534,7 @@ namespace Deployotron {
         if ($this->sh('git rev-parse HEAD')) {
           $sha = trim($this->shOutput());
           // Confirm that we can see the HEAD locally.
-          if ($this->shLocal('git show ' . $sha)) {
+          if ($this->shLocal('git show -s ' . $sha)) {
             self::$headShas[$name] = $sha;
           }
           else {
@@ -564,7 +574,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       $success = $this->sh($this->command);
       drush_print($this->shOutput());
       if (!$success) {
@@ -611,7 +621,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       // Fetch the latest changes from upstream.
       if (!$this->sh('git fetch')) {
         $message = $this->shOutput();
@@ -736,7 +746,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       // Some useful information for other actions.
       $state['requested_branch'] = drush_get_option('branch', NULL);
       $state['requested_tag'] = drush_get_option('tag', NULL);
@@ -779,8 +789,8 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
-      if (!$this->drush('variable-set', array('maintainance_mode', 1))) {
+    public function run(\ArrayObject $state) {
+      if (!$this->drush('variable-set', array('maintenance_mode', 1))) {
         return drush_set_error(dt('Error setting site offline.'));
       }
       return TRUE;
@@ -792,7 +802,7 @@ namespace Deployotron\Actions {
     public function rollback() {
       // Use the online action as rollback.
       $online = new SiteOnline($this->site);
-      $online->run(array());
+      $online->run(new \ArrayObject());
     }
   }
 
@@ -809,8 +819,8 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
-      if (!$this->drush('variable-set', array('maintainance_mode', 0))) {
+    public function run(\ArrayObject $state) {
+      if (!$this->drush('variable-set', array('maintenance_mode', 0))) {
         return drush_set_error(dt('Error setting site online.'));
       }
       return TRUE;
@@ -822,7 +832,7 @@ namespace Deployotron\Actions {
     public function rollback() {
       // Use the online action as rollback.
       $online = new SiteOffline($this->site);
-      $online->run(array());
+      $online->run(new \ArrayObject());
     }
   }
 
@@ -858,7 +868,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       if (!$this->drush('sql-dump', array(), array('no-ordered-dump' => TRUE, 'result-file' => $this->dumpFilename()))) {
         return drush_set_error('Error dumping database.');
       }
@@ -915,7 +925,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       if (!$this->drush('sql-connect', array(), array('pipe' => TRUE))) {
         return drush_set_error('Error getting database connection setup.');
       }
@@ -994,7 +1004,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       if (count($this->deleteDumps)) {
         $this->sh('rm ' . implode(" ", array_map('drush_escapeshellarg', $this->deleteDumps)));
       }
@@ -1017,7 +1027,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       if (!$this->drush('updb', array(), array('yes' => TRUE))) {
         return drush_set_error(dt('Error running database updates.'));
       }
@@ -1037,7 +1047,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       if (!$this->drush('cc', array('all'), array())) {
         return drush_set_error(dt('Error clearing cache.'));
       }
@@ -1100,7 +1110,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       // Doing nothing.
       return TRUE;
     }
@@ -1119,7 +1129,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       if (!empty($state['deployed_sha'])) {
         // Ask git which tags points to this commit.
         $this->shLocal('git tag --points-at ' . $state['deployed_sha']);
@@ -1173,7 +1183,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       if (!empty($state['deployed_sha'])) {
         $this->shLocal('git tag --points-at ' . $state['deployed_sha']);
         $tags = implode(', ', $this->shOutputArray());
@@ -1264,7 +1274,7 @@ namespace Deployotron\Actions {
     /**
      * {@inheritdoc}
      */
-    public function run(array $state) {
+    public function run(\ArrayObject $state) {
       if (!empty($state['deployed_sha'])) {
         $this->shLocal('git tag --points-at ' . $state['deployed_sha']);
         $tags = implode(', ', $this->shOutputArray());

@@ -142,7 +142,7 @@ function reol_feed_feeds_add_news_item($feed, $source, $node) {
       $ting_object = $ting_objects[$tid];
 
       // Make sure we have cover.
-      ting_covers_load(array($ting_object->id));
+      ting_covers_get(array($ting_object->id));
 
       $isbn = $isbns->addChild('isbn');
       $isbn->{0} = reol_base_get_isbn($ting_object->localId);
@@ -246,7 +246,7 @@ function reol_feed_feeds_add_review($feed, $source, $review) {
   $node_link->addAttribute('type', 'content');
 
   // Make sure we have cover.
-  ting_covers_load(array($review->ting_entity->id));
+  ting_covers_get(array($review->ting_entity->id));
 
   $cover_uri = file_create_url(ting_covers_object_path($review->ting_entity->id));
 

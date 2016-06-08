@@ -29,9 +29,10 @@ function subject_menu_content_type_render($subtype, $conf, $panel_args, $context
     ->propertyOrderBy('title', 'DESC');
 
   $res = $query->execute();
-  if ($res['node']) {
+  if (!empty($res['node'])) {
     $nodes = node_load_multiple(array_keys($res['node']));
-    $block->content = drupal_render(node_view_multiple($nodes));
+    $build = node_view_multiple($nodes);
+    $block->content = drupal_render($build);
   }
 
   return $block;
