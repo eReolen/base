@@ -96,3 +96,10 @@ function breol_base_update_7109() {
 function breol_base_update_7110() {
   module_enable(array('breol_fancy_box'), TRUE);
 }
+
+/**
+ * Enable breol_frontpage.
+ */
+function breol_base_update_7111() {
+  module_enable(array('breol_frontpage'), TRUE);
+}
