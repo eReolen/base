@@ -2,7 +2,7 @@
   height: 100px;
   background: $red;
 
-   @include media($tablet) {
+   @include media($tablet-l) {
     height: auto;
     float: left;
     width: 100%;
@@ -20,7 +20,12 @@
   color: white;
   font-family: $font-mikado;
 
-  @include media($tablet) {
+  a {
+    text-decoration: none;
+    color: $white;
+  }
+
+  @include media($tablet-l) {
     height: auto;
     float: left;
     width: 100%;

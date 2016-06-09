@@ -2,6 +2,6 @@
 // $items: number of items element represents.
 // $total-items: represents number of total items.
 @function calc-percentage($items, $total-items) {
-  $width: $total-items - $items;
+  // $width: $total-items - $items;
   @return ($items / $total-items) * 100%;
 }

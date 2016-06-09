@@ -6,7 +6,7 @@
           <section class="topbar">
             <div class="topbar-inner">
               <div class="logo">
-                <span>eReolen Go!</span>
+                <a href="/">eReolen Go!</a>
                 <div class="top-burger"><i class="icon-menu"></i></div>
               </div>
               <?php print render($content['branding']); ?>

@@ -1,0 +1,4 @@
+name = BReol Fancy Box
+description = "Module for making lists of content with fancy theming"
+core = 7.x
+package = eReolen for kids

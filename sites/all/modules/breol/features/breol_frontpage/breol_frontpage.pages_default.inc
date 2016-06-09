@@ -13,9 +13,9 @@ function breol_frontpage_default_page_manager_pages() {
   $page->api_version = 1;
   $page->name = 'breol_frontpage';
   $page->task = 'page';
-  $page->admin_title = 'BReol Frontpage';
+  $page->admin_title = 'Breol Frontpage';
   $page->admin_description = '';
-  $page->path = 'frontpage';
+  $page->path = 'breol_frontpage';
   $page->access = array();
   $page->menu = array();
   $page->arguments = array();
@@ -54,18 +54,18 @@ function breol_frontpage_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
-  $display->uuid = '2a3c812e-559f-4dd6-9cdf-d09f7d0b528b';
+  $display->uuid = '2cbec1ba-5a65-4f9f-8403-59356b3cbae6';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-8c751b38-ed52-45ea-a0f0-bebe552612fd';
+    $pane->pid = 'new-9282ec55-a017-4fce-b98a-7389859efaf7';
     $pane->panel = 'middle';
-    $pane->type = 'carousel';
-    $pane->subtype = 'carousel';
+    $pane->type = 'fancy_box';
+    $pane->subtype = 'fancy_box';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
+      'override_title' => 0,
       'override_title_text' => '',
       'override_title_heading' => 'h2',
     );
@@ -77,14 +77,14 @@ function breol_frontpage_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '8c751b38-ed52-45ea-a0f0-bebe552612fd';
-    $display->content['new-8c751b38-ed52-45ea-a0f0-bebe552612fd'] = $pane;
-    $display->panels['middle'][0] = 'new-8c751b38-ed52-45ea-a0f0-bebe552612fd';
+    $pane->uuid = '9282ec55-a017-4fce-b98a-7389859efaf7';
+    $display->content['new-9282ec55-a017-4fce-b98a-7389859efaf7'] = $pane;
+    $display->panels['middle'][0] = 'new-9282ec55-a017-4fce-b98a-7389859efaf7';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-8c751b38-ed52-45ea-a0f0-bebe552612fd';
+  $display->title_pane = 'new-9282ec55-a017-4fce-b98a-7389859efaf7';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
-  $pages['breol_frontpage'] = $page;
+  $pages[''] = $page;
 
   return $pages;
 
