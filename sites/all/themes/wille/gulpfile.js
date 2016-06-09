@@ -32,7 +32,7 @@ gulp.task('sass:watch', function () {
 
 // JsHint.
 gulp.task('jshint', function () {
-  return gulp.src(['gulfile.js', './js/*.js'])
+  return gulp.src(['gulpfile.js', './js/*.js'])
     .pipe(jshint())
     // Get stylish output.
     .pipe(jshint.reporter(stylish))

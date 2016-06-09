@@ -13,3 +13,9 @@ database:
     MYSQL_DATABASE: drupal
     MYSQL_USER: drupal
     MYSQL_PASSWORD: drupal
+
+gulp:
+  image: reload/gulp:3.9.1
+  volumes:
+    - './sites/all/themes/wille:/src'
+
