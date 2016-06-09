@@ -38,3 +38,19 @@
   text-align: center;
   border-radius: 50%;
 }
+
+// Titles in general. TODO(ts) - theme it right, but
+// this point it is to eraly to tell this should be general.
+.pane-node-content {
+
+  @include outer-container;
+
+  padding: 100px 0;
+
+  > .pane-title {
+    font-size: em(26, $base-font-size);
+    font-family: $font-light;
+    color: $black-medium;
+    margin-bottom: 40px;
+  }
+}

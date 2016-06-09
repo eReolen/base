@@ -20,6 +20,11 @@
   color: white;
   font-family: $font-mikado;
 
+  a {
+    text-decoration: none;
+    color: $white;
+  }
+
   @include media($tablet-l) {
     height: auto;
     float: left;
