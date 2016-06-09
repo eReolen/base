@@ -56,6 +56,9 @@ function breol_fancy_box_fancy_box_content_type_edit_form($form, &$form_state) {
   return $form;
 }
 
+/**
+ * Render a node for the fancy box.
+ */
 function breol_fancy_box_render_node($node, $layout) {
 
   $view_mode = 'teaser_' . $layout['type'];
@@ -72,21 +75,20 @@ function breol_fancy_box_render_node($node, $layout) {
  * from the admin interface somehow.
  *
  * @return array
+ *   The layouts with 'type' and 'attributes' keys.
  */
 function breol_fancy_box_get_layout() {
   return array(
     array(
       'type' => 'medium',
       'attributes' => array(
-        'class' => array(
-        ),
+        'class' => array(),
       ),
     ),
     array(
       'type' => 'small',
       'attributes' => array(
-        'class' => array(
-        ),
+        'class' => array(),
       ),
     ),
     array(
@@ -100,8 +102,7 @@ function breol_fancy_box_get_layout() {
     array(
       'type' => 'medium',
       'attributes' => array(
-        'class' => array(
-        ),
+        'class' => array(),
       ),
     ),
     array(
@@ -115,8 +116,7 @@ function breol_fancy_box_get_layout() {
     array(
       'type' => 'small',
       'attributes' => array(
-        'class' => array(
-        ),
+        'class' => array(),
       ),
     ),
   );
