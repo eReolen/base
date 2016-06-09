@@ -76,10 +76,10 @@ function breol_base_update_7107() {
 }
 
 /**
- * Enable breol_fancy_box.
+ * Enable breol_section.
  */
 function breol_base_update_7108() {
-  module_enable(array('breol_fancy_box'), TRUE);
+  module_enable(array('breol_section'), TRUE);
 }
 
 /**
@@ -88,4 +88,11 @@ function breol_base_update_7108() {
 function breol_base_update_7109() {
   theme_enable(array('wille'));
   variable_set('theme_default', 'wille');
+}
+
+/**
+ * Enable breol_fancy_box.
+ */
+function breol_base_update_7110() {
+  module_enable(array('breol_fancy_box'), TRUE);
 }

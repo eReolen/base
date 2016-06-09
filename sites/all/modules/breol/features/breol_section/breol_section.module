@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BReol section feature.
+ */
+
+include_once 'breol_section.features.inc';
