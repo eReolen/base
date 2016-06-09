@@ -83,9 +83,16 @@ function breol_base_update_7108() {
 }
 
 /**
- * Enable and set Wille as default theme.
+ * Enable breol_page.
  */
 function breol_base_update_7109() {
+  module_enable(array('breol_page'), TRUE);
+}
+
+/**
+ * Enable and set Wille as default theme.
+ */
+function breol_base_update_7110() {
   theme_enable(array('wille'));
   variable_set('theme_default', 'wille');
 }
@@ -93,13 +100,13 @@ function breol_base_update_7109() {
 /**
  * Enable breol_fancy_box.
  */
-function breol_base_update_7110() {
+function breol_base_update_7111() {
   module_enable(array('breol_fancy_box'), TRUE);
 }
 
 /**
  * Enable breol_frontpage.
  */
-function breol_base_update_7111() {
+function breol_base_update_7112() {
   module_enable(array('breol_frontpage'), TRUE);
 }
