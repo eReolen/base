@@ -44,7 +44,7 @@ function breol_video_preprocess_node(&$variables) {
  *
  * Cloned of reol_frontend_view_video().
  *
- * @param StdClass $node
+ * @param $node
  *   The video node.
  *
  * @return array
