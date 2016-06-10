@@ -1205,6 +1205,7 @@ ul.menu .topbar li {
   max-height: 295px;
   display: inline-block;
   position: relative;
+  z-index: 0;
   padding: 0;
   margin: 0;
   overflow: hidden;

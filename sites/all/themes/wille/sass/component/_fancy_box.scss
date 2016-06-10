@@ -38,6 +38,9 @@
   max-height: 295px;
   display: inline-block;
   position: relative;
+  // Establish stacking context, so contained elements with z-index wont
+  // overlap later elements (like the popup window).
+  z-index: 0;
   padding: 0;
   margin: 0;
   overflow: hidden;
