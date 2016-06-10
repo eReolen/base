@@ -1421,4 +1421,8 @@ ul.menu .topbar li {
   display: table;
 }
 
+.ui-dialog {
+  position: absolute;
+}
+
 /*# sourceMappingURL=sourcemaps/wille.main.css.map */

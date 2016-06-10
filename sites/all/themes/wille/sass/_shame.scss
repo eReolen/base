@@ -55,3 +55,16 @@
     margin-bottom: 40px;
   }
 }
+
+// There's a race condition between ui.Dialogs CSS and JS when being loaded
+// through ajax. The CSS sets the position to absolute for the dialog element.
+// The positioning code checks if the dialog element have position: static,
+// and sets it to relative if that's the case. Relative positioning causes it
+// to fail and render the dialog at full window width. For authenticated users,
+// the CSS is added to the page head (trigged by something unknown), but for
+// anonymous users, the CSS is loaded through the ajax request, which can get
+// beaten by the JS. So we'll just ensure that the dialog element has
+// position: absolute.
+.ui-dialog {
+  position: absolute;
+}
