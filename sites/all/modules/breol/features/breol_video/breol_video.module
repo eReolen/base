@@ -56,7 +56,7 @@ function breol_frontend_view_video($node) {
     'breol_frontend',
     t('View video'),
     drupal_render(node_view($node, 'full')),
-    array('refresh' => TRUE, 'class' => array('video-modal'))
+    array('refresh' => FALSE, 'class' => array('video-modal'))
   );
 
   return array('#type' => 'ajax', '#commands' => $commands);
