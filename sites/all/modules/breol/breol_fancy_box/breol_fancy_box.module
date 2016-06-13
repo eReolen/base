@@ -46,27 +46,32 @@ function breol_fancy_box_preprocess_node(&$variables, $hook) {
 
     $variables['teaser_title'] = $variables['title'];
 
+    $link = $variables['node_url'];
     switch ($variables['type']) {
       case 'link':
         $summary = strip_tags(render($variables['content']['body']));
         $variables['teaser_type'] = t('link');
         $variables['teaser_caption'] = $summary;
-        $variables['teaser_link'] = l(t('view more'), url($variables['field_breol_link'][0]['url']));
+        $link = $variables['field_breol_link'][0]['url'];
         break;
 
       case 'breol_video':
         $variables['teaser_type'] = t('video');
         $variables['teaser_caption'] = $variables['field_breol_video'][0]['filename'];
-        $variables['teaser_link'] = l(t('view more'), url($variables['node_url']));
         break;
 
       case 'breol_news':
         $variables['teaser_type'] = t('news');
         $summary = strip_tags(render($variables['content']['body']));
         $variables['teaser_caption'] = $summary;
-        $variables['teaser_link'] = l(t('view more'), url($variables['node_url']));
         break;
     }
+
+    $variables['teaser_link'] = array(
+      '#type' => 'link',
+      '#title' => t('view more'),
+      '#href' => $link,
+    );
   }
 }
 

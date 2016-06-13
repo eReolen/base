@@ -5,3 +5,59 @@
  */
 
 include_once 'breol_video.features.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function breol_frontend_menu() {
+  $items = array();
+
+  $items['video/%node/view'] = array(
+    'page callback' => 'breol_frontend_view_video',
+    'page arguments' => array(1),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node().
+ */
+function breol_video_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  if ($node->type == "breol_video" &&
+      in_array($variables['view_mode'], array(
+        'teaser',
+        'teaser_small',
+        'teaser_medium',
+      ))) {
+    drupal_add_library('system', 'drupal.ajax');
+    $variables['teaser_link']['#href'] = 'video/' . $node->nid . '/view';
+    $variables['teaser_link']['#attributes']['class'][] = 'use-ajax';
+  }
+}
+
+/**
+ * View a video from modal.
+ *
+ * Cloned of reol_frontend_view_video().
+ *
+ * @param $node
+ *   The video node.
+ *
+ * @return array
+ *   Ajax render array.
+ */
+function breol_frontend_view_video($node) {
+  $commands = array();
+  $commands[] = ajax_command_ding_popup(
+    'breol_frontend',
+    t('View video'),
+    drupal_render(node_view($node, 'full')),
+    array('refresh' => FALSE, 'class' => array('video-modal'))
+  );
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+}

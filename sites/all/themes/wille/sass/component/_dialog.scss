@@ -1,0 +1,64 @@
+// Dialog popup widget.
+
+.ui-dialog {
+  // There's a race condition between ui.Dialogs CSS and JS when being loaded
+  // through ajax. The CSS sets the position to absolute for the dialog element.
+  // The positioning code checks if the dialog element have position: static,
+  // and sets it to relative if that's the case. Relative positioning causes it
+  // to fail and render the dialog at full window width. For authenticated
+  // users, the CSS is added to the page head (trigged by something unknown),
+  // but for anonymous users, the CSS is loaded through the ajax request,
+  // which can get beaten by the JS. So we'll just ensure that the dialog
+  // element has position: absolute.
+  position: absolute;
+
+  border: 0;
+  box-shadow: 0px 0px 5px 0px #aaa;
+
+  &, .ui-widget-header, .ui-dialog-content {
+    color: $black-medium;
+  }
+
+  .ui-corner-all {
+    border: 0;
+    background: #fff;
+    border-radius: 5px;
+  }
+
+  .ui-dialog-titlebar {
+    // Resetting.
+    margin: 0;
+    padding: 0;
+    .ui-dialog-title {
+      width: auto;
+      float: none;
+    }
+
+    @include heading(em(50));
+    font-family: $font-mikado;
+    //font-size: em(24);
+    text-transform: uppercase;
+    text-align: center;
+
+    .ui-dialog-title {
+      display: block;
+      padding-top: 50px;
+    }
+
+    .ui-dialog-titlebar-close {
+      top: 30px;
+      right: 30px;
+    }
+ }
+
+  .ui-icon-closethick {
+    // Resetting.
+    width: auto;
+    height: auto;
+    text-indent: inherit;
+
+    background-image: none;
+    @include icon('.icon-close-b');
+    font-size: 22px;
+  }
+}

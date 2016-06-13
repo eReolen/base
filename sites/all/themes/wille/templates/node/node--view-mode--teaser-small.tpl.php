@@ -1,4 +1,4 @@
-<div class="article article--teaser article--teaser--small">
+<div class="article article--teaser article--teaser--small <?php print $classes; ?>">
   <div class="article--teaser__type"><?php print($teaser_type); ?></div>
   <?php if (!empty($content['field_breol_cover_image'])) :?>
     <?php print render($content['field_breol_cover_image']); ?>
@@ -14,5 +14,5 @@
   <div class="article--teaser__caption">
     <?php print($teaser_caption); ?>
   </div>
-  <?php print($teaser_link); ?>
+  <?php print(render($teaser_link)); ?>
 </div>
