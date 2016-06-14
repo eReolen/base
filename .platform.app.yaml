@@ -21,4 +21,5 @@ crons:
 hooks:
     deploy: |
       cd public
-      drush -y updatedb
+      drush -y --cache-clear= updatedb
+      drush cc all
