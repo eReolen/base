@@ -26,7 +26,7 @@ function ding_user_preprocess_html(&$variables) {
       // library user from seeing /user, login and password page.
       // Unless in maintenance_mode: There's no front page login when in maintenance_mode, and a redirect prevent login.
       if (!variable_get('maintenance_mode', 0)) {
-        drupal_goto('', array('fragment' => 'login'));
+        //drupal_goto('', array('fragment' => 'login'));
       }
     }
   }
