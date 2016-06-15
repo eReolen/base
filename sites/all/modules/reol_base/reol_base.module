@@ -43,9 +43,21 @@ function reol_base_get_field_form($type, $bundle, $field_name, $entity, &$form, 
 function reol_base_menu() {
   $items = array();
 
-  $items['login'] = array(
+  $items['login/nojs'] = array(
+    'title' => 'Login',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('user_login'),
+    'access callback' => 'user_is_anonymous',
+    'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'main-menu',
+  );
+
+  $items['login/ajax'] = array(
     'page callback' => 'reol_base_login_ajax',
     'delivery callback' => 'ajax_deliver',
+    // Access set to true as the popup re-triggers the login link on
+    // successful login, which call this page again. reol_base_login_ajax will
+    // redirect user if already logged in.
     'access callback' => TRUE,
   );
 
@@ -186,7 +198,19 @@ function reol_base_theme_registry_alter(&$theme_registry) {
 }
 
 /**
- * Implements hook_preprocess_preprocess_material_item().
+ * Implements hook_preprocess_HOOK() for menu_link().
+ *
+ * Add use-ajax class to our login link.
+ */
+function reol_base_preprocess_menu_link(&$variables) {
+  $element = &$variables['element'];
+  if ($element['#original_link']['router_path'] == 'login/nojs') {
+    $element['#localized_options']['attributes']['class'][] = 'use-ajax';
+  }
+}
+
+/**
+ * Implements hook_preprocess_material_item().
  */
 function reol_base_preprocess_material_item(&$variables) {
   $element = $variables['element'];
@@ -464,7 +488,6 @@ function reol_base_login_ajax() {
   $commands = array();
 
   // Check if the logged in user is a library user.
-  global $user;
   if (!user_is_logged_in()) {
     $commands[] = ajax_command_ding_user_authenticate('');
   }

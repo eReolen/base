@@ -242,11 +242,6 @@ function brin_menu_link($vars) {
       drupal_add_library('system', 'drupal.ajax');
       $element['#localized_options']['attributes']['class'][] = 'use-ajax';
     }
-
-    // If element is pointing to /login, and user is logged in, do not show.
-    if ($element['#original_link']['link_path'] == 'login' && user_is_logged_in()) {
-      return '';
-    }
   }
 
   // Filter classes.
