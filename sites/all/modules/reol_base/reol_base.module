@@ -488,7 +488,6 @@ function reol_base_login_ajax() {
   $commands = array();
 
   // Check if the logged in user is a library user.
-  global $user;
   if (!user_is_logged_in()) {
     $commands[] = ajax_command_ding_user_authenticate('');
   }
