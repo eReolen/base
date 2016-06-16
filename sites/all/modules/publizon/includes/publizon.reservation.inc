@@ -131,8 +131,6 @@ function publizon_reservation_create($account, $local_id, $options) {
     DingPublizonException::convert($e);
   }
 
-  publizon_reservation_clear_cache();
-
   return array();
 }
 
@@ -160,8 +158,6 @@ function publizon_reservation_delete($account, $local_id) {
   $client = PublizonReservationClient::getClient();
   // This will throw exception if reservation is not deleted.
   $client->deleteReservation($retailer_id, $creds['name'], $isbn);
-
-  publizon_reservation_clear_cache();
 }
 
 /**
