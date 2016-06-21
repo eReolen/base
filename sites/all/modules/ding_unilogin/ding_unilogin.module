@@ -1,0 +1,194 @@
+<?php
+
+/**
+ * @file
+ * Allows users to log in via UNI•Login.
+ */
+
+/**
+ * Implements hook_init().
+ *
+ * Handle UNI•Login and add javascript settings.
+ */
+function ding_unilogin_init() {
+  _ding_unilogin_handle_login();
+}
+
+/**
+ * Implements hook_menu().
+ */
+function ding_unilogin_menu() {
+  $items = array();
+
+  // Administration config page.
+  $items['admin/config/ding/unilogin'] = array(
+    'title' => 'UNI•Login',
+    'description' => 'Configure UNI•Login access',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ding_unilogin_admin_settings_form'),
+    'access arguments' => array('configure unilogin'),
+    'file' => 'ding_unilogin.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function ding_unilogin_permission() {
+  return array(
+    'configure unilogin' => array(
+      'title' => t('Configure UNI•Login'),
+      'description' => t('Allow role to configure UNI•Login settings.'),
+    ),
+  );
+}
+
+/**
+ * Alter the login form.
+ *
+ * Add in link for logging in via UNI•Login.
+ *
+ * @param array $form
+ *   The form array to alter.
+ * @param array $form_state
+ *   The state of the form.
+ */
+function ding_unilogin_form_alter(&$form, &$form_state, $form_id) {
+  if (in_array($form_id, array(
+    'user_login',
+    'user_login_block',
+    'ding_user_authenticate_form',
+  ))) {
+    if (variable_get('ding_unilogin_id', '')) {
+      $form['unilogin'] = array(
+        '#attributes' => array('class' => array('unilogin-button')),
+        '#type' => 'link',
+        '#title' => t('Log in via !service',
+                      array(
+                        '!service' => '<span class="unilogin-logo">UNI•Login</span>',
+                      )),
+        '#href' => ding_unilogin_url(),
+        '#options' => array('html' => TRUE),
+      );
+    }
+  }
+}
+
+/**
+ * Handle logging in returing UNI•Login users.
+ */
+function _ding_unilogin_handle_login() {
+  if (isset($_GET['user']) &&
+      isset($_GET['timestamp']) &&
+      isset($_GET['auth'])) {
+    $error = FALSE;
+    // Validate ticket.
+    $hash = md5($_GET['timestamp'] .
+                variable_get('ding_unilogin_secret', '') .
+                $_GET['user']);
+    if ($hash == $_GET['auth']) {
+      $time = DateTime::createFromFormat('YmdHis', $_GET['timestamp'],
+                                         new DateTimeZone('UTC'));
+
+      if ($time) {
+        // Check that the given time stamp is in the past (with 5 seconds
+        // grace to avoid NTP race conditions), but not older than
+        // one minute.
+        $now = (new DateTime())->getTimestamp();
+        if ($time->getTimestamp() < ($now + 5) &&
+            ($now - $time->getTimestamp()) < 60
+        ) {
+          _ding_unilogin_login($_GET['user']);
+        }
+        else {
+          $error = 'Timestamp %time too old for %user';
+        }
+
+      }
+      else {
+        $error = 'Could not parse timestamp %time for %user';
+      }
+    }
+    else {
+      $error = "Auth hash din't validate for %user";
+    }
+
+    if ($error) {
+      watchdog('ding_unilogin', $error,
+               array('%time' => $_GET['timestamp'], '%user' => $_GET['user']),
+               WATCHDOG_WARNING);
+      drupal_set_message(t('Could not understand the reply from UNI•Login, so cannot log you in.'), 'error');
+      // Redirect to current_path() to clear the GET parameters.
+      drupal_goto(current_path());
+    }
+  }
+}
+
+/**
+ * URL to redirect to for UNI•Login.
+ */
+function ding_unilogin_url($path = NULL) {
+  $unilogin_id = variable_get('ding_unilogin_id', '');
+
+  // If no path given default to redirecting back to current path.
+  if (!$path && request_uri() != '/') {
+    $path = url(request_uri(), array('absolute' => TRUE));
+  }
+
+  if (!$path) {
+    return sprintf('https://sso.emu.dk/unilogin/login.cgi?id=%s', $unilogin_id);
+  }
+
+  $secret = variable_get('publizon_unilogin_secret', '');
+  return sprintf('https://sso.emu.dk/unilogin/login.cgi?id=%s&path=%s&auth=%s',
+                 $unilogin_id,
+                 urlencode(base64_encode($path)),
+                 md5($path . $secret)
+  );
+}
+
+/**
+ * Log in UNI•Login user.
+ */
+function _ding_unilogin_login($username) {
+  $auth_name = ding_user_default_authname($username);
+  $auth_res = array(
+    'success' => TRUE,
+    'creds' => array(
+      'name' => $username,
+      'pass' => md5('none'),
+    ),
+    'user' => array(
+      'mail' => '',
+      'blocked' => FALSE,
+      'data' => array(
+        'display_name' => '',
+      ),
+    ),
+  );
+
+  // The next two calls private ding_user functions to do the heavy lifting.
+  // Sadly, nobody has re-factored ding_user to have a simple login function,
+  // so we have to duplicate its work here.
+
+  // Create new account in Drupal and if one exists update it.
+  $account = _ding_user_create_account($auth_name, $auth_res);
+
+  // Check that a profile exists for the user and if not create one.
+  _ding_user_create_profile2($account);
+
+  // Save retailer_id on user.
+  $profile = profile2_load_by_user($account->uid, 'provider_publizon');
+  $wrapper = entity_metadata_wrapper('profile2', $profile);
+  // TODO, should look up which retailer_id to use.
+  $wrapper->field_publizon_retailer_id = variable_get(
+    'publizon_default_retailer',
+    ''
+  );
+  $profile->save();
+
+  $form_state['uid'] = $account->uid;
+  user_login_submit(array(), $form_state);
+}

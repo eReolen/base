@@ -1,0 +1,8 @@
+name = Ding Unilogin
+description = Allow login via UNI•Login.
+core = 7.x
+package = Ding!
+dependencies[] = ding_user
+files[] = lib/ServiceBase.class.inc
+files[] = lib/WS02.class.inc
+files[] = lib/WS05.class.inc
