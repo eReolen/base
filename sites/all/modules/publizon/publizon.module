@@ -5,7 +5,8 @@
  */
 
 include_once 'publizon.features.inc';
-require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
+
+require_once dirname(__FILE__) . '/includes/publizon.admin.inc';
 
 /**
  * Define the providers that are provided by publizon.
