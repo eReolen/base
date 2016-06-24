@@ -141,7 +141,7 @@ function ding_unilogin_url($path = NULL) {
     return sprintf('https://sso.emu.dk/unilogin/login.cgi?id=%s', $unilogin_id);
   }
 
-  $secret = variable_get('publizon_unilogin_secret', '');
+  $secret = variable_get('ding_unilogin_secret', '');
   return sprintf('https://sso.emu.dk/unilogin/login.cgi?id=%s&path=%s&auth=%s',
                  $unilogin_id,
                  urlencode(base64_encode($path)),
