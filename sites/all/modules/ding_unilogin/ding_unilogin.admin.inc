@@ -24,7 +24,7 @@ function ding_unilogin_admin_settings_form($form, &$form_state) {
 
   $form['ding_unilogin_client_id'] = array(
     '#type' => 'textfield',
-    '#title' => t('UNI•Login Client ID'),
+    '#title' => t('Publizon client ID for UNI•Login users'),
     '#description' => t('The client ID to send to publizon for UNI•Login users.'),
     '#default_value' => variable_get('ding_unilogin_client_id', ''),
   );
