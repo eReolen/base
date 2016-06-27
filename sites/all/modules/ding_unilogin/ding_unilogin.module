@@ -30,6 +30,14 @@ function ding_unilogin_menu() {
     'file' => 'ding_unilogin.admin.inc',
   );
 
+  $items['ding_unilogin/get/%'] = array(
+    'page callback' => 'ding_unilogin_url_json',
+    'page arguments' => array(2),
+    // Let anyone access.
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -43,6 +51,18 @@ function ding_unilogin_permission() {
       'description' => t('Allow role to configure UNI•Login settings.'),
     ),
   );
+}
+
+/**
+ * Ajax callback for getting login URL.
+ *
+ * JS calls this with the current path of the browser window, in order to get
+ * a link to UNI•Login with the return path set properly. The form_alter that
+ * inserts the link cannot know what the path of the page is because it's
+ * loaded into the popup using AJAX.
+ */
+function ding_unilogin_url_json($path) {
+  drupal_json_output(array('url' => ding_unilogin_url(urldecode($path))));
 }
 
 /**
@@ -63,14 +83,24 @@ function ding_unilogin_form_alter(&$form, &$form_state, $form_id) {
   ))) {
     if (variable_get('ding_unilogin_id', '')) {
       $form['unilogin'] = array(
-        '#attributes' => array('class' => array('unilogin-button')),
+        '#attributes' => array(
+          'class' => array(
+            'unilogin-button',
+            // Hide the link, the JS will show it when it's set the proper URL.
+            'element-hidden',
+          ),
+        ),
         '#type' => 'link',
         '#title' => t('Log in via !service',
                       array(
                         '!service' => '<span class="unilogin-logo">UNI•Login</span>',
                       )),
-        '#href' => ding_unilogin_url(),
         '#options' => array('html' => TRUE),
+        '#attached' => array(
+          'js' => array(
+            drupal_get_path('module', 'ding_unilogin') . '/js/ding_unilogin.js',
+          ),
+        ),
       );
     }
   }
@@ -120,9 +150,9 @@ function _ding_unilogin_handle_login() {
                array('%time' => $_GET['timestamp'], '%user' => $_GET['user']),
                WATCHDOG_WARNING);
       drupal_set_message(t('Could not understand the reply from UNI•Login, so cannot log you in.'), 'error');
-      // Redirect to current_path() to clear the GET parameters.
-      drupal_goto(current_path());
     }
+    // Redirect to current_path() to clear the GET parameters.
+    drupal_goto(current_path());
   }
 }
 
@@ -169,9 +199,11 @@ function _ding_unilogin_login($username) {
     ),
   );
 
-  // The next two calls private ding_user functions to do the heavy lifting.
-  // Sadly, nobody has re-factored ding_user to have a simple login function,
-  // so we have to duplicate its work here.
+  /*
+   * The next two calls private ding_user functions to do the heavy lifting.
+   * Sadly, nobody has re-factored ding_user to have a simple login function,
+   * so we have to duplicate its work here.
+   */
 
   // Create new account in Drupal and if one exists update it.
   $account = _ding_user_create_account($auth_name, $auth_res);
