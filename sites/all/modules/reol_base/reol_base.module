@@ -86,6 +86,17 @@ function reol_base_menu_alter(&$items) {
 }
 
 /**
+ * Implements hook_init().
+ *
+ * Add drupal.ajax to every page for login popup. As the login is a menu item,
+ * we can't attach it to the link itself, and hook_page_alter() doesn't
+ * seem to work.
+ */
+function reol_base_init() {
+  drupal_add_library('system', 'drupal.ajax', TRUE);
+}
+
+/**
  * Implements hook_entity_load().
  *
  * As our provider uses ISBN-numbers, we wish to have localId be the
