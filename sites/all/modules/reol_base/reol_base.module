@@ -215,7 +215,7 @@ function reol_base_theme_registry_alter(&$theme_registry) {
  */
 function reol_base_preprocess_menu_link(&$variables) {
   $element = &$variables['element'];
-  if ($element['#original_link']['router_path'] == 'login/nojs') {
+  if (isset($element['#original_link']) && $element['#original_link']['router_path'] == 'login/nojs') {
     $element['#localized_options']['attributes']['class'][] = 'use-ajax';
   }
 }
