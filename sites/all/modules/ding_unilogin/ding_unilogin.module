@@ -106,6 +106,14 @@ function ding_unilogin_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
+function ding_unilogin_form_profile2_form_alter(&$form, &$form_state) {
+  if (ding_unilogin_authenticated()) {
+    if (isset($form['pass'])) {
+      $form['pass']['#access'] = FALSE;
+    }
+  }
+}
+
 /**
  * Handle logging in returing UNI•Login users.
  */
@@ -180,6 +188,21 @@ function ding_unilogin_url($path = NULL) {
 }
 
 /**
+ * Check whether a user is logged in via UNI•Login.
+ */
+function ding_unilogin_authenticated($account = NULL) {
+  global $user;
+  if (!$account) {
+    $account = $user;
+  }
+
+  if (isset($account->data['unilogin']) && $account->data['unilogin']) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
  * Log in UNI•Login user.
  */
 function _ding_unilogin_login($username) {
@@ -200,13 +223,16 @@ function _ding_unilogin_login($username) {
   );
 
   /*
-   * The next two calls private ding_user functions to do the heavy lifting.
-   * Sadly, nobody has re-factored ding_user to have a simple login function,
-   * so we have to duplicate its work here.
+   * We call two private ding_user functions to do the heavy lifting. Sadly,
+   * nobody has re-factored ding_user to have a simple login function, so we
+   * have to duplicate its work here.
    */
 
   // Create new account in Drupal and if one exists update it.
   $account = _ding_user_create_account($auth_name, $auth_res);
+
+  // Make a note that this is a UNI•Login account in data by saving once more.
+  user_save($account, array('data' => array('unilogin' => TRUE)));
 
   // Check that a profile exists for the user and if not create one.
   _ding_user_create_profile2($account);
@@ -216,8 +242,7 @@ function _ding_unilogin_login($username) {
   $wrapper = entity_metadata_wrapper('profile2', $profile);
   // TODO, should look up which retailer_id to use.
   $wrapper->field_publizon_retailer_id = variable_get(
-    'publizon_default_retailer',
-    ''
+    'publizon_default_retailer', ''
   );
   $profile->save();
 
