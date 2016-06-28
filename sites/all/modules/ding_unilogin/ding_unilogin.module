@@ -9,8 +9,12 @@
  * Implements hook_init().
  *
  * Handle UNI•Login and add javascript settings.
+ *
+ * Monkeypatch AJAX to make a note of the popup triggered, in case we need to
+ * re-trigger it later (after logging in via UNI•Login).
  */
 function ding_unilogin_init() {
+  drupal_add_js(drupal_get_path('module', 'ding_unilogin') . '/js/ding_unilogin_monkeypatch.js', 'file');
   _ding_unilogin_handle_login();
 }
 
@@ -159,8 +163,13 @@ function _ding_unilogin_handle_login() {
                WATCHDOG_WARNING);
       drupal_set_message(t('Could not understand the reply from UNI•Login, so cannot log you in.'), 'error');
     }
-    // Redirect to current_path() to clear the GET parameters.
-    drupal_goto(current_path());
+    // Redirect to current_path() to clear most GET parameters.
+    $query = array();
+    if (isset($_GET['ding-unilogin-trigger'])) {
+      // This should propagate.
+      $query['ding-unilogin-trigger'] = $_GET['ding-unilogin-trigger'];
+    }
+    drupal_goto(current_path(), array('query' => $query));
   }
 }
 
