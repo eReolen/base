@@ -218,10 +218,7 @@ function ding_unilogin_authenticated($account = NULL) {
     $account = $user;
   }
 
-  if (isset($account->data['unilogin']) && $account->data['unilogin']) {
-    return TRUE;
-  }
-  return FALSE;
+  return isset($account->data['unilogin']) && $account->data['unilogin'];
 }
 
 /**
