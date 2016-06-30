@@ -64,13 +64,12 @@ function ding_unilogin_admin_settings_form($form, &$form_state) {
 
   $form['auth']['ding_unilogin_auth_project'] = array(
     '#type' => 'textfield',
-    '#title' => t('UNI•Login webservice password'),
+    '#title' => t('Project'),
     '#default_value' => variable_get('ding_unilogin_auth_project', ''),
     '#description' => t('The WS05 project to check for access to.'),
   );
 
   // Municipality mapping.
-
   $form['mapping'] = array(
     '#type' => 'fieldset',
     '#title' => t('UNI•Login Municipality mapping'),
