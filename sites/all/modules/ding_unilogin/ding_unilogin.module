@@ -125,12 +125,17 @@ function ding_unilogin_form_profile2_form_alter(&$form, &$form_state) {
 
 /**
  * Handle logging in returing UNI•Login users.
+ *
+ * @see http://www.stil.dk/-/media/STIL/Filer/Publikationer/Tekniske-vejledninger/uni-login-authentication.ashx?la=da
+ * @see http://www.stil.dk/It-og-administration/Brugere-og-adgangsstyring/Udbyder-UNILogin/Dokumentation
  */
 function _ding_unilogin_handle_login() {
   if (isset($_GET['user']) &&
       isset($_GET['timestamp']) &&
       isset($_GET['auth'])) {
+    // Error message in case of errors.
     $error = FALSE;
+    // Whether we successfully logged the user in.
     $success = FALSE;
     // Validate ticket.
     $hash = md5($_GET['timestamp'] .
