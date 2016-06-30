@@ -29,13 +29,6 @@ function ding_unilogin_admin_settings_form($form, &$form_state) {
     '#default_value' => variable_get('ding_unilogin_secret', ''),
   );
 
-  $form['login']['ding_unilogin_client_id'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Publizon client ID for UNI•Login users'),
-    '#description' => t('The client ID to send to publizon for UNI•Login users.'),
-    '#default_value' => variable_get('ding_unilogin_client_id', ''),
-  );
-
   // Settings for WS service general access.
   $form['ws'] = array(
     '#type' => 'fieldset',
