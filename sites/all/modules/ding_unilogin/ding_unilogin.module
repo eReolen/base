@@ -323,6 +323,12 @@ function _ding_unilogin_wservice($service) {
         variable_get('ding_unilogin_ws_pass', '')
       );
 
+    case 'info':
+      return new DingUniloginWS02(
+        variable_get('ding_unilogin_ws_user', ''),
+        variable_get('ding_unilogin_ws_pass', '')
+      );
+
     default:
       throw new RuntimeException('Bad service type ' . $service);
   }
