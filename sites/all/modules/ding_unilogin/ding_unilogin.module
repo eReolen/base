@@ -124,6 +124,28 @@ function ding_unilogin_form_profile2_form_alter(&$form, &$form_state) {
 }
 
 /**
+ * Implements hook_ding_unilogin_login().
+ *
+ * Check access with authentication web service, if configured.
+ */
+function ding_unilogin_ding_unilogin_login($user) {
+  $auth_service = _ding_unilogin_wservice('auth');
+  // Check that the user has license to access us.
+  if (variable_get('ding_unilogin_auth_context', '')) {
+    $access = $user->hasLicense(
+      variable_get('ding_unilogin_auth_context', ''),
+      variable_get('ding_unilogin_auth_project', '')
+    );
+
+    if (!$access) {
+      watchdog('ding_unilogin', 'UNI•Login user %user does not have appropriate license.', array('%user' => $user->name), WATCHDOG_NOTICE);
+    }
+    return $access;
+  }
+  return TRUE;
+}
+
+/**
  * Handle logging in returing UNI•Login users.
  *
  * @see http://www.stil.dk/-/media/STIL/Filer/Publikationer/Tekniske-vejledninger/uni-login-authentication.ashx?la=da
@@ -231,44 +253,30 @@ function ding_unilogin_authenticated($account = NULL) {
  *   Whether the user was logged in.
  */
 function _ding_unilogin_login($username) {
-  $auth_service = _ding_unilogin_wservice('auth');
   $access = FALSE;
 
   try {
-    // Check that the user has license to access us.
-    $access = $auth_service->hasLicense(
+    $user = new DingUniloginUser(
       $username,
-      variable_get('ding_unilogin_auth_context', ''),
-      variable_get('ding_unilogin_auth_project', '')
+      variable_get('ding_unilogin_ws_user', ''),
+      variable_get('ding_unilogin_ws_pass', '')
     );
-
-    // Look up the retailer id we should use for the user.
-    if ($access) {
-      $info_service = _ding_unilogin_wservice('info');
-      $municipality = $info_service->getMunicipality($username);
-      $municipalities = variable_get('ding_unilogin_municipality_mapping', array());
-      if (isset($municipalities[$municipality])) {
-        $publizon_id = $municipalities[$municipality];
-
-        // Check that the retailer_id is one of the configured libraries.
-        $publizon_libraries = variable_get('publizon_libraries', array());
-        if (!isset($publizon_libraries[(int) $publizon_id])) {
-          $access = FALSE;
-        }
-      }
-      else {
-        $access = FALSE;
+    foreach (module_implements('ding_unilogin_login') as $module) {
+      $access = module_invoke($module, 'ding_unilogin_login', $user);
+      // Break out if someone denied access.
+      if (!$access) {
+        break;
       }
     }
   }
   catch (Exception $e) {
-    drupal_set_message(t('Sorry, but there was problems communicating with UNI•Login. Please try again later.'));
+    drupal_set_message(t('Sorry, but there was problems while communicating with UNI•Login. Please try again later.'));
     watchdog_exception('ding_unilogin', $e, NULL, array(), WATCHDOG_ERROR);
     return FALSE;
   }
 
   if (!$access) {
-    drupal_set_message(t('Sorry, but that UNI•Login account has not been granted access'), 'error');
+    drupal_set_message(t('Sorry, but that UNI•Login account has not been granted access. Please contact the administrator if you think this is wrong.'), 'error');
     watchdog('ding_unilogin', 'Access denied for UNI•Login user %user', array('%user' => $username), WATCHDOG_NOTICE);
     return FALSE;
   }
@@ -277,7 +285,7 @@ function _ding_unilogin_login($username) {
   $auth_res = array(
     'success' => TRUE,
     'creds' => array(
-      'name' => $username,
+      'name' => $user->getAuthName(),
       // Random password. Shouldn't be used, but we'll make it un-guessable
       // for good measure, in case someone messes up.
       'pass' => md5(drupal_random_bytes(32) . 'no_password_for_the_wicked'),
@@ -306,12 +314,17 @@ function _ding_unilogin_login($username) {
   // Check that a profile exists for the user and if not create one.
   _ding_user_create_profile2($account);
 
-  // Save retailer_id on user.
-  $profile = profile2_load_by_user($account->uid, 'provider_publizon');
-  $wrapper = entity_metadata_wrapper('profile2', $profile);
+  // Save profile data provided by hook_ding_unilogin_login implementations.
+  $profile_data = $user->getProfileData();
+  if (!empty($profile_data)) {
+    $profile = profile2_load_by_user($account->uid, 'provider_publizon');
+    $wrapper = entity_metadata_wrapper('profile2', $profile);
 
-  $wrapper->field_publizon_retailer_id = $publizon_id;
-  $profile->save();
+    foreach ($profile_data as $field => $value) {
+      $wrapper->{$field} = $value;
+    }
+    $profile->save();
+  }
 
   $form_state['uid'] = $account->uid;
   user_login_submit(array(), $form_state);

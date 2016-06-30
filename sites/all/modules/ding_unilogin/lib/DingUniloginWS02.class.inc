@@ -29,19 +29,4 @@ class DingUniloginWS02 extends DingUniloginServiceBase {
     ));
   }
 
-  /**
-   * Get a persons municipality.
-   */
-  public function getMunicipality($person_id) {
-    $person = $this->getPerson($person_id);
-    if ($person) {
-      $institution = $this->getInstitution($person->Instnr);
-      if ($institution) {
-        return $institution->Kommunenr;
-      }
-    }
-
-    return FALSE;
-  }
-
 }
