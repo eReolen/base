@@ -126,6 +126,7 @@ function _ding_unilogin_handle_login() {
       isset($_GET['timestamp']) &&
       isset($_GET['auth'])) {
     $error = FALSE;
+    $success = FALSE;
     // Validate ticket.
     $hash = md5($_GET['timestamp'] .
                 variable_get('ding_unilogin_secret', '') .
@@ -142,7 +143,7 @@ function _ding_unilogin_handle_login() {
         if ($time->getTimestamp() < ($now + 5) &&
             ($now - $time->getTimestamp()) < 60
         ) {
-          _ding_unilogin_login($_GET['user']);
+          $success = _ding_unilogin_login($_GET['user']);
         }
         else {
           $error = 'Timestamp %time too old for %user';
@@ -165,8 +166,10 @@ function _ding_unilogin_handle_login() {
     }
     // Redirect to current_path() to clear most GET parameters.
     $query = array();
-    if (isset($_GET['ding-unilogin-trigger'])) {
-      // This should propagate.
+    if (isset($_GET['ding-unilogin-trigger']) && $success) {
+      // This should propagate if we logged in a user, else it doesn't matter
+      // (doesn't make sense to re-display the reservation popup, as it'll
+      // just trigger the login form again).
       $query['ding-unilogin-trigger'] = $_GET['ding-unilogin-trigger'];
     }
     drupal_goto(current_path(), array('query' => $query));
@@ -212,9 +215,57 @@ function ding_unilogin_authenticated($account = NULL) {
 }
 
 /**
- * Log in UNI•Login user.
+ * Attemp to log in UNI•Login user.
+ *
+ * @param string $username
+ *   The UNI•Login user name.
+ *
+ * @return bool
+ *   Whether the user was logged in.
  */
 function _ding_unilogin_login($username) {
+  $auth_service = _ding_unilogin_wservice('auth');
+  $access = FALSE;
+
+  try {
+    // Check that the user has license to access us.
+    $access = $auth_service->hasLicense(
+      $username,
+      variable_get('ding_unilogin_auth_context', ''),
+      variable_get('ding_unilogin_auth_project', '')
+    );
+
+    // Look up the retailer id we should use for the user.
+    if ($access) {
+      $info_service = _ding_unilogin_wservice('info');
+      $municipality = $info_service->getMunicipality($username);
+      $municipalities = variable_get('ding_unilogin_municipality_mapping', array());
+      if (isset($municipalities[$municipality])) {
+        $publizon_id = $municipalities[$municipality];
+
+        // Check that the retailer_id is one of the configured libraries.
+        $publizon_libraries = variable_get('publizon_libraries', array());
+        if (!isset($publizon_libraries[(int) $publizon_id])) {
+          $access = FALSE;
+        }
+      }
+      else {
+        $access = FALSE;
+      }
+    }
+  }
+  catch (Exception $e) {
+    drupal_set_message(t('Sorry, but there was problems communicating with UNI•Login. Please try again later.'));
+    watchdog_exception('ding_unilogin', $e, NULL, array(), WATCHDOG_ERROR);
+    return FALSE;
+  }
+
+  if (!$access) {
+    drupal_set_message(t('Sorry, but that UNI•Login account has not been granted access'), 'error');
+    watchdog('ding_unilogin', 'Access denied for UNI•Login user %user', array('%user' => $username), WATCHDOG_NOTICE);
+    return FALSE;
+  }
+
   $auth_name = ding_user_default_authname($username);
   $auth_res = array(
     'success' => TRUE,
@@ -249,12 +300,30 @@ function _ding_unilogin_login($username) {
   // Save retailer_id on user.
   $profile = profile2_load_by_user($account->uid, 'provider_publizon');
   $wrapper = entity_metadata_wrapper('profile2', $profile);
-  // TODO, should look up which retailer_id to use.
-  $wrapper->field_publizon_retailer_id = variable_get(
-    'publizon_default_retailer', ''
-  );
+
+  $wrapper->field_publizon_retailer_id = $publizon_id;
   $profile->save();
 
   $form_state['uid'] = $account->uid;
   user_login_submit(array(), $form_state);
+  return TRUE;
+}
+
+/**
+ * Get a UNI•Login service.
+ *
+ * @param string $service
+ *   The service to get, either 'auth' or 'info'.
+ */
+function _ding_unilogin_wservice($service) {
+  switch ($service) {
+    case 'auth':
+      return new DingUniloginWS05(
+        variable_get('ding_unilogin_ws_user', ''),
+        variable_get('ding_unilogin_ws_pass', '')
+      );
+
+    default:
+      throw new RuntimeException('Bad service type ' . $service);
+  }
 }
