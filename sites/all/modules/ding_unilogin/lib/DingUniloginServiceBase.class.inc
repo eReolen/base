@@ -8,7 +8,7 @@
 /**
  * Base class for UNI•Login services.
  */
-class DingUniloginServiceBase {
+abstract class DingUniloginServiceBase {
   protected $client;
 
   /**
@@ -23,7 +23,7 @@ class DingUniloginServiceBase {
   /**
    * Call service method.
    */
-  public function call($method, $parameters = array()) {
+  protected function call($method, $parameters = array()) {
     try {
       $res = $this->client->{$method}($parameters);
       return isset($res->return) ? $res->return : NULL;
@@ -40,7 +40,7 @@ class DingUniloginServiceBase {
   /**
    * Call service method with authentication.
    */
-  public function callWithAuth($method, $parameters = array()) {
+  protected function callWithAuth($method, $parameters = array()) {
     return $this->call($method, array(
       'wsBrugerid' => $this->user,
       'wsPassword' => $this->pass,
