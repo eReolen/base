@@ -6,14 +6,26 @@
 (function($) {
   "use strict";
   Drupal.ding_unilogin = Drupal.ding_unilogin || {};
+
+  /**
+   * Global variable for the id of the link of the last opened popup.
+   */
   Drupal.ding_unilogin.last_clicked = null;
 
+  /**
+   * Patch AJAX to note the link clicked before opening popups.
+   *
+   * We have to find all .use-ajax links and look them up in
+   * Drupal.ajax, as we can't just traverse Drupal.ajax because it's
+   * really a function.
+   */
   Drupal.behaviors.ding_unilogin_patchajax = {
     attach: function (context, settings) {
       $('.use-ajax', context).once('ding-unilogin-boobytrap', function () {
         var id = $(this).attr('id');
         if (id) {
           if (typeof Drupal.ajax[id] !== 'undefined') {
+            // Add in our own beforeSend that saves the id first.
             var oldBeforeSend = Drupal.ajax[id].options.beforeSend;
             Drupal.ajax[id].options.beforeSend = function() {
               Drupal.ding_unilogin.last_clicked = id;
@@ -25,6 +37,12 @@
     }
   }
 
+  /**
+   * Re-triggers a popup.
+   *
+   * Will click on the link with the id given, in order to trigger the
+   * popup opening.
+   */
   Drupal.behaviors.ding_unilogin_trigger = {
     attach: function (context, settings) {
       var match;

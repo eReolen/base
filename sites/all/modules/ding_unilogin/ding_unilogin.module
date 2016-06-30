@@ -110,6 +110,11 @@ function ding_unilogin_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter() for profile2_form().
+ *
+ * Hide the pincode change widget for UNI•Login users.
+ */
 function ding_unilogin_form_profile2_form_alter(&$form, &$form_state) {
   if (ding_unilogin_authenticated()) {
     if (isset($form['pass'])) {
@@ -131,7 +136,7 @@ function _ding_unilogin_handle_login() {
     $hash = md5($_GET['timestamp'] .
                 variable_get('ding_unilogin_secret', '') .
                 $_GET['user']);
-    if ($hash == $_GET['auth']) {
+    if ($hash === $_GET['auth']) {
       $time = DateTime::createFromFormat('YmdHis', $_GET['timestamp'],
                                          new DateTimeZone('UTC'));
 
