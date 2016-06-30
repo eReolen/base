@@ -276,7 +276,9 @@ function _ding_unilogin_login($username) {
     'success' => TRUE,
     'creds' => array(
       'name' => $username,
-      'pass' => md5('none'),
+      // Random password. Shouldn't be used, but we'll make it un-guessable
+      // for good measure, in case someone messes up.
+      'pass' => md5(drupal_random_bytes(32) . 'no_password_for_the_wicked'),
     ),
     'user' => array(
       'mail' => '',
