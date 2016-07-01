@@ -5,7 +5,8 @@
  */
 
 include_once 'publizon.features.inc';
-require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
+
+require_once dirname(__FILE__) . '/includes/publizon.admin.inc';
 
 /**
  * Define the providers that are provided by publizon.
@@ -184,6 +185,25 @@ function publizon_ting_covers($entities) {
   }
 
   return $covers;
+}
+
+/**
+ * Implements hook_ding_unilogin_login().
+ *
+ * Look up the retailer id we should use for the user.
+ */
+function publizon_ding_unilogin_login($user) {
+  $municipality = $user->getInstitutionMunicipality();
+  $libraries = variable_get('publizon_libraries', array());
+  foreach ($libraries as $retailer_id => $library) {
+    if (isset($library['unilogin_id']) &&
+        $library['unilogin_id'] == $municipality) {
+      $user->setProfileData('field_publizon_retailer_id', $retailer_id);
+      return TRUE;
+    }
+  }
+  watchdog('publizon', 'UNI•Login municipality @municipality not configured on any library', array('@municipality' => $municipality), WATCHDOG_NOTICE);
+  return FALSE;
 }
 
 /**
