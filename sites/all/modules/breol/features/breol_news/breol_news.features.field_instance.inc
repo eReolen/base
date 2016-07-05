@@ -170,7 +170,56 @@ function breol_news_field_default_field_instances() {
         ),
       ),
       'type' => 'media_generic',
-      'weight' => 6,
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-breol_news-field_carousels'
+  $field_instances['node-breol_news-field_carousels'] = array(
+    'bundle' => 'breol_news',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'reol_field_carousel',
+        'settings' => array(),
+        'type' => 'ting_search_carousel_notabs',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser_medium' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser_small' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_carousels',
+    'label' => 'Karouseller',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'reol_field_carousel',
+      'settings' => array(),
+      'type' => 'ting_search_carousel_widget',
+      'weight' => 5,
     ),
   );
 
@@ -178,6 +227,7 @@ function breol_news_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Cover Image');
   t('Indhold');
+  t('Karouseller');
 
   return $field_instances;
 }
