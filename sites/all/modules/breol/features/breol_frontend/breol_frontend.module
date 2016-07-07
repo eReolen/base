@@ -30,3 +30,20 @@ function breol_frontend_entity_info_alter(&$entity_info) {
     'custom settings' => TRUE,
   );
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Copied from
+ * reol_frontend_form_profile2_edit_provider_publizon_form_alter().
+ */
+function breol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &$form_state) {
+  // Hide retailer id.
+  $form['profile_provider_publizon']['field_publizon_retailer_id']['#access'] = FALSE;
+
+  // Hide pass change fieldset.
+  $form['pass']['#access'] = FALSE;
+
+  // Hide sms fee.
+  $form['ding_user_fee_sms']['#access'] = FALSE;
+}
