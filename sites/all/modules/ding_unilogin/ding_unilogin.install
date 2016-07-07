@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ding_unilogin module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function ding_unilogin_install() {
+  _ding_unilogin_set_module_weight();
+}
+
+/**
+ * Set our module weight to 100.
+ *
+ * Needed by ding_unilogin_form_profile2_form_alter() to ensure it's called
+ * after ding_user_form_profile2_form_alter().
+ */
+function _ding_unilogin_set_module_weight() {
+  db_update('system')
+    ->fields(array(
+      'weight' => 100,
+    ))
+    ->condition('name', 'ding_unilogin')
+    ->execute();
+}
+
+/**
+ * Set module weight.
+ */
+function ding_unilogin_update_7101() {
+  _ding_unilogin_set_module_weight();
+}

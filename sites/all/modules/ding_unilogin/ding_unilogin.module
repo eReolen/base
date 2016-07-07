@@ -113,7 +113,8 @@ function ding_unilogin_form_alter(&$form, &$form_state, $form_id) {
 /**
  * Implements hook_form_FORM_ID_alter() for profile2_form().
  *
- * Hide the pincode change widget for UNI•Login users.
+ * Hide the pincode change widget for UNI•Login users. This modules weight
+ * ensures we get called after ding_user_form_profile2_form_alter().
  */
 function ding_unilogin_form_profile2_form_alter(&$form, &$form_state) {
   if (ding_unilogin_authenticated()) {
