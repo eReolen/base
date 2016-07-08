@@ -111,10 +111,18 @@ class DingUniloginUser {
    */
   public function getInstitutionMunicipality() {
     $person = $this->getInfoService()->getPerson($this->name);
-    if ($person) {
-      $institution = $this->getInfoService()->getInstitution($person->Instnr);
-      if ($institution) {
-        return $institution->Kommunenr;
+    if ($person && !empty($person->Instnr)) {
+      try {
+        $institution = $this->getInfoService()->getInstitution($person->Instnr);
+        if ($institution) {
+          return $institution->Kommunenr;
+        }
+      }
+      catch (Exception $e) {
+        watchdog('ding_unilogin', 'Error getting institution @inst for user @user', array(
+          '@inst' => $person->Instnr,
+          '@user' => $this->name,
+        ));
       }
     }
 
