@@ -152,6 +152,13 @@ function publizon_get_library($retailer_id, $reset = FALSE) {
  *   The client id.
  */
 function publizon_get_client_id() {
+  if (module_exists('ding_unilogin')) {
+    // If the user is a UNI•Login user, return the special UNI•Login
+    // client_id.
+    if (ding_unilogin_authenticated()) {
+      return variable_get('publizon_unilogin_client_id', '');
+    }
+  }
   return variable_get('publizon_client_id', '');
 }
 
