@@ -41,5 +41,23 @@ function breol_news_field_default_field_bases() {
     'type' => 'image',
   );
 
+  // Exported field_base: 'field_carousels'
+  $field_bases['field_carousels'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_carousels',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'reol_field_carousel',
+    'settings' => array(
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'ting_search_carousel',
+  );
+
   return $field_bases;
 }

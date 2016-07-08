@@ -1,0 +1,8 @@
+name = Reol Field Carousel
+description = Carrousel field.
+core = 7.x
+dependencies[] = field
+package = ereolen.dk
+; stylesheets[all][] = css/reol_field_carousel.base.css
+; scripts[] = scripts/reol_field_carousel.js
+; files[] = reol_field_carousel.test

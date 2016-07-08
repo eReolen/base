@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the reol_field_carousel module.
+ */
+
+/**
+ * Implements hook_field_schema().
+ */
+function reol_field_carousel_field_schema($field) {
+  return array(
+    'columns' => array(
+      'title' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'search' => array(
+        'type' => 'text',
+        // It's assumed that OpenSearch will choke long before we reach the
+        // 16KiB.
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+    ),
+  );
+}
