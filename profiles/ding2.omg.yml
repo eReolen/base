@@ -66,3 +66,7 @@ patches:
     patch: ../sites/all/patches/footer-icons.patch
     home: 'https://github.com/ding2/ding2/pull/218'
     reason: 'Hand applied footer icon fix.'
+
+# And then bandaid broke, so the following has been hand applied.
+# 33f26aa from https://github.com/ding2/ding2/pull/271
+# 19af2b9 from https://github.com/ding2/ding2/pull/274
