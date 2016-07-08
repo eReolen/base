@@ -126,8 +126,15 @@ function breol_base_update_7114() {
 }
 
 /**
- * Enable reol_loan.
+ * Enable reol_field_carousel.
  */
 function breol_base_update_7115() {
   module_enable(array('reol_field_carousel'), TRUE);
+}
+
+/**
+ * Enable reol_use_loan.
+ */
+function breol_base_update_7116() {
+  module_enable(array('reol_use_loan'), TRUE);
 }
