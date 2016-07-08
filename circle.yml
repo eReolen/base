@@ -41,8 +41,8 @@ test:
     # Run Drupal's simpletests and unittest (if any).
     #- drush --nocolor drake run-tests
 
-deployment:
-  demo:
-    branch: develop
-    commands:
-      - drush deploy @circle-dev -y
+# deployment:
+#   demo:
+#     branch: develop
+#     commands:
+#       - drush deploy @circle-dev -y
