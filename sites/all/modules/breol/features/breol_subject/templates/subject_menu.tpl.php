@@ -1,6 +1,7 @@
 <?php
 /**
  * @File
+ * Create a subject menu list.
  */
 ?>
 <ul class="subject-menu">
