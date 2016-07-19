@@ -25,6 +25,12 @@ function wille_preprocess_node(&$variables, $hook) {
       $variables['file_uri'] = $file_uri;
     }
   }
+
+  // We know we always gonna use the slick library when the node type is
+  // breol_subject.
+  if ($node->type === 'breol_subject') {
+    libraries_load('slick');
+  }
 }
 
 /**
