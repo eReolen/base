@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *
+ * Theming of carousel item.
  */
 ?>
 <li class="carousel-item">
