@@ -1,4 +1,4 @@
-// Layout.
+  // Layout.
 .article--teaser--medium {
   @include span-columns(6);
 
@@ -171,8 +171,11 @@
 
 .pane-fancy-box {
   @include outer-container;
-
   padding: 100px 0;
+  @extend .fade-in;
+  -webkit-animation-delay: 0.3s;
+  -moz-animation-delay: 0.3s;
+  animation-delay: 0.3s;
 
   > .pane-title {
     font-size: em(26, $base-font-size);
