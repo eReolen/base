@@ -20,7 +20,9 @@ $plugin = array(
  */
 function subject_menu_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
+  $block->title = '';
   $block->content = '';
+  $view_mode = 'teaser';
 
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
@@ -31,8 +33,12 @@ function subject_menu_content_type_render($subtype, $conf, $panel_args, $context
   $res = $query->execute();
   if (!empty($res['node'])) {
     $nodes = node_load_multiple(array_keys($res['node']));
-    $build = node_view_multiple($nodes);
-    $block->content = drupal_render($build);
+    $content = node_view_multiple($nodes, $view_mode);
+    $variables = array(
+      'nodes' => $nodes,
+      'content' => $content['nodes'],
+    );
+    $block->content = theme('breol_subject_menu', $variables);
   }
 
   return $block;
