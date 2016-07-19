@@ -4,13 +4,11 @@
  * @file
  * Template for view mode default of Breol News node type.
  */
-
-// Start by hiding all content.
-;
 ?>
 
 <div class="article article--breol-news">
   <div class="article__cover"
+  <?php hide($content['field_breol_cover_image']);?>
   <?php if (!empty($file_uri)) : ?>
     style="background-image: url(<?php print $file_uri; ?>)"
   <?php endif; ?>>

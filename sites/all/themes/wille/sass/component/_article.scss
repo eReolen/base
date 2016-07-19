@@ -69,8 +69,6 @@ $z-index-cover-base: 1;
 
 .article__carousel {
   @include outer-container;
-
-  // TODO(ts) - temp theming. Will be replaced later.
-  text-align: center;
-  height: 520px;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }

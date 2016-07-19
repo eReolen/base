@@ -1,0 +1,84 @@
+// Uber hack. Hide carousel tabs.
+.carousel-tabs {
+  display: none !important;
+}
+
+$carousel-outer-padding: 0 30px;
+
+.carousel-tab {
+  ul {
+    display: block;
+    position: relative;
+    height: auto;
+    margin-bottom: 25px;
+    padding: $carousel-outer-padding;
+  }
+
+  li {
+    float: left;
+    text-align: left;
+    margin-right: 2em;
+    margin-bottom: 1em;
+    // overflow: visible;
+
+    // @include transition(transform 200ms ease-in);
+
+    // &:hover {
+    //   -webkit-transform: scale(1.1);
+    //   -ms-transform: scale(1.1);
+    //   transform: scale(1.1);
+    //   z-index: 999;
+    // }
+  }
+
+  .description {
+    @extend h2;
+    color: $title-color;
+    text-align: left;
+    padding: $carousel-outer-padding;
+  }
+}
+
+.ting-search-carousel {
+
+  .slick-arrow {
+    background-repeat: no-repeat;
+    display: block;
+    height: 16px;
+    top: 40%;
+    margin: auto;
+    cursor: pointer;
+  }
+
+  .slick-prev.slick-arrow {
+    background-image: url('../svg/arrow_left.svg');
+    left: 5px;
+  }
+  .slick-next.slick-arrow {
+    background-image: url('../svg/arrow_right.svg');
+    right: 35px;
+  }
+}
+
+.carousel-item-title {
+  color: $title-color;
+  text-decoration: none;
+  font-family: $font-bold;
+  line-height: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+  display: block;
+}
+
+.carousel-item-creator {
+  display: block;
+  text-decoration: none;
+  color: $title-color;
+  margin-bottom: 5px;
+}
+
+.carousel-item-image {
+  img {
+    width: 100%;
+  }
+}

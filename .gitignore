@@ -9,3 +9,6 @@ compass_app_log.txt
 
 # Ignore local docker settings.
 docker-compose.override.yml
+
+# Dont commit databases.
+private/docker/db/initdb.d/*
