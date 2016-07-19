@@ -21,17 +21,19 @@
             </div>
           </section>
         <?php endif; ?>
-
-        <?php if (!empty($content['navigation'])): ?>
-          <section class="navigation-wrapper js-topbar-menu">
-            <div class="navigation-inner">
-              <?php print render($content['navigation']); ?>
-            </div>
-          </section>
-        <?php endif; ?>
       </div>
     </header>
   <?php endif; ?>
+
+  <div class="navigation">
+    <?php if (!empty($content['navigation'])): ?>
+      <section class="navigation-wrapper">
+        <div class="navigation-inner">
+          <?php print render($content['navigation']); ?>
+        </div>
+      </section>
+    <?php endif; ?>
+  </div>
 
   <div class="main-content">
     <div class="main-content__inner">
