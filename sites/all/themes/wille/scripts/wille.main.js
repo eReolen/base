@@ -38,4 +38,22 @@
       });
     }
   };
+
+  /**
+   * Subject menu.
+   *
+   * Initialize slick.js for the subject menu.
+   */
+  Drupal.behaviors.subjectMenu = {
+    attach : function(context, settings) {
+      $( document ).ready(function() {
+        $('.subject-menu', context).slick({
+          infinite: true,
+          slidesToShow: 6,
+          slidesToScroll: 5
+        });
+      });
+    }
+  };
+
 })(jQuery);
