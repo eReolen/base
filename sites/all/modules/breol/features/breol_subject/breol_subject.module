@@ -12,3 +12,19 @@ include_once 'breol_subject.features.inc';
 function breol_subject_ctools_plugin_directory($owner, $plugin_type) {
   return 'plugins/' . $plugin_type;
 }
+
+/**
+ * Implements hook_theme().
+ */
+function breol_subject_theme($existing, $type, $theme, $path) {
+  return array(
+    'breol_subject_menu' => array(
+      'variables' => array(
+        'nodes' => array(),
+        'content' => NULL,
+      ),
+      'path' => drupal_get_path('module', 'breol_subject') . '/templates',
+      'template' => 'subject_menu',
+    ),
+  );
+}
