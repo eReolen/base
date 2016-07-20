@@ -86,12 +86,6 @@ function breol_subject_strongarm() {
       'workflow_tab' => array(
         'custom_settings' => FALSE,
       ),
-      'teaser_small' => array(
-        'custom_settings' => TRUE,
-      ),
-      'teaser_medium' => array(
-        'custom_settings' => TRUE,
-      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -99,10 +93,10 @@ function breol_subject_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '4',
+          'weight' => '3',
         ),
         'redirect' => array(
-          'weight' => '3',
+          'weight' => '2',
         ),
       ),
       'display' => array(),

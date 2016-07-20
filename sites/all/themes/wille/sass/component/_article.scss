@@ -12,6 +12,10 @@ $z-index-cover-base: 1;
   p {
     font-size: em(14, $base-font-size);
   }
+
+  &--breol-section {
+    padding: 0;
+  }
 }
 
 .article-standard {
@@ -21,6 +25,11 @@ $z-index-cover-base: 1;
 /**
  * Article cover.
  */
+.article__cover-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
 .article__cover {
   background-position: top;
   height: auto;
@@ -42,6 +51,12 @@ $z-index-cover-base: 1;
     display: block;
     content: '';
   }
+
+  &--breol-section {
+    @include outer-container;
+    background-size: contain;
+    background-position: center right;
+  }
 }
 
 .article__cover__content {
@@ -55,20 +70,53 @@ $z-index-cover-base: 1;
 
   // Font.
   text-align: center;
-}
 
+  &--breol-section {
+    text-align: left;
+    width: 100%;
+    max-width: 1180px;
+    font-family: $font-mikado;
+    padding: 0 100px;
+
+    .title {
+      font-size: em(40, $base-font-size);
+    }
+  }
+}
 
 .article__cover__overlay {
   height: 100%;
   width: 100%;
-  background: $white;
-  opacity: 0.8;
+  background: rgba(235, 235, 235, 0.9);
   position: absolute;
-  z-index: calc($z-index-menu + 1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  resize: both;
+  overflow: hidden;
 }
 
 .article__carousel {
   @include outer-container;
   margin-top: 50px;
   margin-bottom: 30px;
+}
+
+.field-name-field-subtitle {
+  font-family: $font-regular;
+  line-height: 28px;
+  position: relative;
+  display: inline-block;
+
+  &:after {
+    content: " / ";
+    position: absolute;
+    top: 0;
+    right: -10px;
+  }
 }

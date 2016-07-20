@@ -44,7 +44,6 @@ function breol_subject_default_page_manager_handlers() {
           'settings' => array(
             'type' => array(
               'breol_subject' => 'breol_subject',
-              'breol_section' => 'breol_section',
             ),
           ),
           'context' => 'argument_entity_id:node_1',
@@ -69,6 +68,36 @@ function breol_subject_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
+    $pane->pid = 'new-7fcb4ff3-cb9a-45fb-a763-73739210062e';
+    $pane->panel = 'middle';
+    $pane->type = 'node_content';
+    $pane->subtype = 'node_content';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'links' => 0,
+      'no_extras' => 1,
+      'override_title' => 1,
+      'override_title_text' => '',
+      'identifier' => '',
+      'link' => 0,
+      'leave_node_title' => 1,
+      'build_mode' => 'full',
+      'context' => 'argument_entity_id:node_1',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '7fcb4ff3-cb9a-45fb-a763-73739210062e';
+    $display->content['new-7fcb4ff3-cb9a-45fb-a763-73739210062e'] = $pane;
+    $display->panels['middle'][0] = 'new-7fcb4ff3-cb9a-45fb-a763-73739210062e';
+    $pane = new stdClass();
     $pane->pid = 'new-1b4e53f5-464a-4347-8b57-3bec0f66a346';
     $pane->panel = 'middle';
     $pane->type = 'panels_mini';
@@ -84,14 +113,16 @@ function breol_subject_default_page_manager_handlers() {
       'override_title_heading' => 'h2',
     );
     $pane->cache = array();
-    $pane->style = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '1b4e53f5-464a-4347-8b57-3bec0f66a346';
     $display->content['new-1b4e53f5-464a-4347-8b57-3bec0f66a346'] = $pane;
-    $display->panels['middle'][0] = 'new-1b4e53f5-464a-4347-8b57-3bec0f66a346';
+    $display->panels['middle'][1] = 'new-1b4e53f5-464a-4347-8b57-3bec0f66a346';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
