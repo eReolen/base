@@ -57,6 +57,12 @@ $z-index-cover-base: 1;
     background-size: contain;
     background-position: center right;
   }
+
+  &--breol-subject {
+    @include outer-container;
+    background-size: 80%;
+    background-position: bottom right;
+  }
 }
 
 .article__cover__content {
