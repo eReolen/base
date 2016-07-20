@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Template for view mode default of Breol News node type.
+ * Template for view mode default of Breol Section node type.
  */
 ?>
 
