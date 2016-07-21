@@ -35,6 +35,11 @@ function breol_search_frontend_default_panels_mini() {
     'style_settings' => array(
       'default' => NULL,
       'middle' => NULL,
+      'header' => NULL,
+      'before_content' => NULL,
+      'main_content' => NULL,
+      'after_content' => NULL,
+      'bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -92,7 +97,7 @@ function breol_search_frontend_default_panels_mini() {
     $display->panels['header'][1] = 'new-0d47494b-9958-4453-b84a-5f453644e712';
     $pane = new stdClass();
     $pane->pid = 'new-3dea43f8-9d6d-4606-ad4b-625063eef6af';
-    $pane->panel = 'header';
+    $pane->panel = 'main_content';
     $pane->type = 'search_result';
     $pane->subtype = 'search_result';
     $pane->shown = TRUE;
@@ -119,11 +124,11 @@ function breol_search_frontend_default_panels_mini() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 0;
     $pane->locks = array();
     $pane->uuid = '3dea43f8-9d6d-4606-ad4b-625063eef6af';
     $display->content['new-3dea43f8-9d6d-4606-ad4b-625063eef6af'] = $pane;
-    $display->panels['header'][2] = 'new-3dea43f8-9d6d-4606-ad4b-625063eef6af';
+    $display->panels['main_content'][0] = 'new-3dea43f8-9d6d-4606-ad4b-625063eef6af';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-6adb6cbf-1c54-4f35-a9a9-af44f36d742a';
   $mini->display = $display;

@@ -31,12 +31,17 @@ function breol_search_frontend_default_page_manager_handlers() {
     'name' => '',
   );
   $display = new panels_display();
-  $display->layout = 'onecol';
+  $display->layout = 'stacked_columns';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'middle' => NULL,
+      'header' => NULL,
+      'before_content' => NULL,
+      'main_content' => NULL,
+      'after_content' => NULL,
+      'bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -45,8 +50,31 @@ function breol_search_frontend_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
+    $pane->pid = 'new-06be3f23-9bc3-47a2-9dcc-06185dc01540';
+    $pane->panel = 'before_content';
+    $pane->type = 'ding_facetbrowser';
+    $pane->subtype = 'ding_facetbrowser';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '06be3f23-9bc3-47a2-9dcc-06185dc01540';
+    $display->content['new-06be3f23-9bc3-47a2-9dcc-06185dc01540'] = $pane;
+    $display->panels['before_content'][0] = 'new-06be3f23-9bc3-47a2-9dcc-06185dc01540';
+    $pane = new stdClass();
     $pane->pid = 'new-4e846570-83d2-4a19-9e21-9eea5286ca80';
-    $pane->panel = 'middle';
+    $pane->panel = 'main_content';
     $pane->type = 'panels_mini';
     $pane->subtype = 'search';
     $pane->shown = TRUE;
@@ -69,8 +97,8 @@ function breol_search_frontend_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = '4e846570-83d2-4a19-9e21-9eea5286ca80';
     $display->content['new-4e846570-83d2-4a19-9e21-9eea5286ca80'] = $pane;
-    $display->panels['middle'][0] = 'new-4e846570-83d2-4a19-9e21-9eea5286ca80';
-  $display->hide_title = PANELS_TITLE_FIXED;
+    $display->panels['main_content'][0] = 'new-4e846570-83d2-4a19-9e21-9eea5286ca80';
+  $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = 'new-4e846570-83d2-4a19-9e21-9eea5286ca80';
   $handler->conf['display'] = $display;
   $export['search_ting_search__panel_context_8c346371-2680-4304-84f1-211870159d30'] = $handler;
