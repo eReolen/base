@@ -7,6 +7,18 @@
 include_once 'breol_frontend.features.inc';
 
 /**
+ * Implements hook_ctools_plugin_directory().
+ *
+ * It simply tells panels where to find the .inc files that define various
+ * args, contexts, content_types. In this case the subdirectories of
+ * ctools_plugin_example/panels are used.
+ */
+function breol_frontend_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+
+/**
  * Implements hook_entity_info_alter().
  */
 function breol_frontend_entity_info_alter(&$entity_info) {

@@ -56,4 +56,26 @@
     }
   };
 
+  /**
+   * Override of the behaviour.
+   *
+   * TODO(ts) - this is a temporary solution until we have
+   * clarified whats gonna happen here.
+   */
+  Drupal.behaviors.dingAvailabilityAttach = function(){};
+
+  /**
+   * Modify the DOM.
+   */
+  Drupal.behaviors.availabilityAttach = {
+    attach : function(context, settings) {
+      $('.search-snippet-info').each(function() {
+        $(this).addClass('js-processed');
+        var metaData = $(this).find('.group-ting-right-col-search', context);
+        var availability = $(this).find('.js-online, .js-pending');
+        metaData.append(availability);
+      });
+    }
+  };
+
 })(jQuery);
