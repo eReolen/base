@@ -78,4 +78,23 @@
     }
   };
 
+  /**
+   * Modify the DOM.
+   */
+  Drupal.behaviors.facets = {
+    attach : function(context, settings) {
+
+      $('#ding-facetbrowser-form').each(function() {
+        $('fieldset').each(function() {
+
+          var dropdown = $(this).find('.fieldset-wrapper').hide().addClass('js-processed');
+
+          $(this).click(function() {
+            dropdown.slideToggle(200).toggeClass('open');
+          });
+        });
+      });
+    }
+  };
+
 })(jQuery);
