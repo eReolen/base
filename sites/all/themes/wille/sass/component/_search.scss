@@ -214,7 +214,8 @@
   display: inline-block;
   width: 100%;
   float: left;
-  margin-bottom: 52px;
+  margin-bottom: 50px;
+  margin-top: 30px;
 
   fieldset {
 
@@ -337,7 +338,7 @@
 }
 
 .ting-cover {
-  min-height: 140px;
+  min-height: 178px;
   position: relative;
   width: 182px;
   max-width: 100%;
@@ -355,3 +356,8 @@
   }
 }
 
+.page-search {
+  .pane-page-tabs {
+    display: none;
+  }
+}
