@@ -9,6 +9,9 @@ stylesheets[all][] = css/wille.main.css
 stylesheets[all][] = system.menus.css
 stylesheets[all][] = panels.css
 stylesheets[all][] = search.css
+stylesheets[all][] = brin.styles.css
+stylesheets[all][] = ddbasic.styles.css
+stylesheets[all][] = ding_availability.css
 
 ;-----------//Javascript.
 scripts[] = scripts/wille.main.js

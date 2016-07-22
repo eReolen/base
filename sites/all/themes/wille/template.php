@@ -47,3 +47,50 @@ function wille_preprocess_image(&$variables) {
     unset($variables[$key]);
   }
 }
+
+/**
+ * Implements hook_preprocess_preprocess_material_item().
+ */
+function wille_preprocess_material_item(&$variables) {
+  $element = $variables['element'];
+  // TODO Can we rely on this?
+  $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
+  $ting_entity = ding_entity_load($ding_entity_id);
+
+  $add_classes = _wille_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+  $variables['classes_array'] = array_merge($variables['classes_array'], $add_classes);
+}
+
+
+/**
+ * Implements hook_preprocess_ting_object_cover().
+ *
+ * Adds type icon to ting object covers.
+ */
+function wille_preprocess_ting_object_cover(&$variables) {
+  if (!isset($variables['elements']['#suppress_type_icon']) ||
+    !$variables['elements']['#suppress_type_icon']) {
+    $ting_entity = $variables['object'];
+    if ($ting_entity && $ting_entity->reply) {
+      $add_classes = _wille_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+      $variables['classes'] = array_merge($variables['classes'], $add_classes);
+    }
+  }
+}
+
+/**
+ * Return classes for type icon.
+ *
+ * @return array
+ *   Classes as array.
+ */
+function _wille_type_icon_classes($type, $quota = NULL) {
+  $classes = array(
+    'type-icon',
+    'type-icon-' . $type,
+  );
+  if (is_bool($quota)) {
+    $classes[] = 'type-icon-' . ($quota ? 'quota' : 'noquota');
+  }
+  return $classes;
+}

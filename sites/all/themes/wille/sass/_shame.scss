@@ -59,3 +59,7 @@
   display: inline-block;
   min-height: 100vh;
 }
+
+.main-content__inner {
+  @include outer-container;
+}

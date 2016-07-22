@@ -1,30 +1,363 @@
-.search-results__item{
+.search-result {
   @include row();
-
   color: $black-medium;
   font-family: $font-light;
-  padding: 40px 0;
+  padding: 20px 0;
   border-bottom: 1px solid $white-dark;
 }
 
-.search-results__item__image {
+.group-ting-left-col-search {
   @include span-columns(2, 12);
-
   padding-right: 15px;
+  overflow: hidden;
 }
 
-.search-results__item__meta-data {
+.group-ting-right-col-search {
   @include span-columns(10, 12);
+  padding-left: 20px;
 }
 
-.byline {
-  font-family: $font-light-italic;
+.search-result--heading-type {
+  display: none; // TODO(ts) -  reomve before merge.
 }
 
-.title {
+.field-name-ting-title {
   font-size: em(29, $base-font-size);
+
+  h2 {
+
+    color: $black-medium;
+    font-family: $font-light;
+    margin: 0 0 10px;
+
+    a {
+      color: $black-medium;
+      font-family: $font-light;
+      text-decoration: none;
+    }
+  }
 }
 
-.title--search {
-  margin: 0;
+.field-name-ting-author {
+  font-family: $font-light-italic;
+   color: $black-medium;
+  a {
+    font-family: $font-light-italic;
+    text-decoration: none;
+     color: $black-medium;
+  }
+}
+
+.field-name-ting-abstract {
+  margin: 20px 0;
+  // Make text readable.
+  max-width: 680px;
+  line-height: 20px;
+}
+
+.search-result--availability-link {
+  text-decoration: none;
+  @include button($green);
+  color: white;
+  margin-left: 20px;
+  float: right;
+
+  &:before {
+    position: relative;
+    top: 3px;
+    color: rgb(1, 115, 52);
+  }
+
+  .js-processed & {
+    float: left;
+    margin-left: 0;
+    margin-right: 20px;
+    margin-top: 20px;
+  }
+}
+
+.field-type-ting-series {
+  border-top: 1px solid $white-medium;
+  border-bottom: 1px solid $white-medium;
+  padding: 20px 0;
+  margin: 20px 0;
+
+  a {
+    color: $red-light;
+    font-family: $font-mikado;
+    text-decoration: none;
+
+    &:hover {
+      color: $blue-medium;
+      text-decoration: underline;
+    }
+  }
+}
+
+.pane-search-per-page,
+.pane-ting-search-sort-form {
+  float: right;
+  width: 25%;
+}
+
+.stacked-section {
+  @include span-columns(12);
+}
+
+.pane-search-result {
+  @include span-columns(12);
+
+  // TODO(ts) - remove, just testing. Suppress warnings until futher
+  // actions has been taken. The question is should meesag be shown here, and
+  // in the context of searches that has not been performed by the user???!.
+  .messages {
+    display: none;
+  }
+}
+
+// Pagination.
+.item-list .pager li {
+  padding: 0;
+  margin: 0 2px;
+  color: $title-color;
+
+  &.pager-next {
+    float: right;
+
+    a {
+      color: $title-color;
+    }
+  }
+
+  &.pager-previous {
+    float: left;
+
+    a {
+      color: $title-color;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $white-dark;
+    text-transform: capitalize;
+
+    &:hover {
+      color: $red;
+    }
+  }
+}
+
+.item-list .pager {
+  padding: 40px 0;
+  font-size: 20px;
+}
+
+.type-icon{
+  position: relative;
+
+  &:before {
+    display: block;
+    content: " ";
+    right: 10px;
+    top: auto;
+    bottom: 10px;
+    left: auto;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background-color: rgb(116, 150, 190);
+    border-radius: 50%;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 9px;
+    color: white;
+  }
+
+  &.type-icon-audiobook {
+    &:before {
+      @include icon('.icon-audio-books');
+    }
+  }
+  &.type-icon-ebook {
+    &:before {
+      @include icon('.icon-e-books');
+    }
+  }
+  &.type-icon-audiobook.type-icon-noquota {
+    &:before {
+      @include icon('.icon-audio-books');
+      background-color: $red;
+    }
+  }
+  &.type-icon-ebook.type-icon-noquota {
+    &:before {
+      @include icon('.icon-audio-books');
+      background-color: $red;
+    }
+  }
+  &.type-icon-audiobook.type-icon-quota {
+    &:before {
+      @include icon('.icon-audio-books');
+    }
+  }
+  &.type-icon-ebook.type-icon-quota {
+    &:before {
+      @include icon('.icon-audio-books');
+    }
+  }
+}
+
+// Facets.
+#ding-facetbrowser-form {
+
+  display: inline-block;
+  width: 100%;
+  float: left;
+  margin-bottom: 50px;
+  margin-top: 30px;
+
+  fieldset {
+
+    @include span-columns(4);
+    position: relative;
+    margin-top: 20px;
+
+    &:nth-child(5n) {
+      clear: left;
+    }
+
+    legend {
+      -webkit-transition: all 0.15s linear;
+      -moz-transition: all 0.15s linear false;
+      -o-transition: all 0.15s linear false;
+      transition: all 0.15s linear;
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      -ms-border-radius: 30px;
+      -o-border-radius: 30px;
+      border-radius: 30px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      background: white;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      appearance:none;
+      border: 1px solid #d5d5d5;
+      width: 99%;
+      padding: 8px;
+      font-family: $font-mikado;
+      font-size: 13px;
+      padding: 19px 30px;
+      color: $title-color;
+      text-transform: uppercase;
+      font-weight: normal;
+      letter-spacing: 1px;
+      background: url(../images/select_arrow.png) $white-medium no-repeat 96% 18px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #677372;
+        color: white;
+      }
+    }
+  }
+
+  .fieldset-wrapper {
+    background: white;
+    border: 1px solid #d5d5d5;
+    border-radius: 30px;
+    padding: 30px;
+    font-family: $font-regular;
+    letter-spacing: 1px;
+    max-width: 99%;
+    margin-top: 30px;
+
+    &.js-processed {
+      position: absolute;
+      width: 99%;
+      margin-top: 12px;
+      z-index: 99;
+    }
+
+    .form-item {
+      border-bottom: 1px solid $white-medium;
+      padding: 10px 0;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: $blue-medium;
+
+    &.expand,
+    &.unselect {
+      position: absolute;
+      bottom: 10px;
+      left: 35px;
+      color: $title-color;
+
+      & {
+        display: none;
+
+        .open + & {
+          display: block;
+        }
+      }
+
+      &:before {
+        @include icon('.icon-arrow-right');
+        float: right;
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+        transition: all 300ms ease-out;
+        font-size: 8px;
+        position: relative;
+        top: 4px;
+        left: 3px;
+      }
+
+      &.expand-less:before {
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        top: 3px;
+        left: 5px;
+      }
+    }
+  }
+}
+
+.pane-panels-mini.pane-search {
+  .header {
+    border-bottom: 1px solid $white-medium;
+    padding-bottom: 20px;
+    margin-bottom: 0px;
+  }
+}
+
+.ting-cover {
+  min-height: 178px;
+  position: relative;
+  width: 182px;
+  max-width: 100%;
+
+  &:after {
+    content: " ";
+    background: url(../svg/camera.svg);
+     background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+  }
+}
+
+.page-search {
+  .pane-page-tabs {
+    display: none;
+  }
 }
