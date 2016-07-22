@@ -39,7 +39,7 @@ function breol_frontend_default_page_manager_handlers() {
     'name' => 'breol-site-template',
   );
   $display = new panels_display();
-  $display->layout = 'ding2_site_template';
+  $display->layout = 'wille_site_template';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -52,6 +52,7 @@ function breol_frontend_default_page_manager_handlers() {
       'branding' => NULL,
       'bottom' => NULL,
       'navigation' => NULL,
+      'content_header' => NULL,
     ),
   );
   $display->cache = array();
@@ -239,6 +240,40 @@ function breol_frontend_default_page_manager_handlers() {
     $display->content['new-4637ed6a-8c15-46bb-ae3b-4de4089e860d'] = $pane;
     $display->panels['content'][2] = 'new-4637ed6a-8c15-46bb-ae3b-4de4089e860d';
     $pane = new stdClass();
+    $pane->pid = 'new-e5040dda-cb3e-45a2-a3ff-81ffeef1049d';
+    $pane->panel = 'content_header';
+    $pane->type = 'cover_image';
+    $pane->subtype = 'cover_image';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'node_type',
+          'settings' => array(
+            'type' => array(
+              'breol_news' => 'breol_news',
+              'breol_section' => 'breol_section',
+              'breol_subject' => 'breol_subject',
+            ),
+          ),
+          'context' => 'node',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = 'e5040dda-cb3e-45a2-a3ff-81ffeef1049d';
+    $display->content['new-e5040dda-cb3e-45a2-a3ff-81ffeef1049d'] = $pane;
+    $display->panels['content_header'][0] = 'new-e5040dda-cb3e-45a2-a3ff-81ffeef1049d';
+    $pane = new stdClass();
     $pane->pid = 'new-fd6dbb4f-c7b5-4881-96d2-769a6c16bfc2';
     $pane->panel = 'footer';
     $pane->type = 'block';
@@ -389,8 +424,27 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->panel = 'navigation';
     $pane->type = 'subject_menu';
     $pane->subtype = 'subject_menu';
-    $pane->shown = FALSE;
-    $pane->access = array();
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'front',
+          'settings' => NULL,
+          'not' => FALSE,
+        ),
+        1 => array(
+          'name' => 'node_type',
+          'settings' => array(
+            'type' => array(
+              'breol_subject' => 'breol_subject',
+            ),
+          ),
+          'context' => 'node',
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'or',
+    );
     $pane->configuration = array();
     $pane->cache = array();
     $pane->style = array(

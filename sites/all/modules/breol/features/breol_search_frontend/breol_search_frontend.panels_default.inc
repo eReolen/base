@@ -48,6 +48,29 @@ function breol_search_frontend_default_panels_mini() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
+    $pane->pid = 'new-4f47e03b-5a0f-4184-9dd4-03dac9f706db';
+    $pane->panel = 'header';
+    $pane->type = 'ding_facetbrowser';
+    $pane->subtype = 'ding_facetbrowser';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '4f47e03b-5a0f-4184-9dd4-03dac9f706db';
+    $display->content['new-4f47e03b-5a0f-4184-9dd4-03dac9f706db'] = $pane;
+    $display->panels['header'][0] = 'new-4f47e03b-5a0f-4184-9dd4-03dac9f706db';
+    $pane = new stdClass();
     $pane->pid = 'new-6adb6cbf-1c54-4f35-a9a9-af44f36d742a';
     $pane->panel = 'header';
     $pane->type = 'search_per_page';
@@ -67,11 +90,11 @@ function breol_search_frontend_default_panels_mini() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '6adb6cbf-1c54-4f35-a9a9-af44f36d742a';
     $display->content['new-6adb6cbf-1c54-4f35-a9a9-af44f36d742a'] = $pane;
-    $display->panels['header'][0] = 'new-6adb6cbf-1c54-4f35-a9a9-af44f36d742a';
+    $display->panels['header'][1] = 'new-6adb6cbf-1c54-4f35-a9a9-af44f36d742a';
     $pane = new stdClass();
     $pane->pid = 'new-0d47494b-9958-4453-b84a-5f453644e712';
     $pane->panel = 'header';
@@ -90,11 +113,11 @@ function breol_search_frontend_default_panels_mini() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '0d47494b-9958-4453-b84a-5f453644e712';
     $display->content['new-0d47494b-9958-4453-b84a-5f453644e712'] = $pane;
-    $display->panels['header'][1] = 'new-0d47494b-9958-4453-b84a-5f453644e712';
+    $display->panels['header'][2] = 'new-0d47494b-9958-4453-b84a-5f453644e712';
     $pane = new stdClass();
     $pane->pid = 'new-3dea43f8-9d6d-4606-ad4b-625063eef6af';
     $pane->panel = 'main_content';
