@@ -1,0 +1,40 @@
+select {
+  -webkit-transition: all 0.15s linear;
+  -moz-transition: all 0.15s linear false;
+  -o-transition: all 0.15s linear false;
+  transition: all 0.15s linear;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  // background: -owg-linear-gradient(#efefef,#fbfbfb);
+  // background: -webkit-linear-gradient(#efefef,#fbfbfb);
+  // background: -moz-linear-gradient(#efefef,#fbfbfb);
+  // background: -o-linear-gradient(#efefef,#fbfbfb);
+  // -pie-background: -pie-linear-gradient(#efefef,#fbfbfb);
+  // background: linear-gradient(#efefef,#fbfbfb);
+  background: white;
+  // -webkit-appearance: menulist-button;
+  -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+  border: 1px solid #d5d5d5;
+  height: 36px;
+  // min-width: 99%;
+  width: 99%;
+  padding: 8px;
+
+  font-family: $font-mikado;
+  font-size: 13px;
+  padding: 10px 30px;
+  color: #969696;
+  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: 1px;
+
+  background: url(../images/select_arrow.png) no-repeat 96% 10px;
+}
