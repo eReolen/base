@@ -17,6 +17,24 @@ function breol_frontend_ctools_plugin_directory($owner, $plugin_type) {
   return 'plugins/' . $plugin_type;
 }
 
+/**
+ * Implements hook_theme().
+ */
+function breol_frontend_theme($existing, $type, $theme, $path) {
+  return array(
+    'cover_image' => array(
+      'variables' => array(
+        'image_uri' => NULL,
+        'cover_background_color' => 'transparant',
+        'title' => '',
+        'subtitle' => '',
+        'node'  => NULL,
+      ),
+      'path' => drupal_get_path('module', 'breol_frontend') . '/templates',
+      'template' => 'cover-image',
+    ),
+  );
+}
 
 /**
  * Implements hook_entity_info_alter().

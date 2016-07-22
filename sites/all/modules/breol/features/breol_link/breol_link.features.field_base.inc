@@ -86,8 +86,7 @@ function breol_link_field_default_field_bases() {
     'locked' => 0,
     'module' => 'color_field',
     'settings' => array(
-      'default_colors' => '#990036,#e6e6e6
-        ',
+      'default_colors' => '#990036,#e6e6e6,#ccd3a4,#bbcdcd,#d6c9b7,#eac781,#efd093,#df9593,',
       'profile2_private' => FALSE,
     ),
     'translatable' => 0,

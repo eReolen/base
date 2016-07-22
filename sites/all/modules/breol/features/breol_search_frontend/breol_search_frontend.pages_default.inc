@@ -50,29 +50,6 @@ function breol_search_frontend_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-06be3f23-9bc3-47a2-9dcc-06185dc01540';
-    $pane->panel = 'before_content';
-    $pane->type = 'ding_facetbrowser';
-    $pane->subtype = 'ding_facetbrowser';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = '06be3f23-9bc3-47a2-9dcc-06185dc01540';
-    $display->content['new-06be3f23-9bc3-47a2-9dcc-06185dc01540'] = $pane;
-    $display->panels['before_content'][0] = 'new-06be3f23-9bc3-47a2-9dcc-06185dc01540';
-    $pane = new stdClass();
     $pane->pid = 'new-4e846570-83d2-4a19-9e21-9eea5286ca80';
     $pane->panel = 'main_content';
     $pane->type = 'panels_mini';

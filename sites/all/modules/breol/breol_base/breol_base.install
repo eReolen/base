@@ -138,3 +138,16 @@ function breol_base_update_7115() {
 function breol_base_update_7116() {
   module_enable(array('reol_use_loan'), TRUE);
 }
+
+/**
+ * Revert various breol features.
+ */
+function breol_base_update_7117() {
+  features_revert_module('breol_frontpage');
+  features_revert_module('breol_frontend');
+  features_revert_module('breol_search_frontend');
+  features_revert_module('breol_subject');
+  features_revert_module('breol_section');
+  features_revert_module('breol_page');
+  features_revert_module('breol_link');
+}
