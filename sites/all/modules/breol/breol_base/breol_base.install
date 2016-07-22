@@ -149,4 +149,5 @@ function breol_base_update_7117() {
   features_revert_module('breol_subject');
   features_revert_module('breol_section');
   features_revert_module('breol_page');
+  features_revert_module('breol_link');
 }
