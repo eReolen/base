@@ -5,13 +5,20 @@ body {
   letter-spacing: em(1, $base-font-size);
 }
 
-ul {
+ul.menu,
+ul.tabs {
+  @extend %reset;
   li {
     list-style-type: none;
     list-style-image: none;
     &.leaf {
       list-style-type: none;
       list-style-image: none;
+
+      .footer & {
+        margin: 0;
+        margin-bottom: 2.14286em;
+      }
     }
   }
 
@@ -21,15 +28,27 @@ ul {
 }
 
 h1 {
-  @include heading(1.4rem);
+  @include heading(em(32, $base-font-size));
 }
 
 h2 {
-  @include heading(1.2rem);
+  @include heading(em(28, $base-font-size));
 }
 
 h3 {
-  @include heading(1rem);
+  @include heading(em(24, $base-font-size));
+}
+
+h4 {
+  @include heading(em(20, $base-font-size));
+}
+
+h5 {
+  @include heading(em(16, $base-font-size));
+}
+
+h6 {
+  @include heading(em(14, $base-font-size));
 }
 
 p {
@@ -43,4 +62,16 @@ img {
 
 * {
   outline: none;
+}
+
+li {
+  margin: 5px;
+}
+
+strong {
+  font-family: $font-bold;
+}
+
+em {
+  font-style: italic;
 }
