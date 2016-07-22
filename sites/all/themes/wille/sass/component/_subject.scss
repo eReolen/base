@@ -98,3 +98,12 @@
     text-decoration: none;
   }
 }
+
+// To keep element from blinking while loading.
+.pane-subject-menu {
+  min-height: 225px;
+
+  @include media($tablet-l) {
+    min-height: 182px;
+  }
+}

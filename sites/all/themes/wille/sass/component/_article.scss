@@ -13,7 +13,7 @@ $z-index-cover-base: 1;
     font-size: em(14, $base-font-size);
   }
 
-  &--breol-section {
+  &--breol_section {
     padding: 0;
   }
 }
@@ -28,6 +28,8 @@ $z-index-cover-base: 1;
 .article__cover-wrapper {
   overflow: hidden;
   position: relative;
+  float: left;
+  width: 100%;
 }
 
 .article__cover {
@@ -52,32 +54,84 @@ $z-index-cover-base: 1;
     content: '';
   }
 
-  &--breol-section {
+  &--breol_section {
     @include outer-container;
     background-size: contain;
     background-position: center right;
   }
 
-  &--breol-subject {
+  &--breol_subject {
     @include outer-container;
     background-size: 80%;
     background-position: bottom right;
   }
 }
 
+.cover {
+
+  &__venskab,
+  &__sjov {
+    .article__cover--breol_subject {
+      background-size: cover;
+    }
+  }
+
+  &__sport {
+    .article__cover--breol_subject {
+      background-size: 93%;
+    }
+  }
+
+  &__gys {
+    .article__cover--breol_subject {
+      background-size: 100%;
+    }
+  }
+
+  &__kærlighed {
+    .article__cover--breol_subject {
+      background-size: cover;
+      background-position: 41%;
+    }
+  }
+
+  &__dyr {
+    .article__cover--breol_subject {
+      background-size: 93%;
+      background-position: center right;
+    }
+  }
+
+  &__historie {
+    .article__cover--breol_subject {
+      background-size: 90%;
+      background-position: center right;
+    }
+  }
+
+  &__eventyr {
+    .article__cover--breol_subject {
+      background-size: 90%;
+      background-position: center right;
+    }
+  }
+}
+
 .article__cover__content {
   @include outer-container;
-  z-index: calc($z-index-menu + 2);
+  z-index: 10;
   position: relative;
   max-width: 550px;
   max-height: 350px;
   overflow: hidden;
   padding: 40px 15px;
+  color: $title-color;
 
   // Font.
   text-align: center;
 
-  &--breol-section {
+  &--breol_section,
+  &--breol_subject {
     text-align: left;
     width: 100%;
     max-width: 1180px;
