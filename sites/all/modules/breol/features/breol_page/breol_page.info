@@ -28,4 +28,5 @@ features[variable][] = menu_parent_breol_page
 features[variable][] = node_options_breol_page
 features[variable][] = node_preview_breol_page
 features[variable][] = node_submitted_breol_page
+mtime = 1469021097
 project path = sites/all/modules/breol/features

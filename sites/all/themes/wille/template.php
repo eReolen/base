@@ -6,6 +6,24 @@
  */
 
 /**
+ * Implements hook_preprocess_html().
+ */
+function wille_preprocess_html(&$variables) {
+
+  // Get the object loaded by the current router item.
+  $node = menu_get_object();
+
+  // Get the field_color and convert i t RGBA foropacity and add it
+  // to the body background.
+  if (!empty($node) && $node->type === 'breol_subject') {
+    $rgb = breol_fancy_box_hex2rgb($node->field_color[LANGUAGE_NONE][0]['rgb']);
+    $rgba = 'rgba(' . implode(",", $rgb) . ', 0.4)';
+    $css = 'body {background-color: ' . $rgba . '}';
+    drupal_add_css($css, 'inline');
+  }
+}
+
+/**
  * Implements hook_preprocess_node().
  */
 function wille_preprocess_node(&$variables, $hook) {
@@ -17,7 +35,7 @@ function wille_preprocess_node(&$variables, $hook) {
   }
 
   $node = $variables['node'];
-  if ($node->type === 'breol_news' || $node->type === 'breol_section') {
+  if ($node->type === 'breol_news' || $node->type === 'breol_section' || $node->type === 'breol_subject') {
     // Get file url for cover image.
     $variables['file_uri'] = null;
     if (!empty($node->field_breol_cover_image[LANGUAGE_NONE][0])) {
@@ -30,6 +48,10 @@ function wille_preprocess_node(&$variables, $hook) {
   // breol_subject.
   if ($node->type === 'breol_subject') {
     libraries_load('slick');
+    $variables['cover_background_color'] = 'transparant';
+    if (!empty($variables['field_color'][0]['rgb'])) {
+      $variables['cover_background_color'] = $variables['field_color'][0]['rgb'];
+    }
   }
 }
 

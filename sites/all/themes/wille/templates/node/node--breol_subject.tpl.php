@@ -7,7 +7,5 @@
 ?>
 
 <div class="article article--breol-section">
-  <div class="article__carousel">
-    <?php print render($content['field_carousels']); ?>
-  </div>
+  <!-- This section is empty for now, because panels do the rest. -->
 </div>

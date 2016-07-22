@@ -54,12 +54,17 @@ function breol_subject_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'onecol';
+  $display->layout = 'stacked_columns';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'middle' => NULL,
+      'header' => NULL,
+      'before_content' => NULL,
+      'main_content' => NULL,
+      'after_content' => NULL,
+      'bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -69,7 +74,7 @@ function breol_subject_default_page_manager_handlers() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-7fcb4ff3-cb9a-45fb-a763-73739210062e';
-    $pane->panel = 'middle';
+    $pane->panel = 'main_content';
     $pane->type = 'node_content';
     $pane->subtype = 'node_content';
     $pane->shown = TRUE;
@@ -96,10 +101,10 @@ function breol_subject_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = '7fcb4ff3-cb9a-45fb-a763-73739210062e';
     $display->content['new-7fcb4ff3-cb9a-45fb-a763-73739210062e'] = $pane;
-    $display->panels['middle'][0] = 'new-7fcb4ff3-cb9a-45fb-a763-73739210062e';
+    $display->panels['main_content'][0] = 'new-7fcb4ff3-cb9a-45fb-a763-73739210062e';
     $pane = new stdClass();
     $pane->pid = 'new-1b4e53f5-464a-4347-8b57-3bec0f66a346';
-    $pane->panel = 'middle';
+    $pane->panel = 'main_content';
     $pane->type = 'panels_mini';
     $pane->subtype = 'search';
     $pane->shown = TRUE;
@@ -122,7 +127,7 @@ function breol_subject_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = '1b4e53f5-464a-4347-8b57-3bec0f66a346';
     $display->content['new-1b4e53f5-464a-4347-8b57-3bec0f66a346'] = $pane;
-    $display->panels['middle'][1] = 'new-1b4e53f5-464a-4347-8b57-3bec0f66a346';
+    $display->panels['main_content'][1] = 'new-1b4e53f5-464a-4347-8b57-3bec0f66a346';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
