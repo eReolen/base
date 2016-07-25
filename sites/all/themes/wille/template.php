@@ -125,3 +125,14 @@ function wille_ting_view_alter(&$build) {
     }
   }
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter;
+ */
+function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+  // HTML5 placeholder attribute
+  $form['search_block_form']['#attributes']['placeholder'] = t('Search among thousands of titles');
+
+  // Hide submit button.
+  $form['actions']['#attributes']['class'][] = 'element-invisible';
+}

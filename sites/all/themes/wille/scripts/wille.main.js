@@ -99,7 +99,39 @@
   };
 
   /**
-   * Make ting object dtails collapsible.
+   * Search drop down.
+   */
+  Drupal.behaviors.searchDropDown = {
+    attach : function(context, settings) {
+      // If the block is not present in the DOM abort.
+      if ($('.pane-search-form').length === 0) {
+        return;
+      }
+
+      // If we are on the search page we dont want to hide the form,
+      // but still don't want users to be able to follow the search link.
+      if ($('body.page-search').length !== 0) {
+        $('.menu-name-main-menu ul li.last a', context)
+        .click(function(event) {
+          event.preventDefault();
+        });
+      } else {
+        var searchFormWrapper = $('.pane-search-form', context);
+        searchFormWrapper.hide();
+
+        // We assume that search is the fith element. This would be preferable
+        // if it was more dynamic and stable.
+        $('.menu-name-main-menu ul li.last a', context)
+          .click(function(event) {
+            event.preventDefault();
+            searchFormWrapper.slideToggle();
+          });
+        }
+    }
+  };
+
+  /**
+   * Make ting object details collapsible.
    */
   Drupal.behaviors.tingObject = {
     attach : function(context, settings) {
