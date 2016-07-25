@@ -46,6 +46,7 @@
    */
   Drupal.behaviors.subjectMenu = {
     attach : function(context, settings) {
+      return;
       $( document ).ready(function() {
         $('.subject-menu', context).slick({
           infinite: true,
@@ -79,7 +80,7 @@
   };
 
   /**
-   * Modify the DOM.
+   * Facets.
    */
   Drupal.behaviors.facets = {
     attach : function(context, settings) {
@@ -92,6 +93,38 @@
           $(this).click(function() {
             dropdown.slideToggle(200).toggeClass('open');
           });
+        });
+      });
+    }
+  };
+
+  /**
+   * Make ting object dtails collapsible.
+   */
+  Drupal.behaviors.tingObject = {
+    attach : function(context, settings) {
+
+      var contentWrapper = $('<div class="collapsible-content-wrapper" />')
+
+      var elements = [
+        '.group_material_details',
+        '.ting-object-wrapper',
+        '.pane-ting-ting-object-types'
+      ];
+
+      $(elements).each(function(id, element) {
+        $(element)
+          .addClass('ting-object-collapsible-enabled')
+          .addClass('open')
+          .find('h2')
+          .nextAll()
+          .wrapAll(contentWrapper);
+
+        $(element).click(function() {
+          $(this)
+            .toggleClass('open')
+            .find('.collapsible-content-wrapper')
+            .slideToggle();
         });
       });
     }
