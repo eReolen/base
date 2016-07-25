@@ -27,29 +27,12 @@ ul.tabs {
   }
 }
 
-h1 {
-  @include heading(em(32, $base-font-size));
-}
-
-h2 {
-  @include heading(em(28, $base-font-size));
-}
-
-h3 {
-  @include heading(em(24, $base-font-size));
-}
-
-h4 {
-  @include heading(em(20, $base-font-size));
-}
-
-h5 {
-  @include heading(em(16, $base-font-size));
-}
-
-h6 {
-  @include heading(em(14, $base-font-size));
-}
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.17em; }
+h4 { font-size: 1.12em; }
+h5 { font-size: .83em; }
+h6 { font-size: .75em; }
 
 p {
   line-height: 1.6em;

@@ -1,0 +1,173 @@
+/**
+ * Quick and dirty theming of object view.
+ */
+.group_ting_object_left_column,
+.group_ting_left_col_collection {
+  @include span-columns(3);
+  overflow: hidden;
+}
+
+.group_ting_object_right_column,
+.group_ting_right_col_collection {
+  @include shift(1);
+  @include span-columns(8);
+
+  // TODO(ts) - resolve this.
+  .field-name-ting-type {
+    display: none;
+  }
+}
+
+.group-material-details {
+  @include span-columns(12);
+
+  // Items.
+  .field-label {
+    @include span-columns(3);
+  }
+
+  .field-items {
+    @include span-columns(9);
+  }
+
+  .field {
+    margin: 15px 0;
+  }
+}
+
+.ting-object-wrapper {
+  @include span-columns(12);
+}
+
+.field-group-format-title {
+  text-decoration: none;
+}
+
+%ting-object-main-title {
+  font-size: 28px;
+  color: $title-color;
+  font-family: $font-light;
+  padding: 20px 0;
+  border-bottom: 1px solid $title-color;
+  margin: 0;
+  cursor: pointer;
+}
+
+.group-material-details,
+.ting-object-wrapper,
+.pane-ting-ting-object-types,
+.pane-ting-ting-relation-anchors,
+.pane-ting-ting-collection-types {
+
+  position: relative;
+
+  h2 {
+    @extend %ting-object-main-title;
+
+    a {
+      color: $title-color;
+      font-weight: normal;
+    }
+  }
+
+  margin-bottom: 50px;
+}
+
+.field-type-ting-entities {
+
+  > .field-items > .field-item {
+    h2 {
+      color: #646464;
+      font-family: "OpenSans Light";
+      text-decoration: none;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.group-material-details {
+  margin-top: 100px;
+}
+
+.pane-ting-object {
+  margin: 60px 0 20px;
+  line-height: 20px;
+  color: $title-color;
+  font-family: $font-light;
+}
+
+.ting-object-related-item {
+  margin: 30px 0;
+}
+
+.pane-ting-ting-object-types,
+.pane-ting-ting-collection-types {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: $title-color;
+
+    &:hover {
+      color: $green;
+    }
+  }
+
+  .item-list ul li {
+    margin: 15px 0;
+    padding: 0;
+  }
+}
+
+.field-name-ting-subjects {
+  a {
+    font-family: $font-regular;
+    color: $red;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.view-mode-collection-list {
+  margin-bottom: 50px;
+}
+
+.field-name-ding-entity-buttons {
+  margin-top: 30px;
+}
+
+.ting-object-collapsible-enabled {
+  h2 {
+    &:before {
+      @include icon('.icon-arrow-right');
+      position: absolute;
+      right: 30px;
+      font-size: 16px;
+      top: 28px;
+      opacity: 0.7;
+      transition: all 300ms ease-out;
+    }
+  }
+
+  &.open {
+    h2 {
+      &:before {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+        transition: all 300ms ease-out;
+      }
+    }
+  }
+}
+
+.pane-ting-ting-object-types {
+  margin-bottom: 150px;
+}

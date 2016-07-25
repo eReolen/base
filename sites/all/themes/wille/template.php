@@ -112,3 +112,16 @@ function _wille_type_icon_classes($type, $quota = NULL) {
   }
   return $classes;
 }
+
+/**
+ * Implements hook_ting_view_alter().
+ *
+ * Fix all fieldgroups to be open.
+ */
+function wille_ting_view_alter(&$build) {
+  foreach ($build['#groups'] as $group) {
+    if ($group->format_settings['formatter'] == 'collapsed') {
+      $group->format_settings['formatter'] = 'open';
+    }
+  }
+}

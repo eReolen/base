@@ -29,6 +29,7 @@
     color: $black-medium;
     font-family: $font-light;
     margin: 0 0 10px;
+    font-size: 28px;
 
     a {
       color: $black-medium;
@@ -55,24 +56,20 @@
   line-height: 20px;
 }
 
+.action-button,
 .search-result--availability-link {
   text-decoration: none;
   @include button($green);
   color: white;
-  margin-left: 20px;
-  float: right;
+  float: left;
+  margin-left: 0;
+  margin-right: 20px;
+  margin-top: 20px;
 
   &:before {
     position: relative;
     top: 3px;
     color: rgb(1, 115, 52);
-  }
-
-  .js-processed & {
-    float: left;
-    margin-left: 0;
-    margin-right: 20px;
-    margin-top: 20px;
   }
 }
 
@@ -192,7 +189,7 @@
   }
   &.type-icon-ebook.type-icon-noquota {
     &:before {
-      @include icon('.icon-audio-books');
+      @include icon('.icon-e-books');
       background-color: $red;
     }
   }
@@ -203,7 +200,7 @@
   }
   &.type-icon-ebook.type-icon-quota {
     &:before {
-      @include icon('.icon-audio-books');
+      @include icon('.icon-e-books');
     }
   }
 }
@@ -340,7 +337,6 @@
 .ting-cover {
   min-height: 178px;
   position: relative;
-  width: 182px;
   max-width: 100%;
 
   &:after {
@@ -353,6 +349,10 @@
     width: 100%;
     height: 100%;
     opacity: 0.2;
+  }
+
+  .view-mode-search-result & {
+    width: 182px;
   }
 }
 
