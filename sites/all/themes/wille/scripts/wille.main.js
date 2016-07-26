@@ -2,6 +2,38 @@
  * Main javascript file for Wille theme.
  */
 (function($) {
+
+  /**
+   * Detect tablets and mobile devices.
+   */
+  Drupal.behaviors.isDesktop = {
+    attach : function(context, settings) {
+
+      // Add class if we are on desktop.
+      if(!isMobile()) {
+        $('body').addClass('is-desktop');
+      }
+
+      /**
+       * Detect if we are on mobile devices.
+       */
+      function isMobile() {
+       if( navigator.userAgent.match(/Android/i)
+         || navigator.userAgent.match(/webOS/i)
+         || navigator.userAgent.match(/iPhone/i)
+         || navigator.userAgent.match(/iPad/i)
+         || navigator.userAgent.match(/iPod/i)
+         || navigator.userAgent.match(/BlackBerry/i)
+         || navigator.userAgent.match(/Windows Phone/i)
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+  };
+
   /**
    * Toggle the footer menus.
    */
