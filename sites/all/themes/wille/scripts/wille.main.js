@@ -119,8 +119,8 @@
         var searchFormWrapper = $('.pane-search-form', context);
         searchFormWrapper.hide();
 
-        // We assume that search is the fith element. This would be preferable
-        // if it was more dynamic and stable.
+        // We assume that search is the fifth element. This would be preferable
+        // if it was more dynamic.
         $('.menu-name-main-menu ul li.last a', context)
           .click(function(event) {
             event.preventDefault();
