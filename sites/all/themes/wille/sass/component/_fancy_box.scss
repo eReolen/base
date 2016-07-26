@@ -46,6 +46,11 @@
   overflow: hidden;
   background: $red-dark;
 
+  // This aligns all divs inside in the middle of the parent.
+  * {
+    vertical-align: middle;
+  }
+
   img {
     height: 100%;
     width: 100%;
@@ -70,6 +75,17 @@
   }
 }
 
+.fancy-box {
+  > div:last-child {
+    .article--teaser {
+      @include media($phone) {
+        margin-left: 50%;
+        margin-right: 50%;
+      }
+    }
+  }
+}
+
 .fancy-box__push-left {
 
   .article--teaser {
@@ -77,6 +93,10 @@
 
     @include media($tablet-p) {
       margin-left: 0;
+    }
+
+    @include media($phone) {
+      margin-left: -50%;
     }
   }
 }
@@ -88,6 +108,11 @@
 
     @include media($tablet-p) {
       margin-right: 0;
+    }
+
+    @include media($phone) {
+      margin-right: percentage(6/12);
+      margin-left: percentage(6/12);
     }
   }
 }
@@ -135,7 +160,7 @@
 
 .article--teaser {
 
-  &:hover {
+  .is-desktop &:hover {
     .article--teaser__caption {
       transform: translate3d(0,0,0);
       opacity: 1;
@@ -154,7 +179,7 @@
     }
   }
 
-  &.article--teaser--small:hover {
+  .is-desktop &.article--teaser--small:hover {
     img {
       transform: translate3d(0,-110px,0);
     }
