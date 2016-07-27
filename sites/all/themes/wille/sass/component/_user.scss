@@ -1,0 +1,113 @@
+.material-item {
+
+  @extend .search-result;
+  padding: 40px 0;
+
+  .left-column {
+    @include span-columns(2);
+  }
+
+  .right-column {
+    @include span-columns(10);
+    padding-left: 30px;
+  }
+}
+
+.pane-user-menu {
+
+  margin-top: 50px;
+
+  .menu {
+
+    @include outer-container;
+
+    li {
+      @include span-columns(4);
+    }
+
+    a {
+      @include button($white, false);
+      color: $black-light;
+      border: 1px solid $white-dark;
+      width: 96%;
+      text-align: center;
+
+      &:before {
+        content: " ";
+      }
+
+      &.active,
+      &:hover {
+        background: $red;
+        color: $white;
+      }
+    }
+  }
+}
+
+.item-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+
+  a {
+    color: $title-color;
+    font-family: $font-light;
+    text-decoration: none;
+  }
+}
+
+.item-information-label {
+  float: left;
+  width: 40%;
+}
+
+.item-information-data {
+  float: left;
+  width: 60%;
+}
+
+.item-information-list {
+
+  padding: 0;
+  margin: 0;
+
+  li {
+    list-style-type: none;
+    padding: 10px 0;
+    font-family: $font-light;
+  }
+}
+
+.expires-in {
+  color: $green;
+
+  .item-information-data {
+    font-family: $font-bold;
+  }
+}
+
+.pane-loans {
+  margin-top: 50px;
+}
+
+.pane-loans,
+.pane-reservations {
+
+  .pane-content {
+    padding: 20px 0;
+    font-family: $font-light;
+  }
+
+  .pane-title {
+    font-size: 28px;
+    color: $title-color;
+    font-family: $font-light;
+    padding: 20px 0;
+    border-bottom: 1px solid $white-dark;
+    margin: 0;
+  }
+}
+
+.material-buttons {
+  margin-top: 75px;
+}
