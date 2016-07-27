@@ -125,6 +125,12 @@
     color: $title-color;
     margin-bottom: 10px;
   }
+
+  .form-actions {
+    input[type="submit"] {
+      float: right;
+    }
+  }
 }
 
 input.password-confirm, input.password-field {
