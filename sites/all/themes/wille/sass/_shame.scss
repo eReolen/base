@@ -63,3 +63,12 @@
 .main-content__inner {
   @include outer-container;
 }
+
+// Hacky hack.
+.material-item {
+  .left-column {
+    > .item-checkbox {
+      display: none;
+    }
+  }
+}

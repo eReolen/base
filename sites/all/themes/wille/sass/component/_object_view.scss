@@ -35,6 +35,10 @@
   }
 }
 
+.material-item {
+  @include clearfix;
+}
+
 .ting-object-wrapper {
   @include span-columns(12);
 }
