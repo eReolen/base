@@ -84,7 +84,7 @@ function breol_frontpage_default_page_manager_pages() {
   $display->title_pane = 'new-9282ec55-a017-4fce-b98a-7389859efaf7';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
-  $pages[''] = $page;
+  $pages['breol_frontpage'] = $page;
 
   return $pages;
 
