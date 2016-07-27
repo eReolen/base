@@ -163,8 +163,5 @@ function wille_preprocess_panels_pane(&$variables) {
         }
       }
     }
-
-    // Make user info available.
-    $r = 123;
   }
 }
