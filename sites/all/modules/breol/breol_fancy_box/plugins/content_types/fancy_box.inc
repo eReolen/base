@@ -82,19 +82,24 @@ function breol_fancy_box_get_layout() {
     array(
       'type' => 'medium',
       'attributes' => array(
-        'class' => array(),
-      ),
-    ),
-    array(
-      'type' => 'small',
-      'attributes' => array(
-        'class' => array(),
+        'class' => array(
+          'fancy-box-item',
+        ),
       ),
     ),
     array(
       'type' => 'small',
       'attributes' => array(
         'class' => array(
+          'fancy-box-item',
+        ),
+      ),
+    ),
+    array(
+      'type' => 'small',
+      'attributes' => array(
+        'class' => array(
+          'fancy-box-item',
           'fancy-box__push-right',
         ),
       ),
@@ -102,13 +107,16 @@ function breol_fancy_box_get_layout() {
     array(
       'type' => 'medium',
       'attributes' => array(
-        'class' => array(),
+        'class' => array(
+          'fancy-box-item',
+        ),
       ),
     ),
     array(
       'type' => 'medium',
       'attributes' => array(
         'class' => array(
+          'fancy-box-item',
           'fancy-box__push-left',
         ),
       ),
@@ -116,7 +124,9 @@ function breol_fancy_box_get_layout() {
     array(
       'type' => 'small',
       'attributes' => array(
-        'class' => array(),
+        'class' => array(
+          'fancy-box-item',
+        ),
       ),
     ),
   );

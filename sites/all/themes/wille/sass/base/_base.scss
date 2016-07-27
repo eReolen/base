@@ -5,6 +5,11 @@ body {
   letter-spacing: em(1, $base-font-size);
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 ul.menu,
 ul.tabs {
   @extend %reset;

@@ -60,10 +60,6 @@
   min-height: 100vh;
 }
 
-.main-content__inner {
-  @include outer-container;
-}
-
 // Hacky hack.
 .pane-loans {
   .material-item {
@@ -72,5 +68,14 @@
         display: none;
       }
     }
+  }
+}
+
+// Frontpage theming.
+.front {
+  .main-content__inner {
+    background: $gray;
+    padding: 75px 0;
+    margin-bottom: 100px;
   }
 }

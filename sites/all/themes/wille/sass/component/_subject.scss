@@ -7,6 +7,8 @@
 .subject-menu {
 
   display: none;
+  padding: 0;
+  margin: 0;
 
   &.slick-initialized {
     display: block;
@@ -34,18 +36,86 @@
     cursor: pointer;
   }
 
+  .slick-active {
+    @include fade-in(0.3);
+
+    // &:nth-child(1) {
+    //   animation-delay: 0.1s;
+    // }
+
+    // &:nth-child(2) {
+    //   animation-delay: 0.2s;
+    // }
+
+    // &:nth-child(3) {
+    //   animation-delay: 0.3s;
+    // }
+
+    // &:nth-child(4) {
+    //   animation-delay: 0.4s;
+    // }
+
+    // &:nth-child(5) {
+    //   animation-delay: 0.5s;
+    // }
+
+    // &:nth-child(6) {
+    //   animation-delay: 0.6s !important;
+    // }
+
+    // &:nth-child(1n+6) {
+    //   animation-delay: 0.1s;
+    // }
+
+    // &:nth-child(2n+6) {
+    //   animation-delay: 0.2s;
+    // }
+
+    // &:nth-child(3n+6) {
+    //   animation-delay: 0.3s;
+    // }
+
+    // &:nth-child(4n+6) {
+    //   animation-delay: 0.4s;
+    // }
+
+    // &:nth-child(5n+6) {
+    //   animation-delay: 0.5s;
+    // }
+
+    // &:nth-child(6n+6) {
+    //   animation-delay: 0.6s;
+    // }
+  }
+
   .slick-arrow {
     opacity: 0.7;
   }
 
   .slick-next.slick-arrow {
     background-image: url("../svg/arrow_right.svg");
-    right: -35px;
+    right: -44px;
+
+    @include media($tablet-l) {
+      right: -34px;
+    }
+
+    @include media($phone) {
+      right: -39px;
+    }
   }
 
   .slick-prev.slick-arrow {
     background-image: url("../svg/arrow_left.svg");
     left: 0;
+
+    @include media($tablet-l) {
+      left: 10px;
+    }
+
+    @include media($phone) {
+      left: 5px;
+    }
   }
 }
 
@@ -54,21 +124,22 @@
   text-align: center;
   cursor: pointer;
   position: relative;
-
+  margin: 0;
 
   img {
     width: 100%;
     max-width: 180px;
+    margin: 0 auto;
     transition: all .3s ease-out;
   }
 
-  &:nth-child(odd):hover {
+  .is-desktop &:nth-child(odd):hover {
     img {
       transform: scale(1.2);
     }
   }
 
-  &:nth-child(even):hover {
+  .is-desktop &:nth-child(even):hover {
     img {
       animation: shake .5s ease-in-out;
     }

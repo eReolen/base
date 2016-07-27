@@ -9,5 +9,5 @@ dependencies[] = page_manager
 features[ctools][] = page_manager:pages_default:1
 features[features_api][] = api:2
 features[page_manager_pages][] = breol_frontpage
-mtime = 1469111439
+mtime = 1469604286
 project path = sites/all/modules/breol/features

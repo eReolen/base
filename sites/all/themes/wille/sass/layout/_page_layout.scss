@@ -1,11 +1,22 @@
 // Header.
 .site-header__inner {
   @include outer-container;
+
+  @include media($tablet-l) {
+    padding: 0 15px;
+  }
 }
 
 // Main content.
+body:not(.front) .main-content__inner {
+  @include outer-container;
+}
+
 .main-content__inner {
   width: 100%;
+  @include media($tablet-l) {
+    padding: 0 15px;
+  }
 }
 
 // Footer.

@@ -25,6 +25,9 @@
       float: left;
       width: 100%;
       display: none;
+      // Neutralize padding.
+      margin-left: -15px;
+      width: calc(100% + 30px);
 
       li {
         width: 100%;

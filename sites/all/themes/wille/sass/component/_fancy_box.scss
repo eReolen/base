@@ -76,6 +76,27 @@
 }
 
 .fancy-box {
+
+  > div:nth-child(5) {
+
+    @include media($phone) {
+
+      width: 50%;
+
+      .article--teaser {
+
+        margin-left: 0;
+
+        img {
+          width: 200%;
+          max-width: 2000px;
+          left: -25%;
+          position: relative;
+        }
+      }
+    }
+  }
+
   > div:last-child {
     .article--teaser {
       @include media($phone) {
@@ -196,7 +217,7 @@
 
 .pane-fancy-box {
   @include outer-container;
-  padding: 100px 0;
+  // padding: 100px 0;
   @extend .fade-in;
   -webkit-animation-delay: 0.3s;
   -moz-animation-delay: 0.3s;
