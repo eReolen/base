@@ -78,12 +78,41 @@
    */
   Drupal.behaviors.subjectMenu = {
     attach : function(context, settings) {
-      return;
       $( document ).ready(function() {
+        // document.body.addEventListener('touchmove', function(e){ e.preventDefault(); });
+
         $('.subject-menu', context).slick({
-          infinite: true,
+          infinite: false,
           slidesToShow: 6,
-          slidesToScroll: 5
+          slidesToScroll: 6,
+          speed: 500,
+          touchThreshold: 24,
+          responsive: [
+            {
+              breakpoint: 1026,
+              settings: {
+                slidesToShow: 5,
+                slidesToScroll: 5,
+              }
+            },
+            {
+              breakpoint: 769,
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 4
+              }
+            },
+            {
+              breakpoint: 500,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+          ]
         });
       });
     }
