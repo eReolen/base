@@ -11,23 +11,14 @@ select {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  // background: -owg-linear-gradient(#efefef,#fbfbfb);
-  // background: -webkit-linear-gradient(#efefef,#fbfbfb);
-  // background: -moz-linear-gradient(#efefef,#fbfbfb);
-  // background: -o-linear-gradient(#efefef,#fbfbfb);
-  // -pie-background: -pie-linear-gradient(#efefef,#fbfbfb);
-  // background: linear-gradient(#efefef,#fbfbfb);
   background: white;
-  // -webkit-appearance: menulist-button;
   -webkit-appearance:none;
-    -moz-appearance:none;
-    appearance:none;
+  -moz-appearance:none;
+  appearance:none;
   border: 1px solid #d5d5d5;
   height: 36px;
-  // min-width: 99%;
   width: 99%;
   padding: 8px;
-
   font-family: $font-mikado;
   font-size: 13px;
   padding: 10px 30px;
@@ -35,6 +26,41 @@ select {
   text-transform: uppercase;
   font-weight: normal;
   letter-spacing: 1px;
-
   background: url(../images/select_arrow.png) no-repeat 96% 10px;
+}
+
+@include placeholder {
+  color: lighten($title-color, 0.8);
+}
+
+input {
+  text-decoration: none;
+  border-radius: 6px;
+  color: white;
+  min-width: 250px;
+  display: inline-block;
+  position: relative;
+  padding: 15px 22px;
+  border: 1px solid $white-dark;
+  color: $title-color;
+  font-size: 16px;
+  font-family: $font-light;
+  width: 99%;
+}
+
+input[type="submit"] {
+  @include button($red);
+  width: inherit;
+}
+
+label {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0.5em 0;
+  font-family: $font-mikado;
+  color: $title-color;
+}
+
+.form-item {
+  position: relative;
 }

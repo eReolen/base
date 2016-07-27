@@ -65,10 +65,12 @@
 }
 
 // Hacky hack.
-.material-item {
-  .left-column {
-    > .item-checkbox {
-      display: none;
+.pane-loans {
+  .material-item {
+    .left-column {
+      > .item-checkbox {
+        display: none;
+      }
     }
   }
 }

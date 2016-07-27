@@ -1,3 +1,5 @@
+/*  Loans and reservations.
+    ------------------------------------------------------- */
 .material-item {
 
   @extend .search-result;
@@ -99,15 +101,89 @@
   }
 
   .pane-title {
-    font-size: 28px;
-    color: $title-color;
-    font-family: $font-light;
-    padding: 20px 0;
-    border-bottom: 1px solid $white-dark;
-    margin: 0;
+    @extend %ting-object-main-title;
   }
 }
 
 .material-buttons {
   margin-top: 75px;
+}
+
+/*  Profile edit form.
+    ------------------------------------------------------- */
+.pane-profile2-form {
+
+  margin-top: 50px;
+
+  .pane-title {
+    @extend %ting-object-main-title;
+    margin-bottom: 50px;
+  }
+
+  legend {
+    font-size: 16px;
+    color: $title-color;
+    margin-bottom: 10px;
+  }
+}
+
+input.password-confirm, input.password-field {
+    width: 99%;
+    margin-bottom: 0;
+}
+
+#edit-ding-user-fee-sms {
+  color: $blue-dark;
+  margin-bottom: 50px;
+}
+
+.field-name-field-phone {
+
+  input {
+    padding: 15px 22px 15px 62px;
+  }
+
+  .field-prefix {
+    position: absolute;
+    z-index: 99;
+    top: 37px;
+    left: 10px;
+    border-right: 1px solid $white-dark;
+    height: 40px;
+    padding: 13px 13px 20px 0;
+  }
+}
+
+/*  Bookmarks form.
+    ------------------------------------------------------- */
+.select-all {
+  .form-checkbox {
+    float: left;
+    width: 30px;
+  }
+}
+
+.pane-bookmarks {
+
+  .form-item-title {
+    border-top: 1px solid $white-dark;
+    border-bottom: 1px solid $white-dark;
+    padding: 20px 0;
+  }
+
+  .material-item {
+    .item-checkbox {
+      float: left;
+      width: 20%;
+    }
+
+    .form-type-checkbox {
+      padding: 0;
+      margin-top: 0;
+    }
+  }
+
+  .action-buttons {
+    margin: 50px 0;
+  }
 }

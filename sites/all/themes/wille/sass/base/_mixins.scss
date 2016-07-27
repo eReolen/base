@@ -11,7 +11,6 @@
   text-decoration: none;
   background: $color;
   border-radius: 40px;
-  padding: 15px 42px 15px 22px;
   color: white;
   min-width: 250px;
   display: inline-block;
@@ -25,6 +24,9 @@
   }
 
   @if $useIcon == true {
+
+    padding: 15px 42px 15px 22px;
+
     &:before {
       @include icon('.icon-arrow-right-funny');
       float: right;
@@ -35,8 +37,6 @@
   @else {
     padding: 15px 22px;
   }
-
-
 }
 
 // Typo.
@@ -44,4 +44,10 @@
   $percentage: calc-percentage($columns, $total);
   padding-bottom: $percentage / 2;
   height: 0;
+}
+
+// Mixin for including icons.
+@mixin icon($class){
+  @extend %icon;
+  @extend #{$class}
 }
