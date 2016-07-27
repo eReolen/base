@@ -12,3 +12,6 @@ docker-compose.override.yml
 
 # Dont commit databases.
 private/docker/db/initdb.d/*
+
+# Ignore phpstorm project files.
+.idea/*
