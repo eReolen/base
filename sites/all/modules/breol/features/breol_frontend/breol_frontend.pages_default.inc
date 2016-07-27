@@ -457,10 +457,170 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->uuid = 'e785bc73-a343-41ea-b6c3-be046d045b5d';
     $display->content['new-e785bc73-a343-41ea-b6c3-be046d045b5d'] = $pane;
     $display->panels['navigation'][0] = 'new-e785bc73-a343-41ea-b6c3-be046d045b5d';
+    $pane = new stdClass();
+    $pane->pid = 'new-5b89ebff-4571-4500-ba34-d704e514049b';
+    $pane->panel = 'navigation';
+    $pane->type = 'user_menu';
+    $pane->subtype = 'user_menu';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'path_visibility',
+          'settings' => array(
+            'visibility_setting' => '1',
+            'paths' => 'user
+user/*',
+          ),
+          'context' => 'argument_string_1',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'path' => '',
+      'context' => 'logged-in-user',
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '5b89ebff-4571-4500-ba34-d704e514049b';
+    $display->content['new-5b89ebff-4571-4500-ba34-d704e514049b'] = $pane;
+    $display->panels['navigation'][1] = 'new-5b89ebff-4571-4500-ba34-d704e514049b';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $export['site_template__breol-site-template'] = $handler;
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'user_edit__breol-provider-profile';
+  $handler->task = 'user_edit';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = -30;
+  $handler->conf = array(
+    'title' => 'Breol provider profile',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(
+      0 => array(
+        'identifier' => 'Profile2 type',
+        'keyword' => 'user_2',
+        'name' => 'profile2',
+        'type' => 'select',
+        'uid' => '',
+        'id' => 1,
+      ),
+    ),
+    'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'external_user',
+          'settings' => NULL,
+          'context' => array(
+            0 => 'argument_user_edit_1',
+          ),
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+    'name' => 'breol-provider-profile',
+  );
+  $display = new panels_display();
+  $display->layout = '25_50_25';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left_sidebar' => NULL,
+      'main_content' => NULL,
+      'right_sidebar' => NULL,
+      'attachment_4_1' => NULL,
+      'attachment_4_2' => NULL,
+      'attachment_4_3' => NULL,
+      'attachment_4_4' => NULL,
+      'attachment_3_1' => NULL,
+      'attachment_3_2' => NULL,
+      'attachment_3_3' => NULL,
+      'attachment_2_1' => NULL,
+      'attachment_2_2' => NULL,
+      'attachment_1_1' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '87c1ede8-382a-4c1e-aed4-19f750af7522';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-121673e4-ec13-4123-88da-a3851e600028';
+    $pane->panel = 'left_sidebar';
+    $pane->type = 'user_menu';
+    $pane->subtype = 'user_menu';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => 'argument_user_edit_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '121673e4-ec13-4123-88da-a3851e600028';
+    $display->content['new-121673e4-ec13-4123-88da-a3851e600028'] = $pane;
+    $display->panels['left_sidebar'][0] = 'new-121673e4-ec13-4123-88da-a3851e600028';
+    $pane = new stdClass();
+    $pane->pid = 'new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+    $pane->panel = 'main_content';
+    $pane->type = 'profile2_form';
+    $pane->subtype = 'profile2_form';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => array(
+        0 => 'argument_user_edit_1',
+        1 => 'context_profile2_1',
+      ),
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+    $display->content['new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d'] = $pane;
+    $display->panels['main_content'][0] = 'new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $export['user_edit__breol-provider-profile'] = $handler;
 
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
@@ -515,7 +675,7 @@ function breol_frontend_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = '25_50_25';
+  $display->layout = 'stacked_columns';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -533,6 +693,10 @@ function breol_frontend_default_page_manager_handlers() {
       'attachment_2_1' => NULL,
       'attachment_2_2' => NULL,
       'attachment_1_1' => NULL,
+      'header' => NULL,
+      'before_content' => NULL,
+      'after_content' => NULL,
+      'bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -542,13 +706,37 @@ function breol_frontend_default_page_manager_handlers() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-931a91cb-060f-420e-9e30-0c6730464a2e';
-    $pane->panel = 'left_sidebar';
+    $pane->panel = 'header';
     $pane->type = 'user_menu';
     $pane->subtype = 'user_menu';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'path' => '',
+      'context' => 'argument_entity_id:user_1',
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '931a91cb-060f-420e-9e30-0c6730464a2e';
+    $display->content['new-931a91cb-060f-420e-9e30-0c6730464a2e'] = $pane;
+    $display->panels['header'][0] = 'new-931a91cb-060f-420e-9e30-0c6730464a2e';
+    $pane = new stdClass();
+    $pane->pid = 'new-df2e8031-847f-4a40-80c6-1ed5ab31403b';
+    $pane->panel = 'main_content';
+    $pane->type = 'loans';
+    $pane->subtype = 'loans';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
       'context' => 'argument_entity_id:user_1',
       'override_title' => 0,
       'override_title_text' => '',
@@ -561,9 +749,9 @@ function breol_frontend_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '931a91cb-060f-420e-9e30-0c6730464a2e';
-    $display->content['new-931a91cb-060f-420e-9e30-0c6730464a2e'] = $pane;
-    $display->panels['left_sidebar'][0] = 'new-931a91cb-060f-420e-9e30-0c6730464a2e';
+    $pane->uuid = 'df2e8031-847f-4a40-80c6-1ed5ab31403b';
+    $display->content['new-df2e8031-847f-4a40-80c6-1ed5ab31403b'] = $pane;
+    $display->panels['main_content'][0] = 'new-df2e8031-847f-4a40-80c6-1ed5ab31403b';
     $pane = new stdClass();
     $pane->pid = 'new-f5508570-df28-4583-9acc-59f70b1f1b2d';
     $pane->panel = 'main_content';
@@ -584,11 +772,11 @@ function breol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = 'f5508570-df28-4583-9acc-59f70b1f1b2d';
     $display->content['new-f5508570-df28-4583-9acc-59f70b1f1b2d'] = $pane;
-    $display->panels['main_content'][0] = 'new-f5508570-df28-4583-9acc-59f70b1f1b2d';
+    $display->panels['main_content'][1] = 'new-f5508570-df28-4583-9acc-59f70b1f1b2d';
     $pane = new stdClass();
     $pane->pid = 'new-9120a9cd-c9fa-47f1-91e8-90b0cfca810d';
     $pane->panel = 'main_content';
@@ -618,34 +806,11 @@ function breol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '9120a9cd-c9fa-47f1-91e8-90b0cfca810d';
     $display->content['new-9120a9cd-c9fa-47f1-91e8-90b0cfca810d'] = $pane;
-    $display->panels['main_content'][1] = 'new-9120a9cd-c9fa-47f1-91e8-90b0cfca810d';
-    $pane = new stdClass();
-    $pane->pid = 'new-df2e8031-847f-4a40-80c6-1ed5ab31403b';
-    $pane->panel = 'main_content';
-    $pane->type = 'loans';
-    $pane->subtype = 'loans';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'context' => 'argument_entity_id:user_1',
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $pane->uuid = 'df2e8031-847f-4a40-80c6-1ed5ab31403b';
-    $display->content['new-df2e8031-847f-4a40-80c6-1ed5ab31403b'] = $pane;
-    $display->panels['main_content'][2] = 'new-df2e8031-847f-4a40-80c6-1ed5ab31403b';
+    $display->panels['main_content'][2] = 'new-9120a9cd-c9fa-47f1-91e8-90b0cfca810d';
     $pane = new stdClass();
     $pane->pid = 'new-ca0fbda3-dfff-4828-8a16-8166dd7dd5b0';
     $pane->panel = 'main_content';

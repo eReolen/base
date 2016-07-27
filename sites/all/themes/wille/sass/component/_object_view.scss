@@ -35,22 +35,16 @@
   }
 }
 
+.material-item {
+  @include clearfix;
+}
+
 .ting-object-wrapper {
   @include span-columns(12);
 }
 
 .field-group-format-title {
   text-decoration: none;
-}
-
-%ting-object-main-title {
-  font-size: 28px;
-  color: $title-color;
-  font-family: $font-light;
-  padding: 20px 0;
-  border-bottom: 1px solid $title-color;
-  margin: 0;
-  cursor: pointer;
 }
 
 .group-material-details,

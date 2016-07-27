@@ -4,6 +4,10 @@
   font-family: $font-light;
   padding: 20px 0;
   border-bottom: 1px solid $white-dark;
+
+  &:last-child {
+    border: none;
+  }
 }
 
 .group-ting-left-col-search {
@@ -67,8 +71,6 @@
   margin-top: 20px;
 
   &:before {
-    position: relative;
-    top: 3px;
     color: rgb(1, 115, 52);
   }
 }
@@ -150,60 +152,6 @@
   font-size: 20px;
 }
 
-.type-icon{
-  position: relative;
-
-  &:before {
-    display: block;
-    content: " ";
-    right: 10px;
-    top: auto;
-    bottom: 10px;
-    left: auto;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    background-color: rgb(116, 150, 190);
-    border-radius: 50%;
-    font-size: 20px;
-    text-align: center;
-    padding-top: 9px;
-    color: white;
-  }
-
-  &.type-icon-audiobook {
-    &:before {
-      @include icon('.icon-audio-books');
-    }
-  }
-  &.type-icon-ebook {
-    &:before {
-      @include icon('.icon-e-books');
-    }
-  }
-  &.type-icon-audiobook.type-icon-noquota {
-    &:before {
-      @include icon('.icon-audio-books');
-      background-color: $red;
-    }
-  }
-  &.type-icon-ebook.type-icon-noquota {
-    &:before {
-      @include icon('.icon-e-books');
-      background-color: $red;
-    }
-  }
-  &.type-icon-audiobook.type-icon-quota {
-    &:before {
-      @include icon('.icon-audio-books');
-    }
-  }
-  &.type-icon-ebook.type-icon-quota {
-    &:before {
-      @include icon('.icon-e-books');
-    }
-  }
-}
 
 /*  Facets
     ------------------------------------------------------- */
@@ -339,6 +287,8 @@
   min-height: 178px;
   position: relative;
   max-width: 100%;
+  // Hide our image background hack.
+  overflow: hidden;
 
   &:after {
     content: " ";
@@ -354,6 +304,61 @@
 
   .view-mode-search-result & {
     width: 182px;
+  }
+
+  &.type-icon {
+    position: relative;
+
+    &:before {
+      display: block;
+      content: " ";
+      right: 10px;
+      top: auto;
+      bottom: 10px;
+      left: auto;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      background-color: rgb(116, 150, 190);
+      border-radius: 50%;
+      font-size: 20px;
+      text-align: center;
+      padding-top: 9px;
+      color: white;
+    }
+
+    &.type-icon-audiobook {
+      &:before {
+        @include icon('.icon-audio-books');
+      }
+    }
+    &.type-icon-ebook {
+      &:before {
+        @include icon('.icon-e-books');
+      }
+    }
+    &.type-icon-audiobook.type-icon-noquota {
+      &:before {
+        @include icon('.icon-audio-books');
+        background-color: $red;
+      }
+    }
+    &.type-icon-ebook.type-icon-noquota {
+      &:before {
+        @include icon('.icon-e-books');
+        background-color: $red;
+      }
+    }
+    &.type-icon-audiobook.type-icon-quota {
+      &:before {
+        @include icon('.icon-audio-books');
+      }
+    }
+    &.type-icon-ebook.type-icon-quota {
+      &:before {
+        @include icon('.icon-e-books');
+      }
+    }
   }
 }
 

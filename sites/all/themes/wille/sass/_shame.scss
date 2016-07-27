@@ -63,3 +63,14 @@
 .main-content__inner {
   @include outer-container;
 }
+
+// Hacky hack.
+.pane-loans {
+  .material-item {
+    .left-column {
+      > .item-checkbox {
+        display: none;
+      }
+    }
+  }
+}

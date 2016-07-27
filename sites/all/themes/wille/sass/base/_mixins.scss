@@ -7,24 +7,35 @@
 }
 
 // Button.
-@mixin button($color){
+@mixin button($color, $useIcon: true){
   text-decoration: none;
   background: $color;
   border-radius: 40px;
-  padding: 15px 22px;
   color: white;
   min-width: 250px;
   display: inline-block;
   text-transform: uppercase;
   font-family: $font-mikado;
+  position: relative;
+  cursor: pointer;
 
   &:hover {
     background: lighten($color, 3);
   }
 
-  &:before {
-    @include icon('.icon-arrow-right-funny');
-    float: right;
+  @if $useIcon == true {
+
+    padding: 15px 42px 15px 22px;
+
+    &:before {
+      @include icon('.icon-arrow-right-funny');
+      float: right;
+      right: 17px;
+      position: absolute;
+    }
+  }
+  @else {
+    padding: 15px 22px;
   }
 }
 
@@ -33,4 +44,10 @@
   $percentage: calc-percentage($columns, $total);
   padding-bottom: $percentage / 2;
   height: 0;
+}
+
+// Mixin for including icons.
+@mixin icon($class){
+  @extend %icon;
+  @extend #{$class}
 }

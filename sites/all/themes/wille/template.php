@@ -147,3 +147,21 @@ function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
   // Hide submit button.
   $form['actions']['#attributes']['class'][] = 'element-invisible';
 }
+
+/**
+ * Implements hook_preprocess_panels_pane().
+ */
+function wille_preprocess_panels_pane(&$variables) {
+  if ($variables['pane']->type === 'user_menu') {
+
+    // Hide logout menu tab.
+    foreach ($variables['content'] as $key => $item) {
+      if (!empty($item['#href'])) {
+        $path = $item['#href'];
+        if (drupal_match_path($path, 'user/*/logout')) {
+          unset($variables['content'][$key]);
+        }
+      }
+    }
+  }
+}

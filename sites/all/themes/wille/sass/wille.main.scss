@@ -2,9 +2,9 @@
 @import "bourbon";
 @import "base/functions";
 @import "base/vars";
+@import "base/placeholders";
 @import "base/mixins";
 @import "base/normalize";
-@import "base/placeholders";
 @import "base/base";
 @import "base/animation";
 
@@ -21,14 +21,15 @@
 @import "layout/page_layout";
 @import "layout/header";
 @import "layout/footer";
-@import "component/navigation";
 
+@import "component/navigation";
 @import "component/article";
 @import "component/article_breol_news";
 @import "component/search";
 @import "component/fancy_box";
 @import "component/subject";
 @import "component/object_view";
+@import "component/user";
 
 // Shame.
 @import "shame";
