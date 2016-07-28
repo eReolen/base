@@ -165,3 +165,25 @@
 .pane-ting-ting-object-types {
   margin-bottom: 150px;
 }
+
+.js-online {
+  @include media($phone) {
+    a {
+      font-size: 12px;
+      padding: 8px;
+      display: block;
+      float: none;
+      max-width: 100%;
+      min-width: 1%;
+      width: 100%;
+      line-height: 16px;
+      text-align: center;
+      min-width: 1px;
+      width: 100%;
+
+      &:before {
+        content: " ";
+      }
+    }
+  }
+}

@@ -35,14 +35,14 @@
     <?php endif; ?>
   </div>
 
-  <div class="main-content-header">
+  <div class="main-header">
     <div class="main-content-header__inner">
       <?php print render($content['content_header']); ?>
     </div>
   </div>
 
-  <div class="main-content">
-    <div class="main-content__inner">
+  <div class="main-content-wrapper">
+    <div class="main-content-wrapper__inner">
       <?php print render($content['content']); ?>
     </div>
   </div>

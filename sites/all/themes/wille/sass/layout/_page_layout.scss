@@ -12,7 +12,7 @@ body:not(.front) .main-content__inner {
   @include outer-container;
 }
 
-.main-content__inner {
+.main-content-wrapper__inner {
   width: 100%;
   @include media($tablet-l) {
     padding: 0 15px;
