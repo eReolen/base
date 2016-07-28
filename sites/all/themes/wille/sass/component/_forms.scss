@@ -16,7 +16,7 @@ select {
   -moz-appearance:none;
   appearance:none;
   border: 1px solid #d5d5d5;
-  height: 36px;
+  // height: 36px;
   width: 99%;
   padding: 8px;
   font-family: $font-mikado;
@@ -63,4 +63,12 @@ label {
 
 .form-item {
   position: relative;
+}
+
+form {
+  .description {
+    color: #047537;
+    font-family: $font-regular;
+    margin-top: 5px;
+  }
 }
