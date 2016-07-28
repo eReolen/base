@@ -37,8 +37,12 @@
   }
 
   .slick-active {
-    @include fade-in(0.3);
 
+    .is-desktop & {
+      @include fade-in(0.3);
+    }
+
+    // TODO(ts) - save this for later. Subject menu deck animations.
     // &:nth-child(1) {
     //   animation-delay: 0.1s;
     // }

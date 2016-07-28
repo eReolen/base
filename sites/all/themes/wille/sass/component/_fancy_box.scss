@@ -217,7 +217,6 @@
 
 .pane-fancy-box {
   @include outer-container;
-  // padding: 100px 0;
   @extend .fade-in;
   -webkit-animation-delay: 0.3s;
   -moz-animation-delay: 0.3s;
