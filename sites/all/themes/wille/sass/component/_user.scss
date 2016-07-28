@@ -5,19 +5,61 @@
   @extend .search-result;
   padding: 40px 0;
 
+  @include media($phone) {
+    padding: 0 0 30px;
+    margin-bottom: 30px;
+  }
+
   .left-column {
     @include span-columns(2);
+
+    @include media($phone) {
+      @include span-columns(3);
+    }
   }
 
   .right-column {
     @include span-columns(10);
     padding-left: 30px;
+
+    @include media($phone) {
+      @include span-columns(9);
+      padding-left: 10px;
+    }
+  }
+
+  .action-button {
+    @include media($phone) {
+      font-size: 12px;
+      padding: 8px;
+      display: block;
+      float: left;
+      max-width: 100%;
+      min-width: 1%;
+      width: 100%;
+      line-height: 16px;
+      text-align: center;
+
+      &:before {
+        content: " ";
+      }
+    }
   }
 }
 
 .pane-user-menu {
 
   margin-top: 50px;
+  display: inline-block;
+  width: 100%;
+
+  @include media($tablet-l) {
+    padding: 0 50px;
+  }
+
+  @include media($tablet-p) {
+    padding: 0 15px;
+  }
 
   .menu {
 
@@ -25,6 +67,15 @@
 
     li {
       @include span-columns(4);
+
+      @include media($tablet-p) {
+        @include span-columns(6);
+        margin-bottom: 10px !important;
+      }
+
+      @include media($phone) {
+        @include span-columns(12);
+      }
     }
 
     a {
@@ -56,16 +107,28 @@
     font-family: $font-light;
     text-decoration: none;
   }
+
+  @include media($phone) {
+    font-size: 16px;
+  }
 }
 
 .item-information-label {
   float: left;
   width: 40%;
+
+  @include media($phone) {
+    width: 100%;
+  }
 }
 
 .item-information-data {
   float: left;
   width: 60%;
+
+  @include media($phone) {
+    width: 100%;
+  }
 }
 
 .item-information-list {
@@ -77,6 +140,11 @@
     list-style-type: none;
     padding: 10px 0;
     font-family: $font-light;
+
+    @include media($phone) {
+      line-height: 24px;
+      font-size: 12px;
+    }
   }
 }
 
@@ -90,10 +158,23 @@
 
 .pane-loans {
   margin-top: 50px;
+
+  @include media($tablet-l) {
+    padding: 50px;
+  }
+
+  @include media($tablet-p) {
+    padding: 0;
+  }
 }
 
 .pane-loans,
 .pane-reservations {
+
+  @include media($tablet-l) {
+    margin-bottom: 50px;
+    margin-top: 0;
+  }
 
   .pane-content {
     padding: 20px 0;
@@ -107,6 +188,10 @@
 
 .material-buttons {
   margin-top: 75px;
+
+  @include media($tablet-l) {
+    margin-top: 35px;
+  }
 }
 
 /*  Profile edit form.
@@ -191,5 +276,11 @@ input.password-confirm, input.password-field {
 
   .action-buttons {
     margin: 50px 0;
+  }
+
+  @include media($tablet-p) {
+    img {
+      padding-left: 6px;
+    }
   }
 }

@@ -26,9 +26,17 @@
   text-align: center;
 
   @include media($tablet-l) {
-    min-width: 450px;
-    max-width: 450px;
-    top: 100px !important;
+    min-width: 450px !important;
+    max-width: 99% !important;
+    top: 10px !important;
+  }
+
+  @include media($phone) {
+    width: 99%;
+    min-width: 99% !important;
+    max-width: 99% !important;
+    top: 10px !important;
+    padding: 5px;
   }
 
   &, .ui-widget-header, .ui-dialog-content {

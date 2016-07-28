@@ -33,7 +33,10 @@ select {
   color: lighten($title-color, 0.8);
 }
 
-input {
+input[type="text"],
+input[type="email"],
+input[type="submit"],
+input[type="password"] {
   text-decoration: none;
   border-radius: 6px;
   color: white;
@@ -46,6 +49,8 @@ input {
   font-size: 16px;
   font-family: $font-light;
   width: 99%;
+  -webkit-appearance:none;
+  -moz-appearance:none;
 }
 
 input[type="submit"] {
