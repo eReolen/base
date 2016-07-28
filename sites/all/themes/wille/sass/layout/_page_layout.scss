@@ -8,7 +8,7 @@
 }
 
 // Main content.
-body:not(.front) .main-content__inner {
+body:not(.front) .main-content-wrapper__inner {
   @include outer-container;
 }
 
