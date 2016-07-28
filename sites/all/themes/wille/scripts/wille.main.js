@@ -79,7 +79,11 @@
   Drupal.behaviors.subjectMenu = {
     attach : function(context, settings) {
       $( document ).ready(function() {
-        // document.body.addEventListener('touchmove', function(e){ e.preventDefault(); });
+
+        // If slick is not loaded, we will abort.
+        if(!jQuery().slick) {
+          return;
+        }
 
         $('.subject-menu', context).slick({
           infinite: false,
@@ -109,9 +113,6 @@
                 slidesToScroll: 2
               }
             }
-            // You can unslick at a given breakpoint now by adding:
-            // settings: "unslick"
-            // instead of a settings object
           ]
         });
       });

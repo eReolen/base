@@ -290,10 +290,14 @@
   // Hide our image background hack.
   overflow: hidden;
 
+  @include media($tablet-p) {
+    min-height: 20px;
+  }
+
   &:after {
     content: " ";
     background: url(../svg/camera.svg);
-     background-size: 50px;
+    background-size: 50px;
     background-repeat: no-repeat;
     background-position: 50%;
     position: absolute;
@@ -325,6 +329,14 @@
       text-align: center;
       padding-top: 9px;
       color: white;
+
+      @include media($tablet-p) {
+        right: 3px;
+        bottom: 6px;
+        height: 30px;
+        width: 30px;
+        font-size: 14px;
+      }
     }
 
     &.type-icon-audiobook {

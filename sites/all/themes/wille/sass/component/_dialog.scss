@@ -10,13 +10,74 @@
   // but for anonymous users, the CSS is loaded through the ajax request,
   // which can get beaten by the JS. So we'll just ensure that the dialog
   // element has position: absolute.
-  position: absolute;
-
+  // position: absolute;
+  border-radius: 0;
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto;
+  top: 300px !important;
+  position: absolute !important;
   border: 0;
   box-shadow: 0px 0px 5px 0px #aaa;
+  min-width: 600px;
+  max-width: 600px;
+  max-height: 90%;
+  box-shadow: 0 0 33px 0 rgba(0, 0, 0, .3);
+  padding: 25px 30px;
+  text-align: center;
+  overflow-y: auto;
+
+
+   @include media($tablet-l) {
+    position: fixed !important;
+    min-width: 450px !important;
+    max-width: 90% !important;
+    top: 100px !important;
+  }
+
+  @include media($tablet-l) {
+    top: 30px !important;
+  }
+
+  @include media($phone) {
+    width: 99%;
+    min-width: 99% !important;
+    max-width: 99% !important;
+    padding: 5px;
+  }
 
   &, .ui-widget-header, .ui-dialog-content {
-    color: $black-medium;
+    color: $title-color;
+    font-family: $font-light;
+
+    em {
+      color: $green-dark;
+    }
+  }
+
+  a {
+    & {
+      color: white;
+      text-align: center;
+    }
+  }
+
+  form {
+    text-align: left;
+
+    .form-actions {
+      text-align: center;
+    }
+  }
+
+  .action-button {
+    margin-top: 50px;
+    float: none;
+    background: $red;
+
+    &:before {
+      color: white;
+    }
   }
 
   .ui-corner-all {
@@ -36,18 +97,18 @@
 
     @include heading(em(50));
     font-family: $font-mikado;
-    //font-size: em(24);
     text-transform: uppercase;
-    text-align: center;
 
     .ui-dialog-title {
       display: block;
-      padding-top: 50px;
     }
 
     .ui-dialog-titlebar-close {
-      top: 30px;
-      right: 30px;
+      top: 5px;
+      right: 0px;
+      position: absolute;
+      font-size: 10px;
+      opacity: 0.6;
     }
  }
 
@@ -61,4 +122,8 @@
     @include icon('.icon-close-b');
     font-size: 22px;
   }
+}
+
+.ui-widget-overlay {
+  opacity: .4;
 }
