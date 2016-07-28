@@ -71,16 +71,4 @@
   }
 }
 
-// Frontpage theming.
-.front {
-  .main-content-wrapper__inner {
-    background: $gray;
-    padding: 75px 0;
-    margin-bottom: 100px;
-
-    @include media($tablet-l) {
-      padding: 15px;
-    }
-  }
-}
 
