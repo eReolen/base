@@ -51,3 +51,10 @@
   @extend %icon;
   @extend #{$class}
 }
+
+@mixin word-wrap() {
+  max-width: 95%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
