@@ -169,7 +169,7 @@ function wille_preprocess_panels_pane(&$variables) {
 
     $user = user_load($user->uid);
 
-    // Todo(ts) - right there doesn't to appear to be anything here.
+    // Todo(ts) - right now there doesn't to appear to be anything here.
     $real_name = trim($user->realname);
 
     $variables['welcome_text_part_1'] = t('Hello @real_name', array('@real_name' => $real_name));
