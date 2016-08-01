@@ -72,6 +72,9 @@
       $('.menu-name-main-menu .menu a', context).click(function() {
         if ($(window).width() < 1025) {
           $('.topbar .menu').slideUp(500);
+
+          // Goto top of page.
+          window.scrollTo(0, 0);
         }
       });
     }
@@ -179,6 +182,10 @@
       // If we are on the search page we dont want to hide the form,
       // but still don't want users to be able to follow the search link.
       if ($('body.page-search').length !== 0) {
+
+        // Show search form.
+        $('.pane-search-form').show();
+
         $('.menu-name-main-menu ul li.last a', context)
         .click(function(event) {
           event.preventDefault();
