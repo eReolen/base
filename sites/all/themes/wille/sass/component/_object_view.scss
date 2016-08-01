@@ -18,16 +18,43 @@
   }
 }
 
+.group_ting_object_left_column {
+  @include media($phone) {
+    @include span-columns(2);
+
+    .ting-cover {
+      overflow: hidden;
+    }
+  }
+}
+
+.group_ting_object_right_column {
+  @include media($phone) {
+    @include span-columns(10);
+    margin: 0;
+    padding-left: 15px;
+  }
+}
+
 .group-material-details {
   @include span-columns(12);
 
   // Items.
   .field-label {
     @include span-columns(3);
+
+    @include media($phone) {
+      @include span-columns(12);
+      font-family: $font-bold;
+    }
   }
 
   .field-items {
     @include span-columns(9);
+
+    @include media($phone) {
+      @include span-columns(12);
+    }
   }
 
   .field {
@@ -62,6 +89,12 @@
       color: $title-color;
       font-weight: normal;
     }
+
+    @include media($phone) {
+      line-height: 30px;
+      font-size: 17px;
+      padding-bottom: 10px;
+    }
   }
 
   margin-bottom: 50px;
@@ -81,7 +114,7 @@
 }
 
 .group-material-details {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .pane-ting-object {
@@ -135,10 +168,18 @@
 }
 
 .field-name-ding-entity-buttons {
+
   margin-top: 30px;
+
+  .action-button {
+    @include media($phone) {
+      @include button-phone();
+    }
+  }
 }
 
 .ting-object-collapsible-enabled {
+
   h2 {
     &:before {
       @include icon('.icon-arrow-right');
@@ -148,14 +189,15 @@
       top: 28px;
       opacity: 0.7;
       transition: all 300ms ease-out;
+      -webkit-transform: rotate(90deg);
+      transform: rotate(90deg);
     }
   }
 
   &.open {
     h2 {
       &:before {
-        -webkit-transform: rotate(90deg);
-        transform: rotate(90deg);
+        transform: rotate(0deg);
         transition: all 300ms ease-out;
       }
     }

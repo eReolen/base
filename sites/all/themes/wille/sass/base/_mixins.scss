@@ -58,3 +58,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@mixin button-phone() {
+  font-size: 12px;
+  padding: 8px;
+  display: block;
+  float: left;
+  max-width: 100%;
+  min-width: 1%;
+  width: 100%;
+  line-height: 16px;
+  text-align: center;
+
+  &:before {
+    content: " ";
+  }
+}
