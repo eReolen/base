@@ -34,7 +34,6 @@ body:not(.front) .main-content-wrapper__inner {
     background: $gray;
     padding: 75px 0;
     margin-bottom: 100px;
-    clear: both;
 
     @include media($tablet-l) {
       padding: 15px;
@@ -42,3 +41,6 @@ body:not(.front) .main-content-wrapper__inner {
   }
 }
 
+.main-content-wrapper__inner {
+  clear: both;
+}

@@ -100,6 +100,7 @@
           slidesToScroll: 6,
           speed: 500,
           touchThreshold: 24,
+          lazyLoad: 'progressive',
           responsive: [
             {
               breakpoint: 1026,
