@@ -220,6 +220,8 @@
           .nextAll()
           .wrapAll(contentWrapper);
 
+        $('.collapsible-content-wrapper').hide();
+
         $(element).click(function() {
           $(this)
             .toggleClass('open')
