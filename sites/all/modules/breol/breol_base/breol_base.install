@@ -151,3 +151,10 @@ function breol_base_update_7117() {
   features_revert_module('breol_page');
   features_revert_module('breol_link');
 }
+
+/**
+ * Enable breol_facetbrowser.
+ */
+function breol_base_update_7118() {
+  module_enable(array('breol_facetbrowser'), TRUE);
+}

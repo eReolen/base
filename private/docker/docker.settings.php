@@ -3,10 +3,10 @@ $databases = array(
   'default' => array(
     'default' => array(
       'driver' => 'mysql',
-      'database' => getenv('DATABASE_ENV_MYSQL_DATABASE'),
-      'username' => getenv('DATABASE_ENV_MYSQL_USER'),
-      'password' => getenv('DATABASE_ENV_MYSQL_PASSWORD'),
-      'host' => 'database',
+      'database' => getenv('MYSQL_DATABASE'),
+      'username' => getenv('MYSQL_USER'),
+      'password' => getenv('MYSQL_PASSWORD'),
+      'host' => getenv('MYSQL_HOST'),
       'prefix' => '',
     ),
   ),
