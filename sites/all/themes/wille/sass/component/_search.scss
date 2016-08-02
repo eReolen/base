@@ -310,7 +310,7 @@
 
 .pane-panels-mini.pane-search {
   .header {
-    border-bottom: 1px solid $white-medium;
+    // border-bottom: 1px solid $white-medium;
     padding-bottom: 20px;
     margin-bottom: 0px;
   }
@@ -331,7 +331,7 @@
     min-height: 91px;
   }
 
-  &:after {
+  &:before {
     content: " ";
     background: url(../svg/camera.svg);
     background-size: 50px;
@@ -354,7 +354,8 @@
   &.type-icon {
     position: relative;
 
-    &:before {
+    &:after {
+      @extend %icon;
       display: block;
       content: " ";
       right: 10px;
@@ -381,35 +382,35 @@
     }
 
     &.type-icon-audiobook {
-      &:before {
-        @include icon('.icon-audio-books');
+      &:after {
+        content: "\e904";
       }
     }
     &.type-icon-ebook {
-      &:before {
-        @include icon('.icon-e-books');
+      &:after {
+        content: "\e900";
       }
     }
     &.type-icon-audiobook.type-icon-noquota {
-      &:before {
-        @include icon('.icon-audio-books');
+      &:after {
+        content: "\e904";
         background-color: $red;
       }
     }
     &.type-icon-ebook.type-icon-noquota {
-      &:before {
-        @include icon('.icon-e-books');
+      &:after {
+        content: "\e900";
         background-color: $red;
       }
     }
     &.type-icon-audiobook.type-icon-quota {
-      &:before {
-        @include icon('.icon-audio-books');
+      &:after {
+        content: "\e904";
       }
     }
     &.type-icon-ebook.type-icon-quota {
-      &:before {
-        @include icon('.icon-e-books');
+      &:after {
+        content: "\e900";
       }
     }
   }
@@ -536,4 +537,102 @@
 .icon-spin {
   display: inline-block;
    @include animation(spin 2s infinite linear);
+}
+
+/*  Search Grid View.
+    ------------------------------------------------------- */
+.js-search-results-grid-view {
+
+  .search-results {
+
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  .search-result {
+    @include span-columns(2);
+    border: none;
+    padding: 0;
+    margin: 0;
+    @extend .fade-in;
+
+    @include media($tablet-l) {
+      @include span-columns(1 of 5);
+    }
+
+    @include media($tablet-p) {
+      @include span-columns(1 of 3);
+    }
+
+    @include media($phone) {
+      @include span-columns(1 of 2);
+    }
+
+    .group-ting-right-col-search {
+      display: none;
+    }
+
+    .group-ting-left-col-search {
+      width: 100%;
+      padding-right: 20px;
+    }
+
+    .ting-cover {
+      min-height: 200px;
+      width: 100%;
+    }
+
+    // Make heigth 100% of all items.
+    [class^="field-"], [class*=" field-"],
+    .field,
+    .ting-object,
+    .ting-cover,
+    .search-snippet-info  {
+      height: 100%;
+    }
+
+    .ting-cover.type-icon:after {
+      bottom: 50px;
+    }
+  }
+
+  .search-snippet {
+    display: none;
+  }
+}
+
+.view-picker {
+  float: right;
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+  .view-picker__item {
+
+    font-size: 40px;
+    display: inline-block;
+    color: $white-dark;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+
+    &:hover {
+      color: white;
+      background: $red;
+    }
+
+    &.active {
+      background: $white-dark;
+      color: white;
+    }
+
+    &.list-view {
+      @include icon('.icon-list-view');
+    }
+
+    &.grid-view {
+      @include icon('.icon-grid-view');
+    }
+  }
 }

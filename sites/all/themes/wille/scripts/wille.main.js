@@ -243,4 +243,44 @@
     }
   };
 
+  /**
+   * Add grid view option.
+   */
+  Drupal.behaviors.gridView = {
+    attach : function(context, settings) {
+
+      var wrapper = $('.pane-panels-mini.pane-search');
+      var gridClass = 'js-search-results-grid-view';
+
+      // If the mini panel exist we will continue.
+      if (wrapper.length !== 0) {
+        var innerWrapper = $('<div class="sort-wrapper" />');
+        var viewPicker = $('<div class="view-picker"><div class="view-picker__item list-view active" data-view-type="list"></div><div class="view-picker__item grid-view" data-view-type="grid"></div></div>');
+
+        // Wrap the sort content in a div.
+        $('.pane-search-per-page, .pane-ting-search-sort-form')
+          .wrapAll(innerWrapper);
+
+        // Append custom content.
+        $('.sort-wrapper').append(viewPicker);
+
+        // Listen for user input.
+        $('.view-picker__item').click(function() {
+         var viewType = $(this).attr('data-view-type');
+
+         // Apply classes depending on user choice.
+         if (!$(this).hasClass('active')) {
+          $('.view-picker__item').toggleClass('active');
+
+          if (viewType === 'grid') {
+            wrapper.addClass(gridClass)
+          } else {
+            wrapper.removeClass(gridClass)
+          }
+         }
+        });
+      }
+    }
+  };
+
 })(jQuery);
