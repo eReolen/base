@@ -1,18 +1,26 @@
 web:
   build: ./private/docker/web
   links:
-    - database
+    - db
   volumes:
     - './:/var/www/html'
     - './private/docker/docker.settings.php:/var/www/html/sites/default/settings.php:ro'
+  environment:
+    MYSQL_HOST: db
+    MYSQL_DATABASE: drupal
+    MYSQL_USER: drupal
+    MYSQL_PASSWORD: drupal
 
-database:
+db:
   image: mariadb:5
   environment:
     MYSQL_ROOT_PASSWORD: root
     MYSQL_DATABASE: drupal
     MYSQL_USER: drupal
     MYSQL_PASSWORD: drupal
+  volumes:
+    - './private/docker/db-init:/docker-entrypoint-initdb.d'
+
 
 gulp:
   image: reload/gulp:3.9.1
