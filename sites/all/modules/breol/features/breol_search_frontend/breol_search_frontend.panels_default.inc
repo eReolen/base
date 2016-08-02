@@ -48,10 +48,10 @@ function breol_search_frontend_default_panels_mini() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-4f47e03b-5a0f-4184-9dd4-03dac9f706db';
+    $pane->pid = 'new-d58f1165-b167-422c-90e4-ccb6aab4d858';
     $pane->panel = 'header';
-    $pane->type = 'ding_facetbrowser';
-    $pane->subtype = 'ding_facetbrowser';
+    $pane->type = 'breol_facetbrowser';
+    $pane->subtype = 'breol_facetbrowser';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -67,9 +67,9 @@ function breol_search_frontend_default_panels_mini() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '4f47e03b-5a0f-4184-9dd4-03dac9f706db';
-    $display->content['new-4f47e03b-5a0f-4184-9dd4-03dac9f706db'] = $pane;
-    $display->panels['header'][0] = 'new-4f47e03b-5a0f-4184-9dd4-03dac9f706db';
+    $pane->uuid = 'd58f1165-b167-422c-90e4-ccb6aab4d858';
+    $display->content['new-d58f1165-b167-422c-90e4-ccb6aab4d858'] = $pane;
+    $display->panels['header'][0] = 'new-d58f1165-b167-422c-90e4-ccb6aab4d858';
     $pane = new stdClass();
     $pane->pid = 'new-6adb6cbf-1c54-4f35-a9a9-af44f36d742a';
     $pane->panel = 'header';

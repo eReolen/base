@@ -8,7 +8,7 @@ $plugin = array(
   'title' => t('Fancy Box'),
   'description' => t('List of content with fancy theming'),
   'single' => TRUE,
-  'category' => 'eReolen for kids',
+  'category' => t('eReolen for kids'),
 );
 
 /**
