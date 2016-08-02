@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Hack ding_facetbrowser to work on non-search pages.
+ */
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function breol_facetbrowser_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}

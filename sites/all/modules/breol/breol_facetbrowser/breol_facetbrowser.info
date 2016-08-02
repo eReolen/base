@@ -1,0 +1,6 @@
+name = Breol Facetbrowser
+description = "Ding Facet browser that works on non-search pages"
+core = 7.x
+dependencies[] = ding_facetbrowser
+dependencies[] = ting_search
+package = eReolen for kids
