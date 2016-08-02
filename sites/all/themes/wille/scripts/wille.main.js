@@ -65,12 +65,15 @@
    */
   Drupal.behaviors.burgerMenu = {
     attach : function(context, settings) {
+
+      var phoneBreakPoint = 667;
+
       $('.icon-menu', context).click(function() {
         $('.topbar .menu').slideToggle(200);
       });
 
       $('.menu-name-main-menu .menu a', context).click(function() {
-        if ($(window).width() < 1025) {
+        if ($(window).width() < phoneBreakPoint) {
           $('.topbar .menu').slideUp(500);
 
           // Goto top of page.
