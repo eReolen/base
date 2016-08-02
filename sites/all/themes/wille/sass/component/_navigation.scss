@@ -20,7 +20,7 @@
     width: calc-percentage(9,12);
     float: left;
 
-    @include media($tablet-l) {
+    @include media($phone) {
       height: auto;
       float: left;
       width: 100%;
@@ -167,9 +167,10 @@
   right: 0;
   top: 3px;
   font-size: 22px;
+  display: none;
 
-  @include media($screen) {
-    display: none;
+  @include media($phone) {
+    display: block;
   }
 }
 

@@ -24,7 +24,7 @@
     color: $white;
   }
 
-  @include media($tablet-l) {
+  @include media($phone) {
     height: auto;
     float: left;
     width: 100%;
