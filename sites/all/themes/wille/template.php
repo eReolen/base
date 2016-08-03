@@ -97,6 +97,11 @@ function wille_preprocess_material_item(&$variables) {
  * Adds type icon to ting object covers.
  */
 function wille_preprocess_ting_object_cover(&$variables) {
+
+  // Wrap the cover image in a link to the material.
+  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
+  $variables['image'] = l($variables['image'], 'ting/collection/' . $ding_entity_id , array('html' => TRUE, ));
+
   if (!isset($variables['elements']['#suppress_type_icon']) ||
     !$variables['elements']['#suppress_type_icon']) {
     $ting_entity = $variables['object'];
