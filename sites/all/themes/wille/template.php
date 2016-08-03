@@ -176,3 +176,13 @@ function wille_preprocess_panels_pane(&$variables) {
     $variables['welcome_text_part_2'] = t('Welcome to Ereolen');
   }
 }
+
+/**
+ * Preprocess search carousel.
+ */
+function wille_preprocess_ting_search_carousel(&$vars) {
+  if (isset($vars['settings']['responsive'][1]['settings']['slidesToShow'])) {
+    $vars['settings']['responsive'][1]['settings']['slidesToShow'] = 3;
+    $vars['settings']['responsive'][1]['settings']['slidesToScroll'] = 3;
+  }
+}
