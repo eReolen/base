@@ -134,13 +134,6 @@
 
 .pane-search-result {
   @include span-columns(12);
-
-  // TODO(ts) - remove, just testing. Suppress warnings until futher
-  // actions has been taken. The question is should meesag be shown here, and
-  // in the context of searches that has not been performed by the user???!.
-  .messages {
-    display: none;
-  }
 }
 
 // Pagination.
@@ -341,6 +334,12 @@
     width: 100%;
     height: 100%;
     opacity: 0.2;
+    z-index: 0;
+  }
+
+  a {
+    z-index: 2;
+    position: relative;
   }
 
   .view-mode-search-result & {
