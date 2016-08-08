@@ -370,6 +370,7 @@
       text-align: center;
       padding-top: 9px;
       color: white;
+      z-index: 4;
 
       @include media($tablet-l) {
         right: 3px;
