@@ -3,6 +3,12 @@
   display: none !important;
 }
 
+.pane-carousel {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 $carousel-outer-padding: 0 30px;
 
 .carousel-tab {
