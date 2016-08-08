@@ -628,7 +628,7 @@ user/*',
     'name' => 'breol-provider-profile',
   );
   $display = new panels_display();
-  $display->layout = '25_50_25';
+  $display->layout = 'stacked_columns';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -646,6 +646,10 @@ user/*',
       'attachment_2_1' => NULL,
       'attachment_2_2' => NULL,
       'attachment_1_1' => NULL,
+      'header' => NULL,
+      'before_content' => NULL,
+      'after_content' => NULL,
+      'bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -655,10 +659,10 @@ user/*',
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-121673e4-ec13-4123-88da-a3851e600028';
-    $pane->panel = 'left_sidebar';
+    $pane->panel = 'header';
     $pane->type = 'user_menu';
     $pane->subtype = 'user_menu';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'context' => 'argument_user_edit_1',
@@ -675,7 +679,7 @@ user/*',
     $pane->locks = array();
     $pane->uuid = '121673e4-ec13-4123-88da-a3851e600028';
     $display->content['new-121673e4-ec13-4123-88da-a3851e600028'] = $pane;
-    $display->panels['left_sidebar'][0] = 'new-121673e4-ec13-4123-88da-a3851e600028';
+    $display->panels['header'][0] = 'new-121673e4-ec13-4123-88da-a3851e600028';
     $pane = new stdClass();
     $pane->pid = 'new-7a8a1910-8380-44a6-9b6e-6e1fe10cbc2d';
     $pane->panel = 'main_content';
