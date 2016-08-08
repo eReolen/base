@@ -78,6 +78,27 @@ function wille_preprocess_image(&$variables) {
 }
 
 /**
+ * Implements hook_ting_collection_view_alter().
+ *
+ * Suppress the type icon on the material in the ting_primary_object when the
+ * collection contains more than one material. This removes the type-icon in
+ * search results where the cover represents more than one material (likely of
+ * different types).
+ */
+function wille_ting_collection_view_alter(&$build) {
+  if (isset($build['ting_primary_object'])) {
+    foreach (element_children($build['ting_primary_object']) as $key) {
+      $collection = $build['ting_primary_object']['#object'];
+      if (count($collection->entities) > 1) {
+        if (isset($build['ting_primary_object'][$key]['ting_cover'])) {
+          $build['ting_primary_object'][$key]['ting_cover'][0]['#suppress_type_icon'] = TRUE;
+        }
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_preprocess_preprocess_material_item().
  */
 function wille_preprocess_material_item(&$variables) {
