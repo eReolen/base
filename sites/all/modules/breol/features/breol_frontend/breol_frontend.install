@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the breol_frontend module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function breol_frontend_install() {
+  _breol_frontend_set_module_weight();
+}
+
+/**
+ * Set our module weight to 100.
+ *
+ * Needed by breol_frontend_form_profile2_form_alter() to ensure it's called
+ * after ding_user_form_profile2_form_alter().
+ */
+function _breol_frontend_set_module_weight() {
+  db_update('system')
+    ->fields(array(
+      'weight' => 100,
+    ))
+    ->condition('name', 'breol_frontend')
+    ->execute();
+}
+
+/**
+ * Set module weight.
+ */
+function breol_frontend_update_7101() {
+  _breol_frontend_set_module_weight();
+}
