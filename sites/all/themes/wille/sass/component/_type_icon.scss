@@ -1,0 +1,68 @@
+// Type icons
+
+.type-icon {
+  position: relative;
+
+  &:after {
+    @extend %icon;
+    display: block;
+    content: " ";
+    right: 10px;
+    top: auto;
+    bottom: 10px;
+    left: auto;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background-color: $icon-quota-unknown;
+    border-radius: 50%;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 9px;
+    color: white;
+    z-index: 4;
+
+    @include media($tablet-l) {
+      right: 3px;
+      bottom: 6px;
+      height: 30px;
+      width: 30px;
+      font-size: 14px;
+    }
+  }
+
+  &.type-icon-audiobook {
+    &:after {
+      content: "\e904";
+    }
+  }
+  &.type-icon-ebook {
+    &:after {
+      content: "\e900";
+    }
+  }
+  &.type-icon-audiobook.type-icon-noquota {
+    &:after {
+      content: "\e904";
+      background-color: $icon-quota-none;
+    }
+  }
+  &.type-icon-ebook.type-icon-noquota {
+    &:after {
+      content: "\e900";
+      background-color: $icon-quota-none;
+    }
+  }
+  &.type-icon-audiobook.type-icon-quota {
+    &:after {
+      content: "\e904";
+      background-color: $icon-quota;
+    }
+  }
+  &.type-icon-ebook.type-icon-quota {
+    &:after {
+      content: "\e900";
+      background-color: $icon-quota;
+    }
+  }
+}
