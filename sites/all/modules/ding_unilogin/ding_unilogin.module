@@ -130,7 +130,6 @@ function ding_unilogin_form_profile2_form_alter(&$form, &$form_state) {
  * Check access with authentication web service, if configured.
  */
 function ding_unilogin_ding_unilogin_login($user) {
-  $auth_service = _ding_unilogin_wservice('auth');
   // Check that the user has license to access us.
   if (variable_get('ding_unilogin_auth_context', '')) {
     $access = $user->hasLicense(
