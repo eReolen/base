@@ -337,7 +337,7 @@ function _ding_unilogin_login($username) {
  * @param string $service
  *   The service to get, either 'auth' or 'info'.
  */
-function _ding_unilogin_wservice($service) {
+function ding_unilogin_wservice($service) {
   switch ($service) {
     case 'auth':
       return new DingUniloginWS05(
