@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Keep statistics of loans by Unilogin users.
+ */
+
+/**
+ * Implements hook_publizon_loan().
+ */
+function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
+  if (ding_unilogin_authenticated($account)) {
+    $service = ding_unilogin_wservice('info');
+    $person = $service->getPerson($name);
+    if (!$person) {
+      return;
+    }
+    $student = $service->getStudent($person->Instnr, $person->Brugerid);
+    if (!$student) {
+      return;
+    }
+    $inst = $service->getInstitution($student->Institutionsnummer);
+    if (!$inst) {
+      return;
+    }
+
+    db_insert('breol_unilogin_statistics')
+      ->fields(array(
+        'timestamp' => REQUEST_TIME,
+        'class' => $student->Klasse,
+        'school_id' => $inst->Instnr,
+        'school' => $inst->Navn,
+        'municipality_id' => $inst->Kommunenr,
+        'municipality' => $inst->Kommune,
+        'isbn' => $isbn,
+      ))
+      ->execute();
+  }
+}

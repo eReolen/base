@@ -158,3 +158,10 @@ function breol_base_update_7117() {
 function breol_base_update_7118() {
   module_enable(array('breol_facetbrowser'), TRUE);
 }
+
+/**
+ * Enable breol_unilogin_statistics.
+ */
+function breol_base_update_7119() {
+  module_enable(array('breol_unilogin_statistics'), TRUE);
+}
