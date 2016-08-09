@@ -364,7 +364,7 @@
       width: 40px;
       height: 40px;
       position: absolute;
-      background-color: rgb(116, 150, 190);
+      background-color: $icon-quota-unknown;
       border-radius: 50%;
       font-size: 20px;
       text-align: center;
@@ -394,23 +394,25 @@
     &.type-icon-audiobook.type-icon-noquota {
       &:after {
         content: "\e904";
-        background-color: $red;
+        background-color: $icon-quota-none;
       }
     }
     &.type-icon-ebook.type-icon-noquota {
       &:after {
         content: "\e900";
-        background-color: $red;
+        background-color: $icon-quota-none;
       }
     }
     &.type-icon-audiobook.type-icon-quota {
       &:after {
         content: "\e904";
+        background-color: $icon-quota;
       }
     }
     &.type-icon-ebook.type-icon-quota {
       &:after {
         content: "\e900";
+        background-color: $icon-quota;
       }
     }
   }
