@@ -261,6 +261,8 @@ function _ding_unilogin_login($username) {
       variable_get('ding_unilogin_ws_user', ''),
       variable_get('ding_unilogin_ws_pass', '')
     );
+    $user->setAuthName(ding_user_default_authname($username));
+
     foreach (module_implements('ding_unilogin_login') as $module) {
       $access = module_invoke($module, 'ding_unilogin_login', $user);
       // Break out if someone denied access.
@@ -281,11 +283,10 @@ function _ding_unilogin_login($username) {
     return FALSE;
   }
 
-  $auth_name = ding_user_default_authname($username);
   $auth_res = array(
     'success' => TRUE,
     'creds' => array(
-      'name' => $user->getAuthName(),
+      'name' => $user->getName(),
       // Random password. Shouldn't be used, but we'll make it un-guessable
       // for good measure, in case someone messes up.
       'pass' => md5(drupal_random_bytes(32) . 'no_password_for_the_wicked'),
@@ -306,7 +307,7 @@ function _ding_unilogin_login($username) {
    */
 
   // Create new account in Drupal and if one exists update it.
-  $account = _ding_user_create_account($auth_name, $auth_res);
+  $account = _ding_user_create_account($user->getAuthName(), $auth_res);
 
   // Make a note that this is a UNI•Login account in data by saving once more.
   user_save($account, array('data' => array('unilogin' => TRUE)));
