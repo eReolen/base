@@ -19,6 +19,10 @@ body:not(.front) .main-content-wrapper__inner {
   }
 }
 
+.main-content-wrapper {
+  clear: both;
+}
+
 // Footer.
 .footer__inner {
   @include outer-container;
@@ -30,7 +34,7 @@ body:not(.front) .main-content-wrapper__inner {
 
 // Frontpage theming.
 .front {
-  .main-content-wrapper__inner {
+  .main-content {
     background: $gray;
     padding: 75px 0;
     margin-bottom: 100px;
@@ -39,8 +43,4 @@ body:not(.front) .main-content-wrapper__inner {
       padding: 15px;
     }
   }
-}
-
-.main-content-wrapper__inner {
-  clear: both;
 }

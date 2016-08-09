@@ -44,12 +44,17 @@ function breol_frontpage_default_page_manager_pages() {
     'name' => 'panel',
   );
   $display = new panels_display();
-  $display->layout = 'onecol';
+  $display->layout = 'stacked_columns';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'middle' => NULL,
+      'header' => NULL,
+      'before_content' => NULL,
+      'main_content' => NULL,
+      'after_content' => NULL,
+      'bottom' => NULL,
     ),
   );
   $display->cache = array();
@@ -58,8 +63,31 @@ function breol_frontpage_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
+    $pane->pid = 'new-79924abc-b7fc-4ff4-91bf-0d938a1ecfbd';
+    $pane->panel = 'after_content';
+    $pane->type = 'carousel';
+    $pane->subtype = 'carousel';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '79924abc-b7fc-4ff4-91bf-0d938a1ecfbd';
+    $display->content['new-79924abc-b7fc-4ff4-91bf-0d938a1ecfbd'] = $pane;
+    $display->panels['after_content'][0] = 'new-79924abc-b7fc-4ff4-91bf-0d938a1ecfbd';
+    $pane = new stdClass();
     $pane->pid = 'new-9282ec55-a017-4fce-b98a-7389859efaf7';
-    $pane->panel = 'middle';
+    $pane->panel = 'main_content';
     $pane->type = 'fancy_box';
     $pane->subtype = 'fancy_box';
     $pane->shown = TRUE;
@@ -79,30 +107,7 @@ function breol_frontpage_default_page_manager_pages() {
     $pane->locks = array();
     $pane->uuid = '9282ec55-a017-4fce-b98a-7389859efaf7';
     $display->content['new-9282ec55-a017-4fce-b98a-7389859efaf7'] = $pane;
-    $display->panels['middle'][0] = 'new-9282ec55-a017-4fce-b98a-7389859efaf7';
-    $pane = new stdClass();
-    $pane->pid = 'new-79924abc-b7fc-4ff4-91bf-0d938a1ecfbd';
-    $pane->panel = 'middle';
-    $pane->type = 'carousel';
-    $pane->subtype = 'carousel';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '79924abc-b7fc-4ff4-91bf-0d938a1ecfbd';
-    $display->content['new-79924abc-b7fc-4ff4-91bf-0d938a1ecfbd'] = $pane;
-    $display->panels['middle'][1] = 'new-79924abc-b7fc-4ff4-91bf-0d938a1ecfbd';
+    $display->panels['main_content'][0] = 'new-9282ec55-a017-4fce-b98a-7389859efaf7';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-9282ec55-a017-4fce-b98a-7389859efaf7';
   $handler->conf['display'] = $display;
