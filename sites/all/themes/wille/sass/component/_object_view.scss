@@ -60,7 +60,8 @@
   }
 }
 
-.material-item {
+.material-item,
+.panel-pane {
   @include clearfix;
 }
 

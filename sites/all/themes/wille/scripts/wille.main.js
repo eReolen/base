@@ -218,8 +218,7 @@
       var contentWrapper = $('<div class="collapsible-content-wrapper" />')
 
       var elements = [
-        '.group_material_details',
-        '.ting-object-wrapper',
+        '.group-material-details',
         '.pane-ting-ting-object-types'
       ];
 
