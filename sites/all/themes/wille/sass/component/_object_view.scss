@@ -1,14 +1,12 @@
 /**
  * Quick and dirty theming of object view.
  */
-.group_ting_object_left_column,
-.group_ting_left_col_collection {
+.ting-object-left {
   @include span-columns(3);
   overflow: hidden;
 }
 
-.group_ting_object_right_column,
-.group_ting_right_col_collection {
+.ting-object-right {
   @include shift(1);
   @include span-columns(8);
 
@@ -18,7 +16,7 @@
   }
 }
 
-.group_ting_object_left_column {
+.ting-object-left {
   @include media($phone) {
     @include span-columns(2);
 
@@ -28,7 +26,7 @@
   }
 }
 
-.group_ting_object_right_column {
+.ting-object-right {
   @include media($phone) {
     @include span-columns(10);
     margin: 0;
@@ -66,16 +64,12 @@
   @include clearfix;
 }
 
-.ting-object-wrapper {
+.ting-object {
   @include span-columns(12);
 }
 
-.field-group-format-title {
-  text-decoration: none;
-}
-
 .group-material-details,
-.ting-object-wrapper,
+.ting-object,
 .pane-ting-ting-object-types,
 .pane-ting-ting-relation-anchors,
 .pane-ting-ting-collection-types {
