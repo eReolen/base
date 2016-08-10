@@ -23,7 +23,6 @@ function _webform_defaults_textarea() {
       'resizable' => 1,
       'disabled' => 0,
       'description' => '',
-      'description_above' => FALSE,
       'placeholder' => '',
       'attributes' => array(),
       'private' => FALSE,

@@ -260,7 +260,7 @@
     }
     // If the operator does not need a source value (i.e. is empty), hide it.
     else if (formKey === false) {
-      $value[0].innerHTML = '<input type="text" value="" style="display: none;" >';
+      $value[0].innerHTML = '&nbsp;';
     }
     // If there is a per-source form for this operator (e.g. option lists), use
     // the specialized value form.
@@ -285,9 +285,7 @@
    * Event callback to make sure all group and/or operators match.
    */
   Drupal.webform.conditionalAndOrChange = function () {
-    var rid = this.getAttribute('data-rid');
-    var text = $(this).find('option:selected').text();
-    $(this).parents('.webform-conditional:first').find('.webform-conditional-andor div[data-rid="' + rid + '"]').text(text);
+    $(this).parents('.webform-conditional:first').find('.webform-conditional-andor select').val(this.value);
   };
 
   /**
@@ -295,7 +293,7 @@
    */
   Drupal.webform.conditionalActionChange = function () {
     var action = $(this).val();
-    var $argument = $(this).parents('.webform-conditional-condition:first').find('.webform-conditional-argument input');
+    var $argument = $(this).parents('.webform-conditional:first').find('.webform-conditional-argument input');
     var isShown = $argument.is(':visible');
     switch (action) {
       case 'show':
@@ -310,6 +308,21 @@
         }
         break;
     }
+  };
+
+  /**
+   * Given a table's DOM element, restripe the odd/even classes.
+   */
+  Drupal.webform.restripeTable = function (table) {
+    // :even and :odd are reversed because jQuery counts from 0 and
+    // we count from 1, so we're out of sync.
+    // Match immediate children of the parent element to allow nesting.
+    $('> tbody > tr, > tr', table)
+      .filter(':odd').filter('.odd')
+        .removeClass('odd').addClass('even')
+      .end().end()
+      .filter(':even').filter('.even')
+        .removeClass('even').addClass('odd');
   };
 
   /**

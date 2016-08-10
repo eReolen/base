@@ -19,7 +19,6 @@ function _webform_defaults_fieldset() {
       'collapsible' => 0,
       'collapsed' => 0,
       'description' => '',
-      'description_above' => FALSE,
       'private' => FALSE,
     ),
   );
