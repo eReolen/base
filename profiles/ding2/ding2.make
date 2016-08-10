@@ -272,7 +272,8 @@ projects[secure_permissions][subdir] = "contrib"
 projects[secure_permissions][download][type] = "git"
 projects[secure_permissions][download][url] = "http://git.drupal.org/project/secure_permissions.git"
 projects[secure_permissions][download][revision] = "ef5eec5"
-projects[secure_permissions][patch][] = "http://drupal.org/files/issues/2188491-features-multilingual-2.patch"
+; Handle translated roles https://www.drupal.org/node/1744274
+projects[secure_permissions][patch][1744274] = "https://www.drupal.org/files/secure_permissions-duplicate_role_exception-1744274-4.patch"
 projects[secure_permissions][patch][] = "http://drupal.org/files/issues/secure_permissions-dont_disable_all_permissions-2499607-3.patch"
 
 projects[similarterms][subdir] = "contrib"
