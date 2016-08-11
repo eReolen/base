@@ -147,7 +147,7 @@
     attach : function(context, settings) {
       $('.search-snippet-info').each(function() {
         $(this).addClass('js-processed');
-        var metaData = $(this).find('.group-ting-right-col-search', context);
+        var metaData = $(this).find('.ting-object-right', context);
         var availability = $(this).find('.js-online, .js-pending');
         metaData.append(availability);
       });
