@@ -232,8 +232,8 @@
 
         $('.collapsible-content-wrapper').hide();
 
-        $(element).click(function() {
-          $(this)
+        $(element).find('h2').click(function() {
+          $(element)
             .toggleClass('open')
             .find('.collapsible-content-wrapper')
             .slideToggle();
