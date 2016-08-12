@@ -6,6 +6,44 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function breol_unilogin_statistics_menu() {
+  $items = array();
+
+  $items['admin/reports/breol_unilogin_statistics'] = array(
+    'title' => 'UNI•Login user loan statistics',
+    'description' => 'Statistics of loans by UNI•Login users',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('breol_unilogin_statistics_form'),
+    'access arguments' => array('access unilogin loan statistics'),
+    'file' => 'breol_unilogin_statistics.page.inc',
+  );
+
+  $items['admin/reports/breol_unilogin_statistics/%/%'] = array(
+    'title' => 'UNI•Login user loan statistics data',
+    'page callback' => 'breol_unilogin_statistics_data',
+    'page arguments' => array(3, 4),
+    'access arguments' => array('access unilogin loan statistics'),
+    'file' => 'breol_unilogin_statistics.page.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function breol_unilogin_statistics_permission() {
+  return array(
+    'access unilogin loan statistics' => array(
+      'title' => t('Access UNI•Login loan statistics'),
+      'description' => t('Allow role to see the loan statistics for UNI•Login.'),
+    ),
+  );
+}
+
+/**
  * Implements hook_publizon_loan().
  */
 function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
