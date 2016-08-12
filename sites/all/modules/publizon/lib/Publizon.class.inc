@@ -19,7 +19,7 @@ abstract class Publizon {
     if (array_key_exists($name, $this->properties)) {
       return $this->properties[$name];
     }
-    throw new PublizonLoansException('Trying to get publizon loans property that do not exists (' . $name . ').');
+    throw new RuntimeException('Trying to get publizon loans property that do not exists (' . $name . ').');
   }
 
   /**
@@ -30,7 +30,7 @@ abstract class Publizon {
       $this->properties[$name] = $value;
     }
     else {
-      throw new PublizonLoansException('Trying to set publizon loans property that do not exists (' . $name . ').');
+      throw new RuntimeException('Trying to set publizon loans property that do not exists (' . $name . ').');
     }
   }
 
@@ -42,7 +42,7 @@ abstract class Publizon {
       return isset($this->properties[$name]);
     }
     else {
-      throw new PublizonLoansException('Trying to test publizon loans property that do not exists (' . $name . ').');
+      throw new RuntimeException('Trying to test publizon loans property that do not exists (' . $name . ').');
     }
   }
 
@@ -54,7 +54,7 @@ abstract class Publizon {
       $this->properties[$name] = NULL;
     }
     else {
-      throw new PublizonLoansException('Trying to unset publizon loans property that do not exists (' . $name . ').');
+      throw new RuntimeException('Trying to unset publizon loans property that do not exists (' . $name . ').');
     }
   }
 
@@ -62,6 +62,6 @@ abstract class Publizon {
    * Implements PHP magic __toString function.
    */
   public function __toString() {
-    throw new PublizonLoansException('To string have not been implemented yet');
+    throw new RuntimeException('To string have not been implemented yet');
   }
 }
