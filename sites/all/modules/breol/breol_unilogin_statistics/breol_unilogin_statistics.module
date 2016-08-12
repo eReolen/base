@@ -13,14 +13,36 @@ function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
     $service = ding_unilogin_wservice('info');
     $person = $service->getPerson($name);
     if (!$person) {
+      watchdog(
+        'breol_unilogin_statistics',
+        'Cannot log loan for %user, cannot get person.',
+        array('%user' => $name),
+        WATCHDOG_ERROR
+      );
       return;
     }
     $student = $service->getStudent($person->Instnr, $person->Brugerid);
     if (!$student) {
+      watchdog(
+        'breol_unilogin_statistics',
+        'Cannot log loan for %user, cannot get student record for user id %user_id at institution id %institution_id.',
+        array(
+          '%user' => $name,
+          '%user_id' => $person->Brugerid,
+          '%institution_id' => $person->Instnr,
+        ),
+        WATCHDOG_ERROR
+      );
       return;
     }
     $inst = $service->getInstitution($student->Institutionsnummer);
     if (!$inst) {
+      watchdog(
+        'breol_unilogin_statistics',
+        'Cannot log loan for %user, cannot get institution id %institution_id.',
+        array('%user' => $name, '%institution_id' => $person->Instnr),
+        WATCHDOG_ERROR
+      );
       return;
     }
 
