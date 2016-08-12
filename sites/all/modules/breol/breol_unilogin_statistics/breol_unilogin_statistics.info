@@ -1,0 +1,5 @@
+name = BReol Unilogin Statistics
+description = "Loan statistics for Unilogin users"
+core = 7.x
+package = eReolen for kids
+dependencies[] = date_api

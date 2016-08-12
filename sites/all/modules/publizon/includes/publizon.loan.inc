@@ -80,6 +80,7 @@ function publizon_loan_create($account, $local_id) {
     $client = PublizonLoanClient::getClient();
     // This will throw exception if loan does not go through.
     $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
+    module_invoke_all('publizon_loan', $account, $creds['name'], $isbn);
   }
   catch (PublizonException $e) {
     PublizonDingProviderException::convert($e);

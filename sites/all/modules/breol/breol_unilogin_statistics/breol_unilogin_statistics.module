@@ -1,0 +1,99 @@
+<?php
+
+/**
+ * @file
+ * Keep statistics of loans by Unilogin users.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function breol_unilogin_statistics_menu() {
+  $items = array();
+
+  $items['admin/reports/breol_unilogin_statistics'] = array(
+    'title' => 'UNI•Login user loan statistics',
+    'description' => 'Statistics of loans by UNI•Login users',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('breol_unilogin_statistics_form'),
+    'access arguments' => array('access unilogin loan statistics'),
+    'file' => 'breol_unilogin_statistics.page.inc',
+  );
+
+  $items['admin/reports/breol_unilogin_statistics/%/%'] = array(
+    'title' => 'UNI•Login user loan statistics data',
+    'page callback' => 'breol_unilogin_statistics_data',
+    'page arguments' => array(3, 4),
+    'access arguments' => array('access unilogin loan statistics'),
+    'file' => 'breol_unilogin_statistics.page.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function breol_unilogin_statistics_permission() {
+  return array(
+    'access unilogin loan statistics' => array(
+      'title' => t('Access UNI•Login loan statistics'),
+      'description' => t('Allow role to see the loan statistics for UNI•Login.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_publizon_loan().
+ */
+function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
+  if (ding_unilogin_authenticated($account)) {
+    $service = ding_unilogin_wservice('info');
+    $person = $service->getPerson($name);
+    if (!$person) {
+      watchdog(
+        'breol_unilogin_statistics',
+        'Cannot log loan for %user, cannot get person.',
+        array('%user' => $name),
+        WATCHDOG_ERROR
+      );
+      return;
+    }
+    $student = $service->getStudent($person->Instnr, $person->Brugerid);
+    if (!$student) {
+      watchdog(
+        'breol_unilogin_statistics',
+        'Cannot log loan for %user, cannot get student record for user id %user_id at institution id %institution_id.',
+        array(
+          '%user' => $name,
+          '%user_id' => $person->Brugerid,
+          '%institution_id' => $person->Instnr,
+        ),
+        WATCHDOG_ERROR
+      );
+      return;
+    }
+    $inst = $service->getInstitution($student->Institutionsnummer);
+    if (!$inst) {
+      watchdog(
+        'breol_unilogin_statistics',
+        'Cannot log loan for %user, cannot get institution id %institution_id.',
+        array('%user' => $name, '%institution_id' => $person->Instnr),
+        WATCHDOG_ERROR
+      );
+      return;
+    }
+
+    db_insert('breol_unilogin_statistics')
+      ->fields(array(
+        'timestamp' => REQUEST_TIME,
+        'class' => $student->Klasse,
+        'school_id' => $inst->Instnr,
+        'school' => $inst->Navn,
+        'municipality_id' => $inst->Kommunenr,
+        'municipality' => $inst->Kommune,
+        'isbn' => $isbn,
+      ))
+      ->execute();
+  }
+}

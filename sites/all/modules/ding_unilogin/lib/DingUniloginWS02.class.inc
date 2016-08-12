@@ -21,6 +21,16 @@ class DingUniloginWS02 extends DingUniloginServiceBase {
   }
 
   /**
+   * Lookup a student.
+   */
+  public function getStudent($institution_id, $person_id) {
+    return $this->callWithAuth('hentElev', array(
+      'instnr' => $institution_id,
+      'uid' => $person_id,
+    ));
+  }
+
+  /**
    * Lookup institution.
    */
   public function getInstitution($institution_id) {
