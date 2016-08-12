@@ -19,7 +19,8 @@ abstract class Publizon {
     if (array_key_exists($name, $this->properties)) {
       return $this->properties[$name];
     }
-    throw new RuntimeException('Trying to get publizon loans property that do not exists (' . $name . ').');
+    // getClass($this) returns the name of the called class, not this class.
+    throw new RuntimeException('Trying to get ' . get_class($this) . ' property that do not exists (' . $name . ').');
   }
 
   /**
@@ -30,7 +31,7 @@ abstract class Publizon {
       $this->properties[$name] = $value;
     }
     else {
-      throw new RuntimeException('Trying to set publizon loans property that do not exists (' . $name . ').');
+      throw new RuntimeException('Trying to set ' . get_class($this) . ' property that do not exists (' . $name . ').');
     }
   }
 
@@ -42,7 +43,7 @@ abstract class Publizon {
       return isset($this->properties[$name]);
     }
     else {
-      throw new RuntimeException('Trying to test publizon loans property that do not exists (' . $name . ').');
+      throw new RuntimeException('Trying to test ' . get_class($this) . ' property that do not exists (' . $name . ').');
     }
   }
 
@@ -54,7 +55,7 @@ abstract class Publizon {
       $this->properties[$name] = NULL;
     }
     else {
-      throw new RuntimeException('Trying to unset publizon loans property that do not exists (' . $name . ').');
+      throw new RuntimeException('Trying to unset ' . get_class($this) . ' property that do not exists (' . $name . ').');
     }
   }
 
