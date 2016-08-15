@@ -8,7 +8,8 @@ class PublizonLibrary extends Publizon {
   protected $properties = array(
     'maxEbookLoans' => NULL,
     'maxAudiobookLoans' => NULL,
-    'maxReservations' => NULL,
+    'maxEbookReservations' => NULL,
+    'maxAudiobookReservations' => NULL,
   );
 
   /**
@@ -30,6 +31,8 @@ class PublizonLibrary extends Publizon {
   private function parse(SimpleXMLElement $item) {
     $this->maxEbookLoans = (int) $item->MaxConcurrentLoansPerBorrower;
     $this->maxAudiobookLoans = (int) $item->MaxConcurrentAudioLoansPerBorrower;
-    $this->maxReservations = (int) $item->MaxConcurrentReservationsPerBorrower;
+    $this->maxEbookReservations = (int) $item->MaxConcurrentReservationsPerBorrower;
+    $this->maxAudiobookReservations = (int) $item->MaxConcurrentAudioReservationsPerBorrower;
   }
+
 }
