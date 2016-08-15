@@ -50,7 +50,6 @@ function reol_shared_frontend_user_quota_info_content_type_render($subtype, $con
     )),
   );
   $block->content = theme('user_quota_info', $variables);
-  dpm($block);
 
   return $block;
 }
