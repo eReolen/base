@@ -88,6 +88,8 @@ function breol_unilogin_statistics_data($from, $to) {
        ->execute();
 
   while ($row = $res->fetchAssoc()) {
+    $time = new DateTime('@' . $row['timestamp']);
+    $row['timestamp'] = $time->format(DateTime::ATOM);
     print implode(';', $row) . "\n";
   }
 
