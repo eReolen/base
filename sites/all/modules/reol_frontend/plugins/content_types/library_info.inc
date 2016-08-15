@@ -30,6 +30,12 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
   $library = publizon_library_load($library_id);
 
   $variables = array(
+    // Quotas.
+    'max_ebook_loans' => $library->maxEbookLoans,
+    'max_audiobook_loans' => $library->maxAudiobookLoans,
+    'max_ebook_reservations' => $library->maxEbookReservations,
+    'max_audiobook_reservations' => $library->maxAudiobookReservations,
+    // Legacy texts.
     'max_ebook_loans_text' => t('You are allowed to loan @loans e-books simultaneously.', array('@loans' => $library->maxEbookLoans)),
     'max_audiobook_loans_text' => t('You are allowed to loan @loans audiobooks simultaneously.', array('@loans' => $library->maxAudiobookLoans)),
     'max_reservations_text' => t('You are allowed to reserve @reservations titles simultaneously.', array('@reservations' => $library->maxEbookReservations)),
