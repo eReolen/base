@@ -60,6 +60,10 @@
   }
 }
 
+.material-item {
+  clear: both;
+}
+
 .material-item,
 .panel-pane {
   @include clearfix;
