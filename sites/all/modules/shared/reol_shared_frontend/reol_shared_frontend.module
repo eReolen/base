@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Shared frontend code.
+ */
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_shared_frontend_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
