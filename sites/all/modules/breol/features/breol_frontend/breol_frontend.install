@@ -33,3 +33,10 @@ function _breol_frontend_set_module_weight() {
 function breol_frontend_update_7101() {
   _breol_frontend_set_module_weight();
 }
+
+/**
+ * Enable reol_shared_frontend.
+ */
+function breol_frontend_update_7102() {
+  module_enable(array('reol_shared_frontend'), TRUE);
+}
