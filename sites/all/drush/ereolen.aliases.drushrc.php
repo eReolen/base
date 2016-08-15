@@ -60,39 +60,10 @@ $aliases['dev'] = array(
   ),
 );
 
-$aliases['test1404'] = array(
-  'remote-host' => 'test1404.reload.dk',
-  'remote-user' => 'reload',
-);
-
-$aliases['test'] = array(
-  'parent' => '@test1404',
-  'uri' => 'ereolen.test1404.reload.dk',
-  'root' => '/var/www/ereolen.test1404.reload.dk',
-  'deployotron' => array(
-    'branch' => 'develop',
-    'dump-dir' => '/home/reload/backup/ereolen',
-    'no-offline' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
-  ),
-);
-
-$aliases['test-test'] = array(
-  'parent' => '@test1404',
-  'uri' => 'ereolen-test.test1404.reload.dk',
-  'root' => '/var/www/ereolen-test.test1404.reload.dk',
-  'deployotron' => array(
-    'branch' => 'develop',
-    'dump-dir' => '/home/reload/backup/ereolen',
-    'no-offline' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
-  ),
-);
-
 // The server only allows certain IPs to log in, so we hack up an
 // alias for the jump server here.
-$aliases['circle'] = $aliases['p01'];
-$aliases['circle']['ssh-options'] .= " -o ForwardAgent=yes -o 'ProxyCommand  ssh circleci@ding.reload.dk nc %h %p'";
+// $aliases['circle'] = $aliases['p01'];
+// $aliases['circle']['ssh-options'] .= " -o ForwardAgent=yes -o 'ProxyCommand  ssh circleci@ding.reload.dk nc %h %p'";
 
-$aliases['circle-dev'] = $aliases['dev'];
-$aliases['circle-dev']['parent'] = '@circle';
+// $aliases['circle-dev'] = $aliases['dev'];
+// $aliases['circle-dev']['parent'] = '@circle';
