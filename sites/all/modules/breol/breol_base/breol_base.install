@@ -165,3 +165,10 @@ function breol_base_update_7118() {
 function breol_base_update_7119() {
   module_enable(array('breol_unilogin_statistics'), TRUE);
 }
+
+/**
+ * Enable googleanalytics.
+ */
+function breol_base_update_7120() {
+  module_enable(array('googleanalytics'), TRUE);
+}
