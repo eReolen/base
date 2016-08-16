@@ -1,6 +1,8 @@
 /**
+ * @file
  * Main javascript file for Wille theme.
  */
+
 (function($) {
 
   /**
@@ -10,7 +12,7 @@
     attach : function(context, settings) {
 
       // Add class if we are on desktop.
-      if(!isMobile()) {
+      if (!isMobile()) {
         $('body').addClass('is-desktop');
       }
 
@@ -18,16 +20,17 @@
        * Detect if we are on mobile devices.
        */
       function isMobile() {
-       if( navigator.userAgent.match(/Android/i)
+        if (navigator.userAgent.match(/Android/i)
          || navigator.userAgent.match(/webOS/i)
          || navigator.userAgent.match(/iPhone/i)
          || navigator.userAgent.match(/iPad/i)
          || navigator.userAgent.match(/iPod/i)
          || navigator.userAgent.match(/BlackBerry/i)
          || navigator.userAgent.match(/Windows Phone/i)
-        ) {
+           ) {
           return true;
-        } else {
+        }
+        else {
           return false;
         }
       }
@@ -46,11 +49,12 @@
 
         // Make sure the right classes are added, so we can
         // make sure the arrow points in the right direction.
-        if ( element.css('display') === 'none') {
+        if (element.css('display') === 'none') {
           $(element).slideDown(200);
           $(this).addClass('open');
           $(this).removeClass('closed');
-        } else {
+        }
+        else {
           $(this).removeClass('open');
           $(this).addClass('closed');
           $(element).slideUp(200);
@@ -90,10 +94,10 @@
    */
   Drupal.behaviors.subjectMenu = {
     attach : function(context, settings) {
-      $( document ).ready(function() {
+      $(document).ready(function() {
 
         // If slick is not loaded, we will abort.
-        if(!jQuery().slick) {
+        if (!jQuery().slick) {
           return;
         }
 
@@ -138,7 +142,8 @@
    * TODO(ts) - this is a temporary solution until we have
    * clarified whats gonna happen here.
    */
-  Drupal.behaviors.dingAvailabilityAttach = function(){};
+  Drupal.behaviors.dingAvailabilityAttach = function(){
+  };
 
   /**
    * Modify the DOM.
@@ -191,10 +196,11 @@
         $('.pane-search-form').show();
 
         $('.menu-name-main-menu ul li.last a', context)
-        .click(function(event) {
-          event.preventDefault();
-        });
-      } else {
+          .click(function(event) {
+            event.preventDefault();
+          });
+      }
+      else {
         var searchFormWrapper = $('.pane-search-form', context);
         searchFormWrapper.hide();
 
@@ -205,7 +211,7 @@
             event.preventDefault();
             searchFormWrapper.slideToggle();
           });
-        }
+      }
     }
   };
 
@@ -275,21 +281,22 @@
 
         // Listen for user input.
         $('.view-picker__item').click(function() {
-         viewType = $(this).attr('data-view-type');
+          viewType = $(this).attr('data-view-type');
 
-         // Apply classes depending on user choice.
-         if (!$(this).hasClass('active')) {
-          $('.view-picker__item').toggleClass('active');
+          // Apply classes depending on user choice.
+          if (!$(this).hasClass('active')) {
+            $('.view-picker__item').toggleClass('active');
 
-          if (viewType === 'grid') {
-            wrapper.addClass(gridClass)
-          } else {
-            wrapper.removeClass(gridClass)
+            if (viewType === 'grid') {
+              wrapper.addClass(gridClass)
+            }
+            else {
+              wrapper.removeClass(gridClass)
+            }
+
+            // Store the last chosen view type in localstorage.
+            localStorage.setItem('breol-search-view-type', viewType);
           }
-
-          // Store the last chosen view type in localstorage.
-          localStorage.setItem('breol-search-view-type', viewType);
-         }
         });
       }
 
@@ -300,7 +307,8 @@
 
         if (viewType === 'list') {
           listPicker.addClass('active');
-        } else {
+        }
+        else {
           gridPicker.addClass('active');
         }
 
