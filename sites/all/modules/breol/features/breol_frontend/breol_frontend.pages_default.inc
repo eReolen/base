@@ -894,12 +894,13 @@ user/*',
       ),
       'reservation_title' => 'Redeemable reservations',
       'reservation_form_id' => 'ding_reservation_reservations_ready_form',
-      'form_build_id' => 'form-4IgdX9lFV0Um3jtKg4JHixkkT4Zyiq4x-rUGltYiNOw',
-      'form_token' => 'ZeyaEkUO_YrkKw-kg15e6SkTPPC9H6w95aTL40LpBtg',
+      'form_build_id' => 'form-PBA3dAzbB1uk28Aon3U1gaFATX2xSUPLPjEdDEr2iTA',
+      'form_token' => 'Wjd39WJwHOkUgjSERg3FO4J-JrCxKmimqgvcjNX391U',
       'form_id' => 'ding_reservation_reservations_content_type_edit_form',
       'override_title' => 1,
-      'override_title_text' => 'Redeemable reservations',
+      'override_title_text' => 'Reservationer klar til lån',
       'reservation_empty_text' => 'There are no reservations ready.',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
