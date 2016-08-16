@@ -29,6 +29,13 @@ function ding_unilogin_admin_settings_form($form, &$form_state) {
     '#default_value' => variable_get('ding_unilogin_secret', ''),
   );
 
+  $form['login']['ding_unilogin_global_logout'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Global logout'),
+    '#description' => t('Log out of UNI•Login when logging out of Drupal.'),
+    '#default_value' => variable_get('ding_unilogin_global_logout', 0),
+  );
+
   // Settings for WS service general access.
   $form['ws'] = array(
     '#type' => 'fieldset',

@@ -146,6 +146,45 @@ function ding_unilogin_ding_unilogin_login($user) {
 }
 
 /**
+ * Implements hook_user_logout().
+ *
+ * If configured for global logout, make a note for
+ * ding_unilogin_drupal_goto_alter to trigger on.
+ */
+function ding_unilogin_user_logout($account) {
+  if (variable_get('ding_unilogin_global_logout', FALSE) &&
+      ding_unilogin_authenticated($account)) {
+    _ding_unilogin_global_logout(TRUE);
+  }
+}
+
+/**
+ * Implements hook_drupal_goto_alter().
+ *
+ * Redirect post-logout to UNI•Login logout page if configured for global
+ * logout.
+ */
+function ding_unilogin_drupal_goto_alter(&$path, &$options, &$http_response_code) {
+  if (_ding_unilogin_global_logout()) {
+    $path = 'https://sso.emu.dk/logout';
+    $options = array('external' => TRUE);
+    $http_response_code = 302;
+  }
+}
+
+/**
+ * Whether to globally log out.
+ */
+function _ding_unilogin_global_logout($state = NULL) {
+  $logout = &drupal_static(__FUNCTION__);
+  if (!is_null($state)) {
+    $logout = $state;
+  }
+
+  return $logout;
+}
+
+/**
  * Handle logging in returing UNI•Login users.
  *
  * @see http://www.stil.dk/-/media/STIL/Filer/Publikationer/Tekniske-vejledninger/uni-login-authentication.ashx?la=da
