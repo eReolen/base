@@ -60,6 +60,24 @@ $aliases['dev'] = array(
   ),
 );
 
+$aliases['ego-prod'] = array(
+  'parent' => '@p01',
+  'uri' => 'ereolengo.dk',
+  'root' => '/data/www/prod_ereolengo_dk',
+  'deployotron' => array(
+    'branch' => 'master',
+    'dump-dir' => '/data/backup/ego-prod',
+    // Updb clears the cache.
+    'no-cc-all' => TRUE,
+    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'newrelic-api-key' => '36372beaa3607d3b8082f6ed3d1ed986609d7359def9a47',
+    'newrelic-app-name' => 'ereolengo.dk',
+    'post-deploy' => array(
+      'sudo service varnish restart',
+    ),
+  ),
+);
+
 // The server only allows certain IPs to log in, so we hack up an
 // alias for the jump server here.
 // $aliases['circle'] = $aliases['p01'];
