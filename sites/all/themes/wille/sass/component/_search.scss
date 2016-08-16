@@ -506,7 +506,8 @@
       @include span-columns(1 of 2);
     }
 
-    .ting-object-right {
+    .ting-object-right,
+    .field-type-ting-collection-types {
       display: none;
     }
 
@@ -516,7 +517,7 @@
     }
 
     .ting-cover {
-      min-height: 200px;
+      min-height: 280px;
       width: 100%;
     }
 
