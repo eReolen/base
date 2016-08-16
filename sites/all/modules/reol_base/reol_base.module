@@ -661,6 +661,7 @@ function reol_base_logout() {
  *   HTML for the button.
  */
 function reol_base_get_modal_close_button($text, $modal) {
+  drupal_add_js(drupal_get_path('module', 'reol_base') . '/js/reol_base.js');
   return '<a class="action-button modal-close" data-modal-name="' . $modal . '" href="#">' . $text . '</a>';
 }
 

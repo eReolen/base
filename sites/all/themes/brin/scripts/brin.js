@@ -1,12 +1,4 @@
 (function($) {
-  Drupal.behaviors.modalClose = {
-    attach : function() {
-      $('.modal-close').click(function() {
-        Drupal.ding_popup.close({name: $(this).data('modal-name')});
-      });
-    }
-  };
-
   // Scroll to top when opening a dialog.
   // Dialogs on this site can get pretty big - e.g. when viewing a reading sample.
   // This is furthermore problematic as scrolling is disabled.
