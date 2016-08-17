@@ -28,7 +28,7 @@ function subject_menu_content_type_render($subtype, $conf, $panel_args, $context
   $query->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'breol_subject')
     ->propertyCondition('status', 1)
-    ->propertyOrderBy('title', 'DESC');
+    ->propertyOrderBy('title', 'ASC');
 
   $res = $query->execute();
   if (!empty($res['node'])) {
