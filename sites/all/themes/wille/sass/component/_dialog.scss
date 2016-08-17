@@ -29,7 +29,7 @@
   overflow-y: auto;
 
 
-   @include media($tablet-l) {
+  @include media($tablet-l) {
     position: fixed !important;
     min-width: 450px !important;
     max-width: 90% !important;
@@ -45,6 +45,36 @@
     min-width: 99% !important;
     max-width: 99% !important;
     padding: 5px;
+  }
+
+  @include media($phone) {
+    &.video-modal {
+      // Give video a bit mere space on mobile.
+      .ui-dialog-content {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      width: 100%;
+      // This is the trick from
+      // http://alistapart.com/article/creating-intrinsic-ratios-for-video
+      // to scale the iframe to the proper aspect ratio.
+      .media-youtube-video {
+        position: relative;
+        // This is 16:9.
+	padding-bottom: 56.25%;
+	padding-top: 25px;
+	height: 0;
+
+      }
+      iframe {
+        position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+      }
+    }
   }
 
   &, .ui-widget-header, .ui-dialog-content {
