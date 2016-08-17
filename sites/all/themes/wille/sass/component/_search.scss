@@ -115,6 +115,21 @@
   }
 }
 
+.pane-search-result-count {
+  float: left;
+  @include media($tablet-l) {
+    float: none;
+  }
+  margin: 22px 0 14px;
+
+  /* .page-title { */
+    color: $black-medium;
+    font-family: $font-light;
+    text-decoration: none;
+    font-size: 28px;
+  /* } */
+}
+
 .pane-search-per-page,
 .pane-ting-search-sort-form {
   float: right;

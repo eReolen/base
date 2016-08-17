@@ -17,5 +17,4 @@ features[panels_mini][] = search
 features[variable][] = ding_facetbrowser_facets
 features[variable][] = ding_facetbrowser_number_of_terms
 features[variable][] = ding_facetbrowser_showcount
-mtime = 1470126258
 project path = sites/all/modules/breol/features

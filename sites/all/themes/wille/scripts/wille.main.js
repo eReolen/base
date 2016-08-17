@@ -269,15 +269,9 @@
 
       // If the mini panel exist we will continue.
       if (wrapper.length !== 0) {
-        var innerWrapper = $('<div class="sort-wrapper" />');
         var viewPicker = getViewPicker(viewType);
 
-        // Wrap the sort content in a div.
-        $('.pane-search-per-page, .pane-ting-search-sort-form')
-          .wrapAll(innerWrapper);
-
-        // Append custom content.
-        $('.sort-wrapper').append(viewPicker);
+        $('.pane-ting-search-sort-form').after(viewPicker);
 
         // Listen for user input.
         $('.view-picker__item').click(function() {
