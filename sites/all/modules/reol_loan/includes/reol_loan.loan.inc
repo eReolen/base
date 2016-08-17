@@ -42,13 +42,15 @@ function reol_loan_loan_form($form, &$form_state, $loanable) {
     ),
   );
 
-  $form['submit'] = $submit_extras + array(
+  $form['actions'] = array('#type' => 'actions');
+
+  $form['actions']['submit'] = $submit_extras + array(
     '#type' => 'submit',
     '#value' => t('Yes'),
     '#name' => 'yes',
   );
 
-  $form['cancel'] = $submit_extras + array(
+  $form['actions']['cancel'] = $submit_extras + array(
     '#type' => 'submit',
     '#name' => 'no',
     '#value' => t('No'),
