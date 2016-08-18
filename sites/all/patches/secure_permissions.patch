@@ -1,0 +1,20 @@
+commit 3a498f8ec4351c4422c5116494de89bbd0507ef5
+Author: Thomas Fini Hansen <xen@xen.dk>
+Date:   Wed Aug 10 12:59:43 2016 +0200
+
+    Use better secure_permissions patch
+
+diff --git a/ding2.make b/ding2.make
+index 7625548..0a045ad 100644
+--- a/ding2.make
++++ b/ding2.make
+@@ -272,7 +272,8 @@ projects[secure_permissions][subdir] = "contrib"
+ projects[secure_permissions][download][type] = "git"
+ projects[secure_permissions][download][url] = "http://git.drupal.org/project/secure_permissions.git"
+ projects[secure_permissions][download][revision] = "ef5eec5"
+-projects[secure_permissions][patch][] = "http://drupal.org/files/issues/2188491-features-multilingual-2.patch"
++; Handle translated roles https://www.drupal.org/node/1744274
++projects[secure_permissions][patch][1744274] = "https://www.drupal.org/files/secure_permissions-duplicate_role_exception-1744274-4.patch"
+ projects[secure_permissions][patch][] = "http://drupal.org/files/issues/secure_permissions-dont_disable_all_permissions-2499607-3.patch"
+ 
+ projects[similarterms][subdir] = "contrib"

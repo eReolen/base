@@ -1,0 +1,19 @@
+commit 351879a5a55de73bf05e84ef6c1f09505280d852
+Author: Thomas Fini Hansen <xen@xen.dk>
+Date:   Fri Aug 5 08:34:19 2016 +0200
+
+    Update admin_views
+
+diff --git a/ding2.make b/ding2.make
+index c297234..6ee8d13 100644
+--- a/ding2.make
++++ b/ding2.make
+@@ -8,7 +8,7 @@ projects[addressfield][subdir] = "contrib"
+ projects[addressfield][version] = "1.0-beta5"
+ 
+ projects[admin_views][subdir] = "contrib"
+-projects[admin_views][version] = "1.4"
++projects[admin_views][version] = "1.6"
+ 
+ projects[apc][subdir] = "contrib"
+ projects[apc][version] = "1.0-beta4"
