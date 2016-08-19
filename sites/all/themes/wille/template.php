@@ -99,20 +99,6 @@ function wille_ting_collection_view_alter(&$build) {
 }
 
 /**
- * Implements hook_preprocess_preprocess_material_item().
- */
-function wille_preprocess_material_item(&$variables) {
-  $element = $variables['element'];
-  // TODO Can we rely on this?
-  $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
-  $ting_entity = ding_entity_load($ding_entity_id);
-
-  $add_classes = _wille_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
-  $variables['classes_array'] = array_merge($variables['classes_array'], $add_classes);
-}
-
-
-/**
  * Implements hook_preprocess_ting_object_cover().
  *
  * Adds type icon to ting object covers.
