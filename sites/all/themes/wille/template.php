@@ -212,3 +212,12 @@ function wille_preprocess_ting_search_carousel(&$vars) {
     $vars['settings']['responsive'][1]['settings']['slidesToScroll'] = 3;
   }
 }
+
+/**
+ * Preprocess ting_relations.
+ */
+function wille_preprocess_ting_relation(&$vars) {
+  if ($vars['relation']->getType() == 'dbcaddi:hasDescriptionFromPublisher') {
+    $vars['title'] = t('Description from publisher');
+  }
+}

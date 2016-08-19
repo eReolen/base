@@ -225,6 +225,7 @@
 
       var elements = [
         '.group-material-details',
+        '.ting-object-related-item',
         '.pane-ting-ting-object-types'
       ];
 
