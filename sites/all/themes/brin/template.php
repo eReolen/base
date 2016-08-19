@@ -422,6 +422,9 @@ function brin_ting_collection_view_alter(&$build) {
 
 /**
  * Implements hook_preprocess_preprocess_material_item().
+ *
+ * @todo check if this is still valid, or whether
+ *   brin_ting_collection_view_alter() ensures there's a type icon.
  */
 function brin_preprocess_material_item(&$variables) {
   $element = $variables['element'];
@@ -432,7 +435,6 @@ function brin_preprocess_material_item(&$variables) {
   $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
   $variables['classes_array'] = array_merge($variables['classes_array'], $add_classes);
 }
-
 
 /**
  * Implements hook_preprocess_ting_object_cover().

@@ -38,8 +38,7 @@ function wille_preprocess_html(&$variables) {
  * Implements hook_preprocess_node().
  */
 function wille_preprocess_node(&$variables, $hook) {
-
-  // Add tpl suggestions for node view modes on node type.
+ // Add tpl suggestions for node view modes on node type.
   if (isset($variables['view_mode'])) {
     $variables['theme_hook_suggestions'][] = 'node__' . 'view_mode__' . $variables['view_mode'];
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
@@ -84,6 +83,8 @@ function wille_preprocess_image(&$variables) {
  * collection contains more than one material. This removes the type-icon in
  * search results where the cover represents more than one material (likely of
  * different types).
+ *
+ * @todo merge with brin_ting_collection_view_alter().
  */
 function wille_ting_collection_view_alter(&$build) {
   if (isset($build['ting_primary_object'])) {
@@ -102,6 +103,8 @@ function wille_ting_collection_view_alter(&$build) {
  * Implements hook_preprocess_ting_object_cover().
  *
  * Adds type icon to ting object covers.
+ *
+ * @todo merge (partly) with brin_preprocess_ting_object_cover().
  */
 function wille_preprocess_ting_object_cover(&$variables) {
 
@@ -124,6 +127,7 @@ function wille_preprocess_ting_object_cover(&$variables) {
  *
  * @return array
  *   Classes as array.
+ * @todo merge with _brin_type_icon_classes().
  */
 function _wille_type_icon_classes($type, $quota = NULL) {
   $classes = array(
@@ -140,6 +144,8 @@ function _wille_type_icon_classes($type, $quota = NULL) {
  * Implements hook_ting_view_alter().
  *
  * Fix all fieldgroups to be open.
+ *
+ * @todo merge with brin_ting_view_alter().
  */
 function wille_ting_view_alter(&$build) {
   foreach ($build['#groups'] as $group) {
