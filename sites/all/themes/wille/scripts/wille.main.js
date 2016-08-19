@@ -137,15 +137,6 @@
   };
 
   /**
-   * Override of the behaviour.
-   *
-   * TODO(ts) - this is a temporary solution until we have
-   * clarified whats gonna happen here.
-   */
-  Drupal.behaviors.dingAvailabilityAttach = function(){
-  };
-
-  /**
    * Modify the DOM.
    */
   Drupal.behaviors.availabilityAttach = {

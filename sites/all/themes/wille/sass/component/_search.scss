@@ -95,6 +95,20 @@
   &:before {
     color: rgb(1, 115, 52);
   }
+
+  &.available {
+    background-color: #01b552;
+  }
+
+  &.reservable {
+    background-color: #ffb81e;
+  }
+
+  &.not-reservable,
+  &.unavailable {
+    display: none;
+  }
+
 }
 
 .field-type-ting-series {

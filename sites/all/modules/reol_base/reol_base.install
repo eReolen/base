@@ -340,3 +340,10 @@ function reol_base_update_7127() {
 function reol_base_update_7128() {
   module_enable(['reol_newsletter'], TRUE);
 }
+
+/**
+ * Enable reol_shared_theme module.
+ */
+function reol_base_update_7129() {
+  module_enable(['reol_shared_theme'], TRUE);
+}
