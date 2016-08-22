@@ -38,7 +38,6 @@ function publizon_availability_items($local_ids) {
   }
   // If no user is logged in, try with the default retailer.
   catch (DingProviderAuthException $e) {
-    $client = PublizonLoanClient::getClient();
     $retailer_id = variable_get('publizon_default_retailer', '');
     $card_number = NULL;
   }
