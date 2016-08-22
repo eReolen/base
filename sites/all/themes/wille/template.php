@@ -210,6 +210,19 @@ function wille_preprocess_ting_search_carousel(&$vars) {
  */
 function wille_preprocess_ting_relation(&$vars) {
   if ($vars['relation']->getType() == 'dbcaddi:hasDescriptionFromPublisher') {
+    // Replace abstract with full content of the relation.
+    // I know, this is way too coupled, but it's what we have to work with.
+    $path = drupal_get_path('module', 'ting_fulltext');
+    include_once $path . '/includes/ting_fulltext.pages.inc';
+    $fulltext = ting_fulltext_object_load($vars['relation']->object->getId());
+    $build = array(
+      'ting_fulltext' => array(
+        '#theme' => 'ting_fulltext',
+        '#fields' => ting_fulltext_parse($fulltext),
+      ),
+    );
+    $vars['abstract'] = drupal_render($build);
+
     $vars['title'] = t('Description from publisher');
   }
 }
