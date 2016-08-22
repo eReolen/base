@@ -32,11 +32,24 @@
   &.try-audiobook {
     // Ensure that the frame will fit.
     max-height: none;
+    // Closer to top of window to get more room.
     top: 30px !important;
     // Full width popup for audio books.
     max-width: 1180px;
     // Let the player/reader of the try popup overflow so it can go full page.
     overflow-y: visible;
+
+    @include media($phone) {
+      // And even closer to the top for phones.
+      top: 0px !important;
+    }
+
+    iframe {
+      @include media($tablet-l) {
+        // Smaller iframe for mobile phones.
+        height: 500px;
+      }
+    }
   }
 
   @include media($tablet-l) {
