@@ -28,6 +28,16 @@
   text-align: center;
   overflow-y: auto;
 
+  &.try-ebook,
+  &.try-audiobook {
+    // Ensure that the frame will fit.
+    max-height: none;
+    top: 30px !important;
+    // Full width popup for audio books.
+    max-width: 1180px;
+    // Let the player/reader of the try popup overflow so it can go full page.
+    overflow-y: visible;
+  }
 
   @include media($tablet-l) {
     position: fixed !important;
