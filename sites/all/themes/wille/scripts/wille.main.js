@@ -251,7 +251,7 @@
       var viewType = localStorage.getItem('breol-search-view-type');
 
       if (viewType === null) {
-        viewType = 'list';
+        viewType = 'grid';
         localStorage.setItem('breol-search-view-type', viewType);
       }
 
