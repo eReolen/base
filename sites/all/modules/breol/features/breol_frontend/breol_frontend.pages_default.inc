@@ -598,6 +598,73 @@ user/*',
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
+  $handler->name = 'ting_object__breol-ting-object';
+  $handler->task = 'ting_object';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = -100;
+  $handler->conf = array(
+    'title' => 'BReol ting object',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'name' => 'breol-ting-object',
+  );
+  $display = new panels_display();
+  $display->layout = 'stacked_columns';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left' => NULL,
+      'middle' => NULL,
+      'right' => NULL,
+      'header' => NULL,
+      'before_content' => NULL,
+      'main_content' => NULL,
+      'after_content' => NULL,
+      'bottom' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '7da7c33f-8425-44e8-a02d-0f497e4945e0';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-eda37090-d344-4baa-8c21-78573268da3d';
+    $pane->panel = 'main_content';
+    $pane->type = 'ting_object';
+    $pane->subtype = 'ting_object';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => 'argument_ting_object_id_17',
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = '';
+    $pane->uuid = 'eda37090-d344-4baa-8c21-78573268da3d';
+    $display->content['new-eda37090-d344-4baa-8c21-78573268da3d'] = $pane;
+    $display->panels['main_content'][0] = 'new-eda37090-d344-4baa-8c21-78573268da3d';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $export['ting_object__breol-ting-object'] = $handler;
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
   $handler->name = 'user_edit__breol-provider-profile';
   $handler->task = 'user_edit';
   $handler->subtask = '';
