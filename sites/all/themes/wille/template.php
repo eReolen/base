@@ -223,6 +223,10 @@ function wille_preprocess_ting_relation(&$vars) {
     );
     $vars['abstract'] = drupal_render($build);
 
+    // Remove link to full text.
+    unset($vars['fulltext_link']);
+
+    // Title is ugly per default, fix it.
     $vars['title'] = t('Description from publisher');
   }
 }
