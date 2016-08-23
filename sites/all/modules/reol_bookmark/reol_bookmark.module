@@ -97,6 +97,11 @@ function reol_bookmark_get_bookmarks($account) {
     if (empty($bookmarks)) {
       try {
         $bookmarks = ding_provider_invoke('bookmark', 'list', $account);
+        // Filter out bookmarks that's not available in the well.
+        if ($bookmarks) {
+          $mapping = reol_base_ding_entity_get_ids($bookmarks);
+          $bookmarks = array_intersect(array_keys($mapping), $bookmarks);
+        }
       }
       catch (Exception $e) {
         $bookmarks = array();
