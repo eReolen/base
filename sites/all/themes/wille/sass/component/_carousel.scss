@@ -28,12 +28,8 @@ $carousel-outer-padding: 0 30px;
   li {
     float: left;
     text-align: left;
-    margin-right: 2em;
     margin-bottom: 1em;
-
-    &.slick-slide {
-      margin-right: 0;
-    }
+    margin-right: 0;
 
     @include media($phone) {
       margin-right: 5px;
