@@ -62,6 +62,10 @@ $carousel-outer-padding: 0 30px;
     background-repeat: no-repeat;
     display: block;
     height: 16px;
+    // IE renders the SVG at the right size, but centered, which makes the
+    // left/right positioning in the following classes not appear to work if
+    // the real size of the element is much larger.
+    width: 16px;
     top: 40%;
     margin: auto;
     cursor: pointer;
