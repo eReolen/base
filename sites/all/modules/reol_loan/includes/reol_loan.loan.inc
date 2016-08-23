@@ -76,6 +76,12 @@ function reol_loan_loan_form_submit($form, &$form_state) {
         $loanable = $form_state['values']['loanable'];
         // Throws exception in case of error.
         ding_provider_invoke('loan', 'create', $user, $loanable->localId);
+
+        // Clear ding_loans cache.
+        if (module_exists('ding_session_cache')) {
+          ding_session_cache_clear('ding_loan', 'list');
+        }
+
         $form_state['loaned'] = TRUE;
         drupal_set_message(t('"@title" loaned.', array('@title' => $loanable->getTitle())));
 
