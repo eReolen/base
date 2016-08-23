@@ -52,12 +52,12 @@ $title-color: $black-medium;
  */
 
 // Base font.
-@include font-face("OpenSans Light", "../fonts/OpenSans-Light", $file-formats: ttf);
-@include font-face("OpenSans Light Italic", "../fonts/OpenSans-LightItalic", $file-formats: ttf);
-@include font-face("OpenSans Regular", "../fonts/OpenSans-Regular", $file-formats: ttf);
-@include font-face("OpenSans Regular Italic", "../fonts/OpenSans-RegularItalic", $file-formats: ttf);
-@include font-face("OpenSans Bold", "../fonts/OpenSans-Bold", $file-formats: ttf);
-@include font-face("OpenSans Bold Italic", "../fonts/OpenSans-BoldItalic", $file-formats: ttf);
+@include font-face("OpenSans Light", "../fonts/OpenSans-Light", $file-formats: woff ttf);
+@include font-face("OpenSans Light Italic", "../fonts/OpenSans-LightItalic", $file-formats: woff ttf);
+@include font-face("OpenSans Regular", "../fonts/OpenSans-Regular", $file-formats: woff ttf);
+@include font-face("OpenSans Regular Italic", "../fonts/OpenSans-RegularItalic", $file-formats: woff ttf);
+@include font-face("OpenSans Bold", "../fonts/OpenSans-Bold", $file-formats: woff ttf);
+@include font-face("OpenSans Bold Italic", "../fonts/OpenSans-BoldItalic", $file-formats: woff ttf);
 
 $fallbackFontFamily: Arial, Helvetica, Sans-Serif;
 $font-regular: 'OpenSans Regular', $fallbackFontFamily;
