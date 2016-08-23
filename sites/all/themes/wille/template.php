@@ -110,7 +110,9 @@ function wille_preprocess_ting_object_cover(&$variables) {
 
   // Wrap the cover image in a link to the material.
   $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
-  $variables['image'] = l($variables['image'], 'ting/collection/' . $ding_entity_id , array('html' => TRUE, ));
+  if (!reol_base_fake_id($ding_entity_id)) {
+    $variables['image'] = l($variables['image'], 'ting/collection/' . $ding_entity_id , array('html' => TRUE, ));
+  }
 
   if (!isset($variables['elements']['#suppress_type_icon']) ||
     !$variables['elements']['#suppress_type_icon']) {
