@@ -31,6 +31,10 @@ $carousel-outer-padding: 0 30px;
     margin-right: 2em;
     margin-bottom: 1em;
 
+    &.slick-slide {
+      margin-right: 0;
+    }
+
     @include media($phone) {
       margin-right: 5px;
     }
@@ -69,7 +73,7 @@ $carousel-outer-padding: 0 30px;
   }
   .slick-next.slick-arrow {
     background-image: url('../svg/arrow_right.svg');
-    right: 35px;
+    right: 5px;
   }
 }
 
