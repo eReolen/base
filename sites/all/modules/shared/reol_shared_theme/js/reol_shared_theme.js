@@ -1,7 +1,7 @@
 /**
-* @file
-*Shared JS.
-*/
+ * @file
+ * Shared JS.
+ */
 
 (function($) {
   // Scroll to top when opening a dialog. Dialogs on this site can get
@@ -15,7 +15,7 @@
   Drupal.behaviors.modalScroll = {
     attach : function() {
       $('body').bind('dialogopen', function() {
-        $.scrollTo(0, 0);
+        window.scrollTo(0, 0);
       });
     }
   };
