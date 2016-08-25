@@ -89,6 +89,8 @@ projects[ding2][patch][] = "sites/all/patches/ting-auth.patch"
 ; based on https://github.com/ding2/ding2/pull/271
 ; without changes to ddbasic
 projects[ding2][patch][] = "sites/all/patches/slick-carousel.patch"
+; Part two.
+projects[ding2][patch][] = "sites/all/patches/slick-carousel-2.patch"
 
 ; Disable sort used message.
 projects[ding2][patch][] = "sites/all/patches/disable-message.patch"
