@@ -87,6 +87,7 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
           'path' => $ajax_path,
           'content' => $chunk['collections'],
           'offset' => $chunk['next_offset'],
+          'placeholders' => TING_SEARCH_CAROUSEL_CHUNK_SIZE,
         );
         $element[] = array(
           '#markup' => '<pre>' . $item['search'] . '</pre>',
@@ -189,6 +190,13 @@ function reol_field_carousel_ajax($entity_type, $entity_id, $field_name, $delta,
     $chunk = ting_search_carousel_get_covers($item['search'], $offset, TING_SEARCH_CAROUSEL_CHUNK_SIZE);
     foreach ($chunk['collections'] as $collection) {
       $content .= theme('ting_search_carousel_collection', array('collection' => $collection));
+    }
+
+    // If there's more covers, add a placeholder at the end to signal the user
+    // that it's loading.
+    if ($chunk['next_offset'] > -1) {
+      $content .= theme('ting_search_carousel_collection',
+                        array('collection' => ting_search_carousel_collection_placeholder()));
     }
 
     $return = array(

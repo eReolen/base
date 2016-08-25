@@ -346,6 +346,11 @@
   // Hide our image background hack.
   overflow: hidden;
 
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
   @include media($tablet-l) {
     min-height: 100px;
   }
@@ -546,7 +551,6 @@
     }
 
     .ting-cover {
-      min-height: 280px;
       width: 100%;
     }
 

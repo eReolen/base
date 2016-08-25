@@ -66,17 +66,6 @@ function wille_preprocess_node(&$variables, $hook) {
 }
 
 /**
- * hook_preprocess_image().
- *
- * Remove Height and Width Inline Styles from Drupal Images.
- */
-function wille_preprocess_image(&$variables) {
-  foreach (array('width', 'height') as $key) {
-    unset($variables[$key]);
-  }
-}
-
-/**
  * Implements hook_ting_collection_view_alter().
  *
  * Suppress the type icon on the material in the ting_primary_object when the
