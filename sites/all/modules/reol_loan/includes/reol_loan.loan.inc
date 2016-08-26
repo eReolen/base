@@ -77,9 +77,10 @@ function reol_loan_loan_form_submit($form, &$form_state) {
         // Throws exception in case of error.
         ding_provider_invoke('loan', 'create', $user, $loanable->localId);
 
-        // Clear ding_loans cache.
+        // Clear ding_loans and ding_reservation caches.
         if (module_exists('ding_session_cache')) {
           ding_session_cache_clear('ding_loan', 'list');
+          ding_session_cache_clear('ding_reservation', 'reservations');
         }
 
         $form_state['loaned'] = TRUE;
