@@ -19,7 +19,7 @@ define('REOL_BASE_LOCAL_ID_PREFIX', 'isbn_');
  *   The entity bundle for the entity.
  * @param string $field_name
  *   The name of the field.
- * @param StdClass $entity
+ * @param object $entity
  *   The entity to get field for.
  * @param array $form
  *   The form to attach field to.
