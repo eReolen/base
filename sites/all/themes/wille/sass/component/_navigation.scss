@@ -20,7 +20,7 @@
     width: calc-percentage(9,12);
     float: left;
 
-    @include media($phone) {
+    @include media($tablet-p) {
       height: auto;
       float: left;
       width: 100%;
@@ -30,7 +30,10 @@
       width: calc(100% + 30px);
 
       li {
-        width: 100%;
+        width: 20%;
+        @include media($phone) {
+          width: 100%;
+        }
         background: $menu-tablet-background;
 
         &:hover {
@@ -169,7 +172,7 @@
   font-size: 22px;
   display: none;
 
-  @include media($phone) {
+  @include media($tablet-p) {
     display: block;
   }
 }
