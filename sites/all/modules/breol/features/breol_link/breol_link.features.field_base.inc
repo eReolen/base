@@ -10,21 +10,13 @@
 function breol_link_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_breol_description'
+  // Exported field_base: 'field_breol_description'.
   $field_bases['field_breol_description'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_breol_description',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -39,14 +31,13 @@ function breol_link_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_breol_link'
+  // Exported field_base: 'field_breol_link'.
   $field_bases['field_breol_link'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_breol_link',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'link',
@@ -70,14 +61,13 @@ function breol_link_field_default_field_bases() {
     'type' => 'link_field',
   );
 
-  // Exported field_base: 'field_color'
+  // Exported field_base: 'field_color'.
   $field_bases['field_color'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_color',
-    'foreign keys' => array(),
     'indexes' => array(
       'rgb' => array(
         0 => 'rgb',
