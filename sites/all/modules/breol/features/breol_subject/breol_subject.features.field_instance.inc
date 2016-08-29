@@ -10,7 +10,7 @@
 function breol_subject_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-breol_subject-field_breol_cover_image'
+  // Exported field_instance: 'node-breol_subject-field_breol_cover_image'.
   $field_instances['node-breol_subject-field_breol_cover_image'] = array(
     'bundle' => 'breol_subject',
     'deleted' => 0,
@@ -89,7 +89,7 @@ function breol_subject_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-breol_subject-field_color'
+  // Exported field_instance: 'node-breol_subject-field_color'.
   $field_instances['node-breol_subject-field_color'] = array(
     'bundle' => 'breol_subject',
     'default_value' => NULL,
@@ -101,7 +101,7 @@ function breol_subject_field_default_field_instances() {
         'module' => 'color_field',
         'settings' => array(),
         'type' => 'color_field_default_formatter',
-        'weight' => 4,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -134,11 +134,11 @@ function breol_subject_field_default_field_instances() {
       'module' => 'color_field',
       'settings' => array(),
       'type' => 'color_field_default_widget',
-      'weight' => 8,
+      'weight' => 7,
     ),
   );
 
-  // Exported field_instance: 'node-breol_subject-field_icon'
+  // Exported field_instance: 'node-breol_subject-field_icon'.
   $field_instances['node-breol_subject-field_icon'] = array(
     'bundle' => 'breol_subject',
     'deleted' => 0,
@@ -212,7 +212,7 @@ function breol_subject_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-breol_subject-field_search_string'
+  // Exported field_instance: 'node-breol_subject-field_search_string'.
   $field_instances['node-breol_subject-field_search_string'] = array(
     'bundle' => 'breol_subject',
     'default_value' => NULL,
@@ -263,12 +263,70 @@ function breol_subject_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-breol_subject-field_weight'.
+  $field_instances['node-breol_subject-field_weight'] = array(
+    'bundle' => 'breol_subject',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Vægt i tema menuen. Lavere vægte kommer først, temaer med samme vægt sorteres alfabetisk.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser_medium' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser_small' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_weight',
+    'label' => 'Vægt',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 1,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Color');
   t('Cover Image');
   t('Ikon');
   t('Søgestreng');
+  t('Vægt');
+  t('Vægt i tema menuen. Lavere vægte kommer først, temaer med samme vægt sorteres alfabetisk.');
 
   return $field_instances;
 }

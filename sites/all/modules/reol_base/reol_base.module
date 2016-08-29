@@ -19,7 +19,7 @@ define('REOL_BASE_LOCAL_ID_PREFIX', 'isbn_');
  *   The entity bundle for the entity.
  * @param string $field_name
  *   The name of the field.
- * @param StdClass $entity
+ * @param object $entity
  *   The entity to get field for.
  * @param array $form
  *   The form to attach field to.
@@ -117,8 +117,8 @@ function reol_base_entity_load($entities, $type) {
     }
     // Provide a 'isbn_' local id if the ding_entity_id matches our own fake ID.
     if (isset($entity->ding_entity_id) &&
-      preg_match('/^publizon:(.*)$/', $entity->ding_entity_id, $matches)) {
-      $local_id = 'isbn_' . $matches[1];
+        $isbn = reol_base_fake_id($entity->ding_entity_id)) {
+      $local_id = 'isbn_' . $isbn;
     }
     // When have to check all the way down, as chain might be broken
     // somwhere. Only touch localId if we have the right value for it.
@@ -252,7 +252,7 @@ function reol_base_preprocess_material_item(&$variables) {
 
   // Make a note of the loan type if it's one of our fake IDs.
   // reol_use_loan_ding_entity_buttons will use this.
-  if (preg_match('/^publizon:/', $ting_entity->ding_entity_id)) {
+  if (reol_base_fake_id($ting_entity->ding_entity_id)) {
     $ting_entity->publizon_type = $entity->publizon_type;
   }
 
@@ -661,6 +661,7 @@ function reol_base_logout() {
  *   HTML for the button.
  */
 function reol_base_get_modal_close_button($text, $modal) {
+  drupal_add_js(drupal_get_path('module', 'reol_base') . '/js/reol_base.js');
   return '<a class="action-button modal-close" data-modal-name="' . $modal . '" href="#">' . $text . '</a>';
 }
 
@@ -805,4 +806,21 @@ function reol_base_field_attach_view_alter(&$output, &$context) {
       $ting_abstract[0]['#markup'] = implode('<br /><br />', $abstract);
     }
   }
+}
+
+/**
+ * Returns ISBN if id is a well fake id.
+ *
+ * @param string $entity_id
+ *   ID to test.
+ *
+ * @return string|FALSE
+ *   ISBN of id, or false if not matching a well fake id.
+ */
+function reol_base_fake_id($entity_id) {
+  if (preg_match('/^publizon:(.*)$/', $entity_id, $matches)) {
+    return $matches[1];
+  }
+
+  return FALSE;
 }

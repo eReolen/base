@@ -42,13 +42,15 @@ function reol_loan_loan_form($form, &$form_state, $loanable) {
     ),
   );
 
-  $form['submit'] = $submit_extras + array(
+  $form['actions'] = array('#type' => 'actions');
+
+  $form['actions']['submit'] = $submit_extras + array(
     '#type' => 'submit',
     '#value' => t('Yes'),
     '#name' => 'yes',
   );
 
-  $form['cancel'] = $submit_extras + array(
+  $form['actions']['cancel'] = $submit_extras + array(
     '#type' => 'submit',
     '#name' => 'no',
     '#value' => t('No'),
@@ -74,6 +76,13 @@ function reol_loan_loan_form_submit($form, &$form_state) {
         $loanable = $form_state['values']['loanable'];
         // Throws exception in case of error.
         ding_provider_invoke('loan', 'create', $user, $loanable->localId);
+
+        // Clear ding_loans and ding_reservation caches.
+        if (module_exists('ding_session_cache')) {
+          ding_session_cache_clear('ding_loan', 'list');
+          ding_session_cache_clear('ding_reservation', 'reservations');
+        }
+
         $form_state['loaned'] = TRUE;
         drupal_set_message(t('"@title" loaned.', array('@title' => $loanable->getTitle())));
 

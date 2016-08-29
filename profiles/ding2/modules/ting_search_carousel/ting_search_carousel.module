@@ -8,6 +8,9 @@
 define('TING_SEARCH_CAROUSEL_CHUNK_SIZE', 12);
 // Number of search results processed for covers at a time.
 define('TING_SEARCH_CAROUSEL_SEARCH_SIZE', 20);
+// Path in files we store our placeholder. Image styles can't work with files
+// outside the flies foler.
+define('TING_SEARCH_CAROUSEL_PLACEHOLDER_IMAGE', 'public://ting_search_carousel_placeholder.png');
 
 /**
  * Implements hook_menu().
@@ -116,6 +119,7 @@ function ting_search_carousel_theme($existing, $type, $theme, $path) {
     ),
     'ting_search_carousel_collection' => array(
       'variables' => array('collection' => NULL),
+      'file' => 'ting_search_carousel.theme.inc',
       'template' => 'templates/ting_search_carousel_collection',
     ),
     'ting_search_carousel_admin_form' => array(
@@ -381,12 +385,37 @@ function _ting_search_carousel_find_covers($query, $start, $size, array $ignore)
     $item->id = $id;
     $item->title = $objects[$id]['title'];
     $item->creator = $objects[$id]['creator'];
+    $item->path = $path;
+    // Legacy.
     $item->image = image_style_url('ting_search_carousel', $path);
 
     $found_covers[$id] = $item;
   }
 
   return array($found_covers, $start, $finished);
+}
+
+/**
+ * Returns an placeholder collection item.
+ */
+function ting_search_carousel_collection_placeholder() {
+  // Image styles only work on files in the files dir, so we copy our
+  // placeholder in.
+  if (!file_exists(TING_SEARCH_CAROUSEL_PLACEHOLDER_IMAGE)) {
+    file_unmanaged_copy(drupal_get_path('module', 'ting_search_carousel') .
+                        '/images/empty.png',
+                        TING_SEARCH_CAROUSEL_PLACEHOLDER_IMAGE,
+                        FILE_EXISTS_REPLACE);
+  }
+  $item = new stdClass();
+  $item->id = '#';
+  $item->title = '';
+  $item->creator = '';
+  $item->path = TING_SEARCH_CAROUSEL_PLACEHOLDER_IMAGE;
+  // Legacy.
+  $item->image = image_style_url('ting_search_carousel', $item->path);
+  $item->placeholder = TRUE;
+  return $item;
 }
 
 /**
@@ -400,7 +429,7 @@ function ting_search_carousel_image_default_styles() {
         array(
           'label' => 'Scale and crop',
           'effect callback' => 'image_scale_and_crop_effect',
-          'dimensions callback' => 'image_scale_dimensions',
+          'dimensions callback' => 'image_resize_dimensions',
           'module' => 'image',
           'name' => 'image_scale_and_crop',
           'data' => array(

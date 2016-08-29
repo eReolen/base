@@ -17,7 +17,7 @@ function breol_search_frontend_strongarm() {
   $strongarm->value = array(
     0 => array(
       'name' => 'facet.type',
-      'title' => 'Materialetype',
+      'title' => 'Læs eller lyt',
       'sorting' => 'default',
       'weight' => '-10',
     ),
@@ -28,8 +28,8 @@ function breol_search_frontend_strongarm() {
       'weight' => '-9',
     ),
     2 => array(
-      'name' => 'facet.category',
-      'title' => 'Målgruppe',
+      'name' => 'facet.audienceCategory',
+      'title' => 'Alder',
       'sorting' => 'default',
       'weight' => '-8',
     ),
@@ -40,7 +40,7 @@ function breol_search_frontend_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'ding_facetbrowser_number_of_terms';
-  $strongarm->value = '5';
+  $strongarm->value = '10';
   $export['ding_facetbrowser_number_of_terms'] = $strongarm;
 
   $strongarm = new stdClass();

@@ -38,8 +38,7 @@ function wille_preprocess_html(&$variables) {
  * Implements hook_preprocess_node().
  */
 function wille_preprocess_node(&$variables, $hook) {
-
-  // Add tpl suggestions for node view modes on node type.
+ // Add tpl suggestions for node view modes on node type.
   if (isset($variables['view_mode'])) {
     $variables['theme_hook_suggestions'][] = 'node__' . 'view_mode__' . $variables['view_mode'];
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
@@ -67,23 +66,14 @@ function wille_preprocess_node(&$variables, $hook) {
 }
 
 /**
- * hook_preprocess_image().
- *
- * Remove Height and Width Inline Styles from Drupal Images.
- */
-function wille_preprocess_image(&$variables) {
-  foreach (array('width', 'height') as $key) {
-    unset($variables[$key]);
-  }
-}
-
-/**
  * Implements hook_ting_collection_view_alter().
  *
  * Suppress the type icon on the material in the ting_primary_object when the
  * collection contains more than one material. This removes the type-icon in
  * search results where the cover represents more than one material (likely of
  * different types).
+ *
+ * @todo merge with brin_ting_collection_view_alter().
  */
 function wille_ting_collection_view_alter(&$build) {
   if (isset($build['ting_primary_object'])) {
@@ -99,34 +89,24 @@ function wille_ting_collection_view_alter(&$build) {
 }
 
 /**
- * Implements hook_preprocess_preprocess_material_item().
- */
-function wille_preprocess_material_item(&$variables) {
-  $element = $variables['element'];
-  // TODO Can we rely on this?
-  $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
-  $ting_entity = ding_entity_load($ding_entity_id);
-
-  $add_classes = _wille_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
-  $variables['classes_array'] = array_merge($variables['classes_array'], $add_classes);
-}
-
-
-/**
  * Implements hook_preprocess_ting_object_cover().
  *
  * Adds type icon to ting object covers.
+ *
+ * @todo merge (partly) with brin_preprocess_ting_object_cover().
  */
 function wille_preprocess_ting_object_cover(&$variables) {
 
   // Wrap the cover image in a link to the material.
   $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
-  $variables['image'] = l($variables['image'], 'ting/collection/' . $ding_entity_id , array('html' => TRUE, ));
+  if (!reol_base_fake_id($ding_entity_id)) {
+    $variables['image'] = l($variables['image'], 'ting/collection/' . $ding_entity_id , array('html' => TRUE, ));
+  }
 
   if (!isset($variables['elements']['#suppress_type_icon']) ||
     !$variables['elements']['#suppress_type_icon']) {
     $ting_entity = $variables['object'];
-    if ($ting_entity && $ting_entity->reply) {
+    if ($ting_entity && $ting_entity->reply && isset($ting_entity->reply->on_quota)) {
       $add_classes = _wille_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
       $variables['classes'] = array_merge($variables['classes'], $add_classes);
     }
@@ -138,6 +118,7 @@ function wille_preprocess_ting_object_cover(&$variables) {
  *
  * @return array
  *   Classes as array.
+ * @todo merge with _brin_type_icon_classes().
  */
 function _wille_type_icon_classes($type, $quota = NULL) {
   $classes = array(
@@ -154,6 +135,8 @@ function _wille_type_icon_classes($type, $quota = NULL) {
  * Implements hook_ting_view_alter().
  *
  * Fix all fieldgroups to be open.
+ *
+ * @todo merge with brin_ting_view_alter().
  */
 function wille_ting_view_alter(&$build) {
   foreach ($build['#groups'] as $group) {
@@ -210,5 +193,31 @@ function wille_preprocess_ting_search_carousel(&$vars) {
   if (isset($vars['settings']['responsive'][1]['settings']['slidesToShow'])) {
     $vars['settings']['responsive'][1]['settings']['slidesToShow'] = 3;
     $vars['settings']['responsive'][1]['settings']['slidesToScroll'] = 3;
+  }
+}
+
+/**
+ * Preprocess ting_relations.
+ */
+function wille_preprocess_ting_relation(&$vars) {
+  if ($vars['relation']->getType() == 'dbcaddi:hasDescriptionFromPublisher') {
+    // Replace abstract with full content of the relation.
+    // I know, this is way too coupled, but it's what we have to work with.
+    $path = drupal_get_path('module', 'ting_fulltext');
+    include_once $path . '/includes/ting_fulltext.pages.inc';
+    $fulltext = ting_fulltext_object_load($vars['relation']->object->getId());
+    $build = array(
+      'ting_fulltext' => array(
+        '#theme' => 'ting_fulltext',
+        '#fields' => ting_fulltext_parse($fulltext),
+      ),
+    );
+    $vars['abstract'] = drupal_render($build);
+
+    // Remove link to full text.
+    unset($vars['fulltext_link']);
+
+    // Title is ugly per default, fix it.
+    $vars['title'] = t('Description from publisher');
   }
 }

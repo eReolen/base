@@ -137,15 +137,6 @@
   };
 
   /**
-   * Override of the behaviour.
-   *
-   * TODO(ts) - this is a temporary solution until we have
-   * clarified whats gonna happen here.
-   */
-  Drupal.behaviors.dingAvailabilityAttach = function(){
-  };
-
-  /**
    * Modify the DOM.
    */
   Drupal.behaviors.availabilityAttach = {
@@ -225,6 +216,7 @@
 
       var elements = [
         '.group-material-details',
+        '.ting-object-related-item',
         '.pane-ting-ting-object-types'
       ];
 
@@ -259,7 +251,7 @@
       var viewType = localStorage.getItem('breol-search-view-type');
 
       if (viewType === null) {
-        viewType = 'list';
+        viewType = 'grid';
         localStorage.setItem('breol-search-view-type', viewType);
       }
 
@@ -269,15 +261,9 @@
 
       // If the mini panel exist we will continue.
       if (wrapper.length !== 0) {
-        var innerWrapper = $('<div class="sort-wrapper" />');
         var viewPicker = getViewPicker(viewType);
 
-        // Wrap the sort content in a div.
-        $('.pane-search-per-page, .pane-ting-search-sort-form')
-          .wrapAll(innerWrapper);
-
-        // Append custom content.
-        $('.sort-wrapper').append(viewPicker);
+        $('.pane-ting-search-sort-form').after(viewPicker);
 
         // Listen for user input.
         $('.view-picker__item').click(function() {

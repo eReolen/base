@@ -20,8 +20,15 @@
   font-family: $font-mikado;
 
   a {
+    margin: 30px auto;
     text-decoration: none;
     color: $white;
+    display: block;
+    text-indent: -9999px;
+    height: 30px;
+    background: url(../svg/logo.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 
   @include media($phone) {

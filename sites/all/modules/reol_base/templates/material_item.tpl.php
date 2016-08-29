@@ -23,9 +23,11 @@
           <div class="item-information-data"><?php print $info['data']; ?></div>
         </li>
       <?php endforeach; ?>
-      <div class="material-buttons">
-        <?php echo $buttons; ?>
-      </div>
+      <?php if (isset($buttons)) : ?>
+        <div class="material-buttons">
+          <?php echo $buttons; ?>
+        </div>
+      <?php endif; ?>
     </ul>
   </div>
 </div>

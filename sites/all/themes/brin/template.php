@@ -40,30 +40,6 @@ function brin_js_alter(&$javascript) {
   $ddbasic = drupal_get_path('theme', 'ddbasic');
   unset($javascript[$ddbasic . '/scripts/ddbasic.topbar.menu.min.js']);
   unset($javascript[$ddbasic . '/scripts/ddbasic.search.min.js']);
-
-  // Override script from ding_availability.
-  $avail_js = drupal_get_path('module', 'ding_availability') .
-    '/js/ding_availability_labels.js';
-  $new_aval_js = drupal_get_path('theme', 'brin') .
-    '/scripts/ding_availability_labels.js';
-  if (isset($javascript[$avail_js])) {
-    $javascript[$avail_js]['data'] = $new_aval_js;
-    $types = array();
-    foreach (_reol_base_get_types() as $type) {
-      $types[$type['ext_name']] = $type['title'];
-    }
-    $javascript['settings']['data'][] = array(
-      'ding_availability_type_mapping' => $types,
-      'ding_availability_type_strings' => array(
-        // For some reason the Drupal.t() doesn't get picked up from
-        // ding_availability_labels.js. The reason might be that we're loading
-        // it dynamically. So pass the strings from here and use formatString in
-        // the JS.
-        'available' => t('@type can be borrowed'),
-        'reservable' => t('@type can be reserved'),
-      ),
-    );
-  }
 }
 
 /**
@@ -422,6 +398,9 @@ function brin_ting_collection_view_alter(&$build) {
 
 /**
  * Implements hook_preprocess_preprocess_material_item().
+ *
+ * @todo check if this is still valid, or whether
+ *   brin_ting_collection_view_alter() ensures there's a type icon.
  */
 function brin_preprocess_material_item(&$variables) {
   $element = $variables['element'];
@@ -432,7 +411,6 @@ function brin_preprocess_material_item(&$variables) {
   $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
   $variables['classes_array'] = array_merge($variables['classes_array'], $add_classes);
 }
-
 
 /**
  * Implements hook_preprocess_ting_object_cover().

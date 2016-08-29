@@ -28,13 +28,22 @@ function template_preprocess_ting_search_carousel(&$vars, $hook) {
       // If an ajax path is given, default to the first page, else disable
       // ajax.
       'offset' => empty($tab['path']) ? -1 : 0,
+      'placeholders' => 1,
       'classes' => '',
     );
 
-    // Render the items.
+    // Render the items, or some placeholders.
     $rendered = array();
-    foreach ($tab['content'] as $item) {
-      $rendered[] = theme('ting_search_carousel_collection', array('collection' => $item));
+    if (count($tab['content'])) {
+      foreach ($tab['content'] as $item) {
+        $rendered[] = theme('ting_search_carousel_collection', array('collection' => $item));
+      }
+    }
+    else {
+      foreach (range(0, $tab['placeholders']) as $dummy) {
+        $rendered[] = theme('ting_search_carousel_collection',
+                            array('collection' => ting_search_carousel_collection_placeholder()));
+      }
     }
     $tab['description'] = $tab['subtitle'];
 
@@ -66,8 +75,8 @@ function template_preprocess_ting_search_carousel(&$vars, $hook) {
       array(
         'breakpoint' => 1024,
         'settings' => array(
-          'slidesToShow' => 3,
-          'slidesToScroll' => 3,
+          'slidesToShow' => 4,
+          'slidesToScroll' => 4,
         ),
       ),
       array(
@@ -91,4 +100,42 @@ function template_preprocess_ting_search_carousel(&$vars, $hook) {
   }
 
   $loaded = libraries_load('slick', 'non-minified');
+}
+
+/**
+ * Preprocess ting_search_carousel template.
+ */
+function template_preprocess_ting_search_carousel_collection(&$vars) {
+  // $vars['collection'] is the legacy variable, leaving it in to not mess
+  // with existing templates.
+  $collection = $vars['collection'];
+  $vars['path'] = '';
+  if (!isset($collection->placeholder)) {
+    $uri = entity_uri('ting_collection', $collection);
+    $vars['path'] = url($uri['path'], $uri['options']);
+  }
+
+  if (isset($collection->placeholder)) {
+    $vars['classes_array'][] = 'placeholder';
+  }
+
+  $vars['title'] = check_plain($collection->title);
+  $vars['creator'] = check_plain($collection->creator);
+
+  $image_info = image_get_info($collection->path);
+  if ($image_info) {
+    $image = array(
+      'style_name' => 'ting_search_carousel',
+      'path' => $collection->path,
+      'width' => $image_info['width'],
+      'height' => $image_info['height'],
+      'alt' => '',
+    );
+    $vars['image'] = theme('image_style', $image);
+  }
+  else {
+    // If image_get_info() couldn't get the image size, image style is likely
+    // to fail too. So we give up here.
+    $vars['image'] = '';
+  }
 }

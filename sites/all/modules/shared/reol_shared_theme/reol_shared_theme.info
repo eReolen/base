@@ -1,0 +1,6 @@
+name = Reol Shared Theme
+description = "Shared theming code"
+core = 7.x
+package = eReolen shared
+dependencies[] = reol_base
+scripts[] = js/reol_shared_theme.js

@@ -95,6 +95,20 @@
   &:before {
     color: rgb(1, 115, 52);
   }
+
+  &.available {
+    background-color: #01b552;
+  }
+
+  &.reservable {
+    background-color: #ffb81e;
+  }
+
+  &.not-reservable,
+  &.unavailable {
+    display: none;
+  }
+
 }
 
 .field-type-ting-series {
@@ -113,6 +127,21 @@
       text-decoration: underline;
     }
   }
+}
+
+.pane-search-result-count {
+  float: left;
+  @include media($tablet-l) {
+    float: none;
+  }
+  margin: 22px 0 14px;
+
+  /* .page-title { */
+    color: $black-medium;
+    font-family: $font-light;
+    text-decoration: none;
+    font-size: 28px;
+  /* } */
 }
 
 .pane-search-per-page,
@@ -317,6 +346,11 @@
   // Hide our image background hack.
   overflow: hidden;
 
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
   @include media($tablet-l) {
     min-height: 100px;
   }
@@ -517,7 +551,6 @@
     }
 
     .ting-cover {
-      min-height: 280px;
       width: 100%;
     }
 

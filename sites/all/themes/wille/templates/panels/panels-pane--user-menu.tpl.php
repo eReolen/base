@@ -25,7 +25,7 @@
       <?php print $welcome_text_part_2; ?>
     </div>
     <div class="user-banner__logout">
-      <a href="user/logout" class="__link"><?php print('Logout'); ?></a>
+      <a href="/user/logout" class="__link"><?php print(t('Logout')); ?></a>
     </div>
     <div class="user-banner__bg"></div>
     <div class="user-banner__overlay"></div>
@@ -35,4 +35,3 @@
     <?php print render($content); ?>
   </div>
 </div>
-

@@ -97,6 +97,11 @@ function reol_bookmark_get_bookmarks($account) {
     if (empty($bookmarks)) {
       try {
         $bookmarks = ding_provider_invoke('bookmark', 'list', $account);
+        // Filter out bookmarks that's not available in the well.
+        if ($bookmarks) {
+          $mapping = reol_base_ding_entity_get_ids($bookmarks);
+          $bookmarks = array_intersect(array_keys($mapping), $bookmarks);
+        }
       }
       catch (Exception $e) {
         $bookmarks = array();
@@ -177,7 +182,7 @@ function reol_bookmark_ctools_plugin_directory($module, $plugin) {
  */
 function reol_bookmark_ding_entity_buttons($type, $entity) {
   $buttons = array();
-  if (reol_loan_is_right_type($entity)) {
+  if (!reol_base_fake_id($entity->ding_entity_id) && reol_loan_is_right_type($entity)) {
     $availability_list = ding_availability_items(array($entity->localId));
     if ($availability_list) {
       list($availability) = array_values($availability_list);
