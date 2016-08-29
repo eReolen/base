@@ -8,7 +8,7 @@ checks:
 
 filter:
   excluded_paths:
-    - 'sites/all/modules/contrib'
+    - 'sites/all/modules/contrib/*'
   paths:
     - 'sites/all/modules/*'
     - 'sites/all/themes/*'
