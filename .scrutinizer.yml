@@ -8,4 +8,4 @@ checks:
 
 filter:
   paths:
-    - 'sites/all'
+    - 'sites/all/*'
