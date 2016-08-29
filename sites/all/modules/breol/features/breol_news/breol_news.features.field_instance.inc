@@ -10,7 +10,7 @@
 function breol_news_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-breol_news-body'
+  // Exported field_instance: 'node-breol_news-body'.
   $field_instances['node-breol_news-body'] = array(
     'bundle' => 'breol_news',
     'default_value' => NULL,
@@ -73,7 +73,7 @@ function breol_news_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-breol_news-field_breol_cover_image'
+  // Exported field_instance: 'node-breol_news-field_breol_cover_image'.
   $field_instances['node-breol_news-field_breol_cover_image'] = array(
     'bundle' => 'breol_news',
     'deleted' => 0,
@@ -97,36 +97,22 @@ function breol_news_field_default_field_instances() {
       ),
       'teaser_medium' => array(
         'label' => 'hidden',
-        'module' => 'cs_adaptive_image',
+        'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'styles' => array(
-            'breakpoint_1' => '',
-            'breakpoint_2' => '',
-            'fallback_style' => 'breol_590_295',
-            'max_style' => 'breol_590_295',
-            'style_1' => 'breol_590_295',
-            'style_2' => 'breol_590_295',
-          ),
+          'image_style' => 'breol_590_295',
         ),
-        'type' => 'cs_adaptive_image',
+        'type' => 'image',
         'weight' => 0,
       ),
       'teaser_small' => array(
         'label' => 'hidden',
-        'module' => 'cs_adaptive_image',
+        'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'styles' => array(
-            'breakpoint_1' => '',
-            'breakpoint_2' => '',
-            'fallback_style' => 'breol_295_295',
-            'max_style' => 'breol_295_295',
-            'style_1' => 'breol_295_295',
-            'style_2' => 'breol_295_295',
-          ),
+          'image_style' => 'breol_295_295',
         ),
-        'type' => 'cs_adaptive_image',
+        'type' => 'image',
         'weight' => 0,
       ),
     ),
@@ -174,7 +160,7 @@ function breol_news_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-breol_news-field_carousels'
+  // Exported field_instance: 'node-breol_news-field_carousels'.
   $field_instances['node-breol_news-field_carousels'] = array(
     'bundle' => 'breol_news',
     'default_value' => NULL,
