@@ -16,12 +16,12 @@ function breol_frontend_install() {
  * Set our module weight to 100.
  *
  * Needed by breol_frontend_form_profile2_form_alter() to ensure it's called
- * after ding_user_form_profile2_form_alter().
+ * after ding_user_form_profile2_form_alter() and ding_unilogin_form_alter().
  */
 function _breol_frontend_set_module_weight() {
   db_update('system')
     ->fields(array(
-      'weight' => 100,
+      'weight' => 200,
     ))
     ->condition('name', 'breol_frontend')
     ->execute();
@@ -39,4 +39,11 @@ function breol_frontend_update_7101() {
  */
 function breol_frontend_update_7102() {
   module_enable(array('reol_shared_frontend'), TRUE);
+}
+
+/**
+ * Set module weight again.
+ */
+function breol_frontend_update_7103() {
+  _breol_frontend_set_module_weight();
 }

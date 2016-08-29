@@ -95,6 +95,7 @@ function ding_unilogin_form_alter(&$form, &$form_state, $form_id) {
           ),
         ),
         '#type' => 'link',
+        '#href' => '#',
         '#title' => t('Log in via !service',
                       array(
                         '!service' => '<span class="unilogin-logo">UNI•Login</span>',
