@@ -46,7 +46,7 @@ input[type="password"] {
   padding: 15px 22px;
   border: 1px solid $white-dark;
   color: $title-color;
-  font-size: 16px;
+  font-size: 15.4px;
   font-family: $font-light;
   width: 99%;
   -webkit-appearance:none;
@@ -56,6 +56,8 @@ input[type="password"] {
 input[type="submit"] {
   @include button($red);
   width: inherit;
+  line-height: 1em;
+  padding: 15px 22px;
 }
 
 label {

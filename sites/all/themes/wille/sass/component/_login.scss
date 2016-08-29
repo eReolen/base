@@ -1,15 +1,29 @@
 
 #user-login {
   fieldset {
-    border: 2px solid black;
+    border: 2px solid $white-dark;
     padding: 20px;
     margin-bottom: 10px;
   }
 
-  .unilogin-wrapper a {
-    @include button($red, false);
-    text-align: center;
-    /* display: block; */
-    margin: .5em 0;
+  .unilogin-wrapper {
+
+    margin-top: 1em;
+    // margin-bottom: .5em;
+
+    a {
+      @include button($red, false);
+      text-align: center;
+      margin: .5em 0;
+    }
   }
+
+  .fieldset-description {
+    font-size: 20px;
+    padding-bottom: 15px;
+  }
+}
+
+.ui-dialog form#user-login .form-actions {
+  text-align: left;
 }
