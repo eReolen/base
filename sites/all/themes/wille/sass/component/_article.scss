@@ -74,7 +74,6 @@ $z-index-cover-base: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  resize: both;
   overflow: hidden;
 
   &:after {
@@ -186,7 +185,6 @@ $z-index-cover-base: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  resize: both;
   overflow: hidden;
 }
 
