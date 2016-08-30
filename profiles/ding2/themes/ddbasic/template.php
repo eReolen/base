@@ -122,6 +122,10 @@ function ddbasic_form_alter(&$form, &$form_state, $form_id) {
       $form['pass']['#field_prefix'] = '<i class="icon-lock"></i>';
       $form['pass']['#attributes']['placeholder'] = t('Pincode is 4 digits');
 
+      // Add JavaScript that will place focus in the login box, when the Login
+      // is clicked.
+      drupal_add_js(drupal_get_path('theme', 'ddbasic') . '/scripts/ddbasic.login.js', 'file');
+
       unset($form['links']);
 
       // Temporary hack to get rid of open id links.
@@ -387,6 +391,25 @@ function ddbasic_preprocess_node(&$variables, $hook) {
             'html' => FALSE,
           ),
           '#prefix' => '<span class="eresource-link">',
+          '#surfix' => '</span>',
+          '#weight' => 6,
+        );
+
+        $variables['content']['group_right_col_search']['more_link'] = $more_link;
+        break;
+
+      case 'ding_page':
+        $more_link = array(
+          '#theme' => 'link',
+          '#text' => t('Read more'),
+          '#path' => 'node/' . $variables['nid'],
+          '#options' => array(
+            'attributes' => array(
+              'title' => $variables['title'],
+            ),
+            'html' => FALSE,
+          ),
+          '#prefix' => '<span class="page-link">',
           '#surfix' => '</span>',
           '#weight' => 6,
         );
