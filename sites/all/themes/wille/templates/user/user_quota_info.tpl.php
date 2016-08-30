@@ -5,13 +5,28 @@
  */
 
 ?>
+<h2 class="user-quota-title"><?php print('Status'); ?></h2>
 <div class="user-quota-info">
   <div class="user-quota-info__section">
     <div class="user-quota-info__section-inner">
       <p><?php print t('Loans you got left:'); ?><p>
       <ul>
-        <li><?php print $max_ebook_loans; ?> <?php print t('E-books'); ?></li>
-        <li><?php print $max_audiobook_loans; ?> <?php print t('Audiobooks'); ?></li>
+        <li class="loans-left">
+          <div class="loans-left__amount">
+            <?php print $max_ebook_loans; ?>
+          </div>
+          <div class="loans-left__type">
+            <?php print t('E-books'); ?>
+          </div>
+        </li>
+        <li class="loans-left">
+          <div class="loans-left__amount">
+            <?php print $max_audiobook_loans; ?>
+          </div>
+          <div class="loans-left__type">
+            <?php print t('Audiobooks'); ?>
+          </div>
+        </li>
       </ul>
     </div>
   </div>

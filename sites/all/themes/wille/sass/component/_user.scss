@@ -389,12 +389,25 @@ input.password-confirm, input.password-field {
   .user-quota-info__section {
     @include span-columns(1 of 2);
 
+    @include media($tablet-p) {
+      @include span-columns(12);
+    }
+
     &:first-child {
       padding-right: 10px;
+
+      @include media($tablet-p) {
+        padding-right: 0;
+      }
     }
 
     &:last-child {
       padding-left: 10px;
+
+      @include media($tablet-p) {
+        padding-left: 0;
+        margin-top: 20px;
+      }
     }
 
   }
@@ -404,7 +417,6 @@ input.password-confirm, input.password-field {
     padding: 10px;
     padding-top: 30px;
     min-height: 234px;
-    // border: 1px solid $gray;
 
     > * {
       text-align: center;
@@ -418,5 +430,51 @@ input.password-confirm, input.password-field {
 
   a {
     @include button($red);
+    margin-top: 20px;
+    font-size: 14px;
   }
+
+  p {
+    font-size: 18px;
+    color: #969696;
+    font-family: $font-light;
+    padding: 0 20%;
+
+    @include media($phone) {
+      padding: 0;
+      font-size: 14px;
+    }
+  }
+}
+
+.loans-left {
+  display: inline-block;
+  font-family: $font-mikado;
+  margin: 0 40px;
+  color: $brown-dark;
+
+  &__amount {
+    width: 86px;
+    height: 78px;
+    display: inline-block;
+    background: url(../images/loans-left-bg.png) no-repeat;
+    font-size: 50px;
+    padding-top: 17px;
+  }
+
+  &__type {
+    margin-top: 15px;
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+
+  @include media($phone) {
+    margin: 0;
+  }
+}
+
+.user-quota-title {
+  @extend %ting-object-main-title;
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
