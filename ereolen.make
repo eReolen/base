@@ -94,3 +94,6 @@ projects[ding2][patch][] = "sites/all/patches/slick-carousel-2.patch"
 
 ; Disable sort used message.
 projects[ding2][patch][] = "sites/all/patches/disable-message.patch"
+
+; Fix dings /user redirect bug.
+projects[ding2][patch][] = "sites/all/patches/ding_user-redirect.patch"

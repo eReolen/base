@@ -1,0 +1,1618 @@
+commit d4ad44ea48c708e05615c252903f3dc849b2f2e0
+Author: Thomas Fini Hansen <xen@xen.dk>
+Date:   Thu Aug 25 12:53:48 2016 +0200
+
+    Update carrousel patch and fix up
+    
+    Ref REOL-276
+
+diff --git a/modules/ting_search_carousel/css/ting_search_carousel.css b/modules/ting_search_carousel/css/ting_search_carousel.css
+index 0920885..ffd43c9 100644
+--- a/modules/ting_search_carousel/css/ting_search_carousel.css
++++ b/modules/ting_search_carousel/css/ting_search_carousel.css
+@@ -2,29 +2,18 @@
+    ting search carousel styling
+    ========================================================================== */
+ 
+-.ting-search-carousel .additional-tab {
+-  /* Hide all but the first tab. */
+-  display: none;
++/* Go away on really small screens. */
++@media (max-width: 300px) {
++  .ting-search-carousel,
++  .carousel-tabs {
++    display: none;
++  }
+ }
+ 
+-.ting-search-carousel .carousel {
+-  width: 100%;
+-}
+ 
+-carousel-runner {
+-  -moz-transform: translate3d(0, 0, 0);
+-  -webkit-transform: translate3d(0, 0, 0);
+-  -o-transform: translate3d(0, 0, 0);
+-  -ms-transform: translate3d(0, 0, 0);
+-  transform: translate3d(0, 0, 0);
+-}
+-
+-.rs-carousel-transition .rs-carousel-runner {
+-  -moz-transition: -moz-transform .400s ease;
+-  -webkit-transition: -webkit-transform .400s ease;
+-  -o-transition: -o-transform .400s ease;
+-  -ms-transition: -ms-transform .400s ease;
+-  transition: transform .400s ease;
++.ting-search-carousel .additional-tab {
++  /* Hide all but the first tab. */
++  display: none;
+ }
+ 
+ /* Pagination and previous and next buttons
+@@ -39,11 +28,11 @@ carousel-runner {
+   overflow: hidden;
+   margin-top: -27px;
+   position: absolute;
++  direction: ltr;
+   text-indent: -1000px;
+   top: 50%;
+   width: 55px;
+   z-index: 1;
+-
+ }
+ 
+ .ting-search-carousel .slick-prev {
+@@ -61,37 +50,46 @@ carousel-runner {
+   display: none;
+ }
+ 
++.carousel-tab {
++  /* Hide the overflow of the extra wide ul below. */
++  overflow: hidden;
++}
++
+ .carousel-tab ul {
+   display: inline-block;
+   vertical-align: top;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+-  /* Clip to one row to avoid flickering. */
+-  height: 315px;
+-  overflow: hidden;
++  /* Set the width to ensure (within reason) that all covers are rendered on one
++   * line, let the parent clip. It is restored to 100% by the JS before
++   * activating the carousel. */
++  width: 3000px;
+ }
+ 
+ .carousel-tab li {
+   float: left;
+   width: 200px;
+   text-align: center;
+-  margin-right: 2em;
+-  margin-bottom: 1em;
+   overflow: hidden;
+ }
+ 
++/* Image loading placeholder. */
++.carousel-tab .carousel-item-image {
++  background-image: url(../images/placeholder.png);
++  background-size: cover;
++  background-position: center;
++}
++
+ .carousel-item-image {
+   display: block;
+ }
+ 
+ .carousel-item-image img {
+   display: block;
+-  margin-left: auto;
+-  margin-right: auto;
++  width: 100%;
+ }
+ 
+-
+ /* Carousel tabs
+    ========================================================================== */
+ .carousel-tabs ul {
+@@ -105,7 +103,3 @@ carousel-runner {
+   vertical-align: top;
+   text-align: center;
+ }
+-
+-.carousel-tabs ul li.active a {
+-  position: relative;
+-}
+diff --git a/modules/ting_search_carousel/images/ajax-loader.gif b/modules/ting_search_carousel/images/ajax-loader.gif
+deleted file mode 100644
+index 8687fb05cf1564f9b3260848f101bbba0d2e917a..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 10819
+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
+F{|6);84>^h
+
+diff --git a/modules/ting_search_carousel/images/empty.png b/modules/ting_search_carousel/images/empty.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..239943615fe8f903da5bc6e7fc5fca2ad572a3ae
+GIT binary patch
+literal 1600
+zcmeAS@N?(olHy`uVBq!ia0y~yU`hjF4mJh`#zyTL8K4APlDE4H!+#K5uy^@npa^Gy
+zM`SSr1Gg{;GcwGYBLNg-FY)wsWq-gS$;NED?-Az`1_su%o-U3d6}R3VG-L!SIJDra
+ve=e8(0w8k~jE2By2#kinXb23M5U7yi$Yfxg{&($3kdr-K{an^LB{Ts5$-^V|
+
+literal 0
+HcmV?d00001
+
+diff --git a/modules/ting_search_carousel/images/placeholder.png b/modules/ting_search_carousel/images/placeholder.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..f36808531bf4b676bb400eb397277170ddcc011d
+GIT binary patch
+literal 4851
+zcmbVPXEYpKw<dZLBm{|GM<>yV`Z7lEBRUbCA(%0`6e2_&y?fP=7}0_;Ln3;O-kA)E
+zK@be1`+WEQx$lp=?ziqfYwxr7v-Ub??Xvb+C(gtOM0=C<CJ6}%t*(xi+4bH>LPE+*
+zO?fQ`i8WT&0Hw1&NQ>m^->Vo?nRboPJlC-fBq6!Q_-`g9$<4oi4N^gM4S`fx>Iamh
+z>?3Xmde_hcD9{S3=?8(h`a(%G16-d%U0t~0o=^{NkglQ0lb3WXBqR*Bx>_0*!SmY%
+z8)gdw%-U+kvrgP8d;I9DQUOIGKMz?NgmQ&zUPP%xph;VQ-v)dyE>ZmOQ}6O-CJ9N<
+zNEx20=VcUe?1ZR>P*u2!dNKp-K}aaqI!1?s@IX~}G_j-lBI-vYR%R^smah5e3b@@Q
+zhq&-GJusGMHNe#AJZRAROSae+E1|CJ**azhMtjM>2jn}u&=}|4>wZ_?d7N#+VY`mW
+zxNrbmI@;jq&D@6F*&60goW|*|BmC5xFT<1_8E_eqdsof^)%RX+LQ`@d+q!j2cLqjL
+zUYd@KyHXpx#i30qevy5*qTBIY;Kv?Z@S!+^4=O55a-(D9rsH(+bY@&|mUNrye1{sC
+zRxfKL3)RsJgIn*flqyZ>&9C_66;fZ{bxn8Dc|3U8!%S$)sXPt5PYZL(h)26ubB62w
+zCF^B&KVfGm+*#PVn<{=64CT6-oTIMNN==fsH>x4^-F2MXx&`b{^<IC&C9s6wCD*OL
+zTZvd!DuMvDRRvV9_%}XCj~gp;9B1#Vl)F?(JarVQ7Mc~&3t$G5ukb_WCvD7iLBhL`
+zbknfZul{d7UV7?zV}?^cl$72*5Lw04^xJ<3x7b4==x+*r_nuE;5B9~?Vc|YL)hNXw
+zvs*N-F-w>~>-ofG>(Zz^J&aCHJl{pZovTG{&3#sUwR6$C0Mny4d7ppp3@<4p>Z~?A
+zbC(Db=WEXs?R=7Vx6R&)?7tK6U-HF|z>;&`ya5BY%gfZlndRC%w2A$@zxy#t@!@WZ
+z<!{h+D=Y%42X*?iCkXt8@}juCQqxHLApy!9dlWV$`#|^T_f|qj;Gj(8?|Pm+3F~$$
+z;U{sN#0WVFwpIe#@znFXlx!kbKAVy(6Q?|O#I(6Nen19EunUBVdG2`jQC(mvN3F(D
+z?+YcrrIsCZd9S>4SY*u<Q@$nMTvN{T$ghAiv*h%H-^(IHqrbg@<tF9gejHsHB|r;L
+zJHolphNE&Tf)4?1IIdh%$#<Krz;+IKe${s0cJ{A)FV*(mJMAY8xqR7Mj(*WQVM32s
+z;nYCQbpKUwC7WaHDMqJ7NKG#sS<hlu&cmgGIcfb%@ZR>@0ouJ*Cdb42^TWV_LsfwU
+zZ0G7JOOW|MXa{opxpy$VGF{cy7-v}iR7M0yfYuUl@~1a+dYz@UX+OE}Zb!gvEYNvU
+zf`jbDq#XVZ>)mBt{ISJ&i+%DZ&*TFh2@ZON$>;4Kws0`nuHoqDmc1f#?SOUKIM*Lf
+zUXJ>(!`r1`uB;vJgTG!jvsS`tr0T_gc-;6O<@$%J-ur;In6^n}Zh@kQ15+D<#hd^v
+z@O)v?CtMm!!V`2$@4~2EhHA=+XzfH#hAu3}__l2M*K)!zi_Z8yX&o?_AZXkcRmC?N
+z9AxMkF*B%g!@b&F9+l%z7$U5DmBa6>X?DDAYQAUb<yw&P?Vj#g2`-FOcA%`=n?rP-
+zmEUEnDeNFKGj7KC_n{z&LO|Xz)C@Y{I8^1ZV{s>xus*wUBICcb+=l75UtCPO`kP>`
+zkVa+R(;_&@xfP<HQBzU?!dXWlv#17taSVrf6dfE6m$NRrRM(K^h@5?z&sN*_yJFh9
+zOoZvBKC@tn|J=f!vv$5u_}V%SPfln}iz4=EkiV%-@37tLNeE|L9$lmq9(?0FoY{oh
+zwqfBtB<uam-)eTUMBZ>L2()<upzsOAJ@@t9K~o4{;QiT2=1r}^bP1PFx<}Rg1~SXX
+zbQl5`$6or1I@KTs^9Y824J;GP2en~#C0w5&<Z<@S%Ad9f1KWuL8%+*K<8X)v;4~-!
+zW10?H*x7m^R%2ej^OeO~{y}V)vW;^6gZ&o?hBx<dw^j@atZ%NN)@~Py=p`=l^ZPn$
+zcrNdhWEg4SaWBG$zRwuTu}w&QY42KV?)uFka2v_y0!VwOmeGFc|52#nv6r<ooR?<@
+z_r0dmawD8<18@>Phjo#gX%=FVTCD`An2*A!{3Z`59|Ce{=^oq>w#nD4E^jJX`{{tn
+z0;))?Y+~U|3ORf){c?hkxpX3I`!9xu$q>C4_D{}tib8V~IR`sPdS1*rp%2lQ<vmtw
+z1Em$()t?<Y4koqDm2F}T4Odn~uh7*gval7H?@%dgPT*LMUT=FA;tlJegRBR20wcr!
+z+MWMs)qfZf?$m<6#SX(eN3^Gm1D~mj(Dhj3nktO4ePjGbsa&KQb*HD&RM*8l-T+ys
+z{N^7Wh9L3T5MiZ>KgOCfr&ygCKVU2q9}ms4;%gotmA0IJ6o>{))EnbTyRAb~%XT~>
+zJ?d>sxhBxwFtCoG^FsHCCNK3pu7>$ht!YRm&t{fr{@My)4zJ!2bg)$FFx&B;OF3=J
+zYIIf~pQ{MAtQCp$%iTOPVn>W-2##}>-(M9O_h0CK+y22J)3{a=ymL-mO%J-9U)PCn
+z`8s>{#R*z2WNI}<%c-k$oyEuBr&JJxu^ZDGw0$|WT|<<=VCwUo>y%vh-NpeqEUJG?
+znNsVQwC>fcdIH3W83LUwEBDS1V-0sMXc~F=XO9~|OK4gZ7%u2=R74&q081nwCgc2@
+ziHdjo`%xZz-Q(I4qFbzjZfubiEkzwZK>&L&{Cm6WZM+;0kM)*-pz!AK6ri-C^i+<2
+zZH!fFG&=(nzi%aK{JJ>_b?kbomhSESOw9Evq&@2CXGrR5lB3O^`Ib7!ghK%p9%s9C
+z48b)l+-#U2o>Wy;DvOV~OovpG;aGpklhOgxJof^VMGOMms~e}fR$Zvb7{U~j2ORiq
+zg!E3QmUw#IB*%k4QAY~W^x8|9EX|MRj0b`Zhepm4ye|-HUll!Q_9$L9R}27X=)EUW
+zqB#LbnD_>$$EitsW;%VnVr94HbuRSba$YFPBKd;_$<aFi*fQt$?`cAaE%KK^6pQ7(
+zy0AP|+PAeOpWd<%9QD)o%wtBQJe_ee8QTTWKZT)V@CZo(4t7IYos64=&+&AhnHHC7
+z#?6llWH(D0$Q;Vk<}GTCH%<IGpgutaaN<#CWRg;lq<j20&K5|&EK|-*cZfzWRBaNG
+zI(>Cz&7l%*Y{COtE3!}wam2;WYO&FCz=Y-L%xLToq$0`OZLfutuY=(6Ca$EHXF48{
+zyAY9<5~tgxn>3I1@?hX}L$j!5)u+XR;7>K{nadUxD*79PGhI;U7K67eA#{DI=P}+A
+z$#Qqtk`r5NA9`oWwZIE^RfbzDgNN55g~%APQh!zT%J}t)>$E&+T;>o_j6FJODNs|+
+zA(?3##A%C9k~KfoWL6Z}v^1?-001kC1b2u+kDl|b3qEj18>0&?BU+?3a@-01FDcDh
+zvn$-><eoLSo#owQVvueyf}68C7RV$>-d8r-n56=GUd5a@^=`?bYd@pKnos}qL-&jF
+zDLE^2rsdZIdr#YV16&xIVaTRG_X%6<dHz4oYj#nXWKCqjOPU(ElJVFoP`Q>Z@R=ZI
+zUMkV&N5&E{P8TGqJ1TdeI731Cjity3{1GYtOR9S{k5ccbNbVUz0x&zyS$_gHb1eg-
+zJ2spa9xHO!niE1ZNVY-oD2IpKb3<lI8}*cxIHl)*9;C3#)>jMbT^5vZ8sASLOb(Qh
+zZuFfY(UbklbbTN0%`_OTTp3+f78~8a6XkwlH-c(4FnxFXZEp>XF*b|VetkJEb~@8*
+z4qDELLa9B)ParEfVF$IHna*rcB|$>|Z*4Z;8%=``G3n6ljWq|gaOvp8^rfadh0*_y
+z+4he?_n#Plq)KinJ!ZB=k(18BD-cEk92Mv*p$)xpTKgup9_Ux2j0w{>&vnMN#_KL9
+z$;peu0G#zqeVsBFL%3H>tt#{?jaK?+5A;J3P<J)rZP^=U(dA`n_hx?SjN6S%>VDv)
+zITdY#6Pp;%=4|o<A^!AO=W?m$FChp<wtPW=T~-EmD?g0G`eUFNgFLkk9b1fRVh>`(
+z#|)N1rt4>bKd{Q9;KAg7kH!{>8OzmaE9Sy|JL`q-G7gaecGJoh7#NA)#Xx=cS8@lB
+zyS_8Njt+Qsd2Btx|86NQu55*4??)DMV04TA4C2yB@p;|ACj_+WlbG?xI(QA#=tj&l
+z?^iFMW1YdcF>+VthbMyZ<DK-RnPt8#q9Yas<kY=s){iamcT;R;MQkLqvy0aZCu3;(
+zH1%(o@qakt-l#lHE74Z>a&t)wcDq7OL|84rIms8lbs{mIR_b&^O}F|jAO;F@vZH^K
+zonbg~+vFO#BcA3$f9Kq97RjR3vq7xLc^Z>NuT4fe%FZsM`TrU!*zC9Heih*{!zFks
+zNOwwA3W@DZJ;8>=#VS;^G-2C5eqo<qyR8ddRC)!5zFL`eZx&d{JLCX<?E3p+=*BNY
+zo3Ohn9FOGXOARc2A!MOXoNo+6Uaec>D%m@taIM4|ngcn35k+~@!PSAtfktuWc&Q7e
+zw}d?ta{du4yQR;BW+y5dRkbec-=EeBp8>pu^(N~#@Tc8||Ec&wY>mkQpYAOqF*|2n
+ztj<fryxnRN-}FYAY8Ub&?dD}cN#IZqQ;jZ2p~7D|@C&lDMN`^{rl3==hobwMk_LH7
+zHvTrRVH;r~Ew=4ZCUt6@92E6q>MU%;ssQPc_O73sU>P^`&4`J#IDaPzyhiu#T(<h6
+zm+|K3qbg=^Z&tsbjThhRB!Ds7CQ}nV5Wu5>>+&$B(N60*X>^``O|;)X6>xYShBrMk
+zVzSJQ+O>)U0Vt2NbBe_dr8FDO8nM&8{S7i24+KAI<y%<2>jaXQX>oOXj#3>uexR#S
+zA$dWu@eAXZLv^;46~UMiR|x0z*;?je5=Yt78whRcT`>R9Fr6EO6anmtqC;37`y~v!
+zCl{G>#dj;1Tg8PhMJR&P@%R|vk5t<iq%?g<nPV&`d5L5!TUjrgYV%J{BvVGZvPZBO
+zxIG_};PkO;+4lOs$?^$N$W<y%AnwFPAWh@FM{w@0IFx7*9Hjm#XQOpshGkv3+VOE)
+zTW2KT>ZOW*`14B6a;Li~M}VZWd>x&ldlC7t85b4i->VLzt~>P9eUUbCjb8Rl*;;C$
+zINt)HsJs%HBh);+5wtC~j|LSUwwR|Q(YvN+S=H<4Z<tUAm%bZPhFuI`_y+#nU}|&T
+z+N>$_LHvc(u^=6Y%v*mxDa!SuR%-F#7rX3M#=crHZO{3E1P<VHtihsp%r^eMpg?AI
+zyOTnT`*bWXw=`HSwD>nt02E)ZS$g|vo9RW~dyZTax29G+T`X)nl)=wy?Cd5!LRDQ*
+zwNB1u<-<p;{BFz3V`W0dIa}56A-ZTvNI>Dpa4lsRfV)6OQlZ}LY0ot$xr#OTO*<*4
+z@w8e=PpnZXT9)8P;yf>cynJ>0G-N%6e>?+@y13L?Lf?+2fm&lKe0P~@mMrF`RG{nK
+z?d4yHB05|PT`B?dmae-?jd2Wqfw`dR5?o)MdI)j_ej=^S$B0M?>tEn%5o*VT?G87w
+z4$bjtjyO+6$mzV#xH&Zsqt-cBsU6CVq3-vay3$(dtK)qAim@Wzb13j<(L;fW;*c}9
+zsgTaef!1DhTt560JvVoZqRbC!6|<AdeQ6M^$h75=C}Sw}P>XCf0^_MbsZ^xOQN>=X
+z7R_$YQ5y#RiT4uIp;w$bc;sc>6>`N3s+odlEM~hxkWS0TBVvW9nL;1!#21sAcC4KB
+zul4e)L|BjI1i1Iyr+@KWAECn1CdSK6amp_PJ1yQHeIp~xT?e+UnjM>>pFh|Sa_s%0
+zPfF8oQNxtc23P#PluP1BF%nZ9yXmBH^a7;9#V2QI$_tN|0)y=k72-N(+0FazEzbIk
+zT-4-rE_LHE{Hh#sk+?tVqldN;2FVV2PF(XXy{_^t7SuWdg#^3r3gllq+;rkJPSx>r
+zuZ^7<V+u6XKZhj|>~;$86$d{7O$+@ekI?_+gQd8l(i0=^8L2Iv{I{<z&`1mUm(#0%
+E0T_T3?EnA(
+
+literal 0
+HcmV?d00001
+
+diff --git a/modules/ting_search_carousel/js/jquery.rs.carousel.js b/modules/ting_search_carousel/js/jquery.rs.carousel.js
+deleted file mode 100644
+index 146ec2c..0000000
+--- a/modules/ting_search_carousel/js/jquery.rs.carousel.js
++++ /dev/null
+@@ -1,842 +0,0 @@
+-/*global jQuery */
+-/*jshint bitwise: true, camelcase: true, curly: true, eqeqeq: true, forin: true,
+-immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: single,
+-undef: true, unused: true, strict: true, trailing: true, browser: true */
+-
+-/*
+- * jquery.rs.carousel.js 1.0.1
+- * https://github.com/richardscarrott/jquery-ui-carousel
+- *
+- * Copyright (c) 2013 Richard Scarrott
+- * http://www.richardscarrott.co.uk
+- *
+- * Dual licensed under the MIT and GPL licenses:
+- * http://www.opensource.org/licenses/mit-license.php
+- * http://www.gnu.org/licenses/gpl.html
+- *
+- * Depends:
+- *  jquery.js v1.8+
+- *  jquery.ui.widget.js v1.8+
+- */
+-
+-(function ($, undefined) {
+-
+-    'use strict';
+-
+-    var _super = $.Widget.prototype;
+-
+-    $.widget('rs.carousel', {
+-
+-        version: '1.0.1',
+-
+-        options: {
+-            // selectors
+-            mask: '> div',
+-            runner: '> ul',
+-            items: '> li',
+-
+-            // options
+-            itemsPerTransition: 'auto',
+-            orientation: 'horizontal',
+-            loop: false,
+-            whitespace: false,
+-            nextPrevActions: true,
+-            insertPrevAction: function () {
+-                return $('<a href="#" class="rs-carousel-action rs-carousel-action-prev">Prev</a>').appendTo(this);
+-            },
+-            insertNextAction: function () {
+-                return $('<a href="#" class="rs-carousel-action rs-carousel-action-next">Next</a>').appendTo(this);
+-            },
+-            pagination: true,
+-            insertPagination: function (pagination) {
+-                return $(pagination).insertAfter($(this).find('.rs-carousel-mask'));
+-            },
+-            speed: 'normal',
+-            easing: 'swing',
+-            fx: 'slide',
+-            translate3d: false,
+-
+-            // callbacks
+-            create: null,
+-            before: null,
+-            after: null
+-        },
+-
+-        _create: function () {
+-
+-            // widget factory 1.8.* backwards compat
+-            this.widgetFullName = this.widgetFullName || this.widgetBaseClass;
+-            this.eventNamespace = this.eventNamespace || '.' + this.widgetName;
+-
+-            this.index = 0;
+-            this._elements();
+-            this._setIsHorizontal();
+-            this._addMask();
+-            this._addNextPrevActions();
+-            this.refresh(false);
+-
+-            return;
+-        },
+-
+-        // caches DOM elements
+-        _elements: function () {
+-
+-            var elems = this.elements = {},
+-                fullName = this.widgetFullName;
+-
+-            this.element.addClass(fullName);
+-
+-            elems.mask = this.element
+-                .find(this.options.mask)
+-                    .addClass(fullName + '-mask');
+-
+-            elems.runner = (elems.mask.length ? elems.mask : this.element)
+-                    .find(this.options.runner)
+-                            .addClass(fullName + '-runner');
+-
+-            elems.items = elems.runner
+-                .find(this.options.items)
+-                    .addClass(fullName + '-item');
+-
+-            return;
+-        },
+-
+-        _setIsHorizontal: function () {
+-
+-            var elems = this.elements,
+-                fullName = this.widgetFullName;
+-
+-            this.element
+-                .removeClass(fullName + '-horizontal')
+-                .removeClass(fullName + '-vertical');
+-
+-            if (this.options.orientation === 'horizontal') {
+-                this.isHorizontal = true;
+-                this.element.addClass(fullName + '-horizontal');
+-                elems.runner.css('top', '');
+-            }
+-            else {
+-                this.isHorizontal = false;
+-                this.element.addClass(fullName + '-vertical');
+-                elems.runner.css('left', '');
+-            }
+-
+-            return;
+-        },
+-
+-        // adds masking div (aka clipper)
+-        _addMask: function () {
+-
+-            var elems = this.elements;
+-
+-            // already exists in markup
+-            if (elems.mask.length) {
+-                return;
+-            }
+-
+-            elems.mask = elems.runner
+-                .wrap('<div class="' + this.widgetFullName + '-mask" />')
+-                .parent();
+-
+-            // indicates whether mask was dynamically added or already existed in mark-up
+-            this.maskAdded = true;
+-
+-            return;
+-        },
+-
+-        // adds next and prev links
+-        _addNextPrevActions: function () {
+-
+-            if (!this.options.nextPrevActions) {
+-                return;
+-            }
+-
+-            var self = this,
+-                elems = this.elements,
+-                opts = this.options,
+-                eventNamespace = this.eventNamespace;
+-
+-            this._removeNextPrevActions();
+-
+-            elems.prevAction = opts.insertPrevAction.apply(this.element[0])
+-                .bind('click' + eventNamespace, function (e) {
+-                    e.preventDefault();
+-                    self.prev();
+-                });
+-
+-            elems.nextAction = opts.insertNextAction.apply(this.element[0])
+-                .bind('click' + eventNamespace, function (e) {
+-                    e.preventDefault();
+-                    self.next();
+-                });
+-
+-            return;
+-        },
+-
+-        _removeNextPrevActions: function () {
+-
+-            var elems = this.elements;
+-
+-            if (elems.nextAction) {
+-                elems.nextAction.remove();
+-                elems.nextAction = undefined;
+-            }
+-
+-            if (elems.prevAction) {
+-                elems.prevAction.remove();
+-                elems.prevAction = undefined;
+-            }
+-
+-            return;
+-        },
+-
+-        // refresh carousel
+-        refresh: function (recache) {
+-
+-            // undefined should pass condition
+-            if (recache !== false) {
+-                this._recacheItems();
+-            }
+-
+-            this._setPages();
+-            this._addPagination();
+-            this._setRunnerWidth();
+-            this.index = this._makeValid(this.index);
+-            this.goToPage(this.index, false, undefined, true);
+-            this._checkDisabled();
+-
+-            return;
+-        },
+-
+-        // re-cache items in case new items have been added,
+-        // moved to own method so continuous can easily override
+-        // to avoid clones
+-        _recacheItems: function () {
+-
+-            this.elements.items = this.elements.runner
+-                .find(this.options.items)
+-                    .addClass(this.widgetFullName + '-item');
+-
+-            return;
+-        },
+-
+-        // sets pages array - [jQuery(li, li, li), jQuery(li, li, li, li), jQuery(li, li, li), jQuery(li, li)]
+-        _setPages: function () {
+-
+-            var self = this,
+-                itemIndex = 0,
+-                lastItemIndex = isNaN(this.options.itemsPerTransition) ? undefined : this._getLastItemIndex(),
+-                start;
+-
+-            this.pages = [];
+-
+-            while (itemIndex < this.getNoOfItems()) {
+-
+-                // if itemsPerTransition isn't a number we need to get the visible
+-                // items at each item index
+-                if (isNaN(this.options.itemsPerTransition)) {
+-                    this.pages.push(self._getVisibleItems(itemIndex));
+-                    itemIndex += this.pages[this.pages.length - 1].length;
+-                }
+-                // otherwise simply slice up the items based on itemsPerTransition
+-                else {
+-                    // making sure we don't go past the lastItemIndex
+-                    if (itemIndex >= lastItemIndex) {
+-                        this.pages.push(this.elements.items.slice(itemIndex));
+-                        break;
+-                    }
+-                    start = itemIndex;
+-                    // #37 - allow `itemsPerTransition` to be passed in as string
+-                    itemIndex += parseInt(this.options.itemsPerTransition, 10);
+-                    this.pages.push(this.elements.items.slice(start, itemIndex));
+-                }
+-            }
+-
+-            return;
+-        },
+-
+-        // returns last logical item index
+-        _getLastItemIndex: function () {
+-
+-            if (this.options.whitespace) {
+-                return;
+-            }
+-
+-            return this.elements.items.index(this._getVisibleItems(0, true).last());
+-        },
+-
+-        // returns a jquery object containing the visible items where the `itemIndex`
+-        // is considered to be the first visible item. Passing in reverse as true allows
+-        // us to, for example, return the visible items from the last item backwards.
+-        _getVisibleItems: function (itemIndex, reverse) {
+-
+-            var self = this,
+-                page = [],
+-                items = !reverse ? this.elements.items.slice(itemIndex) : [].reverse.apply($(this.elements.items)).slice(itemIndex),
+-                maskDim = this._getMaskDim(),
+-                dim = 0;
+-
+-            items
+-                .each(function () {
+-                    dim += self.isHorizontal ? $(this).outerWidth(true) : $(this).outerHeight(true);
+-                    if (dim > maskDim) {
+-                        // if no items have been pushed to page then it means the
+-                        // first item is larger than the mask so we still need to push before
+-                        // breaking.
+-                        if (page.length === 0) {
+-                            page.push(this);
+-                        }
+-                        return false;
+-                    }
+-                    page.push(this);
+-                });
+-
+-            return $(page);
+-        },
+-
+-        _getMaskDim: function () {
+-
+-            return this.elements.mask[this.isHorizontal ? 'width' : 'height']();
+-
+-        },
+-
+-        getNoOfItems: function () {
+-
+-            return this.elements.items.length;
+-
+-        },
+-
+-        // adds pagination links and binds associated events
+-        _addPagination: function () {
+-
+-            if (!this.options.pagination) {
+-                return;
+-            }
+-
+-            var self = this,
+-                fullName = this.widgetFullName,
+-                pagination = $('<ol class="' + fullName + '-pagination" />'),
+-                links = [],
+-                noOfPages = this.getNoOfPages(),
+-                i;
+-
+-            this._removePagination();
+-
+-            for (i = 0; i < noOfPages; i++) {
+-                links[i] = '<li class="' + fullName + '-pagination-link"><a href="#page-' + i + '">' + (i + 1) + '</a></li>';
+-            }
+-
+-            pagination
+-                .append(links.join(''))
+-                .delegate('a', 'click' + this.eventNamespace, function (e) {
+-                    e.preventDefault();
+-                    self.goToPage(parseInt(this.hash.split('-')[1], 10));
+-                });
+-
+-            this.elements.pagination = this.options.insertPagination.call(this.element[0], pagination);
+-
+-            return;
+-        },
+-
+-        _removePagination: function () {
+-
+-            if (this.elements.pagination) {
+-                this.elements.pagination.remove();
+-                this.elements.pagination = undefined;
+-            }
+-
+-            return;
+-        },
+-
+-        // returns noOfPages
+-        getNoOfPages: function () {
+-
+-            return this.pages.length;
+-
+-        },
+-
+-        // if no of items is less than items on first page then the
+-        // carousel should be disabled.
+-        _checkDisabled: function () {
+-
+-            if (this.getNoOfPages() <= 1) {
+-                this.disable();
+-                this._disabled = true;
+-            }
+-            // only enable if carousel was disabled internally.
+-            else if (this._disabled) {
+-                this.enable();
+-                this._disabled = false;
+-            }
+-
+-            return;
+-        },
+-
+-        _setRunnerWidth: function () {
+-
+-            var elems = this.elements,
+-                width = 0;
+-
+-            // reset width in case orientation has been changed
+-            elems.runner.width('');
+-
+-            if (!this.isHorizontal) {
+-                return;
+-            }
+-
+-            elems.runner
+-                .width(function () {
+-                    elems.items
+-                        .each(function () {
+-                            width += $(this).outerWidth(true);
+-                        });
+-
+-                    return width;
+-                });
+-
+-            return;
+-        },
+-
+-        next: function (animate) {
+-
+-            var index = this.index + 1;
+-
+-            if (this.options.loop && index >= this.getNoOfPages()) {
+-                index = 0;
+-            }
+-
+-            this.goToPage(index, animate, 'carousel:next');
+-
+-            return;
+-        },
+-
+-        prev: function (animate) {
+-
+-            var index = this.index - 1;
+-
+-            if (this.options.loop && index < 0) {
+-                index = this.getNoOfPages() - 1;
+-            }
+-
+-            this.goToPage(index, animate, 'carousel:prev');
+-
+-            return;
+-        },
+-
+-        goToPage: function (index, animate, /* INTERNAL */ eventName, /* INTERNAL */ silent) {
+-
+-            // undefined should pass
+-            animate = animate === false ? false : true;
+-
+-            if (!this.options.disabled && this._isValid(index)) {
+-                this.prevIndex = this.index;
+-                this.index = index;
+-                // calling `this._slide` using `options.fx` to easily override within extensions
+-                this['_' + this.options.fx]($.Event(eventName ? eventName : 'carousel:gotopage', {
+-                    animate: animate,
+-                    speed: animate ? this.options.speed : 0
+-                }), silent);
+-            }
+-
+-            // make sure updateUi is called even when disabled
+-            this._updateUi();
+-
+-            return;
+-        },
+-
+-        // `index` can be $obj, element or 0 based index
+-        goToItem: function (index, animate) {
+-
+-            var page,
+-                pageLength,
+-                item,
+-                itemLength;
+-
+-            // if a number get the element
+-            if (!isNaN(index)) {
+-                index = this.elements.items.eq(index);
+-            }
+-
+-            if (index.jquery) {
+-                // unwrap from jquery object
+-                index = index[0];
+-            }
+-
+-            // find item in pages array
+-            pages:
+-            for (page = 0, pageLength = this.getNoOfPages(); page < pageLength; page++) {
+-                for (item = 0, itemLength = this.getPage(page).length; item < itemLength; item++) {
+-                    if (this.getPage(page)[item] === index) {
+-                        break pages;
+-                    }
+-                }
+-            }
+-
+-            this.goToPage(page, animate);
+-
+-            // return item as jquery object
+-            return $(index);
+-        },
+-
+-        // returns true if index is valid, false if not
+-        _isValid: function (index) {
+-
+-            if (index < this.getNoOfPages() && index >= 0) {
+-                return true;
+-            }
+-
+-            return false;
+-        },
+-
+-        // returns valid page index
+-        _makeValid: function (index) {
+-
+-            if (index < 0) {
+-                index = 0;
+-            }
+-            else if (index >= this.getNoOfPages()) {
+-                index = this.getNoOfPages() - 1;
+-            }
+-
+-            return index;
+-        },
+-
+-        // if silent is true callbacks won't be fired
+-        _slide: function (e, silent) {
+-
+-            var self = this,
+-                animateProps = {},
+-                lastPos = this._getAbsoluteLastPos(),
+-                page = this.getPage(),
+-                pos = page.first().position()[this.isHorizontal ? 'left' : 'top'],
+-                eventNamespace = this.eventNamespace,
+-                fullName = this.widgetFullName,
+-                transitionEndEvent;
+-
+-            // if before returns false return and revert index back to prevIndex
+-            if (!silent && !this._trigger('before', e, this._getEventData())) {
+-                this.index = this.prevIndex;
+-                return;
+-            }
+-
+-            // check pos doesn't go past last posible pos
+-            if (pos > lastPos) {
+-                pos = lastPos;
+-            }
+-
+-            if (this.options.translate3d) {
+-
+-                transitionEndEvent = [
+-                    'transitionend' + eventNamespace,
+-                    'webkitTransitionEnd' + eventNamespace,
+-                    'oTransitionEnd' + eventNamespace
+-                ];
+-
+-                if (e.animate) {
+-                    this.element.addClass(fullName + '-transition');
+-                }
+-
+-                this.elements.runner
+-                    .unbind(transitionEndEvent.join(' '))
+-                    .on(transitionEndEvent.join(' '), function (e) {
+-                        self.element.removeClass(fullName + '-transition');
+-                        if (!silent) {
+-                            self._trigger('after', e, self._getEventData());
+-                        }
+-                    })
+-                    .css('transform', 'translate3d(' + (this.isHorizontal ? -pos + 'px, 0, 0' : '0, ' + -pos + 'px, 0') + ')');
+-
+-                // if we're not animating the after callback should still be called
+-                if (!e.animate) {
+-                    self.element.removeClass(fullName + '-transition');
+-                    if (!silent) {
+-                        self._trigger('after', e, self._getEventData());
+-                    }
+-                }
+-
+-            }
+-            else {
+-
+-                animateProps[this.isHorizontal ? 'left' : 'top'] = -pos;
+-                this.elements.runner
+-                    .stop()
+-                    .animate(animateProps, e.speed, this.options.easing, function () {
+-                        if (!silent) {
+-                            self._trigger('after', e, self._getEventData());
+-                        }
+-                    });
+-
+-            }
+-
+-            return;
+-        },
+-
+-        // gets lastPos to ensure runner doesn't move beyond mask
+-        _getAbsoluteLastPos: function () {
+-
+-            if (this.options.whitespace) {
+-                return;
+-            }
+-
+-            var lastPos,
+-                lastItem = this.elements.items.eq(this.getNoOfItems() - 1),
+-                lastItemPos = lastItem.position()[this.isHorizontal ? 'left' : 'top'],
+-                lastItemDim = lastItem[this.isHorizontal ? 'outerWidth' : 'outerHeight'](true);
+-
+-            lastPos = lastItemPos + lastItemDim - this._getMaskDim();
+-
+-            // if lastPos is less than 0 it means there aren't enough items to fill the entire mask
+-            return lastPos < 0 ? undefined : lastPos;
+-        },
+-
+-        // returns jQuery object of items on page
+-        getPage: function (index) {
+-
+-            return this.pages[(typeof index !== 'undefined' ? index : this.index)] || $([]);
+-
+-        },
+-
+-        // returns pages array
+-        getPages: function () {
+-
+-            return this.pages;
+-
+-        },
+-
+-        _getEventData: function () {
+-
+-            return {
+-                page: this.getPage(),
+-                prevPage: this.getPage(this.prevIndex),
+-                elements: this.elements
+-            };
+-
+-        },
+-
+-        _getCreateEventData: function () {
+-
+-            return this._getEventData();
+-
+-        },
+-
+-
+-        // updates pagination, next and prev link state classes
+-        _updateUi: function () {
+-
+-            this._updateActiveItems();
+-
+-            if (this.options.pagination) {
+-                this._updatePagination();
+-            }
+-
+-            if (this.options.nextPrevActions) {
+-                this._updateNextPrevActions();
+-            }
+-
+-            return;
+-        },
+-
+-        _updateActiveItems: function () {
+-
+-            var fullName = this.widgetFullName,
+-                activeClass = fullName + '-item-active';
+-
+-            this.elements.items
+-                .removeClass(activeClass);
+-
+-            this.getPage()
+-                .addClass(activeClass);
+-
+-            return;
+-        },
+-
+-        _updatePagination: function () {
+-
+-            var fullName = this.widgetFullName,
+-                activeClass = fullName + '-pagination-link-active',
+-                disabledClass = fullName + '-pagination-disabled',
+-                pagination = this.elements.pagination
+-                    .removeClass(disabledClass);
+-
+-            if (this.options.disabled) {
+-                pagination.addClass(disabledClass);
+-            }
+-
+-            pagination
+-                .children('.' + fullName + '-pagination-link')
+-                    .removeClass(activeClass)
+-                    .eq(this.index)
+-                        .addClass(activeClass);
+-
+-            return;
+-        },
+-
+-        _updateNextPrevActions: function () {
+-
+-            var elems = this.elements,
+-                actions = elems.nextAction.add(elems.prevAction),
+-                index = this.index,
+-                fullName = this.widgetFullName,
+-                activeClass = fullName + '-action-active',
+-                disabledClass = fullName + '-action-disabled';
+-
+-            actions
+-                .addClass(activeClass)
+-                .removeClass(disabledClass);
+-
+-            if (this.options.disabled) {
+-                actions.addClass(disabledClass);
+-            }
+-
+-            if (!this.options.loop) {
+-
+-                if (index === this.getNoOfPages() - 1) {
+-                    elems.nextAction
+-                        .removeClass(activeClass);
+-                }
+-
+-                if (index === 0) {
+-                    elems.prevAction
+-                        .removeClass(activeClass);
+-                }
+-
+-            }
+-
+-            return;
+-        },
+-
+-        _setOption: function (option, value) {
+-
+-            _super._setOption.apply(this, arguments);
+-
+-            switch (option) {
+-
+-            case 'orientation':
+-
+-                this._setIsHorizontal();
+-                this.refresh();
+-
+-                break;
+-
+-            case 'pagination':
+-
+-                if (value) {
+-                    this._addPagination();
+-                    this._updateUi();
+-                }
+-                else {
+-                    this._removePagination();
+-                }
+-
+-                break;
+-
+-            case 'nextPrevActions':
+-
+-                if (value) {
+-                    this._addNextPrevActions();
+-                    this._updateUi();
+-                }
+-                else {
+-                    this._removeNextPrevActions();
+-                }
+-
+-                break;
+-
+-            case 'loop':
+-            case 'disabled':
+-
+-                this._updateUi();
+-
+-                break;
+-
+-            case 'itemsPerTransition':
+-            case 'whitespace':
+-
+-                this.refresh();
+-
+-                break;
+-            }
+-
+-            return;
+-        },
+-
+-        add: function (items) {
+-
+-            this.elements.runner.append(items);
+-            this.refresh();
+-
+-            return;
+-        },
+-
+-        remove: function (selector) {
+-
+-            if (this.getNoOfItems() > 0) {
+-
+-                this.elements.items
+-                    .filter(selector)
+-                    .remove();
+-
+-                this.refresh();
+-            }
+-
+-            return;
+-        },
+-
+-        // returns current index
+-        getIndex: function () {
+-
+-            return this.index;
+-
+-        },
+-
+-        // returns prev index
+-        getPrevIndex: function () {
+-
+-            return this.prevIndex;
+-
+-        },
+-
+-        // returns carousel to original state
+-        destroy: function () {
+-
+-            var elems = this.elements,
+-                fullName = this.widgetFullName,
+-                cssProps = {};
+-
+-            this.element
+-                .removeClass(fullName)
+-                .removeClass(fullName + '-horizontal')
+-                .removeClass(fullName + '-vertical');
+-            elems.mask
+-                .removeClass(fullName + '-mask');
+-            elems.runner
+-                .removeClass(fullName + '-runner');
+-            elems.items
+-                .removeClass(fullName + '-item');
+-
+-            if (this.maskAdded) {
+-                elems.runner
+-                    .unwrap();
+-            }
+-
+-            cssProps[this.isHorizontal ? 'left' : 'top'] = '';
+-            cssProps[this.isHorizontal ? 'width' : 'height'] = '';
+-            cssProps.transform = '';
+-            elems.runner
+-                .css(cssProps);
+-
+-            this._removePagination();
+-            this._removeNextPrevActions();
+-
+-            elems.runner
+-                .unbind(this.eventNamespace);
+-
+-            _super.destroy.apply(this, arguments);
+-
+-            return;
+-        }
+-
+-    });
+-
+-})(jQuery);
+-
+diff --git a/modules/ting_search_carousel/js/jquery.ui.touch-punch.min.js b/modules/ting_search_carousel/js/jquery.ui.touch-punch.min.js
+deleted file mode 100644
+index 33d6f97..0000000
+--- a/modules/ting_search_carousel/js/jquery.ui.touch-punch.min.js
++++ /dev/null
+@@ -1,11 +0,0 @@
+-/*
+- * jQuery UI Touch Punch 0.2.2
+- *
+- * Copyright 2011, Dave Furfero
+- * Dual licensed under the MIT or GPL Version 2 licenses.
+- *
+- * Depends:
+- *  jquery.ui.widget.js
+- *  jquery.ui.mouse.js
+- */
+-(function(b){b.support.touch="ontouchend" in document;if(!b.support.touch){return;}var c=b.ui.mouse.prototype,e=c._mouseInit,a;function d(g,h){if(g.originalEvent.touches.length>1){return;}g.preventDefault();var i=g.originalEvent.changedTouches[0],f=document.createEvent("MouseEvents");f.initMouseEvent(h,true,true,window,1,i.screenX,i.screenY,i.clientX,i.clientY,false,false,false,false,0,null);g.target.dispatchEvent(f);}c._touchStart=function(g){var f=this;if(a||!f._mouseCapture(g.originalEvent.changedTouches[0])){return;}a=true;f._touchMoved=false;d(g,"mouseover");d(g,"mousemove");d(g,"mousedown");};c._touchMove=function(f){if(!a){return;}this._touchMoved=true;d(f,"mousemove");};c._touchEnd=function(f){if(!a){return;}d(f,"mouseup");d(f,"mouseout");if(!this._touchMoved){d(f,"click");}a=false;};c._mouseInit=function(){var f=this;f.element.bind("touchstart",b.proxy(f,"_touchStart")).bind("touchmove",b.proxy(f,"_touchMove")).bind("touchend",b.proxy(f,"_touchEnd"));e.call(f);};})(jQuery);
+\ No newline at end of file
+diff --git a/modules/ting_search_carousel/js/ting_search_carousel.js b/modules/ting_search_carousel/js/ting_search_carousel.js
+index df9be12..751a266 100644
+--- a/modules/ting_search_carousel/js/ting_search_carousel.js
++++ b/modules/ting_search_carousel/js/ting_search_carousel.js
+@@ -182,28 +182,57 @@
+     };
+   };
+ 
++  var queue = [];
++  var running = false;
++
++  /**
++   * Fetches more covers.
++   *
++   * Runs the queue if not already running.
++   */
++  var update = function() {
++    if (running || queue.length < 1) {
++      return;
++    }
++    running = true;
++    var item = queue.shift();
++
++    $.ajax({
++      type: 'get',
++      url : Drupal.settings.basePath + item.tab.data('path') + '/' + item.tab.data('offset'),
++      dataType : 'json',
++      success : function(data) {
++        // Remove placeholders.
++        item.target.find('.carousel-item.placeholder').remove();
++        item.target.slick('slickAdd', data.content);
++        item.tab.data('offset', data.offset);
++        item.tab.data('updating', false);
++        // Carry on processing the queue.
++        running = false;
++        update();
++      }
++    });
++  };
++
+   /**
+    * Event handler for progressively loading more covers.
+    */
+-  var update = function(e, slick) {
++  var update_handler = function(e, slick) {
+     var tab = e.data;
+-    // Fetch more covers as we approach the end.
+-    if (tab.data('offset') > -1 &&
+-        (slick.slideCount - slick.currentSlide) <
+-        (slick.options.slidesToShow * 2)) {
+-      // Disable updates while updating.
+-      var offset = tab.data('offset');
+-      tab.data('offset', -1);
+-      $.ajax({
+-        type: 'get',
+-        url : Drupal.settings.basePath + tab.data('path') + '/' + offset,
+-        dataType : 'json',
+-        success : function(data) {
+-          $(e.target).slick('slickAdd', data.content);
+-          tab.data('offset', data.offset);
+-        }
+-      });
++    if (!tab.data('updating')) {
++      // If its the first batch or we're near the end.
++      if (tab.data('offset') === 0 ||
++           (tab.data('offset') > -1 &&
++            (slick.slideCount - slick.currentSlide) <
++            (slick.options.slidesToShow * 2))) {
++        // Disable updates while updating.
++        tab.data('updating', true);
++        // Add to queue.
++        queue.push({'tab': tab, 'slick': slick, 'target': $(e.target)});
++      }
+     }
++    // Run queue.
++    update();
+   };
+ 
+   /**
+@@ -230,11 +259,12 @@
+ 
+         $('.carousel-tab', this).each(function () {
+           var tab = $(this);
+-
++          // Reset ul to 100% width before we start Slick. See the CSS.
++          tab.find('ul').css('width', '100%');
+           // Init carousels. In order to react to the init event, the
+           // event handler needs to be defined before triggering Slick
+           // (obviously in hindsight).
+-          $('.carousel', this).on('init reInit afterChange', tab, update)
++          $('.carousel', this).on('init reInit afterChange', tab, update_handler)
+             .slick(settings);
+         });
+ 
+diff --git a/modules/ting_search_carousel/plugins/content_types/carousel.inc b/modules/ting_search_carousel/plugins/content_types/carousel.inc
+index 3376525..c0a851e 100644
+--- a/modules/ting_search_carousel/plugins/content_types/carousel.inc
++++ b/modules/ting_search_carousel/plugins/content_types/carousel.inc
+@@ -27,6 +27,7 @@ function ting_search_carousel_carousel_content_type_render($subtype, $conf, $pan
+         'path' => 'ting_search_carousel/results/ajax/' . $index,
+         'content' => $chunk['collections'],
+         'offset' => $chunk['next_offset'],
++        'placeholders' => TING_SEARCH_CAROUSEL_CHUNK_SIZE,
+       );
+     }
+ 
+diff --git a/modules/ting_search_carousel/templates/ting_search_carousel_collection.tpl.php b/modules/ting_search_carousel/templates/ting_search_carousel_collection.tpl.php
+index 5820499..284120e 100644
+--- a/modules/ting_search_carousel/templates/ting_search_carousel_collection.tpl.php
++++ b/modules/ting_search_carousel/templates/ting_search_carousel_collection.tpl.php
+@@ -1,10 +1,25 @@
+ <?php
+ /**
+  * @file
++ * Default carousel item template.
+  *
++ * Available variables:
++ * - $collection: Legacy item object, do not use.
++ * - $title: Title of item (sanitized).
++ * - $creator: Author of item (sanitized).
++ * - $image: Render array for rendering the cover.
++ * - $path: Path to the collection/material.
+  */
+ ?>
+-<li class="carousel-item">
+-  <a href="/ting/collection/<?php print $collection->id; ?>" class="carousel-item-image"><img src="<?php print $collection->image; ?>" alt=""/></a>
+-  <a href="/ting/collection/<?php print $collection->id; ?>" class="carousel-item-title"><?php print check_plain($collection->title); ?></a>
++<li class="carousel-item <?php print $classes; ?>">
++  <?php if ($path): ?>
++    <a href="<?php print $path; ?>" class="carousel-item-link">
++  <?php endif; ?>
++    <div class="carousel-item-image"><?php print render($image); ?></div>
++    <?php if ($title): ?>
++      <div class="carousel-item-title"><?php print $title; ?></div>
++    <?php endif; ?>
++  <?php if ($path): ?>
++    </a>
++  <?php endif; ?>
+ </li>
+diff --git a/modules/ting_search_carousel/ting_search_carousel.module b/modules/ting_search_carousel/ting_search_carousel.module
+index a26e44d..1284913 100644
+--- a/modules/ting_search_carousel/ting_search_carousel.module
++++ b/modules/ting_search_carousel/ting_search_carousel.module
+@@ -8,6 +8,9 @@
+ define('TING_SEARCH_CAROUSEL_CHUNK_SIZE', 12);
+ // Number of search results processed for covers at a time.
+ define('TING_SEARCH_CAROUSEL_SEARCH_SIZE', 20);
++// Path in files we store our placeholder. Image styles can't work with files
++// outside the flies foler.
++define('TING_SEARCH_CAROUSEL_PLACEHOLDER_IMAGE', 'public://ting_search_carousel_placeholder.png');
+ 
+ /**
+  * Implements hook_menu().
+@@ -116,6 +119,7 @@ function ting_search_carousel_theme($existing, $type, $theme, $path) {
+     ),
+     'ting_search_carousel_collection' => array(
+       'variables' => array('collection' => NULL),
++      'file' => 'ting_search_carousel.theme.inc',
+       'template' => 'templates/ting_search_carousel_collection',
+     ),
+     'ting_search_carousel_admin_form' => array(
+@@ -381,6 +385,8 @@ function _ting_search_carousel_find_covers($query, $start, $size, array $ignore)
+     $item->id = $id;
+     $item->title = $objects[$id]['title'];
+     $item->creator = $objects[$id]['creator'];
++    $item->path = $path;
++    // Legacy.
+     $item->image = image_style_url('ting_search_carousel', $path);
+ 
+     $found_covers[$id] = $item;
+@@ -390,6 +396,29 @@ function _ting_search_carousel_find_covers($query, $start, $size, array $ignore)
+ }
+ 
+ /**
++ * Returns an placeholder collection item.
++ */
++function ting_search_carousel_collection_placeholder() {
++  // Image styles only work on files in the files dir, so we copy our
++  // placeholder in.
++  if (!file_exists(TING_SEARCH_CAROUSEL_PLACEHOLDER_IMAGE)) {
++    file_unmanaged_copy(drupal_get_path('module', 'ting_search_carousel') .
++                        '/images/empty.png',
++                        TING_SEARCH_CAROUSEL_PLACEHOLDER_IMAGE,
++                        FILE_EXISTS_REPLACE);
++  }
++  $item = new stdClass();
++  $item->id = '#';
++  $item->title = '';
++  $item->creator = '';
++  $item->path = TING_SEARCH_CAROUSEL_PLACEHOLDER_IMAGE;
++  // Legacy.
++  $item->image = image_style_url('ting_search_carousel', $item->path);
++  $item->placeholder = TRUE;
++  return $item;
++}
++
++/**
+  * Implements hook_image_default_styles().
+  */
+ function ting_search_carousel_image_default_styles() {
+@@ -400,7 +429,7 @@ function ting_search_carousel_image_default_styles() {
+         array(
+           'label' => 'Scale and crop',
+           'effect callback' => 'image_scale_and_crop_effect',
+-          'dimensions callback' => 'image_scale_dimensions',
++          'dimensions callback' => 'image_resize_dimensions',
+           'module' => 'image',
+           'name' => 'image_scale_and_crop',
+           'data' => array(
+diff --git a/modules/ting_search_carousel/ting_search_carousel.pages.inc b/modules/ting_search_carousel/ting_search_carousel.pages.inc
+index c31840e..9324214 100644
+--- a/modules/ting_search_carousel/ting_search_carousel.pages.inc
++++ b/modules/ting_search_carousel/ting_search_carousel.pages.inc
+@@ -19,6 +19,13 @@ function ting_search_carousel_result($index, $offset) {
+     $content .= theme('ting_search_carousel_collection', array('collection' => $collection));
+   }
+ 
++  // If there's more covers, add a placeholder at the end to signal the user
++  // that it's loading.
++  if ($chunk['next_offset'] > -1) {
++    $content .= theme('ting_search_carousel_collection',
++                      array('collection' => ting_search_carousel_collection_placeholder()));
++  }
++
+   // Return JSON output.
+   drupal_json_output(array(
+     'content' => $content,
+diff --git a/modules/ting_search_carousel/ting_search_carousel.theme.inc b/modules/ting_search_carousel/ting_search_carousel.theme.inc
+index 8cc7832..118c2b8 100644
+--- a/modules/ting_search_carousel/ting_search_carousel.theme.inc
++++ b/modules/ting_search_carousel/ting_search_carousel.theme.inc
+@@ -28,13 +28,22 @@ function template_preprocess_ting_search_carousel(&$vars, $hook) {
+       // If an ajax path is given, default to the first page, else disable
+       // ajax.
+       'offset' => empty($tab['path']) ? -1 : 0,
++      'placeholders' => 1,
+       'classes' => '',
+     );
+ 
+-    // Render the items.
++    // Render the items, or some placeholders.
+     $rendered = array();
+-    foreach ($tab['content'] as $item) {
+-      $rendered[] = theme('ting_search_carousel_collection', array('collection' => $item));
++    if (count($tab['content'])) {
++      foreach ($tab['content'] as $item) {
++        $rendered[] = theme('ting_search_carousel_collection', array('collection' => $item));
++      }
++    }
++    else {
++      foreach (range(0, $tab['placeholders']) as $dummy) {
++        $rendered[] = theme('ting_search_carousel_collection',
++                            array('collection' => ting_search_carousel_collection_placeholder()));
++      }
+     }
+     $tab['description'] = $tab['subtitle'];
+ 
+@@ -66,8 +75,8 @@ function template_preprocess_ting_search_carousel(&$vars, $hook) {
+       array(
+         'breakpoint' => 1024,
+         'settings' => array(
+-          'slidesToShow' => 3,
+-          'slidesToScroll' => 3,
++          'slidesToShow' => 4,
++          'slidesToScroll' => 4,
+         ),
+       ),
+       array(
+@@ -92,3 +101,41 @@ function template_preprocess_ting_search_carousel(&$vars, $hook) {
+ 
+   $loaded = libraries_load('slick', 'non-minified');
+ }
++
++/**
++ * Preprocess ting_search_carousel template.
++ */
++function template_preprocess_ting_search_carousel_collection(&$vars) {
++  // $vars['collection'] is the legacy variable, leaving it in to not mess
++  // with existing templates.
++  $collection = $vars['collection'];
++  $vars['path'] = '';
++  if (!isset($collection->placeholder)) {
++    $uri = entity_uri('ting_collection', $collection);
++    $vars['path'] = url($uri['path'], $uri['options']);
++  }
++
++  if (isset($collection->placeholder)) {
++    $vars['classes_array'][] = 'placeholder';
++  }
++
++  $vars['title'] = check_plain($collection->title);
++  $vars['creator'] = check_plain($collection->creator);
++
++  $image_info = image_get_info($collection->path);
++  if ($image_info) {
++    $image = array(
++      'style_name' => 'ting_search_carousel',
++      'path' => $collection->path,
++      'width' => $image_info['width'],
++      'height' => $image_info['height'],
++      'alt' => '',
++    );
++    $vars['image'] = theme('image_style', $image);
++  }
++  else {
++    // If image_get_info() couldn't get the image size, image style is likely
++    // to fail too. So we give up here.
++    $vars['image'] = '';
++  }
++}
