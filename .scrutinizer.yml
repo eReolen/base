@@ -1,51 +1,14 @@
-tools:
-  php_code_sniffer:
-    extensions:
-      - module
-      - inc
-      - install
-      - test
-      - profile
-      - theme
-    config:
-      standard: Drupal
-  php_cpd:
-    names:
-      - '*.module'
-      - '*.inc'
-      - '*.install'
-      - '*.test'
-      - '*.profile'
-      - '*.theme'
-      - '*.php'
-  php_loc:
-    names:
-      - '*.module'
-      - '*.inc'
-      - '*.install'
-      - '*.test'
-      - '*.profile'
-      - '*.theme'
-      - '*.php'
-  php_pdepend:
-    suffixes:
-      - module
-      - inc
-      - install
-      - test
-      - profile
-      - theme
-      - php
-  js_hint: true
-before_commands:
-  # Remove core files - no need to analyse that.
-  - "rm -r includes misc modules scripts themes"
-  - "rm -r profiles/minimal profiles/standard profiles/testing"
-  # Don't analyze ding2.
-  - "rm -r profiles/ding2"
-  # Don't analyze contributed modules.
-  - "rm -r sites/all/modules/contrib"
-  # No need to analyze deployotron.
-  - "rm -r sites/all/drush/deployotron"
-  # Remove generated code, we don't want to analyze that.
-  - "find . '(' -name '*.features.*' -or -name '*.feeds_importer_default.inc' -or -name '*.field_group.inc' -or -name '*.layouts.inc' -or -name '*.pages_default.inc' -or -name '*.panels_default.inc' -or -name '*.panelizer.inc' -or -name '*.strongarm.inc' -or -name '*.views_default.inc' -or -name '*.file_default_displays.inc' ')' -print0 | xargs -0 rm"
+checks:
+  php: true
+  javascript: true
+
+# build_failure_conditions:
+#   # No new issues allowed.
+#   - 'issues.new.exists'
+
+filter:
+  excluded_paths:
+    - 'sites/all/modules/contrib/*'
+  paths:
+    - 'sites/all/modules/*'
+    - 'sites/all/themes/*'

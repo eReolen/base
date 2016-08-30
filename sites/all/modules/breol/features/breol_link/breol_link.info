@@ -37,4 +37,3 @@ features[variable][] = menu_parent_link
 features[variable][] = node_options_link
 features[variable][] = node_preview_link
 features[variable][] = node_submitted_link
-mtime = 1469021097

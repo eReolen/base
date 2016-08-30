@@ -10,7 +10,7 @@
 function breol_link_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-link-body'
+  // Exported field_instance: 'node-link-body'.
   $field_instances['node-link-body'] = array(
     'bundle' => 'link',
     'default_value' => NULL,
@@ -72,7 +72,7 @@ function breol_link_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-link-field_breol_cover_image'
+  // Exported field_instance: 'node-link-field_breol_cover_image'.
   $field_instances['node-link-field_breol_cover_image'] = array(
     'bundle' => 'link',
     'deleted' => 0,
@@ -96,36 +96,22 @@ function breol_link_field_default_field_instances() {
       ),
       'teaser_medium' => array(
         'label' => 'hidden',
-        'module' => 'cs_adaptive_image',
+        'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'styles' => array(
-            'breakpoint_1' => '',
-            'breakpoint_2' => '',
-            'fallback_style' => 'breol_590_295',
-            'max_style' => 'breol_590_295',
-            'style_1' => 'breol_590_295',
-            'style_2' => 'breol_590_295',
-          ),
+          'image_style' => 'breol_590_295',
         ),
-        'type' => 'cs_adaptive_image',
+        'type' => 'image',
         'weight' => 3,
       ),
       'teaser_small' => array(
         'label' => 'hidden',
-        'module' => 'cs_adaptive_image',
+        'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'styles' => array(
-            'breakpoint_1' => '',
-            'breakpoint_2' => '',
-            'fallback_style' => 'breol_295_295',
-            'max_style' => 'breol_295_295',
-            'style_1' => 'breol_295_295',
-            'style_2' => 'breol_295_295',
-          ),
+          'image_style' => 'breol_295_295',
         ),
-        'type' => 'cs_adaptive_image',
+        'type' => 'image',
         'weight' => 2,
       ),
     ),
@@ -173,7 +159,7 @@ function breol_link_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-link-field_breol_description'
+  // Exported field_instance: 'node-link-field_breol_description'.
   $field_instances['node-link-field_breol_description'] = array(
     'bundle' => 'link',
     'default_value' => NULL,
@@ -225,7 +211,7 @@ function breol_link_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-link-field_breol_link'
+  // Exported field_instance: 'node-link-field_breol_link'.
   $field_instances['node-link-field_breol_link'] = array(
     'bundle' => 'link',
     'default_value' => NULL,
@@ -293,7 +279,7 @@ function breol_link_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-link-field_color'
+  // Exported field_instance: 'node-link-field_color'.
   $field_instances['node-link-field_color'] = array(
     'bundle' => 'link',
     'default_value' => NULL,
