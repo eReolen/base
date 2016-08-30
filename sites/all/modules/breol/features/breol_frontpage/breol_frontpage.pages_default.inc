@@ -16,7 +16,10 @@ function breol_frontpage_default_page_manager_pages() {
   $page->admin_title = 'Breol Frontpage';
   $page->admin_description = '';
   $page->path = 'breol_frontpage';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array();
   $page->conf = array(

@@ -1,5 +1,9 @@
 $z-index-cover-base: 1;
 
+.title {
+  font-size: 2em;
+}
+
 .article {
   color: $black-medium;
   font-family: $font-light;
@@ -15,6 +19,31 @@ $z-index-cover-base: 1;
 
   &--breol_section {
     padding: 0;
+  }
+
+  &--breol_page {
+    padding-right: 15%;
+    padding-left: 15%;
+
+    &--title {
+      margin: 0 0 20px;
+    }
+
+    p {
+      color: #5a5a5a;
+      line-height: 155%;
+      font-size: 1.1em;
+      margin-bottom: 32px;
+    }
+
+    a {
+      color: $red;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
@@ -179,3 +208,4 @@ $z-index-cover-base: 1;
     right: -10px;
   }
 }
+
