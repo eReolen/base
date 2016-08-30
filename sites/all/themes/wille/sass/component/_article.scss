@@ -63,6 +63,7 @@ $z-index-cover-base: 1;
     @include outer-container;
     background-size: 80%;
     background-position: bottom right;
+    max-height: 326px;
   }
 }
 
