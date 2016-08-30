@@ -540,7 +540,9 @@
       @include span-columns(1 of 2);
     }
 
-    .ting-object-right,
+    .field-name-ting-abstract,
+    .field-name-ting-series,
+    .js-online,
     .field-type-ting-collection-types {
       display: none;
     }
@@ -555,11 +557,25 @@
     }
 
     // Make heigth 100% of all items.
-    [class^="field-"], [class*=" field-"],
-    .field,
     .ting-object,
     .search-snippet-info  {
       height: 100%;
+    }
+
+    .field-name-ting-title {
+
+      h2 {
+        margin: 0;
+      }
+
+      a {
+        @extend .carousel-item-title;
+        font-size: 14px;
+      }
+    }
+
+    .view-mode-search-result .ting-object-right {
+      padding-left: 0;
     }
   }
 
