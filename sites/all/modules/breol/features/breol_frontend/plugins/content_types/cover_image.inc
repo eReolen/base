@@ -31,7 +31,8 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
   if (!in_array($node->type, array(
       'breol_subject',
       'breol_section',
-      'breol_news'
+      'breol_news',
+      'breol_page',
       )
     )) {
     return;
@@ -39,18 +40,6 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
 
   // Assign node for view.
   $variables['node'] = $node;
-
-  // Get body for breol_news.
-  if ($node->type === 'breol_news') {
-    $variables['body'] = $node->body[LANGUAGE_NONE][0]['value'];
-  }
-
-  // Add wrapper classes.
-  $variables['wrapper_class'] = 'cover__regular';
-
-  if ($node->type === 'breol_subject') {
-    $variables['wrapper_class'] = 'cover__' . strtolower($node->title);
-  }
 
   // Cover Image.
   $image = '';
@@ -66,6 +55,20 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
     $variables['cover_background_color'] = $node->field_color[LANGUAGE_NONE][0]['rgb'];
   } elseif ($node->type ==='breol_section') {
     $variables['cover_background_color'] = 'rgba(235, 235, 235, 0.9)';
+  }
+
+  // Get body for breol_news.
+  if ($node->type === 'breol_news') {
+    $variables['body'] = $node->body[LANGUAGE_NONE][0]['value'];
+  }
+
+  // Add wrapper classes.
+  $variables['wrapper_class'] = 'cover__regular';
+
+  if ($node->type === 'breol_subject') {
+    $variables['wrapper_class'] = 'cover__' . strtolower($node->title);
+  } elseif ($node->type === 'breol_page') {
+    $variables['wrapper_class'] = 'cover__fallback';
   }
 
   // Render the block.

@@ -27,7 +27,7 @@
       <?php if (!empty($image_uri)) : ?>
         style="background-image: url(<?php print $image_uri; ?>);"
       <?php endif; ?>>
-      <?php if (in_array($node->type, array('breol_news', 'breol_section'))) : ?>
+      <?php if (in_array($node->type, array('breol_news', 'breol_section', 'breol_page'))) : ?>
           <div class="article__cover__overlay"></div>
       <?php endif; ?>
       <div class="article__cover__content article__cover__content--<?php print $node->type?>">
@@ -36,7 +36,9 @@
             <?php print t('Category'); ?>
           </div>
         <?php endif; ?>
-        <h2 class="title"><?php print $node->title; ?></h2>
+        <?php if ($node->type !== 'breol_page') : ?>
+          <h2 class="title"><?php print $node->title; ?></h2>
+        <?php endif; ?>
         <?php if(!empty($body)) : ?>
           <?php print($body); ?>
         <?php endif; ?>
