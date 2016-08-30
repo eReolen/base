@@ -18,6 +18,7 @@
   font-family: $font-mikado;
   position: relative;
   cursor: pointer;
+  line-height: 1em;
 
   &:hover {
     background: lighten($color, 3);
