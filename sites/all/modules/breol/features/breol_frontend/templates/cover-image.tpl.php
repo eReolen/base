@@ -23,9 +23,6 @@
   </div>
 <?php elseif ($node->type === 'breol_page') : ?>
   <div class="user-banner">
-    <div class="user-banner__content">
-      <h2 class="title"><?php print $node->title; ?></h2>
-    </div>
     <div class="user-banner__bg"></div>
     <div class="user-banner__overlay"></div>
   </div>
