@@ -71,7 +71,7 @@ function ding_unilogin_menu() {
 function ding_unilogin_page_alter(&$page) {
   if (arg(0) == 'user') {
     $script = "jQuery(document).ready(function() {
-  var e = jQuery('#ding_user_hidden');
+  var e = jQuery('#ding_unilogin_hidden');
   if (e.val() == 'not_from_history') {
     e.val('from_history');
   }
@@ -84,8 +84,8 @@ function ding_unilogin_page_alter(&$page) {
 });
 ";
 
-    $page['content']['ding_user_hidden'] = array(
-      '#markup' => '<input id="ding_user_hidden" type="hidden" name="ding_user_hidden" value="not_from_history" />',
+    $page['content']['ding_unilogin_hidden'] = array(
+      '#markup' => '<input id="ding_unilogin_hidden" type="hidden" name="ding_unilogin_hidden" value="not_from_history" />',
       '#attached' => array(
         'js' => array(
           array(
