@@ -258,6 +258,8 @@ function ding_unilogin_url($path = NULL) {
   if (!$path && request_uri() != '/') {
     $path = url(request_uri(), array('absolute' => TRUE));
   }
+  // UNI•Login does not handle anchors, so we remove them.
+  $path = preg_replace('/#.*$/', '', $path);
 
   if (!$path) {
     return sprintf('https://sso.emu.dk/unilogin/login.cgi?id=%s', $unilogin_id);
