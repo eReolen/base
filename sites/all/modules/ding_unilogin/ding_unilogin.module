@@ -46,6 +46,60 @@ function ding_unilogin_menu() {
 }
 
 /**
+ * Implements hook_page_alter().
+ *
+ * This is a hack to reload user pages when user presses the back button. When
+ * logging out of UNI•Login, the user is left at a dead end, and might use the
+ * back button to get back to us. Per default this means they'll end up at the
+ * user profile page, apparently still logged in, which is confusing.
+ *
+ * The problem is that the page is loaded from the bfcache (back-forward cache),
+ * which ignores any cache busting headers of the page (which is according to
+ * spec, as the history is supposed to show you what you saw).
+ *
+ * Ideally, UNI•Login should provide a link back to us, but that's not likely to
+ * happen any time soon.
+ *
+ * One is supposed to use the pageshow JS event, however, Chrome has a bug where
+ * the event object doesn't have the right persisted value, which is the one
+ * that allows us to detect if we're loading from cache or not, so that's not
+ * much use.
+ *
+ * So instead we're relying on the fact that non-JS-created input elements are
+ * not reset to their default value when reloading the page from bfcache.
+ */
+function ding_unilogin_page_alter(&$page) {
+  if (arg(0) == 'user') {
+    $script = "jQuery(document).ready(function() {
+  var e = jQuery('#ding_user_hidden');
+  if (e.val() == 'not_from_history') {
+    e.val('from_history');
+  }
+  else {
+    e.val('not_from_history');
+    // Clear out page while loading.
+    jQuery('body').empty();
+    window.location.reload(true);
+  }
+});
+";
+
+    $page['content']['ding_user_hidden'] = array(
+      '#markup' => '<input id="ding_user_hidden" type="hidden" name="ding_user_hidden" value="not_from_history" />',
+      '#attached' => array(
+        'js' => array(
+          array(
+            'data' => $script,
+            'type' => 'inline',
+            'scope' => 'header',
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/**
  * Implements hook_permission().
  */
 function ding_unilogin_permission() {
