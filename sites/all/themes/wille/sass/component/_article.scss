@@ -35,6 +35,15 @@ $z-index-cover-base: 1;
       font-size: 1.1em;
       margin-bottom: 32px;
     }
+
+    a {
+      color: $red;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
