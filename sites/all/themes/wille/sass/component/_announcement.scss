@@ -1,0 +1,23 @@
+.announcement {
+  margin: 10px;
+  padding: 10px 10px;
+  overflow: hidden;
+
+  &.info {
+    border: 1px solid #00b7e7;
+    background: #b7dce5;
+  }
+
+  &.warning {
+    border: 1px solid #e7b700;
+    background: #e5dbb7;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+  a {
+    color: $red;
+  }
+}

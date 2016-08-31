@@ -172,3 +172,10 @@ function breol_base_update_7119() {
 function breol_base_update_7120() {
   module_enable(array('googleanalytics'), TRUE);
 }
+
+/**
+ * Enable reol_announcement.
+ */
+function breol_base_update_7121() {
+  module_enable(array('reol_announcement'), TRUE);
+}
