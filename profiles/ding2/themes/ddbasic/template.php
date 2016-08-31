@@ -924,11 +924,11 @@ function ddbasic_process_page(&$vars) {
 }
 
 /**
- * Implements hook_preprocess_ting_object().
+ * Implements hook_process_ting_object().
  *
  * Adds wrapper classes to the different groups on the ting object.
  */
-function ddbasic_preprocess_ting_object(&$vars) {
+function ddbasic_process_ting_object(&$vars) {
   if (isset($vars['elements']['#view_mode']) && $vars['elements']['#view_mode'] == 'full') {
     switch ($vars['elements']['#entity_type']) {
       case 'ting_object':
