@@ -207,10 +207,11 @@ function brin_menu_link($vars) {
     $sub_menu = drupal_render($element['#below']);
   }
 
+  if (!is_array($element['#localized_options']['attributes']['class'])) {
+    $element['#localized_options']['attributes']['class'] = array();
+  }
   // Add default class to a tag.
-  $element['#localized_options']['attributes']['class'] = array(
-    'menu-item',
-  );
+  $element['#localized_options']['attributes']['class'][] = 'menu-item';
 
   if (isset($element['#original_link'])) {
     // If this element uses ajax, add class and load ajax.
