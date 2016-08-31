@@ -360,6 +360,7 @@ function breol_frontend_default_page_manager_handlers() {
           'settings' => array(
             'type' => array(
               'breol_news' => 'breol_news',
+              'breol_page' => 'breol_page',
               'breol_section' => 'breol_section',
               'breol_subject' => 'breol_subject',
             ),

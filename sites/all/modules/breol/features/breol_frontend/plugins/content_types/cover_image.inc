@@ -41,10 +41,7 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
   // Assign node for view.
   $variables['node'] = $node;
 
-  // Cover Image.
-  $image = '';
-
-  if ($node->field_breol_cover_image) {
+  if (!empty($node->field_breol_cover_image)) {
     $image_entity = !empty($node->field_breol_cover_image) ? $node->field_breol_cover_image[LANGUAGE_NONE][0] : NULL;
     $file_uri = file_create_url($image_entity['uri']);
     $variables['image_uri'] = $file_uri;

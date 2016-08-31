@@ -9,6 +9,10 @@
   font-family: $font-light;
   z-index: 1;
 
+  .node-type-breol-page & {
+    margin-bottom: 0;
+  }
+
   @include media($tablet-l) {
     height: 200px;
   }
