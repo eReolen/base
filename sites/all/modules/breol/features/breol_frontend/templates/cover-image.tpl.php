@@ -6,7 +6,7 @@
  */
 ?>
 <?php if ($node->type === 'breol_section') : ?>
-  <div class="article__cover-wrapper">
+  <div class="article__cover-wrapper article__cover-wrapper--<?php print $node->type?> cover <?php print $wrapper_class?>">
     <div class="article__cover__overlay">
       <div class="article__cover__content article__cover__content--breol_section">
       <div class="field-name-field-subtitle">
