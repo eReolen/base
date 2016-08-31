@@ -80,7 +80,7 @@ function brin_ting_view_alter(&$build) {
 /**
  * Implements hook_preprocess_ting_object().
  */
-function brin_preprocess_ting_object(&$variables) {
+function brin_process_ting_object(&$variables) {
   // Remove the type prefix from the title of the first material of
   // the collection.
   if (!empty($variables['content']['ting_primary_object'][0]['ting_title'][0]['title']['#prefix'])) {

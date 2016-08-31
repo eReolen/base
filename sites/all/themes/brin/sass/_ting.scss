@@ -45,6 +45,13 @@
 }
 
 /**
+ * P2 added a transform that messes with the fallback image. Kill it.
+ */
+.ting-cover:before {
+  transform: none;
+}
+
+/**
  * Proper styles.
  */
 
