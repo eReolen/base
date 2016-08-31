@@ -228,3 +228,12 @@ $z-index-cover-base: 1;
   }
 }
 
+.field-name-field-files {
+  color: $black-medium;
+  font-family: $font-light;
+  .field-label {
+    font-weight: normal;
+    font-size: em(24, $base-font-size);
+    padding: 20px 0;
+  }
+}
