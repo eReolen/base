@@ -289,7 +289,7 @@ function brin_preprocess_html(&$variables) {
       'type' => 'meta',
       'attributes' => array(
         'name' => 'apple-itunes-app',
-        'content' => 'app-id=' . variable_get('reol_base_itunes_app_id'),
+        'content' => 'app-id=' . $app_id,
       ),
     );
   }
