@@ -15,8 +15,10 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
   float: left;
   display: inline-block;
 
-  ul.menu {
-
+  .menu {
+    a {
+      text-transform: none;
+    }
   }
 
   a {
