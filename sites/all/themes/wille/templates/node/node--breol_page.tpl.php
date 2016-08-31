@@ -10,5 +10,4 @@
     <?php print $title; ?>
   </h2>
   <?php print render($content['body']); ?>
-  <?php print render($content); ?>
 </div>
