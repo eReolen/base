@@ -26,7 +26,7 @@ $z-index-cover-base: 1;
     padding-left: 15%;
 
     &--title {
-      margin: 0 0 20px;
+      margin: 20px 0;
     }
 
     p {
@@ -59,6 +59,17 @@ $z-index-cover-base: 1;
   position: relative;
   float: left;
   width: 100%;
+  max-height: 476px;
+
+  &:after {
+    padding-top: 56.25%;
+    display: block;
+    content: '';
+  }
+
+  &--breol_subject {
+    max-height: 326px;
+  }
 }
 
 .article__cover {
@@ -75,11 +86,10 @@ $z-index-cover-base: 1;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  height: 100%;
 
-  &:after {
-    padding-top: 56.25%;
-    display: block;
-    content: '';
+  &--breol_news {
+    position: absolute;
   }
 
   &--breol_section {
@@ -92,6 +102,10 @@ $z-index-cover-base: 1;
     @include outer-container;
     background-size: 80%;
     background-position: bottom right;
+    height: 326px;
+  }
+
+  &--breol_page {
     max-height: 326px;
   }
 }
@@ -152,7 +166,6 @@ $z-index-cover-base: 1;
   position: relative;
   max-width: 550px;
   max-height: 350px;
-  overflow: hidden;
   padding: 40px 15px;
   color: $title-color;
 
@@ -183,8 +196,13 @@ $z-index-cover-base: 1;
   right: 0;
   bottom: 0;
   z-index: 3;
-  display: flex;
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
   justify-content: center;
+  -webkit-justify-content: space-around; /* Safari 6.1+ */
   align-items: center;
   overflow: hidden;
 }
