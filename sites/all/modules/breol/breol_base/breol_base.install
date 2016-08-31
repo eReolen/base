@@ -179,3 +179,10 @@ function breol_base_update_7120() {
 function breol_base_update_7121() {
   module_enable(array('reol_announcement'), TRUE);
 }
+
+/**
+ * Enable ding_webtrends.
+ */
+function breol_base_update_7122() {
+  module_enable(array('ding_webtrends'), TRUE);
+}
