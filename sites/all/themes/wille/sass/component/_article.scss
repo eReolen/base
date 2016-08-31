@@ -44,6 +44,11 @@ $z-index-cover-base: 1;
         text-decoration: underline;
       }
     }
+
+    @include media($tablet-p) {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
   }
 }
 
@@ -68,8 +73,15 @@ $z-index-cover-base: 1;
   }
 
   &--breol_subject,
-  &--breol_section {
+  &--breol_section,
+  &--breol_page {
     max-height: 326px;
+  }
+
+  &--breol_page {
+    @include media($phone) {
+      max-height: 35vh;
+    }
   }
 }
 
@@ -108,6 +120,11 @@ $z-index-cover-base: 1;
 
   &--breol_page {
     max-height: 326px;
+    position: absolute;
+
+    @include media($phone) {
+      max-height: 35vh;
+    }
   }
 }
 
