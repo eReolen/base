@@ -544,20 +544,11 @@ function breol_frontend_default_page_manager_handlers() {
           'name' => 'node_type',
           'settings' => array(
             'type' => array(
+              'breol_section' => 'breol_section',
               'breol_subject' => 'breol_subject',
             ),
           ),
           'context' => 'node',
-          'not' => FALSE,
-        ),
-        2 => array(
-          'name' => 'path_visibility',
-          'settings' => array(
-            'visibility_setting' => '1',
-            'paths' => 'content/eboeger
-content/lydboeger',
-          ),
-          'context' => 'argument_string_1',
           'not' => FALSE,
         ),
       ),
