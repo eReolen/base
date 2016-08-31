@@ -18,7 +18,7 @@ function reol_shared_frontend_ctools_plugin_directory($owner, $plugin_type) {
  * Remove the fragment from the redirect to <front> by ding_user. We don't have
  * the #login form and JS of DDBasic, so it's a no-op and looks weird.
  */
-function reol_shared_frontend_drupal_goto_alter(&$path, &$options, &$http_response_code) {
+function reol_shared_frontend_drupal_goto_alter(&$path, &$options) {
   if ($path == '' &&
     isset($options['fragment']) &&
     $options['fragment'] == 'login') {
