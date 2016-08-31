@@ -67,7 +67,8 @@ $z-index-cover-base: 1;
     content: '';
   }
 
-  &--breol_subject {
+  &--breol_subject,
+  &--breol_section {
     max-height: 326px;
   }
 }
