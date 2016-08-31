@@ -96,13 +96,6 @@ function wille_ting_collection_view_alter(&$build) {
  * @todo merge (partly) with brin_preprocess_ting_object_cover().
  */
 function wille_preprocess_ting_object_cover(&$variables) {
-
-  // Wrap the cover image in a link to the material.
-  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
-  if (!reol_base_fake_id($ding_entity_id)) {
-    $variables['image'] = l($variables['image'], 'ting/collection/' . $ding_entity_id , array('html' => TRUE, ));
-  }
-
   if (!isset($variables['elements']['#suppress_type_icon']) ||
     !$variables['elements']['#suppress_type_icon']) {
     $ting_entity = $variables['object'];
@@ -111,6 +104,31 @@ function wille_preprocess_ting_object_cover(&$variables) {
       $variables['classes'] = array_merge($variables['classes'], $add_classes);
     }
   }
+}
+
+/**
+ * Theme ting_object_cover.
+ *
+ * Wraps the cover in a link to the material.
+ */
+function wille_ting_object_cover($variables) {
+  $attributes = array(
+    'class' => implode(' ', $variables['classes']),
+  );
+
+  foreach ($variables['data'] as $name => $value) {
+    $attributes['data-' . $name] = $value;
+  }
+
+  $cover = '<div ' . drupal_attributes($attributes) . '>' . $variables['image'] . '</div>';
+
+  // Add link if the id is not to a fake material.
+  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
+  if (!reol_base_fake_id($ding_entity_id)) {
+    $cover = l($cover, 'ting/collection/' . $ding_entity_id, array('html' => TRUE));
+  }
+
+  return $cover;
 }
 
 /**
