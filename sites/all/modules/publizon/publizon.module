@@ -520,8 +520,9 @@ function publizon_library_load($library_id) {
   $libraries = &drupal_static(__FUNCTION__) || array();
   // If library is not in cache, get it.
   if (!isset($libraries[$library_id])) {
-    // Try getting from db cache.
-    if ($cache = cache_get('publizon_libraries:' . $library_id)) {
+    // Try getting from db cache. Libraries varies by client_id.
+    $cache_id = 'publizon_libraries:' . $library_id . '' . publizon_get_client_id();
+    if ($cache = cache_get($cache_id)) {
       $libraries[$library_id] = $cache->data;
     }
     else {
@@ -534,7 +535,7 @@ function publizon_library_load($library_id) {
         $libraries[$library_id] = FALSE;
       }
       // Save in db cache.
-      cache_set('publizon_libraries:' . $library_id, $libraries[$library_id], 'cache', time() + 24 * 60 * 60);
+      cache_set($cache_id, $libraries[$library_id], 'cache', time() + 24 * 60 * 60);
     }
   }
 
