@@ -62,8 +62,18 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
   // Add wrapper classes.
   $variables['wrapper_class'] = 'cover__regular';
 
-  if ($node->type === 'breol_subject') {
+   if ($node->type === 'breol_subject' || $node->type === 'breol_section') {
+
+    // TODO(ts) - This was made last minute before launch. Should be refactored later.
     $variables['wrapper_class'] = 'cover__' . strtolower($node->title);
+    if (strtolower($node->title) === 'ebøger' || strtolower($node->title) === 'netlydbøger') {
+      $variables['image_uri'] = NULL;
+      if (strtolower($node->title) === 'ebøger') {
+        $variables['wrapper_class'] = 'cover__ebooks';
+      } elseif (strtolower($node->title) === 'netlydbøger') {
+        $variables['wrapper_class'] = 'cover__audiobooks';
+      }
+    }
   } elseif ($node->type === 'breol_page') {
     $variables['wrapper_class'] = 'cover__fallback';
   }
