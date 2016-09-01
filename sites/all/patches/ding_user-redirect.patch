@@ -1,0 +1,16 @@
+diff --git a/modules/ding_user/ding_user.module b/modules/ding_user/ding_user.module
+index b2d30b4..53d3e16 100644
+--- a/modules/ding_user/ding_user.module
++++ b/modules/ding_user/ding_user.module
+@@ -7,9 +7,9 @@
+ include_once 'ding_user_comments.inc';
+ 
+ /**
+- * Implements hook_preprocess_html().
++ * Implements hook_init().
+  */
+-function ding_user_preprocess_html(&$variables) {
++function ding_user_init() {
+   $args = arg();
+   if ($args[0] == 'user') {
+     // Set default title.

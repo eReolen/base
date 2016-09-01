@@ -5,7 +5,8 @@
  */
 
 include_once 'publizon.features.inc';
-require_once drupal_get_path('module', 'publizon') . '/includes/publizon.admin.inc';
+
+require_once dirname(__FILE__) . '/includes/publizon.admin.inc';
 
 /**
  * Define the providers that are provided by publizon.
@@ -151,6 +152,13 @@ function publizon_get_library($retailer_id, $reset = FALSE) {
  *   The client id.
  */
 function publizon_get_client_id() {
+  if (module_exists('ding_unilogin')) {
+    // If the user is a UNI•Login user, return the special UNI•Login
+    // client_id.
+    if (ding_unilogin_authenticated()) {
+      return variable_get('publizon_unilogin_client_id', '');
+    }
+  }
   return variable_get('publizon_client_id', '');
 }
 
@@ -184,6 +192,25 @@ function publizon_ting_covers($entities) {
   }
 
   return $covers;
+}
+
+/**
+ * Implements hook_ding_unilogin_login().
+ *
+ * Look up the retailer id we should use for the user.
+ */
+function publizon_ding_unilogin_login($user) {
+  $municipality = $user->getInstitutionMunicipality();
+  $libraries = variable_get('publizon_libraries', array());
+  foreach ($libraries as $retailer_id => $library) {
+    if (isset($library['unilogin_id']) &&
+        $library['unilogin_id'] == $municipality) {
+      $user->setProfileData('field_publizon_retailer_id', $retailer_id);
+      return TRUE;
+    }
+  }
+  watchdog('publizon', 'UNI•Login municipality @municipality not configured on any library', array('@municipality' => $municipality), WATCHDOG_NOTICE);
+  return FALSE;
 }
 
 /**
@@ -389,21 +416,6 @@ function publizon_form_ding_reservation_reserve_form_submit($form, &$form_state)
 }
 
 /**
- * Implements hook_init().
- *
- * Add javascript settings.
- */
-function publizon_init() {
-  drupal_add_js(array(
-    'publizon' => array(
-      'player' => array(
-        'clientId' => variable_get('publizon_player_client_id', ''),
-        'url' => variable_get('publizon_player_url', ''),
-      ),
-    ),
-  ), 'setting');
-}
-/**
  * Get custom error messages for publizon error codes.
  */
 function _publizon_error_messages() {
@@ -527,52 +539,4 @@ function publizon_library_load($library_id) {
   }
 
   return $libraries[$library_id];
-}
-
-/**
- * Publizon provider exception.
- */
-class DingPublizonException extends DingProviderUserException {
-  private $showBookmark;
-  private $showReserve;
-  private $exception;
-
-  /**
-   * Convert a PublizonException to a DingPublizonException.
-   *
-   * Rethrows the new exception.
-   *
-   * @throws DingPublizonException
-   */
-  static public function convert(PublizonException $publizon_exception) {
-    $code = $publizon_exception->getCode();
-    $message = publizon_get_message($code);
-
-    throw new self($message['error_text']['value'], $code, $message['show_bookmark'], $message['show_reserve'], $exception);
-  }
-
-  /**
-   * Constructor.
-   */
-  public function __construct($message, $code, $show_bookmark, $show_reserve, $exception) {
-    $this->message = $message;
-    $this->code = $code;
-    $this->showBookmark = $show_bookmark;
-    $this->showReserve = $show_reserve;
-    $this->exception = $exception;
-  }
-
-  /**
-   * Return whether or not to show bookmark button.
-   */
-  public function showBookmark() {
-    return (bool) $this->showBookmark;
-  }
-
-  /**
-   * Return whether or not to show reserve button.
-   */
-  public function showReserve() {
-    return (bool) $this->showReserve;
-  }
 }

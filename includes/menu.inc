@@ -461,9 +461,9 @@ function menu_get_item($path = NULL, $router_item = NULL) {
     $router_items[$path] = $router_item;
   }
   if (!isset($router_items[$path])) {
-    // Rebuild if the menu masks are missing, which occurs rarely, likely due
-    // to a race condition of multiple rebuilds.
-    if (!variable_get('menu_masks', array())) {
+    // Rebuild if we know it's needed, or if the menu masks are missing which
+    // occurs rarely, likely due to a race condition of multiple rebuilds.
+    if (variable_get('menu_rebuild_needed', FALSE) || !variable_get('menu_masks', array())) {
       if (_menu_check_rebuild()) {
         menu_rebuild();
       }
@@ -519,10 +519,6 @@ function menu_execute_active_handler($path = NULL, $deliver = TRUE) {
 
   // Only continue if the site status is not set.
   if ($page_callback_result == MENU_SITE_ONLINE) {
-    // Perform a menu rebuild if one was requested.
-    if (variable_get('menu_rebuild_needed', FALSE)) {
-      menu_rebuild();
-    }
     if ($router_item = menu_get_item($path)) {
       if ($router_item['access']) {
         if ($router_item['include_file']) {

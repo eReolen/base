@@ -1,0 +1,46 @@
+// Header.
+.site-header__inner {
+  @include outer-container;
+
+  @include media($tablet-l) {
+    padding: 0 15px;
+  }
+}
+
+// Main content.
+body:not(.front) .main-content-wrapper__inner {
+  @include outer-container;
+}
+
+.main-content-wrapper__inner {
+  width: 100%;
+  @include media($tablet-l) {
+    padding: 0 15px;
+  }
+}
+
+.main-content-wrapper {
+  clear: both;
+}
+
+// Footer.
+.footer__inner {
+  @include outer-container;
+}
+
+.container {
+  @include outer-container;
+}
+
+// Frontpage theming.
+.front {
+  .main-content {
+    background: $gray;
+    padding: 75px 0;
+    margin-bottom: 100px;
+
+    @include media($tablet-l) {
+      padding: 15px;
+    }
+  }
+}

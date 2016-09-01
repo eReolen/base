@@ -1,0 +1,72 @@
+// TODO(ts) - temporary fix. Must be removed in pane.
+.node-type-breol-news {
+  .main-content h2.pane-title {
+    display: none;
+  }
+}
+
+/**
+ * Tabs theming.
+ */
+.pane-page-tabs {
+  @include outer-container;
+}
+
+#tabs {
+  @include span-columns(12);
+
+  .tabs {
+
+    li {
+      float: left;
+      padding: 10px 20px;
+      margin: 0 5px;
+      background: $brown-light;
+
+    }
+  }
+}
+
+.play_icon {
+  position: absolute;
+  top: 30%;
+  left: 42%;
+  font-size: 44px;
+  color: $red;
+  background: white;
+  padding: 22px 20px 20px 30px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+// Titles in general. TODO(ts) - theme it right, but
+// this point it is to eraly to tell this should be general.
+.pane-node-content {
+
+  > .pane-title {
+    @include outer-container;
+
+    padding: 100px 0 0;
+    font-size: em(26, $base-font-size);
+    font-family: $font-light;
+    color: $black-medium;
+    margin-bottom: 40px;
+  }
+}
+
+.main-content {
+  width: 100%;
+  display: inline-block;
+  min-height: 100vh;
+}
+
+// Hacky hack.
+.pane-loans {
+  .material-item {
+    .left-column {
+      > .item-checkbox {
+        display: none;
+      }
+    }
+  }
+}

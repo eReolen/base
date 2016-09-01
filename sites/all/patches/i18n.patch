@@ -1,0 +1,21 @@
+commit 8382ce0d1b780c2ec6e5d2d3921e6cc60236994c
+Author: Thomas Fini Hansen <xen@xen.dk>
+Date:   Thu Aug 18 09:04:52 2016 +0200
+
+    Update i18n modules
+    
+    Closes BREOL-137
+
+diff --git a/ding2.make b/ding2.make
+index 0a045ad..59cb99e 100644
+--- a/ding2.make
++++ b/ding2.make
+@@ -151,7 +151,7 @@ projects[l10n_update][subdir] = "contrib"
+ projects[l10n_update][version] = "1.0"
+ 
+ projects[i18n][subdir] = "contrib"
+-projects[i18n][version] = "1.11"
++projects[i18n][version] = "1.13"
+ 
+ projects[maintenance_mode_api][subdir] = "contrib"
+ projects[maintenance_mode_api][version] = "1.0-beta1"

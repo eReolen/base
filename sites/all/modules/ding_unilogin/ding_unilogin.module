@@ -1,0 +1,454 @@
+<?php
+
+/**
+ * @file
+ * Allows users to log in via UNI•Login.
+ */
+
+/**
+ * Implements hook_init().
+ *
+ * Handle UNI•Login and add javascript settings.
+ *
+ * Monkeypatch AJAX to make a note of the popup triggered, in case we need to
+ * re-trigger it later (after logging in via UNI•Login).
+ */
+function ding_unilogin_init() {
+  drupal_add_js(drupal_get_path('module', 'ding_unilogin') . '/js/ding_unilogin_monkeypatch.js', 'file');
+  _ding_unilogin_handle_login();
+}
+
+/**
+ * Implements hook_menu().
+ */
+function ding_unilogin_menu() {
+  $items = array();
+
+  // Administration config page.
+  $items['admin/config/ding/unilogin'] = array(
+    'title' => 'UNI•Login',
+    'description' => 'Configure UNI•Login access',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ding_unilogin_admin_settings_form'),
+    'access arguments' => array('configure unilogin'),
+    'file' => 'ding_unilogin.admin.inc',
+  );
+
+  $items['ding_unilogin/get/%'] = array(
+    'page callback' => 'ding_unilogin_url_json',
+    'page arguments' => array(2),
+    // Let anyone access.
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_page_alter().
+ *
+ * This is a hack to reload user pages when user presses the back button. When
+ * logging out of UNI•Login, the user is left at a dead end, and might use the
+ * back button to get back to us. Per default this means they'll end up at the
+ * user profile page, apparently still logged in, which is confusing.
+ *
+ * The problem is that the page is loaded from the bfcache (back-forward cache),
+ * which ignores any cache busting headers of the page (which is according to
+ * spec, as the history is supposed to show you what you saw).
+ *
+ * Ideally, UNI•Login should provide a link back to us, but that's not likely to
+ * happen any time soon.
+ *
+ * One is supposed to use the pageshow JS event, however, Chrome has a bug where
+ * the event object doesn't have the right persisted value, which is the one
+ * that allows us to detect if we're loading from cache or not, so that's not
+ * much use.
+ *
+ * So instead we're relying on the fact that non-JS-created input elements are
+ * not reset to their default value when reloading the page from bfcache.
+ */
+function ding_unilogin_page_alter(&$page) {
+  if (arg(0) == 'user') {
+    $script = "jQuery(document).ready(function() {
+  var e = jQuery('#ding_unilogin_hidden');
+  if (e.val() == 'not_from_history') {
+    e.val('from_history');
+  }
+  else {
+    e.val('not_from_history');
+    // Clear out page while loading.
+    jQuery('body').empty();
+    window.location.reload(true);
+  }
+});
+";
+
+    $page['content']['ding_unilogin_hidden'] = array(
+      '#markup' => '<input id="ding_unilogin_hidden" type="hidden" name="ding_unilogin_hidden" value="not_from_history" />',
+      '#attached' => array(
+        'js' => array(
+          array(
+            'data' => $script,
+            'type' => 'inline',
+            'scope' => 'header',
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function ding_unilogin_permission() {
+  return array(
+    'configure unilogin' => array(
+      'title' => t('Configure UNI•Login'),
+      'description' => t('Allow role to configure UNI•Login settings.'),
+    ),
+  );
+}
+
+/**
+ * Ajax callback for getting login URL.
+ *
+ * JS calls this with the current path of the browser window, in order to get
+ * a link to UNI•Login with the return path set properly. The form_alter that
+ * inserts the link cannot know what the path of the page is because it's
+ * loaded into the popup using AJAX.
+ */
+function ding_unilogin_url_json($path) {
+  drupal_json_output(array('url' => ding_unilogin_url(urldecode($path))));
+}
+
+/**
+ * Alter the login form.
+ *
+ * Add in link for logging in via UNI•Login.
+ *
+ * @param array $form
+ *   The form array to alter.
+ * @param array $form_state
+ *   The state of the form.
+ */
+function ding_unilogin_form_alter(&$form, &$form_state, $form_id) {
+  if (in_array($form_id, array(
+    'user_login',
+    'user_login_block',
+    'ding_user_authenticate_form',
+  ))) {
+    if (variable_get('ding_unilogin_id', '')) {
+      $form['unilogin'] = array(
+        '#attributes' => array(
+          'class' => array(
+            'unilogin-button',
+            // Hide the link, the JS will show it when it's set the proper URL.
+            'element-hidden',
+          ),
+        ),
+        '#type' => 'link',
+        '#href' => '#',
+        '#title' => t('Log in via !service',
+                      array(
+                        '!service' => '<span class="unilogin-logo">UNI•Login</span>',
+                      )),
+        '#options' => array('html' => TRUE),
+        '#attached' => array(
+          'js' => array(
+            drupal_get_path('module', 'ding_unilogin') . '/js/ding_unilogin.js',
+          ),
+        ),
+      );
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for profile2_form().
+ *
+ * Hide the pincode change widget for UNI•Login users. This modules weight
+ * ensures we get called after ding_user_form_profile2_form_alter().
+ */
+function ding_unilogin_form_profile2_form_alter(&$form, &$form_state) {
+  if (ding_unilogin_authenticated()) {
+    if (isset($form['pass'])) {
+      $form['pass']['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Implements hook_ding_unilogin_login().
+ *
+ * Check access with authentication web service, if configured.
+ */
+function ding_unilogin_ding_unilogin_login($user) {
+  // Check that the user has license to access us.
+  if (variable_get('ding_unilogin_auth_context', '')) {
+    $access = $user->hasLicense(
+      variable_get('ding_unilogin_auth_context', ''),
+      variable_get('ding_unilogin_auth_project', '')
+    );
+
+    if (!$access) {
+      watchdog('ding_unilogin', 'UNI•Login user %user does not have appropriate license.', array('%user' => $user->name), WATCHDOG_NOTICE);
+    }
+    return $access;
+  }
+  return TRUE;
+}
+
+/**
+ * Implements hook_user_logout().
+ *
+ * If configured for global logout, make a note for
+ * ding_unilogin_drupal_goto_alter to trigger on.
+ */
+function ding_unilogin_user_logout($account) {
+  if (variable_get('ding_unilogin_global_logout', FALSE) &&
+      ding_unilogin_authenticated($account)) {
+    _ding_unilogin_global_logout(TRUE);
+  }
+}
+
+/**
+ * Implements hook_drupal_goto_alter().
+ *
+ * Redirect post-logout to UNI•Login logout page if configured for global
+ * logout.
+ */
+function ding_unilogin_drupal_goto_alter(&$path, &$options, &$http_response_code) {
+  if (_ding_unilogin_global_logout()) {
+    $path = 'https://sso.emu.dk/logout';
+    $options = array('external' => TRUE);
+    $http_response_code = 302;
+  }
+}
+
+/**
+ * Whether to globally log out.
+ */
+function _ding_unilogin_global_logout($state = NULL) {
+  $logout = &drupal_static(__FUNCTION__);
+  if (!is_null($state)) {
+    $logout = $state;
+  }
+
+  return $logout;
+}
+
+/**
+ * Handle logging in returing UNI•Login users.
+ *
+ * @see http://www.stil.dk/-/media/STIL/Filer/Publikationer/Tekniske-vejledninger/uni-login-authentication.ashx?la=da
+ * @see http://www.stil.dk/It-og-administration/Brugere-og-adgangsstyring/Udbyder-UNILogin/Dokumentation
+ */
+function _ding_unilogin_handle_login() {
+  if (isset($_GET['user']) &&
+      isset($_GET['timestamp']) &&
+      isset($_GET['auth'])) {
+    // Error message in case of errors.
+    $error = FALSE;
+    // Whether we successfully logged the user in.
+    $success = FALSE;
+    // Validate ticket.
+    $hash = md5($_GET['timestamp'] .
+                variable_get('ding_unilogin_secret', '') .
+                $_GET['user']);
+    if ($hash === $_GET['auth']) {
+      $time = DateTime::createFromFormat('YmdHis', $_GET['timestamp'],
+                                         new DateTimeZone('UTC'));
+
+      if ($time) {
+        // Check that the given time stamp is in the past (with 5 seconds
+        // grace to avoid NTP race conditions), but not older than
+        // one minute.
+        $now = (new DateTime())->getTimestamp();
+        if ($time->getTimestamp() < ($now + 5) &&
+            ($now - $time->getTimestamp()) < 60
+        ) {
+          $success = _ding_unilogin_login($_GET['user']);
+        }
+        else {
+          $error = 'Timestamp %time too old for %user';
+        }
+
+      }
+      else {
+        $error = 'Could not parse timestamp %time for %user';
+      }
+    }
+    else {
+      $error = "Auth hash din't validate for %user";
+    }
+
+    if ($error) {
+      watchdog('ding_unilogin', $error,
+               array('%time' => $_GET['timestamp'], '%user' => $_GET['user']),
+               WATCHDOG_WARNING);
+      drupal_set_message(t('Could not understand the reply from UNI•Login, so cannot log you in.'), 'error');
+    }
+    // Redirect to current_path() to clear most GET parameters.
+    $query = array();
+    if (isset($_GET['ding-unilogin-trigger']) && $success) {
+      // This should propagate if we logged in a user, else it doesn't matter
+      // (doesn't make sense to re-display the reservation popup, as it'll
+      // just trigger the login form again).
+      $query['ding-unilogin-trigger'] = $_GET['ding-unilogin-trigger'];
+    }
+    drupal_goto(current_path(), array('query' => $query));
+  }
+}
+
+/**
+ * URL to redirect to for UNI•Login.
+ */
+function ding_unilogin_url($path = NULL) {
+  $unilogin_id = variable_get('ding_unilogin_id', '');
+
+  // If no path given default to redirecting back to current path.
+  if (!$path && request_uri() != '/') {
+    $path = url(request_uri(), array('absolute' => TRUE));
+  }
+  // UNI•Login does not handle anchors, so we remove them.
+  $path = preg_replace('/#.*$/', '', $path);
+
+  if (!$path) {
+    return sprintf('https://sso.emu.dk/unilogin/login.cgi?id=%s', $unilogin_id);
+  }
+
+  $secret = variable_get('ding_unilogin_secret', '');
+  return sprintf('https://sso.emu.dk/unilogin/login.cgi?id=%s&path=%s&auth=%s',
+                 $unilogin_id,
+                 urlencode(base64_encode($path)),
+                 md5($path . $secret)
+  );
+}
+
+/**
+ * Check whether a user is logged in via UNI•Login.
+ */
+function ding_unilogin_authenticated($account = NULL) {
+  global $user;
+  if (!$account) {
+    $account = $user;
+  }
+
+  return isset($account->data['unilogin']) && $account->data['unilogin'];
+}
+
+/**
+ * Attemp to log in UNI•Login user.
+ *
+ * @param string $username
+ *   The UNI•Login user name.
+ *
+ * @return bool
+ *   Whether the user was logged in.
+ */
+function _ding_unilogin_login($username) {
+  $access = FALSE;
+
+  try {
+    $user = new DingUniloginUser(
+      $username,
+      variable_get('ding_unilogin_ws_user', ''),
+      variable_get('ding_unilogin_ws_pass', '')
+    );
+    $user->setAuthName(ding_user_default_authname($username));
+
+    foreach (module_implements('ding_unilogin_login') as $module) {
+      $access = module_invoke($module, 'ding_unilogin_login', $user);
+      // Break out if someone denied access.
+      if (!$access) {
+        break;
+      }
+    }
+  }
+  catch (Exception $e) {
+    drupal_set_message(t('Sorry, but there was problems while communicating with UNI•Login. Please try again later.'));
+    watchdog_exception('ding_unilogin', $e, NULL, array(), WATCHDOG_ERROR);
+    return FALSE;
+  }
+
+  if (!$access) {
+    drupal_set_message(t('Sorry, but that UNI•Login account has not been granted access. Please contact the administrator if you think this is wrong.'), 'error');
+    watchdog('ding_unilogin', 'Access denied for UNI•Login user %user', array('%user' => $username), WATCHDOG_NOTICE);
+    return FALSE;
+  }
+
+  $auth_res = array(
+    'success' => TRUE,
+    'creds' => array(
+      'name' => $user->getName(),
+      // Random password. Shouldn't be used, but we'll make it un-guessable
+      // for good measure, in case someone messes up.
+      'pass' => md5(drupal_random_bytes(32) . 'no_password_for_the_wicked'),
+    ),
+    'user' => array(
+      'mail' => '',
+      'blocked' => FALSE,
+      'data' => array(
+        'display_name' => '',
+      ),
+    ),
+  );
+
+  /*
+   * We call two private ding_user functions to do the heavy lifting. Sadly,
+   * nobody has re-factored ding_user to have a simple login function, so we
+   * have to duplicate its work here.
+   */
+
+  // Create new account in Drupal and if one exists update it.
+  $account = _ding_user_create_account($user->getAuthName(), $auth_res);
+
+  // Make a note that this is a UNI•Login account in data by saving once more.
+  user_save($account, array('data' => array('unilogin' => TRUE)));
+
+  // Check that a profile exists for the user and if not create one.
+  _ding_user_create_profile2($account);
+
+  // Save profile data provided by hook_ding_unilogin_login implementations.
+  $profile_data = $user->getProfileData();
+  if (!empty($profile_data)) {
+    $profile = profile2_load_by_user($account->uid, 'provider_publizon');
+    $wrapper = entity_metadata_wrapper('profile2', $profile);
+
+    foreach ($profile_data as $field => $value) {
+      $wrapper->{$field} = $value;
+    }
+    $profile->save();
+  }
+
+  $form_state['uid'] = $account->uid;
+  user_login_submit(array(), $form_state);
+  return TRUE;
+}
+
+/**
+ * Get a UNI•Login service.
+ *
+ * @param string $service
+ *   The service to get, either 'auth' or 'info'.
+ */
+function ding_unilogin_wservice($service) {
+  switch ($service) {
+    case 'auth':
+      return new DingUniloginWS05(
+        variable_get('ding_unilogin_ws_user', ''),
+        variable_get('ding_unilogin_ws_pass', '')
+      );
+
+    case 'info':
+      return new DingUniloginWS02(
+        variable_get('ding_unilogin_ws_user', ''),
+        variable_get('ding_unilogin_ws_pass', '')
+      );
+
+    default:
+      throw new RuntimeException('Bad service type ' . $service);
+  }
+}

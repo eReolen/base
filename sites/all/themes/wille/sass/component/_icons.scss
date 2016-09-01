@@ -1,0 +1,122 @@
+/**
+ * Custom icomoon font.
+ */
+
+[class^="icon-"], [class*=" icon-"] {
+    @extend %icon;
+}
+
+.icon-logo:before {
+    content: "\e924";
+}
+.icon-e-books:before {
+    content: "\e900";
+}
+.icon-help:before {
+    content: "\e901";
+}
+.icon-close:before {
+    content: "\e902";
+}
+.icon-menu:before {
+    content: "\e903";
+}
+.icon-audio-books:before {
+    content: "\e904";
+}
+.icon-news:before {
+    content: "\e905";
+}
+.icon-profile:before {
+    content: "\e906";
+}
+.icon-search:before {
+    content: "\e907";
+}
+.icon-attention:before {
+    content: "\e908";
+}
+.icon-check:before {
+    content: "\e909";
+}
+.icon-e-book:before {
+    content: "\e90a";
+}
+.icon-previous:before {
+    content: "\e90b";
+}
+.icon-grid-view:before {
+    content: "\e90c";
+}
+.icon-heart:before {
+    content: "\e90d";
+}
+.icon-reading-aloud:before {
+    content: "\e90e";
+}
+.icon-camera:before {
+    content: "\e90f";
+}
+.icon-close-b:before {
+    content: "\e910";
+}
+.icon-easy-reader:before {
+    content: "\e911";
+}
+.icon-list-view:before {
+    content: "\e912";
+}
+.icon-lock:before {
+    content: "\e913";
+}
+.icon-audio-sound:before {
+    content: "\e914";
+}
+.icon-audio-no-sound:before {
+    content: "\e915";
+}
+.icon-audio-book:before {
+    content: "\e916";
+}
+.icon-audio-next:before {
+    content: "\e917";
+}
+.icon-pause:before {
+    content: "\e918";
+}
+.icon-arrow-right:before {
+    content: "\e919";
+}
+.icon-arrow-left:before {
+    content: "\e91a";
+}
+.icon-arrow-right-funny:before {
+    content: "\e91b";
+}
+.icon-arrow-left-funny:before {
+    content: "\e91c";
+}
+.icon-play:before {
+    content: "\e91d";
+}
+.icon-search-b:before {
+    content: "\e91e";
+}
+.icon-fast-forward-right-b:before {
+    content: "\e91f";
+}
+.icon-fast-forward-left-b:before {
+    content: "\e920";
+}
+.icon-fast-forward-right:before {
+    content: "\e921";
+}
+.icon-fast-forward-left:before {
+    content: "\e922";
+}
+.icon-Star:before {
+    content: "\e923";
+}
+.icon-spinner:before {
+    content: "\e97a";
+}

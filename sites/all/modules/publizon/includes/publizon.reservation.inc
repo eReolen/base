@@ -128,7 +128,7 @@ function publizon_reservation_create($account, $local_id, $options) {
     $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $isbn, $email, $phone);
   }
   catch (PublizonException $e) {
-    DingPublizonException::convert($e);
+    PublizonDingProviderException::convert($e);
   }
 
   return array();

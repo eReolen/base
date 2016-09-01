@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the breol_fancy_box module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function breol_fancy_box_install() {
+  $queue_name = 'ereol_frontpage_queue';
+
+  $queue = nodequeue_load_queue_by_name($queue_name);
+
+  if (empty($queue)) {
+    $nodequeue = new stdClass();
+    $nodequeue->api_version = 2;
+    $nodequeue->name = $queue_name;
+    $nodequeue->title = $queue_name;
+    $nodequeue->subqueue_title = '';
+    $nodequeue->size = 6;
+    $nodequeue->link = 'Add to ereol_frontpage_queue';
+    $nodequeue->link_remove = 'Remove from ereol_frontpage_queue';
+    $nodequeue->owner = 'nodequeue';
+    $nodequeue->show_in_ui = 1;
+    $nodequeue->show_in_tab = 1;
+    $nodequeue->show_in_links = 1;
+    $nodequeue->reference = '0';
+    $nodequeue->reverse = 0;
+    $nodequeue->i18n = 0;
+    $nodequeue->roles = array();
+    $nodequeue->types = array(
+      0 => 'link',
+      1 => 'breol_news',
+      2 => 'breol_video',
+    );
+    $nodequeue->add_subqueue = array(
+      1 => 'Ereol frontpage queue',
+    );
+
+    nodequeue_save($nodequeue);
+  }
+}

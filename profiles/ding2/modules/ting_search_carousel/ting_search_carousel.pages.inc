@@ -13,19 +13,22 @@
  *   Offset into result to fetch from.
  */
 function ting_search_carousel_result($index, $offset) {
-  $content = FALSE;
-
   $content = '';
   $chunk = _ting_search_carousel_get_frontpage_covers($index, $offset, TING_SEARCH_CAROUSEL_CHUNK_SIZE);
   foreach ($chunk['collections'] as $collection) {
     $content .= theme('ting_search_carousel_collection', array('collection' => $collection));
   }
-  $offset = $chunk['next_offset'];
+
+  // If there's more covers, add a placeholder at the end to signal the user
+  // that it's loading.
+  if ($chunk['next_offset'] > -1) {
+    $content .= theme('ting_search_carousel_collection',
+                      array('collection' => ting_search_carousel_collection_placeholder()));
+  }
 
   // Return JSON output.
   drupal_json_output(array(
     'content' => $content,
-    'index' => $index,
-    'offset' => $offset,
+    'offset' => $chunk['next_offset'],
   ));
 }

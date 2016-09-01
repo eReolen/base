@@ -22,23 +22,6 @@ class Node extends BaseItem
         return $result;
     }
 
-    /**
-     * Get node tags.
-     *
-     * @return array
-     */
-    public function getTags()
-    {
-        $tags = array();
-        $this->document->walkTags(function($e) use(&$tags) {
-            if (!empty($e['tag_name'])) {
-                $tags[] = $e['tag_name'];
-            }
-        });
-
-        return $tags;
-    }
-
     public function syndicate()
     {
         // @todo implementation

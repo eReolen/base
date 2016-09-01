@@ -2,9 +2,7 @@ name = Form block
 description = Enables the presentation of node creation forms in blocks. This is particularly useful for including forms on panels.
 core = 7.x
 
-
-; Information added by drush on 2016-02-11
+; Information added by drush on 2013-03-10
 version = "2d94c83"
 project = "formblock"
-datestamp = "1455194182"
-
+datestamp = "1362938844"

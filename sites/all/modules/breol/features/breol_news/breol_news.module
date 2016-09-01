@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BReol News feature.
+ */
+
+include_once 'breol_news.features.inc';

@@ -19,8 +19,7 @@ function og_menu_config_form($form, &$form_state) {
     '#size' => 20,
     '#maxlength' => 5,
     '#required' => TRUE,
-    '#description' => t("Enter 0 for no limit. Users with the 'administer menu'
-      permission will be able to bypass this."),
+    '#description' => t("Enter 0 for no limit. Users with the 'administer menu' permission will be able to bypass this."),
   );
 
   // Performance related settings.
@@ -33,10 +32,7 @@ function og_menu_config_form($form, &$form_state) {
     '#type' => 'checkbox',
     '#title' => t('Limit available menus to provided context'),
     '#default_value' => variable_get('og_menu_context_limit', FALSE),
-    '#description' => t('If enabled, instead of loading all available menus on
-      node creation or editing, og menu will only load menus associated with the
-      current context. On sites with a lot of (group) menus this can greatly improve
-      page performance.'),
+    '#description' => t('If enabled, instead of loading all available menus on node creation or editing, og menu will only load menus associated with the current context. On sites with a lot of (group) menus this can greatly improve page performance. Note that this requires the group context to be set when creating content, usually done with url parameters.'),
   );
 
   $form['performance']['og_menu_assignment'] = array(
@@ -54,15 +50,14 @@ function og_menu_config_form($form, &$form_state) {
   // Automatic menu creation.
   $form['auto'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Automatic menu creation'),
+    '#title' => t('Menu creation'),
   );
 
   $form['auto']['og_menu_create_by_default'] = array(
     '#type' => 'checkbox',
     '#title' => t('Automatically create menu for new Organic Group'),
     '#default_value' => variable_get('og_menu_create_by_default', FALSE),
-    '#description' => t('If enabled, an OG Menu will be created by default when
-      a new Organic Group node is created.'),
+    '#description' => t('If enabled, an OG Menu will be created by default when a new Organic Group node is created.'),
   );
 
   $form['auto']['og_menu_hide_create_option'] = array(
@@ -70,19 +65,13 @@ function og_menu_config_form($form, &$form_state) {
     '#title' => t('Hide "Enable menu for this group"'),
     '#default_value' => variable_get('og_menu_hide_create_option', FALSE),
     '#description' => t('If enabled, "Enable menu for this group" will be hidden in the node edit form.'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name=og_menu_create_by_default]' => array('checked' => TRUE),
-      ),
-    ),
   );
 
   // Visibility setting to hide OG Menus on selected pages.
   $form['hiding'] = array(
     '#type' => 'fieldset',
     '#title' => t('Admin page visibility'),
-    '#description' => t("On sites with multiple OG Menus it might be prefereable
-      to hide them in places where you don't need them."),
+    '#description' => t("On sites with multiple OG Menus it might be preferable to hide them in places where you don't need them."),
   );
 
   $form['hiding']['og_menu_show_blocks'] = array(
@@ -114,6 +103,21 @@ function og_menu_config_form($form, &$form_state) {
       '#title' => t("Show blocks in Homebox admin page"),
       '#default_value' => variable_get('og_menu_show_homebox', FALSE),
       '#description' => t("If disabled, blocks for OG Menus will be hidden from the homebox administration page."),
+    );
+  }
+
+  if (module_exists('block')) {
+    // Visibility setting to hide help.
+    $form['help'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Help visibility'),
+      '#description' => t("On sites it might be preferable to hide help."),
+    );
+    $form['help']['og_menu_hide_help'] = array(
+      '#type' => 'checkbox',
+      '#title' => t("Disable module specific help."),
+      '#default_value' => variable_get('og_menu_show_help', FALSE),
+      '#description' => t("If enabled, help will not display on the site."),
     );
   }
 

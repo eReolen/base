@@ -1,0 +1,111 @@
+// Uber hack. Hide carousel tabs.
+.carousel-tabs {
+  display: none !important;
+}
+
+.pane-carousel {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+$carousel-outer-padding: 0 30px;
+
+.carousel-tab {
+  ul {
+    display: block;
+    position: relative;
+    height: auto;
+    margin-bottom: 25px;
+    padding: $carousel-outer-padding;
+
+    @include media($phone) {
+      padding: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  li {
+    float: left;
+    text-align: left;
+    margin-bottom: 1em;
+    margin-right: 0;
+
+    @include media($phone) {
+      margin-right: 5px;
+    }
+  }
+
+  .description {
+    @extend h2;
+    font-size: 26px;
+    color: $title-color;
+    text-align: left;
+    padding: 0 30px 30px 33px;
+    font-weight: normal;
+    font-family: $font-light;
+
+    @include media($phone) {
+      padding: 0;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.ting-search-carousel {
+
+  .slick-arrow {
+    background-repeat: no-repeat;
+    display: block;
+    height: 16px;
+    // IE renders the SVG at the right size, but centered, which makes the
+    // left/right positioning in the following classes not appear to work if
+    // the real size of the element is much larger.
+    width: 16px;
+    top: 40%;
+    margin: auto;
+    cursor: pointer;
+  }
+
+  .slick-prev.slick-arrow {
+    background-image: url('../svg/arrow_left.svg');
+    left: 5px;
+  }
+  .slick-next.slick-arrow {
+    background-image: url('../svg/arrow_right.svg');
+    right: 5px;
+  }
+}
+
+.carousel-item-title {
+  color: $title-color;
+  text-decoration: none;
+  font-family: $font-regular;
+  line-height: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  display: block;
+
+  // One line - word wrap with ellipsis.
+  @include word-wrap();
+}
+
+.carousel-item-creator {
+  display: block;
+  text-decoration: none;
+  color: $title-color;
+  margin-bottom: 5px;
+  @include word-wrap();
+}
+
+.carousel-item-image {
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.carousel-item-link {
+  text-decoration: none;
+}

@@ -187,6 +187,7 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
   // Materials might be deleted in the well, but still loaned by a user. We need
   // to still make it available for use until it expires.
   $deleted = preg_match('/^publizon:/', $entity->ding_entity_id);
+  $loaned = $available = FALSE;
   if (reol_loan_is_right_type($entity) || $deleted) {
     global $user;
     drupal_add_library('system', 'drupal.ajax');

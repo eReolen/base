@@ -32,8 +32,18 @@ function og_menu_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
+      'weight' => array(
+        'description' => "The menu weight for each group menu.",
+        'type' => 'int',
+        'length' => '11',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
     ),
     'primary key' => array('menu_name'),
+    'indexes' => array(
+      'gid_group_type_weight' => array('gid', 'group_type', 'weight'),
+    ),
     'foreign keys' => array(
       'menu_custom' => array(
         'table' => 'menu_custom',
@@ -63,6 +73,7 @@ function og_menu_uninstall() {
     'og_menu_context_limit',
     'og_menu_hide_create_option',
     'og_menu_create_by_default',
+    'og_menu_hide_help',
   );
 
   // List all og_menu related node type settings vars.
@@ -123,36 +134,44 @@ function og_menu_update_7300(&$sandbox) {
       $sandbox['max'] = $results - 1;
     }
 
-    // Since this is a batch update based on gid, cannot update column directly.
-    // Create a temporary column.
-    db_add_field('og_menu', 'etid', array(
-      'description' => 'Temporary column for gid transfer to etid',
-      'type' => 'int',
-      'size' => 'normal',
-      'not null' => TRUE,
-      'initial' => 0,
-    ));
-  }
+    // Upgrade legacy og table.
+    if (db_table_exists('og')) {
+      // Since this is a batch update based on gid, cannot update column directly.
+      // Create a temporary column.
+      db_add_field('og_menu', 'etid', array(
+        'description' => 'Temporary column for gid transfer to etid',
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+        'initial' => 0,
+      ));
 
-  // Cannot use a join in db_update().
-  $groups = db_query('SELECT og.gid, og.etid FROM {og} as og, {og_menu} as og_menu WHERE og.gid = og_menu.gid and og_menu.etid = 0 ORDER BY og_menu.gid LIMIT ' . $sandbox['limit'] . '');
+      // Cannot use a join in db_update().
+      $groups = db_query('SELECT og.gid, og.etid FROM {og} as og, {og_menu} as og_menu WHERE og.gid = og_menu.gid and og_menu.etid = 0 ORDER BY og_menu.gid LIMIT ' . $sandbox['limit'] . '');
+      foreach ($groups as $group) {
+        db_update('og_menu')
+          ->fields(array('etid' => $group->etid))
+          ->condition('gid', $group->gid)
+          ->execute();
 
-  foreach ($groups as $group) {
-    db_update('og_menu')
-      ->fields(array('etid' => $group->etid))
-      ->condition('gid', $group->gid)
-      ->execute();
+        $sandbox['progress']++;
+      }
 
-    $sandbox['progress']++;
-  }
-  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+      // Replace gid contents when complete and remove temporary column.
+      if ($sandbox['#finished'] >= 1) {
+        // Only update if migrating content from legacy og table.
+        db_update('og_menu')
+          ->expression('gid', 'etid')
+          ->execute();
+        db_drop_field('og_menu', 'etid');
+      }
 
-  // Replace gid contents when complete and remove temporary column.
-  if ($sandbox['#finished'] >= 1) {
-    db_update('og_menu')
-      ->expression('gid', 'etid')
-      ->execute();
-    db_drop_field('og_menu', 'etid');
+      // Calculate progress.
+      $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+    }
+    else {
+      $sandbox['#finished'] = TRUE;
+    }
   }
 }
 
@@ -210,4 +229,50 @@ function og_menu_update_7302(&$sandbox) {
  */
 function og_menu_update_7303(&$sandbox) {
   menu_cache_clear_all();
+}
+
+/**
+ * Clear menu cache to ensure changes in hook_menu().
+ */
+function og_menu_update_7304(&$sandbox) {
+  // No need to clear menu cache her, because all caches will be cleared anyway
+  // while finishing update process in update_finished().
+}
+
+/**
+ * Add weight field to og_menu table.
+ */
+function og_menu_update_7305(&$sandbox) {
+  if (!db_field_exists('og_menu', 'weight')) {
+    db_add_field('og_menu', 'weight', array(
+      'description' => "The menu weight for each group menu.",
+      'type' => 'int',
+      'length' => '11',
+      'not null' => TRUE,
+      'default' => 0,
+    ));
+  }
+}
+
+/**
+ * Add og_menu.(gid, group_type, weight) index.
+ */
+function og_menu_update_7306() {
+  if (!db_index_exists('og_menu', 'gid_group_type_weight')) {
+    db_add_index('og_menu', 'gid_group_type_weight', array('gid', 'group_type', 'weight'));
+  }
+}
+
+/**
+ * Clear the menu cache so the renamed items will be picked up.
+ */
+function og_menu_update_7307() {
+  variable_set('menu_rebuild_needed', TRUE);
+}
+
+/**
+ * Clear cache_menu so the renamed menu item will be picked up.
+ */
+function og_menu_update_7308() {
+  cache_clear_all(NULL, 'cache_menu');
 }

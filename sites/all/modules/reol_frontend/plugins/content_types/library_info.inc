@@ -29,11 +29,17 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
   $library_id = publizon_get_retailer_id($user);
   $library = publizon_library_load($library_id);
 
-  $block->content = theme('library_info', array(
-    'max_ebook_loans' => t('You are allowed to loan @loans e-books simultaneously.', array('@loans' => $library->maxEbookLoans)),
-    'max_audiobook_loans' => t('You are allowed to loan @loans audiobooks simultaneously.', array('@loans' => $library->maxAudiobookLoans)),
-    'max_reservations' => t('You are allowed to reserve @reservations titles simultaneously.', array('@reservations' => $library->maxReservations)),
-    'extra_info' => t('<a href="@url">Titles exempt from quotas.</a>', array(
+  $variables = array(
+    // Quotas.
+    'max_ebook_loans' => $library->maxEbookLoans,
+    'max_audiobook_loans' => $library->maxAudiobookLoans,
+    'max_ebook_reservations' => $library->maxEbookReservations,
+    'max_audiobook_reservations' => $library->maxAudiobookReservations,
+    // Legacy texts.
+    'max_ebook_loans_text' => t('You are allowed to loan @loans e-books simultaneously.', array('@loans' => $library->maxEbookLoans)),
+    'max_audiobook_loans_text' => t('You are allowed to loan @loans audiobooks simultaneously.', array('@loans' => $library->maxAudiobookLoans)),
+    'max_reservations_text' => t('You are allowed to reserve @reservations titles simultaneously.', array('@reservations' => $library->maxEbookReservations)),
+    'extra_info_text' => t('<a href="@url">Titles exempt from quotas.</a>', array(
       '@url' => url('search/ting/*', array(
         'query' => array(
           'facets' => array(
@@ -42,7 +48,8 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
         ),
       )),
     )),
-  ));
+  );
+  $block->content = theme('library_info', $variables);
 
   return $block;
 }

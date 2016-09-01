@@ -1,0 +1,77 @@
+// Typo.
+@mixin heading($size){
+  font-size: $size;
+  font-weight: 400;
+  margin: 0 0 20px 0;
+  color: $title-color;
+}
+
+// Button.
+@mixin button($color, $useIcon: true){
+  text-decoration: none;
+  background: $color;
+  border-radius: 40px;
+  color: white;
+  min-width: 250px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-family: $font-mikado;
+  position: relative;
+  cursor: pointer;
+  line-height: 1em;
+
+  &:hover {
+    background: lighten($color, 3);
+  }
+
+  @if $useIcon == true {
+
+    padding: 15px 42px 15px 22px;
+
+    &:before {
+      @include icon('.icon-arrow-right-funny');
+      float: right;
+      right: 17px;
+      position: absolute;
+    }
+  }
+  @else {
+    padding: 15px 22px;
+  }
+}
+
+// Typo.
+@mixin reHeight($columns, $total){
+  $percentage: calc-percentage($columns, $total);
+  padding-bottom: $percentage / 2;
+  height: 0;
+}
+
+// Mixin for including icons.
+@mixin icon($class){
+  @extend %icon;
+  @extend #{$class}
+}
+
+@mixin word-wrap() {
+  max-width: 95%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin button-phone() {
+  font-size: 12px;
+  padding: 8px;
+  display: block;
+  float: left;
+  max-width: 100%;
+  min-width: 1%;
+  width: 100%;
+  line-height: 16px;
+  text-align: center;
+
+  &:before {
+    content: " ";
+  }
+}

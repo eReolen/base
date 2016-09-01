@@ -1,0 +1,30 @@
+<?php
+/**
+ * @file
+ * Code for the BReol subject feature.
+ */
+
+include_once 'breol_subject.features.inc';
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function breol_subject_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function breol_subject_theme($existing, $type, $theme, $path) {
+  return array(
+    'breol_subject_menu' => array(
+      'variables' => array(
+        'nodes' => array(),
+        'content' => NULL,
+      ),
+      'path' => drupal_get_path('module', 'breol_subject') . '/templates',
+      'template' => 'subject_menu',
+    ),
+  );
+}

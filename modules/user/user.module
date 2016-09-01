@@ -1162,7 +1162,7 @@ function user_account_form(&$form, &$form_state) {
   $form['account']['roles'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Roles'),
-    '#default_value' => (!$register && isset($account->roles) ? array_keys($account->roles) : array()),
+    '#default_value' => (!$register && !empty($account->roles) ? array_keys(array_filter($account->roles)) : array()),
     '#options' => $roles,
     '#access' => $roles && user_access('administer permissions'),
     DRUPAL_AUTHENTICATED_RID => $checkbox_authenticated,
@@ -2936,7 +2936,19 @@ function user_roles($membersonly = FALSE, $permission = NULL) {
 
   $roles = array();
   foreach ($result as $role) {
-    $roles[$role->rid] = $role->name;
+    switch ($role->rid) {
+      // We only translate the built in role names
+      case DRUPAL_ANONYMOUS_RID:
+        if (!$membersonly) {
+          $roles[$role->rid] = t($role->name);
+        }
+        break;
+      case DRUPAL_AUTHENTICATED_RID:
+        $roles[$role->rid] = t($role->name);
+        break;
+      default:
+        $roles[$role->rid] = $role->name;
+    }
   }
 
   return $roles;

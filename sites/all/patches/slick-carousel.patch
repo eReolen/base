@@ -1,0 +1,1138 @@
+diff --git b/modules/ting_covers/ting_covers.module a/modules/ting_covers/ting_covers.module
+index 90fb6b5..9d1066d 100644
+--- b/modules/ting_covers/ting_covers.module
++++ a/modules/ting_covers/ting_covers.module
+@@ -96,25 +96,11 @@ function ting_covers_preprocess_ting_object(&$variables) {
+  *   all files.
+  */
+ function _ting_covers_delete_old_files($time = NULL) {
+-  // Collect potential locations of cover folders.
+-  $files_dir = file_default_scheme() . '://';
+-  $image_dirs = array($files_dir);
+-
+-  $styles_dir = $files_dir . 'styles';
+-  foreach (scandir($styles_dir) as $style_dir) {
+-    $style_dir = $styles_dir . DIRECTORY_SEPARATOR . $style_dir . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR;
+-    if (is_dir($style_dir)) {
+-      $image_dirs[] = $style_dir;
+-    }
+-  }
+-
+   // Collect cover files.
+   $cover_files = array();
+-  foreach ($image_dirs as $uri) {
+-    $ting_covers_dir = $uri . 'ting' . DIRECTORY_SEPARATOR . 'covers';
+-    if (is_dir($ting_covers_dir)) {
+-      $cover_files = array_merge($cover_files, file_scan_directory($ting_covers_dir, "/./"));
+-    }
++  $ting_covers_dir = file_default_scheme() . '://ting' . DIRECTORY_SEPARATOR . 'covers';
++  if (is_dir($ting_covers_dir)) {
++    $cover_files = array_merge($cover_files, file_scan_directory($ting_covers_dir, "/./"));
+   }
+ 
+   // Delete obsolete files.
+diff --git b/modules/ting_search_carousel/css/ting_search_carousel.css a/modules/ting_search_carousel/css/ting_search_carousel.css
+index fa3156d..0920885 100644
+--- b/modules/ting_search_carousel/css/ting_search_carousel.css
++++ a/modules/ting_search_carousel/css/ting_search_carousel.css
+@@ -1,20 +1,17 @@
+ /* ==========================================================================
+    ting search carousel styling
+    ========================================================================== */
+-.rs-carousel,
+-.rs-carousel-runner {
+-  position: relative;
+-}
+ 
+-.rs-carousel-runner {
+-  overflow: hidden;
++.ting-search-carousel .additional-tab {
++  /* Hide all but the first tab. */
++  display: none;
+ }
+ 
+-.rs-carousel-inner {
+-  overflow: hidden;
++.ting-search-carousel .carousel {
++  width: 100%;
+ }
+ 
+-rs-carousel-runner {
++carousel-runner {
+   -moz-transform: translate3d(0, 0, 0);
+   -webkit-transform: translate3d(0, 0, 0);
+   -o-transform: translate3d(0, 0, 0);
+@@ -32,8 +29,11 @@ rs-carousel-runner {
+ 
+ /* Pagination and previous and next buttons
+    ========================================================================== */
+-.rs-carousel-action-prev,
+-.rs-carousel-action-next {
++.ting-search-carousel .slick-arrow {
++  color: transparent;
++  border: none;
++  outline: none;
++  background: transparent;
+   background-image: url('../images/arrows.png');
+   height: 55px;
+   overflow: hidden;
+@@ -42,54 +42,50 @@ rs-carousel-runner {
+   text-indent: -1000px;
+   top: 50%;
+   width: 55px;
+-}
++  z-index: 1;
+ 
+-.rs-carousel-action-next {
+-  background-position: right 0;
+-  right: 0;
+ }
+ 
+-.rs-carousel-disabled .rs-carousel-action-prev,
+-.rs-carousel-disabled .rs-carousel-action-next {
+-  display: none;
++.ting-search-carousel .slick-prev {
++  left: 20px;
+ }
+ 
++.ting-search-carousel .slick-next {
++  background-position: right 0;
++  right: 20px;
++}
+ 
+ /* Carousel content, mask, title etc.
+    ========================================================================== */
+-.ajax-loader {
+-  background: transparent url('../images/ajax-loader.gif') no-repeat center center;
+-  left: 50%;
+-  height: 20px;
+-  margin-top: -10px;
+-  margin-left: -110px;
+-  position: absolute;
+-  top: 50%;
+-  width: 220px;
++.ting-search-carousel.no-description .description {
++  display: none;
+ }
+ 
+-.rs-carousel-items ul {
++.carousel-tab ul {
+   display: inline-block;
+   vertical-align: top;
+-}
+-
+-.rs-carousel-items ul {
+   margin: 0;
+   padding: 0;
+   list-style: none;
++  /* Clip to one row to avoid flickering. */
++  height: 315px;
++  overflow: hidden;
+ }
+ 
+-.rs-carousel-items li {
++.carousel-tab li {
+   float: left;
+-  width: 100px;
++  width: 200px;
+   text-align: center;
++  margin-right: 2em;
++  margin-bottom: 1em;
++  overflow: hidden;
+ }
+ 
+-.rs-carousel-item-image {
++.carousel-item-image {
+   display: block;
+ }
+ 
+-.rs-carousel-item-image img {
++.carousel-item-image img {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+@@ -98,18 +94,18 @@ rs-carousel-runner {
+ 
+ /* Carousel tabs
+    ========================================================================== */
+-.rs-carousel-tabs ul {
++.carousel-tabs ul {
+   margin: 0;
+   position: relative;
+   text-align: center;
+ }
+ 
+-.rs-carousel-tabs ul li {
++.carousel-tabs ul li {
+   display: table-cell;
+   vertical-align: top;
+   text-align: center;
+ }
+ 
+-.rs-carousel-tabs ul li.active a {
++.carousel-tabs ul li.active a {
+   position: relative;
+ }
+diff --git b/modules/ting_search_carousel/js/ting_search_carousel.js a/modules/ting_search_carousel/js/ting_search_carousel.js
+index e960e71..df9be12 100644
+--- b/modules/ting_search_carousel/js/ting_search_carousel.js
++++ a/modules/ting_search_carousel/js/ting_search_carousel.js
+@@ -21,36 +21,39 @@
+   // Shorthand for the following code.
+   var transitions = Drupal.tingSearchCarouselTransitions;
+ 
+-  transitions.none = function() {};
++  transitions.none = function() {
++  };
+ 
+   transitions.none.prototype.switchTo = function (to, element) {
+-    element.find('.rs-carousel-inner:visible').hide();
++    element.find('.carousel-tab:visible').hide();
+     to.show();
+   };
+ 
+-  transitions.fade = function() {};
++  transitions.fade = function() {
++  };
+ 
+   transitions.fade.prototype.switchTo = function (to, element) {
+     // Freeze height so it wont collapse in the instant that both tabs
+     // are invisible. Avoids odd scrolling.
+     element.height(element.height());
+-    element.find('.rs-carousel-inner:visible').fadeOut(200, function() {
++    element.find('.carousel-tab:visible').fadeOut(200, function() {
+       to.fadeIn(200);
+       element.height('auto');
+     });
+   };
+ 
+-  transitions.crossFade = function() {};
++  transitions.crossFade = function() {
++  };
+ 
+   transitions.crossFade.prototype.init = function (element) {
+     // Add a delay so things have time to find their size.
+     window.setTimeout(function () {
+       // Add a wrapper and set position/width height, so we can
+       // cross-fade between carousels.
+-      element.find('.rs-carousel-inner').wrapAll($('<div class=fade-container>'));
++      element.find('.carousel-tab').wrapAll($('<div class=fade-container>'));
+       var container = element.find('.fade-container');
+       container.css('position', 'relative').height(container.height());
+-      container.find('.rs-carousel-inner').css({
++      container.find('.carousel-tab').css({
+         'position': 'absolute',
+         'width': '100%',
+         'box-sizing': 'border-box'
+@@ -59,7 +62,7 @@
+   };
+ 
+   transitions.crossFade.prototype.switchTo = function (to, element) {
+-    element.find('.rs-carousel-inner').fadeOut(200);
++    element.find('.carousel-tab').fadeOut(200);
+     to.fadeIn(200);
+   };
+ 
+@@ -67,55 +70,83 @@
+    * End of transition definitions.
+    */
+ 
+-  Drupal.theme.tingSearchCarousel = function(subtitle, content) {
+-    var carousel = $("<div>").addClass('rs-carousel-inner');
+-    if (Drupal.settings.ting_search_carousel.show_description) {
+-      carousel.append($('<div>').addClass('rs-carousel-title').text(subtitle));
++  /**
++   * Object handling tabs.
++   */
++  var Tabset = function(tingCarousel, transition, beforeChange) {
++    var self = this;
++    this.tingCarousel = tingCarousel;
++    this.beforeChange = beforeChange;
++    this.transition = transition;
++    this.element = $('<div>').addClass('carousel-tabs');
++    this.tabs = $('<ul>');
++    this.select = $('<select>');
++
++    // Make basic tab structure.
++    this.element.append(this.tabs).append(this.select);
++
++    // Initialize transition.
++    if (typeof this.transition.init === 'function') {
++        this.transition.init(this.tingCarousel);
+     }
+-    carousel.append($('<div>').addClass('rs-carousel-items').append($('<ul>').append(content)));
+-    return carousel;
+-  };
+ 
+-  Drupal.theme.tingSearchCarouselTabs = function(tab_defs) {
+-    if (tab_defs.length < 1) {
+-      return "";
+-    }
+-    var tabs = $('<ul>').addClass('rs-carousel-list-tabs');
+-    var select = $('<select>').addClass('rs-carousel-select-tabs');
+-    $.each(tab_defs, function (index, tab) {
+-      // Without the href, the styling suffers.
+-      tabs.append($("<li>").addClass('rs-carousel-item').append($('<a>').text(tab.title).attr('href', '#')));
+-      select.append($('<option>').addClass('rs-carousel-item').text(tab.title));
++    // Add event handler for changing tabs when clicked.
++    this.tabs.on('click', 'li', function (e) {
++      e.preventDefault();
++      self.changeTab($(this).data('target'));
++      return false;
+     });
+ 
+-    return $('<div>').addClass('rs-carousel-tabs').append(tabs).append(select);
+-  };
++    // Add event handler for the select for mobile users.
++    this.select.on('change', function() {
++        self.changeTab($(this).find(':selected').data('target'));
++    });
++
++    /**
++     * Add a tab.
++     */
++    this.addTab = function(title, element) {
++      // Without the href, the styling suffers.
++      var tab = $('<li>').append($('<a>').text(title).attr('href', '#')).data('target', element);
++      element.data('tabset-tab', tab);
++      this.tabs.append(tab);
++      var option = $('<option>').text(title).data('target', element);
++      element.data('tabset-option', option);
++      this.select.append(option);
++    };
+ 
+-  Drupal.TingSearchCarousel = (function() {
++    /**
++     * Change tab.
++     */
++    this.changeTab = function(target) {
++      // De-activate current tab.
++      this.tabs.find('.active').removeClass('active');
++      this.select.find(':selected').removeAttr('selected');
+ 
+-    // Root element that contains both carousels and navigation.
+-    var element;
+-    // Tab definition.
+-    var tabs;
+-    // Transition for this carousel.
+-    var transition;
+-    // Tabs and mobile select for switching carousels.
+-    var navigation;
++      if (typeof this.beforeChange === 'function') {
++        this.beforeChange(target, this.tingCarousel);
++      }
++      this.transition.switchTo(target, this.tingCarousel);
++
++      // Activate the current tab.
++      $(target).data('tabset-tab').addClass('active');
++      $(target).data('tabset-option').attr('selected', true);
++    };
+ 
+     /**
+-     * Private: Ensures that the tabs have the same size.
++     * Make tabs equal width.
+      *
+-     * This is purly a design thing.
++     * @todo This might be done with CSS these days.
+      */
+-    function _equal_tab_width(tabsList) {
++    this.equalizeTabWith = function () {
+       // Get the list of tabs and the number of tabs in the list.
+-      var childCount = tabsList.children('li').length;
++      var childCount = this.tabs.children('li').length;
+ 
+       // Only do somehting if there actually is tabs.
+       if (childCount > 0) {
+ 
+         // Get the width of the <ul> list element.
+-        var parentWidth = tabsList.width();
++        var parentWidth = this.tabs.width();
+ 
+         // Calculate the width of the <li>'s.
+         var childWidth = Math.floor(parentWidth / childCount);
+@@ -125,245 +156,106 @@
+         var childWidthLast = parentWidth - (childWidth * (childCount - 1));
+ 
+         // Set the tabs css widths.
+-        tabsList.children().css({'width' : childWidth + 'px'});
+-        tabsList.children(':last-child').css({'width' : childWidthLast + 'px'});
+-      }
+-    }
+-
+-    /**
+-     * Private: Handler activated when the user changes tab.
+-     */
+-    function _change_tab(index) {
+-      // Remove navigation selection.
+-      navigation.find('.active').removeClass('active');
+-      navigation.find(':selected').removeAttr('selected');
+-
+-      // Add new navigation seletions.
+-      $(navigation.find('li')[index]).addClass('active');
+-      $(navigation.find('option')[index]).attr('selected', true);
+-
+-      transition.switchTo(tabs[index].wrapper, element);
+-
+-      // Refresh carousel so it knows how many items are visible and
+-      // can scroll accordingly.
+-      tabs[index].carousel.carousel('refresh');
+-
+-      _update(index);
+-    }
+-
+-    /**
+-     * Private: Check is the device have support for touch events.
+-     */
+-    function _is_touch_device() {
+-      // First part work in most browser the last in IE 10.
+-      return !!('ontouchstart' in window) || !!('onmsgesturechange' in window);
+-    }
+-
+-    /**
+-     * Private: Enable draggable touch support to the carousel.
+-     *
+-     * But only if the device is touch enabled.
+-     */
+-    function _add_touch_support() {
+-      if (_is_touch_device()) {
+-        $.each(tabs, function (index, tab) {
+-          // Add support for touch displays (requires jQuery Touch Punch).
+-          $('.rs-carousel-runner', tab.wrapper).draggable({
+-            axis: "x",
+-            stop: function() {
+-              var left = $('.rs-carousel-runner', tab.wrapper).position().left;
+-
+-              // Left side reached.
+-              if (left > 0) {
+-                tab.carousel.carousel('goToPage', 0);
+-              }
+-
+-              // Right side reached.
+-              if ($('.rs-carousel-mask', tab.wrapper).width() - $('.rs-carousel-runner', element).width() > left) {
+-                var lastIndex = tab.carousel.carousel('getNoOfPages') - 1;
+-                tab.carousel.carousel('goToPage', lastIndex);
+-              }
+-            }
+-          });
+-
+-          // Hide navigation arrows.
+-          $('.rs-carousel-action-prev', tab.wrapper).hide();
+-          $('.rs-carousel-action-next', tab.wrapper).hide();
+-        });
++        this.tabs.children().css({'width' : childWidth + 'px'});
++        this.tabs.children(':last-child').css({'width' : childWidthLast + 'px'});
+       }
+-    }
++    };
+ 
+     /**
+-     * Private: Create tabs and attach events.
++     * Insert the tabs into the page.
+      */
+-    function _init_tabs() {
+-      if (tabs.length < 2 && !tabs[0].title) {
+-        return;
+-      }
+-      // Create tabs.
+-      navigation = Drupal.theme.tingSearchCarouselTabs(tabs);
+-
+-      // Attach click events to tabs.
+-      navigation.find('.rs-carousel-list-tabs').on("click", "li", function(e) {
+-        e.preventDefault();
+-        _change_tab($(this).index());
+-        return false;
+-      });
+-
+-      // Add change event to selector.
+-      navigation.find('.rs-carousel-select-tabs').on('change', function() {
+-        console.log($(this).find(':selected').index());
+-        _change_tab($(this).find(':selected').index());
+-      });
+-
+-      element.find('.rs-carousel').append(navigation);
+-      // Set equal with on the tab navigation menu. We have to do this
+-      // after inserting the menu as else jQuery can't calculate the
+-      // size.
+-      _equal_tab_width(navigation.find('.rs-carousel-list-tabs'));
++    this.insert = function(element) {
++      $(element).after(this.element);
+ 
++      // Make the tabs equal size.
++      this.equalizeTabWith();
++      var self = this;
+       // Resize the tabs if the window size changes.
+       $(window).bind('resize', function () {
+-        _equal_tab_width(navigation.find('.rs-carousel-list-tabs'));
++        self.equalizeTabWith();
+       });
+ 
+-      // Highlight the default tab.
+-      $(navigation.find('li')[0]).addClass('active');
+-      $(navigation.find('option')[0]).attr('selected', true);
+-
+-    }
+-
+-    /**
+-     * Private: Create the carousels.
+-     */
+-    function _init_carousels() {
+-      var first_carousel = element.find('.rs-carousel-inner');
+-      $.each(tabs, function (index, tab) {
+-        var carousel;
+-        // Skip first, it was supplied by the server.
+-        if (index !== 0) {
+-          carousel = Drupal.theme.tingSearchCarousel(tab.subtitle, tab.content).hide();
+-          delete tab.content;
+-          first_carousel.after(carousel);
+-        }
+-        else {
+-          carousel = first_carousel;
+-          // Add in extra content.
+-          if (tab.content) {
+-            carousel.find('ul').append(tab.content);
+-          }
+-        }
+-
+-        tabs[index].wrapper = carousel;
+-        tabs[index].carousel = carousel.find('.rs-carousel-items');
+-
+-        var updateData = function () {
+-          // Update if there's still data to be fetched and we're near
+-          // the end of the carousel.
+-          if (tabs[index].offset >= 0) {
+-            if ($(this).carousel('getIndex') >
+-                ($(this).carousel('getNoOfPages') - 3)) {
+-              _update(index);
+-            }
+-          }
+-        };
+-
+-        tabs[index].carousel.carousel({
+-          noOfRows: 1,
+-          orientation: 'horizontal',
+-          itemsPerTransition: 'auto',
+-          create: updateData,
+-          after: updateData,
+-        });
+-      });
+-    }
++      // Activate the first tab.
++      var target = this.tabs.find('li:first-child').data('target');
++      $(target).data('tabset-tab').addClass('active');
++      $(target).data('tabset-option').attr('selected', true);
++    };
++  };
+ 
+-    /**
+-     * Private: Fetch content for carousels.
+-     */
+-    function _fetch(index, offset, callback) {
++  /**
++   * Event handler for progressively loading more covers.
++   */
++  var update = function(e, slick) {
++    var tab = e.data;
++    // Fetch more covers as we approach the end.
++    if (tab.data('offset') > -1 &&
++        (slick.slideCount - slick.currentSlide) <
++        (slick.options.slidesToShow * 2)) {
++      // Disable updates while updating.
++      var offset = tab.data('offset');
++      tab.data('offset', -1);
+       $.ajax({
+         type: 'get',
+-        url : Drupal.settings.basePath + tabs[index].path + '/' + offset,
++        url : Drupal.settings.basePath + tab.data('path') + '/' + offset,
+         dataType : 'json',
+         success : function(data) {
+-          callback(data);
++          $(e.target).slick('slickAdd', data.content);
++          tab.data('offset', data.offset);
+         }
+       });
+     }
++  };
+ 
+-    /**
+-     * Private: Updates the content when the user changes tabs.
+-     *
+-     * It will fetch the content from the server if it's not fetched
+-     * allready.
+-     */
+-    function _update(index) {
+-      var offset = tabs[index].offset;
+-      // Either there's no more data to be fetched, or we're already
+-      // fetching. Skip.
+-      if (offset < 0) {
+-        return;
+-      }
+-      // Disable updates while updating.
+-      tabs[index].offset = -1;
+-      _fetch(index, offset, function (data) {
+-        tabs[index].offset = data.offset;
+-        tabs[index].wrapper.find('.rs-title').append(data.subtitle);
+-        tabs[index].carousel.find('.rs-carousel-runner').append(data.content);
+-        tabs[index].carousel.carousel('refresh');
+-      });
+-    }
+-
+-    /**
+-     * Public: Init the carousel and fetch content for the first tab.
+-     */
+-    function init(id, settings) {
+-      element = $('#' + id);
+-
+-      tabs = settings.tabs;
+-
+-      // Initialize tabs.
+-      _init_tabs();
++  /**
++   * Start the carousel when the document is ready.
++   */
++  Drupal.behaviors.ting_search_carousel = {
++    attach: function (context) {
+ 
+-      // Start the carousels.
+-      _init_carousels();
++      $('.ting-search-carousel', context).once('ting-search-carousel', function() {
+ 
+-      if (typeof settings.transition === 'string' &&
+-          typeof Drupal.tingSearchCarouselTransitions[settings.transition] === 'function') {
+-        transition = new Drupal.tingSearchCarouselTransitions[settings.transition]();
+-      }
+-      else {
+-        transition = new Drupal.tingSearchCarouselTransitions.fade();
+-      }
++        var transition;
++        if (typeof $(this).data('transition') === 'string' &&
++            typeof Drupal.tingSearchCarouselTransitions[$(this).data('transition')] === 'function') {
++          transition = new Drupal.tingSearchCarouselTransitions[$(this).data('transition')]();
++        }
++        else {
++          transition = new Drupal.tingSearchCarouselTransitions.fade();
++        }
+ 
+-      if (typeof transition.init === 'function') {
+-        transition.init(element);
+-      }
++        var settings = {};
++        if (typeof $(this).data('settings') === 'object') {
++          settings = $(this).data('settings');
++        }
+ 
+-      // Maybe add support for touch devices (will only be applied on touch
+-      // enabled devices).
+-      _add_touch_support();
+-    }
++        $('.carousel-tab', this).each(function () {
++          var tab = $(this);
+ 
+-    /**
+-     * Expoes public functions.
+-     */
+-    return {
+-        name: 'ting_search_carousel',
+-        init: init
+-    };
+-  })();
++          // Init carousels. In order to react to the init event, the
++          // event handler needs to be defined before triggering Slick
++          // (obviously in hindsight).
++          $('.carousel', this).on('init reInit afterChange', tab, update)
++            .slick(settings);
++        });
+ 
+-  /**
+-   * Start the carousel when the document is ready.
+-   */
+-  Drupal.behaviors.ting_search_carousel = {
+-    attach: function (context, settings) {
+-      $.each(settings.ting_search_carousel.carousels, function (id, carousel_settings) {
+-        Drupal.TingSearchCarousel.init(id, carousel_settings);
++        // Add tabs.
++        var tabs = new Tabset($(this), transition, function (tab) {
++          if (tab.hasClass('additional-tab')) {
++            // Silck cannot find the proper width when the parent is hidden, so
++            // show the tab, reinit slick and immediately hide it again, before
++            // running the real transition.
++            tab.show();
++            $('.slick-slider', tab).slick('reinit');
++            tab.hide();
++          }
++        });
++        $('.carousel-tab', this).each(function () {
++          tabs.addTab($(this).data('title'), $(this));
++        });
++        tabs.insert($(this));
+       });
+     }
++
+   };
+ 
+ })(jQuery);
+diff --git b/modules/ting_search_carousel/plugins/content_types/carousel.inc a/modules/ting_search_carousel/plugins/content_types/carousel.inc
+index ed0a547..3376525 100644
+--- b/modules/ting_search_carousel/plugins/content_types/carousel.inc
++++ a/modules/ting_search_carousel/plugins/content_types/carousel.inc
+@@ -30,13 +30,10 @@ function ting_search_carousel_carousel_content_type_render($subtype, $conf, $pan
+       );
+     }
+ 
+-    $tab_position = variable_get('ting_search_carousel_tabs_position');
+-
+     $vars = array(
+       'tabs' => $tabs,
+-      'tab_position' => $tab_position,
+       'transition' => variable_get('ting_search_carousel_transition', 'fade'),
+-      'preload' => variable_get('ting_search_carousel_server_render', 5),
++      'show_description' => variable_get('ting_search_carousel_description_toggle', FALSE),
+     );
+     $block->content = theme('ting_search_carousel', $vars);
+   }
+diff --git b/modules/ting_search_carousel/templates/ting_search_carousel.tpl.php a/modules/ting_search_carousel/templates/ting_search_carousel.tpl.php
+index ebc6f96..5396caa 100644
+--- b/modules/ting_search_carousel/templates/ting_search_carousel.tpl.php
++++ a/modules/ting_search_carousel/templates/ting_search_carousel.tpl.php
+@@ -1,25 +1,20 @@
+ <?php
+ /**
+  * @file
+- *
+- *
+- * * Available variables:
+- * - $tab_position: String with settings info, values: top,bottom,left,right.
+- * - $searches: Array with each tab search.
+- *
+  */
+ ?>
+-
+-<!-- The wrapper div is important because rs-carousel replaces it -->
+-<div id="<?php print $id;?>" class="rs-carousel-wrapper <?php print $toggle_description; ?>">
+-  <div class="rs-carousel">
+-    <div class="rs-carousel-inner">
+-      <?php if ($toggle_description): ?>
+-        <div class="rs-carousel-title"></div>
+-      <?php endif; ?>
+-      <div class="rs-carousel-items">
+-        <ul><?php print $content; ?></ul>
+-      </div>
+-    </div>
++<div class="<?php print $classes; ?>"
++  data-transition="<?php print $transition; ?>"
++  data-settings="<?php print htmlentities(json_encode($settings)); ?>"
++  >
++  <?php foreach ($tabs as $tab): ?>
++  <div class="carousel-tab <?php print $tab['classes']; ?>"
++   data-title="<?php print $tab['title']; ?>"
++   data-offset="<?php print $tab['offset']; ?>"
++   data-path="<?php print $tab['path']; ?>"
++  >
++    <div class="description"><?php print $tab['description']; ?></div>
++    <ul class="carousel"><?php print $tab['content']; ?></ul>
+   </div>
++  <?php endforeach; ?>
+ </div>
+diff --git b/modules/ting_search_carousel/templates/ting_search_carousel_collection.tpl.php a/modules/ting_search_carousel/templates/ting_search_carousel_collection.tpl.php
+index d3603df..5820499 100644
+--- b/modules/ting_search_carousel/templates/ting_search_carousel_collection.tpl.php
++++ a/modules/ting_search_carousel/templates/ting_search_carousel_collection.tpl.php
+@@ -4,7 +4,7 @@
+  *
+  */
+ ?>
+-<li class="rs-carousel-item">
+-  <a href="/ting/collection/<?php print $collection->id; ?>" class="rs-carousel-item-image"><img src="<?php print $collection->image; ?>" alt=""/></a>
+-  <a href="/ting/collection/<?php print $collection->id; ?>" class="rs-carousel-item-title"><?php print check_plain($collection->title); ?></a>
++<li class="carousel-item">
++  <a href="/ting/collection/<?php print $collection->id; ?>" class="carousel-item-image"><img src="<?php print $collection->image; ?>" alt=""/></a>
++  <a href="/ting/collection/<?php print $collection->id; ?>" class="carousel-item-title"><?php print check_plain($collection->title); ?></a>
+ </li>
+diff --git b/modules/ting_search_carousel/ting_search_carousel.admin.inc a/modules/ting_search_carousel/ting_search_carousel.admin.inc
+index 51d85df..aa27d31 100644
+--- b/modules/ting_search_carousel/ting_search_carousel.admin.inc
++++ a/modules/ting_search_carousel/ting_search_carousel.admin.inc
+@@ -29,17 +29,6 @@ function ting_search_carousel_settings_admin_form($form, &$form_state) {
+     '#title' => t('Frontend settings'),
+   );
+ 
+-  $form['settings']['ting_search_carousel_tabs_position'] = array(
+-    '#title' => t('Position of navigational tabs'),
+-    '#type' => 'select',
+-    '#options' => array(
+-      'bottom' => t("Bottom"),
+-    ),
+-    '#default_value' => variable_get('ting_search_carousel_tabs_position', 'bottom'),
+-    '#required' => TRUE,
+-    '#description' => t('Select where you want the tabs for displaying the various searches to be placed in frontend.'),
+-  );
+-
+   $form['settings']['ting_search_carousel_description_toggle'] = array(
+     '#title' => t('Show descriptions for navigational tabs'),
+     '#type' => 'checkbox',
+@@ -61,14 +50,6 @@ function ting_search_carousel_settings_admin_form($form, &$form_state) {
+     '#description' => t('The JS transition used when switching tabs. This applies to the front page carousel.'),
+   );
+ 
+-  $form['settings']['ting_search_carousel_server_render'] = array(
+-    '#title' => t('Number of items pre-loaded in carousel'),
+-    '#type' => 'select',
+-    '#options' => array_combine(range(3, 10), range(3, 10)),
+-    '#default_value' => variable_get('ting_search_carousel_server_render', 5),
+-    '#description' => t("Number of items that's fully visible. Used for fall-back purposes."),
+-  );
+-
+   return system_settings_form($form);
+ }
+ 
+diff --git b/modules/ting_search_carousel/ting_search_carousel.info a/modules/ting_search_carousel/ting_search_carousel.info
+index 41a8cff..fcca1a1 100644
+--- b/modules/ting_search_carousel/ting_search_carousel.info
++++ a/modules/ting_search_carousel/ting_search_carousel.info
+@@ -1,8 +1,9 @@
+ name = Ting search carousel
+ description = Show Ting search results in a carousel
+ package = Ding!
+-version = "7.x-0.3"
++version = "7.x-0.4"
+ core = "7.x"
++dependencies[] = libraries
+ dependencies[] = ting
+ dependencies[] = ting_search
+ dependencies[] = ting_covers
+diff --git b/modules/ting_search_carousel/ting_search_carousel.install a/modules/ting_search_carousel/ting_search_carousel.install
+index 8e30b55..31498cd 100644
+--- b/modules/ting_search_carousel/ting_search_carousel.install
++++ a/modules/ting_search_carousel/ting_search_carousel.install
+@@ -18,4 +18,16 @@ function ting_search_carousel_uninstall() {
+   @drupal_rmdir('public://ting_search_carousel');
+   variable_del('ting_carousel_search_queries_hidden');
+   variable_del('ting_carousel_search_queries');
++  variable_del('ting_search_carousel_tabs_position');
++  variable_del('ting_search_carousel_description_toggle');
++  variable_del('ting_search_carousel_transition');
++  variable_del('ting_search_carousel_server_render');
++}
++
++/**
++ * Delete obsolete variables.
++ */
++function ting_search_carousel_update_7001() {
++  variable_del('ting_search_carousel_tabs_position');
++  variable_del('ting_search_carousel_server_render');
+ }
+diff --git b/modules/ting_search_carousel/ting_search_carousel.module a/modules/ting_search_carousel/ting_search_carousel.module
+index 4c985a0..a26e44d 100644
+--- b/modules/ting_search_carousel/ting_search_carousel.module
++++ a/modules/ting_search_carousel/ting_search_carousel.module
+@@ -55,6 +55,40 @@ function ting_search_carousel_menu() {
+ }
+ 
+ /**
++ * Implements hook_libraries_info().
++ *
++ * @todo Should be defined in another module, to facilitate re-use.
++ */
++function ting_search_carousel_libraries_info() {
++  $libraries = array();
++
++  $libraries['slick'] = array(
++    'name' => 'Slick.js carousel library',
++    'path' => 'slick',
++    'vendor url' => 'https://github.com/kenwheeler/slick',
++    'download url' => 'https://github.com/kenwheeler/slick/archive/1.6.0.zip',
++    'version arguments' => array(
++      'file' => 'slick/slick.js',
++      'pattern' => '@Version:\s+([0-9a-zA-Z\.-]+)@',
++    ),
++    'files' => array(
++      'js' => array('slick.min.js'),
++      'css' => array('slick.css'),
++    ),
++    'variants' => array(
++      'non-minified' => array(
++        'files' => array(
++          'js' => array('slick.js'),
++          'css' => array('slick.css'),
++        ),
++      ),
++    ),
++  );
++
++  return $libraries;
++}
++
++/**
+  * Implements hook_permission().
+  */
+ function ting_search_carousel_permission() {
+@@ -72,7 +106,11 @@ function ting_search_carousel_permission() {
+ function ting_search_carousel_theme($existing, $type, $theme, $path) {
+   return array(
+     'ting_search_carousel' => array(
+-      'variables' => array('searches' => NULL, 'tab_position' => NULL),
++      'variables' => array(
++        'tabs' => NULL,
++        'transition' => NULL,
++        'show_desciption' => NULL,
++      ),
+       'template' => 'templates/ting_search_carousel',
+       'file' => 'ting_search_carousel.theme.inc',
+     ),
+@@ -105,8 +143,8 @@ function ting_search_carousel_block_info() {
+ function ting_search_carousel_block_view($delta) {
+   return array(
+     'content' => theme('ting_search_carousel', array(
+-        'searches' => variable_get('ting_carousel_search_queries', array()),
+-        'tab_position' => variable_get('ting_search_carousel_tabs_position'),
++      'searches' => variable_get('ting_carousel_search_queries', array()),
++      'tab_position' => variable_get('ting_search_carousel_tabs_position'),
+     )),
+   );
+ }
+@@ -144,7 +182,6 @@ function ting_search_carousel_transitions() {
+   return module_invoke_all('ting_search_carousel_transitions');
+ }
+ 
+-
+ /**
+  * Get front page covers.
+  *
+@@ -229,7 +266,9 @@ function ting_search_carousel_get_covers($query, $start, $count, $query_only = F
+       return _ting_search_carousel_get_slice($cache_data, $start, $count);
+     }
+ 
+-    while (count($cache_data['pool'] < $start + $count) &&
++    // If the pool exactly matches the requested items, we'll fetch the next
++    // chunk. Else search_page wouldn't get incremented.
++    while ((count($cache_data['pool']) <= $start + $count) &&
+       !$cache_data['finished']) {
+       $ignore_ids = $cache_data['all_ids'];
+ 
+@@ -239,6 +278,7 @@ function ting_search_carousel_get_covers($query, $start, $count, $query_only = F
+           $cache_data['search_page'],
+           $cache_data['search_page_size'],
+           $ignore_ids);
++
+       foreach ($found_covers as $id => $cover) {
+         $ignore_ids[$id] = TRUE;
+         $cache_data['pool'][] = $cover;
+@@ -301,6 +341,7 @@ function _ting_search_carousel_get_slice($cache_data, $start, $count) {
+ function _ting_search_carousel_find_covers($query, $start, $size, array $ignore) {
+   $found_covers = array();
+   $finished = FALSE;
++  $objects = array();
+ 
+   $options = array(
+     'facets' => array(),
+@@ -325,25 +366,26 @@ function _ting_search_carousel_find_covers($query, $start, $size, array $ignore)
+       }
+       $objects[$object->id] = array(
+         'title' => isset($object->record['dc:title'][''][0]) ? $object->record['dc:title'][''][0] : '',
+-        'creator' => isset($object->record['dc:creator']['oss:aut'][0]) ? $object->record['dc:creator']['oss:aut'][0] : '',
++        'creator' => isset($object->record['dc:creator']['dkdcplus:aut'][0]) ? $object->record['dc:creator']['dkdcplus:aut'][0] : '',
+       );
+     }
++  }
+ 
+-    // See what materials have covers.
+-    $covers = ting_covers_get(array_keys($objects));
++  // See what materials have covers.
++  $covers = ting_covers_get(array_keys($objects));
+ 
+-    // Loop over the fetched covers and build items.
+-    foreach ($covers as $id => $path) {
+-      // Build object with the information collected.
+-      $item = new stdClass();
+-      $item->id = $id;
+-      $item->title = $objects[$id]['title'];
+-      $item->creator = $objects[$id]['creator'];
+-      $item->image = image_style_url('ting_search_carousel', $path);
++  // Loop over the fetched covers and build items.
++  foreach ($covers as $id => $path) {
++    // Build object with the information collected.
++    $item = new stdClass();
++    $item->id = $id;
++    $item->title = $objects[$id]['title'];
++    $item->creator = $objects[$id]['creator'];
++    $item->image = image_style_url('ting_search_carousel', $path);
+ 
+-      $found_covers[$id] = $item;
+-    }
++    $found_covers[$id] = $item;
+   }
++
+   return array($found_covers, $start, $finished);
+ }
+ 
+@@ -371,24 +413,3 @@ function ting_search_carousel_image_default_styles() {
+     ),
+   );
+ }
+-
+-/**
+- * Wrapper function that adds the modules JavaScript.
+- */
+-function _ting_search_carousel_add_javascript() {
+-  $path = drupal_get_path('module', 'ting_search_carousel');
+-
+-  drupal_add_library('system', 'ui.widget');
+-  drupal_add_library('system', 'ui.draggable');
+-  drupal_add_js($path . '/js/jquery.ui.touch-punch.min.js');
+-  drupal_add_js($path . '/js/jquery.rs.carousel.js');
+-  drupal_add_js($path . '/js/ting_search_carousel.js');
+-}
+-
+-/**
+- * Wrapper function that adds the modules css.
+- */
+-function _ting_search_carousel_add_css() {
+-  $path = drupal_get_path('module', 'ting_search_carousel');
+-  drupal_add_css($path . '/css/ting_search_carousel.css');
+-}
+diff --git b/modules/ting_search_carousel/ting_search_carousel.pages.inc a/modules/ting_search_carousel/ting_search_carousel.pages.inc
+index 7fdbd15..c31840e 100644
+--- b/modules/ting_search_carousel/ting_search_carousel.pages.inc
++++ a/modules/ting_search_carousel/ting_search_carousel.pages.inc
+@@ -13,19 +13,15 @@
+  *   Offset into result to fetch from.
+  */
+ function ting_search_carousel_result($index, $offset) {
+-  $content = FALSE;
+-
+   $content = '';
+   $chunk = _ting_search_carousel_get_frontpage_covers($index, $offset, TING_SEARCH_CAROUSEL_CHUNK_SIZE);
+   foreach ($chunk['collections'] as $collection) {
+     $content .= theme('ting_search_carousel_collection', array('collection' => $collection));
+   }
+-  $offset = $chunk['next_offset'];
+ 
+   // Return JSON output.
+   drupal_json_output(array(
+     'content' => $content,
+-    'index' => $index,
+-    'offset' => $offset,
++    'offset' => $chunk['next_offset'],
+   ));
+ }
+diff --git b/modules/ting_search_carousel/ting_search_carousel.theme.inc a/modules/ting_search_carousel/ting_search_carousel.theme.inc
+index 8563cd7..8cc7832 100644
+--- b/modules/ting_search_carousel/ting_search_carousel.theme.inc
++++ a/modules/ting_search_carousel/ting_search_carousel.theme.inc
+@@ -9,20 +9,26 @@
+  * Implements default preprocess function for the search carsousel.
+  */
+ function template_preprocess_ting_search_carousel(&$vars, $hook) {
+-  // Add JavaScript and CSS using wrapper functions.
+-  _ting_search_carousel_add_javascript();
+-  _ting_search_carousel_add_css();
++  // Add JavaScript and CSS.
++  $path = drupal_get_path('module', 'ting_search_carousel');
++  drupal_add_js($path . '/js/ting_search_carousel.js');
++  drupal_add_css($path . '/css/ting_search_carousel.css');
+ 
+-  $css_id = drupal_html_id('ting_search_carousel');
+-  $vars['id'] = $css_id;
+   $vars['content'] = '';
++  $vars += array(
++    'show_description' => FALSE,
++    'transition' => 'fade',
++  );
+ 
+   foreach ($vars['tabs'] as $index => $tab) {
+     $tab += array(
+       'title' => '',
+       'subtitle' => '',
+       'path' => '',
++      // If an ajax path is given, default to the first page, else disable
++      // ajax.
+       'offset' => empty($tab['path']) ? -1 : 0,
++      'classes' => '',
+     );
+ 
+     // Render the items.
+@@ -30,47 +36,59 @@ function template_preprocess_ting_search_carousel(&$vars, $hook) {
+     foreach ($tab['content'] as $item) {
+       $rendered[] = theme('ting_search_carousel_collection', array('collection' => $item));
+     }
++    $tab['description'] = $tab['subtitle'];
++
++    $tab['content'] = implode('', $rendered);
+ 
+-    if ($rendered) {
+-      // Add in the content of the first tab, as it's rendered by the server.
+-      if ($index == 0) {
+-        $preload = !empty($vars['preload']) ? $vars['preload'] : 5;
+-        // Render the first part in the template and add the rest to the JS.
+-        $vars['content'] = implode('', array_slice($rendered, 0, $preload));
+-        $tab['content'] = implode('', array_slice($rendered, $preload));
+-      }
+-      else {
+-        $tab['content'] = implode('', $rendered);
+-      }
++    if ($index != 0) {
++      $tab['classes'] = 'additional-tab';
+     }
+     $vars['tabs'][$index] = $tab;
+   }
+ 
+-  $transition = 'fade';
+   $transitions = ting_search_carousel_transitions();
+-  if (!empty($vars['transition']) &&
+-    isset($transitions[$vars['transition']])) {
+-    $transition = $vars['transition'];
++  if (isset($transitions[$vars['transition']])) {
+     if (!empty($transitions[$vars['transition']]['file'])) {
+       drupal_add_js($transitions[$vars['transition']]['file']);
+     }
+   }
++  else {
++    $vars['transition'] = 'fade';
++  }
+ 
+-  // Load toggle configuration.
+-  $toggle = variable_get('ting_search_carousel_description_toggle', FALSE);
+-  $settings = array(
+-    'ting_search_carousel' => array(
+-      'show_description' => $toggle,
+-      'carousels' => array(
+-        $css_id => array(
+-          'tabs' => $vars['tabs'],
+-          'transition' => $transition,
++  // Default Slick settings.
++  $vars['settings'] = array(
++    'arrows' => TRUE,
++    'infinite' => FALSE,
++    'slidesToShow' => 5,
++    'slidesToScroll' => 4,
++    'responsive' => array(
++      array(
++        'breakpoint' => 1024,
++        'settings' => array(
++          'slidesToShow' => 3,
++          'slidesToScroll' => 3,
+         ),
+       ),
++      array(
++        'breakpoint' => 600,
++        'settings' => array(
++          'slidesToShow' => 2,
++          'slidesToScroll' => 2,
++          'arrows' => FALSE,
++        ),
++      ),
++      array(
++        'breakpoint' => 300,
++        // No carousel.
++        'settings' => "unslick",
++      ),
+     ),
+   );
+-  drupal_add_js($settings, 'setting');
+ 
+-  $vars['toggle_description'] = $toggle;
++  if (!$vars['show_description']) {
++    $vars['classes_array'][] = 'no-description';
++  }
+ 
++  $loaded = libraries_load('slick', 'non-minified');
+ }

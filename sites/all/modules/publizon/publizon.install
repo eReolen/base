@@ -18,6 +18,7 @@ function publizon_uninstall() {
   // Remove configuration.
   variable_del('publizon_base_url');
   variable_del('publizon_client_id');
+  variable_del('publizon_unilogin_client_id');
   variable_del('publizon_default_retailer');
   variable_del('publizon_error_messages');
   variable_del('publizon_libraries');

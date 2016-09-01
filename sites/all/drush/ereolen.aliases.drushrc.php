@@ -60,39 +60,28 @@ $aliases['dev'] = array(
   ),
 );
 
-$aliases['test1404'] = array(
-  'remote-host' => 'test1404.reload.dk',
-  'remote-user' => 'reload',
-);
-
-$aliases['test'] = array(
-  'parent' => '@test1404',
-  'uri' => 'ereolen.test1404.reload.dk',
-  'root' => '/var/www/ereolen.test1404.reload.dk',
+$aliases['ego-prod'] = array(
+  'parent' => '@p01',
+  'uri' => 'ereolengo.dk',
+  'root' => '/data/www/prod_ereolengo_dk',
   'deployotron' => array(
-    'branch' => 'develop',
-    'dump-dir' => '/home/reload/backup/ereolen',
-    'no-offline' => TRUE,
+    'branch' => 'master',
+    'dump-dir' => '/data/backup/ego-prod',
+    // Updb clears the cache.
+    'no-cc-all' => TRUE,
     'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
-  ),
-);
-
-$aliases['test-test'] = array(
-  'parent' => '@test1404',
-  'uri' => 'ereolen-test.test1404.reload.dk',
-  'root' => '/var/www/ereolen-test.test1404.reload.dk',
-  'deployotron' => array(
-    'branch' => 'develop',
-    'dump-dir' => '/home/reload/backup/ereolen',
-    'no-offline' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'newrelic-api-key' => '36372beaa3607d3b8082f6ed3d1ed986609d7359def9a47',
+    'newrelic-app-name' => 'ereolengo.dk',
+    'post-deploy' => array(
+      'sudo service varnish restart',
+    ),
   ),
 );
 
 // The server only allows certain IPs to log in, so we hack up an
 // alias for the jump server here.
-$aliases['circle'] = $aliases['p01'];
-$aliases['circle']['ssh-options'] .= " -o ForwardAgent=yes -o 'ProxyCommand  ssh circleci@ding.reload.dk nc %h %p'";
+// $aliases['circle'] = $aliases['p01'];
+// $aliases['circle']['ssh-options'] .= " -o ForwardAgent=yes -o 'ProxyCommand  ssh circleci@ding.reload.dk nc %h %p'";
 
-$aliases['circle-dev'] = $aliases['dev'];
-$aliases['circle-dev']['parent'] = '@circle';
+// $aliases['circle-dev'] = $aliases['dev'];
+// $aliases['circle-dev']['parent'] = '@circle';

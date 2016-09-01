@@ -1,0 +1,210 @@
+<?php
+
+/**
+ * @file
+ * Provides a field for making carousels.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function reol_field_carousel_menu() {
+  $items = array();
+
+  $items['reol_field_carousel/ajax/%/%/%/%/%'] = array(
+    'title' => 'Show search carousel results',
+    'page callback' => 'reol_field_carousel_ajax',
+    'page arguments' => array(2, 3, 4, 5, 6),
+    'access callback' => 'reol_field_carousel_ajax_access',
+    'access arguments' => array(2, 3, 4),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_field_info().
+ */
+function reol_field_carousel_field_info() {
+  return array(
+    'ting_search_carousel' => array(
+      'label' => t('Ting search carousel'),
+      'description' => t('This field stores ting search carousels'),
+      'default_widget' => 'ting_search_carousel_widget',
+      'default_formatter' => 'ting_search_carousel_notabs',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function reol_field_carousel_field_is_empty($item, $field) {
+  if (!isset($item['title']) || $item['title'] === '') {
+    return !isset($item['search']) || $item['search'] === '';
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function reol_field_carousel_field_formatter_info() {
+  return array(
+    // TODO: ting_search_carousel_default, which renders each item as a tab in
+    // the same carousel.
+    'ting_search_carousel_notabs' => array(
+      'label' => t('Multiple carousels'),
+      'description' => t('Displays the search strings as multiple carousels.'),
+      'field types' => array('ting_search_carousel'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function reol_field_carousel_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  list($entity_id,) = entity_extract_ids($entity_type, $entity);
+
+  switch ($display['type']) {
+    case 'ting_search_carousel_notabs':
+      foreach ($items as $delta => $item) {
+        $tabs = array();
+        $chunk = ting_search_carousel_get_covers($item['search'], 0, TING_SEARCH_CAROUSEL_CHUNK_SIZE, TRUE);
+        $ajax_path = sprintf(
+          'reol_field_carousel/ajax/%s/%s/%s/%s',
+          $entity_type,
+          $entity_id,
+          $field['field_name'],
+          $delta
+        );
+        $tabs[] = array(
+          'title' => $item['title'],
+          'subtitle' => $item['title'],
+          'path' => $ajax_path,
+          'content' => $chunk['collections'],
+          'offset' => $chunk['next_offset'],
+          'placeholders' => TING_SEARCH_CAROUSEL_CHUNK_SIZE,
+        );
+        $element[] = array(
+          '#markup' => '<pre>' . $item['search'] . '</pre>',
+          '#markup' => theme('ting_search_carousel', array(
+            'tabs' => $tabs,
+            'show_description' => TRUE,
+          )),
+        );
+      }
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function reol_field_carousel_field_widget_info() {
+  return array(
+    'ting_search_carousel_widget' => array(
+      'label' => t('Carousel widget'),
+      'field types' => array('ting_search_carousel'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function reol_field_carousel_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $element['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#default_value' => isset($items[$delta]['title']) ? $items[$delta]['title'] : NULL,
+    // As defined in the schema.
+    '#maxlength' => 255,
+  );
+
+  $element['search'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Search'),
+    '#default_value' => isset($items[$delta]['search']) ? $items[$delta]['search'] : NULL,
+    '#cols' => 60,
+    '#rows' => 5,
+  );
+
+  return $element;
+}
+
+/**
+ * Accecss callback for the ajax page.
+ *
+ * @param string $entity_type
+ *   The entity type the field is attached to.
+ * @param string $entity_id
+ *   The id of the entity the field is attached to.
+ * @param string $field_name
+ *   Name of the field.
+ */
+function reol_field_carousel_ajax_access($entity_type, $entity_id, $field_name) {
+  // The ajax page will do an entity_load too, so this isn't as expensive as
+  // entity_load caches.
+  if ($field = field_info_field($field_name) &&
+      $entity = entity_load($entity_type, array($entity_id))) {
+    $entity = reset($entity);
+    return field_access('view', $field, $entity_type, $entity);
+  }
+}
+
+/**
+ * AJAX callback to retrieve carousel items for a given field.
+ *
+ * @param string $entity_type
+ *   The entity type the field is attached to.
+ * @param string $entity_id
+ *   The id of the entity the field is attached to.
+ * @param string $field_name
+ *   Name of the field.
+ * @param string $delta
+ *   Field delta.
+ * @param int $offset
+ *   Offset into result to fetch from.
+ */
+function reol_field_carousel_ajax($entity_type, $entity_id, $field_name, $delta, $offset) {
+  // The access callback has already checked that these exists.
+  $entity = entity_load($entity_type, array($entity_id));
+  $entity = reset($entity);
+
+  $items = field_get_items($entity_type, $entity, $field_name);
+  $content = FALSE;
+
+  $return = array(
+    'content' => '',
+    'offset' => -1,
+  );
+
+  if (isset($items[$delta])) {
+    $item = $items[$delta];
+    $content = '';
+    $chunk = ting_search_carousel_get_covers($item['search'], $offset, TING_SEARCH_CAROUSEL_CHUNK_SIZE);
+    foreach ($chunk['collections'] as $collection) {
+      $content .= theme('ting_search_carousel_collection', array('collection' => $collection));
+    }
+
+    // If there's more covers, add a placeholder at the end to signal the user
+    // that it's loading.
+    if ($chunk['next_offset'] > -1) {
+      $content .= theme('ting_search_carousel_collection',
+                        array('collection' => ting_search_carousel_collection_placeholder()));
+    }
+
+    $return = array(
+      'content' => $content,
+      'offset' => $chunk['next_offset'],
+    );
+  }
+
+  // Return JSON output.
+  drupal_json_output($return);
+}

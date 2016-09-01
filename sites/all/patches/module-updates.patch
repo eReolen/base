@@ -1,0 +1,102 @@
+commit 9e22a91f7a363216e3e627f20e8b6708d0afd1a9
+Author: Thomas Fini Hansen <xen@xen.dk>
+Date:   Wed Aug 10 09:19:53 2016 +0200
+
+    Update modules
+    
+    Security updates
+
+diff --git a/ding2.make b/ding2.make
+index 6ee8d13..7625548 100644
+--- a/ding2.make
++++ b/ding2.make
+@@ -56,7 +56,7 @@ projects[email][subdir] = "contrib"
+ projects[email][version] = "1.3"
+ 
+ projects[entity][subdir] = "contrib"
+-projects[entity][version] = "1.5"
++projects[entity][version] = "1.6"
+ 
+ projects[entitycache][subdir] = "contrib"
+ projects[entitycache][version] = "1.2"
+@@ -74,7 +74,7 @@ projects[expire][version] = "1.0-beta1"
+ projects[expire][patch][0] = "https://drupal.org/files/issues/expire-2183995-1.patch"
+ 
+ projects[features][subdir] = "contrib"
+-projects[features][version] = "2.0"
++projects[features][version] = "2.9"
+ 
+ projects[features_extra][subdir] = "contrib"
+ projects[features_extra][version] = "1.0-beta1"
+@@ -88,7 +88,7 @@ projects[fences][version] = "1.0"
+ projects[fences][patch][0] = "http://drupal.org/files/field_for_wrapper_css_class-1679684-3.patch"
+ 
+ projects[field_group][subdir] = "contrib"
+-projects[field_group][version] = "1.1"
++projects[field_group][version] = "1.5"
+ 
+ projects[file_entity][subdir] = "contrib"
+ projects[file_entity][version] = "2.0-alpha3"
+@@ -128,7 +128,7 @@ projects[job_scheduler][subdir] = "contrib"
+ projects[job_scheduler][version] = "2.0-alpha3"
+ 
+ projects[jquery_update][subdir] = "contrib"
+-projects[jquery_update][version] = "2.6"
++projects[jquery_update][version] = "2.7"
+ 
+ projects[languageicons][subdir] = "contrib"
+ projects[languageicons][version] = "1.0"
+@@ -210,16 +210,10 @@ projects[oembed][version] = "1.0-rc2"
+ projects[oembed][patch][] = "http://www.drupal.org/files/issues/oembed-remove_hook_sytem_info_alter-2502817-1.patch"
+ 
+ projects[og][subdir] = "contrib"
+-projects[og][version] = "2.7"
+-projects[og][patch][] = "https://www.drupal.org/files/issues/entityreference_fields_do_not_validate-2249261-10.patch"
+-; Fix using organic groups for relationships in views
+-; https://www.drupal.org/node/1890370
+-projects[og][patch][] = "https://www.drupal.org/files/issues/add-gid-to-relationship-field-1890370-34.patch"
++projects[og][version] = "2.9"
+ 
+ projects[og_menu][subdir] = "contrib"
+-projects[og_menu][version] = "3.0-rc5"
+-; Fixes JavaScript menu selection in edit node forms.
+-projects[og_menu][patch][0] = "http://drupal.org/files/issues/selector_not_found-2276951-2.patch"
++projects[og_menu][version] = "3.1"
+ 
+ ; This version is patch to make the next/prev links work.
+ projects[opening_hours][type] = "module"
+@@ -270,7 +264,7 @@ projects[rules][subdir] = "contrib"
+ projects[rules][version] = "2.7"
+ 
+ projects[scheduler][subdir] = "contrib"
+-projects[scheduler][version] = "1.2"
++projects[scheduler][version] = "1.3"
+ 
+ ; Patched with "Secure Permissions fails with features and multilingual"
+ projects[secure_permissions][type] = "module"
+@@ -315,10 +309,10 @@ projects[virtual_field][subdir] = "contrib"
+ projects[virtual_field][version] = "1.2"
+ 
+ projects[views][subdir] = "contrib"
+-projects[views][version] = "3.8"
++projects[views][version] = "3.14"
+ 
+ projects[views_bulk_operations][subdir] = "contrib"
+-projects[views_bulk_operations][version] = "3.2"
++projects[views_bulk_operations][version] = "3.3"
+ 
+ projects[views_responsive_grid][subdir] = "contrib"
+ projects[views_responsive_grid][version] = "1.3"
+@@ -380,6 +374,12 @@ libraries[profiler][download][branch] = "7.x-2.0-beta1"
+ ; https://drupal.org/node/1328796, keep dependency order of base profile.
+ libraries[profiler][patch][0] = "http://drupal.org/files/profiler-reverse.patch"
+ 
++libraries[slick][download][type] = "git"
++libraries[slick][download][url] = "git@github.com:kenwheeler/slick.git"
++libraries[slick][download][branch] = "master"
++libraries[slick][directory_name] = "slick"
++libraries[slick][destination] = "libraries"
++
+ libraries[ting-client][download][type] = "git"
+ libraries[ting-client][download][url] = "http://github.com/ding2/ting-client.git"
+ libraries[ting-client][download][branch] = "master"

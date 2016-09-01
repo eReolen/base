@@ -1,0 +1,4 @@
+name = BReol Base
+description = "Base module for eReolen for kids"
+core = 7.x
+package = eReolen for kids

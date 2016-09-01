@@ -1,0 +1,484 @@
+/*  User banner.
+    ------------------------------------------------------- */
+.user-banner {
+  @extend .article__cover;
+  height: 280px;
+  margin-bottom: 50px;
+  font-size: 26px;
+  color: $title-color;
+  font-family: $font-light;
+  z-index: 1;
+
+  .node-type-breol-page & {
+    margin-bottom: 0;
+  }
+
+  @include media($tablet-l) {
+    height: 200px;
+  }
+
+  &__content {
+    z-index: 4;
+    @extend .article__cover__content;
+    position: relative;
+  }
+
+  &__logout {
+    position: absolute;
+    right: 150px;
+    top: 50px;
+    font-size: 16px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    z-index: 5;
+
+    .__link {
+      color: $title-color;
+      text-decoration: none;
+      font-family: $font-mikado;
+
+      &:hover {
+        color: $red;
+      }
+
+      &:before {
+        @include icon('.icon-lock');
+        margin-right: 5px;
+        font-size: 28px;
+        top: 5px;
+        position: relative;
+      }
+
+      @include media($phone) {
+        &:before {
+          font-size: 20px;
+          top: 3px;
+        }
+      }
+    }
+
+    @include media($tablet-l) {
+      right: 50px;
+      top: 30px;
+    }
+
+    @include media($phone) {
+      right: 10px;
+      top: 10px;
+      font-size: 12px;
+
+      &:before {
+        font-size: 20px;
+      }
+    }
+  }
+
+  &__bg {
+    background: url(../images/objects.png);
+    background-size: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0.4;
+  }
+
+  &__overlay {
+    background-color: #eeeeee;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    opacity: 0.9;
+  }
+}
+
+/*  Loans and reservations.
+    ------------------------------------------------------- */
+.material-item {
+
+  @extend .search-result;
+  padding: 40px 0;
+
+  @include media($phone) {
+    padding: 0 0 30px;
+    margin-bottom: 30px;
+  }
+
+  .left-column {
+    @include span-columns(2);
+
+    @include media($phone) {
+      @include span-columns(3);
+    }
+  }
+
+  .right-column {
+    @include span-columns(10);
+    padding-left: 30px;
+
+    @include media($phone) {
+      @include span-columns(9);
+      padding-left: 10px;
+    }
+  }
+
+  .action-button {
+    @include media($phone) {
+      @include button-phone();
+    }
+  }
+}
+
+.pane-user-menu {
+  display: inline-block;
+  width: 100%;
+
+  @include media($tablet-l) {
+    .menu {
+      padding: 0 50px;
+    }
+  }
+
+  @include media($tablet-p) {
+    .menu {
+      padding: 0 15px;
+    }
+  }
+
+  .menu {
+
+    @include outer-container;
+
+    li {
+      @include span-columns(4);
+
+      @include media($tablet-p) {
+        @include span-columns(6);
+        margin-bottom: 10px !important;
+      }
+
+      @include media($phone) {
+        @include span-columns(12);
+      }
+    }
+
+    a {
+      @include button($white, false);
+      color: $black-light;
+      border: 1px solid $white-dark;
+      width: 96%;
+      text-align: center;
+
+      &:before {
+        content: " ";
+      }
+
+      &.active,
+      &:hover {
+        background: $red;
+        color: $white;
+      }
+    }
+  }
+}
+
+.item-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+
+  a {
+    color: $title-color;
+    font-family: $font-light;
+    text-decoration: none;
+  }
+
+  @include media($phone) {
+    font-size: 16px;
+  }
+}
+
+.item-information-label {
+  float: left;
+  width: 20%;
+
+  @include media($tablet-l) {
+    width: 30%;
+  }
+
+  @include media($phone) {
+    width: 100%;
+  }
+}
+
+.item-information-data {
+  float: left;
+  width: 80%;
+
+  @include media($tablet-l) {
+    width: 70%;
+  }
+
+  @include media($phone) {
+    width: 100%;
+  }
+}
+
+.item-information-list {
+
+  padding: 0;
+  margin: 0;
+
+  li {
+    list-style-type: none;
+    padding: 10px 0;
+    font-family: $font-light;
+
+    @include media($phone) {
+      line-height: 24px;
+      font-size: 12px;
+    }
+  }
+}
+
+.expires-in {
+  color: $green;
+
+  .item-information-data {
+    font-family: $font-bold;
+  }
+}
+
+.pane-loans {
+  margin-top: 50px;
+
+  @include media($tablet-l) {
+    padding: 50px;
+  }
+
+  @include media($tablet-p) {
+    padding: 0;
+  }
+}
+
+.pane-loans,
+.pane-reservations {
+
+  @include media($tablet-l) {
+    margin-bottom: 50px;
+    margin-top: 0;
+  }
+
+  .pane-content {
+    padding: 20px 0;
+    font-family: $font-light;
+  }
+
+  .pane-title {
+    @extend %ting-object-main-title;
+  }
+}
+
+.material-buttons {
+  margin-top: 75px;
+
+  @include media($tablet-l) {
+    margin-top: 35px;
+  }
+}
+
+/*  Profile edit form.
+    ------------------------------------------------------- */
+.pane-profile2-form {
+
+  margin-top: 50px;
+
+  .pane-title {
+    @extend %ting-object-main-title;
+    margin-bottom: 50px;
+  }
+
+  legend {
+    font-size: 16px;
+    color: $title-color;
+    margin-bottom: 10px;
+  }
+
+  .form-actions {
+    input[type="submit"] {
+      float: right;
+    }
+  }
+}
+
+input.password-confirm, input.password-field {
+    width: 99%;
+    margin-bottom: 0;
+}
+
+#edit-ding-user-fee-sms {
+  color: $blue-dark;
+  margin-bottom: 50px;
+}
+
+.field-name-field-phone {
+
+  input {
+    padding: 15px 22px 15px 62px;
+  }
+
+  .field-prefix {
+    position: absolute;
+    z-index: 99;
+    top: 37px;
+    left: 10px;
+    border-right: 1px solid $white-dark;
+    height: 40px;
+    padding: 13px 13px 20px 0;
+  }
+}
+
+/*  Bookmarks form.
+    ------------------------------------------------------- */
+.select-all {
+  .form-checkbox {
+    float: left;
+    width: 30px;
+  }
+}
+
+.pane-bookmarks {
+
+  .form-item-title {
+    border-top: 1px solid $white-dark;
+    border-bottom: 1px solid $white-dark;
+    padding: 20px 0;
+  }
+
+  .material-item {
+    .item-checkbox {
+      float: left;
+      width: 20%;
+    }
+
+    .form-type-checkbox {
+      padding: 0;
+      margin-top: 0;
+    }
+  }
+
+  .action-buttons {
+    margin: 50px 0;
+  }
+
+  @include media($tablet-p) {
+    img {
+      padding-left: 6px;
+    }
+  }
+}
+
+/* Quota display.
+    ------------------------------------------------------- */
+.user-quota-info {
+  color: $black-light;
+  .user-quota-info__section {
+    @include span-columns(1 of 2);
+
+    @include media($tablet-p) {
+      @include span-columns(12);
+    }
+
+    &:first-child {
+      padding-right: 10px;
+
+      @include media($tablet-p) {
+        padding-right: 0;
+      }
+    }
+
+    &:last-child {
+      padding-left: 10px;
+
+      @include media($tablet-p) {
+        padding-left: 0;
+        margin-top: 20px;
+      }
+    }
+
+  }
+  .user-quota-info__section-inner {
+    background-color: $gray;
+    border-radius: 10px;
+    padding: 10px;
+    padding-top: 30px;
+    min-height: 234px;
+
+    > * {
+      text-align: center;
+    }
+  }
+
+  ul {
+    @extend %reset;
+    list-style-type: none;
+  }
+
+  a {
+    @include button($red);
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  p {
+    font-size: 18px;
+    color: #969696;
+    font-family: $font-light;
+    padding: 0 20%;
+
+    @include media($phone) {
+      padding: 0;
+      font-size: 14px;
+    }
+  }
+}
+
+.loans-left {
+  display: inline-block;
+  font-family: $font-mikado;
+  margin: 0 40px;
+  color: $brown-dark;
+
+  &__amount {
+    width: 86px;
+    height: 78px;
+    display: inline-block;
+    background: url(../images/loans-left-bg.png) no-repeat;
+    font-size: 50px;
+    padding-top: 17px;
+  }
+
+  &__type {
+    margin-top: 15px;
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+
+  @include media($phone) {
+    margin: 0;
+  }
+}
+
+.user-quota-title {
+  @extend %ting-object-main-title;
+  margin-bottom: 40px;
+  margin-top: 40px;
+}

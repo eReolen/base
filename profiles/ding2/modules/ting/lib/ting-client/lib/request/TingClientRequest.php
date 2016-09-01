@@ -2,6 +2,14 @@
 
 abstract class TingClientRequest {
   private $wsdlUrl;
+
+  /**
+   * Authentication data.
+   *
+   * Either null, or an array with the keys 'name', 'pass' and 'group'.
+   *
+   * @var array|NULL
+   */
   private $auth;
   private $parameters = array();
 
@@ -49,6 +57,17 @@ abstract class TingClientRequest {
     return $this->parameters;
   }
 
+  /**
+   * Get authentication data.
+   *
+   * Gets the authentication data suitable for
+   * setParameter('authentication', ...).
+   *
+   * Returns an empty array if no authentication was provided.
+   *
+   * @return array
+   *   The authentication data.
+   */
   public function getAuth() {
     if ($this->auth) {
       return array(
@@ -60,6 +79,11 @@ abstract class TingClientRequest {
     return array();
   }
 
+  /**
+   * Use authentication.
+   *
+   * Adds the authentication data to this request if any was provided.
+   */
   public function useAuth() {
     $auth = $this->getAuth();
     if ($auth) {

@@ -1,0 +1,92 @@
+/**
+ * Colors.
+ */
+$red: rgb(213, 0, 73);
+$red-light: rgb(235, 0, 85);
+$red-medium: rgb(215, 0, 75);
+$red-dark: rgb(160, 0, 60);
+
+$light-red-light: rgb(240, 170, 170);
+$light-red-medium: rgb(215, 130, 130);
+$light-red-dark: rgb(120, 70, 70);
+
+$black-light: rgb(150, 150, 150);
+$black-medium: rgb(100, 100, 100);
+$black: rgb(50, 50, 50);
+
+$white: rgb(255, 255, 255);
+$white-medium: rgb(235, 235, 235);
+$white-dark: rgb(200, 200, 200);
+
+$yellow-light: rgb(250, 230, 200);
+$yellow-medium: rgb(235, 200, 130);
+$yellow-dark: rgb(145, 120, 80);
+
+$brown-light: rgb(235, 225, 210);
+$brown-medium: rgb(205, 190, 170);
+$brown-dark: rgb(125, 115, 100);
+
+$blue-light: rgb(220, 230, 230);
+$blue-medium: rgb(175, 195, 195);
+$blue-dark: rgb(100, 100, 100);
+
+$green-light: rgb(225, 235, 190);
+$green-medium: rgb(195, 205, 150);
+$green-dark: rgb(115, 120, 90);
+
+$green: rgb(1, 180, 82);
+
+$gray: rgb(238, 238, 238);
+
+// other colors.
+$menu-tablet-background: rgb(236, 3, 84);
+
+$icon-quota-unknown: $black-medium;
+$icon-quota: $red;
+$icon-quota-none: rgb(116, 150, 190);
+
+$title-color: $black-medium;
+
+/**
+ * Fonts.
+ */
+
+// Base font.
+@include font-face("OpenSans Light", "../fonts/OpenSans-Light", $file-formats: woff ttf);
+@include font-face("OpenSans Light Italic", "../fonts/OpenSans-LightItalic", $file-formats: woff ttf);
+@include font-face("OpenSans Regular", "../fonts/OpenSans-Regular", $file-formats: woff ttf);
+@include font-face("OpenSans Regular Italic", "../fonts/OpenSans-RegularItalic", $file-formats: woff ttf);
+@include font-face("OpenSans Bold", "../fonts/OpenSans-Bold", $file-formats: woff ttf);
+@include font-face("OpenSans Bold Italic", "../fonts/OpenSans-BoldItalic", $file-formats: woff ttf);
+
+$fallbackFontFamily: Arial, Helvetica, Sans-Serif;
+$font-regular: 'OpenSans Regular', $fallbackFontFamily;
+$font-regular-italic: 'OpenSans Regular Italic', $fallbackFontFamily;
+$font-light: 'OpenSans Light';
+$font-light-italic: 'OpenSans Light Italic', $fallbackFontFamily;
+$font-bold: 'OpenSans Bold', $fallbackFontFamily;
+$font-bold-italic: 'OpenSans Bold Italic', $fallbackFontFamily;
+
+// Icon font.
+@include font-face("icomoon", "../fonts/icomoon", $file-formats: ttf woff svg eot);
+
+// Mikado font.
+@include font-face("Mikado", "../fonts/mikado", $file-formats: eot woff woff2 ttf);
+
+$font-mikado: "Mikado";
+
+// Base font vars.
+$base-font-size: 14px;
+
+/**
+ * Breakpoints.
+ */
+
+$phone: new-breakpoint(max-width 667px);
+$tablet-p: new-breakpoint(max-width 768px);
+$tablet-l: new-breakpoint(max-width 1024px);
+$screen: new-breakpoint(min-width 1025px);
+$bigscreen: new-breakpoint(min-width 1200px);
+
+// z-index's
+$z-index-menu: 2;
