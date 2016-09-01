@@ -107,8 +107,14 @@ $z-index-cover-base: 1;
 
   &--breol_section {
     @include outer-container;
-    background-size: contain;
-    background-position: center right;
+    background-size: 80%;
+    background-position: bottom right;
+    height: 326px;
+
+    @include media($phone) {
+      background: none;
+      height: auto;
+    }
   }
 
   &--breol_subject {
@@ -202,6 +208,12 @@ $z-index-cover-base: 1;
       font-size: em(40, $base-font-size);
     }
   }
+
+  &--breol_section {
+    @include media($phone) {
+      padding: 15px;
+    }
+  }
 }
 
 .article__cover__overlay {
@@ -252,5 +264,23 @@ $z-index-cover-base: 1;
     font-weight: normal;
     font-size: em(24, $base-font-size);
     padding: 20px 0;
+  }
+}
+
+.cover__audiobooks {
+  .article__cover--breol_section {
+    background: url(../images/headphones.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 78% 37px;
+  }
+}
+
+.cover__ebooks {
+  .article__cover--breol_section {
+    background: url(../images/ebooks.png);
+    background-repeat: no-repeat;
+    background-size: 21%;
+    background-position: 78% center;
   }
 }
