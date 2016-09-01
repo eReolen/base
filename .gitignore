@@ -11,7 +11,17 @@ compass_app_log.txt
 docker-compose.override.yml
 
 # Dont commit databases.
-private/docker/db/initdb.d/*
+private/docker/db-init/ereol/*
+# But do commit sanitize.
+!private/docker/db-init/ereol/900-sanitize.sql
+private/docker/db-init/ego/*
+!private/docker/db-init/ego/900-sanitize.sql
+
+# Ignore files.
+private/docker/sites/ereol/files
+private/docker/sites/ereol/private
+private/docker/sites/ego/files
+private/docker/sites/ego/private
 
 # Ignore phpstorm project files.
 .idea/*

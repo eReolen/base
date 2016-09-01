@@ -1,0 +1,63 @@
+/*
+Error: File to import not found or unreadable: zen.
+       Load paths:
+         Compass::SpriteImporter
+         /theme/sass
+         /usr/local/bundle/gems/compass-core-1.0.3/stylesheets
+        on line 14 of /theme/sass/ddbasic.styles.scss
+
+9: // Include compass
+10: @import "compass";
+11: 
+12: 
+13: // Grid - http://zengrids.com
+14: @import "zen";
+15: 
+16: 
+17: // Include configuration
+18: @import "configuration/_variables";
+19: @import "configuration/_colors";
+
+Backtrace:
+/theme/sass/ddbasic.styles.scss:14
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/import_node.rb:67:in `rescue in import'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/import_node.rb:45:in `import'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/import_node.rb:28:in `imported_file'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/import_node.rb:37:in `css_import?'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:313:in `visit_import'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/stack.rb:79:in `block in with_base'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/stack.rb:115:in `with_frame'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/stack.rb:79:in `with_base'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `visit'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `map'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:169:in `block in visit_children'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:168:in `visit_children'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:188:in `visit_root'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:159:in `visit'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/root_node.rb:36:in `css_tree'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/tree/root_node.rb:20:in `render'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/engine.rb:281:in `render'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:494:in `update_stylesheet'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `each'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:473:in `on_file_changed'
+/usr/local/bundle/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:331:in `block in watch'
+/usr/local/bundle/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+/usr/local/bundle/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+/usr/local/bundle/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:254:in `report_changes'
+/usr/local/bundle/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:323:in `poll_changed_directories'
+/usr/local/bundle/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: zen.\A        Load paths:\A          Compass::SpriteImporter\A          /theme/sass\A          /usr/local/bundle/gems/compass-core-1.0.3/stylesheets\A         on line 14 of /theme/sass/ddbasic.styles.scss\A \A 9: // Include compass\A 10: @import \"compass\";\A 11: \A 12: \A 13: // Grid - http://zengrids.com\A 14: @import \"zen\";\A 15: \A 16: \A 17: // Include configuration\A 18: @import \"configuration/_variables\";\A 19: @import \"configuration/_colors\";"; }

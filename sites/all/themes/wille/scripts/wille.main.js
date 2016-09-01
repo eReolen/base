@@ -159,7 +159,7 @@
       $('#ding-facetbrowser-form', context).each(function() {
         $('fieldset', this).each(function() {
 
-          var dropdown = $(this).find('.fieldset-wrapper').hide().addClass('js-processed');
+          var dropdown = $(this).find('.fieldset-wrapper').addClass('js-processed');
 
           $(this).click(function() {
             dropdown.slideToggle(200).toggeClass('open');

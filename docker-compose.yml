@@ -1,29 +1,85 @@
-web:
-  build: ./private/docker/web
-  links:
-    - db
-  volumes:
-    - './:/var/www/html'
-    - './private/docker/docker.settings.php:/var/www/html/sites/default/settings.php:ro'
-  environment:
-    MYSQL_HOST: db
-    MYSQL_DATABASE: drupal
-    MYSQL_USER: drupal
-    MYSQL_PASSWORD: drupal
+version: '2'
+services:
+  ereol:
+    build: './private/docker/web'
+    links:
+      - db-ereol
+    volumes:
+      - './:/var/www/html'
+      - './private/docker/sites/ereol:/var/www/html/sites/default'
+    environment:
+      MYSQL_HOST: db-ereol
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
 
-db:
-  image: mariadb:5
-  environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_DATABASE: drupal
-    MYSQL_USER: drupal
-    MYSQL_PASSWORD: drupal
-  volumes:
-    - './private/docker/db-init:/docker-entrypoint-initdb.d'
+  ego:
+    build: './private/docker/web'
+    links:
+      - db-ereol
+    volumes:
+      - './:/var/www/html'
+      - './private/docker/sites/ego:/var/www/html/sites/default'
+    environment:
+      MYSQL_HOST: db-ego
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
 
+  db-ereol:
+    image: mariadb:5
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+    volumes:
+      - './private/docker/db-init/ereol:/docker-entrypoint-initdb.d'
 
-gulp:
-  image: reload/gulp:3.9.1
-  volumes:
-    - './sites/all/themes/wille:/src'
+  db-ego:
+    image: mariadb:5
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+    volumes:
+      - './private/docker/db-init/ego:/docker-entrypoint-initdb.d'
 
+  drush-ereol:
+    image: drush/drush:8-alpine
+    links:
+      - db-ereol
+    volumes_from:
+      - ereol
+    working_dir: /var/www/html
+    environment:
+      MYSQL_HOST: db-ereol
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+
+  drush-ego:
+    image: drush/drush:8-alpine
+    links:
+      - db-ego
+    volumes_from:
+      - ego
+    working_dir: /var/www/html
+    environment:
+      MYSQL_HOST: db-ego
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+      
+  # eReolen Go theme
+  gulp:
+    image: reload/gulp:3.9.1
+    volumes:
+      - './sites/all/themes/wille:/src'
+
+  # eReolen theme
+  compass:
+    build: './private/docker/gulp-compass'
+    volumes:
+      - './sites/all/themes/brin:/src'
