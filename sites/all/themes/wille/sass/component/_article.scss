@@ -103,6 +103,10 @@ $z-index-cover-base: 1;
 
   &--breol_news {
     position: absolute;
+
+    @include media($phone) {
+      position: relative;
+    }
   }
 
   &--breol_section {
