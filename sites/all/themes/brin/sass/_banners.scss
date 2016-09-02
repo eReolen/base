@@ -34,8 +34,16 @@ a.global-banner {
   }
 }
 
-// Add in extra padding so the banners are the same size.
-a.nonquota-banner div.nonquota-banner {
+a.go-banner {
+  background-color: #bb0133;
+  img {
+    padding: 14px 0;
+  }
+}
+
+// Add in extra padding so the banners are (approx) the same size.
+a.nonquota-banner div.nonquota-banner,
+a.go-banner div.go-banner {
   padding: 11px 0;
 }
 
@@ -45,7 +53,8 @@ a.nonquota-banner div.nonquota-banner {
     padding: 0;
   }
 
-  a.global-banner div.global-banner {
+  a.global-banner div.global-banner,
+  a.go-banner div.go-banner {
     padding: 4px 0;
   }
 }
