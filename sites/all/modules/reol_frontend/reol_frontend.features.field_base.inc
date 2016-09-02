@@ -10,14 +10,13 @@
 function reol_frontend_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_link'
+  // Exported field_base: 'field_link'.
   $field_bases['field_link'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_link',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'link',
@@ -41,21 +40,13 @@ function reol_frontend_field_default_field_bases() {
     'type' => 'link_field',
   );
 
-  // Exported field_base: 'field_portrait'
+  // Exported field_base: 'field_portrait'.
   $field_bases['field_portrait'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_portrait',
-    'foreign keys' => array(
-      'fid' => array(
-        'columns' => array(
-          'fid' => 'fid',
-        ),
-        'table' => 'file_managed',
-      ),
-    ),
     'indexes' => array(
       'fid' => array(
         0 => 'fid',
@@ -72,14 +63,13 @@ function reol_frontend_field_default_field_bases() {
     'type' => 'image',
   );
 
-  // Exported field_base: 'field_show_in_app'
+  // Exported field_base: 'field_show_in_app'.
   $field_bases['field_show_in_app'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_show_in_app',
-    'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
         0 => 'value',
@@ -99,21 +89,13 @@ function reol_frontend_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_video'
+  // Exported field_base: 'field_video'.
   $field_bases['field_video'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_video',
-    'foreign keys' => array(
-      'fid' => array(
-        'columns' => array(
-          'fid' => 'fid',
-        ),
-        'table' => 'file_managed',
-      ),
-    ),
     'indexes' => array(
       'fid' => array(
         0 => 'fid',
