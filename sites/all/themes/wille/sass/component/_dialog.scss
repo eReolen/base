@@ -197,6 +197,9 @@
 }
 
 .ui-dialog-is-open {
-  overflow: hidden !important;
-  position: fixed !important;;
+
+  @include media($phone) {
+    overflow: hidden !important;
+    position: fixed !important;;
+  }
 }
