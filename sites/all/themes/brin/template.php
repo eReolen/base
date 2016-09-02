@@ -430,6 +430,16 @@ function brin_preprocess_ting_object_cover(&$variables) {
 }
 
 /**
+ * Preprocess search carousel.
+ */
+function brin_preprocess_ting_search_carousel(&$vars) {
+  if (isset($vars['settings'])) {
+    $vars['settings']['slidesToShow'] = 6;
+    $vars['settings']['slidesToScroll'] = 5;
+  }
+}
+
+/**
  * Return classes for type icon.
  *
  * @return array
