@@ -1820,7 +1820,7 @@ function reol_frontend_default_page_manager_pages() {
   $display->title_pane = 'new-7e3d15e0-e9cf-40f9-89ab-658161b063e0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
-  $pages[''] = $page;
+  $pages['reol_frontpage'] = $page;
 
   $page = new stdClass();
   $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
@@ -1964,7 +1964,7 @@ function reol_frontend_default_page_manager_pages() {
   $display->title_pane = 'new-6c1dc5b3-e888-4061-b6a3-845c8f8ddda8';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
-  $pages[''] = $page;
+  $pages['user_newsletter_status'] = $page;
 
   return $pages;
 
