@@ -241,6 +241,26 @@
   };
 
   /**
+   * Detect if jquery ui-dialog is open.
+   */
+  Drupal.behaviors.uiDialog = {
+    attach : function(context, settings) {
+      if($('.ui-dialog', context).css('display') == 'none' || $('.ui-dialog').length === 0) {
+        // Fallback.
+        $('body').removeClass('ui-dialog-is-open');
+      } else {
+        // Add Class that indicates the dialog is open.
+        $('body').addClass('ui-dialog-is-open');
+
+        // Make sure we remove the class when users close the dialog.
+        $('.ui-button-icon-primary').click(function() {
+          $('body').removeClass('ui-dialog-is-open');
+        });
+      }
+    }
+  };
+
+  /**
    * Add grid view option.
    */
   Drupal.behaviors.gridView = {
