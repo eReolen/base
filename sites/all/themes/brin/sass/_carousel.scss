@@ -100,3 +100,26 @@
     }
   }
 }
+
+.carousel-tabs ul li {
+  a {
+    @include header-menu-gradient();
+    color: $text-header-color;
+    margin-right: 0;
+    font-family: Oxygen, sans-serif;
+    font-size: 0.95em;
+  }
+
+  &.active a {
+    @include header-menu-selected-gradient();
+    font-family: Oxygen, sans-serif;
+    font-weight: normal;
+
+    &:before {
+      border-bottom-color: #D8D8D8;
+      border-width: 16px;
+      top: -32px;
+      margin-left: -16px;
+    }
+  }
+}
