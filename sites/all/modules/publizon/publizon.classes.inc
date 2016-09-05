@@ -25,7 +25,7 @@ class PublizonDingProviderException extends DingProviderUserException {
     $code = $publizon_exception->getCode();
     $message = publizon_get_message($code);
 
-    throw new self($message['error_text']['value'], $code, $message['show_bookmark'], $message['show_reserve'], $exception);
+    throw new self($message['error_text']['value'], $code, $message['show_bookmark'], $message['show_reserve'], $publizon_exception);
   }
 
   /**
