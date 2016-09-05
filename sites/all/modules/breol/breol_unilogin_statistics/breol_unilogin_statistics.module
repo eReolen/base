@@ -46,10 +46,11 @@ function breol_unilogin_statistics_permission() {
 /**
  * Implements hook_publizon_loan().
  */
-function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
+function breol_unilogin_statistics_publizon_loan($account, $name, $isbn, $retailer_id) {
   if (ding_unilogin_authenticated($account)) {
     $data = array(
       'timestamp' => REQUEST_TIME,
+      'retailer_id' => $retailer_id,
       'class' => '',
       'school_id' => '',
       'school' => '',
