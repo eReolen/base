@@ -44,3 +44,41 @@ body:not(.front) .main-content-wrapper__inner {
     }
   }
 }
+
+// Organic elements.
+.organic-element {
+  height: 40px;
+  overflow: hidden;
+  z-index: 2;
+  position: relative;
+  width: 100%;
+
+  &--user {
+    .organic-svg {
+      fill: white;
+    }
+  }
+
+  &--content {
+    .organic-svg {
+      fill: white;
+    }
+
+    .page-search & {
+      top: -20px;
+    }
+
+    .page-user & {
+      display: none;
+    }
+  }
+
+  &--footer {
+
+    margin-top: 50px;
+
+    .organic-svg {
+      fill: $red;
+    }
+  }
+}

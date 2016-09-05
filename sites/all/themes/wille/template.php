@@ -21,7 +21,7 @@ function wille_preprocess_html(&$variables) {
 
     $color = _wille_alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 50);
 
-    $css = 'body {background-color: ' . $color . '} .main-content-wrapper:before {background-color: ' . $color . ' !important}';
+    $css = 'body {background-color: ' . $color . '} .organic-element--content .organic-svg  {fill: ' . $color . ' !important}';
     drupal_add_css($css, 'inline');
   }
 
@@ -35,6 +35,13 @@ function wille_preprocess_html(&$variables) {
   );
 
   drupal_add_html_head($viewport, 'viewport');
+}
+
+/**
+ * Implements THEME_preprocess_TEMPLATE();
+ */
+function wille_preprocess_wille_site_template(&$variables, $hook) {
+  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
 }
 
 /**
@@ -182,8 +189,10 @@ function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
  * Implements hook_preprocess_panels_pane().
  */
 function wille_preprocess_panels_pane(&$variables) {
-  if ($variables['pane']->type === 'user_menu') {
 
+  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
+
+  if ($variables['pane']->type === 'user_menu') {
     // Hide logout menu tab.
     foreach ($variables['content'] as $key => $item) {
       if (!empty($item['#href'])) {

@@ -31,6 +31,9 @@
     <div class="user-banner__overlay"></div>
   </div>
 
+  <div class="organic-element organic-element--user">
+    <?php print $organic_svg ?>
+  </div>
   <div class="pane-content user-main-content">
     <?php print render($content); ?>
   </div>
