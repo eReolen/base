@@ -68,6 +68,7 @@ function breol_unilogin_statistics_form_submit($form, &$form_state) {
 function breol_unilogin_statistics_data($from, $to) {
   $fields = array(
     'timestamp',
+    'retailer_id',
     'class',
     'school_id',
     'school',

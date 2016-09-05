@@ -25,6 +25,13 @@ function breol_unilogin_statistics_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
+      'retailer_id' => array(
+        'description' => 'Retailer ID of user.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
       'class' => array(
         'description' => 'Class of user.',
         'type' => 'varchar',
@@ -75,4 +82,19 @@ function breol_unilogin_statistics_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Add retailer_id field.
+ */
+function breol_unilogin_statistics_update_7101() {
+  $desc = array(
+    'description' => 'Retailer ID of user.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+    'initial' => '',
+  );
+  db_add_field('breol_unilogin_statistics', 'retailer_id', $desc);
 }
