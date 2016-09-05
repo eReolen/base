@@ -18,8 +18,6 @@ function wille_preprocess_html(&$variables) {
   if (!empty($node) && $node->type === 'breol_subject') {
     $rgb = breol_fancy_box_hex2rgb($node->field_color[LANGUAGE_NONE][0]['rgb']);
     $rgba = 'rgba(' . implode(",", $rgb) . ', 0.4)';
-    // $css = 'body {background-color: ' . $rgba . '}';
-
 
     $color = _wille_alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 50);
 
