@@ -57,47 +57,53 @@ function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
       'municipality' => '',
       'isbn' => $isbn,
     );
-    $service = ding_unilogin_wservice('info');
-    $person = $service->getPerson($name);
-    if (!$person) {
-      watchdog(
-        'breol_unilogin_statistics',
-        'Cannot log loan for %user, cannot get person.',
-        array('%user' => $name),
-        WATCHDOG_ERROR
-      );
-    }
-    $student = $service->getStudent($person->Instnr, $person->Brugerid);
-    if (!$student) {
-      watchdog(
-        'breol_unilogin_statistics',
-        'Cannot log loan for %user, cannot get student record for user id %user_id at institution id %institution_id.',
-        array(
-          '%user' => $name,
-          '%user_id' => $person->Brugerid,
-          '%institution_id' => $person->Instnr,
-        ),
-        WATCHDOG_ERROR
-      );
-    }
-    else {
-      $data['class'] = $student->Klasse;
-    }
+    try {
+      $service = ding_unilogin_wservice('info');
+      $person = $service->getPerson($name);
+      if (!$person) {
+        watchdog(
+          'breol_unilogin_statistics',
+          'Cannot log loan for %user, cannot get person.',
+          array('%user' => $name),
+          WATCHDOG_ERROR
+        );
+      }
 
-    $inst = $service->getInstitution($person->Instnr);
-    if (!$inst) {
-      watchdog(
-        'breol_unilogin_statistics',
-        'Cannot log loan for %user, cannot get institution id %institution_id.',
-        array('%user' => $name, '%institution_id' => $person->Instnr),
-        WATCHDOG_ERROR
-      );
+      $inst = $service->getInstitution($person->Instnr);
+      if (!$inst) {
+        watchdog(
+          'breol_unilogin_statistics',
+          'Cannot log loan for %user, cannot get institution id %institution_id.',
+          array('%user' => $name, '%institution_id' => $person->Instnr),
+          WATCHDOG_ERROR
+        );
+      }
+      else {
+        $data['school_id'] = $inst->Instnr;
+        $data['school'] = $inst->Navn;
+        $data['municipality_id'] = $inst->Kommunenr;
+        $data['municipality'] = $inst->Kommune;
+      }
+
+      $student = $service->getStudent($person->Instnr, $person->Brugerid);
+      if (!$student) {
+        watchdog(
+          'breol_unilogin_statistics',
+          'Cannot log loan for %user, cannot get student record for user id %user_id at institution id %institution_id.',
+          array(
+            '%user' => $name,
+            '%user_id' => $person->Brugerid,
+            '%institution_id' => $person->Instnr,
+          ),
+          WATCHDOG_ERROR
+        );
+      }
+      else {
+        $data['class'] = $student->Klasse;
+      }
     }
-    else {
-      $data['school_id'] = $inst->Instnr;
-      $data['school'] = $inst->Navn;
-      $data['municipality_id'] = $inst->Kommunenr;
-      $data['municipality'] = $inst->Kommune;
+    catch (Exception $e) {
+      // Quietly ignore.
     }
 
     db_insert('breol_unilogin_statistics')
