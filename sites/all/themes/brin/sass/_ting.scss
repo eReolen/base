@@ -45,6 +45,13 @@
 }
 
 /**
+ * P2 added a transform that messes with the fallback image. Kill it.
+ */
+.ting-cover:before {
+  transform: none;
+}
+
+/**
  * Proper styles.
  */
 
@@ -63,7 +70,7 @@
 }
 .ting-object-right,
 .pane-ting-object .ting-object-right,
-.group_material_details,
+.group-material-details,
 .group_holdings_available,
 .group_periodical_issues,
 .ting-object-relation-group {
@@ -87,7 +94,7 @@
   clear: both;
 }
 
-.group_material_details,
+.group-material-details,
 .group_holdings_available,
 .group_periodical_issues,
 .ting-object-relation-group {
@@ -116,17 +123,17 @@
   margin-bottom: 20px;
 }
 
-.pane-search-result .search-results .list .view-mode-teaser, 
-.view-node-search-result .search-results .list .view-mode-teaser, 
-.ting-reference-reverse-list .search-results .list .view-mode-teaser, 
+.pane-search-result .search-results .list .view-mode-teaser,
+.view-node-search-result .search-results .list .view-mode-teaser,
+.ting-reference-reverse-list .search-results .list .view-mode-teaser,
 .pane-new-materials .search-results .list .view-mode-teaser {
-  padding: 20px 0px; 
+  padding: 20px 0px;
 }
 
 /**
  * Fix up margins.
  */
-.group_material_details,
+.group-material-details,
 .group_holdings_available,
 .group_periodical_issues {
   h2, div {

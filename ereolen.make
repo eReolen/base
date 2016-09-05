@@ -98,6 +98,12 @@ projects[ding2][patch][] = "sites/all/patches/disable-message.patch"
 ; Fix dings /user redirect bug.
 projects[ding2][patch][] = "sites/all/patches/ding_user-redirect.patch"
 
+; DDBasic slick changes, we need it for the eReolen theme.
+projects[ding2][patch][] = "sites/all/patches/slick-carousel-3.patch"
+
+; Adjust ddbasic to the new field_group 1.5.
+projects[ding2][patch][] = "sites/all/patches/ddbasic-field_group.patch"
+
 ; A bit more cover fixes.
 ; based on https://github.com/ding2/ding2/pull/196
 projects[ding2][patch][] = "sites/all/patches/ting_covers-3.patch"

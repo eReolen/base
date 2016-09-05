@@ -1612,6 +1612,29 @@ function reol_frontend_default_page_manager_pages() {
     $display->content['new-55e54c4d-81d0-4c89-b764-cb03d72f575e'] = $pane;
     $display->panels['bottom'][0] = 'new-55e54c4d-81d0-4c89-b764-cb03d72f575e';
     $pane = new stdClass();
+    $pane->pid = 'new-21c9af85-8fb4-47ad-8fb4-f329417afe80';
+    $pane->panel = 'highlight';
+    $pane->type = 'ego_banner';
+    $pane->subtype = 'ego_banner';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '21c9af85-8fb4-47ad-8fb4-f329417afe80';
+    $display->content['new-21c9af85-8fb4-47ad-8fb4-f329417afe80'] = $pane;
+    $display->panels['highlight'][0] = 'new-21c9af85-8fb4-47ad-8fb4-f329417afe80';
+    $pane = new stdClass();
     $pane->pid = 'new-a6e2217a-abee-4a61-aa43-c9428c0e0f39';
     $pane->panel = 'highlight';
     $pane->type = 'nonquota_banner';
@@ -1628,11 +1651,11 @@ function reol_frontend_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = 'a6e2217a-abee-4a61-aa43-c9428c0e0f39';
     $display->content['new-a6e2217a-abee-4a61-aa43-c9428c0e0f39'] = $pane;
-    $display->panels['highlight'][0] = 'new-a6e2217a-abee-4a61-aa43-c9428c0e0f39';
+    $display->panels['highlight'][1] = 'new-a6e2217a-abee-4a61-aa43-c9428c0e0f39';
     $pane = new stdClass();
     $pane->pid = 'new-55786955-f7e6-4f41-b080-b1285000c8c8';
     $pane->panel = 'highlight';
@@ -1650,11 +1673,11 @@ function reol_frontend_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = '55786955-f7e6-4f41-b080-b1285000c8c8';
     $display->content['new-55786955-f7e6-4f41-b080-b1285000c8c8'] = $pane;
-    $display->panels['highlight'][1] = 'new-55786955-f7e6-4f41-b080-b1285000c8c8';
+    $display->panels['highlight'][2] = 'new-55786955-f7e6-4f41-b080-b1285000c8c8';
     $pane = new stdClass();
     $pane->pid = 'new-93ea4343-2bbe-4c49-9889-b21a20719af2';
     $pane->panel = 'highlight';
@@ -1675,11 +1698,11 @@ function reol_frontend_default_page_manager_pages() {
       'css_class' => 'newsletter-signup',
     );
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 3;
     $pane->locks = array();
     $pane->uuid = '93ea4343-2bbe-4c49-9889-b21a20719af2';
     $display->content['new-93ea4343-2bbe-4c49-9889-b21a20719af2'] = $pane;
-    $display->panels['highlight'][2] = 'new-93ea4343-2bbe-4c49-9889-b21a20719af2';
+    $display->panels['highlight'][3] = 'new-93ea4343-2bbe-4c49-9889-b21a20719af2';
     $pane = new stdClass();
     $pane->pid = 'new-383ae229-0de9-49c6-84d9-0aeebe73f41a';
     $pane->panel = 'left';
@@ -1800,7 +1823,7 @@ function reol_frontend_default_page_manager_pages() {
   $pages['reol_frontpage'] = $page;
 
   $page = new stdClass();
-  $page->disabled = TRUE; /* Edit this to true to make a default page disabled initially */
+  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
   $page->api_version = 1;
   $page->name = 'user_newsletter_status';
   $page->task = 'page';

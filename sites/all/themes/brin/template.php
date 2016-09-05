@@ -80,7 +80,7 @@ function brin_ting_view_alter(&$build) {
 /**
  * Implements hook_preprocess_ting_object().
  */
-function brin_preprocess_ting_object(&$variables) {
+function brin_process_ting_object(&$variables) {
   // Remove the type prefix from the title of the first material of
   // the collection.
   if (!empty($variables['content']['ting_primary_object'][0]['ting_title'][0]['title']['#prefix'])) {
@@ -207,10 +207,11 @@ function brin_menu_link($vars) {
     $sub_menu = drupal_render($element['#below']);
   }
 
+  if (!is_array($element['#localized_options']['attributes']['class'])) {
+    $element['#localized_options']['attributes']['class'] = array();
+  }
   // Add default class to a tag.
-  $element['#localized_options']['attributes']['class'] = array(
-    'menu-item',
-  );
+  $element['#localized_options']['attributes']['class'][] = 'menu-item';
 
   if (isset($element['#original_link'])) {
     // If this element uses ajax, add class and load ajax.
@@ -288,7 +289,7 @@ function brin_preprocess_html(&$variables) {
       'type' => 'meta',
       'attributes' => array(
         'name' => 'apple-itunes-app',
-        'content' => 'app-id=' . variable_get('reol_base_itunes_app_id'),
+        'content' => 'app-id=' . $app_id,
       ),
     );
   }
@@ -425,6 +426,16 @@ function brin_preprocess_ting_object_cover(&$variables) {
       $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
       $variables['classes'] = array_merge($variables['classes'], $add_classes);
     }
+  }
+}
+
+/**
+ * Preprocess search carousel.
+ */
+function brin_preprocess_ting_search_carousel(&$vars) {
+  if (isset($vars['settings'])) {
+    $vars['settings']['slidesToShow'] = 6;
+    $vars['settings']['slidesToScroll'] = 5;
   }
 }
 
