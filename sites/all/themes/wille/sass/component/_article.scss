@@ -88,6 +88,10 @@ $z-index-cover-base: 1;
   &--breol_subject {
     margin-bottom: -50px;
   }
+
+  &--breol_news {
+    max-height: 100%;
+  }
 }
 
 .article__cover {
