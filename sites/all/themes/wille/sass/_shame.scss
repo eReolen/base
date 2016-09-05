@@ -57,7 +57,6 @@
 .main-content {
   width: 100%;
   display: inline-block;
-  min-height: 100vh;
 }
 
 // Hacky hack.
@@ -68,5 +67,28 @@
         display: none;
       }
     }
+  }
+}
+
+// Wavy stuff.
+.main-content-wrapper {
+  .page-node &:before,
+  .page-search &:before,
+  .user-main-content &:before {
+    -webkit-mask-image: url(../svg/organic_element.svg);
+    mask-image: url(../svg/organic_element.svg);
+    content: "";
+    background-color: white;
+    -webkit-mask-repeat: repeat-x;
+    z-index: 2;
+    position: relative;
+    height: 50px;
+    width: 100%;
+    display: inline-block;
+    margin-top: -10px;
+  }
+
+  .node-type-breol-subject &:before {
+    height: 60px;
   }
 }

@@ -2,7 +2,12 @@
 $footer-border-color: rgb(226, 77, 128);//#e24d80
 
 .footer {
-  background: $red;
+
+  background-color: $red;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url(../svg/organic_element.svg);;
+  mask-image: url(../svg/organic_element.svg);;
+
   color: $white;
   font-size: $base-font-size;
   font-family: $font-light;
@@ -10,6 +15,7 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
   overflow: hidden;
   padding-top: em(65, $base-font-size);
   padding-bottom: em(45, $base-font-size);
+  margin-top: 50px;
 
   width: 100%;
   float: left;

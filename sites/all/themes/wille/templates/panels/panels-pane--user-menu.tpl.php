@@ -31,7 +31,7 @@
     <div class="user-banner__overlay"></div>
   </div>
 
-  <div class="pane-content">
+  <div class="pane-content user-main-content">
     <?php print render($content); ?>
   </div>
 </div>

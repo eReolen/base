@@ -18,7 +18,12 @@ function wille_preprocess_html(&$variables) {
   if (!empty($node) && $node->type === 'breol_subject') {
     $rgb = breol_fancy_box_hex2rgb($node->field_color[LANGUAGE_NONE][0]['rgb']);
     $rgba = 'rgba(' . implode(",", $rgb) . ', 0.4)';
-    $css = 'body {background-color: ' . $rgba . '}';
+    // $css = 'body {background-color: ' . $rgba . '}';
+
+
+    $color = alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 50);
+
+    $css = 'body {background-color: ' . $color . '} .main-content-wrapper:before {background-color: ' . $color . ' !important}';
     drupal_add_css($css, 'inline');
   }
 
@@ -270,4 +275,21 @@ function wille_field($variables) {
   $output = '<div class="' . $variables['classes'] . '"' . $variables['attributes'] . '>' . $output . '</div>';
 
   return $output;
+}
+
+function alter_brightness($colourstr, $steps) {
+  $colourstr = str_replace('#','',$colourstr);
+  $rhex = substr($colourstr,0,2);
+  $ghex = substr($colourstr,2,2);
+  $bhex = substr($colourstr,4,2);
+
+  $r = hexdec($rhex);
+  $g = hexdec($ghex);
+  $b = hexdec($bhex);
+
+  $r = max(0,min(255,$r + $steps));
+  $g = max(0,min(255,$g + $steps));
+  $b = max(0,min(255,$b + $steps));
+
+  return '#'.dechex($r).dechex($g).dechex($b);
 }
