@@ -257,29 +257,6 @@ function breol_frontend_default_page_manager_handlers() {
     $display->content['new-1769a64d-2cbe-490d-87aa-a2c3ee082997'] = $pane;
     $display->panels['content'][0] = 'new-1769a64d-2cbe-490d-87aa-a2c3ee082997';
     $pane = new stdClass();
-    $pane->pid = 'new-7d6883a8-ded7-4b73-b825-c0d0c8f81df5';
-    $pane->panel = 'content';
-    $pane->type = 'announcement';
-    $pane->subtype = 'announcement';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $pane->uuid = '7d6883a8-ded7-4b73-b825-c0d0c8f81df5';
-    $display->content['new-7d6883a8-ded7-4b73-b825-c0d0c8f81df5'] = $pane;
-    $display->panels['content'][1] = 'new-7d6883a8-ded7-4b73-b825-c0d0c8f81df5';
-    $pane = new stdClass();
     $pane->pid = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
     $pane->panel = 'content';
     $pane->type = 'page_tabs';
@@ -319,11 +296,11 @@ function breol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '76338aa5-3ee9-4256-9414-eab9979db07b';
     $display->content['new-76338aa5-3ee9-4256-9414-eab9979db07b'] = $pane;
-    $display->panels['content'][2] = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
+    $display->panels['content'][1] = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
     $pane = new stdClass();
     $pane->pid = 'new-4637ed6a-8c15-46bb-ae3b-4de4089e860d';
     $pane->panel = 'content';
@@ -342,11 +319,11 @@ function breol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 2;
     $pane->locks = '';
     $pane->uuid = '4637ed6a-8c15-46bb-ae3b-4de4089e860d';
     $display->content['new-4637ed6a-8c15-46bb-ae3b-4de4089e860d'] = $pane;
-    $display->panels['content'][3] = 'new-4637ed6a-8c15-46bb-ae3b-4de4089e860d';
+    $display->panels['content'][2] = 'new-4637ed6a-8c15-46bb-ae3b-4de4089e860d';
     $pane = new stdClass();
     $pane->pid = 'new-e5040dda-cb3e-45a2-a3ff-81ffeef1049d';
     $pane->panel = 'content_header';
@@ -529,6 +506,29 @@ function breol_frontend_default_page_manager_handlers() {
     $display->content['new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0'] = $pane;
     $display->panels['navigation'][0] = 'new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
     $pane = new stdClass();
+    $pane->pid = 'new-7d6883a8-ded7-4b73-b825-c0d0c8f81df5';
+    $pane->panel = 'navigation';
+    $pane->type = 'announcement';
+    $pane->subtype = 'announcement';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '7d6883a8-ded7-4b73-b825-c0d0c8f81df5';
+    $display->content['new-7d6883a8-ded7-4b73-b825-c0d0c8f81df5'] = $pane;
+    $display->panels['navigation'][1] = 'new-7d6883a8-ded7-4b73-b825-c0d0c8f81df5';
+    $pane = new stdClass();
     $pane->pid = 'new-e785bc73-a343-41ea-b6c3-be046d045b5d';
     $pane->panel = 'navigation';
     $pane->type = 'subject_menu';
@@ -562,11 +562,11 @@ function breol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = 'e785bc73-a343-41ea-b6c3-be046d045b5d';
     $display->content['new-e785bc73-a343-41ea-b6c3-be046d045b5d'] = $pane;
-    $display->panels['navigation'][1] = 'new-e785bc73-a343-41ea-b6c3-be046d045b5d';
+    $display->panels['navigation'][2] = 'new-e785bc73-a343-41ea-b6c3-be046d045b5d';
     $pane = new stdClass();
     $pane->pid = 'new-5b89ebff-4571-4500-ba34-d704e514049b';
     $pane->panel = 'navigation';
@@ -600,11 +600,11 @@ user/*',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 3;
     $pane->locks = array();
     $pane->uuid = '5b89ebff-4571-4500-ba34-d704e514049b';
     $display->content['new-5b89ebff-4571-4500-ba34-d704e514049b'] = $pane;
-    $display->panels['navigation'][2] = 'new-5b89ebff-4571-4500-ba34-d704e514049b';
+    $display->panels['navigation'][3] = 'new-5b89ebff-4571-4500-ba34-d704e514049b';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
