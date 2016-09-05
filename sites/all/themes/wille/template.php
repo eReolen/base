@@ -21,7 +21,7 @@ function wille_preprocess_html(&$variables) {
     // $css = 'body {background-color: ' . $rgba . '}';
 
 
-    $color = alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 50);
+    $color = _wille_alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 50);
 
     $css = 'body {background-color: ' . $color . '} .main-content-wrapper:before {background-color: ' . $color . ' !important}';
     drupal_add_css($css, 'inline');
@@ -277,7 +277,10 @@ function wille_field($variables) {
   return $output;
 }
 
-function alter_brightness($colourstr, $steps) {
+/**
+ * Brighten color.
+ */
+function _wille_alter_brightness($colourstr, $steps) {
   $colourstr = str_replace('#','',$colourstr);
   $rhex = substr($colourstr,0,2);
   $ghex = substr($colourstr,2,2);
