@@ -64,10 +64,8 @@ $z-index-cover-base: 1;
   position: relative;
   float: left;
   width: 100%;
-  // max-height: 476px;
 
   &:after {
-    // padding-top: 56.25%;
     display: block;
     content: '';
   }
