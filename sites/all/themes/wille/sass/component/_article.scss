@@ -69,7 +69,6 @@ $z-index-cover-base: 1;
   z-index: 1;
 
   &:after {
-    padding-top: 56.25%;
     display: block;
     content: '';
   }
@@ -95,7 +94,6 @@ $z-index-cover-base: 1;
   background-position: center;
   height: auto;
   position: relative;
-  max-height: 476px;
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -108,10 +106,20 @@ $z-index-cover-base: 1;
   height: 100%;
 
   &--breol_news {
-    position: absolute;
-
     @include media($phone) {
       position: relative;
+    }
+
+    @include media($screen) {
+      min-height: 476px;
+    }
+
+    @include media($tablet-l) {
+      min-height: 323px;
+    }
+
+    @include media($phone) {
+      min-height: 100%;
     }
   }
 
@@ -199,7 +207,7 @@ $z-index-cover-base: 1;
   z-index: 10;
   position: relative;
   max-width: 550px;
-  max-height: 350px;
+  max-height: 100%;
   padding: 40px 15px;
   color: $title-color;
 

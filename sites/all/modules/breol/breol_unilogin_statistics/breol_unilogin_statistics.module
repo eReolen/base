@@ -48,6 +48,15 @@ function breol_unilogin_statistics_permission() {
  */
 function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
   if (ding_unilogin_authenticated($account)) {
+    $data = array(
+      'timestamp' => REQUEST_TIME,
+      'class' => '',
+      'school_id' => '',
+      'school' => '',
+      'municipality_id' => '',
+      'municipality' => '',
+      'isbn' => $isbn,
+    );
     $service = ding_unilogin_wservice('info');
     $person = $service->getPerson($name);
     if (!$person) {
@@ -57,7 +66,6 @@ function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
         array('%user' => $name),
         WATCHDOG_ERROR
       );
-      return;
     }
     $student = $service->getStudent($person->Instnr, $person->Brugerid);
     if (!$student) {
@@ -71,9 +79,12 @@ function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
         ),
         WATCHDOG_ERROR
       );
-      return;
     }
-    $inst = $service->getInstitution($student->Institutionsnummer);
+    else {
+      $data['class'] = $student->Klasse;
+    }
+
+    $inst = $service->getInstitution($person->Instnr);
     if (!$inst) {
       watchdog(
         'breol_unilogin_statistics',
@@ -81,19 +92,16 @@ function breol_unilogin_statistics_publizon_loan($account, $name, $isbn) {
         array('%user' => $name, '%institution_id' => $person->Instnr),
         WATCHDOG_ERROR
       );
-      return;
+    }
+    else {
+      $data['school_id'] = $inst->Instnr;
+      $data['school'] = $inst->Navn;
+      $data['municipality_id'] = $inst->Kommunenr;
+      $data['municipality'] = $inst->Kommune;
     }
 
     db_insert('breol_unilogin_statistics')
-      ->fields(array(
-        'timestamp' => REQUEST_TIME,
-        'class' => $student->Klasse,
-        'school_id' => $inst->Instnr,
-        'school' => $inst->Navn,
-        'municipality_id' => $inst->Kommunenr,
-        'municipality' => $inst->Kommune,
-        'isbn' => $isbn,
-      ))
+      ->fields($data)
       ->execute();
   }
 }

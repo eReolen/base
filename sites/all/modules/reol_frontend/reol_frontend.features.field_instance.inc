@@ -10,7 +10,7 @@
 function reol_frontend_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-article-body'
+  // Exported field_instance: 'node-article-body'.
   $field_instances['node-article-body'] = array(
     'bundle' => 'article',
     'default_value' => NULL,
@@ -64,7 +64,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-article-field_ding_news_list_image'
+  // Exported field_instance: 'node-article-field_ding_news_list_image'.
   $field_instances['node-article-field_ding_news_list_image'] = array(
     'bundle' => 'article',
     'deleted' => 0,
@@ -142,7 +142,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-article-field_ding_news_materials'
+  // Exported field_instance: 'node-article-field_ding_news_materials'.
   $field_instances['node-article-field_ding_news_materials'] = array(
     'bundle' => 'article',
     'default_value' => NULL,
@@ -187,7 +187,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-article-field_reol_entity_type'
+  // Exported field_instance: 'node-article-field_reol_entity_type'.
   $field_instances['node-article-field_reol_entity_type'] = array(
     'bundle' => 'article',
     'default_value' => NULL,
@@ -229,7 +229,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-article-field_show_in_app'
+  // Exported field_instance: 'node-article-field_show_in_app'.
   $field_instances['node-article-field_show_in_app'] = array(
     'bundle' => 'article',
     'default_value' => array(
@@ -277,7 +277,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-author_portrait-body'
+  // Exported field_instance: 'node-author_portrait-body'.
   $field_instances['node-author_portrait-body'] = array(
     'bundle' => 'author_portrait',
     'default_value' => NULL,
@@ -319,7 +319,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-author_portrait-field_link'
+  // Exported field_instance: 'node-author_portrait-field_link'.
   $field_instances['node-author_portrait-field_link'] = array(
     'bundle' => 'author_portrait',
     'default_value' => NULL,
@@ -374,7 +374,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-author_portrait-field_portrait'
+  // Exported field_instance: 'node-author_portrait-field_portrait'.
   $field_instances['node-author_portrait-field_portrait'] = array(
     'bundle' => 'author_portrait',
     'deleted' => 0,
@@ -446,7 +446,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-author_portrait-field_reol_entity_type'
+  // Exported field_instance: 'node-author_portrait-field_reol_entity_type'.
   $field_instances['node-author_portrait-field_reol_entity_type'] = array(
     'bundle' => 'author_portrait',
     'default_value' => NULL,
@@ -482,7 +482,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-video-body'
+  // Exported field_instance: 'node-video-body'.
   $field_instances['node-video-body'] = array(
     'bundle' => 'video',
     'default_value' => NULL,
@@ -523,7 +523,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-video-field_reol_entity_type'
+  // Exported field_instance: 'node-video-field_reol_entity_type'.
   $field_instances['node-video-field_reol_entity_type'] = array(
     'bundle' => 'video',
     'default_value' => NULL,
@@ -559,7 +559,7 @@ function reol_frontend_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-video-field_video'
+  // Exported field_instance: 'node-video-field_video'.
   $field_instances['node-video-field_video'] = array(
     'bundle' => 'video',
     'deleted' => 0,
