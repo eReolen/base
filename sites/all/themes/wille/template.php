@@ -18,7 +18,10 @@ function wille_preprocess_html(&$variables) {
   if (!empty($node) && $node->type === 'breol_subject') {
     $rgb = breol_fancy_box_hex2rgb($node->field_color[LANGUAGE_NONE][0]['rgb']);
     $rgba = 'rgba(' . implode(",", $rgb) . ', 0.4)';
-    $css = 'body {background-color: ' . $rgba . '}';
+
+    $color = _wille_alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 50);
+
+    $css = 'body {background-color: ' . $color . '} .organic-element--content .organic-svg  {fill: ' . $color . ' !important}';
     drupal_add_css($css, 'inline');
   }
 
@@ -32,6 +35,13 @@ function wille_preprocess_html(&$variables) {
   );
 
   drupal_add_html_head($viewport, 'viewport');
+}
+
+/**
+ * Implements THEME_preprocess_TEMPLATE();
+ */
+function wille_preprocess_wille_site_template(&$variables, $hook) {
+  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
 }
 
 /**
@@ -179,8 +189,10 @@ function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
  * Implements hook_preprocess_panels_pane().
  */
 function wille_preprocess_panels_pane(&$variables) {
-  if ($variables['pane']->type === 'user_menu') {
 
+  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
+
+  if ($variables['pane']->type === 'user_menu') {
     // Hide logout menu tab.
     foreach ($variables['content'] as $key => $item) {
       if (!empty($item['#href'])) {
@@ -270,4 +282,24 @@ function wille_field($variables) {
   $output = '<div class="' . $variables['classes'] . '"' . $variables['attributes'] . '>' . $output . '</div>';
 
   return $output;
+}
+
+/**
+ * Brighten color.
+ */
+function _wille_alter_brightness($colourstr, $steps) {
+  $colourstr = str_replace('#','',$colourstr);
+  $rhex = substr($colourstr,0,2);
+  $ghex = substr($colourstr,2,2);
+  $bhex = substr($colourstr,4,2);
+
+  $r = hexdec($rhex);
+  $g = hexdec($ghex);
+  $b = hexdec($bhex);
+
+  $r = max(0,min(255,$r + $steps));
+  $g = max(0,min(255,$g + $steps));
+  $b = max(0,min(255,$b + $steps));
+
+  return '#'.dechex($r).dechex($g).dechex($b);
 }
