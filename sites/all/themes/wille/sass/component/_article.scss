@@ -107,22 +107,18 @@ $z-index-cover-base: 1;
   align-items: center;
   overflow: hidden;
   height: 100%;
+  display: -ms-flexbox;
+  -ms-flex-pack: center;
+
+  padding: 100px 0;
 
   &--breol_news {
     @include media($phone) {
       position: relative;
     }
 
-    @include media($screen) {
-      min-height: 476px;
-    }
-
     @include media($tablet-l) {
-      min-height: 323px;
-    }
-
-    @include media($phone) {
-      min-height: 100%;
+      padding: 20px 0;
     }
   }
 
@@ -206,7 +202,7 @@ $z-index-cover-base: 1;
 }
 
 .article__cover__content {
-  @include outer-container;
+  max-width: 1180px;
   z-index: 10;
   position: relative;
   max-width: 550px;
