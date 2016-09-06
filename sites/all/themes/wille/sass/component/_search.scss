@@ -617,3 +617,27 @@
     }
   }
 }
+
+// Show/hide search on tablet and mobile.
+.js-toggle-facets {
+  display: none;
+  text-align: center;
+  margin-bottom: 10px;
+  color: red;
+  font-family: $font-mikado;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @include media($tablet-p) {
+    display: block;
+  }
+}
+
+.pane-breol-facetbrowser,
+.pane-search .before-content {
+  @include media($tablet-p) {
+    display: none;
+  }
+}
