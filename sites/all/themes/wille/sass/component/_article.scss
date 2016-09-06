@@ -64,6 +64,9 @@ $z-index-cover-base: 1;
   position: relative;
   float: left;
   width: 100%;
+  max-height: 323px;
+  margin-bottom: -20px;
+  z-index: 1;
 
   &:after {
     display: block;
@@ -73,13 +76,20 @@ $z-index-cover-base: 1;
   &--breol_subject,
   &--breol_section,
   &--breol_page {
-    max-height: 326px;
+    max-height: 323px;
   }
 
   &--breol_page {
     @include media($phone) {
       max-height: 35vh;
     }
+  }
+
+  &--breol_subject {
+  }
+
+  &--breol_news {
+    max-height: 100%;
   }
 }
 
@@ -250,7 +260,6 @@ $z-index-cover-base: 1;
 
 .article__carousel {
   @include outer-container;
-  margin-top: 50px;
   margin-bottom: 30px;
 }
 
