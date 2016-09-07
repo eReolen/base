@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @file
+ * Statistics of loans.
+ */
+
+/**
+ * Implements hook_publizon_loan().
+ */
+function reol_statistics_publizon_loan($account, $name, $isbn, $retailer_id) {
+  // We generate an unique hash from our private key and user uid. Hopefully
+  // this is enough disassociation between user and loans.
+  $user_hash = hash('sha512', drupal_get_private_key() . $account->uid);
+  $data = array(
+    'timestamp' => REQUEST_TIME,
+    'retailer_id' => $retailer_id,
+    'user_hash' => $user_hash,
+    'isbn' => $isbn,
+  );
+  $unilogin_data = array();
+
+  // Catch all exceptions and ignore them.
+  try {
+    // Add Unilogin data, if possible.
+    if (function_exists('ding_unilogin_authenticated') &&
+      ding_unilogin_authenticated($account)) {
+      $service = ding_unilogin_wservice('info');
+      $person = $service->getPerson($name);
+      if (!$person) {
+        watchdog(
+          'reol_statistics',
+          'Cannot get person for %user.',
+          array('%user' => $name),
+          WATCHDOG_ERROR
+        );
+      }
+
+      $inst = $service->getInstitution($person->Instnr);
+      if (!$inst) {
+        watchdog(
+          'reol_statistics',
+          'Cannot get institution id %institution_id for %user.',
+          array('%user' => $name, '%institution_id' => $person->Instnr),
+          WATCHDOG_ERROR
+        );
+      }
+      else {
+        $unilogin_data['school_id'] = $inst->Instnr;
+        $unilogin_data['school'] = $inst->Navn;
+        $unilogin_data['municipality_id'] = $inst->Kommunenr;
+        $unilogin_data['municipality'] = $inst->Kommune;
+      }
+
+      $student = $service->getStudent($person->Instnr, $person->Brugerid);
+      if (!$student) {
+        watchdog(
+          'reol_statistics',
+          'Cannot  get student record for user id %user_id at institution id %institution_id.',
+          array(
+            '%user' => $name,
+            '%user_id' => $person->Brugerid,
+            '%institution_id' => $person->Instnr,
+          ),
+          WATCHDOG_ERROR
+        );
+      }
+      else {
+        $unilogin_data['class'] = $student->Klasse;
+      }
+    }
+  }
+  catch (Exception $e) {
+    // Quietly ignore.
+  }
+
+  $sid = db_insert('reol_statistics_loans')
+    ->fields($data)
+    ->execute();
+
+  if ($sid && $unilogin_data) {
+    $unilogin_data['sid'] = $sid;
+    db_insert('reol_statistics_unilogin')
+      ->fields($unilogin_data)
+      ->execute();
+  }
+}

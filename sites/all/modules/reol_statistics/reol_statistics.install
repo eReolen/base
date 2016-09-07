@@ -1,0 +1,99 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the reol_statistics module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function reol_statistics_schema() {
+  $schema = array();
+
+  $schema['reol_statistics_loans'] = array(
+    'description' => 'User loans',
+    'fields' => array(
+      'sid' => array(
+        'description' => 'Primary Key: ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'timestamp' => array(
+        'description' => 'The Unix timestamp when the material was loaned.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'user_hash' => array(
+        'description' => 'Unique hash for the user.',
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'retailer_id' => array(
+        'description' => 'Retailer ID of user.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'isbn' => array(
+        'description' => 'ISBN of material.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('sid'),
+    'indexes' => array(
+      'timestamp' => array('timestamp'),
+    ),
+  );
+
+  $schema['reol_statistics_unilogin'] = array(
+    'description' => 'Additional data for Unilogin users',
+    'fields' => array(
+      'sid' => array(
+        'description' => "Entry's {reol_statistics_loans}.sid.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'class' => array(
+        'description' => 'Class of user.',
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'school_id' => array(
+        'description' => 'School ID of user.',
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'school' => array(
+        'description' => 'School of user.',
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'municipality_id' => array(
+        'description' => 'Municipality id of school.',
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'municipality' => array(
+        'description' => 'Municipality of school.',
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+    ),
+    'primary key' => array('sid'),
+    'foreign keys' => array(
+      'reol_statistics_loans' => array(
+        'table' => 'reol_statistics_loans',
+        'columns' => array('sid' => 'sid'),
+      ),
+    ),
+  );
+
+  return $schema;
+}
