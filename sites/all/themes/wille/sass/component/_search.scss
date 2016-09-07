@@ -213,7 +213,6 @@
   width: 100%;
   float: left;
   margin-bottom: 50px;
-  margin-top: 30px;
 
   fieldset {
 
@@ -242,7 +241,6 @@
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
-      background: white;
       -webkit-appearance:none;
       -moz-appearance:none;
       appearance:none;
@@ -256,7 +254,7 @@
       text-transform: uppercase;
       font-weight: normal;
       letter-spacing: 1px;
-      background: url(../images/select_arrow.png) $white-medium no-repeat 96% 18px;
+      background: url(../images/select_arrow.png) transparent no-repeat 96% 18px;
       cursor: pointer;
 
       &:hover {
@@ -617,5 +615,29 @@
     &.grid-view {
       @include icon('.icon-grid-view');
     }
+  }
+}
+
+// Show/hide search on tablet and mobile.
+.js-toggle-facets {
+  display: none;
+  text-align: center;
+  margin-bottom: 10px;
+  color: red;
+  font-family: $font-mikado;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @include media($tablet-p) {
+    display: block;
+  }
+}
+
+.pane-breol-facetbrowser,
+.pane-search .before-content {
+  @include media($tablet-p) {
+    display: none;
   }
 }

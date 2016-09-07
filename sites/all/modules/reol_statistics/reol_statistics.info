@@ -1,0 +1,5 @@
+name = Reol Statistics
+description = "Loan statistics"
+core = 7.x
+package = ereolen.dk
+; dependencies[] = date_api

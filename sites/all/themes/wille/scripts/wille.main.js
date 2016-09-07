@@ -15,25 +15,6 @@
       if (!isMobile()) {
         $('body').addClass('is-desktop');
       }
-
-      /**
-       * Detect if we are on mobile devices.
-       */
-      function isMobile() {
-        if (navigator.userAgent.match(/Android/i)
-         || navigator.userAgent.match(/webOS/i)
-         || navigator.userAgent.match(/iPhone/i)
-         || navigator.userAgent.match(/iPad/i)
-         || navigator.userAgent.match(/iPod/i)
-         || navigator.userAgent.match(/BlackBerry/i)
-         || navigator.userAgent.match(/Windows Phone/i)
-           ) {
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
     }
   };
 
@@ -60,7 +41,6 @@
           $(element).slideUp(200);
         }
       });
-
     }
   };
 
@@ -166,6 +146,18 @@
           });
         });
       });
+
+      if ($('#ding-facetbrowser-form').length !== 0) {
+
+        var html = $('<div class="js-toggle-facets">' + Drupal.t('Limit search results') + '</div>');
+
+        $('.pane-panels-mini.pane-search').prepend(html);
+
+        $('.js-toggle-facets').click(function() {
+          $('.pane-breol-facetbrowser').slideToggle();
+          $('.before-content').slideToggle();
+        });
+      }
     }
   };
 
@@ -322,5 +314,43 @@
       }
     }
   };
+
+  var resizeTimer; // Set resizeTimer to empty so it resets on page load
+
+  function resizeFunction() {
+      var windowWidth = window.innerWidth;
+
+      if (windowWidth > 768) {
+        $('.pane-breol-facetbrowser, .before-content').show();
+      }
+  };
+
+  // On resize, run the function and reset the timeout
+  // 250 is the delay in milliseconds. Change as you see fit.
+  $(window).resize(function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resizeFunction, 250);
+  });
+
+  resizeFunction();
+
+  /**
+       * Detect if we are on mobile devices.
+       */
+  function isMobile() {
+    if (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)
+    ) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
 })(jQuery);
