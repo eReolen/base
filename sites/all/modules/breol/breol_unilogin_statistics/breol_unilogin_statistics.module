@@ -20,9 +20,26 @@ function breol_unilogin_statistics_menu() {
     'file' => 'breol_unilogin_statistics.page.inc',
   );
 
+  $items['admin/reports/breol_statistics'] = array(
+    'title' => 'User loan statistics',
+    'description' => 'Statistics of loans by non-UNI•Login users',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('breol_unilogin_statistics_other_form'),
+    'access arguments' => array('access unilogin loan statistics'),
+    'file' => 'breol_unilogin_statistics.page.inc',
+  );
+
   $items['admin/reports/breol_unilogin_statistics/%/%'] = array(
     'title' => 'UNI•Login user loan statistics data',
     'page callback' => 'breol_unilogin_statistics_data',
+    'page arguments' => array(3, 4),
+    'access arguments' => array('access unilogin loan statistics'),
+    'file' => 'breol_unilogin_statistics.page.inc',
+  );
+
+  $items['admin/reports/breol_statistics/%/%'] = array(
+    'title' => 'non-UNI•Login user loan statistics data',
+    'page callback' => 'breol_unilogin_statistics_data_other',
     'page arguments' => array(3, 4),
     'access arguments' => array('access unilogin loan statistics'),
     'file' => 'breol_unilogin_statistics.page.inc',
