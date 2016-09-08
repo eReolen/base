@@ -621,8 +621,6 @@
 // Show/hide search on tablet and mobile.
 .js-toggle-facets {
   @include button($red, false)
-  // padding: 8px 42px 8px 22px;
-  // font-size: 14px;
   display: none;
   text-align: center;
   margin-bottom: 10px;
