@@ -30,6 +30,24 @@ function breol_fancy_box_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Implements hook_process_breol_fancy_box().
+ */
+function breol_fancy_box_process_breol_fancy_box(&$vars) {
+  $nodes = array();
+  foreach ($vars['nodes'] as $index => $node) {
+    $view_mode = 'teaser_' . $vars['layout'][$index]['type'];
+    $build = array(
+      '#prefix' => '<div ' . drupal_attributes($vars['layout'][$index]['attributes']) . '>',
+      '#suffix' => '</div>',
+    );
+    $build[] = node_view($node, $view_mode);
+    $nodes[] = $build;
+  }
+
+  $vars['nodes'] = $nodes;
+}
+
+/**
  * Implements hook_preprocess_node().
  */
 function breol_fancy_box_preprocess_node(&$variables, $hook) {
@@ -73,18 +91,6 @@ function breol_fancy_box_preprocess_node(&$variables, $hook) {
       '#href' => $link,
     );
   }
-}
-
-/**
- * Render a node for the fancy box.
- */
-function breol_fancy_box_render_node($node, $layout) {
-
-  $view_mode = 'teaser_' . $layout['type'];
-
-  $rendered_node = node_view($node, $view_mode);
-
-  return drupal_render($rendered_node);
 }
 
 /**
