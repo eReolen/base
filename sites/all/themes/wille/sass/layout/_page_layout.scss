@@ -81,4 +81,13 @@ body:not(.front) .main-content-wrapper__inner {
       fill: $red;
     }
   }
+
+  @include media($tablet-l) {
+
+    svg {
+      width: 1600px;
+      position: absolute;
+      left: -500px;
+    }
+  }
 }
