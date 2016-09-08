@@ -44,7 +44,7 @@
 }
 
 .search-result--heading-type {
-  display: none; // TODO(ts) -  reomve before merge.
+  // display: none; // TODO(ts) -  reomve before merge.
 }
 
 .field-name-ting-title {
@@ -621,15 +621,14 @@
 // Show/hide search on tablet and mobile.
 .js-toggle-facets {
   @include button($red, false)
-  padding: 8px 42px 8px 22px;
-  font-size: 14px;
+  // padding: 8px 42px 8px 22px;
+  // font-size: 14px;
   display: none;
   text-align: center;
   margin-bottom: 10px;
   font-family: $font-mikado;
-  max-width: 320px;
+  width: 99%;
   float: right;
-  margin-right: 20px;
 
   &:before {
     @include icon('.icon-arrow-right');
