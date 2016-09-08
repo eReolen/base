@@ -101,29 +101,25 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     &:before {
       @include icon('.icon-arrow-right');
       float: right;
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
-      transition: all 300ms ease-out;
+      @include transform(90deg);
+      @include transition(all 300ms ease-out);
 
       @include media($tablet-l) {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
+        @include transform(0deg);
       }
     }
 
     &.closed {
 
       &:before {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
+        @include transform(0deg);
       }
     }
 
     &.open {
 
       &:before {
-        -webkit-transform: rotate(90deg);
-        transform: rotate(90deg);
+        @include transform(90deg);
       }
     }
   }

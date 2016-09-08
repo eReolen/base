@@ -620,11 +620,29 @@
 
 // Show/hide search on tablet and mobile.
 .js-toggle-facets {
+  @include button($red, false)
+  padding: 8px 42px 8px 22px;
+  font-size: 14px;
   display: none;
   text-align: center;
   margin-bottom: 10px;
-  color: red;
   font-family: $font-mikado;
+  max-width: 320px;
+  float: right;
+  margin-right: 20px;
+
+  &:before {
+    @include icon('.icon-arrow-right');
+    @include transform(rotate(90deg));
+    @include transition(all 300ms ease-out);
+    float: right;
+    right: 17px;
+    position: absolute;
+  }
+
+  &.open:before {
+    @include transform(rotate(0deg));
+  }
 
   &:hover {
     cursor: pointer;
