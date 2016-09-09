@@ -53,6 +53,10 @@ body:not(.front) .main-content-wrapper__inner {
   position: relative;
   width: 100%;
 
+  .front & {
+    display: none;
+  }
+
   &--user {
     .organic-svg {
       fill: white;
