@@ -56,10 +56,6 @@ body:not(.front) .main-content-wrapper__inner {
   padding: 0px;
   line-height: 0;
 
-  .front & {
-    display: none;
-  }
-
   &--user {
     .organic-svg {
       fill: white;
@@ -75,9 +71,10 @@ body:not(.front) .main-content-wrapper__inner {
       top: -20px;
     }
 
-    .page-user & {
+    .front & {
       display: none;
     }
+
   }
 
   &--footer {
