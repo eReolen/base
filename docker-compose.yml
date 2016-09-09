@@ -2,6 +2,8 @@ version: '2'
 services:
   ereol:
     build: './private/docker/web'
+    ports:
+      - 80
     links:
       - db-ereol
     volumes:
@@ -15,6 +17,8 @@ services:
 
   ego:
     build: './private/docker/web'
+    ports:
+      - 80
     links:
       - db-ereol
     volumes:

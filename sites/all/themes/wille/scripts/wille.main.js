@@ -154,6 +154,9 @@
         $('.pane-panels-mini.pane-search').prepend(html);
 
         $('.js-toggle-facets').click(function() {
+
+          $(this).toggleClass('open');
+
           $('.pane-breol-facetbrowser').slideToggle();
           $('.before-content').slideToggle();
         });
