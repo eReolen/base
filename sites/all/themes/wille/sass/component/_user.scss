@@ -2,9 +2,9 @@
     ------------------------------------------------------- */
 .user-banner {
   @extend .article__cover;
-  height: 280px;
-  padding-bottom: 40px;
-  margin-bottom: -40px;
+  height: auto;
+  padding: 50px 0;
+  margin-bottom: -20px;
   font-size: 26px;
   color: $title-color;
   font-family: $font-light;
@@ -14,8 +14,9 @@
     margin-bottom: 0;
   }
 
-  @include media($tablet-l) {
-    height: 200px;
+  @include media($phone) {
+    padding: 0;
+    font-size: 20px;
   }
 
   &__content {
