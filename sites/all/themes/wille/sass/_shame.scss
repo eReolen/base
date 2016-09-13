@@ -59,7 +59,7 @@
   display: inline-block;
 }
 
-// Hacky hack.
+// Hacky hack. Hide checkbox there is there for unknown reasons.
 .pane-loans {
   .material-item {
     .left-column {
@@ -70,3 +70,36 @@
   }
 }
 
+// Reader container.
+#reader-container {
+  z-index: 999;
+}
+
+#slider {
+  max-width: 600px;
+}
+
+.reader__back-button {
+  @include icon('.icon-arrow-left-funny');
+  position: absolute;
+  text-decoration: none;
+  color: $black;
+  font-size: 20px;
+  top: 10px;
+  left: 20px;
+  z-index: 9999;
+
+  &:before {
+    position: relative;
+    left: -4px;
+    top: 2px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @include media($phone-p) {
+    @include hide-text;
+  }
+}

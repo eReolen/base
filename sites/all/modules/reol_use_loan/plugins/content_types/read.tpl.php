@@ -6,22 +6,16 @@
  * to an ebook.
  */
 
-drupal_add_css(drupal_get_path('module', 'reol_use_loan') . '/css/reader.css');
-drupal_add_js(drupal_get_path('module', 'reol_use_loan') . '/js/reader.js');
 ?>
 <div class="reader">
-  <div class="fullscreen-toggle">
-    <div class="icon">
-      <div class="arrow left-top"></div>
-      <div class="arrow left-bottom"></div>
-      <div class="arrow right-top"></div>
-      <div class="arrow right-bottom"></div>
-    </div>
-    <span class="tooltip"><?php echo t('View in fullscreen'); ?></span>
-  </div>
+  <div class="reader__inner">
+    <a class="reader__back-button" href="javascript:history.go(-1)"><?php print t('back'); ?></a>
+    <div
   <?php if (isset($retailer_order_number)) : ?>
-    <iframe src="/reol_use_loan/reader/<?php echo $retailer_order_number; ?>"></iframe>
-  <?php else : ?>
-    <iframe src="/reol_use_loan/reader/<?php echo $isbn; ?>/try"></iframe>
+    data-id="<?php echo $retailer_order_number; ?>"
+  <?php elseif (isset($isbn)) : ?>
+    data-isbn="<?php echo $isbn; ?>"
   <?php endif; ?>
+  id="reader-container" data-reader-version="<?php echo $reader_version ?>" data-url="<?php echo $publizon_reader_stream_url; ?>" data-images-url="<?php echo $publizon_reader_stream_url; ?>"></div>
+  </div>
 </div>

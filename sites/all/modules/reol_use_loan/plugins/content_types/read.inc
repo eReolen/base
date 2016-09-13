@@ -38,6 +38,16 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
     $vars['retailer_order_number'] = $order['retailer_order_number'];
   }
 
+  $reader_version = variable_get('publizon_reader_version', '1.5.0');
+  $vars['reader_version'] = $reader_version;
+  $vars['publizon_reader_stream_url'] = variable_get('publizon_reader_stream_url', '');
+
+  // Add dependencies.
+  drupal_add_css(drupal_get_path('module', 'reol_use_loan') . '/css/reader.css');
+  drupal_add_js(drupal_get_path('module', 'reol_use_loan') . '/js/reader.js');
+  drupal_add_js(variable_get('publizon_reader_url', '') . '/scripts/reader-' . $reader_version . '/js', 'external');
+  drupal_add_js( drupal_get_path('module', 'reol_use_loan') . '/js/reader_standalone.js');
+
   $block->content = theme('read', $vars);
 
   return $block;
