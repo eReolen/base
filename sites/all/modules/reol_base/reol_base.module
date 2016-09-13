@@ -69,6 +69,18 @@ function reol_base_menu() {
     'weight' => 1000,
   );
 
+  // Configuration page block.
+  $items['admin/config/ereolen'] = array(
+    'title' => 'eReolen',
+    'description' => 'eReolen settings.',
+    'position' => 'right',
+    'weight' => 20,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+
   return $items;
 }
 
