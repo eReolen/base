@@ -3,7 +3,7 @@
  * Main javascript file for Wille theme.
  */
 
-(function($) {
+(function($, Drupal) {
 
   /**
    * Detect tablets and mobile devices.
@@ -142,7 +142,7 @@
           var dropdown = $(this).find('.fieldset-wrapper').addClass('js-processed');
 
           $(this).click(function() {
-            dropdown.slideToggle(200).toggeClass('open');
+            dropdown.slideToggle(200).toggleClass('open');
           });
         });
       });
@@ -157,8 +157,8 @@
 
           $(this).toggleClass('open');
 
-          $('.pane-breol-facetbrowser').slideToggle();
-          $('.before-content').slideToggle();
+          $('.pane-breol-facetbrowser').toggle();
+          $('.before-content').toggle();
         });
       }
     }
@@ -338,8 +338,8 @@
   resizeFunction();
 
   /**
-       * Detect if we are on mobile devices.
-       */
+   * Detect if we are on mobile devices.
+   */
   function isMobile() {
     if (navigator.userAgent.match(/Android/i)
       || navigator.userAgent.match(/webOS/i)
@@ -356,4 +356,4 @@
     }
   }
 
-})(jQuery);
+})(jQuery, Drupal);
