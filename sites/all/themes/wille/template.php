@@ -6,6 +6,20 @@
  */
 
 /**
+ * Implements hook_theme().
+ *
+ * Needed in order to theme user login.
+ */
+function wille_theme() {
+  return array(
+    'user_login' => array(
+      'function' => 'wille_user_login',
+      'render element' => 'element'
+    ),
+  );
+}
+
+/**
  * Implements hook_preprocess_html().
  */
 function wille_preprocess_html(&$variables) {
@@ -282,6 +296,36 @@ function wille_field($variables) {
   $output = '<div class="' . $variables['classes'] . '"' . $variables['attributes'] . '>' . $output . '</div>';
 
   return $output;
+}
+
+/**
+ * Theme user login form.
+ */
+function wille_user_login(&$vars) {
+  $vars['element']['unilogin_wrapper'] = array(
+    '#type' => 'fieldset',
+    '#description' => $vars['element']['unilogin']['#title'],
+  );
+  $vars['element']['unilogin_wrapper']['unilogin'] = $vars['element']['unilogin'];
+  unset($vars['element']['unilogin']);
+  $vars['element']['unilogin_wrapper']['unilogin']['#title'] = $vars['element']['actions']['submit']['#value'];
+  $vars['element']['unilogin_wrapper']['unilogin']['#prefix'] = '<div class="unilogin-wrapper">';
+  $vars['element']['unilogin_wrapper']['unilogin']['#suffix'] = '</div>';
+
+  $vars['element']['login_wrapper'] = array(
+    '#type' => 'fieldset',
+    '#description' => t('Log in with CPR or borrower number'),
+  );
+  $vars['element']['login_wrapper']['name'] = $vars['element']['name'];
+  $vars['element']['login_wrapper']['pass'] = $vars['element']['pass'];
+  $vars['element']['login_wrapper']['retailer_id'] = $vars['element']['retailer_id'];
+  $vars['element']['login_wrapper']['actions'] = $vars['element']['actions'];
+  unset($vars['element']['name']);
+  unset($vars['element']['pass']);
+  unset($vars['element']['retailer_id']);
+  unset($vars['element']['actions']);
+
+  return drupal_render_children($vars['element']);
 }
 
 /**
