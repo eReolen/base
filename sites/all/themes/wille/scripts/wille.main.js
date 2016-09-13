@@ -3,7 +3,7 @@
  * Main javascript file for Wille theme.
  */
 
-(function($, Drupal) {
+(function($) {
 
   /**
    * Detect tablets and mobile devices.
@@ -356,4 +356,4 @@
     }
   }
 
-})(jQuery, Drupal);
+})(jQuery);
