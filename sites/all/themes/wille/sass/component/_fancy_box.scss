@@ -232,4 +232,17 @@
     color: $black-medium;
     margin-bottom: 40px;
   }
+
+  .more-link {
+    margin: 1em 0;
+    float: right;
+    color: $red-light;
+    font-family: $font-mikado;
+    text-decoration: none;
+
+    &:hover {
+      color: $blue-medium;
+      text-decoration: underline;
+    }
+  }
 }

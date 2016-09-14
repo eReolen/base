@@ -34,14 +34,14 @@ function breol_fancy_box_fancy_box_content_type_render($subtype, $conf, $panel_a
   // Render the block.
   $block = new stdClass();
 
+  $output = theme('breol_fancy_box', array('nodes' => $nodes, 'layout' => $layout));
+  $output .= l(t('See all news'), 'nyheder', array('attributes' => array('class' => array('more-link'))));
+
   // Set title.
   $block->title = t('Nyt og spændende');
 
   // Set content.
-  $block->content = theme('breol_fancy_box', array(
-    'nodes' => $nodes,
-    'layout' => $layout,
-  ));
+  $block->content = $output;
 
   return $block;
 }
