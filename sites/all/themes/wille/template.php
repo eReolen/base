@@ -52,9 +52,9 @@ function wille_preprocess_wille_site_template(&$variables, $hook) {
  */
 function wille_preprocess_breol_news_page(&$variables, $hook) {
   $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
-  if ($fid = variable_get('breol_news_page_image', NULL)) {
-    $image_file = file_load($fid);
-    $variables['image_file_uri'] = file_create_url($image_file->uri);
+  $variables['cover_attributes'] = array();
+  if ($variables['image_file']) {
+    $variables['cover_attributes']['style'] = 'background-image: url(' . file_create_url($variables['image_file']->uri) . ');';
   }
 }
 

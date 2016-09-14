@@ -8,7 +8,7 @@
 ?>
 <div class="news-page">
   <div class="news-page__cover-wrapper">
-    <div class="news-page__cover" style="background-image: url(<?php print $image_file_uri ?>);">
+    <div class="news-page__cover" <?php print drupal_attributes($cover_attributes)?>>
     <div class="news-page__overlay"></div>
     <div class="news-page__cover__content">
       <div class="field-name-field-subtitle">eReolenGO</div>
