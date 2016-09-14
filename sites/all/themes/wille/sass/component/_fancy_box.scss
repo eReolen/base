@@ -77,7 +77,7 @@
 
 .fancy-box {
 
-  > div:nth-child(5) {
+  .front & > div:nth-child(5) {
 
     @include media($phone) {
 
@@ -97,7 +97,7 @@
     }
   }
 
-  > div:last-child {
+  .front & > div:last-child {
     .article--teaser {
       @include media($phone) {
         margin-left: 50%;
@@ -132,8 +132,11 @@
     }
 
     @include media($phone) {
-      margin-right: percentage(6/12);
-      margin-left: percentage(6/12);
+
+      .front & {
+        margin-right: percentage(6/12);
+        margin-left: percentage(6/12);
+      }
     }
   }
 }

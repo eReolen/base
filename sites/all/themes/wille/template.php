@@ -45,6 +45,20 @@ function wille_preprocess_wille_site_template(&$variables, $hook) {
 }
 
 /**
+ * Implements THEME_preprocess_TEMPLATE();
+ *
+ * We preprocess and override the ctools content type here in the theme, because
+ * there are theming specific files and styles that shoudl be included.
+ */
+function wille_preprocess_breol_news_page(&$variables, $hook) {
+  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
+  if ($fid = variable_get('breol_news_page_image', NULL)) {
+    $image_file = file_load($fid);
+    $variables['image_file_uri'] = file_create_url($image_file->uri);
+  }
+}
+
+/**
  * Implements hook_preprocess_node().
  */
 function wille_preprocess_node(&$variables, $hook) {
