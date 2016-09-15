@@ -190,36 +190,6 @@ function breol_frontend_image_styles_alter(&$styles) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
- *
- * Reorganize login form.
- */
-function breol_frontend_form_user_login_alter(&$form, &$form_state) {
-  $form['unilogin_wrapper'] = array(
-    '#type' => 'fieldset',
-    '#description' => $form['unilogin']['#title'],
-  );
-  $form['unilogin_wrapper']['unilogin'] = $form['unilogin'];
-  unset($form['unilogin']);
-  $form['unilogin_wrapper']['unilogin']['#title'] = $form['actions']['submit']['#value'];
-  $form['unilogin_wrapper']['unilogin']['#prefix'] = '<div class="unilogin-wrapper">';
-  $form['unilogin_wrapper']['unilogin']['#suffix'] = '</div>';
-
-  $form['login_wrapper'] = array(
-    '#type' => 'fieldset',
-    '#description' => t('Log in with CPR or borrower number'),
-  );
-  $form['login_wrapper']['name'] = $form['name'];
-  $form['login_wrapper']['pass'] = $form['pass'];
-  $form['login_wrapper']['retailer_id'] = $form['retailer_id'];
-  $form['login_wrapper']['actions'] = $form['actions'];
-  unset($form['name']);
-  unset($form['pass']);
-  unset($form['retailer_id']);
-  unset($form['actions']);
-}
-
-/**
  * Implements hook_default_page_manager_pages_alter().
  *
  * Override the bookmark page.
