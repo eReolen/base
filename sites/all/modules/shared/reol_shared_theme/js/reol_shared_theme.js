@@ -4,6 +4,12 @@
  */
 
 (function($) {
+  // ting_search and ting_search_autocomplete is pretty insistent on
+  // wanting to modify the autocomplete behaviour, even when the
+  // autocomplete is disabled. Rather than adding another Ding patch,
+  // we just ensure that the object is available for them to muck
+  // with.
+  Drupal.jsAC = {prototype: {}};
   // Scroll to top when opening a dialog. Dialogs on this site can get
   // pretty big - e.g. when viewing a reading sample. This is
   // furthermore problematic as scrolling is disabled. In _popup.scss
