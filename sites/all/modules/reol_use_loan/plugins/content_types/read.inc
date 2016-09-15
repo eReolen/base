@@ -45,7 +45,10 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
   // Add dependencies.
   drupal_add_css(drupal_get_path('module', 'reol_use_loan') . '/css/reader.css');
   drupal_add_js(drupal_get_path('module', 'reol_use_loan') . '/js/reader.js');
-  drupal_add_js(variable_get('publizon_reader_url', '') . '/scripts/reader-' . $reader_version . '/js', 'external');
+  drupal_add_js(variable_get('publizon_reader_url', '') . '/scripts/reader-' . $reader_version . '/js',
+    array('type' => 'external',
+          'scope' => 'footer',
+  ));
   drupal_add_js( drupal_get_path('module', 'reol_use_loan') . '/js/reader_standalone.js');
 
   $block->content = theme('read', $vars);
