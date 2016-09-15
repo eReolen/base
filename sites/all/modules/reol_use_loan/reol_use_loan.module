@@ -233,15 +233,13 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
       $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id);
 
       // If we are displaying try button, load content in modal.
-      // if (!$loaned) {
-      //   $return['#path'] .= '/ajax';
-      // }
-      // else {
-      //   // Remove ajax on this one.
-      //   $return['#options']['attributes']['class'] = array('action-button');
-      // }
-
-      $return['#options']['attributes']['class'] = array('action-button');
+      if (!$loaned && $entity_type === 'audiobook') {
+        $return['#path'] .= '/ajax';
+      }
+      else {
+        // Remove ajax on this one.
+        $return['#options']['attributes']['class'] = array('action-button');
+      }
 
       return array($return);
     }
