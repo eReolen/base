@@ -85,3 +85,197 @@ function reol_statistics_publizon_loan($account, $name, $isbn, $retailer_id) {
       ->execute();
   }
 }
+
+/**
+ * Implements hook_menu().
+ */
+function reol_statistics_menu() {
+  $items = array();
+
+  $items['statistics'] = array(
+    'title' => 'Select municipality',
+    'page callback' => 'reol_statistics_select_municipality_page',
+    // Let anyone see statistics (let's see if anyone complains).
+    'access callback' => TRUE,
+    'file' => 'reol_statistics.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['statistics/%reol_statistics_municipality/%reol_statistics_month/%reol_statistics_month'] = array(
+    'title' => 'Statistics',
+    'page callback' => 'reol_statistics_municipality_page',
+    'page arguments' => array(1, 2, 3),
+    // Let anyone see statistics (let's see if anyone complains).
+    'access callback' => TRUE,
+    'file' => 'reol_statistics.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Menu loader.
+ */
+function reol_statistics_month_load($string) {
+  if (preg_match('/^\d{6}$/', $string)) {
+    return ReolStatisticsMonth::fromInt($string);
+  }
+
+  return FALSE;
+}
+
+/**
+ * Menu loader.
+ */
+function reol_statistics_municipality_load($string) {
+  if (preg_match('/^\d+$/', $string)) {
+    $library = publizon_get_library($string);
+    if (!empty($library)) {
+      return $library;
+    }
+  }
+
+  return FALSE;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function reol_statistics_cron() {
+  $month = ReolStatisticsMonth::fromInt(variable_get('reol_statistics_last_queued', 201608));
+  $statistics = reol_statistics_get();
+
+  foreach ($statistics as $statistic) {
+    reol_statistics_ensure_schema($statistic);
+  }
+
+  while (!$month->isCurrent()) {
+    $month = $month->next();
+    $queue = DrupalQueue::get('statistics_backlog_processing');
+    foreach ($statistics as $statistic) {
+      $payload = array(
+        'class' => get_class($statistic),
+        'month' => $month->toInt(),
+      );
+      $queue->createItem($payload);
+      variable_set('reol_statistics_last_queued', $month->toInt());
+    }
+  }
+
+  // Always queue a run of the current month, if the queue is empty.
+  $queue = DrupalQueue::get('statistics_processing');
+  if ($queue->numberOfItems() < 1) {
+    $payload = array(
+      'class' => get_class($statistic),
+      'month' => $month->toInt(),
+    );
+    $queue->createItem($payload);
+  }
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function reol_statistics_cron_queue_info() {
+  // Processing of current month.
+  $queues['statistics_processing'] = array(
+    'worker callback' => 'reol_statistics_worker',
+    'time' => 120,
+  );
+
+  // Backlog processing.
+  $queues['statistics_backlog_processing'] = array(
+    'worker callback' => 'reol_statistics_worker',
+    'time' => 120,
+  );
+
+  return $queues;
+}
+
+/**
+ * Cron worker callback.
+ *
+ * Collects statistics for one month for one statistic.
+ */
+function reol_statistics_worker($data) {
+  $class = $data['class'];
+  $statistic = new $class();
+  $statistic->collect(ReolStatisticsMonth::fromInt($data['month']));
+}
+
+/**
+ * Returns statistics classes.
+ */
+function reol_statistics_get() {
+  $classes = &drupal_static(__FUNCTION__, NULL);
+
+  if (!$classes) {
+    $classes = array(
+      new ReolStatisticsMunicipality(),
+    );
+  }
+
+  return $classes;
+}
+
+/**
+ * Ensure that statistics schema is up to date.
+ */
+function reol_statistics_ensure_schema(ReolStatisticsInterface $statistic) {
+  $reset = FALSE;
+  $schema = $statistic->schema();
+  foreach ($schema as $table => $def) {
+    $hash = md5(serialize($def));
+    if ($hash != variable_get($table . '_md5', NULL)) {
+      // Schema changed, rebuild.
+      db_drop_table($table);
+      db_create_table($table, $def);
+      variable_set($table . '_md5', $hash);
+      $reset = TRUE;
+    }
+  }
+
+  if ($reset && method_exists($statistic, 'reset')) {
+    $statistic->reset();
+  }
+}
+
+/**
+ * Interface for the statistics classes.
+ */
+interface ReolStatisticsInterface {
+
+  /**
+   * Returns schema for this statistic.
+   */
+  public function schema();
+
+  /**
+   * Collect this statistic.
+   *
+   * Run in cron.
+   *
+   * @param ReolStatisticsMonth $month
+   *   Month to collect statistics for.
+   */
+  public function collect(ReolStatisticsMonth $month);
+
+  /**
+   * Build statistic display.
+   *
+   * @param array library
+   *   The library as returned from publizon_get_library().
+   * @param ReolStatisticsMonth $from
+   *   From date, integer in yyyymm format.
+   * @param ReolStatisticsMonth $to
+   *   To date, integer in yyyymm format, inclusive.
+   */
+  public function build(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to);
+
+  /**
+   * Reset statistics.
+   */
+  //public function reset();
+
+}

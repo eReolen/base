@@ -2,4 +2,6 @@ name = Reol Statistics
 description = "Loan statistics"
 core = 7.x
 package = ereolen.dk
-; dependencies[] = date_api
+dependencies[] = publizon
+files[] = classes/ReolStatisticsMonth.php
+files[] = classes/ReolStatisticsMunicipality.php
