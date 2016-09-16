@@ -14,7 +14,7 @@ function reol_statistics_select_municipality_page() {
 
   $libraries = array();
   foreach ($publizon_libraries as $retailer_id => $def) {
-    if (!empty($def['subscribed_users'])) {
+    if (!empty($def['unilogin_id']) && !empty($def['subscribed_users'])) {
       $libraries[$def['library_name']] = $retailer_id;
     }
   }
