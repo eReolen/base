@@ -162,9 +162,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface {
       $header[] = $col['label'];
       $query = db_select('reol_statistics_municipality', 'm')
              ->condition('m.month', array($col['from'], $col['to']), 'BETWEEN')
-             ->condition('m.municipality_id', $library['unilogin_id'])
-             ->fields('m', array('month'))
-             ->groupBy('month');
+             ->condition('m.municipality_id', $library['unilogin_id']);
       $query->addExpression('SUM(m.loans)', 'loans');
       $query->addExpression('SUM(m.users)', 'users');
 
