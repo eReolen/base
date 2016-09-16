@@ -215,6 +215,7 @@ function reol_statistics_get() {
   if (!$classes) {
     $classes = array(
       new ReolStatisticsMunicipality(),
+      new ReolStatisticsSchool(),
     );
   }
 
