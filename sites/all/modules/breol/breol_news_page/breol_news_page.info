@@ -1,0 +1,6 @@
+name = BReol News Page
+description = "News page for eReolen GO"
+core = 7.x
+package = eReolen for kids
+dependencies[] = breol_fancy_box
+dependencies[] = media

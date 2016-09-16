@@ -1,0 +1,26 @@
+.news-page {
+  &__overlay {
+    @extend .article__cover__overlay;
+    background: rgba(235, 235, 235, 0.5);
+  }
+}
+
+.news-page__cover {
+
+  @extend .article__cover;
+  min-height: 323px;
+  height: 100%;
+
+  &--wrapper {
+    @extend .article__cover-wrapper;
+  }
+
+  &__content {
+    @extend .article__cover__content;
+    @extend .article__cover__content--breol_section;
+
+    .title {
+      text-transform: uppercase;
+    }
+  }
+}

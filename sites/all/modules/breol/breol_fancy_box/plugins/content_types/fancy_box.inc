@@ -34,14 +34,14 @@ function breol_fancy_box_fancy_box_content_type_render($subtype, $conf, $panel_a
   // Render the block.
   $block = new stdClass();
 
+  $output = theme('breol_fancy_box', array('nodes' => $nodes, 'layout' => $layout));
+  $output .= l(t('See all news'), 'nyheder', array('attributes' => array('class' => array('more-link'))));
+
   // Set title.
   $block->title = t('Nyt og spændende');
 
   // Set content.
-  $block->content = theme('breol_fancy_box', array(
-    'nodes' => $nodes,
-    'layout' => $layout,
-  ));
+  $block->content = $output;
 
   return $block;
 }
@@ -54,80 +54,4 @@ function breol_fancy_box_fancy_box_content_type_render($subtype, $conf, $panel_a
  */
 function breol_fancy_box_fancy_box_content_type_edit_form($form, &$form_state) {
   return $form;
-}
-
-/**
- * Render a node for the fancy box.
- */
-function breol_fancy_box_render_node($node, $layout) {
-
-  $view_mode = 'teaser_' . $layout['type'];
-
-  $rendered_node = node_view($node, $view_mode);
-
-  return drupal_render($rendered_node);
-}
-
-/**
- * Get the layout structure of the fancy box.
- *
- * For now this is hardcoded, but in the feature this array might be editable
- * from the admin interface somehow.
- *
- * @return array
- *   The layouts with 'type' and 'attributes' keys.
- */
-function breol_fancy_box_get_layout() {
-  return array(
-    array(
-      'type' => 'medium',
-      'attributes' => array(
-        'class' => array(
-          'fancy-box-item',
-        ),
-      ),
-    ),
-    array(
-      'type' => 'small',
-      'attributes' => array(
-        'class' => array(
-          'fancy-box-item',
-        ),
-      ),
-    ),
-    array(
-      'type' => 'small',
-      'attributes' => array(
-        'class' => array(
-          'fancy-box-item',
-          'fancy-box__push-right',
-        ),
-      ),
-    ),
-    array(
-      'type' => 'medium',
-      'attributes' => array(
-        'class' => array(
-          'fancy-box-item',
-        ),
-      ),
-    ),
-    array(
-      'type' => 'medium',
-      'attributes' => array(
-        'class' => array(
-          'fancy-box-item',
-          'fancy-box__push-left',
-        ),
-      ),
-    ),
-    array(
-      'type' => 'small',
-      'attributes' => array(
-        'class' => array(
-          'fancy-box-item',
-        ),
-      ),
-    ),
-  );
 }
