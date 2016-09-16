@@ -159,18 +159,20 @@ function reol_statistics_cron() {
         'month' => $month->toInt(),
       );
       $queue->createItem($payload);
-      variable_set('reol_statistics_last_queued', $month->toInt());
     }
+    variable_set('reol_statistics_last_queued', $month->toInt());
   }
 
   // Always queue a run of the current month, if the queue is empty.
   $queue = DrupalQueue::get('statistics_processing');
   if ($queue->numberOfItems() < 1) {
-    $payload = array(
-      'class' => get_class($statistic),
-      'month' => $month->toInt(),
-    );
-    $queue->createItem($payload);
+    foreach ($statistics as $statistic) {
+      $payload = array(
+        'class' => get_class($statistic),
+        'month' => $month->toInt(),
+      );
+      $queue->createItem($payload);
+    }
   }
 }
 
