@@ -5,6 +5,9 @@
  * Statistics of loans.
  */
 
+define('REOL_STATISTICS_DEFAULT_TITLE', 'Statistics for loans by UNI•Login users');
+define('REOL_STATISTICS_DEFAULT_HEADER', "Dato: @date\nKommunenavn: @municipality\nTilmeldte elever i kommunen: @subscribed_users");
+
 /**
  * Implements hook_publizon_loan().
  */
@@ -103,12 +106,24 @@ function reol_statistics_menu() {
 
   $items['statistics/%reol_statistics_municipality/%reol_statistics_month/%reol_statistics_month'] = array(
     'title' => 'Statistics',
+    'title callback' => 'variable_get',
+    'title arguments' => array('reol_statistics_title', REOL_STATISTICS_DEFAULT_TITLE),
     'page callback' => 'reol_statistics_municipality_page',
     'page arguments' => array(1, 2, 3),
     // Let anyone see statistics (let's see if anyone complains).
     'access callback' => TRUE,
     'file' => 'reol_statistics.pages.inc',
     'type' => MENU_CALLBACK,
+  );
+
+  $items['admin/config/ereolen/statistics'] = array(
+    'title' => 'Statistics',
+    'description' => 'Configure statistics.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reol_statistics_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'reol_statistics.admin.inc',
   );
 
   return $items;

@@ -34,6 +34,19 @@ function reol_statistics_municipality_page($library, $from, $to) {
   $statistics = reol_statistics_get();
 
   $output = '';
+  $header = variable_get('reol_statistics_header',
+                                array(
+                                  'value' => REOL_STATISTICS_DEFAULT_HEADER,
+                                  'format' => 'plain_text',
+                                ));
+
+  $replacements = array(
+    '@date' => date('Y-m-d'),
+    '@municipality' => $library['library_name'],
+    '@subscribed_users' => $library['subscribed_users'],
+  );
+  $output .= format_string(check_markup($header['value'], $header['format']), $replacements);
+
   foreach ($statistics as $statistic) {
     $output .= $statistic->build($library, $from, $to);
   }
