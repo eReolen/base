@@ -20,7 +20,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface {
         'fields' => array(
           'month' => array(
             'description' => 'Month, stored as YYYYMM.',
-            'type' => int,
+            'type' => 'int',
             'not null' => TRUE,
             'default' => 0,
           ),
@@ -37,7 +37,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface {
           ),
           'users' => array(
             'description' => 'Unique users.',
-            'type' => int,
+            'type' => 'int',
             'not null' => TRUE,
             'default' => 0,
           ),

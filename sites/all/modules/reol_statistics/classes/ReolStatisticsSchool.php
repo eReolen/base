@@ -20,7 +20,7 @@ class ReolStatisticsSchool implements ReolStatisticsInterface {
         'fields' => array(
           'month' => array(
             'description' => 'Month, stored as YYYYMM.',
-            'type' => int,
+            'type' => 'int',
             'not null' => TRUE,
             'default' => 0,
           ),
@@ -41,7 +41,7 @@ class ReolStatisticsSchool implements ReolStatisticsInterface {
           ),
           'loans' => array(
             'description' => 'Total loans.',
-            'type' => int,
+            'type' => 'int',
             'not null' => TRUE,
             'default' => 0,
           ),
