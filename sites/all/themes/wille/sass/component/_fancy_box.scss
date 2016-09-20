@@ -234,15 +234,9 @@
   }
 
   .more-link {
-    margin: 1em 0;
+    text-align: center;
+    background: $red;
     float: right;
-    color: $red-light;
-    font-family: $font-mikado;
-    text-decoration: none;
-
-    &:hover {
-      color: $blue-medium;
-      text-decoration: underline;
-    }
+    margin-top: 50px;
   }
 }

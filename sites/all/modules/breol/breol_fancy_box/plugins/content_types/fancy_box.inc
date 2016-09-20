@@ -35,7 +35,7 @@ function breol_fancy_box_fancy_box_content_type_render($subtype, $conf, $panel_a
   $block = new stdClass();
 
   $output = theme('breol_fancy_box', array('nodes' => $nodes, 'layout' => $layout));
-  $output .= l(t('See all news'), 'nyheder', array('attributes' => array('class' => array('more-link'))));
+  $output .= l(t('See all news'), 'nyheder', array('attributes' => array('class' => array('more-link btn'))));
 
   // Set title.
   $block->title = t('Nyt og spændende');
