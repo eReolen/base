@@ -113,10 +113,10 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface {
         $rows[] = array(
           $placement,
           $libraries[$row->municipality_id]['name'],
-          $row->ratio,
+          round($row->ratio, 2),
           $prev_placement,
           $libraries[$row->municipality_id]['subscribed_users'],
-          ($row->users / $libraries[$row->municipality_id]['subscribed_users']) * 100,
+          round(($row->users / $libraries[$row->municipality_id]['subscribed_users']) * 100, 2),
         );
       }
       $placement++;
