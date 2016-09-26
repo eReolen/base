@@ -227,6 +227,7 @@ function reol_statistics_get() {
       new ReolStatisticsMunicipality(),
       new ReolStatisticsSchool(),
       new ReolStatisticsISBN(),
+      new ReolStatisticsMunicipalityRank(),
     );
   }
 

@@ -54,6 +54,20 @@ class ReolStatisticsMonth {
   }
 
   /**
+   * Get the previous month.
+   */
+  public function prev() {
+    $year = $this->year;
+    $month = $this->month;
+    if ($month <= 1) {
+      $year -= 1;
+      $month = 12;
+    }
+
+    return new self($year, $month - 1);
+  }
+
+  /**
    * Return the name of the month.
    */
   public function getMonthName() {
