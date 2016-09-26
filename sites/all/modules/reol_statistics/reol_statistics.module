@@ -158,36 +158,31 @@ function reol_statistics_municipality_load($string) {
  * Implements hook_cron().
  */
 function reol_statistics_cron() {
-  $month = ReolStatisticsMonth::fromInt(variable_get('reol_statistics_last_queued', 201608));
   $statistics = reol_statistics_get();
 
   foreach ($statistics as $statistic) {
+    $varname = 'reol_statistics_last_queued_' . get_class($statistic);
+    $month = ReolStatisticsMonth::fromInt(variable_get($varname, 201609));
     reol_statistics_ensure_schema($statistic);
-  }
 
-  while (!$month->isCurrent()) {
-    $month = $month->next();
-    $queue = DrupalQueue::get('statistics_backlog_processing');
-    foreach ($statistics as $statistic) {
+    while (!$month->isCurrent()) {
+      $month = $month->next();
+      $queue = DrupalQueue::get('statistics_backlog_processing');
       $payload = array(
         'class' => get_class($statistic),
         'month' => $month->toInt(),
       );
       $queue->createItem($payload);
+      variable_set($varname, $month->toInt());
     }
-    variable_set('reol_statistics_last_queued', $month->toInt());
-  }
 
-  // Always queue a run of the current month, if the queue is empty.
-  $queue = DrupalQueue::get('statistics_processing');
-  if ($queue->numberOfItems() < 1) {
-    foreach ($statistics as $statistic) {
-      $payload = array(
-        'class' => get_class($statistic),
-        'month' => $month->toInt(),
-      );
-      $queue->createItem($payload);
-    }
+    // Always queue a run of the current month.
+    $queue = DrupalQueue::get('statistics_processing');
+    $payload = array(
+      'class' => get_class($statistic),
+      'month' => $month->toInt(),
+    );
+    $queue->createItem($payload);
   }
 }
 
@@ -231,6 +226,7 @@ function reol_statistics_get() {
     $classes = array(
       new ReolStatisticsMunicipality(),
       new ReolStatisticsSchool(),
+      new ReolStatisticsISBN(),
     );
   }
 
@@ -257,6 +253,31 @@ function reol_statistics_ensure_schema(ReolStatisticsInterface $statistic) {
   if ($reset && method_exists($statistic, 'reset')) {
     $statistic->reset();
   }
+}
+
+/**
+ * Reset statistics, causing a rerun.
+ */
+function reol_statistics_reset_all() {
+  $statistics = reol_statistics_get();
+
+  foreach ($statistics as $statistic) {
+    reol_statistics_reset($statistic);
+  }
+}
+
+/**
+ * Reset a statistic.
+ */
+function reol_statistics_reset(ReolStatisticsInterface $statistic) {
+  $varname = 'reol_statistics_last_queued_' . get_class($statistic);
+  $schema = $statistic->schema();
+  foreach (array_keys($schema) as $table) {
+    // Delete table. It will be recreated.
+    db_drop_table($table);
+    variable_del($table . '_md5');
+  }
+  variable_del($varname);
 }
 
 /**
