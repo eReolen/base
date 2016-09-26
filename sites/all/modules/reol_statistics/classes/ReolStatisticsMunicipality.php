@@ -31,7 +31,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface {
           ),
           'loans' => array(
             'description' => 'Total loans.',
-            'type' => int,
+            'type' => 'int',
             'not null' => TRUE,
             'default' => 0,
           ),
@@ -75,7 +75,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface {
           'municipality_id' => $row->municipality_id,
         );
       }
-      $data[$row->municipality_id]['loans'] = $row->loans;
+      $data[$row->municipality_id]['loans'] += $row->loans;
     }
 
     // Collect unique users.

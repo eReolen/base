@@ -82,7 +82,7 @@ class ReolStatisticsSchool implements ReolStatisticsInterface {
         );
       }
       $data[$index]['school'] = $row->school;
-      $data[$index]['loans'] = $row->loans;
+      $data[$index]['loans'] += $row->loans;
     }
 
     if ($data) {
