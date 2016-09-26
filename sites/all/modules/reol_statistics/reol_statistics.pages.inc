@@ -48,6 +48,7 @@ function reol_statistics_municipality_page($library, $from, $to) {
   $output .= format_string(check_markup($header['value'], $header['format']), $replacements);
 
   foreach ($statistics as $statistic) {
+    reol_statistics_ensure_schema($statistic);
     $output .= $statistic->build($library, $from, $to);
   }
   return $output;
