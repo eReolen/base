@@ -31,5 +31,32 @@ function reol_statistics_settings($form, &$form_state) {
     '#format' => $default_value['format'],
   );
 
+  $form['reol_statistics_isbn_count'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ISBN check count'),
+    '#description' => t('Number of loans from a single class to flag as possible abuse. Exceeding this will show up in the ISBN table.'),
+    '#default_value' => variable_get('reol_statistics_isbn_count', 10),
+  );
+
+  $form['reol_statistics_isbn_period'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ISBN check period'),
+    '#description' => t('The number of days in the period.'),
+    '#default_value' => variable_get('reol_statistics_isbn_period', 14),
+  );
+
+  $form['#submit'][] = 'reol_statistics_settings_submit';
+
   return system_settings_form($form);
+}
+
+/**
+ *
+ */
+function reol_statistics_settings_submit($form, &$form_state) {
+  if (variable_get('reol_statistics_isbn_count', 10) != $form_state['values']['reol_statistics_isbn_count'] ||
+      variable_get('reol_statistics_isbn_period', 14) != $form_state['values']['reol_statistics_isbn_period']) {
+    drupal_set_message(t('Purging ISBN statistics.'), 'status');
+    reol_statistics_reset(new ReolStatisticsISBN());
+  }
 }

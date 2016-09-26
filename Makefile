@@ -5,8 +5,9 @@ ding:
 	rm profiles/ding2/*.patch
 
 statistics:
-	drush vset reol_statistics_last_queued 201609
-	drush php-eval 'reol_statistics_cron();'
+	drush sqlq "DELETE FROM queue WHERE name IN ('statistics_backlog_processing', 'statistics_processing');"
+	drush php-eval 'reol_statistics_reset_all();reol_statistics_cron();'
 	drush queue-list
-	drush queue-run statistics_backlog_processing
 	drush queue-run statistics_processing
+	drush queue-run statistics_backlog_processing
+	drush queue-list

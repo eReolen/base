@@ -85,13 +85,17 @@ class ReolStatisticsMonth {
   }
 
   /**
+   * DateTime just off end of the month.
+   */
+  public function getEndDateTime() {
+    return $this->getStartDateTime()->add(new DateInterval('P1M'));
+  }
+
+  /**
    * Timestamp just off end of the month.
-   *
-   * This is one second past the end of the month to facilitate using the <
-   * operator.
    */
   public function getEndTimestamp() {
-    return $this->getStartDateTime()->add(new DateInterval('P1M'))->getTimestamp();
+    return $this->getEndDateTime()->getTimestamp();
   }
 
   /**

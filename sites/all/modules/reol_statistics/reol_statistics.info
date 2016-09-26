@@ -6,3 +6,4 @@ dependencies[] = publizon
 files[] = classes/ReolStatisticsMonth.php
 files[] = classes/ReolStatisticsMunicipality.php
 files[] = classes/ReolStatisticsSchool.php
+files[] = classes/ReolStatisticsISBN.php
