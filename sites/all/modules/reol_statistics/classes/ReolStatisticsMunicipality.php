@@ -169,7 +169,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
       if ($row = $query->execute()->fetchObject()) {
         $loan_row[] = $row->loans;
         $user_row[] = $row->users;
-        $percentage_row[] = ($row->users / $library['subscribed_users']) * 100;
+        $percentage_row[] = round(($row->users / $library['subscribed_users']) * 100, 2) . '%';
 
       }
       else {

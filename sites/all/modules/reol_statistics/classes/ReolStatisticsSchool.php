@@ -188,7 +188,7 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
       foreach (array_keys($cols) as $index) {
         if (isset($columns[$index])) {
           $row[] = $columns[$index]['loans'];
-          $row[] = sprintf('%.2f %%', $columns[$index]['percentage']);
+          $row[] = sprintf('%.2f%%', $columns[$index]['percentage']);
         }
         else {
           $row[] = $row[] = '';
