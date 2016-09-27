@@ -21,7 +21,7 @@ function reol_statistics_select_municipality_page() {
 
   ksort($libraries);
   foreach ($libraries as $name => $id) {
-    $output .= '<p>' . l($name, 'statistics/' . $id . '/201609/201612') . '</p>';
+    $output .= '<p>' . l($name, 'statistics/municipality/' . $id . '/201609/201612') . '</p>';
   }
 
   return $output;
@@ -52,4 +52,34 @@ function reol_statistics_municipality_page($library, $from, $to) {
     $output .= $statistic->build($library, $from, $to);
   }
   return $output;
+}
+
+/**
+ * Page callback for publizon loan count.
+ */
+function reol_statistics_publizon_page($library, $month = NULL) {
+  if ($month) {
+    $month = reol_statistics_month_load($month);
+  }
+
+  if (!$month) {
+    $month = reol_statistics_month_load(date('Ym'));
+  }
+
+  // Make sure the table exists.
+  reol_statistics_ensure_schema(new ReolStatisticsMunicipality());
+
+  $res = db_select('reol_statistics_municipality', 'm')
+    ->fields('m', array('loans'))
+    ->condition('m.municipality_id', $library['unilogin_id'])
+    ->condition('m.month', (string) $month)
+    ->execute();
+
+  $count = $res->fetchField();
+  if (!$count) {
+    $count = 0;
+  }
+
+  echo (string) $count;
+  drupal_exit();
 }
