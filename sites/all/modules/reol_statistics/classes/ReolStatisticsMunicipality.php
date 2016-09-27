@@ -8,7 +8,7 @@
 /**
  * Municipality statistics implementation.
  */
-class ReolStatisticsMunicipality implements ReolStatisticsInterface {
+class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatisticsMunicipalityInterface {
 
   /**
    * {@inheritdoc}
@@ -118,7 +118,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface {
   /**
    * {@inheritdoc}
    */
-  public function build(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
+  public function buildMunicipality(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
     if (!isset($library['unilogin_id'])) {
       return '';
     }

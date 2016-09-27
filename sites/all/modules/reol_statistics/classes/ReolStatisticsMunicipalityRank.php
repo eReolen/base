@@ -8,7 +8,7 @@
 /**
  * Municipality rankstatistics implementation.
  */
-class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface {
+class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolStatisticsGeneralInterface {
 
   /**
    * {@inheritdoc}
@@ -29,7 +29,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface {
   /**
    * {@inheritdoc}
    */
-  public function build(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
+  public function buildGeneral(ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
     // This table is an aberration, it's not for the given library, but
     // globally, and not for the given period, but always the last month(s),
     // but they insisted.
@@ -45,17 +45,10 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface {
       }
     }
 
-    $month = ReolStatisticsMonth::fromInt(date('Ym'));
-    $month = $month->prev();
-
-    // If we're not out of the very first month yet, use that instead.
-    if (((string) $month) == '201608') {
-      $month = ReolStatisticsMonth::fromInt(date('201609'));
-    }
     // Avoid excessive casting.
-    $month_str = (string) $month;
+    $month_str = (string) $from;
 
-    $prev_month = $month->prev();
+    $prev_month = $from->prev();
 
     $header = array(
       t('Position'),
@@ -123,7 +116,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface {
     }
 
     $table = array(
-      'caption' => t('4. Municipalities ranked by loans per subscribed students'),
+      'caption' => t('Municipalities ranked by loans per subscribed students'),
       'header' => $header,
       'rows' => $rows,
     );

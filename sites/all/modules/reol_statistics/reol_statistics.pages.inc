@@ -19,6 +19,39 @@ function reol_statistics_select_municipality_page() {
     }
   }
 
+  // Table of general statistics.
+  $table = array(
+    'caption' => t('Municipality ranking'),
+    'rows' => array(),
+  );
+
+  $current_month = date('Ym');
+  foreach (range(2016, date('Y')) as $year) {
+    $table['rows'][] = array(
+      array(
+        'data' => $year,
+        'header'  => TRUE,
+        'colspan' => 12,
+      ),
+    );
+
+    $row = array();
+    foreach (range(1, 12) as $month_num) {
+      $cell = '';
+      $month = new ReolStatisticsMonth($year, $month_num);
+      $month_string = (string) $month;
+      if ($month_string > '201608' && $month_string <= $current_month) {
+        $cell = l(format_date($month->getStartTimestamp(), 'custom', 'M'), 'statistics/general/' . $month_string . '/' . $month_string);
+      }
+
+      $row[] = $cell;
+    }
+    $table['rows'][] = $row;
+  }
+
+  $output = theme('table', $table);
+
+  // Library listing.
   ksort($libraries);
   foreach ($libraries as $name => $id) {
     $output .= '<p>' . l($name, 'statistics/municipality/' . $id . '/201609/201612') . '</p>';
@@ -28,7 +61,24 @@ function reol_statistics_select_municipality_page() {
 }
 
 /**
- * Page callback for statistics display.
+ * Page callback for general statistics display.
+ */
+function reol_statistics_general_page($from, $to) {
+  $statistics = reol_statistics_get();
+
+  $output = '';
+
+  foreach ($statistics as $statistic) {
+    if ($statistic instanceof ReolStatisticsGeneralInterface) {
+      reol_statistics_ensure_schema($statistic);
+      $output .= $statistic->buildGeneral($from, $to);
+    }
+  }
+  return $output;
+}
+
+/**
+ * Page callback for municipality statistics display.
  */
 function reol_statistics_municipality_page($library, $from, $to) {
   $statistics = reol_statistics_get();
@@ -48,8 +98,10 @@ function reol_statistics_municipality_page($library, $from, $to) {
   $output .= format_string(check_markup($header['value'], $header['format']), $replacements);
 
   foreach ($statistics as $statistic) {
-    reol_statistics_ensure_schema($statistic);
-    $output .= $statistic->build($library, $from, $to);
+    if ($statistic instanceof ReolStatisticsMunicipalityInterface) {
+      reol_statistics_ensure_schema($statistic);
+      $output .= $statistic->buildMunicipality($library, $from, $to);
+    }
   }
   return $output;
 }

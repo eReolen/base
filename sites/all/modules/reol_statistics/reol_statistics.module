@@ -109,7 +109,17 @@ function reol_statistics_menu() {
     'title callback' => 'variable_get',
     'title arguments' => array('reol_statistics_title', REOL_STATISTICS_DEFAULT_TITLE),
     'page callback' => 'reol_statistics_municipality_page',
-    'page arguments' => array(1, 2, 3),
+    'page arguments' => array(2, 3, 4),
+    // Let anyone see statistics (let's see if anyone complains).
+    'access callback' => TRUE,
+    'file' => 'reol_statistics.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['statistics/general/%reol_statistics_month/%reol_statistics_month'] = array(
+    'title' => 'Statistics',
+    'page callback' => 'reol_statistics_general_page',
+    'page arguments' => array(2, 3),
     // Let anyone see statistics (let's see if anyone complains).
     'access callback' => TRUE,
     'file' => 'reol_statistics.pages.inc',
@@ -311,6 +321,13 @@ interface ReolStatisticsInterface {
    */
   public function collect(ReolStatisticsMonth $month);
 
+}
+
+/**
+ * Interface for general statistics building.
+ */
+interface ReolStatisticsGeneralInterface {
+
   /**
    * Build statistic display.
    *
@@ -321,11 +338,24 @@ interface ReolStatisticsInterface {
    * @param ReolStatisticsMonth $to
    *   To date, integer in yyyymm format, inclusive.
    */
-  public function build(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to);
+  public function buildGeneral(ReolStatisticsMonth $from, ReolStatisticsMonth $to);
+
+}
+/**
+ * Interface for municipality statistics building.
+ */
+interface ReolStatisticsMunicipalityInterface {
 
   /**
-   * Reset statistics.
+   * Build statistic display.
+   *
+   * @param array library
+   *   The library as returned from publizon_get_library().
+   * @param ReolStatisticsMonth $from
+   *   From date, integer in yyyymm format.
+   * @param ReolStatisticsMonth $to
+   *   To date, integer in yyyymm format, inclusive.
    */
-  //public function reset();
+  public function buildMunicipality(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to);
 
 }
