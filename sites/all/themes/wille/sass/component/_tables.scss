@@ -1,0 +1,49 @@
+table{
+  width:100%;
+  border: 1px solid $black-light;
+  margin: 50px 0;
+
+  caption {
+    text-align: left;
+    font-size: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid $black-light;
+    margin-bottom: 30px;
+  }
+}
+
+tr {
+  border: inherit;
+}
+
+tr {
+  &.even,
+  &.odd {
+    background-color: white;
+    border: 1px solid $black-light;
+  }
+}
+
+td {
+  text-align: center;
+  padding: 1rem;
+  vertical-align: baseline;
+  border: inherit;
+
+  &:nth-child(2n+0) {
+    background: #e7e6e6;
+  }
+}
+
+th {
+  text-align: center;
+  padding: 1rem;
+  vertical-align: baseline;
+  border: inherit;
+}
+
+thead {
+  font-family: $font-bold;
+  font-size: 16px;
+  border: inherit;
+}
