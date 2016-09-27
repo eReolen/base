@@ -430,6 +430,31 @@ function brin_preprocess_ting_object_cover(&$variables) {
 }
 
 /**
+ * Theme ting_object_cover.
+ *
+ * Wraps the cover in a link to the material.
+ */
+function brin_ting_object_cover($variables) {
+  $attributes = array(
+    'class' => implode(' ', $variables['classes']),
+  );
+
+  foreach ($variables['data'] as $name => $value) {
+    $attributes['data-' . $name] = $value;
+  }
+
+  $cover = '<div ' . drupal_attributes($attributes) . '>' . $variables['image'] . '</div>';
+
+  // Add link if the id is not to a fake material.
+  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
+  if (!reol_base_fake_id($ding_entity_id)) {
+    $cover = l($cover, 'ting/collection/' . $ding_entity_id, array('html' => TRUE));
+  }
+
+  return $cover;
+}
+
+/**
  * Preprocess search carousel.
  */
 function brin_preprocess_ting_search_carousel(&$vars) {
@@ -455,3 +480,4 @@ function _brin_type_icon_classes($type, $quota = NULL) {
   }
   return $classes;
 }
+
