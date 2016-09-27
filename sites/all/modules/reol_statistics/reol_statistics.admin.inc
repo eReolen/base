@@ -26,7 +26,7 @@ function reol_statistics_settings($form, &$form_state) {
   $form['reol_statistics_header'] = array(
     '#type' => 'text_format',
     '#title' => t('Header'),
-    '#description' => t('Header on statistics pages. Available placeholders: @date: date of Display, @municipality: name of the municipality, @subscribed_users: number of subscribed users in the municipality.'),
+    '#description' => t('Header on statistics pages. Available placeholders: @date: date of display, @municipality: name of the municipality, @subscribed_users: number of subscribed users in the municipality.'),
     '#default_value' => $default_value['value'],
     '#format' => $default_value['format'],
   );
@@ -51,7 +51,7 @@ function reol_statistics_settings($form, &$form_state) {
 }
 
 /**
- *
+ * Submit handler for settings form.
  */
 function reol_statistics_settings_submit($form, &$form_state) {
   if (variable_get('reol_statistics_isbn_count', 10) != $form_state['values']['reol_statistics_isbn_count'] ||
