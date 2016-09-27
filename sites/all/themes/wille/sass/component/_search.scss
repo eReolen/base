@@ -590,6 +590,17 @@
 
     .view-mode-search-result .ting-object-right {
       padding-left: 0;
+      float: left;
+      display: block;
+      width: 83.33333%;
+      margin-left: 0%;
+      margin-right: 0;
+    }
+
+    .view-mode-search-result .ting-object-right {
+      padding-left: 0;
+      margin-left: 0px;
+      float: left;
     }
   }
 
@@ -600,34 +611,41 @@
 
 .view-picker {
   float: right;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  display: block;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-top: 13px;
 
   .view-picker__item {
-
     font-size: 40px;
     display: inline-block;
-    color: $white-dark;
+    color: gray;
     margin-right: 10px;
     cursor: pointer;
     border-radius: 50%;
 
-    &:hover {
-      color: white;
-      background: $red;
-    }
-
-    &.active {
-      background: $white-dark;
-      color: white;
-    }
+    background-position: top;
+    background-size: contain;
+    height: 35px;
+    width: 35px;
+    background-repeat: no-repeat;
 
     &.list-view {
-      @include icon('.icon-list-view');
+      background-image: url("../images/list.png");
+
+      &.active,
+      &:hover {
+        background-image: url("../images/list-inv.png");
+      }
     }
 
     &.grid-view {
-      @include icon('.icon-grid-view');
+      background-image: url("../images/grid.png");
+
+      &.active,
+      &:hover {
+        background-image: url("../images/grid-inv.png");
+      }
     }
   }
 }

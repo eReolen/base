@@ -260,61 +260,7 @@
    */
   Drupal.behaviors.gridView = {
     attach : function(context, settings) {
-
-      var wrapper = $('.pane-panels-mini.pane-search');
-      var gridClass = 'js-search-results-grid-view';
-      var viewType = localStorage.getItem('breol-search-view-type');
-
-      if (viewType === null) {
-        viewType = 'grid';
-        localStorage.setItem('breol-search-view-type', viewType);
-      }
-
-      if (viewType === 'grid') {
-        wrapper.addClass(gridClass)
-      }
-
-      // If the mini panel exist we will continue.
-      if (wrapper.length !== 0) {
-        var viewPicker = getViewPicker(viewType);
-
-        $('.pane-ting-search-sort-form').after(viewPicker);
-
-        // Listen for user input.
-        $('.view-picker__item').click(function() {
-          viewType = $(this).attr('data-view-type');
-
-          // Apply classes depending on user choice.
-          if (!$(this).hasClass('active')) {
-            $('.view-picker__item').toggleClass('active');
-
-            if (viewType === 'grid') {
-              wrapper.addClass(gridClass)
-            }
-            else {
-              wrapper.removeClass(gridClass)
-            }
-
-            // Store the last chosen view type in localstorage.
-            localStorage.setItem('breol-search-view-type', viewType);
-          }
-        });
-      }
-
-      function getViewPicker(viewType) {
-        var viewPicker = $('<div class="view-picker"></div>');
-        var listPicker = $('<div class="view-picker__item list-view" data-view-type="list"></div>');
-        var gridPicker = $('<div class="view-picker__item grid-view" data-view-type="grid"></div>');
-
-        if (viewType === 'list') {
-          listPicker.addClass('active');
-        }
-        else {
-          gridPicker.addClass('active');
-        }
-
-        return viewPicker.append(listPicker, gridPicker);
-      }
+      $('.pane-panels-mini.pane-search').viewPicker('.pane-ting-search-sort-form');
     }
   };
 
