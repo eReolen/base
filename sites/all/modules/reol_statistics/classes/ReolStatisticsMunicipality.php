@@ -179,6 +179,9 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
     }
 
     $table = array(
+      'attributes' => array(
+        'class' => array('statistics-municipality'),
+      ),
       'caption' => t('1. Loans in municipality, per month and total'),
       'header' => $header,
       'rows' => array(

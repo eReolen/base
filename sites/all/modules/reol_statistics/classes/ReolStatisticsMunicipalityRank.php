@@ -120,6 +120,9 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     }
 
     $table = array(
+      'attributes' => array(
+        'class' => array('statistics-municipality-rank'),
+      ),
       'caption' => t('Municipalities ranked by loans per subscribed students'),
       'header' => $header,
       'rows' => $rows,

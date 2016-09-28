@@ -245,6 +245,9 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
     }
 
     $table = array(
+      'attributes' => array(
+        'class' => array('statistics-isbn'),
+      ),
       'caption' => t("3. List of ISBN numbers that's been loaned more than @times times per @period days", array(
         '@times' => $max_count,
         '@period' => $period_days,

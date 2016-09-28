@@ -115,7 +115,12 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
     }
 
     $header = array(array());
-    $sub_header = array('School');
+    $sub_header = array(
+      array(
+        'data' => 'School',
+        'header' => TRUE,
+      ),
+    );
     $school_rows = array();
 
     // We create an array of columns that we can just iterate over.
@@ -141,8 +146,14 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
         'data' => $col['label'],
         'colspan' => 2,
       );
-      $sub_header[] = t('Number of loans');
-      $sub_header[] = t('% of total');
+      $sub_header[] = array(
+        'data' => t('Number of loans'),
+        'header' => TRUE,
+      );
+      $sub_header[] = array(
+        'data' => t('% of total'),
+        'header' => TRUE,
+      );
 
       // Get the total count of loans across schools for this period. We need it
       // for the percentage calculation.
@@ -176,6 +187,9 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
 
     ksort($school_data);
     $table = array(
+      'attributes' => array(
+        'class' => array('statistics-school'),
+      ),
       'caption' => t('2. Number of loans per school in municipality, per month'),
       'header' => $header,
       'rows' => array(
@@ -184,7 +198,12 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
     );
 
     foreach ($school_data as $school => $columns) {
-      $row = array($school);
+      $row = array(
+        array(
+          'data' => $school,
+          'header' => TRUE,
+        ),
+      );
       foreach (array_keys($cols) as $index) {
         if (isset($columns[$index])) {
           $row[] = $columns[$index]['loans'];
