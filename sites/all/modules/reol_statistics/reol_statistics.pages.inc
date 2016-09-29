@@ -14,8 +14,8 @@ function reol_statistics_select_municipality_page() {
 
   $libraries = array();
   foreach ($publizon_libraries as $retailer_id => $def) {
-    if (!empty($def['unilogin_id']) && !empty($def['subscribed_users'])) {
-      $libraries[$def['library_name']] = $retailer_id;
+    if (!empty($def->unilogin_id) && !empty($def->subscribed_users)) {
+      $libraries[$def->library_name] = $retailer_id;
     }
   }
 
@@ -110,8 +110,8 @@ function reol_statistics_municipality_page($library, $from, $to) {
 
   $replacements = array(
     '@date' => date('Y-m-d'),
-    '@municipality' => $library['library_name'],
-    '@subscribed_users' => $library['subscribed_users'],
+    '@municipality' => $library->library_name,
+    '@subscribed_users' => $library->subscribed_users,
   );
   $output .= format_string(check_markup($header['value'], $header['format']), $replacements);
 
@@ -141,7 +141,7 @@ function reol_statistics_publizon_page($library, $month = NULL) {
 
   $res = db_select('reol_statistics_municipality', 'm')
     ->fields('m', array('loans'))
-    ->condition('m.municipality_id', $library['unilogin_id'])
+    ->condition('m.municipality_id', $library->unilogin_id)
     ->condition('m.month', (string) $month)
     ->execute();
 

@@ -180,8 +180,8 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
   /**
    * {@inheritdoc}
    */
-  public function buildMunicipality(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
-    if (!isset($library['unilogin_id'])) {
+  public function buildMunicipality(PublizonConfiguredLibrary $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
+    if (!isset($library->unilogin_id)) {
       return '';
     }
 
@@ -197,7 +197,7 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
     $query = db_select('reol_statistics_isbn', 'i')
            ->fields('i', array('day', 'isbn', 'school', 'period_total'))
            ->condition('day', array($start, $end), 'BETWEEN')
-           ->condition('municipality_id', $library['unilogin_id'])
+           ->condition('municipality_id', $library->unilogin_id)
            ->condition('i.period_total', $max_count, '>');
 
     $isbns = array();

@@ -27,7 +27,7 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
   // Load library.
   $user = $context[0]->data;
   $library_id = publizon_get_retailer_id($user);
-  $library = publizon_library_load($library_id);
+  $library = publizon_client_library_load($library_id);
 
   $variables = array(
     // Quotas.

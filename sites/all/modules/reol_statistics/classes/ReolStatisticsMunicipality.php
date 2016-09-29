@@ -118,8 +118,8 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
   /**
    * {@inheritdoc}
    */
-  public function buildMunicipality(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
-    if (!isset($library['unilogin_id'])) {
+  public function buildMunicipality(PublizonConfiguredLibrary $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
+    if (!isset($library->unilogin_id)) {
       return '';
     }
 
@@ -164,7 +164,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
       $header[] = $col['label'];
       $query = db_select('reol_statistics_municipality', 'm')
              ->condition('m.month', array($col['from'], $col['to']), 'BETWEEN')
-             ->condition('m.municipality_id', $library['unilogin_id']);
+             ->condition('m.municipality_id', $library->unilogin_id);
       $query->addExpression('SUM(m.loans)', 'loans');
       $query->addExpression('SUM(m.users)', 'users');
 
@@ -172,7 +172,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
         if (!is_null($row->loans)) {
           $loan_row[] = $row->loans;
           $user_row[] = $row->users;
-          $percentage_row[] = sprintf('%.' . $col['scale'] . 'f%%', ($row->users / $library['subscribed_users']) * 100);
+          $percentage_row[] = sprintf('%.' . $col['scale'] . 'f%%', ($row->users / $library->subscribed_users) * 100);
         }
         else {
           $loan_row[] = $user_row[] = $percentage_row[] = '';
