@@ -16,6 +16,6 @@
   <?php elseif (isset($isbn)) : ?>
     data-isbn="<?php echo $isbn; ?>"
   <?php endif; ?>
-  id="reader-container" data-reader-version="<?php echo $reader_version ?>" data-url="<?php echo $publizon_reader_stream_url; ?>" data-images-url="<?php echo $publizon_reader_stream_url; ?>"></div>
+  id="reader-container" data-reader-version="<?php echo $reader_version ?>" data-url="<?php echo $publizon_reader_stream_url; ?>" data-images-url="<?php echo $publizon_reader_url; ?>"></div>
   </div>
 </div>

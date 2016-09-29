@@ -30,6 +30,7 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
   $order = reol_use_loan_get_order($ting_entity->localId);
 
   $vars = array();
+
   // If there is no order, start player in preview mode.
   if (!$order) {
     $vars['isbn'] = reol_base_get_isbn($ting_entity->localId);
@@ -38,18 +39,22 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
     $vars['retailer_order_number'] = $order['retailer_order_number'];
   }
 
-  $reader_version = variable_get('publizon_reader_version', '1.5.0');
+  $reader_version = variable_get('publizon_reader_version', '1.6.0');
+  $publizon_reader_stream_url = variable_get('publizon_reader_stream_url', '');
+  $publizon_reader_url = variable_get('publizon_reader_url', '');
+  $module_url = drupal_get_path('module', 'reol_use_loan');
+
   $vars['reader_version'] = $reader_version;
-  $vars['publizon_reader_stream_url'] = variable_get('publizon_reader_stream_url', '');
+  $vars['publizon_reader_stream_url'] = $publizon_reader_stream_url;
+  $vars['publizon_reader_url'] = $publizon_reader_url;
 
   // Add dependencies.
-  drupal_add_css(drupal_get_path('module', 'reol_use_loan') . '/css/reader.css');
-  drupal_add_js(drupal_get_path('module', 'reol_use_loan') . '/js/reader.js');
-  drupal_add_js(variable_get('publizon_reader_url', '') . '/scripts/reader-' . $reader_version . '/js',
+  drupal_add_css($module_url . '/css/reader.css');
+  drupal_add_js($publizon_reader_url . '/scripts/reader-' . $reader_version . '/js',
     array('type' => 'external',
           'scope' => 'footer',
   ));
-  drupal_add_js( drupal_get_path('module', 'reol_use_loan') . '/js/reader_standalone.js');
+  drupal_add_js($module_url . '/js/reader_standalone.js');
 
   $block->content = theme('read', $vars);
 
