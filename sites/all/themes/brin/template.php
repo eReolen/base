@@ -459,8 +459,13 @@ function brin_ting_object_cover($variables) {
  */
 function brin_preprocess_ting_search_carousel(&$vars) {
   if (isset($vars['settings'])) {
-    $vars['settings']['slidesToShow'] = 6;
+    $vars['settings']['slidesToShow'] = 5;
     $vars['settings']['slidesToScroll'] = 5;
+  }
+
+  if (isset($vars['settings']['responsive'][1]['settings']['slidesToShow'])) {
+    $vars['settings']['responsive'][1]['settings']['slidesToShow'] = 3;
+    $vars['settings']['responsive'][1]['settings']['slidesToScroll'] = 3;
   }
 }
 
