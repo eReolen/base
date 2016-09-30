@@ -104,16 +104,17 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
           $prev_placement = $prev_munis_lookup[$row->municipality_id]->placement;
         }
         $ratio = round($row->ratio, 3);
-        if ($ratio == '0' && $row->loans > 0) {
-          $ratio = '~0';
-        }
+        $ratio = sprintf('%.3f', $row->ratio);
         $rows[] = array(
           $placement,
-          $libraries[$row->municipality_id]['name'],
+          array(
+            'data' => $libraries[$row->municipality_id]['name'],
+            'class' => 'municipality-column'
+          ),
           $ratio,
           $prev_placement,
           $libraries[$row->municipality_id]['subscribed_users'],
-          round(($row->users / $libraries[$row->municipality_id]['subscribed_users']) * 100, 3),
+          sprintf("%.0f%%", ($row->users / $libraries[$row->municipality_id]['subscribed_users']) * 100),
         );
       }
       $placement++;
