@@ -40,11 +40,19 @@ function reol_statistics_select_municipality_page() {
       $cell = '';
       $month = new ReolStatisticsMonth($year, $month_num);
       $month_string = (string) $month;
+      $month_name = format_date($month->getStartTimestamp(), 'custom', 'M');
       if ($month_string > '201608' && $month_string <= $current_month) {
-        $cell = l(format_date($month->getStartTimestamp(), 'custom', 'M'), 'statistics/general/' . $month_string . '/' . $month_string);
+        $path = 'statistics/general/' . $month_string . '/' . $month_string;
+        $cell = l($month_name, $path);
+      }
+      else {
+        $cell = $month_name;
       }
 
-      $row[] = $cell;
+      // We don't want cells for months before the start of the statistics.
+      if ($month_string > '201608') {
+        $row[] = $cell;
+      }
     }
     $table['rows'][] = $row;
   }
@@ -53,15 +61,18 @@ function reol_statistics_select_municipality_page() {
 
   // Library listing.
   ksort($libraries);
+  $options = array(
+    'attributes' => array(
+      'class' => array(
+        'btn-statistics',
+      ),
+    ),
+  );
+
+  $output .= '<h2 class="statistics-header">' . t('Select municipality to view the local stastistics') . '</h2>';
   foreach ($libraries as $name => $id) {
-    $output .= '<p>' . l($name, 'statistics/municipality/' . $id . '/201609/201612', array(
-      'attributes' => array(
-        'class' => array(
-          'btn-statistics'
-          )
-        )
-      )
-    ) . '</p>';
+    $path = 'statistics/municipality/' . $id . '/201609/201612';
+    $output .= l($name, $path, $options);
   }
 
   return $output;
