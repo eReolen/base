@@ -347,10 +347,3 @@ function reol_base_update_7128() {
 function reol_base_update_7129() {
   module_enable(['reol_shared_theme'], TRUE);
 }
-
-/**
- * Enable reol_field_carousel module.
- */
-function reol_base_update_7130() {
-  module_enable(['reol_field_carousel'], TRUE);
-}
