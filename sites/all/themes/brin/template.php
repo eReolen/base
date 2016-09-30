@@ -458,7 +458,7 @@ function brin_ting_object_cover($variables) {
  * Preprocess search carousel.
  */
 function brin_preprocess_ting_search_carousel(&$vars) {
-  $slides_to_show = $vars['field_carousel'] ? 5 : 6;
+  $slides_to_show = (isset($vars['field_carousel']) && $vars['field_carousel']) ? 5 : 6;
   if (isset($vars['settings'])) {
     $vars['settings']['slidesToShow'] = $slides_to_show;
     $vars['settings']['slidesToScroll'] = $slides_to_show;
