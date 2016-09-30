@@ -240,10 +240,6 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
       }
     }
 
-    if (!$isbn_rows) {
-      return '';
-    }
-
     $table = array(
       'attributes' => array(
         'class' => array('statistics-isbn'),
@@ -254,6 +250,7 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
       )),
       'header' => $header,
       'rows' => $isbn_rows,
+      'empty' => t('No ISBNs have been loaned excessively.'),
     );
 
     return theme('table', $table);
