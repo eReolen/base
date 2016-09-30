@@ -1,4 +1,4 @@
-table{
+table {
   width:100%;
   border: 1px solid $black-light;
   margin: 50px 0;
@@ -7,8 +7,7 @@ table{
     text-align: left;
     font-size: 20px;
     padding: 10px 0;
-    border-bottom: 1px solid $black-light;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
 }
 
@@ -26,7 +25,7 @@ tr {
 
 td {
   text-align: center;
-  padding: 1rem;
+  padding: 1vw;
   vertical-align: baseline;
   border: inherit;
 
@@ -36,14 +35,19 @@ td {
 }
 
 th {
-  text-align: center;
-  padding: 1rem;
+  text-align: left;
+  padding: 1vw;
   vertical-align: baseline;
   border: inherit;
+  font-size: 14px;
+  font-family: $font-bold;
 }
 
 thead {
-  font-family: $font-bold;
-  font-size: 16px;
+
+  th {
+    font-size: 16px;
+
+  }
   border: inherit;
 }

@@ -54,7 +54,14 @@ function reol_statistics_select_municipality_page() {
   // Library listing.
   ksort($libraries);
   foreach ($libraries as $name => $id) {
-    $output .= '<p>' . l($name, 'statistics/municipality/' . $id . '/201609/201612') . '</p>';
+    $output .= '<p>' . l($name, 'statistics/municipality/' . $id . '/201609/201612', array(
+      'attributes' => array(
+        'class' => array(
+          'btn-statistics'
+          )
+        )
+      )
+    ) . '</p>';
   }
 
   return $output;
