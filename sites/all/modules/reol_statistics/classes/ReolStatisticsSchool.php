@@ -130,12 +130,14 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
         'label' => $month->getMonthName(),
         'from' => (string) $month,
         'to' => (string) $month,
+        'scale' => 2,
       );
     }
     $cols[] = array(
       'label' => t('Total'),
       'from' => (string) $from,
       'to' => (string) $to,
+      'scale' => 0,
     );
 
     // School data. Indexed by school (the name, so we kan ksort it), the value
@@ -204,10 +206,10 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
           'header' => TRUE,
         ),
       );
-      foreach (array_keys($cols) as $index) {
+      foreach ($cols as $index => $col) {
         if (isset($columns[$index])) {
           $row[] = $columns[$index]['loans'];
-          $row[] = sprintf('%.2f%%', $columns[$index]['percentage']);
+          $row[] = sprintf('%.' . $col['scale'] . 'f%%', $columns[$index]['percentage']);
         }
         else {
           $row[] = $row[] = '';
