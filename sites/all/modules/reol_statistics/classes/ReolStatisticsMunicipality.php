@@ -150,12 +150,14 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
         'label' => $month->getMonthName(),
         'from' => (string) $month,
         'to' => (string) $month,
+        'scale' => 2,
       );
     }
     $cols[] = array(
       'label' => t('Total'),
       'from' => (string) $from,
       'to' => (string) $to,
+      'scale' => 0,
     );
 
     foreach ($cols as $col) {
@@ -167,14 +169,14 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
       $query->addExpression('SUM(m.users)', 'users');
 
       if ($row = $query->execute()->fetchObject()) {
-        $loan_row[] = $row->loans;
-        $user_row[] = $row->users;
-        $percentage_row[] = round(($row->users / $library['subscribed_users']) * 100, 2) . '%';
-
-      }
-      else {
-        $loan_row[] = $user_row[] = 0;
-        $percentage_row[] = '-';
+        if (!is_null($row->loans)) {
+          $loan_row[] = $row->loans;
+          $user_row[] = $row->users;
+          $percentage_row[] = sprintf('%.' . $col['scale'] . 'f%%', ($row->users / $library['subscribed_users']) * 100);
+        }
+        else {
+          $loan_row[] = $user_row[] = $percentage_row[] = '';
+        }
       }
     }
 
