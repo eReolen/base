@@ -121,7 +121,6 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
         'header' => TRUE,
       ),
     );
-    $school_rows = array();
 
     // We create an array of columns that we can just iterate over.
     $cols = array();
