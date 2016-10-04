@@ -75,10 +75,6 @@
   z-index: 999;
 }
 
-#slider {
-  max-width: 600px;
-}
-
 .reader__back-button {
   @include icon('.icon-arrow-left-funny');
   position: absolute;
@@ -97,9 +93,5 @@
 
   &:hover {
     cursor: pointer;
-  }
-
-  @include media($phone-p) {
-    @include hide-text;
   }
 }
