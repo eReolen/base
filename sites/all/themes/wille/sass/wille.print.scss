@@ -8,22 +8,25 @@
 .site-header,
 .navigation,
 .main-header,
-.footer,
-#sliding-popup {
+.footer {
   display: none;
+}
+
+// Apparently IE needs it to be specified a bit more forcefully.
+#sliding-popup {
+  display: none !important;
 }
 
 table {
    width:100%!important;
-   font-size:1.2vw;
+   font-size:10px;
 
    caption {
-     font-size:1.6vw;
+     font-size:1.6em;
    }
 }
 
 tr {
-
   padding: 2px;
 
   &.even,
@@ -37,14 +40,14 @@ td {
 }
 
 th {
-  font-size:1.2vw;
+  font-size:1em;
 }
 
 thead th {
-  font-size:1.4vw;
+  font-size:1.2em;
 }
 
 body:not(.front):not(.page-nyheder) .main-content-wrapper__inner {
   max-width: 100%;
-  padding: 0 1vw;
+  padding: 0 1em;
 }
