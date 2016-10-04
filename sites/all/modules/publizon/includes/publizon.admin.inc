@@ -73,14 +73,6 @@ function publizon_settings_form($form, &$form_state) {
     '#required' => TRUE,
   );
 
-  $form['publizon']['settings']['publizon_player_client_id'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Client ID for the player API'),
-    '#description' => t('The Client ID for the player to use on the player API'),
-    '#default_value' => variable_get('publizon_player_client_id', ''),
-    '#required' => TRUE,
-  );
-
   $form['publizon']['settings']['publizon_reader_stream_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Reader stream URL'),
@@ -178,6 +170,13 @@ function publizon_settings_form($form, &$form_state) {
       '#title' => $titles ? t('Library name') : '',
       '#size' => 32,
       '#default_value' => isset($library['library_name']) ? $library['library_name'] : '',
+    );
+
+    $form['publizon']['libraries']['l'][$i]['subscribed_users'] = array(
+      '#type' => 'textfield',
+      '#title' => $titles ? t('Number of users') : '',
+      '#size' => 6,
+      '#default_value' => isset($library['subscribed_users']) ? $library['subscribed_users'] : '',
     );
   }
 
@@ -444,7 +443,6 @@ function publizon_settings_form_validate($form, &$form_state) {
   foreach ($form_state['values']['publizon']['libraries']['l'] as $i => $library) {
     $name = $library['library_name'];
     $id   = $library['retailer_id'];
-    $unilogin_id  = $library['unilogin_id'];
     $code = $library['retailer_key_code'];
 
     // If one of them is filled out, we have to get them all.

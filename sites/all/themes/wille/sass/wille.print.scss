@@ -1,0 +1,53 @@
+@import "bourbon";
+@import "base/functions";
+@import "base/vars";
+// Hide all content that should not
+// be displayed in print.
+#toolbar,
+.organic-element,
+.site-header,
+.navigation,
+.main-header,
+.footer {
+  display: none;
+}
+
+// Apparently IE needs it to be specified a bit more forcefully.
+#sliding-popup {
+  display: none !important;
+}
+
+table {
+   width:100%!important;
+   font-size:10px;
+
+   caption {
+     font-size:1.6em;
+   }
+}
+
+tr {
+  padding: 2px;
+
+  &.even,
+  &.odd {
+    background-color: white !important;
+  }
+}
+
+td {
+  padding: 1px;
+}
+
+th {
+  font-size:1em;
+}
+
+thead th {
+  font-size:1.2em;
+}
+
+body:not(.front):not(.page-nyheder) .main-content-wrapper__inner {
+  max-width: 100%;
+  padding: 0 1em;
+}
