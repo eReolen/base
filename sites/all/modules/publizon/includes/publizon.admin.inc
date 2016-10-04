@@ -179,6 +179,13 @@ function publizon_settings_form($form, &$form_state) {
       '#size' => 32,
       '#default_value' => isset($library['library_name']) ? $library['library_name'] : '',
     );
+
+    $form['publizon']['libraries']['l'][$i]['subscribed_users'] = array(
+      '#type' => 'textfield',
+      '#title' => $titles ? t('Number of users') : '',
+      '#size' => 6,
+      '#default_value' => isset($library['subscribed_users']) ? $library['subscribed_users'] : '',
+    );
   }
 
   $form['publizon']['libraries']['spacer'] = array(
@@ -444,7 +451,6 @@ function publizon_settings_form_validate($form, &$form_state) {
   foreach ($form_state['values']['publizon']['libraries']['l'] as $i => $library) {
     $name = $library['library_name'];
     $id   = $library['retailer_id'];
-    $unilogin_id  = $library['unilogin_id'];
     $code = $library['retailer_key_code'];
 
     // If one of them is filled out, we have to get them all.
