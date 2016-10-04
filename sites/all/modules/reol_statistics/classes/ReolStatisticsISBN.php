@@ -188,7 +188,7 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
     $max_count = variable_get('reol_statistics_isbn_count', 10);
     $period_days = variable_get('reol_statistics_isbn_period', 14);
 
-    $header = array(t('Period'), t('School'), t('ISBN Number'), 'Loans');
+    $header = array(t('Period'), t('School'), t('ISBN Number'), t('Loans'));
     $isbn_rows = array();
 
     $start = $from->getStartDatetime()->format('Ymd');

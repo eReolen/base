@@ -117,7 +117,7 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
     $header = array(array());
     $sub_header = array(
       array(
-        'data' => 'School',
+        'data' => t('School'),
         'header' => TRUE,
       ),
     );
