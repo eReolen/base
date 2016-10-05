@@ -162,7 +162,7 @@ function publizon_settings_form($form, &$form_state) {
 
     $form['publizon']['libraries']['l'][$i]['subscribed_users'] = array(
       '#type' => 'textfield',
-      '#title' => $titles ? t('Number of users') : '',
+      '#title' => t('Number of users'),
       '#size' => 6,
       '#default_value' => $library->subscribed_users,
     );
