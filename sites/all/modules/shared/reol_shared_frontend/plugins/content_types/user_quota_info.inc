@@ -27,7 +27,7 @@ function reol_shared_frontend_user_quota_info_content_type_render($subtype, $con
   // Load library.
   $user = $context[0]->data;
   $library_id = publizon_get_retailer_id($user);
-  $library = publizon_library_load($library_id);
+  $library = publizon_client_library_load($library_id);
 
   $extra_link = url('search/ting/*', array(
     'query' => array(

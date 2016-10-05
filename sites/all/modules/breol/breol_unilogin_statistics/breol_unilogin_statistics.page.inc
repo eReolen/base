@@ -148,7 +148,7 @@ function breol_unilogin_statistics_data_other($from, $to) {
       $time->format(DateTime::ATOM),
       $row['retailer_id'],
       (isset($libraries[$row['retailer_id']]) ?
-        $libraries[$row['retailer_id']]['library_name'] : '?'),
+        $libraries[$row['retailer_id']]->library_name : '?'),
       $row['isbn'],
     );
     print implode(';', $data) . "\n";

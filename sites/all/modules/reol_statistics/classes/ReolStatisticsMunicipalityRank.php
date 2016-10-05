@@ -35,12 +35,12 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     // but they insisted.
     $libraries = array();
     foreach (publizon_get_libraries() as $def) {
-      if (!empty($def['unilogin_id']) &&
-          !empty($def['subscribed_users']) &&
-          $def['subscribed_users'] > 0) {
-        $libraries[$def['unilogin_id']] = array(
-          'subscribed_users' => $def['subscribed_users'],
-          'name' => $def['library_name'],
+      if (!empty($def->unilogin_id) &&
+          !empty($def->subscribed_users) &&
+          $def->subscribed_users > 0) {
+        $libraries[$def->unilogin_id] = array(
+          'subscribed_users' => $def->subscribed_users,
+          'name' => $def->library_name,
         );
       }
     }
