@@ -114,26 +114,13 @@ function publizon_settings_form($form, &$form_state) {
     '#collapsed' => FALSE,
   );
 
-  // Find the number of elements (libraries) to show, base on the current state.
-  $libraries = variable_get('publizon_libraries', array());
-  $num_libraries = count($libraries) ? count($libraries) : 1;
-  if (isset($form_state['values']['publizon']['num_libraries'])) {
-    $num_libraries = $form_state['values']['publizon']['num_libraries'];
-  }
-
-  // Store the number of libraries to ahah callbacks (add one more).
-  $form['publizon']['num_libraries'] = array(
-    '#type' => 'value',
-    '#value' => $num_libraries,
-  );
+  $libraries = publizon_get_libraries();
+  // Add an empty one for adding.
+  $libraries[] = new PublizonConfiguredLibrary();
 
   // Add form elements.
-  for ($i = 0; $i < $num_libraries; $i++) {
-    $library = array_shift($libraries);
-
-    // Only show titles for the fields for every 20th row.
-    $titles = $i % 20 == 0;
-
+  $i = 1;
+  while ($library = array_shift($libraries)) {
     $form['publizon']['libraries']['l'][$i] = array(
       '#type' => 'fieldset',
       '#title' => t('Library information'),
@@ -146,75 +133,48 @@ function publizon_settings_form($form, &$form_state) {
 
     $form['publizon']['libraries']['l'][$i]['retailer_id'] = array(
       '#type' => 'textfield',
-      '#title' => $titles ? t('Retailer ID') : '',
+      '#title' => t('Retailer ID'),
       '#size' => 6,
-      '#default_value' => isset($library['retailer_id']) ? $library['retailer_id'] : '',
+      '#disabled' => empty($library->retailer_id) ? FALSE : TRUE,
+      '#default_value' => $library->retailer_id,
     );
 
     $form['publizon']['libraries']['l'][$i]['unilogin_id'] = array(
       '#type' => 'textfield',
-      '#title' => $titles ? t('Unilogin ID') : '',
+      '#title' => t('Unilogin ID'),
       '#size' => 6,
-      '#default_value' => isset($library['unilogin_id']) ? $library['unilogin_id'] : '',
+      '#default_value' => $library->unilogin_id,
     );
 
     $form['publizon']['libraries']['l'][$i]['retailer_key_code'] = array(
       '#type' => 'textfield',
-      '#title' => $titles ? t('Retailer key code') : '',
+      '#title' => t('Retailer key code'),
       '#size' => 20,
-      '#default_value' => isset($library['retailer_key_code']) ? $library['retailer_key_code'] : '',
+      '#default_value' => $library->retailer_key_code,
     );
 
     $form['publizon']['libraries']['l'][$i]['library_name'] = array(
       '#type' => 'textfield',
-      '#title' => $titles ? t('Library name') : '',
+      '#title' => t('Library name'),
       '#size' => 32,
-      '#default_value' => isset($library['library_name']) ? $library['library_name'] : '',
+      '#default_value' => $library->library_name,
     );
 
     $form['publizon']['libraries']['l'][$i]['subscribed_users'] = array(
       '#type' => 'textfield',
-      '#title' => $titles ? t('Number of users') : '',
+      '#title' => t('Number of users'),
       '#size' => 6,
-      '#default_value' => isset($library['subscribed_users']) ? $library['subscribed_users'] : '',
+      '#default_value' => $library->subscribed_users,
     );
-  }
 
-  $form['publizon']['libraries']['spacer'] = array(
-    '#type' => 'markup',
-    '#markup' => '<div class="spacer"></div>',
-  );
-
-  $form['publizon']['libraries']['add'] = array(
-    '#type' => 'submit',
-    '#value' => t('Add more'),
-    '#submit' => array('publizon_settings_form_add_library'),
-    '#name' => 'add-library',
-    '#ajax' => array(
-      'callback' => 'publizon_settings_form_libraries_callback',
-      'wrapper' => 'libraries-fieldset-wrapper',
-    ),
-    '#prefix' => '<div class="add">',
-  );
-
-  $form['publizon']['libraries']['add_count'] = array(
-    '#type' => 'textfield',
-    '#size' => 1,
-    '#default_value' => isset($form_state['values']['publizon']['libraries']['add_count']) ? $form_state['values']['publizon']['libraries']['add_count'] : 1,
-    '#suffix' => '</div>',
-  );
-
-  if ($num_libraries > 1) {
-    $form['publizon']['libraries']['remove'] = array(
-      '#type' => 'submit',
-      '#value' => t('Remove last'),
-      '#submit' => array('publizon_settings_form_remove_library'),
-      '#name' => 'remove-library',
-      '#ajax' => array(
-        'callback' => 'publizon_settings_form_libraries_callback',
-        'wrapper' => 'libraries-fieldset-wrapper',
-      ),
+    $form['publizon']['libraries']['l'][$i]['delete'] = array(
+      '#markup' => empty($library->retailer_id) ? '' : l(t('delete'),
+                     'admin/config/ding/provider/publizon/' .
+                     $library->retailer_id . '/delete'),
+      '#title' => t('Operations'),
     );
+
+    $i++;
   }
 
   // Add messages fieldset.
@@ -334,6 +294,8 @@ function publizon_settings_form($form, &$form_state) {
     );
   }
 
+  $form['#theme'] = 'publizon_settings_form';
+
   // Make the form look like at system form.
   $form = system_settings_form($form);
 
@@ -344,43 +306,32 @@ function publizon_settings_form($form, &$form_state) {
 }
 
 /**
- * Callback for adding one more library.
+ * Returns HTML for the Publizon settings form.
  *
- * @param array $form
- *   The form.
- * @param array $form_state
- *   The form state at submit.
+ * @ingroup themeable
  */
-function publizon_settings_form_add_library($form, &$form_state) {
-  $form_state['values']['publizon']['num_libraries'] = $form_state['values']['publizon']['num_libraries'] + $form_state['values']['publizon']['libraries']['add_count'];
-  $form_state['rebuild'] = TRUE;
-}
+function theme_publizon_settings_form($variables) {
+  $form = $variables['form'];
 
-/**
- * Callback for removing a library.
- *
- * @param array $form
- *   The form.
- * @param array $form_state
- *   The form state at submit.
- */
-function publizon_settings_form_remove_library($form, &$form_state) {
-  if ($form_state['values']['publizon']['num_libraries'] > 1) {
-    $form_state['values']['publizon']['num_libraries']--;
+  $header = array();
+  $rows = array();
+  $first_row = TRUE;
+  foreach (element_children($form['publizon']['libraries']['l']) as $key) {
+    $row = array();
+    foreach (element_children($form['publizon']['libraries']['l'][$key]) as $field) {
+      if ($first_row) {
+        $header[] = $form['publizon']['libraries']['l'][$key][$field]['#title'];
+      }
+      $form['publizon']['libraries']['l'][$key][$field]['#title_display'] = 'invisible';
+      $row[] = drupal_render($form['publizon']['libraries']['l'][$key][$field]);
+    }
+    $rows[] = $row;
+    $first_row = FALSE;
   }
-  $form_state['rebuild'] = TRUE;
-}
+  $form['publizon']['libraries']['#children'] = theme('table', array('header' => $header, 'rows' => $rows));
 
-/**
- * Ajax callback for libraries altering.
- *
- * @param array $form
- *   The form.
- * @param array $form_state
- *   The form state at submit.
- */
-function publizon_settings_form_libraries_callback($form, $form_state) {
-  return $form['publizon']['libraries'];
+  // Render the the from.
+  return drupal_render_children($form);
 }
 
 /**
@@ -440,6 +391,7 @@ function publizon_settings_form_validate($form, &$form_state) {
     return;
   }
 
+  $seen_ids = array();
   foreach ($form_state['values']['publizon']['libraries']['l'] as $i => $library) {
     $name = $library['library_name'];
     $id   = $library['retailer_id'];
@@ -449,15 +401,19 @@ function publizon_settings_form_validate($form, &$form_state) {
     // If none are filled out, it will just be ignored.
     if (!empty($name) || !empty($id) || !empty($code)) {
       if (empty($name)) {
-        form_set_error('publizon][libraries][l][' . $i . '][library_name', t('Library name must be specified!'));
+        form_set_error('publizon][libraries][l][' . $i . '][library_name', t('Library name must be specified.'));
       }
       if (empty($id)) {
-        form_set_error('publizon][libraries][l][' . $i . '][retailer_id', t('Library retailer id must be specified!'));
+        form_set_error('publizon][libraries][l][' . $i . '][retailer_id', t('Library retailer id must be specified.'));
       }
       if (empty($code)) {
-        form_set_error('publizon][libraries][l][' . $i . '][retailer_key_code', t('Library retailer key code must be specified!'));
+        form_set_error('publizon][libraries][l][' . $i . '][retailer_key_code', t('Library retailer key code must be specified.'));
+      }
+      if (isset($seen_ids[$id])) {
+        form_set_error('publizon][libraries][l][' . $i . '][retailer_id', t('Library retailer id must be unique.'));
       }
     }
+    $seen_ids[$id] = TRUE;
   }
 }
 
@@ -470,7 +426,6 @@ function publizon_settings_form_validate($form, &$form_state) {
  *   The form state at submit.
  */
 function publizon_settings_form_submit($form, &$form_state) {
-  $libraries = array();
   // Go through the libraries submitted.
   foreach ($form_state['values']['publizon']['libraries']['l'] as $library) {
     // Because of the validation function above, if one of
@@ -481,10 +436,9 @@ function publizon_settings_form_submit($form, &$form_state) {
     }
 
     // Save this one.
-    $libraries[$library['retailer_id']] = $library;
+    publizon_library_save(PublizonConfiguredLibrary::fromArray($library));
   }
 
-  variable_set('publizon_libraries', $libraries);
   // For all other values that the libraries, just save it as a variable.
   foreach ($form_state['values']['publizon']['settings'] as $name => $value) {
     variable_set($name, $value);
@@ -505,4 +459,31 @@ function publizon_settings_form_submit($form, &$form_state) {
   variable_set('publizon_error_messages', $error_messages);
 
   drupal_set_message(t('The configuration options have been saved.'));
+}
+
+/**
+ * Delete library form.
+ */
+function publizon_delete_library_form($form, &$form_state, $library) {
+  $form['retailer_id'] = array(
+    '#type' => 'value',
+    '#value' => $library->retailer_id,
+  );
+  return confirm_form($form,
+                      t('Are you sure you want to delete the "@name" library?', array('@name' => $library->library_name)),
+                      'admin/config/ding/provider/publizon',
+                      NULL,
+                      t('Delete')
+  );
+}
+
+/**
+ * Submit handler for delete form.
+ */
+function publizon_delete_library_form_submit($form, &$form_state) {
+  db_delete('publizon_libraries')
+    ->condition('retailer_id', $form_state['values']['retailer_id'])
+    ->execute();
+
+  $form_state['redirect'] = 'admin/config/ding/provider/publizon';
 }

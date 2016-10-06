@@ -109,8 +109,8 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
   /**
    * {@inheritdoc}
    */
-  public function buildMunicipality(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
-    if (!isset($library['unilogin_id'])) {
+  public function buildMunicipality(PublizonConfiguredLibrary $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
+    if (!isset($library->unilogin_id)) {
       return '';
     }
 
@@ -160,7 +160,7 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
       // for the percentage calculation.
       $query = db_select('reol_statistics_school', 's')
              ->condition('s.month', array($col['from'], $col['to']), 'BETWEEN')
-             ->condition('s.municipality_id', $library['unilogin_id']);
+             ->condition('s.municipality_id', $library->unilogin_id);
       $query->addExpression('SUM(s.loans)', 'loans');
 
       // This might return false if there's no loans in the period, but then
@@ -169,7 +169,7 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
 
       $query = db_select('reol_statistics_school', 's')
              ->condition('s.month', array($col['from'], $col['to']), 'BETWEEN')
-             ->condition('s.municipality_id', $library['unilogin_id'])
+             ->condition('s.municipality_id', $library->unilogin_id)
              ->fields('s', array('school'))
              ->groupBy('school_id');
       $query->addExpression('SUM(s.loans)', 'loans');

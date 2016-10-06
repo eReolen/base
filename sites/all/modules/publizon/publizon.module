@@ -9,6 +9,8 @@ include_once 'publizon.features.inc';
 require_once dirname(__FILE__) . '/includes/publizon.admin.inc';
 
 /**
+ * Implements hook_ding_provider().
+ *
  * Define the providers that are provided by publizon.
  *
  * @return array
@@ -50,6 +52,40 @@ function publizon_ding_provider() {
 }
 
 /**
+ * Implements hook_menu().
+ */
+function publizon_menu() {
+  $items['admin/config/ding/provider/publizon/%publizon_library/delete'] = array(
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('publizon_delete_library_form', 5),
+    'access arguments' => array('administer ding provider'),
+    'type' => MENU_CALLBACK,
+    'file' => 'includes/publizon.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Menu loader.
+ */
+function publizon_library_load($retailer_id) {
+  $library = publizon_get_library($retailer_id);
+  return $library ? $library : FALSE;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function publizon_theme() {
+  return array(
+    'publizon_settings_form' => array(
+      'render element' => 'form',
+    ),
+  );
+}
+
+/**
  * Implements hook_webform_select_options_info().
  *
  * Provides library list as options for webform.
@@ -71,7 +107,7 @@ function publizon_webform_select_options_info() {
 function publizon_webform_select_options_libraries($compontent, $flat, $arguments) {
   $libraries = publizon_get_libraries();
   foreach ($libraries as $lib) {
-    $options[$lib['retailer_id']] = $lib['library_name'];
+    $options[$lib['retailer_id']] = $lib->library_name;
   }
 
   return $options;
@@ -81,33 +117,28 @@ function publizon_webform_select_options_libraries($compontent, $flat, $argument
  * Get publizon libraries.
  *
  * Helper function that findes all libraries stored in the Publizon
- * configuration and returns the library names indexed by retailer id.
- *
- * @staticvar array $retailers
- *   Static cache used to speed-up the search if call more than once.
+ * configuration and returns PublizonConfiguredLibrary indexed by retailer id.
  *
  * @param bool $reset
  *   If TRUE the static cache will be rebuild. Defaults to FALSE.
  *
  * @return array
- *   Library names indexed by retailer id.
+ *   PublizonConfiguredLibrary indexed by retailer id.
  */
 function publizon_get_libraries($reset = FALSE) {
-  static $libraries;
-  if (!isset($libraries) || $reset) {
-    $libraries = variable_get('publizon_libraries', array());
+  $libraries = drupal_static(__FUNCTION__, array());
+  if (empty($libraries) || $reset) {
+    $libraries = db_select('publizon_libraries', 'p')
+               ->fields('p', PublizonConfiguredLibrary::fields())
+               ->orderBy('p.library_name')
+               ->execute()
+               ->fetchAllAssoc('retailer_id', 'PublizonConfiguredLibrary');
+
     if (empty($libraries)) {
       // We are missing some library configuration here.
       drupal_set_message(t('You need to login as administrator and configure Publizon library lists'), 'warning', FALSE);
       return array();
     }
-
-    // Sort the libraries by library name.
-    setlocale(LC_ALL, 'da_DK.UTF8');
-    uasort($libraries, function($e1, $e2) {
-      return strcoll($e1['library_name'], $e2['library_name']);
-    });
-    setlocale(LC_ALL, '');
   }
 
   return $libraries;
@@ -117,32 +148,31 @@ function publizon_get_libraries($reset = FALSE) {
  * Get single library.
  *
  * Helper function that loads Publizon configuration information about a given
- * library and return the information as an array. The array contains
- * retailer_id, retailer_key_code and library_name.
- *
- * @staticvar array $libraries
- *   Static cache used to speed-up the search if call more than once.
+ * library and return the information as a PublizonConfiguredLibrary.
  *
  * @param string $retailer_id
  *   Retailer id that identifies the library at Publizon.
  * @param bool $reset
  *   If TRUE the static cache will be rebuild. Defaults to FALSE.
  *
- * @return array
+ * @return PublizonConfiguredLibrary
  *   Basic information about the library entered at the publizon administration
  *   interface.
  */
 function publizon_get_library($retailer_id, $reset = FALSE) {
-  static $libraries;
-  if (!isset($libraries) || !isset($libraries[$retailer_id]) || $reset) {
-    $libraries = variable_get('publizon_libraries', array());
-    if (empty($libraries)) {
-      // We are missing som library configuration here.
-      drupal_set_message(t('You need to login as administrator and configure Publizon library lists'), 'warning', FALSE);
-      return array();
-    }
-  }
+  // This could be more effective, but it'll do for the moment being.
+  $libraries = publizon_get_libraries($reset);
   return isset($libraries[$retailer_id]) ? $libraries[$retailer_id] : array();
+}
+
+/**
+ * Save library.
+ */
+function publizon_library_save(PublizonConfiguredLibrary $library) {
+  db_merge('publizon_libraries')
+    ->key(array('retailer_id' => $library->retailer_id))
+    ->fields($library->toArray())
+    ->execute();
 }
 
 /**
@@ -170,7 +200,7 @@ function publizon_get_client_id() {
  */
 function publizon_get_libraries_list() {
   return array_map(function ($elem) {
-    return $elem['library_name'];
+    return $elem->library_name;
   }, publizon_get_libraries());
 }
 
@@ -201,10 +231,10 @@ function publizon_ting_covers($entities) {
  */
 function publizon_ding_unilogin_login($user) {
   $municipality = $user->getInstitutionMunicipality();
-  $libraries = variable_get('publizon_libraries', array());
+  $libraries = publizon_get_libraries();
   foreach ($libraries as $retailer_id => $library) {
-    if (isset($library['unilogin_id']) &&
-        $library['unilogin_id'] == $municipality) {
+    if (!empty($library->unilogin_id) &&
+        $library->unilogin_id == $municipality) {
       $user->setProfileData('field_publizon_retailer_id', $retailer_id);
       return TRUE;
     }
@@ -516,7 +546,7 @@ function publizon_load($local_id) {
  * @return PublizonLibrary
  *   The library.
  */
-function publizon_library_load($library_id) {
+function publizon_client_library_load($library_id) {
   $libraries = &drupal_static(__FUNCTION__) || array();
   // If library is not in cache, get it.
   if (!isset($libraries[$library_id])) {

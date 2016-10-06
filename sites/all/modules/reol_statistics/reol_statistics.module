@@ -104,7 +104,7 @@ function reol_statistics_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['statistics/municipality/%reol_statistics_municipality/%reol_statistics_month/%reol_statistics_month'] = array(
+  $items['statistics/municipality/%publizon_library/%reol_statistics_month/%reol_statistics_month'] = array(
     'title' => 'Statistics',
     'title callback' => 'variable_get',
     'title arguments' => array('reol_statistics_title', REOL_STATISTICS_DEFAULT_TITLE),
@@ -126,7 +126,7 @@ function reol_statistics_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['statistics/publizon/%reol_statistics_municipality'] = array(
+  $items['statistics/publizon/%publizon_library'] = array(
     'title' => 'Publizon municipality count',
     'page callback' => 'reol_statistics_publizon_page',
     'page arguments' => array(2),
@@ -349,13 +349,13 @@ interface ReolStatisticsMunicipalityInterface {
   /**
    * Build statistic display.
    *
-   * @param array library
+   * @param PublizonConfiguredLibrary library
    *   The library as returned from publizon_get_library().
    * @param ReolStatisticsMonth $from
    *   From date, integer in yyyymm format.
    * @param ReolStatisticsMonth $to
    *   To date, integer in yyyymm format, inclusive.
    */
-  public function buildMunicipality(array $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to);
+  public function buildMunicipality(PublizonConfiguredLibrary $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to);
 
 }
