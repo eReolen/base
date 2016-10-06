@@ -78,7 +78,7 @@ class PublizonConfiguredLibrary {
   public function __construct() {
     foreach ($this->properties as $prop) {
       if (!isset($this->{$prop})) {
-        $this->{$prop} = NULL;
+        $this->{$prop} = '';
       }
     }
   }
