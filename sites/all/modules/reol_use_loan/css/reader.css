@@ -13,6 +13,16 @@
   margin-bottom: 50px;
 }
 
+#reader-settings #settings-night-mode {
+  margin-top: 0;
+  position: relative;;
+  top: -4px;
+}
+
+#reader-settings #settings-night-mode .settings-icon {
+  margin-top: 22px;
+}
+
 #reader-button-previouspage, #reader-button-nextpage {
   margin-top: -15px;
   right: 0% !important;
@@ -31,4 +41,24 @@
 
 #slider {
   max-width: 600px;
+}
+
+#reader-settings .settings-value {
+  margin: 23px 60% 0 0;
+}
+
+.reader img {
+  max-width: initial;
+}
+
+#reader-settings .settings-header {
+  line-height: 59px;
+}
+
+#reader-settings .settings-icon {
+  margin-top: 21px;
+}
+
+#reader-settings #settings-reset-zoom {
+  right: 13px;
 }
