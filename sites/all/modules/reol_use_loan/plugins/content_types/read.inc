@@ -49,10 +49,14 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
   $vars['publizon_reader_url'] = $publizon_reader_url;
 
   // Add dependencies.
+  drupal_add_css($publizon_reader_url . '/scripts/reader-' . $reader_version . '/css', array(
+    'type' => 'external',
+    'scope' => 'header',
+  ));
   drupal_add_css($module_url . '/css/reader.css');
-  drupal_add_js($publizon_reader_url . '/scripts/reader-' . $reader_version . '/js',
-    array('type' => 'external',
-          'scope' => 'footer',
+  drupal_add_js($publizon_reader_url . '/scripts/reader-' . $reader_version . '/js', array(
+    'type' => 'external',
+    'scope' => 'footer',
   ));
   drupal_add_js($module_url . '/js/reader_standalone.js');
 
