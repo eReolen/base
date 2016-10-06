@@ -121,6 +121,13 @@ function reol_statistics_municipality_page($library, $from, $to) {
       $output .= $statistic->buildMunicipality($library, $from, $to);
     }
   }
+
+  $footer = variable_get('reol_statistics_footer',
+                         array(
+                           'value' => '',
+                           'format' => 'plain_text',
+                         ));
+  $output .= check_markup($footer['value'], $footer['format']);
   return $output;
 }
 

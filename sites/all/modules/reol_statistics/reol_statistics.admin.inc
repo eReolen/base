@@ -31,6 +31,19 @@ function reol_statistics_settings($form, &$form_state) {
     '#format' => $default_value['format'],
   );
 
+  $default_value = variable_get('reol_statistics_footer',
+                                array(
+                                  'value' => '',
+                                  'format' => 'plain_text',
+                                ));
+  $form['reol_statistics_footer'] = array(
+    '#type' => 'text_format',
+    '#title' => t('Footer'),
+    '#description' => t('Footer on statistics pages.'),
+    '#default_value' => $default_value['value'],
+    '#format' => $default_value['format'],
+  );
+
   $form['reol_statistics_isbn_count'] = array(
     '#type' => 'textfield',
     '#title' => t('ISBN check count'),
