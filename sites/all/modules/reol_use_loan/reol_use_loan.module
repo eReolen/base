@@ -102,7 +102,7 @@ function reol_use_loan_reader_renew_session($id) {
   $url = variable_get('publizon_reader_stream_url', '');
 
   // Get response from endpoint.
-  $response = reol_use_loan_get_reader_session($url, $id, $client_id, $retailer['retailer_id'], md5($retailer['retailer_key_code']));
+  $response = reol_use_loan_get_reader_session($url, $id, $client_id, $retailer->retailer_id, md5($retailer->retailer_key_code));
 
   // Write response to browser.
   http_response_code($response['status']);
@@ -233,7 +233,7 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
       $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id);
 
       // If we are displaying try button, load content in modal.
-      if (!$loaned) {
+      if (!$loaned && $entity_type === 'audiobook') {
         $return['#path'] .= '/ajax';
       }
       else {

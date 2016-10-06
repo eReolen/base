@@ -231,6 +231,12 @@ $z-index-cover-base: 1;
       padding: 15px;
     }
   }
+
+  &--breol_news {
+    a {
+      color: $red;
+    }
+  }
 }
 
 .article__cover__overlay {

@@ -27,9 +27,7 @@ function listen_content_type_render($subtype, $conf, $panel_args, $context) {
 
   $ting_entity = $context[0]->data;
 
-  $vars = array(
-    'player_client_id' => variable_get('publizon_player_client_id', ''),
-  );
+  $vars = array();
 
   $order = reol_use_loan_get_order($ting_entity->localId);
 

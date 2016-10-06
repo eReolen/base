@@ -37,6 +37,7 @@ $green-dark: rgb(115, 120, 90);
 $green: rgb(1, 180, 82);
 
 $gray: rgb(238, 238, 238);
+$gray-light: rgb(231, 230, 230);//#E7E6E6
 
 // other colors.
 $menu-tablet-background: rgb(236, 3, 84);
@@ -82,6 +83,8 @@ $base-font-size: 14px;
  * Breakpoints.
  */
 
+
+$phone-p: new-breakpoint(max-width 480px);
 $phone: new-breakpoint(max-width 667px);
 $tablet-p: new-breakpoint(max-width 768px);
 $tablet-l: new-breakpoint(max-width 1024px);

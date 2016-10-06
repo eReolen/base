@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * News page for eReolen GO.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function breol_news_page_menu() {
+  $items = array();
+
+  $items['nyheder'] = array(
+    'title' => 'News',
+    'description' => 'News',
+    'page callback' => 'breol_news_page_news_page',
+    // Everybody should be able to see news page.
+    'access callback' => TRUE,
+    'file' => 'breol_news_page.pages.inc',
+  );
+
+  $items['admin/config/ereolen/news'] = array(
+    'title' => 'News page',
+    'description' => 'Configure news page.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('breol_news_page_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'breol_news_page.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function breol_news_page_theme() {
+  return array(
+    'breol_news_page' => array(
+      'variables' => array(
+        'image' => NULL,
+        'image_file' => NULL,
+        'fancy_box' => NULL,
+        'pager' => NULL,
+      ),
+      'file' => 'breol_news_page.theme.inc',
+      'template' => 'breol_news_page',
+    ),
+  );
+}

@@ -5,6 +5,58 @@
  */
 
 /**
+ * Implements hook_schema().
+ */
+function publizon_schema() {
+  $schema['publizon_libraries'] = array(
+    'description' => 'Configured Publizon libaries',
+    'fields' => array(
+      'retailer_id' => array(
+        'description' => 'Retailer ID of library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'library_name' => array(
+        'description' => 'Name of library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'unilogin_id' => array(
+        'description' => 'Unilogin id of  library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'retailer_key_code' => array(
+        'description' => 'Retailer key code of library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'subscribed_users' => array(
+        'description' => 'Number of subscribed users for the library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('retailer_id'),
+    'indexes' => array(
+      'unilogin_id' => array('unilogin_id'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
  * Implements hook_install().
  */
 function publizon_install() {
@@ -23,7 +75,6 @@ function publizon_uninstall() {
   variable_del('publizon_error_messages');
   variable_del('publizon_libraries');
   variable_del('publizon_logging');
-  variable_del('publizon_player_client_id');
   variable_del('publizon_player_url');
   variable_del('publizon_reader_stream_url');
   variable_del('publizon_reader_url');
@@ -35,4 +86,67 @@ function publizon_uninstall() {
 function publizon_update_7100() {
   require drupal_get_path('module', 'publizon') . '/includes/publizon.default_error_messages.inc';
   variable_set('publizon_error_messages', $errors);
+}
+
+/**
+ * Delete obsolete publizon_player_client_id variable.
+ */
+function publizon_update_7101() {
+  variable_del('publizon_player_client_id');
+}
+
+/**
+ * Migrate publizon_libraries from variable to table.
+ */
+function publizon_update_7102() {
+  db_create_table('publizon_libraries', array(
+    'description' => 'Configured Publizon libaries',
+    'fields' => array(
+      'retailer_id' => array(
+        'description' => 'Retailer ID of library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'library_name' => array(
+        'description' => 'Name of library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'unilogin_id' => array(
+        'description' => 'Unilogin id of  library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'retailer_key_code' => array(
+        'description' => 'Retailer key code of library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'subscribed_users' => array(
+        'description' => 'Number of subscribed users for the library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('retailer_id'),
+    'indexes' => array(
+      'unilogin_id' => array('unilogin_id'),
+    ),
+  ));
+
+  $libraries = variable_get('publizon_libraries', array());
+  foreach ($libraries as $library) {
+    publizon_library_save(PublizonConfiguredLibrary::fromArray($library));
+  }
+  variable_del('publizon_libraries');
 }

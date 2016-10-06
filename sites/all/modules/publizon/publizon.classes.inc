@@ -52,4 +52,69 @@ class PublizonDingProviderException extends DingProviderUserException {
   public function showReserve() {
     return (bool) $this->showReserve;
   }
+
+}
+
+/**
+ * Represents a library.
+ *
+ * Not called PublizonLibrary as that's already taken by the client.
+ */
+class PublizonConfiguredLibrary {
+  /*
+   * Should be static, but arrays is only allowed for statics in PHP 5.6+.
+   */
+  protected $properties = array(
+    'library_name',
+    'retailer_id',
+    'unilogin_id',
+    'retailer_key_code',
+    'subscribed_users',
+  );
+
+  /**
+   * Constructor.
+   */
+  public function __construct() {
+    foreach ($this->properties as $prop) {
+      if (!isset($this->{$prop})) {
+        $this->{$prop} = '';
+      }
+    }
+  }
+
+  /**
+   * Create from array.
+   */
+  public static function fromArray($array) {
+    $lib = new self();
+    foreach ($lib->properties as $prop) {
+      if (isset($array[$prop])) {
+        $lib->{$prop} = $array[$prop];
+      }
+    }
+    return $lib;
+  }
+
+  /**
+   * Get field list.
+   */
+  public static function fields() {
+    // A bit odd, but as we can't use an array as a static variable.
+    $lib = new self();
+    return $lib->properties;
+  }
+
+  /**
+   * Convert to array.
+   */
+  public function toArray() {
+    $array = array();
+    foreach ($this->properties as $prop) {
+      $array[$prop] = $this->{$prop};
+    }
+
+    return $array;
+  }
+
 }

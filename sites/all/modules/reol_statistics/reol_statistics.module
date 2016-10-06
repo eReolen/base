@@ -5,6 +5,9 @@
  * Statistics of loans.
  */
 
+define('REOL_STATISTICS_DEFAULT_TITLE', 'Statistics for loans by UNI•Login users');
+define('REOL_STATISTICS_DEFAULT_HEADER', "Dato: @date\nKommunenavn: @municipality\nTilmeldte elever i kommunen: @subscribed_users");
+
 /**
  * Implements hook_publizon_loan().
  */
@@ -84,4 +87,275 @@ function reol_statistics_publizon_loan($account, $name, $isbn, $retailer_id) {
       ->fields($unilogin_data)
       ->execute();
   }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reol_statistics_menu() {
+  $items = array();
+
+  $items['statistics'] = array(
+    'title' => 'Select municipality',
+    'page callback' => 'reol_statistics_select_municipality_page',
+    // Let anyone see statistics (let's see if anyone complains).
+    'access callback' => TRUE,
+    'file' => 'reol_statistics.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['statistics/municipality/%publizon_library/%reol_statistics_month/%reol_statistics_month'] = array(
+    'title' => 'Statistics',
+    'title callback' => 'variable_get',
+    'title arguments' => array('reol_statistics_title', REOL_STATISTICS_DEFAULT_TITLE),
+    'page callback' => 'reol_statistics_municipality_page',
+    'page arguments' => array(2, 3, 4),
+    // Let anyone see statistics (let's see if anyone complains).
+    'access callback' => TRUE,
+    'file' => 'reol_statistics.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['statistics/general/%reol_statistics_month/%reol_statistics_month'] = array(
+    'title' => 'Statistics',
+    'page callback' => 'reol_statistics_general_page',
+    'page arguments' => array(2, 3),
+    // Let anyone see statistics (let's see if anyone complains).
+    'access callback' => TRUE,
+    'file' => 'reol_statistics.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['statistics/publizon/%publizon_library'] = array(
+    'title' => 'Publizon municipality count',
+    'page callback' => 'reol_statistics_publizon_page',
+    'page arguments' => array(2),
+    // Let anyone see statistics (let's see if anyone complains).
+    'access callback' => TRUE,
+    'file' => 'reol_statistics.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['admin/config/ereolen/statistics'] = array(
+    'title' => 'Statistics',
+    'description' => 'Configure statistics.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reol_statistics_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'reol_statistics.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Menu loader.
+ */
+function reol_statistics_month_load($string) {
+  if (preg_match('/^\d{6}$/', $string)) {
+    return ReolStatisticsMonth::fromInt($string);
+  }
+
+  return FALSE;
+}
+
+/**
+ * Menu loader.
+ */
+function reol_statistics_municipality_load($string) {
+  if (preg_match('/^\d+$/', $string)) {
+    $library = publizon_get_library($string);
+    if (!empty($library)) {
+      return $library;
+    }
+  }
+
+  return FALSE;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function reol_statistics_cron() {
+  $statistics = reol_statistics_get();
+
+  foreach ($statistics as $statistic) {
+    $varname = 'reol_statistics_last_queued_' . get_class($statistic);
+    $month = ReolStatisticsMonth::fromInt(variable_get($varname, 201609));
+    reol_statistics_ensure_schema($statistic);
+
+    while (!$month->isCurrent()) {
+      $month = $month->next();
+      $queue = DrupalQueue::get('statistics_backlog_processing');
+      $payload = array(
+        'class' => get_class($statistic),
+        'month' => $month->toInt(),
+      );
+      $queue->createItem($payload);
+      variable_set($varname, $month->toInt());
+    }
+
+    // Always queue a run of the current month.
+    $queue = DrupalQueue::get('statistics_processing');
+    $payload = array(
+      'class' => get_class($statistic),
+      'month' => $month->toInt(),
+    );
+    $queue->createItem($payload);
+  }
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function reol_statistics_cron_queue_info() {
+  // Processing of current month.
+  $queues['statistics_processing'] = array(
+    'worker callback' => 'reol_statistics_worker',
+    'time' => 120,
+  );
+
+  // Backlog processing.
+  $queues['statistics_backlog_processing'] = array(
+    'worker callback' => 'reol_statistics_worker',
+    'time' => 120,
+  );
+
+  return $queues;
+}
+
+/**
+ * Cron worker callback.
+ *
+ * Collects statistics for one month for one statistic.
+ */
+function reol_statistics_worker($data) {
+  $class = $data['class'];
+  $statistic = new $class();
+  $statistic->collect(ReolStatisticsMonth::fromInt($data['month']));
+}
+
+/**
+ * Returns statistics classes.
+ */
+function reol_statistics_get() {
+  $classes = &drupal_static(__FUNCTION__, NULL);
+
+  if (!$classes) {
+    $classes = array(
+      new ReolStatisticsMunicipality(),
+      new ReolStatisticsSchool(),
+      new ReolStatisticsISBN(),
+      new ReolStatisticsMunicipalityRank(),
+    );
+  }
+
+  return $classes;
+}
+
+/**
+ * Ensure that statistics schema is up to date.
+ */
+function reol_statistics_ensure_schema(ReolStatisticsInterface $statistic) {
+  $reset = FALSE;
+  $schema = $statistic->schema();
+  foreach ($schema as $table => $def) {
+    $hash = md5(serialize($def));
+    if ($hash != variable_get($table . '_md5', NULL)) {
+      // Schema changed, rebuild.
+      db_drop_table($table);
+      db_create_table($table, $def);
+      variable_set($table . '_md5', $hash);
+      $reset = TRUE;
+    }
+  }
+
+  if ($reset && method_exists($statistic, 'reset')) {
+    $statistic->reset();
+  }
+}
+
+/**
+ * Reset statistics, causing a rerun.
+ */
+function reol_statistics_reset_all() {
+  $statistics = reol_statistics_get();
+
+  foreach ($statistics as $statistic) {
+    reol_statistics_reset($statistic);
+  }
+}
+
+/**
+ * Reset a statistic.
+ */
+function reol_statistics_reset(ReolStatisticsInterface $statistic) {
+  $varname = 'reol_statistics_last_queued_' . get_class($statistic);
+  $schema = $statistic->schema();
+  foreach (array_keys($schema) as $table) {
+    // Delete table. It will be recreated.
+    db_drop_table($table);
+    variable_del($table . '_md5');
+  }
+  variable_del($varname);
+}
+
+/**
+ * Interface for the statistics classes.
+ */
+interface ReolStatisticsInterface {
+
+  /**
+   * Returns schema for this statistic.
+   */
+  public function schema();
+
+  /**
+   * Collect this statistic.
+   *
+   * Run in cron.
+   *
+   * @param ReolStatisticsMonth $month
+   *   Month to collect statistics for.
+   */
+  public function collect(ReolStatisticsMonth $month);
+
+}
+
+/**
+ * Interface for general statistics building.
+ */
+interface ReolStatisticsGeneralInterface {
+
+  /**
+   * Build statistic display.
+   *
+   * @param array library
+   *   The library as returned from publizon_get_library().
+   * @param ReolStatisticsMonth $from
+   *   From date, integer in yyyymm format.
+   * @param ReolStatisticsMonth $to
+   *   To date, integer in yyyymm format, inclusive.
+   */
+  public function buildGeneral(ReolStatisticsMonth $from, ReolStatisticsMonth $to);
+
+}
+/**
+ * Interface for municipality statistics building.
+ */
+interface ReolStatisticsMunicipalityInterface {
+
+  /**
+   * Build statistic display.
+   *
+   * @param PublizonConfiguredLibrary library
+   *   The library as returned from publizon_get_library().
+   * @param ReolStatisticsMonth $from
+   *   From date, integer in yyyymm format.
+   * @param ReolStatisticsMonth $to
+   *   To date, integer in yyyymm format, inclusive.
+   */
+  public function buildMunicipality(PublizonConfiguredLibrary $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to);
+
 }

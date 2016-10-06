@@ -8,7 +8,7 @@
 }
 
 // Main content.
-body:not(.front) .main-content-wrapper__inner {
+body:not(.front):not(.page-nyheder) .main-content-wrapper__inner {
   @include outer-container;
 }
 
@@ -71,10 +71,20 @@ body:not(.front) .main-content-wrapper__inner {
       top: -20px;
     }
 
-    .front & {
+    .front &,
+    .page-nyheder & {
       display: none;
     }
 
+  }
+
+  &--page-news {
+
+    top: -20px;
+
+    .organic-svg {
+      fill: white;
+    }
   }
 
   &--footer {

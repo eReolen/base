@@ -94,6 +94,7 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
           '#markup' => theme('ting_search_carousel', array(
             'tabs' => $tabs,
             'show_description' => TRUE,
+            'field_carousel' => TRUE,
           )),
         );
       }
