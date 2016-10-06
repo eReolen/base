@@ -96,4 +96,23 @@
       $('.page-search-ting').viewPicker('.pane-ting-search-sort-form');
     }
   };
+
+  /**
+   * Make sure overlay are never shown on initial page show.
+   *
+   * Because inconsistent cross-browser behaviour, we will always
+   * check if the search overlay is injected into the dom and if it
+   * is, we will remove. This prevents users from seing the overlay
+   * when using the back button.
+   */
+  Drupal.behaviors.overlay = {
+    attach : function(context, settings) {
+      $(window).bind('pageshow', function() {
+        var overlay = $('.search-overlay--wrapper');
+        if (overlay.length !== 0) {
+          overlay.remove();
+        }
+      });
+    }
+  };
 })(jQuery);
