@@ -57,6 +57,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
       t('Position (last month)'),
       t('Subscribed students'),
       t('Unique users (% of subscribed)'),
+      t('Loans'),
     );
 
     $rows = array();
@@ -97,8 +98,13 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
 
     // Create table.
     $placement = 1;
+    $totals = array(
+      'subscribed_users' => 0,
+      'loans' => 0,
+    );
     foreach ($munis as $items) {
       foreach ($items as $row) {
+        $subscribed_users = $libraries[$row->municipality_id]['subscribed_users'];
         $prev_placement = '';
         if (isset($prev_munis_lookup[$row->municipality_id])) {
           $prev_placement = $prev_munis_lookup[$row->municipality_id]->placement;
@@ -114,11 +120,27 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
           $ratio,
           $prev_placement,
           $libraries[$row->municipality_id]['subscribed_users'],
-          sprintf("%.0f%%", ($row->users / $libraries[$row->municipality_id]['subscribed_users']) * 100),
+          sprintf("%.0f%%", ($row->users / $subscribed_users) * 100),
+          $row->loans,
         );
+        $totals['subscribed_users'] += $subscribed_users;
+        $totals['loans'] += $row->loans;
       }
       $placement++;
     }
+
+    $rows[] = array(
+      array(
+        'data' => t('Total'),
+        'header' => TRUE,
+      ),
+      '',
+      '',
+      '',
+      $totals['subscribed_users'],
+      '',
+      $totals['loans'],
+    );
 
     $table = array(
       'attributes' => array(
