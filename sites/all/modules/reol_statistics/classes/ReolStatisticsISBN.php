@@ -211,6 +211,7 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
     foreach ($isbns as $periods) {
       while ($periods) {
         $period = array_shift($periods);
+        $period->end_day = $period->day;
         // Let anything that goes within the interval of this period belong to
         // it.
         $following = new DateTime($period->day);
