@@ -104,13 +104,31 @@ function breol_unilogin_statistics_data($from, $to) {
 
   print implode(';', $fields) . "\n";
 
-  $res = db_select('breol_unilogin_statistics', 'b')
-       ->fields('b', $fields)
-       ->condition('timestamp', array($from, $to), 'BETWEEN')
-       ->orderBy('timestamp')
-       ->execute();
+  $query = db_select('reol_statistics_loans', 'l')
+       ->fields('l', array(
+         'timestamp',
+         'retailer_id',
+         'isbn',
+       ))
+       ->condition('timestamp', array($from, $to), 'BETWEEN');
 
-  while ($row = $res->fetchAssoc()) {
+  $query->join('reol_statistics_unilogin', 'u', 'l.sid = u.sid');
+  $query
+    ->fields('u', array(
+      'class',
+      'school_id',
+      'school',
+      'municipality_id',
+      'municipality',
+    ))
+    ->orderBy('timestamp')
+    ->execute();
+
+  foreach ($query->execute() as $item) {
+    $row = array();
+    foreach ($fields as $field) {
+      $row[$field] = $item->{$field};
+    }
     $time = new DateTime('@' . $row['timestamp']);
     $row['timestamp'] = $time->format(DateTime::ATOM);
     print implode(';', $row) . "\n";
