@@ -6,95 +6,15 @@
  */
 
 /**
- * Implements hook_schema().
+ * Obsoleted.
  */
-function breol_unilogin_statistics_schema() {
-  $schema = array();
-
-  $schema['breol_unilogin_statistics'] = array(
-    'description' => 'Statistics for Unilogin user loans',
-    'fields' => array(
-      'sid' => array(
-        'description' => 'Primary Key: ID.',
-        'type' => 'serial',
-        'not null' => TRUE,
-      ),
-      'timestamp' => array(
-        'description' => 'The Unix timestamp when the material was loaned.',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-      'retailer_id' => array(
-        'description' => 'Retailer ID of user.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'class' => array(
-        'description' => 'Class of user.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'school_id' => array(
-        'description' => 'School ID of user.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'school' => array(
-        'description' => 'School of user.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'municipality_id' => array(
-        'description' => 'Municipality id of school.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'municipality' => array(
-        'description' => 'Municipality of school.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'isbn' => array(
-        'description' => 'ISBN of material.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-    ),
-    'primary key' => array('sid'),
-    'indexes' => array(
-      'timestamp' => array('timestamp'),
-    ),
-  );
-
-  return $schema;
+function breol_unilogin_statistics_update_7101() {
+  // Obsoleted.
 }
 
 /**
- * Add retailer_id field.
+ * Delete breol_unilogin_statistics table.
  */
-function breol_unilogin_statistics_update_7101() {
-  $desc = array(
-    'description' => 'Retailer ID of user.',
-    'type' => 'varchar',
-    'length' => 255,
-    'not null' => TRUE,
-    'default' => '',
-    'initial' => '',
-  );
-  db_add_field('breol_unilogin_statistics', 'retailer_id', $desc);
+function breol_unilogin_statistics_update_7102() {
+  db_drop_table('breol_unilogin_statistics');
 }

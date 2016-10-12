@@ -23,58 +23,19 @@ function reol_statistics_publizon_loan($account, $name, $isbn, $retailer_id) {
   );
   $unilogin_data = array();
 
-  // Catch all exceptions and ignore them.
-  try {
-    // Add Unilogin data, if possible.
-    if (function_exists('ding_unilogin_authenticated') &&
-      ding_unilogin_authenticated($account)) {
-      $service = ding_unilogin_wservice('info');
-      $person = $service->getPerson($name);
-      if (!$person) {
-        watchdog(
-          'reol_statistics',
-          'Cannot get person for %user.',
-          array('%user' => $name),
-          WATCHDOG_ERROR
-        );
-      }
-
-      $inst = $service->getInstitution($person->Instnr);
-      if (!$inst) {
-        watchdog(
-          'reol_statistics',
-          'Cannot get institution id %institution_id for %user.',
-          array('%user' => $name, '%institution_id' => $person->Instnr),
-          WATCHDOG_ERROR
-        );
-      }
-      else {
-        $unilogin_data['school_id'] = $inst->Instnr;
-        $unilogin_data['school'] = $inst->Navn;
-        $unilogin_data['municipality_id'] = $inst->Kommunenr;
-        $unilogin_data['municipality'] = $inst->Kommune;
-      }
-
-      $student = $service->getStudent($person->Instnr, $person->Brugerid);
-      if (!$student) {
-        watchdog(
-          'reol_statistics',
-          'Cannot  get student record for user id %user_id at institution id %institution_id.',
-          array(
-            '%user' => $name,
-            '%user_id' => $person->Brugerid,
-            '%institution_id' => $person->Instnr,
-          ),
-          WATCHDOG_ERROR
-        );
-      }
-      else {
-        $unilogin_data['class'] = $student->Klasse;
-      }
-    }
+  if (isset($_SESSION['unilogin_data'])) {
+    $unilogin_data = $_SESSION['unilogin_data'];
   }
-  catch (Exception $e) {
-    // Quietly ignore.
+  elseif (function_exists('ding_unilogin_authenticated') &&
+          ding_unilogin_authenticated($account)) {
+    watchdog(
+      'reol_statistics',
+      'Looking up UNI•Login data on loan.',
+      array(),
+      WATCHDOG_WARNING
+    );
+    // Have another try at adding UNI•Login data, and allow for partial data.
+    $unilogin_data = _reol_statistics_get_unilogin_data($name, TRUE);
   }
 
   $sid = db_insert('reol_statistics_loans')
@@ -87,6 +48,27 @@ function reol_statistics_publizon_loan($account, $name, $isbn, $retailer_id) {
       ->fields($unilogin_data)
       ->execute();
   }
+}
+
+/**
+ * Implements hook_ding_unilogin_login().
+ *
+ * Store statistics details in session for later logging.
+ */
+function reol_statistics_ding_unilogin_login($user) {
+  $unilogin_data = _reol_statistics_get_unilogin_data($user->getName());
+  if (empty($unilogin_data)) {
+    watchdog(
+      'reol_statistics',
+      'UNI•Login failure, denying login for %user.',
+      array('%user' => $user->getName()),
+      WATCHDOG_ERROR
+    );
+    throw new Exception('Error communicating with UNI•Login');
+  }
+
+  $_SESSION['unilogin_data'] = $unilogin_data;
+  return TRUE;
 }
 
 /**
@@ -299,6 +281,78 @@ function reol_statistics_reset(ReolStatisticsInterface $statistic) {
     variable_del($table . '_md5');
   }
   variable_del($varname);
+}
+
+/**
+ * Get UNI•Login log data for name.
+ *
+ * @param string $name
+ *   Name of user to get data for.
+ * @param bool $partial
+ *   Whether to return partial result in case of failuer.
+ * @return array
+ *   Array of collected data or an empty array.
+ */
+function _reol_statistics_get_unilogin_data($name, $partial = TRUE) {
+  $unilogin_data = array();
+
+  if (!function_exists('ding_unilogin_authenticated')) {
+    return $unilogin_data;
+  }
+  // Catch all exceptions and ignore them.
+  try {
+    $service = ding_unilogin_wservice('info');
+    $person = $service->getPerson($name);
+    if (!$person) {
+      watchdog(
+        'reol_statistics',
+        'Cannot get person for %user.',
+        array('%user' => $name),
+        WATCHDOG_ERROR
+      );
+    }
+
+    $inst = $service->getInstitution($person->Instnr);
+    if (!$inst) {
+      watchdog(
+        'reol_statistics',
+        'Cannot get institution id %institution_id for %user.',
+        array('%user' => $name, '%institution_id' => $person->Instnr),
+        WATCHDOG_ERROR
+      );
+    }
+    else {
+      $unilogin_data['school_id'] = $inst->Instnr;
+      $unilogin_data['school'] = $inst->Navn;
+      $unilogin_data['municipality_id'] = $inst->Kommunenr;
+      $unilogin_data['municipality'] = $inst->Kommune;
+    }
+
+    $student = $service->getStudent($person->Instnr, $person->Brugerid);
+    if (!$student) {
+      watchdog(
+        'reol_statistics',
+        'Cannot  get student record for user id %user_id at institution id %institution_id.',
+        array(
+          '%user' => $name,
+          '%user_id' => $person->Brugerid,
+          '%institution_id' => $person->Instnr,
+        ),
+        WATCHDOG_ERROR
+      );
+    }
+    else {
+      $unilogin_data['class'] = $student->Klasse;
+    }
+  }
+  catch (Exception $e) {
+    // Wipe partial result, unless it was requested.
+    if (!$partial) {
+      $unilogin_data = array();
+    }
+  }
+
+  return $unilogin_data;
 }
 
 /**
