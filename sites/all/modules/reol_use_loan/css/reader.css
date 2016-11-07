@@ -44,7 +44,7 @@
 }
 
 .reader {
-  background-color: black;
+  background-color: white;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -67,4 +67,16 @@
 
 #reader-settings #settings-reset-zoom {
   right: 13px;
+}
+
+#reader-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 800px) {
+  #reader-container {
+    max-width: 100%;
+  }
 }
