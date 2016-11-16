@@ -249,7 +249,7 @@ function breol_link_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_breol_link',
     'label' => 'Link',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'attributes' => array(
         'class' => '',
