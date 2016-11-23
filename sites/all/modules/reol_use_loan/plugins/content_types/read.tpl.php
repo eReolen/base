@@ -7,6 +7,7 @@
  */
 
 ?>
+<script src="<?php print($js_publizon_url); ?>"></script>
 <div class="reader">
   <div class="reader__inner">
     <a class="reader__back-button" href="javascript:history.go(-1)"><?php print t('back'); ?></a>
