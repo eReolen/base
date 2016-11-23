@@ -47,7 +47,7 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
   $vars['reader_version'] = $reader_version;
   $vars['publizon_reader_stream_url'] = $publizon_reader_stream_url;
   $vars['publizon_reader_url'] = $publizon_reader_url;
-  $vars['js_publizon_url'] = $publizon_reader_url . '/scripts/reader-' . $reader_version . '/js?' . time();
+  $js_publizon_url = $publizon_reader_url . '/scripts/reader-' . $reader_version . '/js?' . time();
 
   // Add dependencies.
   drupal_add_css($publizon_reader_url . '/scripts/reader-' . $reader_version . '/css', array(
@@ -56,6 +56,14 @@ function read_content_type_render($subtype, $conf, $panel_args, $context) {
     'cache' => FALSE,
     'preprocess' => FALSE,
   ));
+
+  drupal_add_js($js_publizon_url, array(
+    'type' => 'external',
+    'scope' => 'footer',
+    'cache' => FALSE,
+    'preprocess' => FALSE,
+  ));
+
   drupal_add_css($module_url . '/css/reader.css');
   drupal_add_js($module_url . '/js/reader_standalone.js');
 
