@@ -78,6 +78,32 @@ $aliases['ego-prod'] = array(
   ),
 );
 
+$aliases['ego-stg'] = array(
+  'parent' => '@p01',
+  'uri' => 'ereolengo.dk',
+  'root' => '/data/www/stg_ereolengo_dk',
+  'deployotron' => array(
+    'branch' => 'develop',
+    'dump-dir' => '/data/backup/ego-stg',
+    // Updb clears the cache.
+    'no-cc-all' => TRUE,
+    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+  ),
+);
+
+$aliases['ego-dev'] = array(
+  'parent' => '@p01',
+  'uri' => 'ereolengo.dk',
+  'root' => '/data/www/dev_ereolengo_dk',
+  'deployotron' => array(
+    'branch' => 'develop',
+    'dump-dir' => '/data/backup/ego-dev',
+    // Updb clears the cache.
+    'no-cc-all' => TRUE,
+    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+  ),
+);
+
 // The server only allows certain IPs to log in, so we hack up an
 // alias for the jump server here.
 // $aliases['circle'] = $aliases['p01'];
