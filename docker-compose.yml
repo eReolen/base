@@ -57,7 +57,9 @@ services:
       - './sites/all/themes/wille:/src'
 
   # eReolen theme
-  compass:
-    build: './private/docker/gulp-compass'
+  ereol-gulp:
+    image: node:alpine
     volumes:
       - './sites/all/themes/brin:/src'
+    working_dir: /src
+    command: npm start

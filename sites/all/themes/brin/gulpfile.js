@@ -1,17 +1,17 @@
 // Get modules.
 var gulp = require('gulp');
 var notify = require('gulp-notify');
-var compass = require('gulp-compass');
+var sass = require('gulp-sass');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
 
-// Compass.
-gulp.task('compass', function () {
+// Sass.
+gulp.task('sass', function () {
   return gulp.src('./sass/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(compass({
+    .pipe(sass({
       includePaths: require('node-neat').includePaths,
       outputStyle: 'expanded'
     }).on('error', notify.onError(function (error) {
@@ -25,9 +25,9 @@ gulp.task('compass', function () {
     .pipe(gulp.dest('./css'));
 });
 
-// Compass watch.
-gulp.task('compass:watch', function () {
-  gulp.watch('./sass/**/*.scss', ['compass']);
+// Sass watch.
+gulp.task('sass:watch', function () {
+  gulp.watch('./sass/**/*.scss', ['sass']);
 });
 
 // JsHint.
@@ -49,4 +49,4 @@ gulp.task('jshint:watch', function () {
 });
 
 // Register workers.
-gulp.task('default', ['jshint', 'compass', 'jshint:watch', 'compass:watch']);
+gulp.task('default', ['jshint', 'sass', 'jshint:watch', 'sass:watch']);

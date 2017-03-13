@@ -95,11 +95,11 @@
     }
 
     @include small-large() {
-      @include box-sizing(border-box);
+      box-sizing: border-box;
       width: 50%;
 
       .author-portrait-teaser {
-        @include box-sizing(border-box);
+        box-sizing: border-box;
         width: 100%;
         max-width: 550px;
         margin: auto;

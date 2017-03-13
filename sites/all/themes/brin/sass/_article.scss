@@ -51,7 +51,7 @@
   .article-left {
     width: 285px;
     position: relative;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
 
     @include small-large() {
       width: 30%;
@@ -84,7 +84,7 @@
     width: 565px;
     min-height: 300px;
     padding: 70px 0 25px 0;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     text-align: center;
 
     @include small-large() {
@@ -199,7 +199,7 @@
     font-weight: normal;
     font-size: 160%;
     @extend h2;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     padding-left: 3px;
     margin-bottom: 10px;
     @include small-medium() {
@@ -219,14 +219,14 @@
     #edit-type-wrapper {
       width: 100%;
       padding-top: 0;
-      @include box-sizing(border-box);
+      box-sizing: border-box;
 
       label {
         padding: 0 10px 10px 0;
       }
       .bef-select-as-links > .form-item > div {
         a {
-          @include box-sizing(border-box);
+          box-sizing: border-box;
           display: block;
           width: 100%;
           padding: 10px 10px 10px 0;
@@ -267,7 +267,7 @@
     width: 75%;
     float: right;
     padding-left: 5px;
-    @include box-sizing(border-box);
+    box-sizing: border-box;
     @include small-medium() {
       width: 100%;
     }
