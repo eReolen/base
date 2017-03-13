@@ -98,18 +98,18 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
     if ($data) {
       foreach ($data as $row) {
         $query = db_merge('reol_statistics_municipality')
-               ->key(
-                 array(
-                   'month' => $row['month'],
-                   'municipality_id' => $row['municipality_id'],
-                 )
-               )
-               ->fields(
-                 array(
-                   'loans' => $row['loans'],
-                   'users' => $row['users'],
-                 )
-               );
+          ->key(
+            array(
+              'month' => $row['month'],
+              'municipality_id' => $row['municipality_id'],
+            )
+          )
+          ->fields(
+            array(
+              'loans' => $row['loans'],
+              'users' => $row['users'],
+            )
+          );
         $query->execute();
       }
     }
@@ -163,8 +163,8 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
     foreach ($cols as $col) {
       $header[] = $col['label'];
       $query = db_select('reol_statistics_municipality', 'm')
-             ->condition('m.month', array($col['from'], $col['to']), 'BETWEEN')
-             ->condition('m.municipality_id', $library->unilogin_id);
+        ->condition('m.month', array($col['from'], $col['to']), 'BETWEEN')
+        ->condition('m.municipality_id', $library->unilogin_id);
       $query->addExpression('SUM(m.loans)', 'loans');
       $query->addExpression('SUM(m.users)', 'users');
 
