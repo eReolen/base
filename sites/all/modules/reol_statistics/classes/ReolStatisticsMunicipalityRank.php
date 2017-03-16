@@ -63,8 +63,8 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     $rows = array();
 
     $query = db_select('reol_statistics_municipality', 'm')
-           ->fields('m', array('month', 'municipality_id', 'loans', 'users'))
-           ->condition('m.month', array($month_str, (string) $prev_month), 'IN');
+      ->fields('m', array('month', 'municipality_id', 'loans', 'users'))
+      ->condition('m.month', array($month_str, (string) $prev_month), 'IN');
 
     // Sort municipalities in order of most loans per subscribed users for
     // both current and previous month.
@@ -115,7 +115,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
           $placement,
           array(
             'data' => $libraries[$row->municipality_id]['name'],
-            'class' => 'municipality-column'
+            'class' => 'municipality-column',
           ),
           $ratio,
           $prev_placement,
