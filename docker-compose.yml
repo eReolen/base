@@ -50,16 +50,18 @@ services:
     volumes:
       - './private/docker/db-init/ego:/docker-entrypoint-initdb.d'
 
-  # eReolen Go theme
-  gulp:
-    image: reload/gulp:3.9.1
-    volumes:
-      - './sites/all/themes/wille:/src'
-
   # eReolen theme
   ereol-gulp:
     image: node:alpine
     volumes:
       - './sites/all/themes/brin:/src'
+    working_dir: /src
+    command: npm start
+
+  # eReolen Go theme
+  ego-gulp:
+    image: node:alpine
+    volumes:
+      - './sites/all/themes/wille:/src'
     working_dir: /src
     command: npm start
