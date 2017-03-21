@@ -10,7 +10,8 @@
 function reol_base_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'ting_object-ting_object-ting_details_audiobook_reader'
+  // Exported field_instance:
+  // 'ting_object-ting_object-ting_details_audiobook_reader'.
   $field_instances['ting_object-ting_object-ting_details_audiobook_reader'] = array(
     'bundle' => 'ting_object',
     'default_value' => NULL,
@@ -89,7 +90,8 @@ function reol_base_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'ting_object-ting_object-ting_details_ebook_format'
+  // Exported field_instance:
+  // 'ting_object-ting_object-ting_details_ebook_format'.
   $field_instances['ting_object-ting_object-ting_details_ebook_format'] = array(
     'bundle' => 'ting_object',
     'default_value' => NULL,
@@ -168,7 +170,8 @@ function reol_base_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'ting_object-ting_object-ting_details_publizon_genre'
+  // Exported field_instance:
+  // 'ting_object-ting_object-ting_details_publizon_genre'.
   $field_instances['ting_object-ting_object-ting_details_publizon_genre'] = array(
     'bundle' => 'ting_object',
     'default_value' => NULL,

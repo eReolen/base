@@ -9,8 +9,9 @@ dependencies[] = reol_bookmark
 dependencies[] = reol_reservation
 dependencies[] = strongarm
 dependencies[] = text
+dependencies[] = ting_material_details
 dependencies[] = virtual_field
-explanation = Field type(s) in use - see <a href="/admin/reports/fields">Field list</a>
+explanation = Anvendte felttyper - se <a href="/admin/reports/fields">feltliste</a>
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[field_base][] = body
@@ -62,5 +63,4 @@ features[variable][] = googleanalytics_visibility_pages
 features[variable][] = googleanalytics_visibility_roles
 features[variable][] = ting_online_types
 features[variable][] = ting_reservable_sources
-mtime = 1422448503
 required = 1
