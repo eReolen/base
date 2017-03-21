@@ -347,3 +347,10 @@ function reol_base_update_7128() {
 function reol_base_update_7129() {
   module_enable(['reol_shared_theme'], TRUE);
 }
+
+/**
+ * Enable google_tag module.
+ */
+function reol_base_update_7130() {
+  module_enable(['google_tag'], TRUE);
+}
