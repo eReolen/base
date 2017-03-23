@@ -81,7 +81,7 @@ function _breol_news_page_row_layout($first, $second = null) {
   $layouts = array();
   $items = array($first, $second);
   $size_map = array(
-    'breol_news' => 'a',
+    'breol_news' => 'm',
     'breol_video' => 'm',
     'link' => 's',
   );

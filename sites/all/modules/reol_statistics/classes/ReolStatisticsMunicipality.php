@@ -98,18 +98,18 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
     if ($data) {
       foreach ($data as $row) {
         $query = db_merge('reol_statistics_municipality')
-               ->key(
-                 array(
-                   'month' => $row['month'],
-                   'municipality_id' => $row['municipality_id'],
-                 )
-               )
-               ->fields(
-                 array(
-                   'loans' => $row['loans'],
-                   'users' => $row['users'],
-                 )
-               );
+          ->key(
+            array(
+              'month' => $row['month'],
+              'municipality_id' => $row['municipality_id'],
+            )
+          )
+          ->fields(
+            array(
+              'loans' => $row['loans'],
+              'users' => $row['users'],
+            )
+          );
         $query->execute();
       }
     }
@@ -150,29 +150,42 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
         'label' => $month->getMonthName(),
         'from' => (string) $month,
         'to' => (string) $month,
-        'scale' => 2,
+        'total' => FALSE,
       );
     }
     $cols[] = array(
       'label' => t('Total'),
       'from' => (string) $from,
       'to' => (string) $to,
-      'scale' => 0,
+      'total' => TRUE,
     );
 
     foreach ($cols as $col) {
       $header[] = $col['label'];
-      $query = db_select('reol_statistics_municipality', 'm')
-             ->condition('m.month', array($col['from'], $col['to']), 'BETWEEN')
-             ->condition('m.municipality_id', $library->unilogin_id);
-      $query->addExpression('SUM(m.loans)', 'loans');
-      $query->addExpression('SUM(m.users)', 'users');
+      if ($col['total']) {
+        // Total will have to be recalculated for unique users, as we can't
+        // pre-calculate it for arbitrary ranges.
+        $query = db_select('reol_statistics_loans', 'l');
+        $query->join('reol_statistics_unilogin', 'u', 'l.sid = u.sid');
+        $query->addExpression('COUNT(l.sid)', 'loans');
+        $query->addExpression('COUNT(DISTINCT user_hash)', 'users');
+        $query->condition('l.timestamp', array($from->getStartTimestamp(), $to->getEndTimestamp()), 'BETWEEN');
+        $query->condition('u.municipality_id', $library->unilogin_id);
+
+      }
+      else {
+        $query = db_select('reol_statistics_municipality', 'm')
+          ->condition('m.month', array($col['from'], $col['to']), 'BETWEEN')
+          ->condition('m.municipality_id', $library->unilogin_id);
+        $query->addExpression('SUM(m.loans)', 'loans');
+        $query->addExpression('SUM(m.users)', 'users');
+      }
 
       if ($row = $query->execute()->fetchObject()) {
         if (!is_null($row->loans)) {
           $loan_row[] = $row->loans;
           $user_row[] = $row->users;
-          $percentage_row[] = sprintf('%.' . $col['scale'] . 'f%%', ($row->users / $library->subscribed_users) * 100);
+          $percentage_row[] = sprintf('%.' . ($col['total'] ? 0 : 2) . 'f%%', ($row->users / $library->subscribed_users) * 100);
         }
         else {
           $loan_row[] = $user_row[] = $percentage_row[] = '';

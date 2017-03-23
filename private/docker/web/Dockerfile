@@ -1,4 +1,4 @@
-FROM reload/drupal-apache-ssl
+FROM reload/drupal-apache-ssl:1.3
 
 # Install imagemagick module.
 RUN apt-get update && \

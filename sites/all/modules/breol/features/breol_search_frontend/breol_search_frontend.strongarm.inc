@@ -33,6 +33,12 @@ function breol_search_frontend_strongarm() {
       'sorting' => 'default',
       'weight' => '-8',
     ),
+    3 => array(
+      'name' => 'facet.language',
+      'title' => 'Sprog',
+      'sorting' => 'default',
+      'weight' => '10',
+    ),
   );
   $export['ding_facetbrowser_facets'] = $strongarm;
 

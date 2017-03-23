@@ -99,6 +99,10 @@ function publizon_update_7101() {
  * Migrate publizon_libraries from variable to table.
  */
 function publizon_update_7102() {
+  // Clear cache so the registry is rebuild, so PublizonConfiguredLibrary is
+  // available.
+  drupal_flush_all_caches();
+
   db_create_table('publizon_libraries', array(
     'description' => 'Configured Publizon libaries',
     'fields' => array(

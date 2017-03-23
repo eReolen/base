@@ -50,40 +50,18 @@ services:
     volumes:
       - './private/docker/db-init/ego:/docker-entrypoint-initdb.d'
 
-  drush-ereol:
-    image: drush/drush:8-alpine
-    links:
-      - db-ereol
-    volumes_from:
-      - ereol
-    working_dir: /var/www/html
-    environment:
-      MYSQL_HOST: db-ereol
-      MYSQL_DATABASE: drupal
-      MYSQL_USER: drupal
-      MYSQL_PASSWORD: drupal
-
-  drush-ego:
-    image: drush/drush:8-alpine
-    links:
-      - db-ego
-    volumes_from:
-      - ego
-    working_dir: /var/www/html
-    environment:
-      MYSQL_HOST: db-ego
-      MYSQL_DATABASE: drupal
-      MYSQL_USER: drupal
-      MYSQL_PASSWORD: drupal
-      
-  # eReolen Go theme
-  gulp:
-    image: reload/gulp:3.9.1
-    volumes:
-      - './sites/all/themes/wille:/src'
-
   # eReolen theme
-  compass:
-    build: './private/docker/gulp-compass'
+  ereol-gulp:
+    image: node:alpine
     volumes:
       - './sites/all/themes/brin:/src'
+    working_dir: /src
+    command: npm start
+
+  # eReolen Go theme
+  ego-gulp:
+    image: node:alpine
+    volumes:
+      - './sites/all/themes/wille:/src'
+    working_dir: /src
+    command: npm start

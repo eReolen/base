@@ -17,7 +17,7 @@
     }
 
     @include small-medium() {
-      @include box-sizing(border-box);
+      box-sizing: border-box;
 
       background-color: $background-dark;
       display: none;
@@ -245,7 +245,7 @@
           padding: 35px 0;
           z-index: 100;
 
-          @include box-shadow(black 0px 5px 50px -20px);
+          box-shadow: black 0px 5px 50px -20px;
 
           li {
             display: block;

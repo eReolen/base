@@ -17,7 +17,7 @@ a.button,
 %button-default {
   position: static;
   display: inline-block;
-  @include border-radius(2px);
+  border-radius: 2px;
   color: #ffffff;
   background-color: #c7003d;
   background-image: none;

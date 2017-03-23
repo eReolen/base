@@ -55,16 +55,16 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
       t('Municipality'),
       t('Loans per student'),
       t('Position (last month)'),
-      t('Subscribed students'),
+      array('data' => t('Subscribed students'), 'field' => 'subscribed_users'),
       t('Unique users (% of subscribed)'),
-      t('Loans'),
+      array('data' => t('Loans'), 'field' => 'loans'),
     );
 
     $rows = array();
 
     $query = db_select('reol_statistics_municipality', 'm')
-           ->fields('m', array('month', 'municipality_id', 'loans', 'users'))
-           ->condition('m.month', array($month_str, (string) $prev_month), 'IN');
+      ->fields('m', array('month', 'municipality_id', 'loans', 'users'))
+      ->condition('m.month', array($month_str, (string) $prev_month), 'IN');
 
     // Sort municipalities in order of most loans per subscribed users for
     // both current and previous month.
@@ -82,8 +82,19 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
         }
       }
     }
+
+    // Sort on placement.
     krsort($munis);
     krsort($prev_munis);
+
+    // Add placement to each row.
+    $placement = 1;
+    foreach ($munis as $muni) {
+      foreach ($muni as $row) {
+        $muni[0]->placement = $placement;
+      }
+      $placement++;
+    }
 
     // Determine placement of last month, and convert to lookup table.
     $placement = 1;
@@ -96,37 +107,58 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
       $placement++;
     }
 
+    // Sort by selected table headers.
+    $ts = tablesort_init($header);
+    $sorted_munis = array();
+    foreach ($munis as $items) {
+      foreach ($items as $row) {
+        switch ($ts['sql']) {
+          case 'loans':
+            $sorted_munis[$row->loans] = $row;
+            break;
+
+          case 'subscribed_users':
+            $subscribed_users = $libraries[$row->municipality_id]['subscribed_users'];
+            $sorted_munis[$subscribed_users] = $row;
+            break;
+
+          default:
+            // Just append. Array indexes will ensure they keep the ordering.
+            $sorted_munis[] = $row;
+        }
+      }
+    }
+    $func = $ts['sort'] == 'asc' ? 'ksort' : 'krsort';
+    $func($sorted_munis);
+
     // Create table.
-    $placement = 1;
     $totals = array(
       'subscribed_users' => 0,
       'loans' => 0,
     );
-    foreach ($munis as $items) {
-      foreach ($items as $row) {
-        $subscribed_users = $libraries[$row->municipality_id]['subscribed_users'];
-        $prev_placement = '';
-        if (isset($prev_munis_lookup[$row->municipality_id])) {
-          $prev_placement = $prev_munis_lookup[$row->municipality_id]->placement;
-        }
-        $ratio = round($row->ratio, 3);
-        $ratio = sprintf('%.3f', $row->ratio);
-        $rows[] = array(
-          $placement,
-          array(
-            'data' => $libraries[$row->municipality_id]['name'],
-            'class' => 'municipality-column'
-          ),
-          $ratio,
-          $prev_placement,
-          $libraries[$row->municipality_id]['subscribed_users'],
-          sprintf("%.0f%%", ($row->users / $subscribed_users) * 100),
-          $row->loans,
-        );
-        $totals['subscribed_users'] += $subscribed_users;
-        $totals['loans'] += $row->loans;
+
+    foreach ($sorted_munis as $row) {
+      $subscribed_users = $libraries[$row->municipality_id]['subscribed_users'];
+      $prev_placement = '';
+      if (isset($prev_munis_lookup[$row->municipality_id])) {
+        $prev_placement = $prev_munis_lookup[$row->municipality_id]->placement;
       }
-      $placement++;
+      $ratio = round($row->ratio, 3);
+      $ratio = sprintf('%.3f', $row->ratio);
+      $rows[] = array(
+        $row->placement,
+        array(
+          'data' => $libraries[$row->municipality_id]['name'],
+          'class' => 'municipality-column',
+        ),
+        $ratio,
+        $prev_placement,
+        $libraries[$row->municipality_id]['subscribed_users'],
+        sprintf("%.0f%%", ($row->users / $subscribed_users) * 100),
+        $row->loans,
+      );
+      $totals['subscribed_users'] += $subscribed_users;
+      $totals['loans'] += $row->loans;
     }
 
     $rows[] = array(

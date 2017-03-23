@@ -75,7 +75,7 @@
       width: 8px;
       height: 8px;
       border: 2px solid #000;
-      @include rotate(45deg);
+      transform: rotate(45deg);
       text-align: center;
     }
 

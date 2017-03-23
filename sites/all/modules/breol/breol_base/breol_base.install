@@ -200,3 +200,10 @@ function breol_base_update_7123() {
 function breol_base_update_7124() {
   module_enable(array('breol_news_page'), TRUE);
 }
+
+/**
+ * Revert breol_search_frontend.
+ */
+function breol_base_update_7125() {
+  features_revert_module('breol_search_frontend');
+}

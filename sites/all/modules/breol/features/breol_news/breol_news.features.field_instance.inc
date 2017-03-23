@@ -57,7 +57,7 @@ function breol_news_field_default_field_instances() {
     'label' => 'Indhold',
     'required' => 0,
     'settings' => array(
-      'display_summary' => 0,
+      'display_summary' => 1,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),

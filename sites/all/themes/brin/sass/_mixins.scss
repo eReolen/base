@@ -4,7 +4,7 @@
 
 @mixin header-gradient($flat, $one, $two) {
   background-color: $flat;
-  @include background(linear-gradient(to bottom, $one, $two));
+  background: linear-gradient(to bottom, $one, $two);
 }
 
 @mixin header-logo-gradient {

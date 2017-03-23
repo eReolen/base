@@ -10,7 +10,7 @@
 function reol_base_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'body'
+  // Exported field_base: 'body'.
   $field_bases['body'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -21,14 +21,6 @@ function reol_base_field_default_field_bases() {
     'field_name' => 'body',
     'field_permissions' => array(
       'type' => 2,
-    ),
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
     ),
     'indexes' => array(
       'format' => array(
@@ -44,14 +36,13 @@ function reol_base_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
-  // Exported field_base: 'field_reol_entity_type'
+  // Exported field_base: 'field_reol_entity_type'.
   $field_bases['field_reol_entity_type'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_reol_entity_type',
-    'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
         0 => 'value',
@@ -68,14 +59,13 @@ function reol_base_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'ting_details_audiobook_reader'
+  // Exported field_base: 'ting_details_audiobook_reader'.
   $field_bases['ting_details_audiobook_reader'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'ting_details_audiobook_reader',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'reol_base',
@@ -90,14 +80,13 @@ function reol_base_field_default_field_bases() {
     'type' => 'ting_details_audiobook_reader',
   );
 
-  // Exported field_base: 'ting_details_ebook_format'
+  // Exported field_base: 'ting_details_ebook_format'.
   $field_bases['ting_details_ebook_format'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'ting_details_ebook_format',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'reol_base',
@@ -112,14 +101,13 @@ function reol_base_field_default_field_bases() {
     'type' => 'ting_details_ebook_format',
   );
 
-  // Exported field_base: 'ting_details_publizon_genre'
+  // Exported field_base: 'ting_details_publizon_genre'.
   $field_bases['ting_details_publizon_genre'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'ting_details_publizon_genre',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'reol_base',

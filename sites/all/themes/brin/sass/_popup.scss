@@ -1,6 +1,6 @@
 
 .ui-dialog {
-  @include border-radius(0);
+  border-radius: 0;
   background-color: $background-light;
 
   // Fix the positioning of the close button.

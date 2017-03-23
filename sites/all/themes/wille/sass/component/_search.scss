@@ -230,9 +230,13 @@
 
   fieldset {
 
-    @include span-columns(4);
+    @include span-columns(3);
     position: relative;
     margin-top: 20px;
+
+    @include media($tablet-l) {
+      @include span-columns(6);
+    }
 
     @include media($phone) {
       @include span-columns(12);
