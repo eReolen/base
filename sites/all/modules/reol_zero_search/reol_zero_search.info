@@ -1,0 +1,10 @@
+name = Reol Zero Search
+description = Zero hits search handling for eReolen.
+core = 7.x
+package = Features
+dependencies[] = ctools
+dependencies[] = page_manager
+dependencies[] = ting_search_carousel
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_handlers][] = search_ting_search__ting-search-with-carousel

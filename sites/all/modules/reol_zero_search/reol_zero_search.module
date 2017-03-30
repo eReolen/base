@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * @file
+ * Code for the reol_zero_search feature.
+ */
+
+include_once 'reol_zero_search.features.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function reol_zero_search_menu() {
+  $items = array();
+
+  $items['reol_zero_search/results/ajax/%/%'] = array(
+    'title' => 'Show search carousel results',
+    'page callback' => 'reol_zero_search_result',
+    'page arguments' => array(3, 4),
+    'access arguments' => array('access content'),
+    'file' => 'reol_zero_search.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['admin/config/ereolen/reol_zero_search'] = array(
+    'title' => 'Search zero-hit carousel',
+    'description' => 'Manage content for frontpage carousel.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reol_zero_search_admin_form'),
+    // We're reusing the ting_search_carousel permission, no need for
+    // granulating this.
+    'access arguments' => array('configure carousel'),
+    'file' => 'reol_zero_search.admin.inc',
+  );
+
+  $items['admin/config/ereolen/reol_zero_search/settings'] = array(
+    'title' => 'Content',
+    'description' => 'Manage content for frontpage carousel.',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+
+  $items['admin/config/ereolen/reol_zero_search/frontend_settings'] = array(
+    'title' => 'Frontend settings',
+    'description' => 'Manage settings for the display of frontpage carousel',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reol_zero_search_settings_admin_form'),
+    'access arguments' => array('configure carousel'),
+    'file' => 'reol_zero_search.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 0,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function reol_zero_search_theme($existing, $type, $theme, $path) {
+  return array(
+    'reol_zero_search_admin_form_table' => array(
+      'render element' => 'elements',
+    ),
+  );
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function reol_zero_search_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Get zero hit search carousel covers.
+ *
+ * @param int $index
+ *   The reol_zero_search_carousel_search_queries index to get.
+ * @param int $start
+ *   Start offset.
+ * @param int $count
+ *   Number to return.
+ * @param bool $query_only
+ *   Whether to only consult the already cached data.
+ *
+ * @return array
+ *   Array with the keys 'collections', and array of covers, and 'next_offset',
+ *   which is the next offset to use or -1.
+ */
+function _reol_zero_search_get_frontpage_covers($index, $start, $count, $query_only = FALSE) {
+  $queries = variable_get('reol_zero_search_carousel_search_queries', array());
+  $query = isset($queries[$index]) ? $queries[$index] : FALSE;
+  if (!$query) {
+    return FALSE;
+  }
+
+  return ting_search_carousel_get_covers($query['query'], $start, $count, $query_only);
+}
