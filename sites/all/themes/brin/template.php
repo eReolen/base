@@ -207,7 +207,7 @@ function brin_menu_link($vars) {
     $sub_menu = drupal_render($element['#below']);
   }
 
-  if (!is_array($element['#localized_options']['attributes']['class'])) {
+  if (!isset($element['#localized_options']['attributes']['class'])) {
     $element['#localized_options']['attributes']['class'] = array();
   }
   // Add default class to a tag.
@@ -486,4 +486,3 @@ function _brin_type_icon_classes($type, $quota = NULL) {
   }
   return $classes;
 }
-
