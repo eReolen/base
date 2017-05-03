@@ -62,10 +62,31 @@ function reol_statistics_select_municipality_page() {
   // Library listing.
   ksort($libraries);
 
-  $quarters = array(
-    '2016-4' => '201609/201612',
-    '2017-1' => '201701/201703',
+  $quarter_spec = array(
+    1 => array('01', '03'),
+    2 => array('04', '06'),
+    3 => array('07', '09'),
+    4 => array('10', '12'),
   );
+
+  $quarters = array(
+    '2016-3' => '201607/201609',
+    '2016-4' => '2016010/201612',
+  );
+
+  $year = 2017;
+  $current = date('Ym');
+  while ($year <= date('Y')) {
+    foreach ($quarter_spec as $num => $def) {
+      list($from, $to) = $def;
+      $start = sprintf('%d%02d', $year, $from);
+      if ($start <= $current) {
+        $quarters[$year . '-' . $num] = $start . '/' . sprintf('%d%02d', $year, $to);
+      }
+    }
+    $year++;
+  }
+
   $output .= '<h2 class="statistics-header">' . t('Select municipality to view the local stastistics') . '</h2>';
   foreach ($libraries as $name => $id) {
     $output .= '<span class="btn-statistics">' . $name . '<br />';
