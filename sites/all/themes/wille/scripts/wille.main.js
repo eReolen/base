@@ -92,7 +92,7 @@
             {
               breakpoint: 1026,
               settings: {
-                slidesToShow: 5,
+                slidesToShow: 8,
                 slidesToScroll: 5,
               }
             },
@@ -106,7 +106,7 @@
             {
               breakpoint: 500,
               settings: {
-                slidesToShow: 2,
+                slidesToShow: 4,
                 slidesToScroll: 2
               }
             }
@@ -269,7 +269,7 @@
   function resizeFunction() {
       var windowWidth = window.innerWidth;
 
-      if (windowWidth > 768) {
+      if (windowWidth > 1024) {
         $('.pane-breol-facetbrowser, .before-content').show();
       }
   };

@@ -99,3 +99,12 @@
     left: 20px;
   }
 }
+
+.node-type-breol-subject {
+  @include media($phone-l) {
+    .main-header,
+    .organic-element--content {
+      display: none;
+    }
+  }
+}

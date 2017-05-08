@@ -29,6 +29,11 @@
     background: url(../svg/logo.svg);
     background-repeat: no-repeat;
     background-size: contain;
+
+    @include media($phone) {
+      margin: 20px auto;
+      height: 20px;
+    }
   }
 
   @include media($phone) {

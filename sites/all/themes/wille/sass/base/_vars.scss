@@ -85,6 +85,7 @@ $base-font-size: 14px;
 
 
 $phone-p: new-breakpoint(max-width 480px);
+$phone-l: new-breakpoint(max-height 375px);
 $phone: new-breakpoint(max-width 667px);
 $tablet-p: new-breakpoint(max-width 768px);
 $tablet-l: new-breakpoint(max-width 1024px);
