@@ -11,3 +11,13 @@ statistics:
 	drush queue-run statistics_processing
 	drush queue-run statistics_backlog_processing
 	drush queue-list
+
+dump-ereol:
+	# Ensure that ssh doesn't mess with the dump because of host keys.
+	dce drush @prod status
+	dce drush @prod sql-dump --structure-tables-list=watchdog,cache,cache_menu | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ereol/100-database.sql.gz
+
+dump-ego:
+	# Ensure that ssh doesn't mess with the dump because of host keys.
+	dce drush @ego-prod status
+	dce drush @ego-prod sql-dump --structure-tables-list=watchdog,cache,cache_menu | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ego/100-database.sql.gz
