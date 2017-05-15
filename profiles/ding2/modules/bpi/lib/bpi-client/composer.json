@@ -15,11 +15,13 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "fabpot/goutte": "v1.0.1",
-        "ircmaxell/password-compat": "~1.0"
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "autoload": {
         "psr-0": { "Bpi\\Sdk": "." }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
     }
 }

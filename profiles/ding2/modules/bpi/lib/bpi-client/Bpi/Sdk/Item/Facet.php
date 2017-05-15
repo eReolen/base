@@ -14,7 +14,8 @@ namespace Bpi\Sdk\Item;
  *
  * Single facet class
  */
-class Facet {
+class Facet
+{
 
     /**
      * Facet name

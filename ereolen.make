@@ -32,7 +32,9 @@ projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/d
 
 ; Add custom type labels.
 ; https://github.com/ding2/ding2/pull/141
-projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/141.patch"
+; projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/141.patch"
+; Re-roll of above which doesn't apply to 2.4.4 anymore.
+projects[ding2][patch][] = "sites/all/patches/141-type-labels.patch"
 
 ; Allow provider to fiddle with user login form, so we can add the library selector.
 ; https://github.com/ding2/ding2/pull/142
@@ -51,9 +53,11 @@ projects[ding2][patch][] = "sites/all/patches/bpi-change-node-type.patch"
 
 ; Fix facet browser to not duplicate "show more" links when the logon popup shows.
 ; https://github.com/ding2/ding2/pull/215
-projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/215.patch"
+;projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/215.patch"
+; Re-roll of above which doesn't apply to 2.4.4 anymore.
+projects[ding2][patch][] = "sites/all/patches/215-idempotent-facetbrowser.patch"
 
-; Pluggable covers and carousel update. Applied manueally.
+; Pluggable covers and carousel update. Applied manually.
 ; https://github.com/ding2/ding2/pull/196
 projects[ding2][patch][] = "sites/all/patches/ting_covers.patch"
 

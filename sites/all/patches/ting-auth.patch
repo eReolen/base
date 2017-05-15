@@ -1,8 +1,8 @@
-diff --git b/modules/ting/ting.admin.inc a/modules/ting/ting.admin.inc
-index 67cabf8..60848ff 100644
---- b/modules/ting/ting.admin.inc
-+++ a/modules/ting/ting.admin.inc
-@@ -36,6 +36,46 @@ function ting_admin_ting_settings($form_state) {
+diff --git a/modules/ting/ting.admin.inc b/modules/ting/ting.admin.inc
+index 41c2b87d..b5dcecbb 100644
+--- a/modules/ting/ting.admin.inc
++++ b/modules/ting/ting.admin.inc
+@@ -35,6 +35,46 @@ function ting_admin_ting_settings($form_state) {
      '#default_value' => variable_get('ting_search_url', ''),
    );
  
@@ -46,13 +46,13 @@ index 67cabf8..60848ff 100644
 +    '#states' => $auth_states,
 +  );
 +
-   $form['ting']['ting_filter_by_local_holdings'] = array(
+   $form['ting']['ting_filter_by_local_holdings']= array(
      '#type' => 'checkbox',
      '#title' => t('Filter search queries on holdingsItem'),
-diff --git b/modules/ting/ting.client.inc a/modules/ting/ting.client.inc
-index ad5538f..69336f9 100644
---- b/modules/ting/ting.client.inc
-+++ a/modules/ting/ting.client.inc
+diff --git a/modules/ting/ting.client.inc b/modules/ting/ting.client.inc
+index ad5538fe..69336f9d 100644
+--- a/modules/ting/ting.client.inc
++++ b/modules/ting/ting.client.inc
 @@ -631,7 +631,16 @@ function ting_get_request_factory() {
        }
      }
