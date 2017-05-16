@@ -55,8 +55,8 @@ function opening_hours_crud_api_page() {
         // Clear the cached array storing which nodes have opening hours.
         cache_clear_all('opening_hours_present_on_node', 'cache');
       }
-
       break;
+
     case 'GET':
       // The nid parameter might be an array. If it's a single value, it
       // should still pass these filters with no trouble.
@@ -91,6 +91,7 @@ function opening_hours_instance_id_api_page($instance) {
     case 'GET':
       $output[] = $instance;
       break;
+
     case 'PUT':
       $updated_instance = _opening_hours_get_instance_from_request();
 
@@ -108,6 +109,7 @@ function opening_hours_instance_id_api_page($instance) {
 
       $output[] = _opening_hours_instance_update($updated_instance, $instance);
       break;
+
     case 'DELETE':
       _opening_hours_instance_delete($instance);
       break;
@@ -144,12 +146,12 @@ function _opening_hours_get_instance_from_request() {
  *
  * Also updates propagated copies, if applicable.
  *
- * @param stdClass $instance
+ * @param object $instance
  *   The updated instance object.
- * @param stdClass $original
+ * @param object $original
  *   Original instance data as currently stored in the database.
  *
- * @return stdClass
+ * @return object
  *   Returns $instance.
  */
 function _opening_hours_instance_update($instance, $original) {
@@ -263,7 +265,7 @@ function _opening_hours_instance_update($instance, $original) {
  *
  * Also deletes propagated copies, if applicable.
  *
- * @param stdClass $instance
+ * @param object $instance
  *   The update instance object.
  */
 function _opening_hours_instance_delete($instance) {

@@ -20,12 +20,11 @@
     <span class="end_time" title="<?php echo t('Closing time'); ?>"><%= end_time %></span>
 
   <% if (category) { %>
-    <span class="category"><%= category %></span>
+    <span class="category"><%- category %></span>
   <% } %>
 
   <% if (notice) { %>
-    <span class="notice"><%= notice %></span>
+    <span class="notice"><%- notice %></span>
   <% } %>
   </div>
 </script>
-

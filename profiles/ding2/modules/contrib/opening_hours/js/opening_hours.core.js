@@ -163,7 +163,7 @@
 
       // Set the date from the parts. Remember, months are zero-based,
       // so subtract 1 from them.
-      return new Date(parts[0], parts[1]-1, parts[2]);
+      return new Date(parts[0], parts[1] - 1, parts[2]);
     } else {
       throw 'Input to Drupal.OpeningHours.parseDate was not well-formed. It should be in ISO 8601 format, eg. 2011-11-28';
     }

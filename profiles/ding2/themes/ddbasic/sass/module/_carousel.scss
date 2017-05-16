@@ -136,7 +136,7 @@ $carousel-tab-color:                       $white;
 
   @include small() {
     li {
-      width: $carousel-image-width / 2;
+      width: $carousel-image-width;
 
       .carousel-item-title {
         display: none;

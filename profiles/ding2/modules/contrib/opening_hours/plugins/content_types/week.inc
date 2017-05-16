@@ -17,7 +17,7 @@ $plugin = array(
 );
 
 /**
- * Render the block
+ * Render the block.
  */
 function opening_hours_week_content_type_render($subtype, $conf, $panel_args, $context) {
   $node = isset($context->data) ? $context->data : NULL;
@@ -40,14 +40,14 @@ function opening_hours_week_content_type_edit_form($form, &$form_state) {
   $form['hide_if_empty'] = array(
     '#type' => 'checkbox',
     '#title' => t('Hide if there is no opening hours data for this node'),
-    '#default_value' => !(empty($form_state['conf']['hide_if_empty'])) ?  $form_state['conf']['hide_if_empty'] : NULL,
+    '#default_value' => !(empty($form_state['conf']['hide_if_empty'])) ? $form_state['conf']['hide_if_empty'] : NULL,
   );
 
   return $form;
 }
 
 /**
- * Submit handler for the admin form
+ * Submit handler for the admin form.
  */
 function opening_hours_week_content_type_edit_form_submit($form, &$form_state) {
   $form_state['conf']['hide_if_empty'] = $form_state['values']['hide_if_empty'];
