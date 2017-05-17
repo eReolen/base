@@ -1,8 +1,8 @@
 ding:
 	dce rm -rf profiles/ding2
 	dce drush make ereolen.make . --shallow-clone --no-core --contrib-destination=profiles/ding2
-	# Remove local patches.
-	dce rm profiles/ding2/*.patch
+	# Remove local patches and problematic .gitignores.
+	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore
 
 statistics:
 	dce drush sqlq "DELETE FROM queue WHERE name IN ('statistics_backlog_processing', 'statistics_processing');"
