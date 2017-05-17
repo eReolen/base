@@ -17,35 +17,33 @@ require_once dirname(__FILE__) . '/includes/publizon.admin.inc';
  *   The array definition for ding_provider.
  */
 function publizon_ding_provider() {
-  $path = drupal_get_path('module', 'publizon') . '/includes';
-
   return array(
     'title' => 'Publizon provider',
     'settings' => 'publizon_settings_form',
     'provides' => array(
       'user' => array(
         'prefix' => 'user',
-        'file' => $path . '/publizon.user.inc',
+        'file' => 'includes/publizon.user.inc',
       ),
       'loan' => array(
         'prefix' => 'loan',
-        'file' => $path . '/publizon.loan.inc',
+        'file' => 'includes/publizon.loan.inc',
       ),
       'reservation' => array(
         'prefix' => 'reservation',
-        'file' => $path . '/publizon.reservation.inc',
+        'file' => 'includes/publizon.reservation.inc',
       ),
       'availability' => array(
         'prefix' => 'availability',
-        'file' => $path . '/publizon.availability.inc',
+        'file' => 'includes/publizon.availability.inc',
       ),
       'debt' => array(
         'prefix' => 'debt',
-        'file' => $path . '/publizon.debt.inc',
+        'file' => 'includes/publizon.debt.inc',
       ),
       'bookmark' => array(
         'prefix' => 'bookmark',
-        'file' => $path . '/publizon.bookmark.inc',
+        'file' => 'includes/publizon.bookmark.inc',
       ),
     ),
   );
