@@ -143,7 +143,6 @@ function reol_bookmark_views_default_views_alter(&$views) {
  *   The bookmark item title.
  */
 function reol_bookmark_menu_item_title($title, $account = NULL) {
-  $account = isset($account->data) ? $account->data : $account;
   $bookmarks = $account ? count(reol_bookmark_get_bookmarks($account)) : 0;
   return t($title) . ' (' . $bookmarks . ')';
 }
