@@ -54,3 +54,7 @@ projects[ding2][patch][] = "sites/all/patches/ding_user-redirect.patch"
 
 ; Adjust ddbasic to the new field_group 1.5.
 projects[ding2][patch][] = "sites/all/patches/ddbasic-field_group.patch"
+
+; Patch oembed to not produce fatal error.
+; https://github.com/ding2/ding2/pull/269
+projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/269.patch"

@@ -126,10 +126,12 @@ function oembed_menu_alter(&$items) {
 
   // Create a new menu item where all oembed export UIs will be local tasks by
   // copying the export UI's menu item that will become the default local task.
-  $items['admin/config/media/oembed/provider'] += $items['admin/config/media/oembed/provider/default'];
-  $items['admin/config/media/oembed/provider']['type'] = MENU_LOCAL_TASK;
+  if (!empty($items['admin/config/media/oembed/provider/default'])) {
+    $items['admin/config/media/oembed/provider'] += $items['admin/config/media/oembed/provider/default'];
+    $items['admin/config/media/oembed/provider']['type'] = MENU_LOCAL_TASK;
 
-  $items['admin/config/media/oembed/provider/default']['type'] = MENU_DEFAULT_LOCAL_TASK;
+    $items['admin/config/media/oembed/provider/default']['type'] = MENU_DEFAULT_LOCAL_TASK;
+  }
 }
 
 /**
