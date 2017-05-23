@@ -43,7 +43,7 @@ projects[ding2][patch][] = "sites/all/patches/i18n.patch"
 projects[ding2][patch][] = "sites/all/patches/popup-unload.patch"
 
 ; Slick for search carousel.
-; based on https://github.com/ding2/ding2/pull/271
+; based on a squashed version of https://github.com/ding2/ding2/pull/614
 projects[ding2][patch][] = "sites/all/patches/slick-carousel.patch"
 
 ; Disable sort used message.
