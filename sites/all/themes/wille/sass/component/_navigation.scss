@@ -175,6 +175,10 @@
   @include media($tablet-p) {
     display: block;
   }
+
+  @include media($phone) {
+    top: -13px;
+  }
 }
 
 .icon-menu {

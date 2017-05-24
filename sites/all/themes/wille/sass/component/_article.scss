@@ -80,7 +80,7 @@ $z-index-cover-base: 1;
   }
 
   &--breol_page {
-    @include media($phone) {
+    @include media($tablet-l) {
       max-height: 35vh;
     }
   }
@@ -112,6 +112,14 @@ $z-index-cover-base: 1;
 
   padding: 100px 0;
 
+  @include media($tablet-l) {
+    padding: 6vh 0;
+  }
+
+  @include media($phone) {
+    padding: 0;
+  }
+
   &--breol_news {
     @include media($phone) {
       position: relative;
@@ -128,7 +136,7 @@ $z-index-cover-base: 1;
     background-position: bottom right;
     height: 326px;
 
-    @include media($phone) {
+    @include media($tablet-l) {
       background: none;
       height: auto;
     }
@@ -139,13 +147,17 @@ $z-index-cover-base: 1;
     background-size: 80%;
     background-position: bottom right;
     height: 326px;
+
+    @include media($tablet-l) {
+      height: auto;
+    }
   }
 
   &--breol_page {
     max-height: 326px;
     position: absolute;
 
-    @include media($phone) {
+    @include media($tablet-l) {
       max-height: 35vh;
     }
   }
@@ -162,7 +174,8 @@ $z-index-cover-base: 1;
 
   &__sport {
     .article__cover--breol_subject {
-      background-size: 93%;
+      // background-size: 93%;
+      background-size: 75%;
     }
   }
 
@@ -209,9 +222,12 @@ $z-index-cover-base: 1;
   max-height: 100%;
   padding: 40px 15px;
   color: $title-color;
-
   // Font.
   text-align: center;
+
+  @include media($phone) {
+    padding: 30px 15px;
+  }
 
   &--breol_section,
   &--breol_subject {
@@ -219,10 +235,13 @@ $z-index-cover-base: 1;
     width: 100%;
     max-width: 1180px;
     font-family: $font-mikado;
-    padding: 0 100px;
 
     .title {
       font-size: em(40, $base-font-size);
+
+      @include media($phone) {
+        font-size: em(20, $base-font-size);
+      }
     }
   }
 
@@ -249,11 +268,7 @@ $z-index-cover-base: 1;
   right: 0;
   bottom: 0;
   z-index: 3;
-  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-  display: -ms-flexbox;      /* TWEENER - IE 10 */
-  display: -webkit-flex;     /* NEW - Chrome */
-  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  display: flex;
   justify-content: center;
   -webkit-justify-content: space-around; /* Safari 6.1+ */
   align-items: center;
@@ -295,6 +310,14 @@ $z-index-cover-base: 1;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 78% 37px;
+
+    @include media($tablet-l) {
+      padding: 73px 0;
+    }
+
+    @include media($phone) {
+      padding: 48px 0;
+    }
   }
 }
 
@@ -304,5 +327,13 @@ $z-index-cover-base: 1;
     background-repeat: no-repeat;
     background-size: 21%;
     background-position: 78% center;
+
+    @include media($tablet-l) {
+      padding: 73px 0;
+    }
+
+    @include media($phone) {
+      padding: 48px 0;
+    }
   }
 }

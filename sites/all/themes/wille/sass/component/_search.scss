@@ -20,6 +20,12 @@
   ul.list {
     padding: 0 !important;
   }
+
+  @include media($phone) {
+    position: relative;
+    top: -38px;
+    left: 13px;
+  }
 }
 
 .view-mode-search-result .ting-object-left {
@@ -620,7 +626,11 @@
   padding-bottom: 0;
   margin-top: 13px;
 
-  .view-picker__item {
+  @include media($phone) {
+    padding-bottom: 20px;
+  }
+
+  &__item {
     font-size: 40px;
     display: inline-block;
     color: gray;
@@ -684,14 +694,18 @@
     cursor: pointer;
   }
 
-  @include media($tablet-p) {
+  @include media($tablet-l) {
     display: block;
+  }
+
+  @include media($phone) {
+    padding: 10px 0;
   }
 }
 
 .pane-breol-facetbrowser,
 .pane-search .before-content {
-  @include media($tablet-p) {
+  @include media($tablet-l) {
     display: none;
   }
 }
