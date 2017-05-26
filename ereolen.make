@@ -66,3 +66,7 @@ projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/d
 ; Make P2 not mess up ting object display.
 ; https://github.com/ding2/ding2/pull/606
 projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/606.patch"
+
+; Make ting_carusel compatible with the latest field_group.
+; https://github.com/ding2/ding2/pull/619
+projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/619.patch"
