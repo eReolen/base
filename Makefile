@@ -1,8 +1,19 @@
-ding:
+
+build-dependecies:
+	@dce git --version >/dev/null || dce sh -c "apt update && apt install -y git patch unzip"
+
+ding: build-dependecies
 	dce rm -rf profiles/ding2
 	dce drush make ereolen.make . --shallow-clone --no-core --contrib-destination=profiles/ding2
 	# Remove local patches and problematic .gitignores.
 	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore
+
+patches-dev: build-dependecies
+	dce rm -rf profiles/ding2
+	dce drush make ereolen.make . --working-copy --no-recursion --no-core --contrib-destination=profiles/ding2
+	# Remove local patches and problematic .gitignores.
+	dce rm profiles/ding2/*.patch
+	cd profiles/ding2/ && fish -c 'toggleperm .' && git add *
 
 statistics:
 	dce drush sqlq "DELETE FROM queue WHERE name IN ('statistics_backlog_processing', 'statistics_processing');"
