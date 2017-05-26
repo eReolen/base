@@ -853,6 +853,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 1,
       ),
     ),
 
@@ -865,6 +866,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 2,
       ),
     ),
 
@@ -877,6 +879,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 3,
       ),
     ),
 
@@ -889,6 +892,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 4,
       ),
     ),
 
@@ -902,6 +906,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 5,
       ),
     ),
 
@@ -918,6 +923,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
           'image_style' => 'reol_review',
         ),
         'type' => 'ting_cover_default',
+        'weight' => 6,
       ),
     ),
 
@@ -930,6 +936,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 7,
       ),
     ),
 
@@ -942,6 +949,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 8,
       ),
     ),
 
@@ -954,6 +962,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 9,
       ),
     ),
 
@@ -966,6 +975,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 10,
       ),
     ),
 
@@ -978,10 +988,12 @@ function reol_base_field_default_field_instances_alter(&$fields) {
           'prefix_type' => 'no',
         ),
         'type' => 'ting_title_default',
+        'weight' => 39,
       ),
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 11,
       ),
     ),
 
@@ -994,6 +1006,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 12,
       ),
     ),
 
