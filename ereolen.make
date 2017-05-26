@@ -29,7 +29,11 @@ projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/d
 ; Patch to use our node type.
 projects[ding2][patch][] = "sites/all/patches/bpi-change-node-type.patch"
 
-; Update entity, features, field_group, jquery_update, og, og_menu, scheduler and views.
+; Update field_group.
+; Adapted from https://github.com/ding2/ding2/commit/d88c068d3d
+projects[ding2][patch][] = "sites/all/patches/update-field_group.patch"
+
+; Update entity, features, jquery_update, og, og_menu, scheduler and views.
 projects[ding2][patch][] = "sites/all/patches/module-updates.patch"
 
 ; Use better secure_permissions patch.

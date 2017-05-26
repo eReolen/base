@@ -6,6 +6,7 @@ The following patches have been applied to this project:
 - ding_popup-add-class.patch
 - https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/141.patch
 - bpi-change-node-type.patch
+- update-field_group.patch
 - module-updates.patch
 - secure_permissions.patch
 - i18n.patch

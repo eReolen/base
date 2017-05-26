@@ -1,5 +1,5 @@
 diff --git a/ding2.make b/ding2.make
-index 51bb2057..4b29bb8c 100644
+index 23589154..bbe83680 100644
 --- a/ding2.make
 +++ b/ding2.make
 @@ -64,7 +64,7 @@ projects[email][subdir] = "contrib"
@@ -20,15 +20,6 @@ index 51bb2057..4b29bb8c 100644
  
  projects[features_extra][subdir] = "contrib"
  projects[features_extra][version] = "1.0-beta1"
-@@ -98,7 +98,7 @@ projects[fences][version] = "1.0"
- projects[fences][patch][0] = "http://drupal.org/files/field_for_wrapper_css_class-1679684-3.patch"
- 
- projects[field_group][subdir] = "contrib"
--projects[field_group][version] = "1.1"
-+projects[field_group][version] = "1.5"
- 
- projects[file_entity][subdir] = "contrib"
- projects[file_entity][version] = "2.0-alpha3"
 @@ -144,7 +144,7 @@ projects[job_scheduler][subdir] = "contrib"
  projects[job_scheduler][version] = "2.0-alpha3"
  
@@ -68,7 +59,7 @@ index 51bb2057..4b29bb8c 100644
  
  ; Patched with "Secure Permissions fails with features and multilingual"
  projects[secure_permissions][type] = "module"
-@@ -383,10 +375,10 @@ projects[virtual_field][subdir] = "contrib"
+@@ -378,10 +370,10 @@ projects[virtual_field][subdir] = "contrib"
  projects[virtual_field][version] = "1.2"
  
  projects[views][subdir] = "contrib"
