@@ -31,6 +31,12 @@ function reol_base_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'compact' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'default' => array(
         'label' => 'inline',
         'module' => 'reol_base',
@@ -111,6 +117,12 @@ function reol_base_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'compact' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'default' => array(
         'label' => 'inline',
         'module' => 'reol_base',
@@ -186,6 +198,12 @@ function reol_base_field_default_field_instances() {
         'weight' => 0,
       ),
       'collection_primary' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'compact' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
