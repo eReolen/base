@@ -32,3 +32,13 @@ dump-ego:
 	# Ensure that ssh doesn't mess with the dump because of host keys.
 	dce drush @ego-prod status
 	dce drush @ego-prod sql-dump --structure-tables-list=watchdog,cache,cache_menu | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ego/100-database.sql.gz
+
+sync-dev:
+	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolen_dk && \
+	drush sql-dump --structure-tables-list=watchdog,cache,cache_menu >/tmp/dev-sync.sql && \
+	cd /data/www/dev_ereolen_dk && \
+	drush sql-drop -y && \
+	drush sqlc < /tmp/dev-sync.sql && \
+	rm /tmp/dev-sync.sql && \
+	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolen_dk/sites/default/files/ /data/www/dev_ereolen_dk/sites/default/files/ && \
+	drush updb -y"
