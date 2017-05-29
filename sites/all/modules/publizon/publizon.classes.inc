@@ -61,8 +61,12 @@ class PublizonDingProviderException extends DingProviderUserException {
  * Not called PublizonLibrary as that's already taken by the client.
  */
 class PublizonConfiguredLibrary {
-  /*
+  /**
+   * Properties used.
+   *
    * Should be static, but arrays is only allowed for statics in PHP 5.6+.
+   *
+   * @var array
    */
   protected $properties = array(
     'library_name',

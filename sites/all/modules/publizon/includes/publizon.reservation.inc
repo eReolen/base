@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Ding reservation provider for Publizon.
@@ -201,7 +202,7 @@ function publizon_reservation_default_options($account) {
 /**
  * Ding requires this function. We do not need it.
  *
- * @return NULL
+ * @return null
  *   Empty response always.
  */
 function publizon_reservation_branch_name($branch_id) {

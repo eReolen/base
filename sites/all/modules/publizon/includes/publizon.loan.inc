@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Ding loan provider for Publizon.
@@ -46,12 +47,12 @@ function publizon_loan_list($account, $reset = FALSE) {
       }
 
       $result[$id] = new DingProviderLoan($id, array(
-                       'ding_entity_id' => $id,
-                       'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
-                       'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
-                       'renewable' => FALSE,
-                       'display_name' => $loan->title,
-                     ));
+        'ding_entity_id' => $id,
+        'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
+        'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
+        'renewable' => FALSE,
+        'display_name' => $loan->title,
+      ));
 
       $result[$id]->publizon_type = reol_base_get_ting_type(reol_base_get_type_from_format($loan->format));
     }
@@ -90,9 +91,7 @@ function publizon_loan_create($account, $local_id) {
 /**
  * Get a single loan.
  *
- * @TODO Should we cache this, or is it okay not to?
- *
- * @param StdClass $account
+ * @param object $account
  *   The account to get loan for.
  * @param string $local_id
  *   The local id to get loan for.
