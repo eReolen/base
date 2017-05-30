@@ -42,6 +42,10 @@ function publizon_ding_provider() {
         'prefix' => 'bookmark',
         'file' => 'includes/publizon.bookmark.inc',
       ),
+      'user_consent' => array(
+        'prefix' => 'user_consent',
+        'file' => 'includes/publizon.user_consent.inc',
+      ),
     ),
   );
 }
