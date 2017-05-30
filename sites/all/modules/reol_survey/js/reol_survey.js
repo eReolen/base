@@ -4,7 +4,7 @@
  */
 
 (function ($) {
-  "use strict";
+  'use strict';
 
   Drupal.reolSurvey = Drupal.reolSurvey || {};
 
