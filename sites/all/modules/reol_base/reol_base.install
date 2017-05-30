@@ -354,3 +354,10 @@ function reol_base_update_7129() {
 function reol_base_update_7130() {
   module_enable(['google_tag'], TRUE);
 }
+
+/**
+ * Enable reol_survey module.
+ */
+function reol_base_update_7131() {
+  module_enable(['reol_survey'], TRUE);
+}
