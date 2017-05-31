@@ -33,6 +33,7 @@ class TingClientSearchRequest extends TingClientRequest {
   protected $agency;
   protected $profile;
   protected $collectionType;
+  protected $filterLocalHoldings;
   var $userDefinedBoost;
   var $userDefinedRanking;
 
@@ -45,6 +46,12 @@ class TingClientSearchRequest extends TingClientRequest {
     $this->setParameter('action', 'searchRequest');
     if (!isset($parameters['format']) || empty($parameters['format'])) {
       $this->setParameter('format', 'dkabm');
+    }
+
+    if (!empty($this->agency) && !empty($this->filterLocalHoldings)) {
+      $query = $this->getQuery();
+      $query = '(' . $query . ') and holdingsitem.agencyid="' . $this->agency . '"';
+      $this->setQuery($query);
     }
 
     $methodParameterMap = array(
@@ -194,13 +201,21 @@ class TingClientSearchRequest extends TingClientRequest {
   public function setProfile($profile) {
     $this->profile = $profile;
   }
-  
+
   public function getCollectionType() {
     return $this->collectionType;
   }
 
   public function setCollectionType($collectionType) {
     $this->collectionType = $collectionType;
+  }
+
+  public function getFilterLocalHoldings() {
+    return $this->filterLocalHoldings;
+  }
+
+  public function setFilterLocalHoldings($filterLocalHoldings) {
+    $this->filterLocalHoldings = $filterLocalHoldings;
   }
 
   public function processResponse(stdClass $response) {

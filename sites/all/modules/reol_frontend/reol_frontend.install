@@ -22,3 +22,10 @@ function reol_frontend_update_7101() {
   // Ensure the new is properly build.
   reol_frontend_flush_caches();
 }
+
+/**
+ * Enable reol_zero_search module.
+ */
+function reol_frontend_update_7102() {
+  module_enable(['reol_zero_search'], TRUE);
+}

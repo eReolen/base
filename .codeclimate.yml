@@ -1,0 +1,50 @@
+---
+engines:
+  # csslint:
+  #   enabled: true
+  # duplication:
+  #   enabled: true
+  #   config:
+  #     languages:
+  #     - javascript
+  #     - php
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  # phpmd:
+  #   enabled: true
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: Drupal,DrupalPractice
+  scss-lint:
+    enabled: true
+ratings:
+  paths:
+  - "**.css"
+  - "**.inc"
+  - "**.js"
+  - "**.module"
+  - "**.install"
+  - "**.php"
+exclude_paths:
+  - tests/
+  - includes/
+  - index.php
+  - install.php
+  - misc/
+  - modules/
+  - private/
+  - profiles/
+  - scripts/
+  - sites/all/drush/
+  - sites/all/libraries/
+  - sites/default/
+  - sites/*.php
+  - tests/
+  - themes/
+  - update.php
+  - "**/node_modules/"
+  - "**/contrib/"
+  - "**/vendor/"

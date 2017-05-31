@@ -4,3 +4,6 @@
 /.settings
 
 /composer.phar
+
+vendor
+

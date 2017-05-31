@@ -87,22 +87,22 @@ function ting_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  $items['admin/config/ting/settings'] = array(
-    'title' => 'Ting',
-    'description' => 'Manage Ting integration settings.',
-    'weight' => -20,
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('ting_admin_ting_settings'),
-    'access arguments' => array('administer ting settings'),
-    'file' => 'ting.admin.inc',
-  );
-
   $items['admin/config/ting/types'] = array(
     'title' => 'Types',
     'description' => 'Configure custom names for ting types.',
     'weight' => -10,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ting_admin_types_settings'),
+    'access arguments' => array('administer ting settings'),
+    'file' => 'ting.admin.inc',
+  );
+
+  $items['admin/config/ting/settings'] = array(
+    'title' => 'Ting',
+    'description' => 'Manage Ting integration settings.',
+    'weight' => -20,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ting_admin_ting_settings'),
     'access arguments' => array('administer ting settings'),
     'file' => 'ting.admin.inc',
   );

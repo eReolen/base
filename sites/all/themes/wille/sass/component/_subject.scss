@@ -5,7 +5,6 @@
 }
 
 .subject-menu {
-
   display: none;
   padding: 0;
   margin: 0;
@@ -17,6 +16,10 @@
   }
 
   @include outer-container;
+
+  @include media($phone) {
+    max-width: 90vw;
+  }
 
   .slick-arrow {
     color: transparent;
@@ -56,7 +59,7 @@
     }
 
     @include media($phone) {
-      right: -39px;
+      right: -54px;
     }
   }
 
@@ -69,7 +72,7 @@
     }
 
     @include media($phone) {
-      left: 5px;
+      left: -10px;
     }
   }
 }
@@ -86,6 +89,16 @@
     max-width: 180px;
     margin: 0 auto;
     transition: all .3s ease-out;
+
+    @include media($tablet-l) {
+      padding: 0;
+      margin-bottom: 0;
+      max-width: 8vw;
+    }
+
+    @include media($tablet-p) {
+      max-width: 22vw;
+    }
   }
 
   .is-desktop &:nth-child(odd):hover {
@@ -106,6 +119,10 @@
   margin: 10px 0;
   text-transform: uppercase;
   font-family: $font-bold;
+
+  @include media($phone) {
+    display: none;
+  }
 }
 
 .subject-menu__link {
@@ -130,6 +147,10 @@
   min-height: 225px;
 
   @include media($tablet-l) {
-    min-height: 182px;
+    min-height: 1px;
+  }
+
+  @include media($phone) {
+    min-height: 1px;
   }
 }
