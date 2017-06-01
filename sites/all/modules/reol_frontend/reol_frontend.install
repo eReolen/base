@@ -29,3 +29,11 @@ function reol_frontend_update_7101() {
 function reol_frontend_update_7102() {
   module_enable(['reol_zero_search'], TRUE);
 }
+
+/**
+ * Kick p2 in the nads to activate frontpage serendipity.
+ */
+function reol_frontend_update_7103() {
+  variable_set('ding_frontpage_promoter', 'serendipity');
+  variable_set('ding_entity_rating_popular_on_frontpage', TRUE);
+}
