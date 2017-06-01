@@ -1186,7 +1186,7 @@ index b89f2a99..2d36cba3 100644
 +core = 7.x
 +dependencies[] = ding_carousel
 diff --git a/modules/p2/ting_carousel/ting_carousel.module b/modules/p2/ting_carousel/ting_carousel.module
-index cd50a483..1241ef70 100644
+index cd50a483..bb2bdb29 100644
 --- a/modules/p2/ting_carousel/ting_carousel.module
 +++ b/modules/p2/ting_carousel/ting_carousel.module
 @@ -1,12 +1,12 @@
@@ -1206,7 +1206,7 @@ index cd50a483..1241ef70 100644
   */
  
  /**
-@@ -20,48 +20,11 @@ function ting_carousel_entity_info_alter(&$entity_info) {
+@@ -20,50 +20,6 @@ function ting_carousel_entity_info_alter(&$entity_info) {
    );
  }
  
@@ -1231,9 +1231,9 @@ index cd50a483..1241ef70 100644
 -  );
 -}
 -
- /**
-  * Implements hook_preprocess_ting_carousel().
-  */
+-/**
+- * Implements hook_preprocess_ting_carousel().
+- */
 -function template_preprocess_ting_carousel(&$vars, $hook) {
 -  $path = drupal_get_path('module', 'ting_search_carousel');
 -  drupal_add_library('system', 'ui.widget');
@@ -1243,8 +1243,7 @@ index cd50a483..1241ef70 100644
 -
 -  _ting_search_carousel_add_css();
 -
-+function ting_carousel_preprocess_ding_carousel(&$vars, $hook) {
-   drupal_add_js(drupal_get_path('module', 'ting_carousel') . '/js/ting_carousel.js');
+-  drupal_add_js(drupal_get_path('module', 'ting_carousel') . '/js/ting_carousel.js');
 -
 -  $vars['object_items'] = '';
 -  foreach ($vars['objects'] as $object) {
@@ -1253,9 +1252,11 @@ index cd50a483..1241ef70 100644
 -
 -  $vars['id'] = drupal_html_id('ting-carousel');
 -  drupal_add_js(array('ting_carousel' => array('#' . $vars['id'])), 'setting');
- }
- 
+-}
+-
  /**
+  * Implements hook_preprocess_ting_object().
+  */
 diff --git a/modules/ting_covers/ting_covers.module b/modules/ting_covers/ting_covers.module
 index 890553f9..d26fc48e 100644
 --- a/modules/ting_covers/ting_covers.module
