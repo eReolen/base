@@ -1329,6 +1329,25 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->uuid = 'ca0fbda3-dfff-4828-8a16-8166dd7dd5b0';
     $display->content['new-ca0fbda3-dfff-4828-8a16-8166dd7dd5b0'] = $pane;
     $display->panels['main_content'][3] = 'new-ca0fbda3-dfff-4828-8a16-8166dd7dd5b0';
+    $pane = new stdClass();
+    $pane->pid = 'new-87e15953-75c4-45c3-98b5-eed3ec310541';
+    $pane->panel = 'main_content';
+    $pane->type = 'lists';
+    $pane->subtype = 'lists';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 4;
+    $pane->locks = array();
+    $pane->uuid = '87e15953-75c4-45c3-98b5-eed3ec310541';
+    $display->content['new-87e15953-75c4-45c3-98b5-eed3ec310541'] = $pane;
+    $display->panels['main_content'][4] = 'new-87e15953-75c4-45c3-98b5-eed3ec310541';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
