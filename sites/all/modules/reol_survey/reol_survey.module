@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * A simple survey for eReolen.
+ */
+
+/**
+ * Implements hook_page_alter().
+ */
+function reol_survey_page_alter(&$page) {
+  // Make ajax_command_ding_popup add the needed libraries for popups.
+  ajax_command_ding_popup('', '', '');
+
+  $page['page_top']['reol_survey'] = array(
+    '#attached' => array(
+      'js' => array(
+        drupal_get_path('module', 'reol_survey') . '/js/reol_survey.js',
+      ),
+    ),
+  );
+}
