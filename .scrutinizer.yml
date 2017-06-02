@@ -9,6 +9,16 @@ checks:
 filter:
   excluded_paths:
     - 'sites/all/modules/contrib/*'
+    # Generated Features code
+    - '*.features.*'
+    - '*.feeds_importer_default.inc'
+    - '*.field_group.inc'
+    - '*.layouts.inc'
+    - '*.pages_default.inc'
+    - '*.panels_default.inc'
+    - '*.panelizer.inc'
+    - '*.strongarm.inc'
+    - '*.views_default.inc'
   paths:
     - 'sites/all/modules/*'
     - 'sites/all/themes/*'
