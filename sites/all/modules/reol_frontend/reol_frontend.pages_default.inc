@@ -660,6 +660,33 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79'] = $pane;
     $display->panels['branding'][2] = 'new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
     $pane = new stdClass();
+    $pane->pid = 'new-e4fc7036-2237-4147-891a-67ec251e01b9';
+    $pane->panel = 'branding';
+    $pane->type = 'notifications_top_menu';
+    $pane->subtype = 'notifications_top_menu';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'top_menu_items' => array(
+        'ready_to_pickup' => 'ready_to_pickup',
+        'dept' => 'dept',
+      ),
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = 'e4fc7036-2237-4147-891a-67ec251e01b9';
+    $display->content['new-e4fc7036-2237-4147-891a-67ec251e01b9'] = $pane;
+    $display->panels['branding'][3] = 'new-e4fc7036-2237-4147-891a-67ec251e01b9';
+    $pane = new stdClass();
     $pane->pid = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
     $pane->panel = 'content';
     $pane->type = 'announcement';
