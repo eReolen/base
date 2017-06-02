@@ -29,7 +29,8 @@ ratings:
   - "**.install"
   - "**.php"
 exclude_paths:
-  - tests/
+  - authorize.php
+  - cron.php
   - includes/
   - index.php
   - install.php
@@ -38,13 +39,14 @@ exclude_paths:
   - private/
   - profiles/
   - scripts/
+  - sites/*.php
   - sites/all/drush/
   - sites/all/libraries/
   - sites/default/
-  - sites/*.php
   - tests/
   - themes/
   - update.php
+  - xmlrpc.php
   - "**/node_modules/"
   - "**/contrib/"
   - "**/vendor/"
