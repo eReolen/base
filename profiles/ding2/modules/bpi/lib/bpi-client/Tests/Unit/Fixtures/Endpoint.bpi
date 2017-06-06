@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpi version="0.1">
+  <item type="resource" name="node">
+    <hypermedia>
+      <link rel="self" href="/node" />
+      <link rel="collection" href="/node/collection" />
+      <query rel="item" href="/node/item">
+        <param name="id"></param>
+      </query>
+      <template rel="push" href="qwerty" title="Node template">
+        <fields>
+          <field name="title"/>
+          <field name="teaser"/>
+          <field name="body"/>
+          <field name="type"/>
+        </fields>
+      </template>
+    </hypermedia>
+    <name type="property">node</name>
+  </item>
+  <item type="resource" name="profile">
+    <hypermedia>
+      <link rel="self" href="/node/profile" />
+      <link rel="collection" href="/node/profile/collection" />
+    </hypermedia>
+  </item>
+</bpi>
