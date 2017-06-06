@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpi version="0.1">
+  <item type="template">
+    <hypermedia>
+      <link rel="self" href="/node/template" />
+      <template rel="push" href="/node" title="Node template">
+        <fields>
+          <field name="title"/>
+          <field name="teaser"/>
+          <field name="body"/>
+          <field name="type"/>
+        </fields>
+      </template>
+    </hypermedia>
+  </item>
+</bpi>
