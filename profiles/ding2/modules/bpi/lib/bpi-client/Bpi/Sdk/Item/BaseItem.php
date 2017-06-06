@@ -1,24 +1,18 @@
 <?php
 namespace Bpi\Sdk\Item;
 
+use Bpi\Sdk\Document;
+
 /**
  * TODO please add a documentation for this class.
  */
 class BaseItem
 {
-    /**
-     * @var \SimpleXMLElement
-     */
-    protected $element;
+    protected $document;
 
-    /**
-     * @var array
-     */
-    protected $properties;
-
-    public function __construct(\SimpleXMLElement $element)
+    public function __construct(Document $document)
     {
-        $this->element = $element;
+        $this->document = $document;
     }
 
     /**
@@ -27,24 +21,20 @@ class BaseItem
      */
     public function getProperties()
     {
-        if (!$this->properties) {
-            $properties = [];
-            foreach ($this->element->xpath('properties/property') as $property) {
-                $name = (string)$property['name'];
-                $value = (string) $property;
-                if (isset($properties[$name])) {
-                    if (is_array($properties[$name])) {
-                        $properties[$name][] = $value;
-                    } else {
-                        $properties[$name] = array($properties[$name], $value);
-                    }
+        $properties = array();
+        $this->document->walkProperties(function($e) use(&$properties) {
+            if (isset($properties[$e['name']])) {
+                if (is_array($properties[$e['name']])) {
+                    $properties[$e['name']][] = $e['@value'];
                 } else {
-                    $properties[$name] = $value;
+                    $properties[$e['name']] = array($properties[$e['name']], $e['@value']);
                 }
-            };
-            $this->properties = $properties;
-        }
+            } else {
+                $properties[$e['name']] = $e['@value'];
+            }
+        });
 
-        return $this->properties;
+
+        return $properties;
     }
 }

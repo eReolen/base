@@ -6,22 +6,22 @@ namespace Bpi\Sdk;
  */
 class Authorization
 {
-    protected $agencyId;
-    protected $publicKey;
-    protected $secret;
+    protected $agency_id;
+    protected $public_key;
+    protected $secret_key;
     protected $token;
 
     /**
      *
-     * @param string $agencyId
-     * @param string $publicKey
-     * @param string $secret
+     * @param string $agency_id
+     * @param string $public_key
+     * @param string $secret_key
      */
-    public function __construct($agencyId, $publicKey, $secret)
+    public function __construct($agency_id, $public_key, $secret_key)
     {
-        $this->agencyId = $agencyId;
-        $this->publicKey = $publicKey;
-        $this->secret = $secret;
+        $this->agency_id = $agency_id;
+        $this->public_key = $public_key;
+        $this->secret_key = $secret_key;
         $this->generateToken();
     }
 
@@ -30,7 +30,7 @@ class Authorization
      */
     protected function generateToken()
     {
-        $this->token = password_hash($this->agencyId . $this->publicKey . $this->secret, PASSWORD_BCRYPT);
+        $this->token = crypt($this->agency_id . $this->public_key . $this->secret_key);
     }
 
     /**
@@ -41,6 +41,6 @@ class Authorization
      */
     public function toHTTPHeader()
     {
-        return sprintf('BPI agency="%s", token="%s"', $this->agencyId, $this->token);
+        return sprintf('BPI agency="%s", token="%s"', $this->agency_id, $this->token);
     }
 }
