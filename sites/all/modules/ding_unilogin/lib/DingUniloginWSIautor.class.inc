@@ -8,8 +8,8 @@
 /**
  * Class for the authorization service.
  */
-class DingUniloginWS05 extends DingUniloginServiceBase {
-  const WSDLURL = 'https://ws05.infotjeneste.uni-c.dk/infotjenesteautorisation-ws/ws?WSDL';
+class DingUniloginWSIautor extends DingUniloginServiceBase {
+  const WSDLURL = 'https://wsiautor.uni-login.dk/wsiautor-v3/ws?WSDL';
 
   /**
    * Get all licenses for a user.
@@ -25,9 +25,9 @@ class DingUniloginWS05 extends DingUniloginServiceBase {
    */
   public function hasLicense($id, $context, $project) {
     return (bool) $this->callWithAuth('harBrugerLicens', array(
-      'kontekst' => $context,
-      'projektid' => $project,
       'brugerid' => $id,
+      'udbydernr' => $context,
+      'tjenestekode' => $project,
     ));
   }
 

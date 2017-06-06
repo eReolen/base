@@ -52,12 +52,12 @@ class DingUniloginUser {
   /**
    * Get authorization service.
    *
-   * @return DingUniloginWS05
+   * @return DingUniloginWSIautor
    *   The authorization service.
    */
   protected function getAuthService() {
     if (!$this->authService) {
-      $this->authService = new DingUniloginWS05($this->wsuser, $this->wspass);
+      $this->authService = new DingUniloginWSIautor($this->wsuser, $this->wspass);
     }
 
     return $this->authService;
