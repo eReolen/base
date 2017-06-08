@@ -71,7 +71,7 @@ function reol_statistics_select_municipality_page() {
 
   $quarters = array(
     '2016-3' => '201607/201609',
-    '2016-4' => '2016010/201612',
+    '2016-4' => '201610/201612',
   );
 
   $year = 2017;
