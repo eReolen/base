@@ -9,6 +9,7 @@ services:
     volumes:
       - './:/var/www/html'
       - './private/docker/sites/ereol:/var/www/html/sites/default'
+      - './private/docker/init/prepare-environment.sh:/etc/my_init.d/prepare-environment.sh'
     environment:
       MYSQL_HOST: db-ereol
       MYSQL_DATABASE: drupal
@@ -24,6 +25,7 @@ services:
     volumes:
       - './:/var/www/html'
       - './private/docker/sites/ego:/var/www/html/sites/default'
+      - './private/docker/init/prepare-environment.sh:/etc/my_init.d/prepare-environment.sh'
     environment:
       MYSQL_HOST: db-ego
       MYSQL_DATABASE: drupal
