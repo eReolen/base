@@ -24,11 +24,13 @@ class DingUniloginWSIautor extends DingUniloginServiceBase {
    * Check if user has a license for a project.
    */
   public function hasLicense($id, $context, $project) {
-    return (bool) $this->callWithAuth('harBrugerLicens', array(
+    $parameters = array(
       'brugerid' => $id,
       'udbydernr' => $context,
       'tjenestekode' => $project,
-    ));
+    );
+    $res = $this->callWithAuth('harBrugerLicens', $parameters, 'harLicens');
+    return (bool) $res;
   }
 
 }

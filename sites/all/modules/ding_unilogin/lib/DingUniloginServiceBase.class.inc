@@ -30,10 +30,10 @@ abstract class DingUniloginServiceBase {
   /**
    * Call service method.
    */
-  protected function call($method, $parameters = array()) {
+  protected function call($method, $parameters = array(), $returnProperty = 'return') {
     try {
       $res = $this->client->{$method}($parameters);
-      return isset($res->return) ? $res->return : NULL;
+      return isset($res->{$returnProperty}) ? $res->{$returnProperty} : NULL;
     }
     catch (Exception $e) {
       // Catch error and throw a new one which includes request and response.
@@ -48,11 +48,11 @@ abstract class DingUniloginServiceBase {
   /**
    * Call service method with authentication.
    */
-  protected function callWithAuth($method, $parameters = array()) {
+  protected function callWithAuth($method, $parameters = array(), $returnProperty = 'return') {
     return $this->call($method, array(
       'wsBrugerid' => $this->user,
       'wsPassword' => $this->pass,
-    ) + $parameters);
+    ) + $parameters, $returnProperty);
   }
 
 }
