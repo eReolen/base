@@ -12,15 +12,20 @@ abstract class DingUniloginServiceBase {
   protected $client;
 
   /**
+   * Soap version to use.
+   *
+   * Not all services uses the same Soap version.
+   */
+  protected $soapVersion = SOAP_1_1;
+
+  /**
    * Base constructor.
    */
   public function __construct($user, $pass) {
     $options = array(
       // Set trace so we can pull out request/response in case of error.
       'trace' => TRUE,
-      // We get an "Unsupported Media Type" on the new WSIautor service if using
-      // 1.1.
-      'soap_version' => SOAP_1_2,
+      'soap_version' => $this->soapVersion,
     );
     $this->client = new SoapClient($this::WSDLURL, $options);
     $this->user = $user;
