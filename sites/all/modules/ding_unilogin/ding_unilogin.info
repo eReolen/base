@@ -4,6 +4,6 @@ core = 7.x
 package = Ding!
 dependencies[] = ding_user
 files[] = lib/DingUniloginServiceBase.class.inc
+files[] = lib/DingUniloginWSIautor.class.inc
 files[] = lib/DingUniloginWS02.class.inc
-files[] = lib/DingUniloginWS05.class.inc
 files[] = lib/DingUniloginUser.class.inc
