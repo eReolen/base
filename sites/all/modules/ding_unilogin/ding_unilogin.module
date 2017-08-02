@@ -437,7 +437,7 @@ function _ding_unilogin_login($username) {
 function ding_unilogin_wservice($service) {
   switch ($service) {
     case 'auth':
-      return new DingUniloginWS05(
+      return new DingUniloginWSIautor(
         variable_get('ding_unilogin_ws_user', ''),
         variable_get('ding_unilogin_ws_pass', '')
       );

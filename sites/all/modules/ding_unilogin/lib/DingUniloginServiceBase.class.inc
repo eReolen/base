@@ -12,10 +12,22 @@ abstract class DingUniloginServiceBase {
   protected $client;
 
   /**
+   * Soap version to use.
+   *
+   * Not all services uses the same Soap version.
+   */
+  protected $soapVersion = SOAP_1_1;
+
+  /**
    * Base constructor.
    */
   public function __construct($user, $pass) {
-    $this->client = new SoapClient($this::WSDLURL, array('trace' => TRUE));
+    $options = array(
+      // Set trace so we can pull out request/response in case of error.
+      'trace' => TRUE,
+      'soap_version' => $this->soapVersion,
+    );
+    $this->client = new SoapClient($this::WSDLURL, $options);
     $this->user = $user;
     $this->pass = $pass;
   }
@@ -23,12 +35,13 @@ abstract class DingUniloginServiceBase {
   /**
    * Call service method.
    */
-  protected function call($method, $parameters = array()) {
+  protected function call($method, $parameters = array(), $returnProperty = 'return') {
     try {
       $res = $this->client->{$method}($parameters);
-      return isset($res->return) ? $res->return : NULL;
+      return isset($res->{$returnProperty}) ? $res->{$returnProperty} : NULL;
     }
     catch (Exception $e) {
+      // Catch error and throw a new one which includes request and response.
       $message = "Error: " . $e->getMessage() .
                "\nRequest: \n" . $this->client->__getLastRequest() .
                "\nResponse: \n" . $this->client->__getLastResponse();
@@ -40,11 +53,11 @@ abstract class DingUniloginServiceBase {
   /**
    * Call service method with authentication.
    */
-  protected function callWithAuth($method, $parameters = array()) {
+  protected function callWithAuth($method, $parameters = array(), $returnProperty = 'return') {
     return $this->call($method, array(
       'wsBrugerid' => $this->user,
       'wsPassword' => $this->pass,
-    ) + $parameters);
+    ) + $parameters, $returnProperty);
   }
 
 }
