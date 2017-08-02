@@ -114,3 +114,7 @@ projects[ding2][patch][] = "sites/all/patches/ting_covers-3.patch"
 
 ; Pin down bpi so we don't get an incompatible master revision.
 projects[ding2][patch][] = "sites/all/patches/bpi-pin.patch"
+
+; And another cover fix.
+; based on https://github.com/ding2/ding2/pull/196
+projects[ding2][patch][] = "sites/all/patches/ting_covers-4.patch"
