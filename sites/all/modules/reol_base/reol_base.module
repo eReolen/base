@@ -441,7 +441,8 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
 /**
  * Get ding entity ids from multiple ISBN numbers.
  *
- * Only does one request to the well.
+ * Searches the well 50 isbn numbers at a time. Limited to 50 to not break the
+ * well.
  *
  * @param string $isbns
  *   The ISBN numbers to search for.
@@ -452,17 +453,18 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
 function reol_base_ding_entity_get_ids($isbns) {
   module_load_include('client.inc', 'ting');
   // Get the id from a search in Ting.
-  $search = implode(" OR term.identifier=", $isbns);
-  $res = ting_do_search("term.identifier=" . $search, 1, 500);
-  if (!$res) {
-    return FALSE;
-  }
-
+  $chunks = array_chunk($isbns, 50);
   $mapping = array();
-  foreach ($res->collections as $collection) {
-    foreach ($collection->getEntities() as $entity) {
-      foreach ($entity->getIsbn() as $isbn) {
-        $mapping[$isbn] = $entity->getId();
+  foreach ($chunks as $isbn_chunk) {
+    $search = implode(" OR term.identifier=", $isbn_chunk);
+    $res = ting_do_search("term.identifier=" . $search, 1, 500);
+    if ($res) {
+      foreach ($res->collections as $collection) {
+        foreach ($collection->getEntities() as $entity) {
+          foreach ($entity->getIsbn() as $isbn) {
+            $mapping[$isbn] = $entity->getId();
+          }
+        }
       }
     }
   }
