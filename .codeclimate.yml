@@ -50,6 +50,7 @@ exclude_paths:
   - "**/node_modules/"
   - "**/contrib/"
   - "**/vendor/"
+  - "**/gulpfile.js"
   # Generated Features code
   - '**.features.*'
   - '**.feeds_importer_default.inc'
