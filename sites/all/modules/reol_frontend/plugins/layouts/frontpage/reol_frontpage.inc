@@ -8,7 +8,6 @@ $plugin['reol_frontpage'] = array(
   'title' => t('Reol frontpage'),
   'icon' => 'reol_frontpage.png',
   'theme' => 'reol_frontpage',
-  'css' => 'reol_frontpage.css',
   'category'  => 'eReolen',
   'regions' => array(
     'top' => t('Top'),
