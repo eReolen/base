@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Code for the Inspiration feature.
+ */
+
+include_once 'ereol_inspiration.features.inc';
