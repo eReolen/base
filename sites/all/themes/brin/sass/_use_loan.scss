@@ -6,3 +6,25 @@
 .ui-dialog .back-button {
   display: none;
 }
+
+#reader-settings #settings-reset-zoom {
+  position: absolute;
+  width: 13px;
+  top: -12px;
+  padding: 13px 2px;
+  line-height: 1;
+}
+
+#reader-settings .settings-header {
+  height: 7px;
+}
+
+.reader__back-button {
+  position: absolute;
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  top: 10px;
+  left: 28%;
+  z-index: 9999;
+}
