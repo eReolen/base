@@ -361,3 +361,13 @@ function reol_base_update_7130() {
 function reol_base_update_7131() {
   features_revert_module('ding_ting_frontend');
 }
+
+/**
+ * Enable ereol_base on eReolen.
+ */
+function reol_base_update_7132() {
+  // Only enable ereol_base if breol_base is not enabled.
+  if (!module_exists('breol_base')) {
+    module_enable(['ereol_base'], TRUE);
+  }
+}

@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ereol_base module.
+ */
+
+/**
+ * Implements hook_install_N().
+ */
+function ereol_base_install_7101() {
+  module_enable(array('ereol_inspiration'), TRUE);
+}
