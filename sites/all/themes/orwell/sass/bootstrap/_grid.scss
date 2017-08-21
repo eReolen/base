@@ -1,0 +1,16 @@
+@import "bourbon";
+@import "neat";
+
+$grid-columns: 12;
+
+$medium: (
+  columns: $grid-columns,
+  gutter: 0px,
+  media: 'all and (min-width: 49rem)',
+);
+
+$large: (
+  columns: $grid-columns,
+  gutter: 0px,
+  media: 'all and (min-width: 65rem)',
+);
