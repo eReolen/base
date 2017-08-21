@@ -354,3 +354,10 @@ function reol_base_update_7129() {
 function reol_base_update_7130() {
   module_enable(['google_tag'], TRUE);
 }
+
+/**
+ * Revert ding_ting_frontend.
+ */
+function reol_base_update_7131() {
+  features_revert_module('ding_ting_frontend');
+}

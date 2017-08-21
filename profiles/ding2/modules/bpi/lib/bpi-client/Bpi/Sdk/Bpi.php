@@ -1,9 +1,17 @@
 <?php
-require_once __DIR__ . '/../../vendor/autoload.php';
+
+use Bpi\Sdk\Authorization;
+use Bpi\Sdk\Exception\SDKException;
+use Bpi\Sdk\Item\BaseItem;
+use Bpi\Sdk\Item\Node;
+use Bpi\Sdk\NodeList;
+use GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Exception\ClientException as GuzzleClientException;
 
 /**
  * TODO please add a general description about the purpose of this class.
  */
+// @codingStandardsIgnoreLine
 class Bpi
 {
     /**
@@ -20,40 +28,40 @@ class Bpi
 
     /**
      *
-     * @var \Bpi\Sdk\Document
+     * @var string
      */
     protected $endpoint;
-
-    /**
-     *
-     * @var \Bpi\Sdk\Document
-     */
-    protected $current_document;
 
     /**
      * Create Bpi Client
      *
      * @param string $endpoint URL
-     * @param string $agency_id Agency ID
-     * @param string $api_key App key
-     * @param string $secret_key
+     * @param string $agencyId Agency ID
+     * @param string $publicKey App key
+     * @param string $secret
      */
-    public function __construct($endpoint, $agency_id, $api_key, $secret_key)
+    public function __construct($endpoint, $agencyId, $publicKey, $secret)
     {
-        $this->client = new \Goutte\Client();
-        $this->authorization = new \Bpi\Sdk\Authorization($agency_id, $api_key, $secret_key);
-        $this->current_document = $this->endpoint = $this->createDocument();
-        $this->endpoint->loadEndpoint($endpoint);
+        $this->endpoint = $endpoint;
+        $this->authorization = new Authorization($agencyId, $publicKey, $secret);
     }
 
-    /**
-     * Create new document
-     *
-     * @return \Bpi\Sdk\Document
-     */
-    protected function createDocument()
+    private function request($method, $url, array $data = [])
     {
-        return new \Bpi\Sdk\Document($this->client, $this->authorization);
+        try {
+            $this->client = new GuzzleHttpClient([
+                'base_uri' => $this->endpoint,
+                'headers' => [
+                    'Auth' => $this->authorization->toHTTPHeader(),
+                ],
+            ]);
+
+            $result = $this->client->request($method, $url, $data);
+
+            return $result;
+        } catch (GuzzleClientException $e) {
+            throw new SDKException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**
@@ -63,21 +71,14 @@ class Bpi
      *   filter and sort requires nested arrays
      * @return \Bpi\Sdk\NodeList
      */
-    public function searchNodes(array $queries = array())
+    public function searchNodes(array $query = array())
     {
-        $nodes = $this->createDocument();
-        $endpoint = clone $this->endpoint;
-        $endpoint->firstItem('name', 'node')
-            ->link('collection')
-            ->get($nodes);
+        $result = $this->request('GET', '/node/collection', [
+            'query' => $query,
+        ]);
+        $element = new \SimpleXMLElement((string)$result->getBody());
 
-        $nodes->firstItem('type', 'collection')
-            ->query('refinement')
-            ->send($nodes, $queries);
-        $nodes->setFacets();
-        $this->current_document = $nodes;
-
-        return new \Bpi\Sdk\NodeList($nodes);
+        return new NodeList($element);
     }
 
     /**
@@ -89,21 +90,10 @@ class Bpi
      */
     public function push(array $data)
     {
-        $node = $this->createDocument();
-        $nodes = clone $this->endpoint;
-        $nodes->firstItem('name', 'node')
-            ->template('push')
-            ->eachField(function ($field) use ($data) {
-                // nb: variable $data[(string)$field] may be empty.
-                if (!isset($data[(string)$field])) {
-                    throw new \InvalidArgumentException(sprintf('Field [%s] is required', (string) $field));
-                }
-                $field->setValue($data[(string) $field]);
-            })->post($node);
+        $result = $this->request('POST', '/node', ['form_params' => $data]);
+        $element = new \SimpleXMLElement((string)$result->getBody());
 
-        $this->current_document = $node;
-
-        return new \Bpi\Sdk\Item\Node($node);
+        return new Node($element->item[0]);
     }
 
     /**
@@ -114,16 +104,9 @@ class Bpi
      */
     public function syndicateNode($id)
     {
-        $result = $this->createDocument();
+        $result = $this->request('GET', '/node/syndicated', ['query' => ['id' => $id]]);
 
-        $endpoint = clone $this->endpoint;
-        $endpoint->firstItem('name', 'node')
-            ->query('syndicated')
-            ->send($result, array('id' => $id));
-
-        $this->current_document = $result;
-
-        return $result->status()->isSuccess();
+        return $result->getStatusCode() === 200;
     }
 
     /**
@@ -134,16 +117,9 @@ class Bpi
      */
     public function deleteNode($id)
     {
-        $result = $this->createDocument();
+        $result = $this->request('GET', '/node/delete', ['query' => ['id' => $id]]);
 
-        $endpoint = clone $this->endpoint;
-        $endpoint->firstItem('name', 'node')
-            ->query('delete')
-            ->send($result, array('id' => $id));
-
-        $this->current_document = $result;
-
-        return $result->status()->isSuccess();
+        return $result->getStatusCode() === 200;
     }
 
     /**
@@ -158,15 +134,10 @@ class Bpi
      */
     public function getStatistics($dateFrom, $dateTo)
     {
-        $result = $this->createDocument();
-        $endpoint = clone $this->endpoint;
-        $endpoint->firstItem('name', 'node')
-            ->query('statistics')
-            ->send($result, array('dateFrom'=>$dateFrom, 'dateTo'=>$dateTo));
+        $result = $this->request('GET', '/statistics', ['query' => ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]]);
+        $element = new \SimpleXMLElement((string)$result->getBody());
 
-        $this->current_document = $result;
-
-        return new \Bpi\Sdk\Item\BaseItem($result);
+        return new BaseItem($element);
     }
 
     /**
@@ -177,16 +148,10 @@ class Bpi
      */
     public function getNode($id)
     {
-        $result = $this->createDocument();
+        $result = $this->request('GET', '/node/item/' . $id);
+        $element = new \SimpleXMLElement((string)$result->getBody());
 
-        $endpoint = clone $this->endpoint;
-        $endpoint->firstItem('name', 'node')
-            ->query('item')
-            ->send($result, array('id' => $id));
-
-        $this->current_document = $result;
-
-        return new \Bpi\Sdk\Item\Node($result);
+        return new Node($element->item[0]);
     }
 
     /**
@@ -196,37 +161,19 @@ class Bpi
      */
     public function getDictionaries()
     {
-        $result = $this->createDocument();
+        $result = $this->request('GET', '/profile/dictionary');
+        $element = new \SimpleXMLElement((string)$result->getBody());
 
-        $endpoint = clone $this->endpoint;
-        $endpoint->firstItem('name', 'profile')
-            ->link('dictionary')
-            ->get($result);
-
-        $this->current_document = $result;
-
-        $dictionary = array();
-        foreach ($result as $item)
-        {
-            $properties = array();
-            $item->walkProperties(function($property) use (&$properties){
-                $properties[$property['name']] = $property['@value'];
-            });
-
-            $dictionary[$properties['group']][] = $properties['name'];
+        $dictionary = [];
+        foreach ($element->xpath('/bpi/item') as $item) {
+            $group = (string)$item->xpath('properties/property[@name = "group"]')[0];
+            $name = (string)$item->xpath('properties/property[@name = "name"]')[0];
+            if (!isset($dictionary[$group])) {
+                $dictionary[$group] = [];
+            }
+            $dictionary[$group][] = $name;
         }
 
         return $dictionary;
-    }
-
-    /**
-     * TODO This is a public function prefixed with an _ signalling that it is
-     * not to be used for public consumption. Why is this necessary?
-     *
-     * @return \Bpi\Sdk\Document
-     */
-    public function _getCurrentDocument()
-    {
-        return $this->current_document;
     }
 }

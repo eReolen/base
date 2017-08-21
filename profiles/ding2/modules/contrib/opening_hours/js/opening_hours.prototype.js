@@ -8,7 +8,7 @@
 // Array.indexOf was only introduced to Internet Explorer in version 9,
 // so we'll probably have this workaround for some time.
 if (!Array.prototype.indexOf) {
-  Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
+  Array.prototype.indexOf = function (searchElement /*, fromIndex */) {
     "use strict";
     if (this === void 0 || this === null) {
       throw new TypeError();
@@ -21,7 +21,8 @@ if (!Array.prototype.indexOf) {
     var n = 0;
     if (arguments.length > 0) {
       n = Number(arguments[1]);
-      if (n !== n) { // shortcut for verifying if it's NaN
+      // shortcut for verifying if it's NaN.
+      if (n !== n) {
         n = 0;
       } else if (n !== 0 && n !== Infinity && n !== -Infinity) {
         n = (n > 0 || -1) * Math.floor(Math.abs(n));
@@ -59,7 +60,7 @@ if (!Array.prototype.indexOf) {
     * Format date in ISO 8601-format.
     */
     Date.prototype.getISODate = function (type) {
-      return this.getFullYear()+ '-' + pad(this.getMonth() + 1) + '-' + pad(this.getDate());
+      return this.getFullYear() + '-' + pad(this.getMonth() + 1) + '-' + pad(this.getDate());
     };
   }
 

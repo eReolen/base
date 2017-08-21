@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen bookmark module feature.
@@ -13,7 +14,7 @@ function reol_bookmark_menu() {
   $items['user/%user/bookmarks'] = array(
     'title' => 'Bookmarks',
     'title callback' => 'reol_bookmark_menu_item_title',
-    'title arguments' => array('Bookmarks', 1),
+    'title arguments' => array(1),
     'page callback' => 'reol_bookmark_user_bookmark_page',
     'page arguments' => array(1),
     'access callback' => 'reol_bookmark_view_access',
@@ -55,7 +56,7 @@ function reol_bookmark_permission() {
  * @param string $id
  *   The id of the ting object.
  * @param bool $remove
- *   Whether or not to remove bookmark. Default FALSE
+ *   Whether or not to remove bookmark. Default FALSE.
  *
  * @return bool
  *   Whether or not action was successful.
@@ -79,7 +80,7 @@ function reol_bookmark_bookmark($id, $remove = FALSE) {
 /**
  * Get all bookmarks for a user.
  *
- * @param StdClass $account
+ * @param object $account
  *   The user to get bookmarks for.
  *
  * @return array
@@ -134,18 +135,15 @@ function reol_bookmark_views_default_views_alter(&$views) {
 /**
  * Alter title to add count items number.
  *
- * @param string $title
- *   Untranslated title.
- * @param StdClass $account
+ * @param object $account
  *   User account object, for counting bookmark items.
  *
  * @return string
  *   The bookmark item title.
  */
-function reol_bookmark_menu_item_title($title, $account = NULL) {
-  $account = isset($account->data) ? $account->data : $account;
+function reol_bookmark_menu_item_title($account = NULL) {
   $bookmarks = $account ? count(reol_bookmark_get_bookmarks($account)) : 0;
-  return t($title) . ' (' . $bookmarks . ')';
+  return t('Bookmarks') . ' (' . $bookmarks . ')';
 }
 
 /**
@@ -220,7 +218,7 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
  * @return array
  *   Renderable array button.
  */
-function reol_bookmark_get_bookmark_button($entity) {
+function reol_bookmark_get_bookmark_button(TingEntity $entity) {
   list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
   if (!@$availability['bookmarked']) {
@@ -262,7 +260,7 @@ function reol_bookmark_secure_permissions($role) {
  * @return array
  *   Render array with Ajax commands.
  */
-function reol_bookmark_create_ajax($entity, $remove = FALSE) {
+function reol_bookmark_create_ajax(TingEntity $entity, $remove = FALSE) {
   $commands = array();
 
   // Try to add bookmark to the users list.

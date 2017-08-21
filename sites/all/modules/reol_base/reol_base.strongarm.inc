@@ -328,6 +328,13 @@ nonGoogleIframes';
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'ting_openlist_wsdl';
+  $strongarm->value = 'http://test.openlist.ddbcms.dk/?wsdl';
+  $export['ting_openlist_wsdl'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'ting_reservable_sources';
   $strongarm->value = array(
     0 => 'bibliotekskatalog',

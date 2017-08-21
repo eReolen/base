@@ -8,6 +8,7 @@
  * Form builder; Configure ting settings for this site.
  *
  * @ingroup forms
+ *
  * @see system_settings_form()
  */
 function ting_admin_ting_settings($form_state) {
@@ -75,7 +76,7 @@ function ting_admin_ting_settings($form_state) {
     '#states' => $auth_states,
   );
 
-  $form['ting']['ting_filter_by_local_holdings']= array(
+  $form['ting']['ting_filter_by_local_holdings'] = array(
     '#type' => 'checkbox',
     '#title' => t('Filter search queries on holdingsItem'),
     '#description' => t('Filter searches by holdingsitem.agencyId. Only activate when opensearch uses data-well 3.5, and the provider is fbs'),
@@ -87,7 +88,7 @@ function ting_admin_ting_settings($form_state) {
     '#type' => 'textfield',
     '#title' => t('Recommendation service URL'),
     '#description' => t('URL to the Ting recommendation webservice (Andre der har lånt...) , e.g. http://openadhl.addi.dk/1.1/'),
-    '#required' => TRUE,
+    '#required' => FALSE,
     '#default_value' => variable_get('ting_recommendation_url', ''),
   );
 
@@ -242,7 +243,6 @@ function ting_admin_ranking_settings($form, &$form_state) {
     ),
   );
 
-
   $ting_sort_value = variable_get('ting_sort_default', 'rank_frequency');
   $form['ting_sort_default'] = array(
     '#title' => t('Default sort method (best match)'),
@@ -260,7 +260,6 @@ function ting_admin_ranking_settings($form, &$form_state) {
     ),
     '#default_value' => array('sort_type' => $ting_sort_value),
   );
-
 
   $form['buttons']['save'] = array(
     '#type' => 'submit',
@@ -462,6 +461,7 @@ function _ting_boost_field_sort($a, $b) {
  * Form builder; Configure online resource types and their URL labels.
  *
  * @ingroup forms
+ *
  * @see system_settings_form()
  */
 function ting_admin_online_types_settings($form_state) {
@@ -549,6 +549,7 @@ function ting_admin_update_types($form, &$form_state) {
  * Form builder; Configure reservable materials.
  *
  * @ingroup forms
+ *
  * @see system_settings_form()
  */
 function ting_admin_reservable_settings($form_state) {
@@ -627,8 +628,9 @@ function ting_admin_reservable_settings($form_state) {
 }
 
 /**
- * Submit handler. Updates the list of known types and sources from the
- * data well.
+ * Submit handler.
+ *
+ * Updates the list of known types and sources from the data well.
  */
 function ting_admin_reservable_settings_update($form, &$form_state) {
   _ting_fetch_well_types();

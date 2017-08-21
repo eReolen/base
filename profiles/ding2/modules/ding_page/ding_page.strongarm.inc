@@ -103,7 +103,14 @@ function ding_page_strongarm() {
           'weight' => '6',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'webform' => array(
+          'search_result' => array(
+            'weight' => '10',
+            'visible' => FALSE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__ding_page'] = $strongarm;
@@ -145,7 +152,7 @@ function ding_page_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_preview_ding_page';
-  $strongarm->value = '0';
+  $strongarm->value = '1';
   $export['node_preview_ding_page'] = $strongarm;
 
   $strongarm = new stdClass();

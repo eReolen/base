@@ -660,6 +660,33 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79'] = $pane;
     $display->panels['branding'][2] = 'new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
     $pane = new stdClass();
+    $pane->pid = 'new-e4fc7036-2237-4147-891a-67ec251e01b9';
+    $pane->panel = 'branding';
+    $pane->type = 'notifications_top_menu';
+    $pane->subtype = 'notifications_top_menu';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'top_menu_items' => array(
+        'ready_to_pickup' => 'ready_to_pickup',
+        'dept' => 'dept',
+      ),
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = 'e4fc7036-2237-4147-891a-67ec251e01b9';
+    $display->content['new-e4fc7036-2237-4147-891a-67ec251e01b9'] = $pane;
+    $display->panels['branding'][3] = 'new-e4fc7036-2237-4147-891a-67ec251e01b9';
+    $pane = new stdClass();
     $pane->pid = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
     $pane->panel = 'content';
     $pane->type = 'announcement';
@@ -1329,6 +1356,25 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->uuid = 'ca0fbda3-dfff-4828-8a16-8166dd7dd5b0';
     $display->content['new-ca0fbda3-dfff-4828-8a16-8166dd7dd5b0'] = $pane;
     $display->panels['main_content'][3] = 'new-ca0fbda3-dfff-4828-8a16-8166dd7dd5b0';
+    $pane = new stdClass();
+    $pane->pid = 'new-87e15953-75c4-45c3-98b5-eed3ec310541';
+    $pane->panel = 'main_content';
+    $pane->type = 'lists';
+    $pane->subtype = 'lists';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 4;
+    $pane->locks = array();
+    $pane->uuid = '87e15953-75c4-45c3-98b5-eed3ec310541';
+    $display->content['new-87e15953-75c4-45c3-98b5-eed3ec310541'] = $pane;
+    $display->panels['main_content'][4] = 'new-87e15953-75c4-45c3-98b5-eed3ec310541';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -1816,6 +1862,93 @@ function reol_frontend_default_page_manager_pages() {
     $pane->uuid = '7e3d15e0-e9cf-40f9-89ab-658161b063e0';
     $display->content['new-7e3d15e0-e9cf-40f9-89ab-658161b063e0'] = $pane;
     $display->panels['top'][0] = 'new-7e3d15e0-e9cf-40f9-89ab-658161b063e0';
+    $pane = new stdClass();
+    $pane->pid = 'new-391a90b8-8558-47cb-b784-58eb6be787d4';
+    $pane->panel = 'top';
+    $pane->type = 'interaction_pane';
+    $pane->subtype = 'interaction_pane';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'count' => '5',
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '391a90b8-8558-47cb-b784-58eb6be787d4';
+    $display->content['new-391a90b8-8558-47cb-b784-58eb6be787d4'] = $pane;
+    $display->panels['top'][1] = 'new-391a90b8-8558-47cb-b784-58eb6be787d4';
+    $pane = new stdClass();
+    $pane->pid = 'new-a3d90f44-f8c8-4a5c-937e-fa1e0fae2bfa';
+    $pane->panel = 'top';
+    $pane->type = 'serendipity_ting_object';
+    $pane->subtype = 'serendipity_ting_object';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'view_mode' => 'compact',
+      'sort_weight' => FALSE,
+      'max' => '20',
+      'min' => '10',
+      'random' => 1,
+      'selected_keys' => array(
+        'ting_object' => 'ting_object',
+        'frontpage' => 'frontpage',
+      ),
+      'context' => array(
+        0 => 'empty',
+        1 => 'empty',
+        2 => 'empty',
+        3 => 'empty',
+      ),
+      'override_title' => 0,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = 'a3d90f44-f8c8-4a5c-937e-fa1e0fae2bfa';
+    $display->content['new-a3d90f44-f8c8-4a5c-937e-fa1e0fae2bfa'] = $pane;
+    $display->panels['top'][2] = 'new-a3d90f44-f8c8-4a5c-937e-fa1e0fae2bfa';
+    $pane = new stdClass();
+    $pane->pid = 'new-2e25bef5-5470-405d-bc3a-833c5b2527b5';
+    $pane->panel = 'top';
+    $pane->type = 'popular';
+    $pane->subtype = 'popular';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'month' => '',
+      'libcode' => 0,
+      'override_title' => 1,
+      'override_title_text' => 'Månedens populæreste titler',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $pane->uuid = '2e25bef5-5470-405d-bc3a-833c5b2527b5';
+    $display->content['new-2e25bef5-5470-405d-bc3a-833c5b2527b5'] = $pane;
+    $display->panels['top'][3] = 'new-2e25bef5-5470-405d-bc3a-833c5b2527b5';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-7e3d15e0-e9cf-40f9-89ab-658161b063e0';
   $handler->conf['display'] = $display;

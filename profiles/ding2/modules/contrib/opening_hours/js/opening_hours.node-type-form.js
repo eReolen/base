@@ -1,4 +1,7 @@
-// Displays a summary of the opening hours setting on the vertical tab on the node type form.
+/**
+ * Displays a summary of the opening hours setting on the vertical tab
+ * on the node type form.
+ */
 (function ($) {
 "use strict";
 

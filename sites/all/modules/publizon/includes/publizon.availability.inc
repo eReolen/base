@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Availability-provider for Publizon.
@@ -69,7 +70,6 @@ function publizon_availability_items($local_ids) {
 
 /**
  * Available holdings.
- * @TODO
  */
 function publizon_availability_holdings($provider_ids) {
   // For now, everything is available everywhere.

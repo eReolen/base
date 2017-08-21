@@ -7,7 +7,8 @@ namespace Bpi\Sdk\Item;
  *
  * Single facet term class
  */
-class FacetTerm {
+class FacetTerm
+{
 
     /**
      * @var string

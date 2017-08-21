@@ -60,7 +60,7 @@ class FBSAuthenticationHandler implements HttpClient {
   public function request(RequestInterface $request) {
     // If the path matches this, it's an authentication request, so we wont
     // add session id.
-    $auth_request = preg_match('{/external/v1/[-A-Za-z0-9]+/authentication/login$}', $request->getUri()->getPath());
+    $auth_request = preg_match('{/external/v1/[-A-Za-z0-9]*/authentication/login$}', $request->getUri()->getPath());
 
     $body = $request->getBody();
     $body->seek(0);
@@ -109,15 +109,25 @@ class FBSAuthenticationHandler implements HttpClient {
     $login = new FBS\Model\Login();
     $login->username = $this->username;
     $login->password = $this->password;
-    $res = fbs_service()->Authentication->login(fbs_service()->agencyId, $login);
+
+    $res = NULL;
+    try {
+      $res = fbs_service()->Authentication->login(fbs_service()->agencyId, $login);
+    }
+    catch (Exception $e) {
+      watchdog_exception('fbs', $e);
+    }
+
     if (isset($res->sessionKey)) {
       $this->sessionId = $res->sessionKey;
       $this->cache->set(self::SESSION_KEY, $this->sessionId);
+
       return TRUE;
     }
     else {
       $this->log->critical('Error athentication with FBS. Check endpoint, agency id, username and password.');
     }
+    
     return FALSE;
   }
 }
