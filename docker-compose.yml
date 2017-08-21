@@ -9,6 +9,7 @@ services:
     volumes:
       - './:/var/www/html'
       - './private/docker/sites/ereol:/var/www/html/sites/default'
+      - './private/docker/init/prepare-environment.sh:/etc/my_init.d/prepare-environment.sh'
     environment:
       MYSQL_HOST: db-ereol
       MYSQL_DATABASE: drupal
@@ -24,6 +25,7 @@ services:
     volumes:
       - './:/var/www/html'
       - './private/docker/sites/ego:/var/www/html/sites/default'
+      - './private/docker/init/prepare-environment.sh:/etc/my_init.d/prepare-environment.sh'
     environment:
       MYSQL_HOST: db-ego
       MYSQL_DATABASE: drupal
@@ -50,11 +52,19 @@ services:
     volumes:
       - './private/docker/db-init/ego:/docker-entrypoint-initdb.d'
 
+  # pratchett base theme
+  pratchett-gulp:
+    image: node:alpine
+    volumes:
+      - './sites/all/themes/pratchett:/src'
+    working_dir: /src
+    command: npm start
+
   # eReolen theme
   ereol-gulp:
     image: node:alpine
     volumes:
-      - './sites/all/themes/brin:/src'
+      - './sites/all/themes/orwell:/src'
     working_dir: /src
     command: npm start
 

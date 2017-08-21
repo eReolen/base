@@ -1,6 +1,6 @@
 
 build-dependecies:
-	@dce git --version >/dev/null || dce sh -c "apt update && apt install -y git patch unzip"
+	@dce git --version >/dev/null || dce 'sh -c "apt update && apt install -y git patch unzip"'
 
 ding: build-dependecies
 	dce rm -rf profiles/ding2

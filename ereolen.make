@@ -70,3 +70,7 @@ projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/d
 ; Make ting_carusel compatible with the latest field_group.
 ; https://github.com/ding2/ding2/pull/619
 projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/619.patch"
+
+; And another cover fix.
+; based on https://github.com/ding2/ding2/pull/196
+projects[ding2][patch][] = "sites/all/patches/ting_covers-4.patch"

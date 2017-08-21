@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Theming of carousel item.
@@ -9,7 +10,9 @@
 $cover_classes = '';
 if (!isset($collection->placeholder)) {
   $entity = ding_entity_load($collection->id);
-  $cover_classes = implode(' ', _wille_type_icon_classes(reol_base_get_type_name($entity->type), $entity->reply->on_quota));
+  if (isset($entity->reply)) {
+    $cover_classes = implode(' ', _wille_type_icon_classes(reol_base_get_type_name($entity->type), $entity->reply->on_quota));
+  }
 }
 ?>
 <li class="carousel-item <?php print $classes; ?>">

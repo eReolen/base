@@ -1,0 +1,6 @@
+base theme = pratchett
+name = Orwell
+description = eReol theme.
+core = 7.x
+release = 7.x-1.x
+stylesheets[all][] = css/orwell.main.css
