@@ -1,4 +1,7 @@
 @import 'bourbon';
 
-@include font-face("SourceSansPro", "./fonts/SourceSansPro/SourceSansPro-Regular", $file-formats: otf, $weight: 700);
+@include font-face("SourceSansPro", "/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular");
+@include font-face("SourceSansProSemiBold", "/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold");
+
 $font-regular: 'SourceSansPro', sans-serif;
+$font-semibold: 'SourceSansProSemiBold', sans-serif;

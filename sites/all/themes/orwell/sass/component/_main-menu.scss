@@ -1,0 +1,44 @@
+$menu-height: 5rem;
+
+.menu-name-main-menu {
+  height: $menu-height;
+  background-color: $red;
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    margin: 0 5vw;
+    list-style-type: none;
+  }
+
+  li {
+    display: flex;
+    align-content: center;
+    align-items: center;
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-family: $font-regular;
+      font-weight: bold;
+      font-size: 1rem;
+
+      @include grid-media($medium) {
+        height: 100%;
+        padding: 2.5rem;
+        color: $font-menu__gray;
+        line-height: $menu-height;
+        font-weight: 700;
+
+        &:hover {
+          background: $page-bg;
+        }
+      }
+    }
+  }
+
+  @include grid-media($medium){
+    background-color: transparent;
+  }
+}

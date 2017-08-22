@@ -17,7 +17,7 @@ function reol_frontend_menu_block_defaults() {
   $menu_block->label = 'Main menu (eReolen)';
   $menu_block->description = '';
   $menu_block->depth = 3;
-  $menu_block->expanded = 1;
+  $menu_block->expanded = 0;
   $menu_block->follow = '0';
   $menu_block->level = 1;
   $menu_block->parent = 'main-menu:0';

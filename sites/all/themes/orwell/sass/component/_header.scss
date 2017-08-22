@@ -1,0 +1,24 @@
+.site-header {
+  background: white;
+}
+
+.pane-menu-block-main-menu {
+  width: 100%;
+
+  @include grid-media($medium){
+    width: auto;
+    order: 2;
+  }
+}
+
+.topbar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  height: 11.9rem;
+
+  @include grid-media($medium){
+    flex-wrap: nowrap;
+    justify-content: center;
+    height: 5rem;
+  }
+}

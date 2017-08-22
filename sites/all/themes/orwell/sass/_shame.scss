@@ -1,0 +1,13 @@
+.topbar {
+  .pane-search-form {
+    @include grid-media($medium){
+      order: 3;
+    }
+  }
+
+  #header {
+    @include grid-media($medium){
+      order: 1;
+    }
+  }
+}
