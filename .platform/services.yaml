@@ -1,3 +1,3 @@
-mysql:
+mysqldb:
     type: mysql:5.5
     disk: 2048
