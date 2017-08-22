@@ -1,0 +1,4 @@
+@import 'bourbon';
+
+@include font-face("SourceSansPro", "./fonts/SourceSansPro/SourceSansPro-Regular", $file-formats: otf, $weight: 700);
+$font-regular: 'SourceSansPro', sans-serif;
