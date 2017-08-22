@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen newsletter module feature.
@@ -73,7 +74,9 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
       '#default_value' => isset($default_values['SIGNUP_value']) ? $default_values['SIGNUP_value'] : '',
       '#states' => [
         'visible' => [
-          "input[name='mergefields[" . REOL_NEWSLETTER_SIGNUP_FIELD_NAME . "]']" => ["checked" => TRUE]
+          "input[name='mergefields[" . REOL_NEWSLETTER_SIGNUP_FIELD_NAME . "]']" => [
+            "checked" => TRUE,
+          ],
         ],
       ],
     ];
@@ -89,7 +92,9 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
     '#weight' => -1,
     '#states' => [
       'visible' => [
-        "input[name='mode[2]']" => ["checked" => TRUE]
+        "input[name='mode[2]']" => [
+          "checked" => TRUE,
+        ],
       ],
     ],
   ];
