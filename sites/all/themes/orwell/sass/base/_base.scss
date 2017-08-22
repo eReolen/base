@@ -1,7 +1,14 @@
+@import "reset";
+@import "bootstrap/bootstrap";
+
 * {
   -webkit-font-smoothing: antialiased;
 }
 
 html {
   font-size: 100%;
+}
+
+body {
+  background: $page-bg;
 }
