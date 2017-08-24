@@ -12,6 +12,17 @@ engines:
     enabled: true
   fixme:
     enabled: true
+    config:
+      strings:
+        # Standard configuration.
+        - TODO
+        - FIXME
+        - HACK
+        - XXX
+        - BUG
+        # Doxygen variants.
+        - '@todo'
+        - '@fixme'
   # phpmd:
   #   enabled: true
   phpcodesniffer:
