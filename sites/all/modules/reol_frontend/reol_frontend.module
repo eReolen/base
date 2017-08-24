@@ -35,6 +35,24 @@ function reol_frontend_menu() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function reol_frontend_theme() {
+  return array(
+    'reol_frontend_reol_notifications' => array(
+      'variables' => array(
+        'uri' => NULL,
+        'messages' => NULL,
+        'reservations' => NULL,
+        'debts' => NULL,
+      ),
+      'path' => drupal_get_path('module', 'reol_frontend') . '/templates',
+      'template' => 'reol-frontend-reol-notifications',
+    ),
+  );
+}
+
+/**
  * Implements hook_preprocess_node().
  */
 function reol_frontend_preprocess_node(&$variables) {

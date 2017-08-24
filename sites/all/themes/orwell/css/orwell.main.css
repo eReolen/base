@@ -121,6 +121,10 @@ body {
   }
 }
 
+.js .js-login-form {
+  display: none;
+}
+
 .menu-name-main-menu {
   height: 5rem;
   background-color: #b81b40;

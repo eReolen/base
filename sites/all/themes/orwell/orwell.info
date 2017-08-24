@@ -6,3 +6,6 @@ release = 7.x-1.x
 stylesheets[all][] = css/orwell.main.css
 
 stylesheets[all][] = system.menus.css
+
+;-----------//Javascript.
+scripts[] = scripts/orwell.main.js

@@ -635,29 +635,6 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9'] = $pane;
     $display->panels['branding'][1] = 'new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9';
     $pane = new stdClass();
-    $pane->pid = 'new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
-    $pane->panel = 'branding';
-    $pane->type = 'block';
-    $pane->subtype = 'search-form';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-      'style' => 'default',
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $pane->uuid = 'f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
-    $display->content['new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0'] = $pane;
-    $display->panels['branding'][2] = 'new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
-    $pane = new stdClass();
     $pane->pid = 'new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
     $pane->panel = 'branding';
     $pane->type = 'block';
@@ -709,6 +686,78 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->uuid = 'e4fc7036-2237-4147-891a-67ec251e01b9';
     $display->content['new-e4fc7036-2237-4147-891a-67ec251e01b9'] = $pane;
     $display->panels['branding'][4] = 'new-e4fc7036-2237-4147-891a-67ec251e01b9';
+    $pane = new stdClass();
+    $pane->pid = 'new-129be78f-5184-4a16-b2e7-e93019eff04a';
+    $pane->panel = 'branding';
+    $pane->type = 'reol_notifications';
+    $pane->subtype = 'reol_notifications';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 4;
+    $pane->locks = array();
+    $pane->uuid = '129be78f-5184-4a16-b2e7-e93019eff04a';
+    $display->content['new-129be78f-5184-4a16-b2e7-e93019eff04a'] = $pane;
+    $display->panels['branding'][4] = 'new-129be78f-5184-4a16-b2e7-e93019eff04a';
+    $pane = new stdClass();
+    $pane->pid = 'new-8c79c7df-e311-4af4-965f-50d239f6ecec';
+    $pane->panel = 'branding';
+    $pane->type = 'reol_profile_link';
+    $pane->subtype = 'reol_profile_link';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 5;
+    $pane->locks = array();
+    $pane->uuid = '8c79c7df-e311-4af4-965f-50d239f6ecec';
+    $display->content['new-8c79c7df-e311-4af4-965f-50d239f6ecec'] = $pane;
+    $display->panels['branding'][5] = 'new-8c79c7df-e311-4af4-965f-50d239f6ecec';
+    $pane = new stdClass();
+    $pane->pid = 'new-407ab43a-dfc4-49ea-a537-292b9d04c95c';
+    $pane->panel = 'branding';
+    $pane->type = 'block';
+    $pane->subtype = 'user-login';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'js-login-form',
+    );
+    $pane->extras = array();
+    $pane->position = 6;
+    $pane->locks = array();
+    $pane->uuid = '407ab43a-dfc4-49ea-a537-292b9d04c95c';
+    $display->content['new-407ab43a-dfc4-49ea-a537-292b9d04c95c'] = $pane;
+    $display->panels['branding'][6] = 'new-407ab43a-dfc4-49ea-a537-292b9d04c95c';
     $pane = new stdClass();
     $pane->pid = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
     $pane->panel = 'content';

@@ -22,3 +22,8 @@
     height: 5rem;
   }
 }
+
+// Hide the login form, it'll be toggled by JS.
+.js .js-login-form {
+  display: none;
+}
