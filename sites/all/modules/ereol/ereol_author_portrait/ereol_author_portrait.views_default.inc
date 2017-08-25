@@ -1,21 +1,21 @@
 <?php
 /**
  * @file
- * reol_frontend.views_default.inc
+ * ereol_author_portrait.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function reol_frontend_views_default_views() {
+function ereol_author_portrait_views_default_views() {
   $export = array();
 
   $view = new view();
-  $view->name = 'videos';
+  $view->name = 'author_portraits';
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Videos';
+  $view->human_name = 'Author portraits';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -67,11 +67,29 @@ function reol_frontend_views_default_views() {
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
-    'video' => 'video',
+    'author_portrait' => 'author_portrait',
   );
 
-  /* Display: Videos on frontpage */
-  $handler = $view->new_display('panel_pane', 'Videos on frontpage', 'panel_pane_1');
+  /* Display: Author portraits on frontpage */
+  $handler = $view->new_display('panel_pane', 'Author portraits on frontpage', 'panel_pane_1');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '2';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  $handler->display->display_options['argument_input'] = array(
+    'field_reol_entity_type_value' => array(
+      'type' => 'user',
+      'context' => 'entity:user.og-membership--2',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Indhold: Entity type (field_reol_entity_type)',
+    ),
+  );
+
+  /* Display: Author portraits on type frontpage */
+  $handler = $view->new_display('panel_pane', 'Author portraits on type frontpage', 'panel_pane_2');
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '1';
@@ -97,7 +115,7 @@ function reol_frontend_views_default_views() {
       'label' => 'Indhold: Entity type (field_reol_entity_type)',
     ),
   );
-  $translatables['videos'] = array(
+  $translatables['author_portraits'] = array(
     t('Master'),
     t('mere'),
     t('Udfør'),
@@ -112,11 +130,12 @@ function reol_frontend_views_default_views() {
     t('‹ forrige'),
     t('næste ›'),
     t('sidste »'),
-    t('Videos on frontpage'),
-    t('Alle'),
+    t('Author portraits on frontpage'),
     t('View panes'),
+    t('Author portraits on type frontpage'),
+    t('Alle'),
   );
-  $export['videos'] = $view;
+  $export['author_portraits'] = $view;
 
   return $export;
 }

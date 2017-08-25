@@ -16,5 +16,5 @@ function ereol_base_update_7101() {
  * Implements hook_update_N().
  */
 function ereol_base_update_7102() {
-  module_enable(array('ereol_article'), TRUE);
+  module_enable(array('ereol_article', 'ereol_author_portrait'), TRUE);
 }

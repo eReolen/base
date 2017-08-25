@@ -35,41 +35,6 @@ function reol_frontend_views_api($module = NULL, $api = NULL) {
 function reol_frontend_image_default_styles() {
   $styles = array();
 
-  // Exported image style: reol_author_portrait_full.
-  $styles['reol_author_portrait_full'] = array(
-    'label' => 'reol_author_portrait_full',
-    'effects' => array(
-      6 => array(
-        'name' => 'image_scale_and_crop',
-        'data' => array(
-          'width' => 360,
-          'height' => 400,
-        ),
-        'weight' => 1,
-      ),
-    ),
-  );
-
-  // Exported image style: reol_author_portrait_teaser.
-  $styles['reol_author_portrait_teaser'] = array(
-    'label' => 'reol_author_portrait_teaser',
-    'effects' => array(
-      7 => array(
-        'name' => 'image_scale_and_crop',
-        'data' => array(
-          'width' => 550,
-          'height' => 250,
-        ),
-        'weight' => 1,
-      ),
-      9 => array(
-        'name' => 'image_desaturate',
-        'data' => array(),
-        'weight' => 2,
-      ),
-    ),
-  );
-
   // Exported image style: reol_review.
   $styles['reol_review'] = array(
     'label' => 'reol_review',
@@ -93,14 +58,6 @@ function reol_frontend_image_default_styles() {
  */
 function reol_frontend_node_info() {
   $items = array(
-    'author_portrait' => array(
-      'name' => t('Om forfatteren'),
-      'base' => 'node_content',
-      'description' => t('Contains portraits of authors from Forfatterweb'),
-      'has_title' => '1',
-      'title_label' => t('Author name'),
-      'help' => '',
-    ),
     'video' => array(
       'name' => t('Video'),
       'base' => 'node_content',

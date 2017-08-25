@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen Author portrait feature.
+ */
+
+include_once 'ereol_author_portrait.features.inc';
