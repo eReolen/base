@@ -50,44 +50,8 @@ function reol_frontend_menu() {
  */
 function reol_frontend_preprocess_node(&$variables) {
   $node = $variables['node'];
-  $node_wrapper = entity_metadata_wrapper('node', $node);
 
-  // Add background image on teaser for article.
-  if ($node->type == 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
-
-    // Get image info.
-    $image_field = $node_wrapper->field_ding_news_list_image->value();
-    $image_uri = $image_field['uri'];
-
-    // If stage_file proxy is enabled, give it a chance to download the file.
-    if (function_exists('stage_file_proxy_process_file_uri')) {
-      stage_file_proxy_process_file_uri($image_uri);
-    }
-
-    $image_for_sizing = image_style_path('reol_article_teaser_background', $image_uri);
-    // Make sure image has been generated.
-    image_style_create_derivative(image_style_load('reol_article_teaser_background'), $image_uri, $image_for_sizing);
-
-    list($image_w, $image_h) = getimagesize($image_for_sizing);
-
-    // Add image style image.
-    $variables['image_background'] = theme('image_style', array(
-      'style_name' => 'reol_article_teaser_background',
-      'path' => $image_uri,
-      'getsize' => TRUE,
-      'attributes' => array(
-        'width' => $image_w,
-        'height' => $image_h,
-      ),
-    ));
-
-    // Change text for read more link.
-    $variables['readmore_text'] = t('Read entire article');
-    $uri = entity_uri('node', $node);
-    $variables['readmore'] = url($uri['path'], $uri['options']);
-  }
-
-  elseif ($node->type == "author_portrait") {
+  if ($node->type == "author_portrait") {
     $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
   }
 
@@ -335,29 +299,6 @@ function reol_frontend_ting_post_execute($request, $response, $raw_response) {
       }
       break;
   }
-}
-
-/**
- * Implements hook_image_styles_alter().
- */
-function reol_frontend_image_styles_alter(&$styles) {
-  $styles['ding_list_medium']['effects'] = array(
-    array(
-      'label' => 'Skalér og beskær',
-      'help' => 'Skalering og beskæring bevarer billedets højde-bredde-forhold og beskærer derefter den største dimension. Det er nyttigt til at generere kvadratiske thumbnails uden at forvrænge billedet.',
-      'effect callback' => 'image_scale_and_crop_effect',
-      'dimensions callback' => 'image_resize_dimensions',
-      'form callback' => 'image_resize_form',
-      'summary theme' => 'image_resize_summary',
-      'module' => 'image',
-      'name' => 'image_scale_and_crop',
-      'data' => array(
-        'width' => 245,
-        'height' => 365,
-      ),
-      'weight' => 1,
-    ),
-  );
 }
 
 /**
