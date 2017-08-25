@@ -16,17 +16,6 @@ function reol_frontend_entity_info_alter(&$entity_info) {
       'custom settings' => TRUE,
     ),
   );
-
-  $entity_info['file']['view modes'] += array(
-    'video_frontpage' => array(
-      'label' => t('Video on frontpage'),
-      'custom settings' => TRUE,
-    ),
-    'video_show' => array(
-      'label' => t('Video player'),
-      'custom settings' => TRUE,
-    ),
-  );
 }
 
 /**
@@ -51,12 +40,7 @@ function reol_frontend_menu() {
 function reol_frontend_preprocess_node(&$variables) {
   $node = $variables['node'];
 
-  if ($node->type == "video" && $variables['view_mode'] == 'teaser') {
-    drupal_add_library('system', 'drupal.ajax');
-    $variables['link'] = 'video/' . $node->nid . '/view';
-  }
-
-  elseif ($node->type == 'faq') {
+  if ($node->type == 'faq') {
     $uri = entity_uri('node', $node);
     $variables['link'] = url($uri['path'], $uri['options']);
   }
