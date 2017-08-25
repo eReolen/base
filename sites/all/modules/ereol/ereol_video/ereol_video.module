@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the eReol Video feature.
+ */
+
+include_once 'ereol_video.features.inc';

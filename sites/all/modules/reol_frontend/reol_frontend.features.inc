@@ -52,21 +52,3 @@ function reol_frontend_image_default_styles() {
 
   return $styles;
 }
-
-/**
- * Implements hook_node_info().
- */
-function reol_frontend_node_info() {
-  $items = array(
-    'video' => array(
-      'name' => t('Video'),
-      'base' => 'node_content',
-      'description' => t('Contains videos as shown on type frontpages.'),
-      'has_title' => '1',
-      'title_label' => t('Titel'),
-      'help' => '',
-    ),
-  );
-  drupal_alter('node_info', $items);
-  return $items;
-}

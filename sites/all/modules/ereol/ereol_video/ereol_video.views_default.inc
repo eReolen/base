@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * reol_frontend.views_default.inc
+ * ereol_video.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function reol_frontend_views_default_views() {
+function ereol_video_views_default_views() {
   $export = array();
 
   $view = new view();
