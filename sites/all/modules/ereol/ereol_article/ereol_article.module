@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the eReolen article feature.
+ */
+
+include_once 'ereol_article.features.inc';
