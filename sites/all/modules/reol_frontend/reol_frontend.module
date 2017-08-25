@@ -51,11 +51,7 @@ function reol_frontend_menu() {
 function reol_frontend_preprocess_node(&$variables) {
   $node = $variables['node'];
 
-  if ($node->type == "author_portrait") {
-    $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
-  }
-
-  elseif ($node->type == "video" && $variables['view_mode'] == 'teaser') {
+  if ($node->type == "video" && $variables['view_mode'] == 'teaser') {
     drupal_add_library('system', 'drupal.ajax');
     $variables['link'] = 'video/' . $node->nid . '/view';
   }
