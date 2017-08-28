@@ -6,6 +6,14 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function ereol_base_install() {
+  // Trigger update hooks created before the module was enabled.
+  ereol_base_update_7103();
+}
+
+/**
  * Enable ereol_inspiration.
  */
 function ereol_base_update_7101() {
@@ -17,4 +25,12 @@ function ereol_base_update_7101() {
  */
 function ereol_base_update_7102() {
   module_enable(array('ereol_article', 'ereol_author_portrait', 'ereol_video'), TRUE);
+}
+
+/**
+ * Set theme to orwell.
+ */
+function ereol_base_update_7103() {
+  theme_enable(array('orwell'));
+  variable_set('theme_default', 'orwell');
 }
