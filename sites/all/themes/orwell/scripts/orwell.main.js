@@ -4,6 +4,7 @@
  */
 
 (function ($) {
+  "use strict"
 
   /**
    * Make login link toggle login form.
@@ -15,7 +16,7 @@
         $('.js-login-link', context).click(function (e) {
           e.preventDefault();
           $('.pane-user-login').toggle();
-        })
+        });
       }
     }
   };
