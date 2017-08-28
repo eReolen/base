@@ -7,7 +7,7 @@
 
 $plugin = array(
   'title' => t('eReolen profile link'),
-  'description' => t('Link to login/profile, with JS behaviur.'),
+  'description' => t('Link to login/profile, with JS behavior and notification count.'),
   'category' => 'ereolen.dk',
   'single' => TRUE,
   'content type' => 'reol_profile_link',
@@ -22,13 +22,28 @@ function reol_frontend_reol_profile_link_content_type_render($subtype, $conf, $p
   global $user;
   $block = new stdClass();
 
+  $variables = array(
+    'content' => '',
+    'count' => NULL,
+  );
+
   $block->content = '';
   if (!user_is_logged_in()) {
-    $block->content .= l(t('Login'), 'login/nojs', array('attributes' => array('class' => array('js-login-link'))));
+    $variables['content'] = l(t('Login'), 'login/nojs', array('attributes' => array('class' => array('js-login-link'))));
   }
-  elseif (ding_user_is_provider_user($user)) {
-    $block->content .= l(t('My page'), 'user');
+  else {
+    $variables['content'] = l(t('My page'), 'user');
+    if (ding_user_is_provider_user($user)) {
+      $count = 0;
+      if (module_exists('ding_message')) {
+        $count = ding_message_get_message_count();
+      }
+      $count += count(ding_provider_invoke('reservation', 'list', $user, DING_RESERVATION_READY));
+      $count += count(ding_provider_invoke('debt', 'list', $user));
+    }
   }
+
+  $block->content = theme('reol_frontend_reol_login', $variables);
 
   return $block;
 }

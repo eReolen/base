@@ -40,15 +40,13 @@ function reol_frontend_menu() {
  */
 function reol_frontend_theme() {
   return array(
-    'reol_frontend_reol_notifications' => array(
+    'reol_frontend_reol_login' => array(
       'variables' => array(
-        'uri' => NULL,
-        'messages' => NULL,
-        'reservations' => NULL,
-        'debts' => NULL,
+        'content' => '',
+        'count' => NULL,
       ),
       'path' => drupal_get_path('module', 'reol_frontend') . '/templates',
-      'template' => 'reol-frontend-reol-notifications',
+      'template' => 'reol-frontend-reol-login',
     ),
   );
 }
