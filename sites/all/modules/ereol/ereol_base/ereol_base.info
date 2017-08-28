@@ -3,3 +3,6 @@ description = Base module for eReolen.
 core = 7.x
 dependencies[] = reol_base
 dependencies[] = ereol_inspiration
+dependencies[] = ereol_article
+dependencies[] = ereol_author_portrait
+dependencies[] = ereol_video

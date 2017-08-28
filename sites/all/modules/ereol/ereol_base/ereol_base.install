@@ -6,8 +6,15 @@
  */
 
 /**
- * Implements hook_install_N().
+ * Implements hook_update_N().
  */
-function ereol_base_install_7101() {
+function ereol_base_update_7101() {
   module_enable(array('ereol_inspiration'), TRUE);
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function ereol_base_update_7102() {
+  module_enable(array('ereol_article', 'ereol_author_portrait', 'video'), TRUE);
 }

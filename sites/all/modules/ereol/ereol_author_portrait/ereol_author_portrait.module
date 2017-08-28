@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Code for the eReolen Author portrait feature.
+ */
+
+include_once 'ereol_author_portrait.features.inc';
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function ereol_author_portrait_preprocess_node(&$variables) {
+  $node = $variables['node'];
+
+  if ($node->type == "author_portrait") {
+    $variables['link'] = $variables['content']['field_link']['#items'][0]['url'];
+  }
+}
