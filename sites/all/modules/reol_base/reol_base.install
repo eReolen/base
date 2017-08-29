@@ -370,3 +370,10 @@ function reol_base_update_7132() {
     module_enable(['ereol_base'], TRUE);
   }
 }
+
+/**
+ * Enable xautoload for bpi.
+ */
+function reol_base_update_7133() {
+  module_enable(['xautoload']);
+}
