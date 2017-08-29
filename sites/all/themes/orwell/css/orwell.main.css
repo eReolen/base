@@ -786,8 +786,6 @@ html.js input.form-autocomplete {
 }
 
 .user-login__link::before {
-  font-size: 28px;
-  color: #787878;
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -797,14 +795,14 @@ html.js input.form-autocomplete {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
+  font-size: 28px;
+  color: #787878;
   content: "";
   display: inline-block;
   top: 10px;
 }
 
 .user-login__profile-link::before {
-  font-size: 2rem;
-  color: #787878;
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -814,6 +812,8 @@ html.js input.form-autocomplete {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
+  font-size: 2rem;
+  color: #787878;
   content: "";
   display: inline-block;
   top: 10px;
@@ -821,7 +821,6 @@ html.js input.form-autocomplete {
 
 .notifications__count {
   position: absolute;
-  top: 0;
   background-color: #95b978;
   padding: 4px;
   color: white;
@@ -855,6 +854,27 @@ html.js input.form-autocomplete {
     -ms-flex-order: 3;
     order: 3;
   }
+}
+
+.article--teaser {
+  font-family: "SourceSansPro", sans-serif;
+  height: 370px;
+  color: white;
+  background-color: #393939;
+}
+
+.article--teaser a {
+  color: white;
+  text-decoration: none;
+}
+
+.article--teaser .article--teaser__title {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.article--teaser .article--teaser__body {
+  display: none;
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */

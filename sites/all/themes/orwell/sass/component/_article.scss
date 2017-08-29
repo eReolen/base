@@ -1,0 +1,25 @@
+
+.article--teaser {
+  // TODO: this should be the light version
+  font-family: $font-regular;
+  height: 370px;
+  color: white;
+  // TODO: random color in design?
+  background-color: #393939;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .article--teaser__title {
+    // TODO: this doesn't make sense at the moment.
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .article--teaser__body {
+    // Not displayed on mobile.
+    display: none;
+  }
+}

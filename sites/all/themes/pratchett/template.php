@@ -21,3 +21,14 @@ function pratchett_preprocess_html(&$variables) {
 
   drupal_add_html_head($viewport, 'viewport');
 }
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function pratchett_preprocess_node(&$variables) {
+  // Add tpl suggestions for node view modes on node type.
+  if (isset($variables['view_mode'])) {
+    $variables['theme_hook_suggestions'][] = 'node__' . 'view_mode__' . $variables['view_mode'];
+    $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
+  }
+}

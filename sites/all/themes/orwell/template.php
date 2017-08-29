@@ -34,3 +34,43 @@ function orwell_form_user_login_block_alter(&$form, &$form_state) {
   // Hide links.
   $form['links']['#access'] = FALSE;
 }
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function orwell_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  if ($node->type === 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
+    $variables['covers'] = array();
+    $entity_ids = array();
+    // Sadly no entity_wrapper support in ting_reference, so we'll do it the
+    // hard way.
+    if (isset($node->field_ding_news_materials[LANGUAGE_NONE])) {
+      foreach ($node->field_ding_news_materials[LANGUAGE_NONE] as $item) {
+        if (isset($item['value']->endpoints[LANGUAGE_NONE][1])) {
+          $entity_ids[] = $item['value']->endpoints[LANGUAGE_NONE][1]['entity_id'];
+        }
+      }
+    }
+
+    if ($entity_ids) {
+      // Pick two randomly.
+      shuffle($entity_ids);
+      $entity_ids = array_slice($entity_ids, 0, 2);
+
+      // Load the entities so we can get the well ID of them.
+      $ding_entities = entity_load('ting_object', $entity_ids);
+      $ids = array_map(function ($ding_entity) {
+        return $ding_entity->getId();
+      }, $ding_entities);
+
+      $variables['covers'] = array_map(function ($file) {
+        $variables = array(
+          'style_name' => 'ereol_article_covers',
+          'path' => $file,
+        );
+        return theme('image_style', $variables);
+      }, ting_covers_get(array_values($ids)));
+    }
+  }
+}
