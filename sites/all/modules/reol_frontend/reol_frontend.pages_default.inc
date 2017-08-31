@@ -591,7 +591,7 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->panel = 'branding';
     $pane->type = 'pane_header';
     $pane->subtype = 'pane_header';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array();
     $pane->cache = array();
@@ -635,7 +635,7 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9'] = $pane;
     $display->panels['branding'][1] = 'new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9';
     $pane = new stdClass();
-    $pane->pid = 'new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
+    $pane->pid = 'new-c5c6da7b-d735-401c-bf43-5149c3fdf141';
     $pane->panel = 'branding';
     $pane->type = 'block';
     $pane->subtype = 'menu_block-main_menu';
@@ -644,6 +644,7 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->configuration = array(
       'override_title' => 1,
       'override_title_text' => '',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -656,9 +657,9 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $pane->uuid = '34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
-    $display->content['new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79'] = $pane;
-    $display->panels['branding'][2] = 'new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
+    $pane->uuid = 'c5c6da7b-d735-401c-bf43-5149c3fdf141';
+    $display->content['new-c5c6da7b-d735-401c-bf43-5149c3fdf141'] = $pane;
+    $display->panels['branding'][2] = 'new-c5c6da7b-d735-401c-bf43-5149c3fdf141';
     $pane = new stdClass();
     $pane->pid = 'new-8c79c7df-e311-4af4-965f-50d239f6ecec';
     $pane->panel = 'branding';

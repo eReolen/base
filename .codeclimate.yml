@@ -51,6 +51,7 @@ exclude_paths:
   - profiles/
   - scripts/
   - sites/*.php
+  - sites/all/modules/contrib/
   - sites/all/drush/
   - sites/all/libraries/
   - sites/default/

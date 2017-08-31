@@ -113,6 +113,27 @@
   };
 
   /**
+   * Search drop down.
+   */
+  Drupal.behaviors.searchDropDown = {
+    attach : function(context, settings) {
+      // If the block is not present in the DOM abort.
+      if ($('.pane-search-form').length === 0) {
+        return;
+      }
+
+      var searchFormWrapper = $('.js-search-form-target', context);
+      var openTrigger = $('.js-search-form-trigger', context);
+
+      $(openTrigger).click(function(event) {
+        event.preventDefault();
+        searchFormWrapper.toggle();
+        openTrigger.toggleClass('open');
+      });
+    }
+  };
+
+  /**
    * Detect if we are on mobile devices.
    */
   function isMobile() {
