@@ -1,49 +1,55 @@
-@import "bootstrap/bootstrap";
+@import 'bootstrap/bootstrap';
 
+$color__search-form: #d8d8d8;
 $item-height: 6.875rem;
 $icon-color: #9c9c9c;
 
 .pane-search-form {
-  margin-left: auto;
   height: $item-height;
+  margin-left: auto;
 
   @include grid-media($medium) {
-    width: 100%;
     height: auto;
+    width: 100%;
   }
 }
 
 .search-form {
+  border-top: 1px solid $color__search-form;
   font-family: $font-regular;
-  border-top: 1px solid #d8d8d8;
 
   &__icon__wrapper {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    height: $item-height;
     cursor: pointer;
+    display: flex;
+    height: $item-height;
+    justify-content: center;
 
-    &:before {
+    &::before {
       @include icon;
-      content: $icon__search;
       color: $icon-color;
-      position: absolute;
+      content: $icon__search;
       font-size: 2.5rem;
-      z-index: 99999;
       position: absolute;
+      z-index: 99999;
 
       @include grid-media($medium) {
-        color: white;
-        position: relative;
+        color: $color__white;
         font-size: 1.5rem;
-        color: white;
+        position: relative;
         top: 5px;
       }
     }
 
     &.open {
-      &:before {
+      @include grid-media($medium) {
+        height: 2rem;
+        left: calc(50% - 1rem);
+        position: relative;
+        width: 2rem;
+      }
+
+      &::before {
         content: '\ea0f';
         font-size: 1.5rem;
 
@@ -52,19 +58,12 @@ $icon-color: #9c9c9c;
           top: 8px;
         }
       }
-
-      @include grid-media($medium) {
-        position: relative;
-        left: calc(50% - 1rem);
-        width: 2rem;
-        height: 2rem;
-      }
     }
 
     @include grid-media($medium) {
-      height: 2rem;
       background: $red;
       display: block;
+      height: 2rem;
       text-align: center;
     }
   }
@@ -75,62 +74,59 @@ $icon-color: #9c9c9c;
   }
 
   &__content {
+    background: $color__white;
     display: none;
-    width: 100%;
     height: $item-height;
-    position: absolute;
-    max-width: 100%;
-    top: 0;
     left: 0;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
     z-index: 4;
-    background: white;
 
     @include grid-media($medium) {
+      margin: 0 auto;
       position: relative;
       width: 1200px;
-      margin: 0 auto;
     }
   }
 
-  input#edit-search-block-form--2 {
-    width: 100%;
-    border: none;
-    color: gray;
-    height: $item-height;
-    display: block;
-    font-size: 2rem;
-    font-family: $font-light;
-    padding: 0 1.875rem;
+  &__input--text {
+    border: 0;
     box-sizing: border-box;
+    color: $color__gray;
+    display: block;
+    font-family: $font-light;
+    font-size: 2rem;
+    height: $item-height;
+    padding: 0 1.875rem;
+    width: 100%;
   }
 
   &__icon--close {
+    background: $red;
+    height: 2rem;
     position: absolute;
     right: 1rem;
-    height: 2rem;
     width: 2rem;
-    background: $red;
-
-    &:before {
-      @include icon;
-      content: $icon__cross;
-      color: red;
-      position: absolute;
-      font-size: 2.5rem;
-      color: white;
-      position: absolute;
-      font-size: 1rem;
-      left: 0.5rem;
-      top: 0.5rem;
-    }
 
     @include grid-media($medium) {
       right: auto;
       left: calc(50% - 1rem);
     }
+
+    &::before {
+      @include icon;
+      color: $color__white;
+      content: $icon__cross;
+      font-size: 1rem;
+      left: .5rem;
+      position: absolute;
+      top: .5rem;
+    }
   }
 }
 
-html.js input.form-autocomplete {
+.js .form-autocomplete {
   background-image: none;
 }

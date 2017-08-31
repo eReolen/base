@@ -1,17 +1,18 @@
-@import "reset";
-@import "bootstrap/bootstrap";
+@import 'reset';
+@import 'bootstrap/bootstrap';
 
 * {
   -webkit-font-smoothing: antialiased;
+
+  &::before,
+  &::after {
+    box-sizing: inherit;
+  }
 }
 
 html {
   box-sizing: border-box;
   font-size: 100%;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
 }
 
 body {

@@ -591,7 +591,7 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->panel = 'branding';
     $pane->type = 'pane_header';
     $pane->subtype = 'pane_header';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array();
     $pane->cache = array();

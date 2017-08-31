@@ -13,7 +13,7 @@ function ereol_base_install() {
 }
 
 /**
- * Implements hook_install_N().
+ * Implements hook_update_N().
  */
 function ereol_base_update_7101() {
   module_enable(array('ereol_inspiration'), TRUE);

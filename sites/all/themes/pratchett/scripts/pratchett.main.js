@@ -126,10 +126,10 @@
       var openTrigger = $('.js-search-form-trigger', context);
 
       $(openTrigger).click(function(event) {
-          event.preventDefault();
-          searchFormWrapper.toggle();
-          openTrigger.toggleClass('open');
-        });
+        event.preventDefault();
+        searchFormWrapper.toggle();
+        openTrigger.toggleClass('open');
+      });
     }
   };
 
