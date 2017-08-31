@@ -13,9 +13,9 @@ $menu-height: 5rem;
   }
 
   li {
-    display: flex;
     align-content: center;
     align-items: center;
+    display: inline-block;
 
     a {
       color: white;
@@ -25,16 +25,19 @@ $menu-height: 5rem;
       font-size: 1rem;
 
       @include grid-media($medium) {
-        height: 100%;
-        padding: 2.5rem;
         color: $font-menu__gray;
-        line-height: $menu-height;
         font-weight: 700;
+        line-height: $menu-height;
+        padding: 2.5rem;
 
         &:hover {
           background: $page-bg;
         }
       }
+    }
+
+    @include grid-media($medium) {
+      height: 100%;
     }
   }
 

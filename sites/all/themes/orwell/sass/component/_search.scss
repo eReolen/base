@@ -1,0 +1,132 @@
+@import 'bootstrap/bootstrap';
+
+$color__search-form: #d8d8d8;
+$item-height: 6.875rem;
+$icon-color: #9c9c9c;
+
+.pane-search-form {
+  height: $item-height;
+  margin-left: auto;
+
+  @include grid-media($medium) {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.search-form {
+  border-top: 1px solid $color__search-form;
+  font-family: $font-regular;
+
+  &__icon__wrapper {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: $item-height;
+    justify-content: center;
+
+    &::before {
+      @include icon;
+      color: $icon-color;
+      content: $icon__search;
+      font-size: 2.5rem;
+      position: absolute;
+      z-index: 99999;
+
+      @include grid-media($medium) {
+        color: $color__white;
+        font-size: 1.5rem;
+        position: relative;
+        top: 5px;
+      }
+    }
+
+    &.open {
+      @include grid-media($medium) {
+        height: 2rem;
+        left: calc(50% - 1rem);
+        position: relative;
+        width: 2rem;
+      }
+
+      &::before {
+        content: '\ea0f';
+        font-size: 1.5rem;
+
+        @include grid-media($medium) {
+          font-size: 1rem;
+          top: 8px;
+        }
+      }
+    }
+
+    @include grid-media($medium) {
+      background: $red;
+      display: block;
+      height: 2rem;
+      text-align: center;
+    }
+  }
+
+  &__icon {
+    width: 4rem;
+
+  }
+
+  &__content {
+    background: $color__white;
+    display: none;
+    height: $item-height;
+    left: 0;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 4;
+
+    @include grid-media($medium) {
+      margin: 0 auto;
+      position: relative;
+      width: 1200px;
+    }
+  }
+
+  &__input--text {
+    border: 0;
+    box-sizing: border-box;
+    color: $color__gray;
+    display: block;
+    font-family: $font-light;
+    font-size: 2rem;
+    height: $item-height;
+    padding: 0 1.875rem;
+    width: 100%;
+  }
+
+  &__icon--close {
+    background: $red;
+    height: 2rem;
+    position: absolute;
+    right: 1rem;
+    width: 2rem;
+
+    @include grid-media($medium) {
+      right: auto;
+      left: calc(50% - 1rem);
+    }
+
+    &::before {
+      @include icon;
+      color: $color__white;
+      content: $icon__cross;
+      font-size: 1rem;
+      left: .5rem;
+      position: absolute;
+      top: .5rem;
+    }
+  }
+}
+
+.js .form-autocomplete {
+  background-image: none;
+}
