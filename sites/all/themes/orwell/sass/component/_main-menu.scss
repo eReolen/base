@@ -25,7 +25,7 @@ $menu-height: 5rem;
       font-size: 1rem;
 
       @include grid-media($medium) {
-        height: 100%;
+
         padding: 2.5rem;
         color: $font-menu__gray;
         line-height: $menu-height;
@@ -35,6 +35,10 @@ $menu-height: 5rem;
           background: $page-bg;
         }
       }
+    }
+
+    @include grid-media($medium) {
+      height: 100%;
     }
   }
 

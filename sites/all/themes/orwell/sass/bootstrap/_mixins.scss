@@ -1,0 +1,14 @@
+@import "fonts";
+
+@mixin icon() {
+  font-family: $font-icon;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "";
+  font-weight: normal;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+}

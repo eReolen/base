@@ -1,7 +1,11 @@
 @import 'bourbon';
 
+@include font-face('icomoon', '/sites/all/themes/orwell/fonts/icomoon/icomoon', $file-formats: woff ttf);
+@include font-face("SourceSansProLight", "/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light");
 @include font-face("SourceSansPro", "/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular");
 @include font-face("SourceSansProSemiBold", "/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold");
 
+$font-light: 'SourceSansProLight', sans-serif;
 $font-regular: 'SourceSansPro', sans-serif;
 $font-semibold: 'SourceSansProSemiBold', sans-serif;
+$font-icon: 'icomoon';

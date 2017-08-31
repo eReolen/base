@@ -17,8 +17,9 @@
   height: 11.9rem;
 
   @include grid-media($medium){
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
-    height: 5rem;
+    // height: 5rem;
+    height: auto;
   }
 }
