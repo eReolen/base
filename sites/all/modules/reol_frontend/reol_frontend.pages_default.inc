@@ -635,7 +635,7 @@ function reol_frontend_default_page_manager_handlers() {
     $display->content['new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9'] = $pane;
     $display->panels['branding'][1] = 'new-6ad350ba-6bd8-4e57-8001-6c2c54a7a2a9';
     $pane = new stdClass();
-    $pane->pid = 'new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
+    $pane->pid = 'new-c5c6da7b-d735-401c-bf43-5149c3fdf141';
     $pane->panel = 'branding';
     $pane->type = 'block';
     $pane->subtype = 'search-form';
@@ -644,19 +644,19 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->configuration = array(
       'override_title' => 1,
       'override_title_text' => '',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
-      'style' => 'default',
     );
     $pane->css = array();
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $pane->uuid = 'f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
-    $display->content['new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0'] = $pane;
-    $display->panels['branding'][2] = 'new-f06a4c37-1ed2-4a64-8502-7b8d4d0619b0';
+    $pane->uuid = 'c5c6da7b-d735-401c-bf43-5149c3fdf141';
+    $display->content['new-c5c6da7b-d735-401c-bf43-5149c3fdf141'] = $pane;
+    $display->panels['branding'][2] = 'new-c5c6da7b-d735-401c-bf43-5149c3fdf141';
     $pane = new stdClass();
     $pane->pid = 'new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
     $pane->panel = 'branding';
@@ -677,7 +677,7 @@ function reol_frontend_default_page_manager_handlers() {
       'css_class' => 'js-topbar-menu',
     );
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 3;
     $pane->locks = array();
     $pane->uuid = '34bbd87e-b453-4803-9fcd-5d4b4b1c9b79';
     $display->content['new-34bbd87e-b453-4803-9fcd-5d4b4b1c9b79'] = $pane;
@@ -704,7 +704,7 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 4;
     $pane->locks = array();
     $pane->uuid = 'e4fc7036-2237-4147-891a-67ec251e01b9';
     $display->content['new-e4fc7036-2237-4147-891a-67ec251e01b9'] = $pane;
