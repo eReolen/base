@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Carousel paragraph feature.
+ */
+
+include_once 'reol_carousel_paragraph.features.inc';
