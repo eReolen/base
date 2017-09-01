@@ -1,0 +1,10 @@
+linters:
+  # Don't enforce naming format for mixins/variables.
+  NameFormat:
+    enabled: false
+  # Allow more nesting.
+  NestingDepth:
+    max_depth: 8
+  # Don't enforce any property order.
+  PropertySortOrder:
+    enabled: false
