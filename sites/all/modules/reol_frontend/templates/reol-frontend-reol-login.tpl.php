@@ -11,7 +11,9 @@
  * @ingroup themeable
  */
 ?>
-<div>
+<div class="user-login">
   <?php print $content; ?>
-  <span class="notifications__count"><?php print $count; ?></span>
+  <?php if(!empty($count)) : ?>
+    <span class="notifications__count"><?php print $count; ?></span>
+  <?php endif; ?>
 </div>

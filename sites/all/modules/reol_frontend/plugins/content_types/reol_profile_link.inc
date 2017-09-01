@@ -29,10 +29,22 @@ function reol_frontend_reol_profile_link_content_type_render($subtype, $conf, $p
 
   $block->content = '';
   if (!user_is_logged_in()) {
-    $variables['content'] = l(t('Login'), 'login/nojs', array('attributes' => array('class' => array('js-login-link'))));
+    $variables['content'] = l(t('Login'), 'login/nojs', array(
+      'attributes' => array(
+        'class' => array(
+          'js-login-link',
+          'user-login__link'
+        )
+      ))
+    );
   }
   else {
-    $variables['content'] = l(t('My page'), 'user');
+    $variables['content'] = l(t('My page'), 'user', array(
+      'attributes' => array(
+        'class' => array(
+          'user-login__profile-link'
+        )
+      )));
     if (ding_user_is_provider_user($user)) {
       $count = 0;
       if (module_exists('ding_message')) {
@@ -40,6 +52,7 @@ function reol_frontend_reol_profile_link_content_type_render($subtype, $conf, $p
       }
       $count += count(ding_provider_invoke('reservation', 'list', $user, DING_RESERVATION_READY));
       $count += count(ding_provider_invoke('debt', 'list', $user));
+      $variables['count'] = $count;
     }
   }
 

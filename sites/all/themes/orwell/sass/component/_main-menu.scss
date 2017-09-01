@@ -15,7 +15,7 @@ $menu-height: 5rem;
   li {
     align-content: center;
     align-items: center;
-    display: inline-block;
+    display: flex;
 
     a {
       color: white;
@@ -38,6 +38,7 @@ $menu-height: 5rem;
 
     @include grid-media($medium) {
       height: 100%;
+      display: inline-block;
     }
   }
 

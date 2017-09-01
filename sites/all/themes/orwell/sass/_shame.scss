@@ -1,7 +1,7 @@
 .topbar {
   .pane-search-form {
     @include grid-media($medium){
-      order: 3;
+      order: 4;
     }
   }
 
@@ -21,4 +21,88 @@ img {
   flex: 1;
   height: 6.875rem;
   width: 50%;
+}
+
+.pane-user-login {
+  display: block;
+  width: 100%;
+  order: 4;
+  background: $page-bg;
+
+  select {
+    background: white;
+    border: 1px solid #d5d5d5;
+    height: 41px;
+    width: 100%;
+    padding: 8px;
+    font-size: 13px;
+    padding: 10px 30px;
+    color: #969696;
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 1px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="submit"],
+  input[type="password"] {
+    text-decoration: none;
+    border-radius: 6px;
+    color: white;
+    min-width: 250px;
+    display: inline-block;
+    position: relative;
+    height: 41px;
+    border: 1px solid #d5d5d5;
+    color: black;
+    font-size: 15.4px;
+    font-family: $font-regular;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    appearance: none;
+  }
+
+  input[type="submit"] {
+    line-height: 1em;
+    padding: 15px 22px;
+    margin-top: 1rem;
+    border-radius: 0;
+    background-color: #dcdcdc;
+    width: 100%;
+
+    &:hover {
+      background-color: #e6e6e6;
+      cursor: pointer;
+    }
+  }
+
+  label {
+    font-size: 16px;
+    line-height: 22px;
+    font-family: $font-light;
+    color: #505050;
+    margin: 0 0 5px;
+    display: block;
+  }
+
+  .form-item {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  form {
+    .description {
+      color: #047537;
+      font-family: $font-regular;
+      margin-top: 5px;
+    }
+  }
+
+  form#user-login-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
 }
