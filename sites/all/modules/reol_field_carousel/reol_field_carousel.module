@@ -11,10 +11,10 @@
 function reol_field_carousel_menu() {
   $items = array();
 
-  $items['reol_field_carousel/ajax/%/%/%/%/%'] = array(
+  $items['reol_field_carousel/ajax/%/%/%/%/%/%'] = array(
     'title' => 'Show search carousel results',
     'page callback' => 'reol_field_carousel_ajax',
-    'page arguments' => array(2, 3, 4, 5, 6),
+    'page arguments' => array(2, 3, 4, 5, 6, 7),
     'access callback' => 'reol_field_carousel_ajax_access',
     'access arguments' => array(2, 3, 4),
     'type' => MENU_CALLBACK,
@@ -58,8 +58,58 @@ function reol_field_carousel_field_formatter_info() {
       'label' => t('Multiple carousels'),
       'description' => t('Displays the search strings as multiple carousels.'),
       'field types' => array('reol_field_carousel'),
+      'settings' => array('render_method' => 'cover'),
     ),
   );
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function reol_field_carousel_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $element = array();
+
+  if ($display['type'] == 'reol_field_carousel_notabs') {
+    $element['render_method'] = array(
+      '#title' => t('Cover rendering method'),
+      '#type' => 'radios',
+      '#options' => array(
+        'cover' => t('Cover (like ting_search_carousel)'),
+        'material' => t('Material (like ding_seredipity)'),
+      ),
+      '#default_value' => !empty($settings['render_method']) ? $settings['render_method'] : 'cover',
+      '#description' => t('How to render covers.'),
+      '#required' => TRUE,
+    );
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function reol_field_carousel_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $summary = '';
+
+  if (($display['type'] == 'reol_field_carousel_notabs')) {
+    $options = array(
+      'cover' => t('Cover (like ting_search_carousel)'),
+      'material' => t('Material (like ding_seredipity)'),
+    );
+    $render_method = !empty($settings['render_method']) ? $settings['render_method'] : 'cover';
+
+    $summary = t('Render method: @render_method', array('@render_method' => $options[$render_method]));
+  }
+
+  return $summary;
+
 }
 
 /**
@@ -68,6 +118,7 @@ function reol_field_carousel_field_formatter_info() {
 function reol_field_carousel_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
   list($entity_id,) = entity_extract_ids($entity_type, $entity);
+  $render_method = !empty($display['settings']['render_method']) ? $display['settings']['render_method'] : 'cover';
 
   switch ($display['type']) {
     case 'reol_field_carousel_notabs':
@@ -75,19 +126,15 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
         $chunk = ting_search_carousel_get_covers($item['search'], 0, TING_SEARCH_CAROUSEL_CHUNK_SIZE, TRUE);
 
         $ajax_path = sprintf(
-          'reol_field_carousel/ajax/%s/%s/%s/%s',
+          'reol_field_carousel/ajax/%s/%s/%s/%s/%s',
           $entity_type,
           $entity_id,
           $field['field_name'],
-          $delta
+          $delta,
+          $render_method
         );
 
-        foreach ($chunk['collections'] as $collection) {
-          $covers[] = array(
-            '#type' => 'ting_search_carousel_cover',
-            '#cover' => $collection,
-          );
-        }
+        $covers = reol_field_carousel_build_covers($render_method, $chunk['collections']);
 
         $element[] = array(
           '#type' => 'ding_carousel',
@@ -97,10 +144,7 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
           '#offset' => $chunk['next_offset'],
           // TODO: should be field configurable.
           '#placeholders' => TING_SEARCH_CAROUSEL_CHUNK_SIZE,
-          '#placeholder' => array(
-            '#type' => 'ting_search_carousel_cover',
-            '#cover' => ting_search_carousel_collection_placeholder(),
-          ),
+          '#placeholder' => reol_field_carousel_build_placeholder($render_method),
 
         );
       }
@@ -145,6 +189,52 @@ function reol_field_carousel_field_widget_form(&$form, &$form_state, $field, $in
 }
 
 /**
+ * Build render of covers according to field settings.
+ */
+function reol_field_carousel_build_covers($render_method, $collections) {
+  $build = array();
+  switch ($render_method) {
+    case 'cover':
+      foreach ($collections as $collection) {
+        $build[] = array(
+          '#type' => 'ting_search_carousel_cover',
+          '#cover' => $collection,
+        );
+      }
+      break;
+
+    case 'material':
+      $ding_entity_ids = array_map(function ($object) {
+        return $object->id;
+      }, $collections);
+
+      $entities = ding_entity_load_multiple($ding_entity_ids);
+      foreach ($entities as $entity) {
+        $build[] = ting_object_view($entity, 'compact');
+      }
+      break;
+  }
+
+  return $build;
+}
+
+/**
+ * Build render of a cover placeholder according to field settings.
+ */
+function reol_field_carousel_build_placeholder($render_method) {
+  switch ($render_method) {
+    case 'cover':
+    case 'material':
+      // We're using ting_search_carousels placeholder rendering in both cases,
+      // as there's really no material placeholder implementation.
+      return array(
+        '#type' => 'ting_search_carousel_cover',
+        '#cover' => ting_search_carousel_collection_placeholder(),
+      );
+  }
+}
+
+/**
  * Accecss callback for the ajax page.
  *
  * @param string $entity_type
@@ -175,16 +265,17 @@ function reol_field_carousel_ajax_access($entity_type, $entity_id, $field_name) 
  *   Name of the field.
  * @param string $delta
  *   Field delta.
+ * @param string $render_method
+ *   Cover rendering method.
  * @param int $offset
  *   Offset into result to fetch from.
  */
-function reol_field_carousel_ajax($entity_type, $entity_id, $field_name, $delta, $offset) {
+function reol_field_carousel_ajax($entity_type, $entity_id, $field_name, $delta, $render_method, $offset) {
   // The access callback has already checked that these exists.
   $entity = entity_load($entity_type, array($entity_id));
   $entity = reset($entity);
 
   $items = field_get_items($entity_type, $entity, $field_name);
-  $content = FALSE;
 
   $return = array(
     'content' => '',
@@ -193,15 +284,12 @@ function reol_field_carousel_ajax($entity_type, $entity_id, $field_name, $delta,
 
   if (isset($items[$delta])) {
     $item = $items[$delta];
-    $content = '';
     $chunk = ting_search_carousel_get_covers($item['search'], $offset, TING_SEARCH_CAROUSEL_CHUNK_SIZE);
-    foreach ($chunk['collections'] as $collection) {
+    $covers = reol_field_carousel_build_covers($render_method, $chunk['collections']);
+    foreach ($covers as $cover) {
       $build[] = array(
         '#type' => 'ding_carousel_item',
-        '#content' => array(
-          '#type' => 'ting_search_carousel_cover',
-          '#cover' => $collection,
-        ),
+        '#content' => $cover,
       );
     }
 
@@ -211,10 +299,7 @@ function reol_field_carousel_ajax($entity_type, $entity_id, $field_name, $delta,
       $build[] = array(
         '#type' => 'ding_carousel_item',
         '#placeholder' => TRUE,
-        '#content' => array(
-          '#type' => 'ting_search_carousel_cover',
-          '#cover' => ting_search_carousel_collection_placeholder(),
-        ),
+        '#content' => reol_field_carousel_build_placeholder($render_method),
       );
     }
 
