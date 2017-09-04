@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen frontend feature.
@@ -32,6 +33,22 @@ function reol_frontend_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function reol_frontend_theme() {
+  return array(
+    'reol_frontend_reol_login' => array(
+      'variables' => array(
+        'content' => '',
+        'count' => NULL,
+      ),
+      'path' => drupal_get_path('module', 'reol_frontend') . '/templates',
+      'template' => 'reol-frontend-reol-login',
+    ),
+  );
 }
 
 /**
@@ -145,7 +162,7 @@ function reol_frontend_flush_caches() {
 /**
  * View a video from modal.
  *
- * @param StdClass $node
+ * @param object $node
  *   The video node.
  *
  * @return array
@@ -192,7 +209,7 @@ function reol_frontend_form_ting_search_backend_engines_form_alter(&$form, &$for
   $default = search_get_default_module_info();
 
   $options = &$form['backends']['searches']['#options'];
-  foreach ($backends as $name => $backend) {
+  foreach ($backends as $backend) {
 
     // Create new title for better translations.
     switch ($backend['path']) {

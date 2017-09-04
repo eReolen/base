@@ -1,0 +1,68 @@
+@import 'bootstrap/bootstrap';
+
+.user-login {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  height: 6.875rem;
+
+  @include grid-media($medium) {
+    height: 5rem;
+  }
+
+  a {
+    font-size: 0;
+    color: transparent;
+    padding: 0 1rem;
+  }
+
+  &__link {
+    &::before {
+      @include icon();
+      font-size: 28px;
+      color: $font-gray;
+      content: $icon__lock;
+      display: inline-block;
+      top: 10px;
+    }
+  }
+
+  &__profile-link {
+    &::before {
+      @include icon();
+      font-size: 2rem;
+      color: $font-gray;
+      content: $icon__user;
+      display: inline-block;
+      top: 10px;
+    }
+  }
+}
+
+.notifications__count {
+  position: absolute;
+  background-color: $color__green;
+  padding: 4px;
+  color: white;
+  border-radius: 50%;
+  font-size: 13px;
+  font-family: $font-semibold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 14px;
+  width: 14px;
+  margin-left: -10px;
+  top: 31px;
+
+  @include grid-media($medium) {
+    top: 19px;
+  }
+}
+
+.pane-reol-profile-link {
+  @include grid-media($medium) {
+    order: 3;
+  }
+}

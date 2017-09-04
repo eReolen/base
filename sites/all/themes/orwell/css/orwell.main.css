@@ -120,9 +120,9 @@ body {
 
 @media all and (min-width: 49rem) {
   .topbar .pane-search-form {
-    -webkit-box-ordinal-group: 4;
-    -ms-flex-order: 3;
-    order: 3;
+    -webkit-box-ordinal-group: 5;
+    -ms-flex-order: 4;
+    order: 4;
   }
 }
 
@@ -145,6 +145,91 @@ img {
   flex: 1;
   height: 6.875rem;
   width: 50%;
+}
+
+.pane-user-login {
+  display: block;
+  width: 100%;
+  -webkit-box-ordinal-group: 5;
+  -ms-flex-order: 4;
+  order: 4;
+  background: #f0f0f0;
+}
+
+.pane-user-login select {
+  background: white;
+  border: 1px solid #d5d5d5;
+  height: 41px;
+  width: 100%;
+  font-size: 13px;
+  padding: 10px 30px;
+  color: #969696;
+  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.pane-user-login input[type="text"],
+.pane-user-login input[type="email"],
+.pane-user-login input[type="submit"],
+.pane-user-login input[type="password"] {
+  text-decoration: none;
+  border-radius: 6px;
+  min-width: 250px;
+  display: inline-block;
+  position: relative;
+  height: 41px;
+  border: 1px solid #d5d5d5;
+  color: black;
+  font-size: 15.4px;
+  font-family: "SourceSansPro", sans-serif;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.pane-user-login input[type="submit"] {
+  line-height: 1em;
+  padding: 15px 22px;
+  margin-top: 1rem;
+  border-radius: 0;
+  background-color: #dcdcdc;
+  width: 100%;
+}
+
+.pane-user-login input[type="submit"]:hover {
+  background-color: #e6e6e6;
+  cursor: pointer;
+}
+
+.pane-user-login label {
+  font-size: 16px;
+  line-height: 22px;
+  font-family: "SourceSansProLight", sans-serif;
+  color: #505050;
+  margin: 0 0 5px;
+  display: block;
+}
+
+.pane-user-login .form-item {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.pane-user-login form .description {
+  color: #047537;
+  font-family: "SourceSansPro", sans-serif;
+  margin-top: 5px;
+}
+
+.pane-user-login form#user-login-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 @font-face {
@@ -360,7 +445,7 @@ img {
   top: .5rem;
 }
 
-.js .form-autocomplete {
+html.js input.form-autocomplete {
   background-image: none;
 }
 
@@ -370,6 +455,9 @@ img {
 
 .pane-menu-block-main-menu {
   width: 100%;
+  -webkit-box-ordinal-group: 6;
+  -ms-flex-order: 5;
+  order: 5;
 }
 
 @media all and (min-width: 49rem) {
@@ -387,7 +475,6 @@ img {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  height: 11.9rem;
 }
 
 @media all and (min-width: 49rem) {
@@ -399,6 +486,10 @@ img {
     justify-content: center;
     height: auto;
   }
+}
+
+.js .js-login-form {
+  display: none;
 }
 
 .menu-name-main-menu {
@@ -424,7 +515,9 @@ img {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .menu-name-main-menu li a {
@@ -450,6 +543,7 @@ img {
 @media all and (min-width: 49rem) {
   .menu-name-main-menu li {
     height: 100%;
+    display: inline-block;
   }
 }
 
@@ -607,6 +701,160 @@ img {
 
 .footer .leaf {
   margin: 0;
+}
+
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+.user-login {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 6.875rem;
+}
+
+@media all and (min-width: 49rem) {
+  .user-login {
+    height: 5rem;
+  }
+}
+
+.user-login a {
+  font-size: 0;
+  color: transparent;
+  padding: 0 1rem;
+}
+
+.user-login__link::before {
+  font-size: 28px;
+  color: #787878;
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  display: inline-block;
+  top: 10px;
+}
+
+.user-login__profile-link::before {
+  font-size: 2rem;
+  color: #787878;
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  display: inline-block;
+  top: 10px;
+}
+
+.notifications__count {
+  position: absolute;
+  top: 0;
+  background-color: #95b978;
+  padding: 4px;
+  color: white;
+  border-radius: 50%;
+  font-size: 13px;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 14px;
+  width: 14px;
+  margin-left: -10px;
+  top: 31px;
+}
+
+@media all and (min-width: 49rem) {
+  .notifications__count {
+    top: 19px;
+  }
+}
+
+@media all and (min-width: 49rem) {
+  .pane-reol-profile-link {
+    -webkit-box-ordinal-group: 4;
+    -ms-flex-order: 3;
+    order: 3;
+  }
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */

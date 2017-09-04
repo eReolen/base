@@ -1,10 +1,22 @@
 linters:
-  # Don't enforce naming format for mixins/variables.
-  NameFormat:
-    enabled: false
+  # We're using the hphenated_BEM convention.
+  SelectorFormat:
+    convention: hyphenated_BEM
   # Allow more nesting.
   NestingDepth:
     max_depth: 8
+  # Don't enforce naming format for mixins/variables.
+  NameFormat:
+    enabled: false
   # Don't enforce any property order.
   PropertySortOrder:
+    enabled: false
+  # Not all colors are defined as variables.
+  ColorVariable:
+    enabled: false
+  # Don't require hex notation for all colors.
+  ColorKeyword:
+    enabled: false
+  # Allow qualifying selectors like input[type="text"]
+  QualifyingElement:
     enabled: false

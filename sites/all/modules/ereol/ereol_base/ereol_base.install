@@ -9,25 +9,26 @@
  * Implements hook_install().
  */
 function ereol_base_install() {
+  // Trigger update hooks created before the module was enabled.
   ereol_base_update_7103();
 }
 
 /**
- * Implements hook_update_N().
+ * Enable ereol_inspiration.
  */
 function ereol_base_update_7101() {
   module_enable(array('ereol_inspiration'), TRUE);
 }
 
 /**
- * Implements hook_update_N().
+ * Enable ereol_article, ereol_author_portrait, ereol_video.
  */
 function ereol_base_update_7102() {
-  module_enable(array('ereol_article', 'ereol_author_portrait', 'video'), TRUE);
+  module_enable(array('ereol_article', 'ereol_author_portrait', 'ereol_video'), TRUE);
 }
 
 /**
- * Enable modules and theme.
+ * Set theme to orwell.
  */
 function ereol_base_update_7103() {
   theme_enable(array('orwell'));

@@ -19,10 +19,18 @@ function orwell_panels_default_style_render_region($vars) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function orwell_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+function orwell_form_search_block_form_alter(&$form, &$form_state) {
   // HTML5 placeholder attribute.
   $form['search_block_form']['#attributes']['placeholder'] = t('Søg efter');
   $form['search_block_form']['#attributes']['class'][] = 'search-form__input--text';
   // Hide submit button.
   $form['actions']['#attributes']['class'][] = 'element-invisible';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function orwell_form_user_login_block_alter(&$form, &$form_state) {
+  // Hide links.
+  $form['links']['#access'] = FALSE;
 }

@@ -4,6 +4,7 @@
 
 .pane-menu-block-main-menu {
   width: 100%;
+  order: 5;
 
   @include grid-media($medium){
     width: auto;
@@ -14,12 +15,15 @@
 .topbar-inner {
   display: flex;
   flex-wrap: wrap;
-  height: 11.9rem;
 
   @include grid-media($medium){
     flex-wrap: wrap;
     justify-content: center;
-    // height: 5rem;
     height: auto;
   }
+}
+
+// Hide the login form, it'll be toggled by JS.
+.js .js-login-form {
+  display: none;
 }
