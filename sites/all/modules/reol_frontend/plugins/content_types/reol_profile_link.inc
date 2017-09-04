@@ -29,22 +29,25 @@ function reol_frontend_reol_profile_link_content_type_render($subtype, $conf, $p
 
   $block->content = '';
   if (!user_is_logged_in()) {
-    $variables['content'] = l(t('Login'), 'login/nojs', array(
+    $options = array(
       'attributes' => array(
         'class' => array(
           'js-login-link',
-          'user-login__link'
-        )
-      ))
+          'user-login__link',
+        ),
+      ),
     );
+    $variables['content'] = l(t('Login'), 'login/nojs', $options);
   }
   else {
-    $variables['content'] = l(t('My page'), 'user', array(
+    $options = array(
       'attributes' => array(
         'class' => array(
-          'user-login__profile-link'
-        )
-      )));
+          'user-login__profile-link',
+        ),
+      ),
+    );
+    $variables['content'] = l(t('My page'), 'user', $options);
     if (ding_user_is_provider_user($user)) {
       $count = 0;
       if (module_exists('ding_message')) {

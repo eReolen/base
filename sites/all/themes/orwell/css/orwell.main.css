@@ -161,7 +161,6 @@ img {
   border: 1px solid #d5d5d5;
   height: 41px;
   width: 100%;
-  padding: 8px;
   font-size: 13px;
   padding: 10px 30px;
   color: #969696;
@@ -176,7 +175,6 @@ img {
 .pane-user-login input[type="password"] {
   text-decoration: none;
   border-radius: 6px;
-  color: white;
   min-width: 250px;
   display: inline-block;
   position: relative;

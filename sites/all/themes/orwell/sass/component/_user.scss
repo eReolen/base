@@ -19,9 +19,9 @@
 
   &__link {
     &::before {
+      @include icon();
       font-size: 28px;
       color: $font-gray;
-      @include icon();
       content: $icon__lock;
       display: inline-block;
       top: 10px;
@@ -30,9 +30,9 @@
 
   &__profile-link {
     &::before {
+      @include icon();
       font-size: 2rem;
       color: $font-gray;
-      @include icon();
       content: $icon__user;
       display: inline-block;
       top: 10px;
@@ -42,7 +42,6 @@
 
 .notifications__count {
   position: absolute;
-  top: 0;
   background-color: $color__green;
   padding: 4px;
   color: white;
@@ -58,7 +57,7 @@
   top: 31px;
 
   @include grid-media($medium) {
-      top: 19px;
+    top: 19px;
   }
 }
 

@@ -4,7 +4,7 @@
  */
 
 (function ($) {
-  "use strict"
+  'use strict';
 
   /**
    * Make login link toggle login form.
