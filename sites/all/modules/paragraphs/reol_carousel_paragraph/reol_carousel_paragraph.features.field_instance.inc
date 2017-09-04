@@ -21,14 +21,18 @@ function reol_carousel_paragraph_field_default_field_instances() {
       'default' => array(
         'label' => 'hidden',
         'module' => 'reol_field_carousel',
-        'settings' => array(),
+        'settings' => array(
+          'render_method' => 'material',
+        ),
         'type' => 'reol_field_carousel_notabs',
         'weight' => 0,
       ),
       'paragraphs_editor_preview' => array(
         'label' => 'hidden',
         'module' => 'reol_field_carousel',
-        'settings' => array(),
+        'settings' => array(
+          'render_method' => 'cover',
+        ),
         'type' => 'reol_field_carousel_notabs',
         'weight' => 0,
       ),
