@@ -9,7 +9,7 @@
 ?>
 <div class="reader">
   <div class="reader__inner">
-    <a class="reader__back-button" href="javascript:history.go(-1)"><?php print t('back'); ?></a>
+    <a class="reader__back-button" onclick="javascript:history.go(-1)"><?php print t('back'); ?></a>
     <div
   <?php if (isset($retailer_order_number)) : ?>
     data-id="<?php echo $retailer_order_number; ?>"
