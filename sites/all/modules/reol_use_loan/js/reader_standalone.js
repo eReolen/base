@@ -28,6 +28,14 @@
 
       // Add class to root element so the we can style everything acordingly.
       $('html').addClass('reader-is-open');
+
+      // Add back button that works on click and touchstart(mobile).
+      var trigger = $('<a class="reader__back-button js-back-button">back</a>');
+      $('#reader-header').append(trigger);
+
+      trigger.on('click touchstart', function(event) {
+        window.history.back();
+      });
     }
   };
 })(jQuery);
