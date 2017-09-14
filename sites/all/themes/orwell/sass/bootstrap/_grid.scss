@@ -3,6 +3,18 @@
 
 $grid-columns: 12;
 
+$xsmall: (
+  columns: $grid-columns,
+  gutter: 0px,
+  media: 'all and (min-width: 24rem)',
+);
+
+$small: (
+  columns: $grid-columns,
+  gutter: 0px,
+  media: 'all and (min-width: 31rem)',
+);
+
 $medium: (
   columns: $grid-columns,
   gutter: 0px,

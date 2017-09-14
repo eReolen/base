@@ -26,6 +26,22 @@ function ereol_article_views_api($module = NULL, $api = NULL) {
 function ereol_article_image_default_styles() {
   $styles = array();
 
+  // Exported image style: ereol_article_covers.
+  $styles['ereol_article_covers'] = array(
+    'label' => 'eReol article covers',
+    'effects' => array(
+      1 => array(
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => '',
+          'height' => 390,
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
   // Exported image style: reol_article_teaser.
   $styles['reol_article_teaser'] = array(
     'label' => 'reol_article_teaser',
