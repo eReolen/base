@@ -74,6 +74,12 @@ function reol_frontend_preprocess_node(&$variables) {
     $uri = entity_uri('node', $node);
     $variables['link'] = url($uri['path'], $uri['options']);
   }
+
+  // Add variable that tells if the teaser is an image teaser.
+  if ($node->type == 'article') {
+    $variables['is_image_teaser'] = !empty($node->field_image_teaser)
+      && !empty($node->field_article_image);
+  }
 }
 
 /**

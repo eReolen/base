@@ -72,5 +72,11 @@ function orwell_preprocess_node(&$variables) {
         return theme('image_style', $variables);
       }, ting_covers_get(array_values($ids)));
     }
+
+    // Add template suggestion if teaser should use article_image
+    // as background.
+    if ($variables['is_image_teaser']) {
+      $variables['theme_hook_suggestions'][] = 'node__article__view_mode__teaser__image';
+    }
   }
 }
