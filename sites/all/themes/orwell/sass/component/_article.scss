@@ -15,6 +15,7 @@ $teaser-bg-default: #393939;
   }
 
   &__title {
+    position: relative;
     max-width: 600px;
     margin: 0 auto 2rem;
     // TODO: this doesn't make sense at the moment.
@@ -22,6 +23,12 @@ $teaser-bg-default: #393939;
     line-height: 2.6rem;
     text-align: center;
     font-family: $font-light;
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
+
+    .article--teaser--image & {
+      float: left;
+      text-align: left;
+    }
 
     @include grid-media($medium) {
       max-width: 100%;
@@ -31,6 +38,7 @@ $teaser-bg-default: #393939;
   }
 
   &__body {
+    position: relative;
     // Not displayed on mobile.
     display: none;
     margin: 0 0 2rem;
@@ -90,7 +98,19 @@ $teaser-bg-default: #393939;
     }
   }
 
+  &__label {
+    position: relative;
+    margin-bottom: 1rem;
+    color: $color__white;
+    font-size: 1rem;
+    font-family: $font-semibold;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
+  }
+
   &__read-more {
+    position: relative;
     // Not displayed on mobile.
     display: none;
     appearance: none;
@@ -101,12 +121,18 @@ $teaser-bg-default: #393939;
     color: $color__white;
     text-transform: uppercase;
     font-size: 0.75rem;
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
+    font-weight: bold;
     border-radius: 2px;
     text-align: center;
     cursor: pointer;
 
     &:hover {
       border: 1px solid rgba(255, 255, 255, 1);
+    }
+
+    .article--teaser--image & {
+      float: right;
     }
 
     @include grid-media($medium) {
@@ -119,23 +145,58 @@ $teaser-bg-default: #393939;
     padding: 2rem;
   }
 
-  @include grid-media($medium) {
-
-    &__left,
-    &__right {
+  &__left,
+  &__right {
+    @include grid-media($medium) {
       float: left;
       width: 50%;
       margin: 0;
     }
+  }
 
-    &__left {
-      display: flex;
+  &__info {
+
+    .article--teaser--image & {
+      padding: 0 2rem;
+    }
+
+    @include grid-media($medium) {
       height: 100%;
+      display: flex;
       align-items: center;
 
       &__inner {
+        width: 100%;
         padding: 2rem;
       }
     }
+
+    .article--teaser--image & {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+
+  &--image {
+    padding: 0;
+  }
+
+  &__cover {
+    position: absolute;
+    height: 440px;
+    width: 100%;
+
+    @include grid-media($medium) {
+      height: 475px;
+    }
+  }
+}
+
+.field-name-field-article-image {
+  img {
+    object-fit: cover;
+    height: 475px;
+    display: block;
   }
 }

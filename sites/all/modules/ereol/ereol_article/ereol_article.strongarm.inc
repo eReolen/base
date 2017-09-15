@@ -96,16 +96,23 @@ function ereol_article_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '8',
-        ),
-        'redirect' => array(
           'weight' => '9',
         ),
+        'redirect' => array(
+          'weight' => '10',
+        ),
         'metatags' => array(
-          'weight' => '11',
+          'weight' => '12',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'ding_serendipity_info' => array(
+          'teaser' => array(
+            'weight' => '0',
+            'visible' => TRUE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__article'] = $strongarm;
