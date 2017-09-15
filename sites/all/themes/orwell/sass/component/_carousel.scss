@@ -1,0 +1,28 @@
+@import "bootstrap/bootstrap";
+
+.ding-carousel .slick-arrow {
+  background: $page-bg;
+  border: 1px solid $icon-color;
+  border-radius: 1px;
+  font-size: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 30px;
+  z-index: 1;
+
+  &.slick-prev {
+    left: 30px;
+  }
+
+  &.slick-next {
+    right: 30px;
+  }
+
+  &:before {
+    @include icon;
+    content: $icon__play;
+    color: $icon-color;
+    font-size: 28px;
+    text-indent: 0;
+  }
+}
