@@ -1029,4 +1029,95 @@ html.js input.form-autocomplete {
   }
 }
 
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+.ding-carousel .slick-arrow {
+  background: #f0f0f0;
+  border: 1px solid #9c9c9c;
+  border-radius: 1px;
+  font-size: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 30px;
+  z-index: 1;
+}
+
+.ding-carousel .slick-arrow.slick-prev {
+  left: 30px;
+}
+
+.ding-carousel .slick-arrow.slick-next {
+  right: 30px;
+}
+
+.ding-carousel .slick-arrow:before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  color: #9c9c9c;
+  font-size: 28px;
+  text-indent: 0;
+}
+
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
