@@ -4,7 +4,6 @@
  * @file
  * Teaser view for articles with cover image as baclground.
  */
-
 ?>
 <div class="article article--teaser article--teaser--image <?php print $classes; ?>">
   <a href="<?php print $node_url; ?>">

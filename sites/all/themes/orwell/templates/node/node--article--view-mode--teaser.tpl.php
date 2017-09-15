@@ -4,7 +4,6 @@
  * @file
  * Teaser view for articles.
  */
-
 ?>
 <div class="article article--teaser <?php print $classes; ?>">
   <a href="<?php print $node_url; ?>">

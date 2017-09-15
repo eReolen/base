@@ -23,7 +23,7 @@ $teaser-bg-default: #393939;
     line-height: 2.6rem;
     text-align: center;
     font-family: $font-light;
-    text-shadow: 0 0 6px rgba(0,0,0,0.78);
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
 
     .article--teaser--image & {
       float: left;
@@ -106,7 +106,7 @@ $teaser-bg-default: #393939;
     font-family: $font-semibold;
     font-weight: 700;
     text-transform: uppercase;
-    text-shadow: 0 0 6px rgba(0,0,0,0.78);
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
   }
 
   &__read-more {
@@ -121,9 +121,8 @@ $teaser-bg-default: #393939;
     color: $color__white;
     text-transform: uppercase;
     font-size: 0.75rem;
-    text-shadow: 0 0 6px rgba(0,0,0,0.78);
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
     font-weight: bold;
-    font-size: 14px;
     border-radius: 2px;
     text-align: center;
     cursor: pointer;
