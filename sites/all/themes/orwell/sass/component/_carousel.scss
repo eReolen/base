@@ -1,4 +1,4 @@
-@import "bootstrap/bootstrap";
+@import 'bootstrap/bootstrap';
 
 .ding-carousel .slick-arrow {
   background: $page-bg;
@@ -18,7 +18,7 @@
     right: 30px;
   }
 
-  &:before {
+  &::before {
     @include icon;
     content: $icon__play;
     color: $icon-color;
