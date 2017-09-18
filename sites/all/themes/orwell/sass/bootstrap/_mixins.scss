@@ -11,3 +11,8 @@
   font-variant: normal;
   text-transform: none;
 }
+
+@mixin content-wrapper() {
+  max-width: 1200px;
+  margin: 0 auto;
+}
