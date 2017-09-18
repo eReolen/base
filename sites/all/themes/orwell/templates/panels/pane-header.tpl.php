@@ -11,7 +11,7 @@
  <div class="branding">
    <?php if (!empty($logo)): ?>
      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo" class="branding__logo">
-       <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+       <img src="sites/all/themes/orwell/svg/eReolen_Logo.svg" alt="<?php print t('Home'); ?>" />
      </a>
    <?php endif; ?>
  </div>

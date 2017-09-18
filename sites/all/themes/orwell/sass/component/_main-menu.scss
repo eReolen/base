@@ -6,16 +6,20 @@ $menu-height: 5rem;
 
   ul {
     display: flex;
-    justify-content: space-between;
-    height: 100%;
-    margin: 0 5vw;
-    list-style-type: none;
+
+    @include grid-media($medium) {
+      display: inline-block;
+      margin: 0 auto;
+    }
   }
 
   li {
-    align-content: center;
-    align-items: center;
-    display: flex;
+    height: 100%;
+    display: inline-block;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    float: left;
 
     a {
       color: white;
@@ -23,12 +27,18 @@ $menu-height: 5rem;
       font-family: $font-regular;
       font-weight: bold;
       font-size: 1rem;
+      line-height: 5rem;
+      height: 100%;
+      display: block;
+      padding: 0;
 
       @include grid-media($medium) {
         color: $font-menu__gray;
         font-weight: 700;
-        line-height: $menu-height;
-        padding: 2.5rem;
+        line-height: 5rem;
+        height: 100%;
+        display: block;
+        padding: 0 2.5rem;
 
         &:hover {
           background: $page-bg;
@@ -39,6 +49,9 @@ $menu-height: 5rem;
     @include grid-media($medium) {
       height: 100%;
       display: inline-block;
+      margin: 0;
+      padding: 0;
+      float: left;
     }
   }
 

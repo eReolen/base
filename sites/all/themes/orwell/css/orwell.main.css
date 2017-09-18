@@ -122,7 +122,13 @@ body {
 
 .page-wrapper {
   max-width: 1440px;
-  margin: 2rem auto;
+  margin: 0 auto;
+}
+
+@media all and (min-width: 49rem) {
+  .page-wrapper {
+    margin: 2rem auto;
+  }
 }
 
 .content-wrapper {
@@ -176,15 +182,6 @@ body {
 
 img {
   max-width: 100%;
-}
-
-.branding {
-  border: 1px solid;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  height: 6.875rem;
-  width: 50%;
 }
 
 .pane-user-login {
@@ -309,12 +306,19 @@ img {
 .pane-search-form {
   height: 6.875rem;
   margin-left: auto;
+  margin-left: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 @media all and (min-width: 49rem) {
   .pane-search-form {
+    position: relative;
     height: auto;
     width: 100%;
+    top: auto;
+    right: auto;
   }
 }
 
@@ -362,6 +366,13 @@ img {
   }
 }
 
+.search-form__icon__wrapper.open {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+}
+
 @media all and (min-width: 49rem) {
   .search-form__icon__wrapper.open {
     height: 2rem;
@@ -372,6 +383,7 @@ img {
 }
 
 .search-form__icon__wrapper.open::before {
+  position: relative;
   content: '\ea0f';
   font-size: 1.5rem;
   right: 1.3rem;
@@ -379,6 +391,7 @@ img {
 
 @media all and (min-width: 49rem) {
   .search-form__icon__wrapper.open::before {
+    position: relative;
     font-size: 1rem;
     top: 8px;
     right: 0;
@@ -404,7 +417,7 @@ img {
   height: 6.875rem;
   left: 0;
   max-width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: 4;
@@ -440,7 +453,7 @@ img {
 .search-form__icon--close {
   background: #b81b40;
   height: 2rem;
-  position: absolute;
+  position: fixed;
   right: 1rem;
   width: 2rem;
 }
@@ -480,47 +493,102 @@ html.js input.form-autocomplete {
   background-image: none;
 }
 
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
 .site-header {
   background: white;
 }
 
 .pane-menu-block-main-menu {
   width: 100%;
-  -webkit-box-ordinal-group: 6;
-  -ms-flex-order: 5;
-  order: 5;
+  float: left;
+  text-align: center;
 }
 
 @media all and (min-width: 49rem) {
   .pane-menu-block-main-menu {
-    width: auto;
-    -webkit-box-ordinal-group: 3;
-    -ms-flex-order: 2;
-    order: 2;
+    width: 75%;
+    display: inline-block;
   }
 }
 
-.topbar__inner {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+.topbar {
+  overflow: hidden;
+}
+
+@media all and (min-width: 49rem) {
+  .topbar {
+    height: 80px;
+  }
 }
 
 @media all and (min-width: 49rem) {
   .topbar__inner {
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    height: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
   }
 }
 
 .js .js-login-form {
   display: none;
+}
+
+.branding {
+  height: 6.875rem;
+}
+
+@media all and (min-width: 49rem) {
+  .branding {
+    width: 9%;
+    float: left;
+    height: 100%;
+  }
+}
+
+.branding__logo {
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.branding__logo img {
+  width: 100%;
+  max-width: 35vw;
 }
 
 .menu-name-main-menu {
@@ -532,23 +600,24 @@ html.js input.form-autocomplete {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  height: 100%;
-  margin: 0 5vw;
-  list-style-type: none;
+}
+
+@media all and (min-width: 49rem) {
+  .menu-name-main-menu ul {
+    display: inline-block;
+    margin: 0 auto;
+  }
 }
 
 .menu-name-main-menu li {
-  -ms-flex-line-pack: center;
-  align-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  height: 100%;
+  display: inline-block;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  float: left;
 }
 
 .menu-name-main-menu li a {
@@ -557,6 +626,10 @@ html.js input.form-autocomplete {
   font-family: "SourceSansPro", sans-serif;
   font-weight: bold;
   font-size: 1rem;
+  line-height: 5rem;
+  height: 100%;
+  display: block;
+  padding: 0;
 }
 
 @media all and (min-width: 49rem) {
@@ -564,7 +637,9 @@ html.js input.form-autocomplete {
     color: #505050;
     font-weight: 700;
     line-height: 5rem;
-    padding: 2.5rem;
+    height: 100%;
+    display: block;
+    padding: 0 2.5rem;
   }
   .menu-name-main-menu li a:hover {
     background: #f0f0f0;
@@ -575,6 +650,9 @@ html.js input.form-autocomplete {
   .menu-name-main-menu li {
     height: 100%;
     display: inline-block;
+    margin: 0;
+    padding: 0;
+    float: left;
   }
 }
 
@@ -823,11 +901,18 @@ html.js input.form-autocomplete {
   }
 }
 
+.pane-reol-profile-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 @media all and (min-width: 49rem) {
   .pane-reol-profile-link {
-    -webkit-box-ordinal-group: 4;
-    -ms-flex-order: 3;
-    order: 3;
+    float: right;
+    position: relative;
+    top: auto;
+    right: auto;
   }
 }
 

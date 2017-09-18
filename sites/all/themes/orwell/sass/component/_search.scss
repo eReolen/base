@@ -7,10 +7,17 @@ $icon-color: #9c9c9c;
 .pane-search-form {
   height: $item-height;
   margin-left: auto;
+  margin-left: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
 
   @include grid-media($medium) {
+    position: relative;
     height: auto;
     width: 100%;
+    top: auto;
+    right: auto;
   }
 }
 
@@ -41,6 +48,11 @@ $icon-color: #9c9c9c;
     }
 
     &.open {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 999;
+
       @include grid-media($medium) {
         height: 2rem;
         left: calc(50% - 1rem);
@@ -49,11 +61,13 @@ $icon-color: #9c9c9c;
       }
 
       &::before {
+        position: relative;
         content: '\ea0f';
         font-size: 1.5rem;
         right: 1.3rem;
 
         @include grid-media($medium) {
+          position: relative;
           font-size: 1rem;
           top: 8px;
           right: 0;
@@ -80,7 +94,7 @@ $icon-color: #9c9c9c;
     height: $item-height;
     left: 0;
     max-width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 4;
@@ -111,7 +125,7 @@ $icon-color: #9c9c9c;
   &__icon--close {
     background: $red;
     height: 2rem;
-    position: absolute;
+    position: fixed;
     right: 1rem;
     width: 2rem;
 
