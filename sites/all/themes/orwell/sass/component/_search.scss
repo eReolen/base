@@ -15,7 +15,6 @@ $icon-color: #9c9c9c;
 }
 
 .search-form {
-  border-top: 1px solid $color__search-form;
   font-family: $font-regular;
 
   &__icon__wrapper {
@@ -30,7 +29,7 @@ $icon-color: #9c9c9c;
       color: $icon-color;
       content: $icon__search;
       font-size: 2.5rem;
-      position: absolute;
+      position: relative;
       z-index: 99999;
 
       @include grid-media($medium) {
@@ -52,10 +51,12 @@ $icon-color: #9c9c9c;
       &::before {
         content: '\ea0f';
         font-size: 1.5rem;
+        right: 1.3rem;
 
         @include grid-media($medium) {
           font-size: 1rem;
           top: 8px;
+          right: 0;
         }
       }
     }
@@ -69,7 +70,7 @@ $icon-color: #9c9c9c;
   }
 
   &__icon {
-    width: 4rem;
+    width: auto;
 
   }
 
@@ -99,8 +100,12 @@ $icon-color: #9c9c9c;
     font-family: $font-light;
     font-size: 2rem;
     height: $item-height;
-    padding: 0 1.875rem;
+    padding: 0 1rem;
     width: 100%;
+
+    @include grid-media($medium) {
+      padding: 0 1.875rem;
+    }
   }
 
   &__icon--close {
@@ -124,6 +129,10 @@ $icon-color: #9c9c9c;
       position: absolute;
       top: .5rem;
     }
+  }
+
+  @include grid-media($medium) {
+    border-top: 1px solid $color__search-form;
   }
 }
 
