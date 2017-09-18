@@ -80,3 +80,18 @@ function orwell_preprocess_node(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_preprocess_panels_pane().
+ */
+function orwell_preprocess_panels_pane(&$variables) {
+  if ($variables['pane']->type == 'node_content') {
+    $variables['theme_hook_suggestions'][] = 'panels_pane__node_content__' . $variables['content']['#bundle'];
+  }
+
+  if ($variables['pane']->type == 'page_content') {
+    $variables['classes_array'] = array(
+      'page-wrapper',
+    );
+  }
+}

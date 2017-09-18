@@ -1,0 +1,10 @@
+@import 'bootstrap/mixins';
+
+.page-wrapper {
+  max-width: 1440px;
+  margin: 2rem auto;
+}
+
+.content-wrapper {
+  @include content-wrapper;
+}
