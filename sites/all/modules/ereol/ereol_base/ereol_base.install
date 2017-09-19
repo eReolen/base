@@ -11,6 +11,7 @@
 function ereol_base_install() {
   // Trigger update hooks created before the module was enabled.
   ereol_base_update_7103();
+  ereol_base_update_7104();
 }
 
 /**
