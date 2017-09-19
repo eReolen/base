@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Code for the ereol frontend feature.
+ */
+
+include_once 'ereol_frontend.features.inc';
+
+/**
+ * Implements hook_field_display_ENTITY_TYPE_alter().
+ *
+ * Alter field display settings.
+ */
+function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
+  if ($context['view_mode'] == 'compact') {
+    switch ($context['instance']['field_name']) {
+      case 'ting_cover':
+        // Fix up image style.
+        $display['settings']['image_style'] = 'ereol_cover_base';
+        $display['label'] = 'hidden';
+        break;
+
+      case 'ting_author':
+        // Use a formatter that doesn't make the author a link.
+        $display['module'] = 'reol_base';
+        $display['type'] = 'reol_base_author_plain';
+        $display['label'] = 'hidden';
+        break;
+
+      case 'ting_title':
+        // Remove type prefix.
+        $display['settings']['prefix_type'] = 'no';
+        $display['label'] = 'hidden';
+        break;
+
+    }
+  }
+}

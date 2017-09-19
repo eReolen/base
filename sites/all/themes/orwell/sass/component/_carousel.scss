@@ -8,6 +8,7 @@
   padding: 0;
   position: absolute;
   bottom: 30px;
+  // Ensure that buttons is above the carousel.
   z-index: 1;
 
   &.slick-prev {
@@ -24,5 +25,22 @@
     color: $icon-color;
     font-size: 28px;
     text-indent: 0;
+  }
+
+  @include grid-media($medium) {
+    // Move up on non-mobile to account for the author and title.
+    bottom: 90px;
+  }
+}
+
+.ding-carousel-item {
+  padding-right: 32px;
+
+  @include grid-media($medium) {
+    padding-right: 40px;
+  }
+
+  @include grid-media($large) {
+    padding-right: 60px;
   }
 }

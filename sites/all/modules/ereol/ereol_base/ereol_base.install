@@ -34,3 +34,10 @@ function ereol_base_update_7103() {
   theme_enable(array('orwell'));
   variable_set('theme_default', 'orwell');
 }
+
+/**
+ * Enable ereol_frontend.
+ */
+function ereol_base_update_7104() {
+  module_enable(array('ereol_frontend'));
+}
