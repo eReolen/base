@@ -1,29 +1,59 @@
+@import 'bootstrap/bootstrap';
+
 .site-header {
   background: white;
 }
 
 .pane-menu-block-main-menu {
   width: 100%;
-  order: 5;
+  float: left;
+  text-align: center;
 
   @include grid-media($medium){
-    width: auto;
-    order: 2;
+    width: 75%;
+    display: inline-block;
+  }
+}
+
+.topbar {
+  overflow: hidden;
+
+  @include grid-media($medium){
+    height: 80px;
   }
 }
 
 .topbar__inner {
-  display: flex;
-  flex-wrap: wrap;
-
-  @include grid-media($medium){
-    flex-wrap: wrap;
-    justify-content: center;
-    height: auto;
+  @include grid-media($medium) {
+    @include content-wrapper;
+    height: 100%;
   }
 }
 
 // Hide the login form, it'll be toggled by JS.
 .js .js-login-form {
   display: none;
+}
+
+.branding {
+  height: 6.875rem;
+
+  @include grid-media($medium) {
+    width: 9%;
+    float: left;
+    height: 100%;
+  }
+}
+
+.branding__logo {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  img {
+    width: 100%;
+    max-width: 35vw;
+  }
 }

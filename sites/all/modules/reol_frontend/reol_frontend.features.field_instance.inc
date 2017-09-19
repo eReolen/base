@@ -25,7 +25,7 @@ function reol_frontend_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 5,
       ),
       'search_result' => array(
         'label' => 'above',

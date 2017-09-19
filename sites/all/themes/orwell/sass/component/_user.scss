@@ -62,7 +62,14 @@
 }
 
 .pane-reol-profile-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+
   @include grid-media($medium) {
-    order: 3;
+    float: right;
+    position: relative;
+    top: auto;
+    right: auto;
   }
 }
