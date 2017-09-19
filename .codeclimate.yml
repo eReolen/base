@@ -63,6 +63,9 @@ exclude_paths:
   - "**/contrib/"
   - "**/vendor/"
   - "**/gulpfile.js"
+  # Ignore generated CSS
+  - sites/all/themes/orwell/css/
+  - sites/all/themes/pratchett/css/
   # Generated Features code
   - '**.features.*'
   - '**.feeds_importer_default.inc'
