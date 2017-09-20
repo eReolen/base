@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Code for the News carousel feature.
+ */
+
+include_once 'reol_news_paragraph.features.inc';
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function reol_news_paragraph_field_formatter_info() {
+  return array(
+    'reol_news_paragraph_carousel' => array(
+      'label' => t('Article carousel'),
+      'field types' => array(
+        'number_integer',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  foreach ($items as $delta => $item) {
+    $element[$delta] = _reol_news_paragraph_build_carousel($item['value']);
+  }
+
+  return $element;
+}
+
+/**
+ * Return a render array for a article carousel.
+ *
+ * @param int $count
+ *   Number of items in the carousel.
+ *
+ * @return array
+ *   Render array for the carousel.
+ */
+function _reol_news_paragraph_build_carousel($count) {
+  $build = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'article')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->propertyOrderBy('created', 'DESC')
+    ->range(0, $count);
+
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $articles = entity_load('node', array_keys($result['node']));
+    if ($articles) {
+      $rendered_nodes = node_view_multiple($articles);
+      $items = array();
+      foreach (element_children($rendered_nodes['nodes']) as $key) {
+        $items[$key] = $rendered_nodes['nodes'][$key];
+      }
+      $build = array(
+        '#type' => 'ding_carousel',
+        '#title' => '',
+        '#items' => $items,
+      );
+    }
+  }
+
+  return $build;
+}
