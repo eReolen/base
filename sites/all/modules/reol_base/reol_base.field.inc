@@ -70,7 +70,7 @@ function reol_base_field_formatter_info() {
  */
 function reol_base_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
-  foreach ($items as $delta => $items) {
+  foreach ($items as $delta => $item) {
     switch ($display['type']) {
       case 'reol_base_ebook_format':
         // Only add on ebooks.
