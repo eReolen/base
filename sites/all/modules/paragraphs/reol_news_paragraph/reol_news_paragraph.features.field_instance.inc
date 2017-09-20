@@ -25,14 +25,9 @@ function reol_news_paragraph_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 0,
-          'thousand_separator' => '',
-        ),
-        'type' => 'number_integer',
+        'module' => 'reol_news_paragraph',
+        'settings' => array(),
+        'type' => 'reol_news_paragraph_carousel',
         'weight' => 0,
       ),
       'paragraphs_editor_preview' => array(

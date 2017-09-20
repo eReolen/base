@@ -8,15 +8,30 @@
 include_once 'reol_news_paragraph.features.inc';
 
 /**
- * Implements hook_ENTITY_TYPE_view().
+ * Implements hook_field_formatter_info().
  */
-function reol_news_paragraph_paragraphs_item_view($entity, $view_mode, $langcode) {
-  if ($entity->bundle() == 'article_carousel') {
-    $count = $entity->wrapper()->field_carousel_count->value();
+function reol_news_paragraph_field_formatter_info() {
+  return array(
+    'reol_news_paragraph_carousel' => array(
+      'label' => t('Article carousel'),
+      'field types' => array(
+        'number_integer',
+      ),
+    ),
+  );
+}
 
-    // Override the rendering of the count field with the carousel.
-    $entity->content['field_carousel_count'] = _reol_news_paragraph_build_carousel($count);
+/**
+ * Implements hook_field_formatter_view().
+ */
+function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  foreach ($items as $delta => $item) {
+    $element[$delta] = _reol_news_paragraph_build_carousel($item['value']);
   }
+
+  return $element;
 }
 
 /**
