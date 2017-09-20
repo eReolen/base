@@ -11,3 +11,10 @@
 function ereol_inspiration_update_7101() {
   module_enable(array('reol_carousel_paragraph'), TRUE);
 }
+
+/**
+ * Enable reol_news_paragraph.
+ */
+function ereol_inspiration_update_7102() {
+  module_enable(array('reol_news_paragraph'), TRUE);
+}

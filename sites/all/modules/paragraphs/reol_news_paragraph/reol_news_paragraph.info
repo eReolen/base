@@ -1,0 +1,13 @@
+name = News carousel
+description = News carousel paragraph
+core = 7.x
+package = ereolen.dk
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = number
+dependencies[] = paragraphs
+features[features_api][] = api:2
+features[field_base][] = field_carousel_count
+features[field_instance][] = paragraphs_item-article_carousel-field_carousel_count
+features[paragraphs][] = article_carousel
+project path = sites/all/modules/paragraphs
