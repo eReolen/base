@@ -1,6 +1,6 @@
 name: app
 
-type: php
+type: "php:5.5"
 
 build:
   flavor: none
