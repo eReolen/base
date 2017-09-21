@@ -89,4 +89,8 @@ $material--teaser__margin-bottom: 1.2rem;
       display: block;
     }
   }
+
+  &__rating {
+    margin: 0.3rem 0 $material--teaser__margin-bottom;
+  }
 }

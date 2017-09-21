@@ -98,5 +98,9 @@ function orwell_preprocess_panels_pane(&$variables) {
  * Template preprocessor for ting objects.
  */
 function orwell_preprocess_ting_object(&$variables) {
- $variables['theme_hook_suggestions'][] = 'ting_object__' . $variables['elements']['#view_mode'];
+  $variables['theme_hook_suggestions'][] = 'ting_object__' . $variables['elements']['#view_mode'];
+
+  // Add font-awesome - used for ratings.
+  $font_awesome = variable_get('ereol_font_awesome_path', '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
+  drupal_add_css($font_awesome, array('type' => 'external'));
 }

@@ -1,0 +1,123 @@
+// Dialog popup widget.
+
+.ui-dialog {
+  // There's a race condition between ui.Dialogs CSS and JS when being loaded
+  // through ajax. The CSS sets the position to absolute for the dialog element.
+  // The positioning code checks if the dialog element have position: static,
+  // and sets it to relative if that's the case. Relative positioning causes it
+  // to fail and render the dialog at full window width. For authenticated
+  // users, the CSS is added to the page head (trigged by something unknown),
+  // but for anonymous users, the CSS is loaded through the ajax request,
+  // which can get beaten by the JS. So we'll just ensure that the dialog
+  // element has position: absolute.
+  // position: absolute;
+  border-radius: 0;
+  margin: 0 auto;
+  // top: 100px !important;
+  // position: absolute !important;
+  border: 0;
+  box-shadow: 0px 0px 5px 0px #aaa;
+  // Adjusted so videos will fit.
+  max-width: 730px;
+  max-height: 90%;
+  box-shadow: 0 0 33px 0 rgba(0, 0, 0, .3);
+  padding: 25px 30px;
+  text-align: center;
+  overflow-y: auto;
+
+  &.try-ebook,
+  &.try-audiobook {
+    // Ensure that the frame will fit.
+    max-height: none;
+    // Closer to top of window to get more room.
+    top: 30px !important;
+    // Full width popup for audio books.
+    max-width: 1180px;
+    // Let the player/reader of the try popup overflow so it can go full page.
+    overflow-y: visible;
+  }
+
+  &, .ui-widget-header, .ui-dialog-content {
+    color: $color__dark;
+    font-family: $font-light;
+  }
+
+  a {
+    & {
+      color: white;
+      text-align: center;
+    }
+  }
+
+  form {
+    text-align: left;
+
+    .form-actions {
+      text-align: center;
+    }
+  }
+
+  .action-button {
+    margin-top: 50px;
+    float: none;
+    background: $color__red;
+
+    &:before {
+      color: white;
+    }
+  }
+
+  .ui-corner-all {
+    border: 0;
+    background: #fff;
+    border-radius: 5px;
+  }
+
+  .ui-dialog-titlebar {
+    // Resetting.
+    margin: 0;
+    padding: 0;
+    .ui-dialog-title {
+      width: auto;
+      float: none;
+    }
+
+    font-family: $font-regular;
+    text-transform: uppercase;
+
+    .ui-dialog-title {
+      display: block;
+    }
+
+    .ui-dialog-titlebar-close {
+      top: 5px;
+      right: 0px;
+      position: absolute;
+      font-size: 10px;
+      opacity: 0.6;
+
+      @include grid-media($medium) {
+        top: 15px;
+        right: 15px;
+      }
+    }
+ }
+
+  .ui-icon-closethick {
+    // Resetting.
+    width: auto;
+    height: auto;
+    text-indent: inherit;
+
+    background-image: none;
+    font-size: 22px;
+  }
+
+  @include grid-media($medium) {
+    min-width: 600px;
+  }
+}
+
+.ui-widget-overlay {
+  opacity: .4;
+}

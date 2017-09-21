@@ -13,6 +13,10 @@
     <?php echo render($content['group_ting_object_teaser_left']['ting_cover']); ?>
   </div>
   <div class="material--teaser__content text">
+    <div class="material--teaser__rating">
+      <?php echo render($content['group_ting_object_teaser_right']['ding_entity_rating_action']); ?>
+      <?php echo render($content['group_ting_object_teaser_right']['ding_entity_rating_result']); ?>
+    </div>
     <div class="material--teaser__title">
       <?php echo render($content['group_ting_object_teaser_right']['ting_title']); ?>
     </div>
