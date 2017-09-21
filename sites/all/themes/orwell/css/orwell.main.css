@@ -1161,7 +1161,8 @@ html.js input.form-autocomplete {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    padding-bottom: 5rem;
+    padding-bottom: 3.5rem;
+    padding-top: 0;
   }
 }
 
