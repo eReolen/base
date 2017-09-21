@@ -7,9 +7,6 @@
 ?>
 <div class="article article--teaser <?php print $classes; ?>">
   <a href="<?php print $node_url; ?>">
-    <div class="article--teaser__cover">
-      <?php print render($content['field_article_image']); ?>
-    </div>
     <div class="article--teaser__left article--teaser__info">
       <div class="article--teaser__info__inner">
         <h2 class="article--teaser__title"><?php print $title; ?></h2>

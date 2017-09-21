@@ -12,3 +12,10 @@
 .content-wrapper {
   @include content-wrapper;
 }
+
+.pane-node-content {
+
+  @include grid-media($medium) {
+    padding: 2rem 0 0;
+  }
+}

@@ -86,27 +86,31 @@ function ereol_article_strongarm() {
       'token' => array(
         'custom_settings' => FALSE,
       ),
+      'workflow_tab' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
         'flag' => array(
-          'weight' => '7',
+          'weight' => '6',
         ),
         'title' => array(
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '9',
+          'weight' => '7',
         ),
         'redirect' => array(
-          'weight' => '10',
-        ),
-        'metatags' => array(
-          'weight' => '12',
+          'weight' => '8',
         ),
       ),
       'display' => array(
         'ding_serendipity_info' => array(
+          'default' => array(
+            'weight' => '3',
+            'visible' => TRUE,
+          ),
           'teaser' => array(
             'weight' => '0',
             'visible' => TRUE,

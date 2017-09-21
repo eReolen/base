@@ -1,0 +1,92 @@
+@import 'bootstrap/bootstrap';
+
+$material--teaser__margin-bottom: 1.2rem;
+
+.material--teaser {
+  padding: 2rem 0;
+  border-bottom: 1px solid $color__border-gray;
+
+  @include grid-media($medium) {
+    padding: 3.5rem 0;
+  }
+
+  &__cover {
+    width: 50%;
+    float: left;
+
+    @include grid-media($medium) {
+      width: 25%;
+    }
+  }
+
+  &__content {
+    width: 50%;
+    float: left;
+    padding-left: 2rem;
+
+    @include grid-media($medium) {
+      padding-left: 4rem;
+      width: 75%;
+    }
+  }
+
+  &__title {
+    margin-bottom: $material--teaser__margin-bottom;
+    font-size: 2.1rem;
+
+    a {
+      text-decoration: none;
+      font-family: $font-light;
+      color: $color__font-gray;
+    }
+  }
+
+  &__author {
+    color: $color__dark;
+    font-family: $font-semibold;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: $material--teaser__margin-bottom;
+
+    a {
+      text-decoration: none;
+      color: $color__dark;
+    }
+  }
+
+  &__abstract {
+    @include text-paragraph;
+    // Not displayed on mobile.
+    display: none;
+    margin-bottom: $material--teaser__margin-bottom;
+
+    @include grid-media($medium) {
+      display: block;
+    }
+  }
+
+  &__subjects {
+    // Not displayed on mobile.
+    display: none;
+    margin: 2rem 0 $material--teaser__margin-bottom;
+
+    .subject {
+      background-color: $color__gray--light;
+      border-radius: 20px;
+      color: $color__font-gray--dark;
+      text-decoration: none;
+      padding: 5px 20px;
+      margin: 0 1rem 1rem 0;
+      display: inline-block;
+
+      &:hover {
+        background-color: $color__font-gray;
+        color: $color__white;
+      }
+    }
+
+    @include grid-media($medium) {
+      display: block;
+    }
+  }
+}
