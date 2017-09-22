@@ -42,7 +42,7 @@ function orwell_preprocess_node(&$variables) {
   $node = $variables['node'];
   // Make author information available.
   $variables['author'] = user_load($node->uid);
-  $variables['created_formatted'] = format_date($node->created ,'custom','d - m / y');
+  $variables['created_formatted'] = format_date($node->created, 'custom', 'd - m / y');
 
   if ($node->type === 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
     $variables['covers'] = array();

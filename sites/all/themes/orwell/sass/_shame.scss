@@ -17,22 +17,17 @@ img {
 }
 
 .pane-user-login {
+  @include form-default;
   display: block;
   width: 100%;
   order: 4;
   background: $page-bg;
-
-  @include form-default;
 
   form#user-login-form {
     max-width: 500px;
     margin: 0 auto;
     padding: 2rem;
   }
-}
-
-.ui-dialog form {
-  @include form-default;
 }
 
 // Used for testing
@@ -46,10 +41,21 @@ img {
 .ui-dialog {
   border-radius: 0;
   background-color: white;
+  // Try to make it responsive.
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto;
+  top: 100px !important;
+  position: absolute !important;
+
+  form {
+    @include form-default;
+  }
 
   // Fix the positioning of the close button.
   .ui-dialog-titlebar .ui-dialog-titlebar-close {
     top: 0;
+
     &:focus {
       outline: none;
     }
@@ -58,13 +64,6 @@ img {
   .messages {
     margin: 16px 0;
   }
-
-  // Try to make it responsive.
-  left: 0 !important;
-  right: 0 !important;
-  margin: 0 auto;
-  top: 100px !important;
-  position: absolute !important;
 }
 
 .ui-widget {

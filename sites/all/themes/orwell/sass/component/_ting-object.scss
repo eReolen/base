@@ -70,6 +70,10 @@ $material--teaser__margin-bottom: 1.2rem;
     display: none;
     margin: 2rem 0 $material--teaser__margin-bottom;
 
+    @include grid-media($medium) {
+      display: block;
+    }
+
     .subject {
       background-color: $color__gray--light;
       border-radius: 20px;
@@ -84,13 +88,9 @@ $material--teaser__margin-bottom: 1.2rem;
         color: $color__white;
       }
     }
-
-    @include grid-media($medium) {
-      display: block;
-    }
   }
 
   &__rating {
-    margin: 0.3rem 0 $material--teaser__margin-bottom;
+    margin: .3rem 0 $material--teaser__margin-bottom;
   }
 }

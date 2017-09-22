@@ -4,7 +4,6 @@
  * @file
  * Article full view mode.
  */
-
 ?>
 <div class="article <?php print $classes; ?>">
   <div class="article__image content-wrapper">

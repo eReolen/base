@@ -16,7 +16,6 @@
   // top: 100px !important;
   // position: absolute !important;
   border: 0;
-  box-shadow: 0px 0px 5px 0px #aaa;
   // Adjusted so videos will fit.
   max-width: 730px;
   max-height: 90%;
@@ -24,6 +23,10 @@
   padding: 25px 30px;
   text-align: center;
   overflow-y: auto;
+
+  @include grid-media($medium) {
+    min-width: 600px;
+  }
 
   &.try-ebook,
   &.try-audiobook {
@@ -37,16 +40,16 @@
     overflow-y: visible;
   }
 
-  &, .ui-widget-header, .ui-dialog-content {
+  &,
+  .ui-widget-header,
+  .ui-dialog-content {
     color: $color__dark;
     font-family: $font-light;
   }
 
   a {
-    & {
-      color: white;
-      text-align: center;
-    }
+    color: white;
+    text-align: center;
   }
 
   form {
@@ -62,7 +65,7 @@
     float: none;
     background: $color__red;
 
-    &:before {
+    &::before {
       color: white;
     }
   }
@@ -77,31 +80,28 @@
     // Resetting.
     margin: 0;
     padding: 0;
-    .ui-dialog-title {
-      width: auto;
-      float: none;
-    }
-
     font-family: $font-regular;
     text-transform: uppercase;
 
     .ui-dialog-title {
+      width: auto;
+      float: none;
       display: block;
     }
 
     .ui-dialog-titlebar-close {
       top: 5px;
-      right: 0px;
+      right: 0;
       position: absolute;
       font-size: 10px;
-      opacity: 0.6;
+      opacity: .6;
 
       @include grid-media($medium) {
         top: 15px;
         right: 15px;
       }
     }
- }
+  }
 
   .ui-icon-closethick {
     // Resetting.
@@ -111,10 +111,6 @@
 
     background-image: none;
     font-size: 22px;
-  }
-
-  @include grid-media($medium) {
-    min-width: 600px;
   }
 }
 
