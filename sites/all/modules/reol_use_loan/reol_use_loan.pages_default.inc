@@ -109,8 +109,9 @@ function reol_use_loan_default_page_manager_pages() {
       'context' => array(
         0 => 'argument_ting_object_id_1',
       ),
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -137,7 +138,10 @@ function reol_use_loan_default_page_manager_pages() {
   $page->admin_title = 'Read ebook';
   $page->admin_description = '';
   $page->path = 'ting/object/%ting_object/read';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'ting_object' => array(
