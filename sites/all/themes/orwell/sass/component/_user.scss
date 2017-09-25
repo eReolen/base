@@ -21,7 +21,7 @@
     &::before {
       @include icon();
       font-size: 28px;
-      color: $font-gray;
+      color: $color__font-gray;
       content: $icon__lock;
       display: inline-block;
       top: 10px;
@@ -32,7 +32,7 @@
     &::before {
       @include icon();
       font-size: 2rem;
-      color: $font-gray;
+      color: $color__font-gray;
       content: $icon__user;
       display: inline-block;
       top: 10px;

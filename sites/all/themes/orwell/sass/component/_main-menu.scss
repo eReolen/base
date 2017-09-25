@@ -2,7 +2,7 @@ $menu-height: 5rem;
 
 .menu-name-main-menu {
   height: $menu-height;
-  background-color: $red;
+  background-color: $color__red;
 
   ul {
     display: flex;
@@ -33,7 +33,7 @@ $menu-height: 5rem;
       padding: 0;
 
       @include grid-media($medium) {
-        color: $font-menu__gray;
+        color: $color__font-gray--dark;
         font-weight: 700;
         line-height: 5rem;
         height: 100%;

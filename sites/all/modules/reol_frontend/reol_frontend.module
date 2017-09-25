@@ -78,7 +78,7 @@ function reol_frontend_preprocess_node(&$variables) {
   // Add variable that tells if the teaser is an image teaser.
   if ($node->type == 'article') {
     $variables['is_image_teaser'] = !empty($node->field_image_teaser)
-      && !empty($node->field_article_image);
+      && !empty($node->field_ding_news_list_image);
   }
 }
 

@@ -40,6 +40,10 @@ function orwell_form_user_login_block_alter(&$form, &$form_state) {
  */
 function orwell_preprocess_node(&$variables) {
   $node = $variables['node'];
+  // Make author information available.
+  $variables['author'] = user_load($node->uid);
+  $variables['created_formatted'] = format_date($node->created, 'custom', 'd - m / y');
+
   if ($node->type === 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
     $variables['covers'] = array();
     $entity_ids = array();
@@ -88,10 +92,15 @@ function orwell_preprocess_panels_pane(&$variables) {
   if ($variables['pane']->type == 'node_content') {
     $variables['theme_hook_suggestions'][] = 'panels_pane__node_content__' . $variables['content']['#bundle'];
   }
+}
 
-  if ($variables['pane']->type == 'page_content') {
-    $variables['classes_array'] = array(
-      'page-wrapper',
-    );
-  }
+/**
+ * Template preprocessor for ting objects.
+ */
+function orwell_preprocess_ting_object(&$variables) {
+  $variables['theme_hook_suggestions'][] = 'ting_object__' . $variables['elements']['#view_mode'];
+
+  // Add font-awesome - used for ratings.
+  $font_awesome = variable_get('ereol_font_awesome_path', '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
+  drupal_add_css($font_awesome, array('type' => 'external'));
 }

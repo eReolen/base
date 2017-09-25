@@ -1,0 +1,36 @@
+@import 'bootstrap/bootstrap';
+
+.text {
+
+  font-family: $font-regular;
+
+  p {
+    @include text-paragraph;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $font-light;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  a {
+    color: $color__red;
+    text-decoration: none;
+
+    &:hover {
+      color: $color__blue;
+    }
+  }
+}
+
+.highlight {
+  color: $color__red;
+}

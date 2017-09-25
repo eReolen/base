@@ -30,7 +30,7 @@ function reol_frontend_default_page_manager_handlers() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'reol_frontpage';
+  $display->layout = 'onecol';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -52,6 +52,7 @@ function reol_frontend_default_page_manager_handlers() {
       'left' => NULL,
       'right' => NULL,
       'bottom' => NULL,
+      'middle' => NULL,
     ),
   );
   $display->cache = array();
@@ -61,7 +62,7 @@ function reol_frontend_default_page_manager_handlers() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-b5e896b9-d6cb-4efa-8b7c-b1d17ac88441';
-    $pane->panel = 'left';
+    $pane->panel = 'middle';
     $pane->type = 'node_content';
     $pane->subtype = 'node_content';
     $pane->shown = TRUE;
@@ -69,13 +70,14 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->configuration = array(
       'links' => 1,
       'no_extras' => 0,
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
       'identifier' => '',
       'link' => 0,
-      'leave_node_title' => 0,
+      'leave_node_title' => 1,
       'build_mode' => 'full',
       'context' => 'argument_entity_id:node_1',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -87,13 +89,13 @@ function reol_frontend_default_page_manager_handlers() {
     $pane->locks = array();
     $pane->uuid = 'b5e896b9-d6cb-4efa-8b7c-b1d17ac88441';
     $display->content['new-b5e896b9-d6cb-4efa-8b7c-b1d17ac88441'] = $pane;
-    $display->panels['left'][0] = 'new-b5e896b9-d6cb-4efa-8b7c-b1d17ac88441';
+    $display->panels['middle'][0] = 'new-b5e896b9-d6cb-4efa-8b7c-b1d17ac88441';
     $pane = new stdClass();
     $pane->pid = 'new-64cdf8b7-bc5c-45cc-a97c-7d8796d75ec3';
-    $pane->panel = 'right';
+    $pane->panel = 'middle';
     $pane->type = 'quick_guide';
     $pane->subtype = 'quick_guide';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 0,
@@ -105,17 +107,17 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '64cdf8b7-bc5c-45cc-a97c-7d8796d75ec3';
     $display->content['new-64cdf8b7-bc5c-45cc-a97c-7d8796d75ec3'] = $pane;
-    $display->panels['right'][0] = 'new-64cdf8b7-bc5c-45cc-a97c-7d8796d75ec3';
+    $display->panels['middle'][1] = 'new-64cdf8b7-bc5c-45cc-a97c-7d8796d75ec3';
     $pane = new stdClass();
     $pane->pid = 'new-a72df90d-33cd-48f8-a072-372e2e9ae617';
-    $pane->panel = 'right';
+    $pane->panel = 'middle';
     $pane->type = 'single_review';
     $pane->subtype = 'single_review';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'type' => '',
@@ -128,17 +130,17 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
     $pane->uuid = 'a72df90d-33cd-48f8-a072-372e2e9ae617';
     $display->content['new-a72df90d-33cd-48f8-a072-372e2e9ae617'] = $pane;
-    $display->panels['right'][1] = 'new-a72df90d-33cd-48f8-a072-372e2e9ae617';
+    $display->panels['middle'][2] = 'new-a72df90d-33cd-48f8-a072-372e2e9ae617';
     $pane = new stdClass();
     $pane->pid = 'new-607fb4a8-c190-4aab-a5b2-9e60afec5eb2';
-    $pane->panel = 'right';
+    $pane->panel = 'middle';
     $pane->type = 'facebook_likebox';
     $pane->subtype = 'facebook_likebox';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'width' => '270',
@@ -152,11 +154,11 @@ function reol_frontend_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 3;
     $pane->locks = array();
     $pane->uuid = '607fb4a8-c190-4aab-a5b2-9e60afec5eb2';
     $display->content['new-607fb4a8-c190-4aab-a5b2-9e60afec5eb2'] = $pane;
-    $display->panels['right'][2] = 'new-607fb4a8-c190-4aab-a5b2-9e60afec5eb2';
+    $display->panels['middle'][3] = 'new-607fb4a8-c190-4aab-a5b2-9e60afec5eb2';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-b5e896b9-d6cb-4efa-8b7c-b1d17ac88441';
   $handler->conf['display'] = $display;

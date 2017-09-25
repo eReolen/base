@@ -75,7 +75,7 @@ $icon-color: #9c9c9c;
     }
 
     @include grid-media($medium) {
-      background: $red;
+      background: $color__red;
       display: block;
       height: 2rem;
       text-align: center;
@@ -122,7 +122,7 @@ $icon-color: #9c9c9c;
   }
 
   &__icon--close {
-    background: $red;
+    background: $color__red;
     height: 2rem;
     position: fixed;
     right: 1rem;

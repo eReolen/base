@@ -2,6 +2,7 @@
 @import 'base/layout';
 @import 'bootstrap/fonts';
 @import 'shame';
+@import 'component/text';
 @import 'component/search';
 @import 'component/header';
 @import 'component/main-menu';
@@ -9,4 +10,7 @@
 @import 'component/user';
 @import 'component/article';
 @import 'component/carousel';
+@import 'component/ting-object';
 @import 'component/ting-object-compact';
+@import 'component/dialog';
+@import 'component/ratings';

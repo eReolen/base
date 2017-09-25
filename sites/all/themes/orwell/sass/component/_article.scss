@@ -1,4 +1,127 @@
+@import 'bootstrap/bootstrap';
+
 $teaser-bg-default: #393939;
+
+.article {
+  font-family: $font-regular;
+
+  &__content {
+    padding: 2rem 2rem 0;
+
+    @include grid-media($medium) {
+      display: flex;
+      flex-wrap: wrap;
+      padding-bottom: 3.5rem;
+      padding-top: 0;
+    }
+  }
+
+  &__title {
+    font-family: $font-light;
+    font-size: 2rem;
+    margin: 3rem;
+    text-align: center;
+
+    @include grid-media($medium) {
+      width: 100%;
+      order: 1;
+      margin: 0 0 3rem;
+      text-align: left;
+    }
+  }
+
+  &__byline {
+    width: 100%;
+    overflow: hidden;
+    font-family: $font-regular;
+    color: $color__font-gray;
+    line-height: $line-height__default;
+
+    &__date {
+      float: left;
+      font-family: $font-semibold;
+      color: $color__font-gray--dark;
+
+      @include grid-media($medium) {
+        display: block;
+        float: none;
+      }
+    }
+
+    &__author {
+      float: right;
+
+      @include grid-media($medium) {
+        display: block;
+        float: none;
+      }
+    }
+
+    @include grid-media($medium) {
+      padding-right: 3.5rem;
+      order: 2;
+      width: 17%;
+    }
+  }
+
+  &__body {
+    padding-bottom: 3.5rem;
+
+    @include grid-media($medium) {
+      order: 3;
+      width: 83%;
+      padding-bottom: 0;
+    }
+  }
+
+  &__image {
+    padding: 2rem 2rem 0;
+    margin-bottom: 1.5rem;
+
+    * {
+      height: 100%;
+      width: 100%;
+    }
+
+    img {
+      object-fit: cover;
+      object-position: top;
+    }
+
+    @include grid-media($medium) {
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-bottom: 5rem;
+      height: 400px;
+    }
+  }
+
+  &__materials {
+    background-color: #e6e6e6;
+    width: 100%;
+    display: block;
+    clear: both;
+    overflow: hidden;
+    padding: 2rem;
+
+    .field-item:last-child {
+      .material--teaser {
+        border: 0;
+      }
+    }
+
+    .view-mode-teaser {
+      @include grid-media($large) {
+        width: 83%;
+        float: right;
+      }
+    }
+
+    @include grid-media($medium) {
+      padding: 2rem 0;
+    }
+  }
+}
 
 .article--teaser {
   display: block;
@@ -185,7 +308,18 @@ $teaser-bg-default: #393939;
   &__cover {
     position: absolute;
     height: 440px;
-    width: 100%;
+    width: 1200px;
+    max-width: 100%;
+
+    * {
+      height: 100%;
+      width: 100%;
+    }
+
+    img {
+      object-fit: cover;
+      object-position: top;
+    }
 
     @include grid-media($medium) {
       height: 475px;

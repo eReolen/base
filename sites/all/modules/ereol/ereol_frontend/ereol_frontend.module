@@ -8,6 +8,18 @@
 include_once 'ereol_frontend.features.inc';
 
 /**
+ * Implements hook_entity_info_alter().
+ */
+function ereol_frontend_entity_info_alter(&$entity_info) {
+  $entity_info['ting_object']['view modes'] += array(
+    'ereol_material_teaser' => array(
+      'label' => t('eReol Material Teaser'),
+      'custom settings' => TRUE,
+    ),
+  );
+}
+
+/**
  * Implements hook_field_display_ENTITY_TYPE_alter().
  *
  * Alter field display settings.
