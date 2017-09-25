@@ -547,7 +547,6 @@ img {
   content: "";
   font-size: 2.5rem;
   position: relative;
-  z-index: 99999;
 }
 
 @media all and (min-width: 49rem) {
@@ -563,7 +562,7 @@ img {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 999;
+  z-index: 1;
 }
 
 @media all and (min-width: 49rem) {
@@ -613,7 +612,6 @@ img {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 4;
 }
 
 @media all and (min-width: 49rem) {
@@ -1726,6 +1724,12 @@ html.js input.form-autocomplete {
   margin: 2rem 0 1.2rem;
 }
 
+@media all and (min-width: 49rem) {
+  .material--teaser__subjects {
+    display: block;
+  }
+}
+
 .material--teaser__subjects .subject {
   background-color: #dcdcdc;
   border-radius: 20px;
@@ -1739,12 +1743,6 @@ html.js input.form-autocomplete {
 .material--teaser__subjects .subject:hover {
   background-color: #787878;
   color: #ffffff;
-}
-
-@media all and (min-width: 49rem) {
-  .material--teaser__subjects {
-    display: block;
-  }
 }
 
 .material--teaser__rating {
@@ -1877,8 +1875,6 @@ html.js input.form-autocomplete {
   border-radius: 0;
   margin: 0 auto;
   border: 0;
-  -webkit-box-shadow: 0px 0px 5px 0px #aaa;
-  box-shadow: 0px 0px 5px 0px #aaa;
   max-width: 730px;
   max-height: 90%;
   -webkit-box-shadow: 0 0 33px 0 rgba(0, 0, 0, 0.3);
@@ -1888,6 +1884,12 @@ html.js input.form-autocomplete {
   overflow-y: auto;
 }
 
+@media all and (min-width: 49rem) {
+  .ui-dialog {
+    min-width: 600px;
+  }
+}
+
 .ui-dialog.try-ebook, .ui-dialog.try-audiobook {
   max-height: none;
   top: 30px !important;
@@ -1895,7 +1897,9 @@ html.js input.form-autocomplete {
   overflow-y: visible;
 }
 
-.ui-dialog, .ui-dialog .ui-widget-header, .ui-dialog .ui-dialog-content {
+.ui-dialog,
+.ui-dialog .ui-widget-header,
+.ui-dialog .ui-dialog-content {
   color: #505050;
   font-family: "SourceSansProLight", sans-serif;
 }
@@ -1919,7 +1923,7 @@ html.js input.form-autocomplete {
   background: #b81b40;
 }
 
-.ui-dialog .action-button:before {
+.ui-dialog .action-button::before {
   color: white;
 }
 
@@ -1939,18 +1943,15 @@ html.js input.form-autocomplete {
 .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
   width: auto;
   float: none;
-}
-
-.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
   display: block;
 }
 
 .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
   top: 5px;
-  right: 0px;
+  right: 0;
   position: absolute;
   font-size: 10px;
-  opacity: 0.6;
+  opacity: .6;
 }
 
 @media all and (min-width: 49rem) {
@@ -1966,12 +1967,6 @@ html.js input.form-autocomplete {
   text-indent: inherit;
   background-image: none;
   font-size: 22px;
-}
-
-@media all and (min-width: 49rem) {
-  .ui-dialog {
-    min-width: 600px;
-  }
 }
 
 .ui-widget-overlay {
@@ -2012,7 +2007,7 @@ html.js input.form-autocomplete {
 }
 
 .fa-star-o::before {
-  content: "\f005";
+  content: '\f005';
 }
 
 .fa-star-o.active {
@@ -2020,7 +2015,7 @@ html.js input.form-autocomplete {
 }
 
 .star {
-  margin-right: 0.3rem;
+  margin-right: .3rem;
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
