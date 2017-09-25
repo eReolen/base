@@ -286,6 +286,11 @@ function reol_frontend_ting_pre_execute($request) {
  * @todo merge with breol_frontend_ting_post_execute().
  */
 function reol_frontend_ting_post_execute($request, $response, $raw_response) {
+  if (!is_object($response)) {
+    // Sometimes we get a non-object response, for some types of requests. We'll
+    // just ignore them as we're not interested in those requests anyway.
+    return;
+  }
   switch (get_class($response)) {
     case 'TingClientObject':
       $response->on_quota = TRUE;
