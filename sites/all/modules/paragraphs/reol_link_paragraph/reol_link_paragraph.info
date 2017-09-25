@@ -1,0 +1,13 @@
+name = Link paragraph
+description = Link paragraph
+core = 7.x
+package = ereolen.dk
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = link
+dependencies[] = paragraphs
+dependencies[] = reol_frontend
+features[features_api][] = api:2
+features[field_instance][] = paragraphs_item-linkbox-field_link
+features[paragraphs][] = linkbox
+project path = sites/all/modules/paragraphs
