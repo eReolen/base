@@ -354,6 +354,11 @@ $teaser-bg-default: #393939;
     font-family: $font-semibold;
     margin-bottom: 1.5rem;
     line-height: $line-height__small;
+    margin-top: calc(50% - 3rem);
+
+    @include grid-media($medium) {
+      margin: 0;
+    }
   }
 
   &__cover {

@@ -1745,6 +1745,13 @@ html.js input.form-autocomplete {
   font-family: "SourceSansProSemiBold", sans-serif;
   margin-bottom: 1.5rem;
   line-height: 1.3rem;
+  margin-top: calc(50% - 3rem);
+}
+
+@media all and (min-width: 49rem) {
+  .article--search-result__title {
+    margin: 0;
+  }
 }
 
 .article--search-result__cover img {
@@ -2030,6 +2037,7 @@ html.js input.form-autocomplete {
   color: #787878;
   clear: left;
   line-height: 1.3rem;
+  margin-bottom: 3.5rem;
 }
 
 .material__series a {
@@ -2047,8 +2055,9 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49rem) {
   .material__series {
-    width: auto;
+    width: 100%;
     margin-top: 1rem;
+    margin-bottom: 0;
     clear: none;
   }
 }

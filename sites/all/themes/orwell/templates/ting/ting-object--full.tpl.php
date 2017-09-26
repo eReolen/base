@@ -7,8 +7,6 @@
  * - $object: The TingClientObject instance we're rendering.
  * - $content: Render array of content.
  */
- // dpm($content);
- /*//<?php print render($content); ?>*/
 ?>
 <?php if ($bundle == 'ting_collection') : ?>
   <div class="content-wrapper content-wrapper--material">
