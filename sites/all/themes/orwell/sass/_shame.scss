@@ -23,11 +23,13 @@ img {
   order: 4;
   background: $page-bg;
 
-  form#user-login-form {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 2rem;
+  .messages {
+    margin: 16px 0;
   }
+}
+
+.ui-dialog form {
+  @include form-default;
 }
 
 // Used for testing
@@ -48,14 +50,9 @@ img {
   top: 100px !important;
   position: absolute !important;
 
-  form {
-    @include form-default;
-  }
-
   // Fix the positioning of the close button.
   .ui-dialog-titlebar .ui-dialog-titlebar-close {
     top: 0;
-
     &:focus {
       outline: none;
     }

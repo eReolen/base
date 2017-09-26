@@ -42,6 +42,7 @@ function orwell_preprocess_node(&$variables) {
   $node = $variables['node'];
   // Make author information available.
   $variables['author'] = user_load($node->uid);
+
   $variables['created_formatted'] = format_date($node->created, 'custom', 'd - m / y');
 
   if ($node->type === 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
@@ -98,9 +99,38 @@ function orwell_preprocess_panels_pane(&$variables) {
  * Template preprocessor for ting objects.
  */
 function orwell_preprocess_ting_object(&$variables) {
+
+  $variables['bundle'] = $variables['elements']['#bundle'];
+
   $variables['theme_hook_suggestions'][] = 'ting_object__' . $variables['elements']['#view_mode'];
 
   // Add font-awesome - used for ratings.
   $font_awesome = variable_get('ereol_font_awesome_path', '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
   drupal_add_css($font_awesome, array('type' => 'external'));
+}
+
+/**
+ * Preprocess ting_relations.
+ */
+function orwell_preprocess_ting_relation(&$vars) {
+  if ($vars['relation']->getType() == 'dbcaddi:hasDescriptionFromPublisher') {
+    // Replace abstract with full content of the relation.
+    // I know, this is way too coupled, but it's what we have to work with.
+    $path = drupal_get_path('module', 'ting_fulltext');
+    include_once $path . '/includes/ting_fulltext.pages.inc';
+    $fulltext = ting_fulltext_object_load($vars['relation']->object->getId());
+    $build = array(
+      'ting_fulltext' => array(
+        '#theme' => 'ting_fulltext',
+        '#fields' => ting_fulltext_parse($fulltext),
+      ),
+    );
+    $vars['abstract'] = drupal_render($build);
+
+    // Remove link to full text.
+    unset($vars['fulltext_link']);
+
+    // Title is ugly per default, fix it.
+    $vars['title'] = t('Description from publisher');
+  }
 }

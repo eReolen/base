@@ -2,7 +2,7 @@
 
 $material--teaser__margin-bottom: 1.2rem;
 
-.material--teaser {
+.material {
   padding: 2rem 0;
   border-bottom: 1px solid $color__border-gray;
 
@@ -11,22 +11,46 @@ $material--teaser__margin-bottom: 1.2rem;
   }
 
   &__cover {
-    width: 50%;
+    width: 100%;
     float: left;
+    margin-bottom: $material--teaser__margin-bottom;
+
+    @include grid-media($small) {
+      width: 50%;
+    }
 
     @include grid-media($medium) {
-      width: 25%;
+      width: percentage(1 / 3);
+      padding-right: 2.5rem;
+    }
+
+    &--teaser {
+      @include grid-media($medium) {
+        width: percentage(1 / 4);
+        padding-right: 0;
+      }
     }
   }
 
   &__content {
-    width: 50%;
+    width: 100%;
     float: left;
-    padding-left: 2rem;
+    margin-bottom: $material--teaser__margin-bottom;
+
+    @include grid-media($small) {
+      padding-left: 2rem;
+      width: 50%;
+    }
 
     @include grid-media($medium) {
-      padding-left: 4rem;
-      width: 75%;
+      padding-left: 3.5rem;
+      width: percentage(2 / 3);
+    }
+
+    &--teaser {
+      @include grid-media($medium) {
+        width: percentage(3 / 4);
+      }
     }
   }
 
@@ -38,6 +62,7 @@ $material--teaser__margin-bottom: 1.2rem;
       text-decoration: none;
       font-family: $font-light;
       color: $color__font-gray;
+      overflow-wrap: break-word;
     }
   }
 
@@ -46,6 +71,7 @@ $material--teaser__margin-bottom: 1.2rem;
     font-family: $font-semibold;
     font-weight: 600;
     font-size: 1rem;
+    line-height: $line-height__small;
     margin-bottom: $material--teaser__margin-bottom;
 
     a {
@@ -56,8 +82,6 @@ $material--teaser__margin-bottom: 1.2rem;
 
   &__abstract {
     @include text-paragraph;
-    // Not displayed on mobile.
-    display: none;
     margin-bottom: $material--teaser__margin-bottom;
 
     @include grid-media($medium) {
@@ -92,5 +116,178 @@ $material--teaser__margin-bottom: 1.2rem;
 
   &__rating {
     margin: .3rem 0 $material--teaser__margin-bottom;
+  }
+
+  &__series {
+    float: left;
+    width: 50%;
+    font-family: $font-regular;
+    color: $color__font-gray;
+    clear: left;
+    line-height: $line-height__small;
+    margin-bottom: 3.5rem;
+
+    @include grid-media($medium) {
+      width: 100%;
+      margin-top: 1rem;
+      margin-bottom: 0;
+      clear: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: $color__red;
+    }
+
+    .field-label {
+      color: $color__dark;
+      font-family: $font-semibold;
+      font-weight: normal;
+      float: left;
+      margin-right: 1rem;
+    }
+  }
+
+  &__buttons {
+    @include grid-media($medium) {
+      float: left;
+      width: percentage(1 / 3);
+      clear: left;
+      padding-right: 2.5rem;
+      margin-bottom: 3.5rem;
+
+      .field-item {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: wrap;
+      }
+    }
+  }
+
+  &__details,
+  .group-material-details,
+  #ting-object-ting-object-full-group-on-this-site {
+    > h2,
+    .ting-relations__title h2,
+    .field-group-format-title {
+      text-decoration: none;
+      font-family: $font-light;
+      color: $color__font-gray;
+      overflow-wrap: break-word;
+      font-size: 1.1rem;
+      display: block;
+      width: 100%;
+
+      @include grid-media($mobile-only) {
+        padding-right: 4rem;
+
+        &::before {
+          @include icon;
+          content: $icon__chevron-down;
+          position: absolute;
+          right: 3.5rem;
+          font-size: 1.5rem;
+        }
+      }
+
+
+      @include grid-media($small) {
+        font-size: 1.5rem;
+      }
+
+      @include grid-media($medium) {
+        font-size: 2.1rem;
+      }
+    }
+
+    > h2,
+    .ting-relations__title {
+      @include grid-media($medium) {
+        float: left;
+        width: percentage(1 / 3);
+      }
+    }
+
+    .field-group-format-wrapper,
+    .ting-relations__content {
+      padding: 2rem 0;
+
+      @include grid-media($medium) {
+        padding: 0;
+        float: left;
+        display: block !important;
+        width: percentage(2 / 3);
+      }
+    }
+  }
+}
+
+.action-button {
+  @extend .btn;
+  float: left;
+  text-align: left;
+
+  @include grid-media($medium) {
+    max-width: 47%;
+  }
+}
+
+.content-wrapper--material {
+  padding: 0 2rem;
+}
+
+.detail {
+  width: 100%;
+  display: inline-block;
+  clear: left;
+  padding: 1.5rem 0;
+  border-top: 1px solid $color__border-gray;
+  margin: 0;
+
+  .article--search-result {
+    float: left;
+    width: 100%;
+    margin: .5rem 0;
+
+    @include grid-media($medium) {
+      margin: 1.5rem 0 2rem;
+    }
+  }
+}
+
+.group-material-details .field-group-format-wrapper {
+  font-family: $font-regular;
+  font-weight: normal;
+
+  .field-label,
+  .field-items {
+    width: 50%;
+    float: left;
+    padding: 1rem .5rem 1rem 0;
+  }
+
+  .field-label {
+    font-family: $font-semibold;
+    font-weight: normal;
+  }
+
+  .field-items {
+    color: $color__font-gray;
+
+    a {
+      color: $color__red;
+      text-decoration: none;
+    }
+  }
+}
+
+.abstract {
+  @include text-paragraph;
+}
+
+.ting-fulltext-inner-wrapper {
+  h1 {
+    color: $color__font-gray--dark;
+    font-family: $font-semibold;
   }
 }

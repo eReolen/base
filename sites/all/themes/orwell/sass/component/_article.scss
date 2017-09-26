@@ -11,14 +11,14 @@ $teaser-bg-default: #393939;
     @include grid-media($medium) {
       display: flex;
       flex-wrap: wrap;
-      padding-bottom: 3.5rem;
-      padding-top: 0;
+      padding: 0 0 3.5rem;
     }
   }
 
   &__title {
     font-family: $font-light;
     font-size: 2rem;
+    color: $color__font-gray;
     margin: 3rem;
     text-align: center;
 
@@ -89,8 +89,7 @@ $teaser-bg-default: #393939;
     }
 
     @include grid-media($medium) {
-      padding-top: 0;
-      padding-bottom: 0;
+      padding: 0;
       margin-bottom: 5rem;
       height: 400px;
     }
@@ -332,5 +331,58 @@ $teaser-bg-default: #393939;
     object-fit: cover;
     height: 475px;
     display: block;
+  }
+}
+
+.article--search-result {
+  font-family: $font-regular;
+
+  a {
+    text-decoration: none;
+  }
+
+  &__left,
+  &__right {
+    width: 50%;
+    float: left;
+  }
+
+  &__title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: $color__font-gray--dark;
+    font-family: $font-semibold;
+    margin-bottom: 1.5rem;
+    line-height: $line-height__small;
+    margin-top: calc(50% - 3rem);
+
+    @include grid-media($medium) {
+      margin: 0;
+    }
+  }
+
+  &__cover {
+    img {
+      height: auto;
+      max-height: 194px;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    @include grid-media($medium) {
+      padding-right: 3.5rem;
+    }
+  }
+
+  p {
+    @include text-paragraph;
+  }
+
+  &__info__inner {
+    padding: 0 0 0 2rem;
+
+    @include grid-media($medium) {
+      padding: 1.5rem 0 0;
+    }
   }
 }

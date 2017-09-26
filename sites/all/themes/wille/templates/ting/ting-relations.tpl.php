@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Template file for ting_relations theme function.

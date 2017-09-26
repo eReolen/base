@@ -3,38 +3,6 @@
 .ting-object.view-mode-compact {
   width: 268px;
 
-  .ting-cover-wrapper {
-    // Establish a positioning context for the type icons.
-    position: relative;
-  }
-
-  .type-icons {
-    position: absolute;
-    width: 100%;
-    top: 20px;
-    padding-right: 20px;
-    text-align: end;
-
-    .ebook::before,
-    .audiobook::before {
-      padding: 10px;
-      background-color: white;
-      border-radius: 50%;
-      border: 1px solid #eee;
-      @include icon;
-      color: $color__font-gray;
-      font-size: 16px;
-    }
-
-    .ebook::before {
-      content: $icon__badge-ebook;
-    }
-
-    .audiobook::before {
-      content: $icon__badge-sound;
-    }
-  }
-
   // Hide author and title per default.
   .group-overlay {
     display: none;

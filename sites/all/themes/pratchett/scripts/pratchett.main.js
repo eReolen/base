@@ -63,30 +63,10 @@
    */
   Drupal.behaviors.tingObject = {
     attach : function(context, settings) {
-
-      var contentWrapper = $('<div class="collapsible-content-wrapper" />')
-
-      var elements = [
-        '.group-material-details',
-        '.ting-object-related-item',
-        '.pane-ting-ting-object-types'
-      ];
-
-      $(elements).each(function(id, element) {
-        $(element)
-          .addClass('ting-object-collapsible-enabled')
-          .addClass('open')
-          .find('h2')
-          .nextAll()
-          .wrapAll(contentWrapper);
-
-        $('.collapsible-content-wrapper').hide();
-
-        $(element).find('h2').click(function() {
-          $(element)
-            .toggleClass('open')
-            .find('.collapsible-content-wrapper')
-            .slideToggle();
+      $('.js-collaps').each(function(id, element) {
+        $(element).find('.ting-relations__content').hide();
+        $(element).find('h2').first().click(function() {
+          $(element).find('.ting-relations__content').slideToggle();
         });
       });
     }

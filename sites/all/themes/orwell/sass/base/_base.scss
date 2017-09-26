@@ -19,3 +19,15 @@ html {
 body {
   background: $page-bg;
 }
+
+.desktop-only {
+  @include grid-media($mobile-only) {
+    display: none !important;
+  }
+}
+
+.mobile-only {
+  @include grid-media($medium) {
+    display: none !important;
+  }
+}

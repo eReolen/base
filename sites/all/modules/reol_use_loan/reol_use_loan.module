@@ -230,7 +230,7 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
       }
 
       // Create the button.
-      $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id);
+      $return = reol_base_get_entity_button($text, $link, 'read-' . $entity->id, array('btn', 'btn--try'));
 
       // If we are displaying try button, load content in modal.
       if (!$loaned && $entity_type === 'audiobook') {
