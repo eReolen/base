@@ -134,3 +134,28 @@ function orwell_preprocess_ting_relation(&$vars) {
     $vars['title'] = t('Description from publisher');
   }
 }
+
+/**
+ * Template preprocessor for entities.
+ */
+function orwell_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'linkbox') {
+      $wrapper = $variables['paragraphs_item']->wrapper();
+      $variables['classes_array'][] = 'linkbox';
+
+      $color = $wrapper->field_link_color->value();
+      if (isset($color['rgb'])) {
+        $variables['attributes_array']['style'] = 'background-color: ' . $color['rgb'] . ';';
+      }
+
+      $link = $wrapper->field_link->value();
+      if (isset($link['url'])) {
+        $variables['href'] = $link['url'];
+      }
+      if (isset($link['title'])) {
+        $variables['title'] = check_plain($link['title']);
+      }
+    }
+  }
+}

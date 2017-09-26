@@ -2604,4 +2604,34 @@ html.js input.form-autocomplete {
   }
 }
 
+.linkbox {
+  max-width: 510px;
+  margin: 40px;
+  overflow: hidden;
+}
+
+.linkbox a {
+  color: white;
+  text-decoration: none;
+}
+
+.linkbox .linkbox__container {
+  height: 250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.linkbox .linkbox__content {
+  font-family: "SourceSansPro", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
