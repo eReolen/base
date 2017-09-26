@@ -6,13 +6,13 @@ $grid-columns: 12;
 $xsmall: (
   columns: $grid-columns,
   gutter: 0px,
-  media: 'all and (min-width: 24rem)',
+  media: 'all and (min-width: 20rem)',
 );
 
 $small: (
   columns: $grid-columns,
   gutter: 0px,
-  media: 'all and (min-width: 31rem)',
+  media: 'all and (min-width: 23rem)',
 );
 
 $medium: (
@@ -25,4 +25,10 @@ $large: (
   columns: $grid-columns,
   gutter: 0px,
   media: 'all and (min-width: 65rem)',
+);
+
+$mobile-only: (
+  columns: $grid-columns,
+  gutter: 0px,
+  media: 'all and (max-width: 49rem)',
 );

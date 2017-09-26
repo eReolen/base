@@ -637,17 +637,17 @@ function reol_base_entity_ajax_form($popup_id, $callback, $entity) {
  * @return array
  *   Themable button array.
  */
-function reol_base_get_entity_button($text, $link, $id) {
+function reol_base_get_entity_button($text, $link, $id, $classes = array()) {
   return array(
     '#theme' => 'link',
     '#text' => $text,
     '#path' => $link,
     '#options' => array(
       'attributes' => array(
-        'class' => array(
+        'class' => array_merge(array(
           'action-button',
           'use-ajax',
-        ),
+        ), $classes),
         'id' => $id,
       ),
       'html' => FALSE,

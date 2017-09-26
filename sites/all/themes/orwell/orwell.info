@@ -6,6 +6,7 @@ release = 7.x-1.x
 stylesheets[all][] = css/orwell.main.css
 stylesheets[all][] = system.menus.css
 stylesheets[all][] = system.theme.css
+stylesheets[all][] = field.css
 ; stylesheets[all][] = system.base.css
 stylesheets[all][] = search.css
 stylesheets[all][] = panels.css

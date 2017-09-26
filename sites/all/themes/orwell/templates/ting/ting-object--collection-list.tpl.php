@@ -10,26 +10,26 @@
 ?>
 <div class="material material--teaser <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <div class="material__cover material__cover--teaser">
-    <?php echo render($content['group_ting_object_teaser_left']['ting_cover']); ?>
+    <?php echo render($content['group_ting_left_col_collection']['ting_cover']); ?>
   </div>
   <div class="material__content text">
     <div class="material__rating">
-      <?php echo render($content['group_ting_object_teaser_right']['ding_entity_rating_action']); ?>
-      <?php echo render($content['group_ting_object_teaser_right']['ding_entity_rating_result']); ?>
+      <?php echo render($content['group_ting_right_col_collection']['ding_entity_rating_action']); ?>
+      <?php echo render($content['group_ting_right_col_collection']['ding_entity_rating_result']); ?>
     </div>
     <div class="material__title">
-      <?php echo render($content['group_ting_object_teaser_right']['ting_title']); ?>
+      <?php echo render($content['group_ting_right_col_collection']['ting_title']); ?>
     </div>
     <div class="material__author">
-      <?php echo render($content['group_ting_object_teaser_right']['ting_author']); ?>
+      <?php echo render($content['group_ting_right_col_collection']['ting_author']); ?>
     </div>
     <div class="material__abstract">
-      <?php echo render($content['group_ting_object_teaser_right']['ting_abstract']); ?>
+      <?php echo render($content['group_ting_right_col_collection']['ting_abstract']); ?>
     </div>
     <div class="material__subjects">
-      <?php echo render($content['group_ting_object_teaser_right']['ting_subjects']); ?>
+      <?php echo render($content['group_ting_right_col_collection']['ting_subjects']); ?>
     </div>
-    <div class="material__series material__series--desktop">
+    <div class="material__series">
       <?php echo render($content['group_ting_object_right_column']['ting_series']); ?>
     </div>
   </div>

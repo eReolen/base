@@ -68,6 +68,7 @@
     line-height: 1em;
     padding: 15px 22px;
     margin-top: 1rem;
+    border-radius: 0;
     width: 100%;
     background-color: $color__green;
     color: white;
@@ -90,7 +91,7 @@
   }
 
   .description {
-    margin: .5rem 0;
+    margin: 0.5rem 0;
   }
 
   .form-item {
@@ -104,5 +105,25 @@
       font-family: $font-regular;
       margin-top: 5px;
     }
+  }
+}
+
+@mixin button() {
+  font-family: $font-semibold;
+  line-height: 1em;
+  padding: 10px 22px;
+  margin-top: 1rem;
+  border-radius: 0;
+  width: 100%;
+  background-color: $color__green;
+  color: white;
+  border-radius: 2px;
+  text-transform: uppercase;
+  width: 100%;
+  font-size: 0.9rem;
+
+  &:hover {
+    background-color: $color__green--dark;
+    cursor: pointer;
   }
 }
