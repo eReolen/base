@@ -24,7 +24,7 @@
     @include icon;
     content: $icon__chevron-right;
     position: absolute;
-    right: 0.5rem;
+    right: .5rem;
   }
 }
 
@@ -37,7 +37,7 @@
     @include icon;
     content: $icon__eye;
     position: absolute;
-    right: 0.5rem;
+    right: .5rem;
     top: 12px;
     font-size: 2rem;
   }

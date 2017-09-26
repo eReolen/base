@@ -103,9 +103,9 @@ $teaser-bg-default: #393939;
     overflow: hidden;
     padding: 2rem;
 
-    & .field-item:last-child {
+    .field-item:last-child {
       .material--teaser {
-        border: none;
+        border: 0;
       }
     }
 

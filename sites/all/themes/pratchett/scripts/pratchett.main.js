@@ -63,8 +63,6 @@
    */
   Drupal.behaviors.tingObject = {
     attach : function(context, settings) {
-      var contentWrapper = $('<div class="collapsible-content-wrapper" />')
-
       $('.js-collaps').each(function(id, element) {
         $(element).find('.ting-relations__content').hide();
         $(element).find('h2').first().click(function() {

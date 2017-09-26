@@ -23,8 +23,6 @@ img {
   order: 4;
   background: $page-bg;
 
-  @include form-default;
-
   .messages {
     margin: 16px 0;
   }
@@ -45,6 +43,12 @@ img {
 .ui-dialog {
   border-radius: 0;
   background-color: white;
+  // Try to make it responsive.
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto;
+  top: 100px !important;
+  position: absolute !important;
 
   // Fix the positioning of the close button.
   .ui-dialog-titlebar .ui-dialog-titlebar-close {
@@ -57,13 +61,6 @@ img {
   .messages {
     margin: 16px 0;
   }
-
-  // Try to make it responsive.
-  left: 0 !important;
-  right: 0 !important;
-  margin: 0 auto;
-  top: 100px !important;
-  position: absolute !important;
 }
 
 .ui-widget {

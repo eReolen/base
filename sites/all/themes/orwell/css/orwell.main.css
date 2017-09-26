@@ -260,7 +260,6 @@ img {
   line-height: 1em;
   padding: 15px 22px;
   margin-top: 1rem;
-  border-radius: 0;
   width: 100%;
   background-color: #95b978;
   color: white;
@@ -283,86 +282,7 @@ img {
 }
 
 .pane-user-login .description {
-  margin: 0.5rem 0;
-}
-
-.pane-user-login .form-item {
-  position: relative;
-  margin-bottom: 1rem;
-}
-
-.pane-user-login form .description {
-  color: #047537;
-  font-family: "SourceSansPro", sans-serif;
-  margin-top: 5px;
-}
-
-.pane-user-login select {
-  background: white;
-  border: 1px solid #d5d5d5;
-  height: 41px;
-  width: 100%;
-  font-size: 13px;
-  padding: 10px 30px;
-  color: #969696;
-  font-family: "SourceSansProSemiBold", sans-serif;
-  text-transform: uppercase;
-  font-weight: normal;
-  letter-spacing: 1px;
-}
-
-.pane-user-login input[type="text"],
-.pane-user-login input[type="email"],
-.pane-user-login input[type="submit"],
-.pane-user-login input[type="password"] {
-  text-decoration: none;
-  border-radius: 6px;
-  min-width: 250px;
-  display: inline-block;
-  position: relative;
-  height: 41px;
-  border: 1px solid #d5d5d5;
-  color: black;
-  font-size: 15.4px;
-  font-family: "SourceSansProSemiBold", sans-serif;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 1rem;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.pane-user-login input[type="submit"] {
-  font-family: "SourceSansProSemiBold", sans-serif;
-  line-height: 1em;
-  padding: 15px 22px;
-  margin-top: 1rem;
-  border-radius: 0;
-  width: 100%;
-  background-color: #95b978;
-  color: white;
-  border-radius: 2px;
-  text-transform: uppercase;
-}
-
-.pane-user-login input[type="submit"]:hover {
-  background-color: #7c9b63;
-  cursor: pointer;
-}
-
-.pane-user-login label {
-  font-size: 16px;
-  line-height: 22px;
-  font-family: "SourceSansProSemiBold", sans-serif;
-  color: #505050;
-  margin: 0 0 5px;
-  display: block;
-}
-
-.pane-user-login .description {
-  margin: 0.5rem 0;
+  margin: .5rem 0;
 }
 
 .pane-user-login .form-item {
@@ -422,7 +342,6 @@ img {
   line-height: 1em;
   padding: 15px 22px;
   margin-top: 1rem;
-  border-radius: 0;
   width: 100%;
   background-color: #95b978;
   color: white;
@@ -445,7 +364,7 @@ img {
 }
 
 .ui-dialog form .description {
-  margin: 0.5rem 0;
+  margin: .5rem 0;
 }
 
 .ui-dialog form .form-item {
@@ -529,14 +448,12 @@ img {
   line-height: 1em;
   padding: 10px 22px;
   margin-top: 1rem;
-  border-radius: 0;
-  width: 100%;
   background-color: #95b978;
   color: white;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
-  font-size: 0.9rem;
+  font-size: .9rem;
   color: #ffffff !important;
   text-decoration: none;
   position: relative;
@@ -1464,7 +1381,7 @@ html.js input.form-autocomplete {
 }
 
 .article__materials .field-item:last-child .material--teaser {
-  border: none;
+  border: 0;
 }
 
 @media all and (min-width: 65rem) {
