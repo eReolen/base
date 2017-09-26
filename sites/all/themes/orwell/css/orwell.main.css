@@ -2296,45 +2296,6 @@ html.js input.form-autocomplete {
   width: 268px;
 }
 
-.ting-object.view-mode-compact .ting-cover-wrapper {
-  position: relative;
-}
-
-.ting-object.view-mode-compact .type-icons {
-  position: absolute;
-  width: 100%;
-  top: 20px;
-  padding-right: 20px;
-  text-align: end;
-}
-
-.ting-object.view-mode-compact .type-icons .ebook::before,
-.ting-object.view-mode-compact .type-icons .audiobook::before {
-  padding: 10px;
-  background-color: white;
-  border-radius: 50%;
-  border: 1px solid #eee;
-  font-family: "icomoon";
-  speak: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: '';
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  color: #787878;
-  font-size: 16px;
-}
-
-.ting-object.view-mode-compact .type-icons .ebook::before {
-  content: "";
-}
-
-.ting-object.view-mode-compact .type-icons .audiobook::before {
-  content: "";
-}
-
 .ting-object.view-mode-compact .group-overlay {
   display: none;
 }
@@ -2534,6 +2495,45 @@ html.js input.form-autocomplete {
 
 .star {
   margin-right: 0.3rem;
+}
+
+.ting-cover-wrapper {
+  position: relative;
+}
+
+.type-icons {
+  position: absolute;
+  width: 100%;
+  top: 20px;
+  padding-right: 20px;
+  text-align: end;
+}
+
+.type-icons .ebook::before,
+.type-icons .audiobook::before {
+  padding: 10px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  color: #787878;
+  font-size: 16px;
+}
+
+.type-icons .ebook::before {
+  content: "";
+}
+
+.type-icons .audiobook::before {
+  content: "";
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
