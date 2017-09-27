@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Spotlightbox paragraph feature.
+ */
+
+include_once 'reol_spotlightbox_paragraph.features.inc';
