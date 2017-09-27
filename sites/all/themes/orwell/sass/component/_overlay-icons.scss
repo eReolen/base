@@ -1,5 +1,6 @@
 
-.ting-cover-wrapper {
+.ting-cover-wrapper,
+.linkbox {
   // Establish a positioning context for the type icons.
   position: relative;
 }
@@ -27,5 +28,11 @@
 
   .audiobook::before {
     content: $icon__badge-sound;
+  }
+
+  .link::before {
+    content: $icon__link;
+    // Special color, for some odd reason.
+    color: #db2b52;
   }
 }

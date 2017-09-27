@@ -840,7 +840,8 @@ div.messages {
   margin-right: .3rem;
 }
 
-.ting-cover-wrapper {
+.ting-cover-wrapper,
+.linkbox {
   position: relative;
 }
 
@@ -876,6 +877,11 @@ div.messages {
 
 .overlay-icons .audiobook::before {
   content: "";
+}
+
+.overlay-icons .link::before {
+  content: "";
+  color: #db2b52;
 }
 
 @font-face {

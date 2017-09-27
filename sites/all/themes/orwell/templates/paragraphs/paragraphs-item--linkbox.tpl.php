@@ -17,4 +17,5 @@
   <?php if (isset($href)): ?>
     </a>
   <?php endif; ?>
+  <?php print $icons; ?>
 </div>

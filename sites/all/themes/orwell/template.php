@@ -149,9 +149,14 @@ function orwell_preprocess_entity(&$variables) {
         $variables['attributes_array']['style'] = 'background-color: ' . $color['rgb'] . ';';
       }
 
+      $variables['icons'] = '';
       $link = $wrapper->field_link->value();
       if (isset($link['url'])) {
         $variables['href'] = $link['url'];
+
+        if (!preg_match('{^' . preg_quote($GLOBALS['base_url']) . '}', $link['url'])) {
+          $variables['icons'] = theme('reol_overlay_icons', array('icons' => array('link')));
+        }
       }
       if (isset($link['title'])) {
         $variables['title'] = check_plain($link['title']);
