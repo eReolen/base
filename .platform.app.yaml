@@ -1,25 +1,43 @@
-name: php
+name: app
+
 type: php
+
 build:
-    flavor: drupal
+  flavor: none
+
+dependencies:
+  php:
+    "drush/drush": "^8.0"
+
 access:
-    ssh: contributor
+  ssh: contributor
+
 relationships:
-    database: "mysql:mysql"
+  database: "mysqldb:mysql"
+
 web:
-    document_root: "/"
-    passthru: "/index.php"
+  document_root: "/"
+  passthru: "/index.php"
+
 disk: 2048
+
 mounts:
-    "/public/sites/default/files": "shared:files/files"
-    "/tmp": "shared:files/tmp"
-    "/private": "shared:files/private"
+  "/public/sites/default/files": "shared:files/files"
+  "/tmp": "shared:files/tmp"
+  "/private": "shared:files/private"
+
 crons:
-    drupal:
-        spec: "*/20 * * * *"
-        cmd: "cd public ; drush core-cron"
+  drupal:
+    spec: "*/20 * * * *"
+    cmd: "cd public ; drush core-cron"
+
 hooks:
-    deploy: |
-      cd public
-      drush -y --cache-clear=0 updatedb
-      drush cc all
+  build: |
+    cd public/sites/all/modules/contrib
+    drush pm-download stage_file_proxy-7
+    
+  deploy: |
+    cd public
+    drush -y --cache-clear=0 updatedb
+    drush en -y stage_file_proxy
+    drush cc all
