@@ -13,11 +13,11 @@
   text-align: end;
 
   .icon::before {
+    @include icon;
     padding: 10px;
     background-color: white;
     border-radius: 50%;
     border: 1px solid #eee;
-    @include icon;
     color: $color__font-gray;
     font-size: 16px;
   }
