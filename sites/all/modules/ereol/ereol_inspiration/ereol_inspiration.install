@@ -18,3 +18,10 @@ function ereol_inspiration_update_7101() {
 function ereol_inspiration_update_7102() {
   module_enable(array('reol_news_paragraph'), TRUE);
 }
+
+/**
+ * Enable reol_link_paragraph.
+ */
+function ereol_inspiration_update_7103() {
+  module_enable(array('reol_link_paragraph'), TRUE);
+}

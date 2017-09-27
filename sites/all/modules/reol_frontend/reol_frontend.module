@@ -48,7 +48,28 @@ function reol_frontend_theme() {
       'path' => drupal_get_path('module', 'reol_frontend') . '/templates',
       'template' => 'reol-frontend-reol-login',
     ),
+    'reol_overlay_icons' => array(
+      'variables' => array(
+        'icons' => array(),
+      ),
+    ),
   );
+}
+
+/**
+ * Returns HTML for overlay icons.
+ */
+function theme_reol_overlay_icons($variables) {
+  $spans = '';
+  foreach ($variables['icons'] as $icon) {
+    $spans .= '<span class="icon ' . $icon . '"></span>';
+  }
+
+  if (!$spans) {
+    return '';
+  }
+
+  return '<div class="overlay-icons">' . $spans . '</div>';
 }
 
 /**

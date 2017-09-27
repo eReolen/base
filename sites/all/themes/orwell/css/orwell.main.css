@@ -840,11 +840,12 @@ div.messages {
   margin-right: .3rem;
 }
 
-.ting-cover-wrapper {
+.ting-cover-wrapper,
+.linkbox {
   position: relative;
 }
 
-.type-icons {
+.overlay-icons {
   position: absolute;
   width: 100%;
   top: 20px;
@@ -852,8 +853,7 @@ div.messages {
   text-align: end;
 }
 
-.type-icons .ebook::before,
-.type-icons .audiobook::before {
+.overlay-icons .icon::before {
   padding: 10px;
   background-color: white;
   border-radius: 50%;
@@ -871,12 +871,17 @@ div.messages {
   font-size: 16px;
 }
 
-.type-icons .ebook::before {
+.overlay-icons .ebook::before {
   content: "";
 }
 
-.type-icons .audiobook::before {
+.overlay-icons .audiobook::before {
   content: "";
+}
+
+.overlay-icons .link::before {
+  content: "";
+  color: #db2b52;
 }
 
 @font-face {
@@ -2602,6 +2607,36 @@ html.js input.form-autocomplete {
   .ting-object.view-mode-compact {
     width: 225px;
   }
+}
+
+.linkbox {
+  max-width: 510px;
+  margin: 40px;
+  overflow: hidden;
+}
+
+.linkbox a {
+  color: white;
+  text-decoration: none;
+}
+
+.linkbox .linkbox__container {
+  height: 250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.linkbox .linkbox__content {
+  font-family: "SourceSansPro", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
