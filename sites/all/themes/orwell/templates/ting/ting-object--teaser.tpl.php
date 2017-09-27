@@ -8,7 +8,6 @@
  * - $object: The TingClientObject instance we're rendering.
  * - $content: Render array of content.
  */
- // dpm($content);
 ?>
 
 <?php if (!empty($content['ting_primary_object'])) : ?>

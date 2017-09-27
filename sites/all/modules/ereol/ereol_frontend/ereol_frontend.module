@@ -25,9 +25,9 @@ function ereol_frontend_entity_info_alter(&$entity_info) {
  * Force search results to use teaser view mode.
  */
 function ereol_frontend_field_display_ting_collection_alter(&$display, $context) {
-  if ($context['entity_type'] == 'ting_collection'
-    && $context['instance']['field_name'] == 'ting_primary_object') {
-      $display['settings']['view_mode'] = 'teaser';
+  if ($context['entity_type'] == 'ting_collection' &&
+    $context['instance']['field_name'] == 'ting_primary_object') {
+    $display['settings']['view_mode'] = 'teaser';
   }
 }
 

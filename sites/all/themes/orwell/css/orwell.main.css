@@ -768,7 +768,7 @@ div.messages {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  font-size: 0.9rem;
+  font-size: .9rem;
   color: #505050;
   border: 1px solid #d8d8d8;
   padding: 1rem;
@@ -2155,10 +2155,6 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-.material__cover img {
-  width: 100%;
-}
-
 @media all and (min-width: 23rem) {
   .material__cover {
     width: 50%;
@@ -2174,6 +2170,10 @@ html.js input.form-autocomplete {
     width: 33.33333%;
     padding-right: 2.5rem;
   }
+}
+
+.material__cover img {
+  width: 100%;
 }
 
 @media all and (min-width: 49rem) {
