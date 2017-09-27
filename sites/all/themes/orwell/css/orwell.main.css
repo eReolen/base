@@ -854,10 +854,6 @@ div.messages {
 }
 
 .overlay-icons .icon::before {
-  padding: 10px;
-  background-color: white;
-  border-radius: 50%;
-  border: 1px solid #eee;
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -867,6 +863,10 @@ div.messages {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
+  padding: 10px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid #eee;
   color: #787878;
   font-size: 16px;
 }
@@ -882,6 +882,21 @@ div.messages {
 .overlay-icons .link::before {
   content: "";
   color: #db2b52;
+}
+
+.reader__back-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 5px;
+  text-decoration: none;
+  font-size: 22px;
+}
+
+.reader__back-button:before {
+  font-family: "FontAwesome";
+  content: "\f060";
+  position: relative;
 }
 
 @font-face {
