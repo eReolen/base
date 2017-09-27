@@ -844,7 +844,7 @@ div.messages {
   position: relative;
 }
 
-.type-icons {
+.overlay-icons {
   position: absolute;
   width: 100%;
   top: 20px;
@@ -852,8 +852,7 @@ div.messages {
   text-align: end;
 }
 
-.type-icons .ebook::before,
-.type-icons .audiobook::before {
+.overlay-icons .icon::before {
   padding: 10px;
   background-color: white;
   border-radius: 50%;
@@ -871,11 +870,11 @@ div.messages {
   font-size: 16px;
 }
 
-.type-icons .ebook::before {
+.overlay-icons .ebook::before {
   content: "";
 }
 
-.type-icons .audiobook::before {
+.overlay-icons .audiobook::before {
   content: "";
 }
 

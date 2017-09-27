@@ -4,15 +4,14 @@
   position: relative;
 }
 
-.type-icons {
+.overlay-icons {
   position: absolute;
   width: 100%;
   top: 20px;
   padding-right: 20px;
   text-align: end;
 
-  .ebook::before,
-  .audiobook::before {
+  .icon::before {
     padding: 10px;
     background-color: white;
     border-radius: 50%;
