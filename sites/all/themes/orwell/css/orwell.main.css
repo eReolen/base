@@ -132,13 +132,13 @@ body {
   src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
 }
 
-.page-wrapper {
+.page-wrapper, .page-search-ting .pane-page-content {
   max-width: 1440px;
   margin: 0 auto;
 }
 
 @media all and (min-width: 49rem) {
-  .page-wrapper {
+  .page-wrapper, .page-search-ting .pane-page-content {
     margin: 2rem auto;
   }
 }
@@ -415,6 +415,16 @@ img {
   margin-top: 2em;
 }
 
+div.messages {
+  padding: 2rem;
+  background-color: #ffffff;
+  font-family: "SourceSansPro", sans-serif;
+  font-size: 1.2rem;
+  color: #505050;
+  line-height: 1.8rem;
+  border: 1px solid #dcdcdc;
+}
+
 @font-face {
   font-family: "icomoon";
   font-style: normal;
@@ -489,7 +499,7 @@ img {
   text-transform: none;
   content: "";
   position: absolute;
-  right: 0.5rem;
+  right: .5rem;
 }
 
 .btn--try {
@@ -510,7 +520,7 @@ img {
   text-transform: none;
   content: "";
   position: absolute;
-  right: 0.5rem;
+  right: .5rem;
   top: 12px;
   font-size: 2rem;
 }
@@ -577,6 +587,296 @@ img {
 
 .highlight {
   color: #b81b40;
+}
+
+.ui-dialog {
+  border-radius: 0;
+  margin: 0 auto;
+  border: 0;
+  max-width: 730px;
+  max-height: 90%;
+  -webkit-box-shadow: 0 0 33px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 33px 0 rgba(0, 0, 0, 0.3);
+  padding: 25px 30px;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.ui-dialog.try-ebook, .ui-dialog.try-audiobook {
+  max-height: none;
+  top: 30px !important;
+  max-width: 1180px;
+  overflow-y: visible;
+}
+
+.ui-dialog,
+.ui-dialog .ui-widget-header,
+.ui-dialog .ui-dialog-content {
+  color: #505050;
+  font-family: "SourceSansProLight", sans-serif;
+}
+
+.ui-dialog a {
+  color: white;
+  text-align: center;
+}
+
+.ui-dialog form {
+  text-align: left;
+}
+
+.ui-dialog form .form-actions {
+  text-align: center;
+}
+
+.ui-dialog .action-button {
+  margin-top: 50px;
+  float: none;
+  background: #b81b40;
+}
+
+.ui-dialog .action-button::before {
+  color: white;
+}
+
+.ui-dialog .ui-corner-all {
+  border: 0;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+  margin: 0;
+  padding: 0;
+  font-family: "SourceSansPro", sans-serif;
+  text-transform: uppercase;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+  width: auto;
+  float: none;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+  display: block;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
+  top: 5px;
+  right: 0px;
+  position: absolute;
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+@media all and (min-width: 49rem) {
+  .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
+    top: 15px;
+    right: 15px;
+  }
+}
+
+.ui-dialog .ui-icon-closethick {
+  width: auto;
+  height: auto;
+  text-indent: inherit;
+  background-image: none;
+  font-size: 22px;
+}
+
+@media all and (min-width: 49rem) {
+  .ui-dialog {
+    min-width: 600px;
+  }
+}
+
+.ui-widget-overlay {
+  opacity: .4;
+}
+
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+.pager {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+}
+
+.pager a {
+  display: inline-block;
+  padding: 1rem;
+  color: #787878;
+  text-decoration: none;
+}
+
+.pager a:hover {
+  color: #b81b40;
+}
+
+.pager-current {
+  color: #b81b40;
+  padding: 1rem;
+}
+
+.pager-previous,
+.pager-next {
+  font-size: 0;
+}
+
+.pager-previous a,
+.pager-next a {
+  padding: 1rem 0;
+}
+
+.pager-previous a::before,
+.pager-next a::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-size: 0.9rem;
+  color: #505050;
+  border: 1px solid #d8d8d8;
+  padding: 1rem;
+  border-radius: 2px;
+}
+
+.pager-previous a:hover::before,
+.pager-next a:hover::before {
+  color: #b81b40;
+  border: 1px solid #b81b40;
+}
+
+.pager-next a::before {
+  content: "";
+}
+
+.pager-previous {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.pager-previous a::before {
+  content: "";
+}
+
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+.fa-star-o {
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 1.1rem;
+}
+
+.fa-star-o::before {
+  content: '\f005';
+}
+
+.fa-star-o.active {
+  color: #95b978;
+}
+
+.star {
+  margin-right: .3rem;
+}
+
+.ting-cover-wrapper {
+  position: relative;
+}
+
+.type-icons {
+  position: absolute;
+  width: 100%;
+  top: 20px;
+  padding-right: 20px;
+  text-align: end;
+}
+
+.type-icons .ebook::before,
+.type-icons .audiobook::before {
+  padding: 10px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  color: #787878;
+  font-size: 16px;
+}
+
+.type-icons .ebook::before {
+  content: "";
+}
+
+.type-icons .audiobook::before {
+  content: "";
 }
 
 @font-face {
@@ -664,7 +964,7 @@ img {
     color: #ffffff;
     font-size: 1.5rem;
     position: relative;
-    top: 5px;
+    top: 3px;
   }
 }
 
@@ -792,6 +1092,28 @@ img {
 
 html.js input.form-autocomplete {
   background-image: none;
+}
+
+@media all and (min-width: 49rem) {
+  .page-search-ting .panel-col-first {
+    width: 33.33333%;
+    float: left;
+  }
+}
+
+@media all and (min-width: 49rem) {
+  .page-search-ting .panel-col-last {
+    width: 66.66667%;
+    float: left;
+  }
+}
+
+.search-results {
+  padding: 2rem 0 0;
+}
+
+.search-results .pager {
+  padding: 3.75rem 0;
 }
 
 @font-face {
@@ -1822,7 +2144,8 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49rem) {
   .material {
-    padding: 3.5rem 0;
+    margin: 2rem 0;
+    padding: 0 0 2rem;
   }
 }
 
@@ -1832,9 +2155,17 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
+.material__cover img {
+  width: 100%;
+}
+
 @media all and (min-width: 23rem) {
   .material__cover {
     width: 50%;
+    margin-bottom: 0;
+  }
+  .material__cover img {
+    width: auto;
   }
 }
 
@@ -1862,6 +2193,7 @@ html.js input.form-autocomplete {
   .material__content {
     padding-left: 2rem;
     width: 50%;
+    margin-bottom: 0;
   }
 }
 
@@ -1922,6 +2254,12 @@ html.js input.form-autocomplete {
   margin: 2rem 0 1.2rem;
 }
 
+@media all and (min-width: 49rem) {
+  .material__subjects {
+    display: block;
+  }
+}
+
 .material__subjects .subject {
   background-color: #dcdcdc;
   border-radius: 20px;
@@ -1937,12 +2275,6 @@ html.js input.form-autocomplete {
   color: #ffffff;
 }
 
-@media all and (min-width: 49rem) {
-  .material__subjects {
-    display: block;
-  }
-}
-
 .material__rating {
   margin: 0.3rem 0 1.2rem;
 }
@@ -1954,7 +2286,15 @@ html.js input.form-autocomplete {
   color: #787878;
   clear: left;
   line-height: 1.3rem;
-  margin-bottom: 3.5rem;
+}
+
+@media all and (min-width: 49rem) {
+  .material__series {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    clear: none;
+  }
 }
 
 .material__series a {
@@ -1968,15 +2308,6 @@ html.js input.form-autocomplete {
   font-weight: normal;
   float: left;
   margin-right: 1rem;
-}
-
-@media all and (min-width: 49rem) {
-  .material__series {
-    width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 0;
-    clear: none;
-  }
 }
 
 @media all and (min-width: 49rem) {
@@ -2144,7 +2475,7 @@ html.js input.form-autocomplete {
 .detail .article--search-result {
   float: left;
   width: 100%;
-  margin: 0.5rem 0;
+  margin: .5rem 0;
 }
 
 @media all and (min-width: 49rem) {
@@ -2162,7 +2493,7 @@ html.js input.form-autocomplete {
 .group-material-details .field-group-format-wrapper .field-items {
   width: 50%;
   float: left;
-  padding: 1rem 0.5rem 1rem 0;
+  padding: 1rem .5rem 1rem 0;
 }
 
 .group-material-details .field-group-format-wrapper .field-label {
@@ -2271,195 +2602,6 @@ html.js input.form-autocomplete {
   .ting-object.view-mode-compact {
     width: 225px;
   }
-}
-
-.ui-dialog {
-  border-radius: 0;
-  margin: 0 auto;
-  border: 0;
-  -webkit-box-shadow: 0px 0px 5px 0px #aaa;
-  box-shadow: 0px 0px 5px 0px #aaa;
-  max-width: 730px;
-  max-height: 90%;
-  -webkit-box-shadow: 0 0 33px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 33px 0 rgba(0, 0, 0, 0.3);
-  padding: 25px 30px;
-  text-align: center;
-  overflow-y: auto;
-}
-
-.ui-dialog.try-ebook, .ui-dialog.try-audiobook {
-  max-height: none;
-  top: 30px !important;
-  max-width: 1180px;
-  overflow-y: visible;
-}
-
-.ui-dialog, .ui-dialog .ui-widget-header, .ui-dialog .ui-dialog-content {
-  color: #505050;
-  font-family: "SourceSansProLight", sans-serif;
-}
-
-.ui-dialog a {
-  color: white;
-  text-align: center;
-}
-
-.ui-dialog form {
-  text-align: left;
-}
-
-.ui-dialog form .form-actions {
-  text-align: center;
-}
-
-.ui-dialog .action-button {
-  margin-top: 50px;
-  float: none;
-  background: #b81b40;
-}
-
-.ui-dialog .action-button:before {
-  color: white;
-}
-
-.ui-dialog .ui-corner-all {
-  border: 0;
-  background: #fff;
-  border-radius: 5px;
-}
-
-.ui-dialog .ui-dialog-titlebar {
-  margin: 0;
-  padding: 0;
-  font-family: "SourceSansPro", sans-serif;
-  text-transform: uppercase;
-}
-
-.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
-  width: auto;
-  float: none;
-}
-
-.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
-  display: block;
-}
-
-.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
-  top: 5px;
-  right: 0px;
-  position: absolute;
-  font-size: 10px;
-  opacity: 0.6;
-}
-
-@media all and (min-width: 49rem) {
-  .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
-    top: 15px;
-    right: 15px;
-  }
-}
-
-.ui-dialog .ui-icon-closethick {
-  width: auto;
-  height: auto;
-  text-indent: inherit;
-  background-image: none;
-  font-size: 22px;
-}
-
-@media all and (min-width: 49rem) {
-  .ui-dialog {
-    min-width: 600px;
-  }
-}
-
-.ui-widget-overlay {
-  opacity: .4;
-}
-
-@font-face {
-  font-family: "icomoon";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "SourceSansProLight";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
-}
-
-@font-face {
-  font-family: "SourceSansProSemiBold";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
-}
-
-.fa-star-o {
-  color: rgba(0, 0, 0, 0.2);
-  font-size: 1.1rem;
-}
-
-.fa-star-o::before {
-  content: "\f005";
-}
-
-.fa-star-o.active {
-  color: #95b978;
-}
-
-.star {
-  margin-right: 0.3rem;
-}
-
-.ting-cover-wrapper {
-  position: relative;
-}
-
-.type-icons {
-  position: absolute;
-  width: 100%;
-  top: 20px;
-  padding-right: 20px;
-  text-align: end;
-}
-
-.type-icons .ebook::before,
-.type-icons .audiobook::before {
-  padding: 10px;
-  background-color: white;
-  border-radius: 50%;
-  border: 1px solid #eee;
-  font-family: "icomoon";
-  speak: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: '';
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  color: #787878;
-  font-size: 16px;
-}
-
-.type-icons .ebook::before {
-  content: "";
-}
-
-.type-icons .audiobook::before {
-  content: "";
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */

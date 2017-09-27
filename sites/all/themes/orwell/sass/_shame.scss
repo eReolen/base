@@ -71,3 +71,13 @@ img {
     margin-top: 2em;
   }
 }
+
+div.messages {
+  padding: 2rem;
+  background-color: $color__white;
+  font-family: $font-regular;
+  font-size: 1.2rem;
+  color: $color__font-gray--dark;
+  line-height: 1.8rem;
+  border: 1px solid $color__gray--light;
+}
