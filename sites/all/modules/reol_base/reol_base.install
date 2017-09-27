@@ -355,16 +355,23 @@ function reol_base_update_7130() {
 }
 
 /**
- * Revert ding_ting_frontend.
+ * Enable system_status.
  */
 function reol_base_update_7131() {
+  module_enable(['system_status']);
+}
+
+/**
+ * Revert ding_ting_frontend.
+ */
+function reol_base_update_7132() {
   features_revert_module('ding_ting_frontend');
 }
 
 /**
  * Enable ereol_base on eReolen.
  */
-function reol_base_update_7132() {
+function reol_base_update_7133() {
   // Only enable ereol_base if breol_base is not enabled.
   if (!module_exists('breol_base')) {
     module_enable(['ereol_base'], TRUE);
@@ -374,6 +381,6 @@ function reol_base_update_7132() {
 /**
  * Enable xautoload for bpi.
  */
-function reol_base_update_7133() {
+function reol_base_update_7134() {
   module_enable(['xautoload']);
 }
