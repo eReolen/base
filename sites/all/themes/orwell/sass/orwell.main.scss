@@ -1,9 +1,18 @@
+// Base settings.
 @import 'base/base';
 @import 'base/layout';
 @import 'bootstrap/fonts';
+
+// Base components.
 @import 'shame';
 @import 'component/buttons';
 @import 'component/text';
+@import 'component/dialog';
+@import 'component/pager';
+@import 'component/ratings';
+@import 'component/type-icons';
+
+// Composite components.
 @import 'component/search';
 @import 'component/header';
 @import 'component/main-menu';
@@ -13,6 +22,3 @@
 @import 'component/carousel';
 @import 'component/ting-object';
 @import 'component/ting-object-compact';
-@import 'component/dialog';
-@import 'component/ratings';
-@import 'component/type-icons';

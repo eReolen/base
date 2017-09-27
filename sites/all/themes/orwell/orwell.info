@@ -7,7 +7,7 @@ stylesheets[all][] = css/orwell.main.css
 stylesheets[all][] = system.menus.css
 stylesheets[all][] = system.theme.css
 stylesheets[all][] = field.css
-; stylesheets[all][] = system.base.css
+stylesheets[all][] = twocol_stacked.css
 stylesheets[all][] = search.css
 stylesheets[all][] = panels.css
 ; Kill ding_carousels theming (we got our own).
