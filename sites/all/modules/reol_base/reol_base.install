@@ -358,6 +358,6 @@ function reol_base_update_7130() {
 /**
  * Enable system_status.
  */
-function reol_base_update_7134() {
+function reol_base_update_7131() {
   module_enable(['system_status']);
 }
