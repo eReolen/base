@@ -11,83 +11,87 @@
   padding: 20px;
 }
 
-.spotlight-box__top {
+.spotlight-box__top,
+.spotlight-box__middle,
+.spotlight-box__bottom {
   display: flex;
   flex-wrap: wrap;
+}
 
-  @include grid-media($medium) {
-    .spotlight-box__top__primary {
-      flex-basis: 66%;
-    }
+// Mobile first implementation, but desktop first design. Explains why
+// this is more fiddly that it should be.
 
-    .spotlight-box__top__secondary {
-      display: block;
-      flex-basis: 33%;
-    }
-  }
+// Only show primary in full width on small screens.
+.spotlight-box__top__primary {
+  flex-basis: 100%;
+}
 
+.spotlight-box__top__secondary {
+  display: none;
+}
+
+// 2/3 to primary, the rest to secondary.
+@include grid-media($medium) {
   .spotlight-box__top__primary {
-    flex-basis: 100%;
+    flex-basis: percentage(2 / 3);
   }
 
   .spotlight-box__top__secondary {
-    display: none;
+    display: block;
+    flex-basis: percentage(1 / 3);
   }
 }
 
-.spotlight-box__middle {
-  display: flex;
-  flex-wrap: wrap;
+// Full width on very small screens.
+.spotlight-box__middle__item_1 {
+  flex-basis: 100%;
+  order: 1;
+}
 
-  @include grid-media($medium) {
-    .spotlight-box__middle__item_1 {
-      flex-basis: 33%;
-      order: 1;
-    }
+.spotlight-box__middle__item_2 {
+  flex-basis: 100%;
+  order: 3;
+}
 
-
-    .spotlight-box__middle__item_2 {
-      flex-basis: 33%;
-      order: 2;
-    }
-
-    .spotlight-box__middle__item_3 {
-      flex-basis: 33%;
-      order: 3;
-    }
-  }
-
+.spotlight-box__middle__item_3 {
+  flex-basis: 100%;
+  order: 2;
+}
+// Item 1 and 2 at half width, 2 at full.
+@include grid-media($small) {
   .spotlight-box__middle__item_1,
   .spotlight-box__middle__item_3 {
-    flex-basis: 50%;
+    flex-basis: percentage(1 / 2);
   }
+}
 
+// All on one row.
+@include grid-media($medium) {
   .spotlight-box__middle__item_1 {
+    flex-basis: percentage(1 / 3);
     order: 1;
   }
 
 
   .spotlight-box__middle__item_2 {
-    flex-basis: 100%;
-    order: 3;
+    flex-basis: percentage(1 / 3);
+    order: 2;
   }
 
   .spotlight-box__middle__item_3 {
-    order: 2;
+    flex-basis: percentage(1 / 3);
+    order: 3;
   }
 }
 
-.spotlight-box__bottom {
-  display: flex;
-  flex-wrap: wrap;
+// Full width on small screens.
+.spotlight-box__bottom__item {
+  flex-basis: 100%;
+}
 
-  @include grid-media($medium) {
-    .spotlight-box__bottom__item {
-      flex-basis: 50%;
-    }
-  }
-
+// Side by side on bigger.
+@include grid-media($medium) {
   .spotlight-box__bottom__item {
-    flex-basis: 100%;
+    flex-basis: percentage(1 / 2);
   }
 }
