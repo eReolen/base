@@ -1517,7 +1517,7 @@ html.js input.form-autocomplete {
   text-transform: none;
   font-size: 2rem;
   color: #787878;
-  content: "";
+  content: "";
   display: inline-block;
   top: 10px;
 }
