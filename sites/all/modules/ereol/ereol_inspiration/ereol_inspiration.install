@@ -25,3 +25,10 @@ function ereol_inspiration_update_7102() {
 function ereol_inspiration_update_7103() {
   module_enable(array('reol_link_paragraph'), TRUE);
 }
+
+/**
+ * Enable reol_spotlightbox_paragraph.
+ */
+function ereol_inspiration_update_7104() {
+  module_enable(array('reol_spotlightbox_paragraph'), TRUE);
+}
