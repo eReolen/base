@@ -1,0 +1,131 @@
+@import 'bootstrap/bootstrap';
+
+.page-user {
+  .layout-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    @include content-wrapper;
+
+    .primary-content {
+      flex-basis: 100%;
+
+      @include grid-media($medium) {
+        flex-basis: 75%;
+        order: 2;
+      }
+
+    }
+
+    .secondary-content {
+      flex-basis: 100%;
+
+      @include grid-media($medium) {
+        flex-basis: 25%;
+        order: 1;
+      }
+    }
+
+    .primary-content .panel-pane,
+    .secondary-content .panel-pane {
+      margin: 0 1rem 2rem;
+    }
+
+  }
+
+  h2,
+  h3 {
+    font-family: $font-light;
+    font-size: 1.5rem;
+    padding: 1rem 0;
+
+    @include grid-media($medium) {
+      font-size: 2.1rem;
+    }
+
+  }
+
+  .pane-content {
+    font-family: $font-regular;
+  }
+
+  .pane-user-menu {
+    li,
+    .pane-title {
+      font-family: $font-light;
+      font-size: 1.2rem;
+      padding: 1rem 0;
+      border-top: 1px solid $color__border-gray--light;
+    }
+
+    a {
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .material-item {
+    display: flex;
+    flex-wrap: wrap;
+
+    @include grid-media($medium) {
+      flex-wrap: nowrap;
+    }
+
+    .left-column {
+      flex-basis: 100%;
+
+      @include grid-media($medium) {
+        flex-basis: 300px;
+        flex-grow: 0;
+      }
+    }
+
+    .right-column {
+      flex-basis: 100%;
+
+      @include grid-media($medium) {
+        flex-basis: 75%;
+        padding: 0 20px;
+      }
+    }
+  }
+
+  h3 {
+    text-decoration: none;
+    font-family: $font-light;
+    color: $color__font-gray;
+    overflow-wrap: break-word;
+
+    a {
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .library-info {
+    a {
+      color: $color__green--dark;
+    }
+  }
+
+  .ting-cover-wrapper {
+    max-width: 300px;
+  }
+
+  .item-information {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 0;
+  }
+
+  .material-buttons {
+    display: flex;
+    bottom: 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+.pane-profile2-form {
+  @include form-default;
+}
