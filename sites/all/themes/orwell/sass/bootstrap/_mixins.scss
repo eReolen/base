@@ -22,6 +22,17 @@
   }
 }
 
+@mixin content-wrapper__large() {
+  max-width: 1440px;
+  position: relative;
+
+  @include grid-media($medium) {
+    margin: 0 auto;
+    padding: 0 3.75rem;
+  }
+}
+
+
 @mixin text-paragraph {
   font-size: 1rem;
   line-height: 1.8rem;
@@ -123,4 +134,12 @@
     background-color: $color__green--dark;
     cursor: pointer;
   }
+}
+
+@mixin title() {
+  font-size: 2.1rem;
+  text-decoration: none;
+  font-family: $font-light;
+  color: $color__font-gray;
+  overflow-wrap: break-word;
 }
