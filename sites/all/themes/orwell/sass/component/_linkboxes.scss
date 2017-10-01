@@ -1,0 +1,22 @@
+
+.linkbox {
+  overflow: hidden;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .linkbox__container {
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .linkbox__content {
+    font-family: $font-regular;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}

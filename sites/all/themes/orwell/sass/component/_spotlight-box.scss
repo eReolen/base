@@ -1,0 +1,97 @@
+
+.spotlight-box {
+  // Cancel out the outer padding of the items.
+  margin: -20px;
+}
+
+.spotlight-box__top__primary,
+.spotlight-box__top__secondary,
+.spotlight-box__middle__item,
+.spotlight-box__bottom__item {
+  padding: 20px;
+}
+
+.spotlight-box__top,
+.spotlight-box__middle,
+.spotlight-box__bottom {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// Mobile first implementation, but desktop first design. Explains why
+// this is more fiddly that it should be.
+
+// Only show primary in full width on small screens.
+.spotlight-box__top__primary {
+  flex-basis: 100%;
+}
+
+.spotlight-box__top__secondary {
+  display: none;
+}
+
+// 2/3 to primary, the rest to secondary.
+@include grid-media($medium) {
+  .spotlight-box__top__primary {
+    flex-basis: percentage(2 / 3);
+  }
+
+  .spotlight-box__top__secondary {
+    display: block;
+    flex-basis: percentage(1 / 3);
+  }
+}
+
+// Full width on very small screens.
+.spotlight-box__middle__item_1 {
+  flex-basis: 100%;
+  order: 1;
+}
+
+.spotlight-box__middle__item_2 {
+  flex-basis: 100%;
+  order: 3;
+}
+
+.spotlight-box__middle__item_3 {
+  flex-basis: 100%;
+  order: 2;
+}
+// Item 1 and 2 at half width, 2 at full.
+@include grid-media($small) {
+  .spotlight-box__middle__item_1,
+  .spotlight-box__middle__item_3 {
+    flex-basis: percentage(1 / 2);
+  }
+}
+
+// All on one row.
+@include grid-media($medium) {
+  .spotlight-box__middle__item_1 {
+    flex-basis: percentage(1 / 3);
+    order: 1;
+  }
+
+
+  .spotlight-box__middle__item_2 {
+    flex-basis: percentage(1 / 3);
+    order: 2;
+  }
+
+  .spotlight-box__middle__item_3 {
+    flex-basis: percentage(1 / 3);
+    order: 3;
+  }
+}
+
+// Full width on small screens.
+.spotlight-box__bottom__item {
+  flex-basis: 100%;
+}
+
+// Side by side on bigger.
+@include grid-media($medium) {
+  .spotlight-box__bottom__item {
+    flex-basis: percentage(1 / 2);
+  }
+}

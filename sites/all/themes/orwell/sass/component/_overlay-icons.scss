@@ -1,23 +1,23 @@
 
-.ting-cover-wrapper {
+.ting-cover-wrapper,
+.linkbox {
   // Establish a positioning context for the type icons.
   position: relative;
 }
 
-.type-icons {
+.overlay-icons {
   position: absolute;
   width: 100%;
   top: 20px;
   padding-right: 20px;
   text-align: end;
 
-  .ebook::before,
-  .audiobook::before {
+  .icon::before {
+    @include icon;
     padding: 10px;
     background-color: white;
     border-radius: 50%;
     border: 1px solid #eee;
-    @include icon;
     color: $color__font-gray;
     font-size: 16px;
   }
@@ -28,5 +28,11 @@
 
   .audiobook::before {
     content: $icon__badge-sound;
+  }
+
+  .link::before {
+    content: $icon__link;
+    // Special color, for some odd reason.
+    color: #db2b52;
   }
 }

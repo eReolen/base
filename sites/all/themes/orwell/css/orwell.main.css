@@ -870,11 +870,12 @@ div.messages {
   margin-right: .3rem;
 }
 
-.ting-cover-wrapper {
+.ting-cover-wrapper,
+.linkbox {
   position: relative;
 }
 
-.type-icons {
+.overlay-icons {
   position: absolute;
   width: 100%;
   top: 20px;
@@ -882,12 +883,7 @@ div.messages {
   text-align: end;
 }
 
-.type-icons .ebook::before,
-.type-icons .audiobook::before {
-  padding: 10px;
-  background-color: white;
-  border-radius: 50%;
-  border: 1px solid #eee;
+.overlay-icons .icon::before {
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -897,16 +893,40 @@ div.messages {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
+  padding: 10px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid #eee;
   color: #787878;
   font-size: 16px;
 }
 
-.type-icons .ebook::before {
+.overlay-icons .ebook::before {
   content: "";
 }
 
-.type-icons .audiobook::before {
+.overlay-icons .audiobook::before {
   content: "";
+}
+
+.overlay-icons .link::before {
+  content: "";
+  color: #db2b52;
+}
+
+.reader__back-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 5px;
+  text-decoration: none;
+  font-size: 22px;
+}
+
+.reader__back-button::before {
+  font-family: 'FontAwesome';
+  content: '\f060';
+  position: relative;
 }
 
 @font-face {
@@ -1869,7 +1889,7 @@ html.js input.form-autocomplete {
   text-transform: none;
   font-size: 2rem;
   color: #787878;
-  content: "";
+  content: "";
   display: inline-block;
   top: 10px;
 }
@@ -2979,6 +2999,144 @@ html.js input.form-autocomplete {
 @media all and (min-width: 65rem) {
   .ting-object.view-mode-compact {
     width: 225px;
+  }
+}
+
+.linkbox {
+  overflow: hidden;
+}
+
+.linkbox a {
+  color: white;
+  text-decoration: none;
+}
+
+.linkbox .linkbox__container {
+  height: 250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.linkbox .linkbox__content {
+  font-family: "SourceSansPro", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.spotlight-box {
+  margin: -20px;
+}
+
+.spotlight-box__top__primary,
+.spotlight-box__top__secondary,
+.spotlight-box__middle__item,
+.spotlight-box__bottom__item {
+  padding: 20px;
+}
+
+.spotlight-box__top,
+.spotlight-box__middle,
+.spotlight-box__bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.spotlight-box__top__primary {
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+}
+
+.spotlight-box__top__secondary {
+  display: none;
+}
+
+@media all and (min-width: 49rem) {
+  .spotlight-box__top__primary {
+    -ms-flex-preferred-size: 66.66667%;
+    flex-basis: 66.66667%;
+  }
+  .spotlight-box__top__secondary {
+    display: block;
+    -ms-flex-preferred-size: 33.33333%;
+    flex-basis: 33.33333%;
+  }
+}
+
+.spotlight-box__middle__item_1 {
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  -webkit-box-ordinal-group: 2;
+  -ms-flex-order: 1;
+  order: 1;
+}
+
+.spotlight-box__middle__item_2 {
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  -webkit-box-ordinal-group: 4;
+  -ms-flex-order: 3;
+  order: 3;
+}
+
+.spotlight-box__middle__item_3 {
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  -webkit-box-ordinal-group: 3;
+  -ms-flex-order: 2;
+  order: 2;
+}
+
+@media all and (min-width: 23rem) {
+  .spotlight-box__middle__item_1,
+  .spotlight-box__middle__item_3 {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+  }
+}
+
+@media all and (min-width: 49rem) {
+  .spotlight-box__middle__item_1 {
+    -ms-flex-preferred-size: 33.33333%;
+    flex-basis: 33.33333%;
+    -webkit-box-ordinal-group: 2;
+    -ms-flex-order: 1;
+    order: 1;
+  }
+  .spotlight-box__middle__item_2 {
+    -ms-flex-preferred-size: 33.33333%;
+    flex-basis: 33.33333%;
+    -webkit-box-ordinal-group: 3;
+    -ms-flex-order: 2;
+    order: 2;
+  }
+  .spotlight-box__middle__item_3 {
+    -ms-flex-preferred-size: 33.33333%;
+    flex-basis: 33.33333%;
+    -webkit-box-ordinal-group: 4;
+    -ms-flex-order: 3;
+    order: 3;
+  }
+}
+
+.spotlight-box__bottom__item {
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+}
+
+@media all and (min-width: 49rem) {
+  .spotlight-box__bottom__item {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
   }
 }
 
