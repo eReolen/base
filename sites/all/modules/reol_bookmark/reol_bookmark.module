@@ -161,7 +161,7 @@ function reol_bookmark_menu_alter(&$items) {
   foreach ($items as $path => $item) {
     if ($path == 'user/%user/bookmarks' || $path == 'user/%pm_arg/bookmarks') {
       $items[$path]['title callback'] = 'reol_bookmark_menu_item_title';
-      $items[$path]['title arguments'] = array($items[$path]['title'], 1);
+      $items[$path]['title arguments'] = array(1);
     }
   }
 }
