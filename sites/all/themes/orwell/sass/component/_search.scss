@@ -1,7 +1,7 @@
 @import 'bootstrap/bootstrap';
 
 $color__search-form: #d8d8d8;
-$item-height: 6.875rem;
+$item-height: 5rem;
 $icon-color: #9c9c9c;
 
 .pane-search-form {
@@ -23,6 +23,12 @@ $icon-color: #9c9c9c;
 .search-form {
   font-family: $font-regular;
 
+  .page-search & {
+    @include grid-media($medium) {
+      background-color: $color__red;
+    }
+  }
+
   &__icon__wrapper {
     align-items: center;
     cursor: pointer;
@@ -32,10 +38,12 @@ $icon-color: #9c9c9c;
 
     &::before {
       @include icon;
+      position: relative;
+      top: -3px;
+      right: 3px;
       color: $icon-color;
       content: $icon__search;
-      font-size: 2.5rem;
-      position: relative;
+      font-size: 2rem;
 
       @include grid-media($medium) {
         color: $color__white;
@@ -79,6 +87,11 @@ $icon-color: #9c9c9c;
       height: 2rem;
       text-align: center;
     }
+
+    // Hide on search page.
+    .page-search & {
+      display: none;
+    }
   }
 
   &__icon {
@@ -97,9 +110,37 @@ $icon-color: #9c9c9c;
     width: 100%;
 
     @include grid-media($medium) {
-      margin: 0 auto;
-      position: relative;
-      width: 1200px;
+      @include content-wrapper__large;
+    }
+
+    // Show always on search page.
+    .page-search & {
+      display: block;
+      z-index: 1;
+
+      @include grid-media($medium) {
+        height: auto;
+        padding: 1.2rem;
+        background-color: $color__red;
+      }
+
+      .form-item-search-block-form {
+        &::before {
+          @include icon;
+          content: $icon__search;
+          position: absolute;
+          color: $color__font-gray;
+          top: 27px;
+          left: 7px;
+          font-size: 1.5rem;
+
+          @include grid-media($medium) {
+            top: 21px;
+            color: white;
+            font-size: 1.2rem;
+          }
+        }
+      }
     }
   }
 
@@ -116,6 +157,22 @@ $icon-color: #9c9c9c;
 
     @include grid-media($medium) {
       padding: 0 1.875rem;
+    }
+
+    .page-search & {
+      padding-left: 3rem;
+
+      @include grid-media($medium) {
+        height: auto;
+        background: $color__red;
+        color: white;
+        font-size: 1.3rem;
+        font-family: $font-regular;
+
+        &::placeholder {
+          color: $color__white;
+        }
+      }
     }
   }
 
@@ -153,21 +210,54 @@ html.js input.form-autocomplete {
 
 // Search page.
 .page-search-ting {
+
+  // TODO(ts) - resolve.
+  &.not-logged-in .pane-page-tabs {
+    display: none;
+  }
+
   .pane-page-content {
     @extend .page-wrapper;
+    padding: 0 2rem;
   }
 
   .panel-col-first {
+    @include grid-media($mobile-only) {
+      width: 100%;
+      background-color: rgba(250, 250, 250, .9);
+    }
+
     @include grid-media($medium) {
-      width: percentage(1 / 3);
+      padding-top: 3.5rem;
+      padding-bottom: 3.5rem;
       float: left;
+      width: 300px;
+      border-right: 1px solid $color__border-gray;
+    }
+
+    @include grid-media($large) {
+      width: 410px;
     }
   }
 
   .panel-col-last {
+    width: 100%;
+
     @include grid-media($medium) {
-      width: percentage(2 / 3);
-      float: left;
+      width: auto;
+      padding-left: 3.5rem;
+      overflow: hidden;
+    }
+  }
+
+  .page-title {
+    @include title;
+    padding: 0 2rem;
+    background: $page-bg;
+    display: none;
+
+    @include grid-media($medium) {
+      display: block;
     }
   }
 }

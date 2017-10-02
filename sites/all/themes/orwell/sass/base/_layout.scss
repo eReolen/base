@@ -1,12 +1,7 @@
 @import 'bootstrap/bootstrap';
 
 .page-wrapper {
-  max-width: 1440px;
-  margin: 0 auto;
-
-  @include grid-media($medium) {
-    margin: 2rem auto;
-  }
+  @include content-wrapper__large;
 }
 
 .content-wrapper {

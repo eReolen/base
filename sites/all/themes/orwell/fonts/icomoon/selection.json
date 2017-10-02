@@ -4,6 +4,35 @@
     {
       "icon": {
         "paths": [
+          "M393.847 905.847l-393.847-417.398 110.198-112.601 281.561 294.321 517.672-552.015 114.57 110.514z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "check"
+        ]
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 104,
+        "id": 0,
+        "name": "check",
+        "prevSize": 32,
+        "code": 59649
+      },
+      "setIdx": 0,
+      "setId": 3,
+      "iconIdx": 0
+    },
+    {
+      "icon": {
+        "paths": [
           "M771.505 496.704l-488.631-488.631c-8.499-8.073-21.883-7.861-29.955 0.424-7.861 8.286-7.861 21.245 0 29.531l473.547 473.547-473.547 473.76c-8.499 8.073-8.71 21.67-0.424 29.955 8.073 8.499 21.67 8.71 29.955 0.424 0.213-0.213 0.424-0.424 0.424-0.424l488.631-488.631c8.286-8.288 8.286-21.672 0-29.957z"
         ],
         "attrs": [
@@ -26,7 +55,7 @@
         "prevSize": 32,
         "code": 59682
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 2,
       "iconIdx": 0
     },
@@ -55,7 +84,7 @@
         "prevSize": 32,
         "code": 59683
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 2,
       "iconIdx": 1
     },
@@ -84,7 +113,7 @@
         "prevSize": 32,
         "code": 59684
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 2,
       "iconIdx": 2
     },
@@ -113,7 +142,7 @@
         "prevSize": 32,
         "code": 59685
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 2,
       "iconIdx": 3
     },
@@ -140,36 +169,9 @@
         "name": "star",
         "code": 59648
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
       "iconIdx": 0
-    },
-    {
-      "icon": {
-        "paths": [
-          "M23.956 568.893c-23.955-23.955-23.955-62.873 0-83.834 11.978-11.978 26.949-17.966 41.921-17.966s29.944 5.988 41.921 17.966l236.53 236.53 571.874-571.874c11.978-11.978 26.949-17.966 41.921-17.966s32.938 5.988 41.921 17.966c23.955 23.955 23.955 59.879 0 83.834l-658.703 658.703-317.378-323.367zM344.328 847.344l-299.411-299.411c-11.978-11.978-11.978-29.944 0-41.921s29.944-11.978 41.921 0l257.491 257.491 595.83-595.83c11.978-11.978 29.944-11.978 41.921 0s11.978 29.944 0 41.921l-637.742 637.742z"
-        ],
-        "isMulticolor": false,
-        "isMulticolor2": false,
-        "tags": [
-          "check"
-        ],
-        "defaultCode": 59649,
-        "grid": 16,
-        "attrs": []
-      },
-      "attrs": [],
-      "properties": {
-        "id": 2,
-        "order": 55,
-        "ligatures": "",
-        "prevSize": 32,
-        "name": "check",
-        "code": 59649
-      },
-      "setIdx": 1,
-      "setId": 1,
-      "iconIdx": 1
     },
     {
       "icon": {
@@ -194,9 +196,9 @@
         "name": "untitled",
         "code": 59650
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 2
+      "iconIdx": 1
     },
     {
       "icon": {
@@ -221,9 +223,9 @@
         "name": "untitled3",
         "code": 59652
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 3
+      "iconIdx": 2
     },
     {
       "icon": {
@@ -248,9 +250,9 @@
         "name": "eReolen_Symbol",
         "code": 59654
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 4
+      "iconIdx": 3
     },
     {
       "icon": {
@@ -275,9 +277,9 @@
         "name": "ArrowDown",
         "code": 59655
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 5
+      "iconIdx": 4
     },
     {
       "icon": {
@@ -302,9 +304,9 @@
         "name": "eReolen_Logo",
         "code": 59656
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 6
+      "iconIdx": 5
     },
     {
       "icon": {
@@ -329,9 +331,9 @@
         "name": "btn_play",
         "code": 59657
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 7
+      "iconIdx": 6
     },
     {
       "icon": {
@@ -356,9 +358,9 @@
         "name": "facebook",
         "code": 59658
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 8
+      "iconIdx": 7
     },
     {
       "icon": {
@@ -383,9 +385,9 @@
         "name": "Forfatterweb",
         "code": 59659
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 9
+      "iconIdx": 8
     },
     {
       "icon": {
@@ -409,9 +411,9 @@
         "name": "badge_book2",
         "code": 59660
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 10
+      "iconIdx": 9
     },
     {
       "icon": {
@@ -437,9 +439,9 @@
         "name": "lydbogsafspiller_sound",
         "code": 59661
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 11
+      "iconIdx": 10
     },
     {
       "icon": {
@@ -464,9 +466,9 @@
         "name": "user",
         "code": 59663
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 12
+      "iconIdx": 11
     },
     {
       "icon": {
@@ -492,9 +494,9 @@
         "name": "search",
         "code": 59665
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 13
+      "iconIdx": 12
     },
     {
       "icon": {
@@ -520,9 +522,9 @@
         "name": "eye",
         "code": 59667
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 14
+      "iconIdx": 13
     },
     {
       "icon": {
@@ -548,9 +550,9 @@
         "name": "books",
         "code": 59669
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 15
+      "iconIdx": 14
     },
     {
       "icon": {
@@ -576,9 +578,9 @@
         "name": "link",
         "code": 59670
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 16
+      "iconIdx": 15
     },
     {
       "icon": {
@@ -604,9 +606,9 @@
         "name": "eReolen-symbol",
         "code": 59671
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 17
+      "iconIdx": 16
     },
     {
       "icon": {
@@ -632,9 +634,9 @@
         "name": "eReolen-fuld",
         "code": 59672
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 18
+      "iconIdx": 17
     },
     {
       "icon": {
@@ -659,9 +661,9 @@
         "name": "arrow-left",
         "code": 59673
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 19
+      "iconIdx": 18
     },
     {
       "icon": {
@@ -685,9 +687,9 @@
         "prevSize": 32,
         "code": 59676
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 20
+      "iconIdx": 19
     },
     {
       "icon": {
@@ -712,9 +714,9 @@
         "name": "badge_book22",
         "code": 59674
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 21
+      "iconIdx": 20
     },
     {
       "icon": {
@@ -739,9 +741,9 @@
         "name": "bagde_sound2",
         "code": 59675
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 22
+      "iconIdx": 21
     },
     {
       "icon": {
@@ -766,9 +768,9 @@
         "name": "help2",
         "code": 59677
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 23
+      "iconIdx": 22
     },
     {
       "icon": {
@@ -793,9 +795,9 @@
         "name": "lock",
         "code": 59791
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 24
+      "iconIdx": 23
     },
     {
       "icon": {
@@ -820,9 +822,9 @@
         "name": "cross",
         "code": 59919
       },
-      "setIdx": 1,
+      "setIdx": 2,
       "setId": 1,
-      "iconIdx": 25
+      "iconIdx": 24
     }
   ],
   "height": 1024,

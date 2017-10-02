@@ -21,4 +21,20 @@
     }
   };
 
+  /**
+   * Slide toggle facets on search page on mobile.
+   */
+  Drupal.behaviors.searchPageFacets = {
+    attach: function (context) {
+      if ($('body.page-search').length) {
+        var trigger = $('<div class="facets-trigger-wrapper"><div class="js-facets-trigger"></div><div>');
+        $('.panel-col-first').prepend(trigger);
+
+        trigger.on('click', function () {
+          $('.panel-col-first').find('.inside').slideToggle();
+        });
+      }
+    }
+  };
+
 })(jQuery);

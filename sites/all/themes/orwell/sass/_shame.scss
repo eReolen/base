@@ -81,3 +81,27 @@ div.messages {
   line-height: 1.8rem;
   border: 1px solid $color__gray--light;
 }
+
+.logged-in .pane-page-tabs {
+  width: 100%;
+  display: block;
+  background-color: $color__blue;
+  text-align: center;
+
+  a {
+    color: $color__white;
+    text-decoration: none;
+    font-family: $font-semibold;
+    font-size: 1.1rem;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+
+    a {
+      display: inline-block;
+      padding: .5rem 1rem;
+    }
+  }
+}

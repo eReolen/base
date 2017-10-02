@@ -134,12 +134,13 @@ body {
 
 .page-wrapper, .page-search-ting .pane-page-content {
   max-width: 1440px;
-  margin: 0 auto;
+  position: relative;
 }
 
 @media all and (min-width: 49rem) {
   .page-wrapper, .page-search-ting .pane-page-content {
-    margin: 2rem auto;
+    margin: 0 auto;
+    padding: 0 3.75rem;
   }
 }
 
@@ -423,6 +424,34 @@ div.messages {
   color: #505050;
   line-height: 1.8rem;
   border: 1px solid #dcdcdc;
+}
+
+.logged-in .pane-page-tabs {
+  width: 100%;
+  display: block;
+  background-color: #5f7f9f;
+  text-align: center;
+}
+
+.logged-in .pane-page-tabs a {
+  color: #ffffff;
+  text-decoration: none;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1.1rem;
+}
+
+.logged-in .pane-page-tabs .tabs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.logged-in .pane-page-tabs .tabs a {
+  display: inline-block;
+  padding: .5rem 1rem;
 }
 
 @font-face {
@@ -927,243 +956,6 @@ div.messages {
   src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
 }
 
-.pane-search-form {
-  height: 6.875rem;
-  margin-left: auto;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-@media all and (min-width: 49rem) {
-  .pane-search-form {
-    position: relative;
-    height: auto;
-    width: 100%;
-    top: auto;
-    right: auto;
-  }
-}
-
-.search-form {
-  font-family: "SourceSansPro", sans-serif;
-}
-
-.search-form__icon__wrapper {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  cursor: pointer;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 6.875rem;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.search-form__icon__wrapper::before {
-  font-family: "icomoon";
-  speak: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: '';
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  color: #9c9c9c;
-  content: "";
-  font-size: 2.5rem;
-  position: relative;
-}
-
-@media all and (min-width: 49rem) {
-  .search-form__icon__wrapper::before {
-    color: #ffffff;
-    font-size: 1.5rem;
-    position: relative;
-    top: 3px;
-  }
-}
-
-.search-form__icon__wrapper.open {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 1;
-}
-
-@media all and (min-width: 49rem) {
-  .search-form__icon__wrapper.open {
-    height: 2rem;
-    left: calc(50% - 1rem);
-    position: relative;
-    width: 2rem;
-  }
-}
-
-.search-form__icon__wrapper.open::before {
-  position: relative;
-  content: '\ea0f';
-  font-size: 1.5rem;
-  right: 1.3rem;
-}
-
-@media all and (min-width: 49rem) {
-  .search-form__icon__wrapper.open::before {
-    position: relative;
-    font-size: 1rem;
-    top: 8px;
-    right: 0;
-  }
-}
-
-@media all and (min-width: 49rem) {
-  .search-form__icon__wrapper {
-    background: #b81b40;
-    display: block;
-    height: 2rem;
-    text-align: center;
-  }
-}
-
-.search-form__icon {
-  width: auto;
-}
-
-.search-form__content {
-  background: #ffffff;
-  display: none;
-  height: 6.875rem;
-  left: 0;
-  max-width: 100%;
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-@media all and (min-width: 49rem) {
-  .search-form__content {
-    margin: 0 auto;
-    position: relative;
-    width: 1200px;
-  }
-}
-
-.search-form__input--text {
-  border: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  color: gray;
-  display: block;
-  font-family: "SourceSansProLight", sans-serif;
-  font-size: 2rem;
-  height: 6.875rem;
-  padding: 0 1rem;
-  width: 100%;
-}
-
-@media all and (min-width: 49rem) {
-  .search-form__input--text {
-    padding: 0 1.875rem;
-  }
-}
-
-.search-form__icon--close {
-  background: #b81b40;
-  height: 2rem;
-  position: fixed;
-  right: 1rem;
-  width: 2rem;
-}
-
-@media all and (min-width: 49rem) {
-  .search-form__icon--close {
-    right: auto;
-    left: calc(50% - 1rem);
-  }
-}
-
-.search-form__icon--close::before {
-  font-family: "icomoon";
-  speak: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: '';
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  color: #ffffff;
-  content: "";
-  font-size: 1rem;
-  left: .5rem;
-  position: absolute;
-  top: .5rem;
-}
-
-@media all and (min-width: 49rem) {
-  .search-form {
-    border-top: 1px solid #d8d8d8;
-  }
-}
-
-html.js input.form-autocomplete {
-  background-image: none;
-}
-
-@media all and (min-width: 49rem) {
-  .page-search-ting .panel-col-first {
-    width: 33.33333%;
-    float: left;
-  }
-}
-
-@media all and (min-width: 49rem) {
-  .page-search-ting .panel-col-last {
-    width: 66.66667%;
-    float: left;
-  }
-}
-
-.search-results {
-  padding: 2rem 0 0;
-}
-
-.search-results .pager {
-  padding: 3.75rem 0;
-}
-
-@font-face {
-  font-family: "icomoon";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "SourceSansProLight";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
-}
-
-@font-face {
-  font-family: "SourceSansPro";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
-}
-
-@font-face {
-  font-family: "SourceSansProSemiBold";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
-}
-
 .site-header {
   background: white;
 }
@@ -1211,7 +1003,7 @@ html.js input.form-autocomplete {
 }
 
 .branding {
-  height: 6.875rem;
+  height: 5rem;
 }
 
 @media all and (min-width: 49rem) {
@@ -1434,6 +1226,588 @@ html.js input.form-autocomplete {
   margin: 0;
 }
 
+input[type=checkbox],
+.radio-custom {
+  opacity: 0;
+  position: absolute;
+}
+
+input[type=checkbox],
+input[type=checkbox] + label::before,
+.radio-custom,
+.radio-custom-label {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+input[type=checkbox] + label::before,
+.radio-custom-label {
+  position: relative;
+}
+
+input[type=checkbox] + label::before,
+.radio-custom + .radio-custom-label::before {
+  content: '';
+  background: transparent;
+  border: 1px solid #b5b5b5;
+  vertical-align: middle;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 2px;
+  text-align: center;
+  font-size: .7rem;
+  border-radius: 50%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+input[type=checkbox]:checked + label::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  background-color: #95b978;
+  color: #ffffff;
+}
+
+.radio-custom + .radio-custom-label::before {
+  border-radius: 50%;
+}
+
+.radio-custom:checked + label::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  color: #bbb;
+}
+
+input[type=checkbox]:focus + label,
+.radio-custom:focus + .radio-custom-label {
+  outline: 1px solid #ddd;
+}
+
+.ding-facetbrowser-group-processed {
+  font-family: "SourceSansPro", sans-serif;
+}
+
+.ding-facetbrowser-group-processed .form-item {
+  margin-bottom: 1rem;
+}
+
+.ding-facetbrowser-group-processed a {
+  color: #505050;
+  text-decoration: none;
+}
+
+.ding-facetbrowser-group-processed label {
+  display: inline-block;
+  width: 100%;
+}
+
+.ding-facetbrowser-group-processed label::before {
+  float: right;
+}
+
+.ding-facetbrowser-group-processed label a {
+  float: left;
+}
+
+.ding-facetbrowser-group-processed legend {
+  top: 3rem;
+  position: relative;
+  margin-bottom: 3rem;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  text-transform: uppercase;
+}
+
+fieldset {
+  padding: 2rem;
+  border-bottom: 1px solid #cfcfcf;
+  background-color: #f0f0f0;
+  margin-top: -.5rem;
+}
+
+@media all and (min-width: 49rem) {
+  fieldset:nth-child(odd) {
+    background-color: #eaeaea;
+  }
+}
+
+.expand {
+  margin-top: 1rem;
+  font-family: "SourceSansPro", sans-serif;
+  color: #787878;
+  margin-left: 3rem;
+}
+
+.expand-more {
+  float: right;
+  text-decoration: none;
+}
+
+.expand-more::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  position: relative;
+  left: -10px;
+  top: 1px;
+  color: #505050;
+  font-weight: bold;
+}
+
+.expand-less {
+  float: right;
+}
+
+.expand-less::after {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  position: relative;
+  right: -10px;
+  top: 1px;
+  color: #505050;
+  font-weight: bold;
+}
+
+.js-facets-trigger {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAoCAYAAAAG0SEsAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAI2SURBVFiF7Zcxb9pAGIafC9wIbNmpkPBiCX5BRi9QbBW2Tt2zd4hUVfyDZm4mlgqBLLkDTPyBDiBVYAkC3rOlalXJgutQQA6CYKxTFvJN5/Ore+67O3/vWbAnbNteAhebZ9d1xT7dcxFnjIvdjpeMV/j5wdPRB8dxLpVS1+xMyrbtppTyS7vdftAJ30JqtVpdKTUDbvbobsIwnNm2/U4nPA3gOE5DKfUNEOVyGcuyyOfzAMznc/r9PsPhMAu0bdtuuK7b0QEX66WeAZl6vU6lUtkr9DyPTqcD8CilLBzbglhFZr3HmXK5fBAMUK1WKZVKANkwDK9jJHY0LoQQbwEsyzoqjmiqWuBKqTfAdo+fi4imoAV+ilgptWmudMHvARaLxVFxEASb5r0uuAfQ6/WOiiOa71rgQohb4NdwOMTzvINCz/MYjUbw/1O71QFP+b7/u1gsToUQjclkIoIgIJfLkc1mWS6XTKdTWq0Wg8EAQAHvu93uj2MDG4bxCdh+277vf97VbF+uS+cdkD0w3iPwIW51i1NkUpGZTUzT/Lparf4qpa6EeKJtSiljZew4zqVhGB+Bq2i/YRhp0zR/jsfjP5u+vXezpHe4Wq1WF0LcAZkDkierlz4gOjmSmJOWzJOak5abTFJz0gJPak66Mk9kTi9+gYyaky54InPSBU9kTroOXCJzSu0TxTGFaCQ1J63l9VRz0nraXdftSCkLQDNyqjfRlFIWoq6oNfNTxzjfv9RX+PnB/wEW0D9HilhIfAAAAABJRU5ErkJggg==);
+  width: 2rem;
+  height: 2rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
+.facets-trigger-wrapper {
+  width: 100%;
+  background-color: #f0f0f0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+@media all and (min-width: 49rem) {
+  .facets-trigger-wrapper {
+    display: none;
+  }
+}
+
+.page-search-ting .panel-col-first .inside {
+  display: none;
+  background-color: #f0f0f0;
+}
+
+@media all and (min-width: 49rem) {
+  .page-search-ting .panel-col-first .inside {
+    display: block;
+  }
+}
+
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+.pane-search-form {
+  height: 5rem;
+  margin-left: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+@media all and (min-width: 49rem) {
+  .pane-search-form {
+    position: relative;
+    height: auto;
+    width: 100%;
+    top: auto;
+    right: auto;
+  }
+}
+
+.search-form {
+  font-family: "SourceSansPro", sans-serif;
+}
+
+@media all and (min-width: 49rem) {
+  .page-search .search-form {
+    background-color: #b81b40;
+  }
+}
+
+.search-form__icon__wrapper {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 5rem;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.search-form__icon__wrapper::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  position: relative;
+  top: -3px;
+  right: 3px;
+  color: #9c9c9c;
+  content: "";
+  font-size: 2rem;
+}
+
+@media all and (min-width: 49rem) {
+  .search-form__icon__wrapper::before {
+    color: #ffffff;
+    font-size: 1.5rem;
+    position: relative;
+    top: 3px;
+  }
+}
+
+.search-form__icon__wrapper.open {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+@media all and (min-width: 49rem) {
+  .search-form__icon__wrapper.open {
+    height: 2rem;
+    left: calc(50% - 1rem);
+    position: relative;
+    width: 2rem;
+  }
+}
+
+.search-form__icon__wrapper.open::before {
+  position: relative;
+  content: '\ea0f';
+  font-size: 1.5rem;
+  right: 1.3rem;
+}
+
+@media all and (min-width: 49rem) {
+  .search-form__icon__wrapper.open::before {
+    position: relative;
+    font-size: 1rem;
+    top: 8px;
+    right: 0;
+  }
+}
+
+@media all and (min-width: 49rem) {
+  .search-form__icon__wrapper {
+    background: #b81b40;
+    display: block;
+    height: 2rem;
+    text-align: center;
+  }
+}
+
+.page-search .search-form__icon__wrapper {
+  display: none;
+}
+
+.search-form__icon {
+  width: auto;
+}
+
+.search-form__content {
+  background: #ffffff;
+  display: none;
+  height: 5rem;
+  left: 0;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+@media all and (min-width: 49rem) {
+  .search-form__content {
+    max-width: 1440px;
+    position: relative;
+  }
+}
+
+@media all and (min-width: 49rem) and (min-width: 49rem) {
+  .search-form__content {
+    margin: 0 auto;
+    padding: 0 3.75rem;
+  }
+}
+
+.page-search .search-form__content {
+  display: block;
+  z-index: 1;
+}
+
+@media all and (min-width: 49rem) {
+  .page-search .search-form__content {
+    height: auto;
+    padding: 1.2rem;
+    background-color: #b81b40;
+  }
+}
+
+.page-search .search-form__content .form-item-search-block-form::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  position: absolute;
+  color: #787878;
+  top: 27px;
+  left: 7px;
+  font-size: 1.5rem;
+}
+
+@media all and (min-width: 49rem) {
+  .page-search .search-form__content .form-item-search-block-form::before {
+    top: 21px;
+    color: white;
+    font-size: 1.2rem;
+  }
+}
+
+.search-form__input--text {
+  border: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: gray;
+  display: block;
+  font-family: "SourceSansProLight", sans-serif;
+  font-size: 2rem;
+  height: 5rem;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+@media all and (min-width: 49rem) {
+  .search-form__input--text {
+    padding: 0 1.875rem;
+  }
+}
+
+.page-search .search-form__input--text {
+  padding-left: 3rem;
+}
+
+@media all and (min-width: 49rem) {
+  .page-search .search-form__input--text {
+    height: auto;
+    background: #b81b40;
+    color: white;
+    font-size: 1.3rem;
+    font-family: "SourceSansPro", sans-serif;
+  }
+  .page-search .search-form__input--text::-webkit-input-placeholder {
+    color: #ffffff;
+  }
+  .page-search .search-form__input--text:-ms-input-placeholder {
+    color: #ffffff;
+  }
+  .page-search .search-form__input--text::placeholder {
+    color: #ffffff;
+  }
+}
+
+.search-form__icon--close {
+  background: #b81b40;
+  height: 2rem;
+  position: fixed;
+  right: 1rem;
+  width: 2rem;
+}
+
+@media all and (min-width: 49rem) {
+  .search-form__icon--close {
+    right: auto;
+    left: calc(50% - 1rem);
+  }
+}
+
+.search-form__icon--close::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  color: #ffffff;
+  content: "";
+  font-size: 1rem;
+  left: .5rem;
+  position: absolute;
+  top: .5rem;
+}
+
+@media all and (min-width: 49rem) {
+  .search-form {
+    border-top: 1px solid #d8d8d8;
+  }
+}
+
+html.js input.form-autocomplete {
+  background-image: none;
+}
+
+.page-search-ting.not-logged-in .pane-page-tabs {
+  display: none;
+}
+
+.page-search-ting .pane-page-content {
+  padding: 0 2rem;
+}
+
+@media all and (max-width: 49rem) {
+  .page-search-ting .panel-col-first {
+    width: 100%;
+    background-color: rgba(250, 250, 250, 0.9);
+  }
+}
+
+@media all and (min-width: 49rem) {
+  .page-search-ting .panel-col-first {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+    float: left;
+    width: 300px;
+    border-right: 1px solid #cfcfcf;
+  }
+}
+
+@media all and (min-width: 65rem) {
+  .page-search-ting .panel-col-first {
+    width: 410px;
+  }
+}
+
+.page-search-ting .panel-col-last {
+  width: 100%;
+}
+
+@media all and (min-width: 49rem) {
+  .page-search-ting .panel-col-last {
+    width: auto;
+    padding-left: 3.5rem;
+    overflow: hidden;
+  }
+}
+
+.page-search-ting .page-title {
+  font-size: 2.1rem;
+  text-decoration: none;
+  font-family: "SourceSansProLight", sans-serif;
+  color: #787878;
+  overflow-wrap: break-word;
+  padding: 0 2rem;
+  background: #f0f0f0;
+  display: none;
+}
+
+@media all and (min-width: 49rem) {
+  .page-search-ting .page-title {
+    display: block;
+  }
+}
+
+.search-results {
+  padding: 2rem 0 0;
+}
+
+.search-results .pager {
+  padding: 3.75rem 0;
+}
+
 @font-face {
   font-family: "icomoon";
   font-style: normal;
@@ -1473,7 +1847,7 @@ html.js input.form-autocomplete {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  height: 6.875rem;
+  height: 5rem;
 }
 
 @media all and (min-width: 49rem) {
@@ -1564,6 +1938,12 @@ html.js input.form-autocomplete {
     top: auto;
     right: auto;
   }
+}
+
+#user-login-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 @font-face {

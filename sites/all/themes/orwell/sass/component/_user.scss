@@ -5,7 +5,7 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
-  height: 6.875rem;
+  height: 5rem;
 
   @include grid-media($medium) {
     height: 5rem;
@@ -72,4 +72,10 @@
     top: auto;
     right: auto;
   }
+}
+
+#user-login-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
 }
