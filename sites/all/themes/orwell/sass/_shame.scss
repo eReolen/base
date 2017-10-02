@@ -95,14 +95,13 @@ div.messages {
     font-size: 1.1rem;
   }
 
-   .tabs {
-    display: inline-block;
+  .tabs {
     display: flex;
     justify-content: center;
 
     a {
       display: inline-block;
-      padding: 0.5rem 1rem;
+      padding: .5rem 1rem;
     }
   }
 }

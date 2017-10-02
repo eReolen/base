@@ -1,23 +1,28 @@
-input[type=checkbox], .radio-custom {
-    opacity: 0;
-    position: absolute;
+input[type=checkbox],
+.radio-custom {
+  opacity: 0;
+  position: absolute;
 }
 
-input[type=checkbox], input[type=checkbox] + label:before, .radio-custom, .radio-custom-label {
-    display: inline-block;
-    vertical-align: middle;
-    cursor: pointer;
+input[type=checkbox],
+input[type=checkbox] + label::before,
+.radio-custom,
+.radio-custom-label {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
-input[type=checkbox] + label:before, .radio-custom-label {
-    position: relative;
+input[type=checkbox] + label::before,
+.radio-custom-label {
+  position: relative;
 }
 
-input[type=checkbox] + label:before, .radio-custom + .radio-custom-label:before {
+input[type=checkbox] + label::before,
+.radio-custom + .radio-custom-label::before {
   content: '';
   background: transparent;
   border: 1px solid $color__border-gray--dark;
-  display: inline-block;
   vertical-align: middle;
   width: 1.5rem;
   height: 1.5rem;
@@ -30,25 +35,27 @@ input[type=checkbox] + label:before, .radio-custom + .radio-custom-label:before 
   justify-content: center;
 }
 
-input[type=checkbox]:checked + label:before {
+input[type=checkbox]:checked + label::before {
   @include icon;
   content: $icon__check;
   background-color: $color__green;
   color: $color__white;
 }
 
-.radio-custom + .radio-custom-label:before {
-    border-radius: 50%;
+.radio-custom + .radio-custom-label::before {
+  border-radius: 50%;
 }
 
-.radio-custom:checked + label:before {
+.radio-custom:checked + label::before {
   @include icon;
   content: $icon__check;
   color: #bbb;
 }
 
-input[type=checkbox]:focus + label, .radio-custom:focus + .radio-custom-label {
-  outline: 1px solid #ddd; /* focus style */
+input[type=checkbox]:focus + label,
+.radio-custom:focus + .radio-custom-label {
+  // Focus style.
+  outline: 1px solid #ddd;
 }
 
 .ding-facetbrowser-group-processed {
@@ -86,11 +93,10 @@ input[type=checkbox]:focus + label, .radio-custom:focus + .radio-custom-label {
 }
 
 fieldset {
-  margin-top: 0;
   padding: 2rem;
   border-bottom: 1px solid $color__border-gray;
   background-color: $page-bg;
-  margin-top: -0.5rem;
+  margin-top: -.5rem;
 
   @include grid-media($medium) {
     &:nth-child(odd) {
@@ -146,7 +152,6 @@ fieldset {
 
 .facets-trigger-wrapper {
   width: 100%;
-  display: block;
   background-color: $page-bg;
   display: flex;
   justify-content: flex-end;
@@ -165,7 +170,7 @@ fieldset {
       background-color: $page-bg;
 
       @include grid-media($medium) {
-        display: block !important;
+        display: block;
       }
     }
   }

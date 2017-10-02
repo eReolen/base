@@ -30,12 +30,11 @@
         var trigger = $('<div class="facets-trigger-wrapper"><div class="js-facets-trigger"></div><div>');
         $('.panel-col-first').prepend(trigger);
 
-        trigger.on('click', function() {
+        trigger.on('click', function () {
           $('.panel-col-first').find('.inside').slideToggle();
         });
       }
     }
   };
-
 
 })(jQuery);

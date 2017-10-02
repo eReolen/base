@@ -441,7 +441,6 @@ div.messages {
 }
 
 .logged-in .pane-page-tabs .tabs {
-  display: inline-block;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -452,7 +451,7 @@ div.messages {
 
 .logged-in .pane-page-tabs .tabs a {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: .5rem 1rem;
 }
 
 @font-face {
@@ -1227,26 +1226,31 @@ div.messages {
   margin: 0;
 }
 
-input[type=checkbox], .radio-custom {
+input[type=checkbox],
+.radio-custom {
   opacity: 0;
   position: absolute;
 }
 
-input[type=checkbox], input[type=checkbox] + label:before, .radio-custom, .radio-custom-label {
+input[type=checkbox],
+input[type=checkbox] + label::before,
+.radio-custom,
+.radio-custom-label {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
 }
 
-input[type=checkbox] + label:before, .radio-custom-label {
+input[type=checkbox] + label::before,
+.radio-custom-label {
   position: relative;
 }
 
-input[type=checkbox] + label:before, .radio-custom + .radio-custom-label:before {
+input[type=checkbox] + label::before,
+.radio-custom + .radio-custom-label::before {
   content: '';
   background: transparent;
   border: 1px solid #b5b5b5;
-  display: inline-block;
   vertical-align: middle;
   width: 1.5rem;
   height: 1.5rem;
@@ -1265,7 +1269,7 @@ input[type=checkbox] + label:before, .radio-custom + .radio-custom-label:before 
   justify-content: center;
 }
 
-input[type=checkbox]:checked + label:before {
+input[type=checkbox]:checked + label::before {
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -1280,11 +1284,11 @@ input[type=checkbox]:checked + label:before {
   color: #ffffff;
 }
 
-.radio-custom + .radio-custom-label:before {
+.radio-custom + .radio-custom-label::before {
   border-radius: 50%;
 }
 
-.radio-custom:checked + label:before {
+.radio-custom:checked + label::before {
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -1298,9 +1302,9 @@ input[type=checkbox]:checked + label:before {
   color: #bbb;
 }
 
-input[type=checkbox]:focus + label, .radio-custom:focus + .radio-custom-label {
+input[type=checkbox]:focus + label,
+.radio-custom:focus + .radio-custom-label {
   outline: 1px solid #ddd;
-  /* focus style */
 }
 
 .ding-facetbrowser-group-processed {
@@ -1338,11 +1342,10 @@ input[type=checkbox]:focus + label, .radio-custom:focus + .radio-custom-label {
 }
 
 fieldset {
-  margin-top: 0;
   padding: 2rem;
   border-bottom: 1px solid #cfcfcf;
   background-color: #f0f0f0;
-  margin-top: -0.5rem;
+  margin-top: -.5rem;
 }
 
 @media all and (min-width: 49rem) {
@@ -1414,7 +1417,6 @@ fieldset {
 
 .facets-trigger-wrapper {
   width: 100%;
-  display: block;
   background-color: #f0f0f0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1439,7 +1441,7 @@ fieldset {
 
 @media all and (min-width: 49rem) {
   .page-search-ting .panel-col-first .inside {
-    display: block !important;
+    display: block;
   }
 }
 
