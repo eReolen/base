@@ -3328,7 +3328,7 @@ html.js input.form-autocomplete {
   justify-content: space-between;
 }
 
-.page-user-view .left-column .item-checkbox {
+.page-user .left-column .item-checkbox {
   display: none;
 }
 
@@ -3486,6 +3486,10 @@ html.js input.form-autocomplete {
   color: #047537;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
+}
+
+.page-user-bookmarks .left-column .item-checkbox {
+  display: block;
 }
 
 .page-user-bookmarks .select-all {

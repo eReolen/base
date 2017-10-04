@@ -129,9 +129,12 @@
 
 // View page (main page).
 
-.page-user-view {
+.page-user {
   // Checkbox functionality is currently disabled on the main page.
-  // Wasn't implemented in the previous version either.
+  // Wasn't implemented in the previous version either. But as the
+  // user might end up on /user, we can't target it specifically, so
+  // we hide it on all user pages and show it on those where we need
+  // it.
   .left-column .item-checkbox {
     display: none;
   }
@@ -145,6 +148,11 @@
 // Bookmarks page.
 .page-user-bookmarks {
   @include form-default;
+
+  .left-column .item-checkbox {
+    // Show material checkboxes on this page.
+    display: block;
+  }
 
   .select-all {
     margin: 20px 0;
