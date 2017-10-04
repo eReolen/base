@@ -1,5 +1,6 @@
 @import 'bootstrap/bootstrap';
 
+// All user pages.
 .page-user {
   .layout-wrapper {
     display: flex;
@@ -126,6 +127,61 @@
   }
 }
 
+// View page (main page).
+
+.page-user-view {
+  // Checkbox functionality is currently disabled on the main page.
+  // Wasn't implemented in the previous version either.
+  .left-column .item-checkbox {
+    display: none;
+  }
+}
+
+// Edit profile.
 .pane-profile2-form {
   @include form-default;
+}
+
+// Bookmarks page.
+.page-user-bookmarks {
+  @include form-default;
+
+  .select-all {
+    margin: 20px 0;
+  }
+
+  input[type=checkbox] + label {
+    display: flex;
+    align-items: center;
+
+    &::before {
+      // Add spacing towards text.
+      margin-right: 10px;
+      // Set background-color so it wont be transparent on the covers.
+      background-color: $page-bg;
+    }
+  }
+
+  input[type=checkbox]:checked + label {
+    &::before {
+      // Reset the checked background-color, it was overridden above.
+      background-color: $color__green;
+    }
+  }
+
+  .left-column {
+    position: relative;
+
+    .item-checkbox {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1;
+
+      label {
+        // Hide labels on material-items.
+        font-size: 0;
+      }
+    }
+  }
 }

@@ -1251,22 +1251,12 @@ input[type=checkbox] + label::before,
   content: '';
   background: transparent;
   border: 1px solid #b5b5b5;
-  vertical-align: middle;
   width: 1.5rem;
   height: 1.5rem;
-  padding: 2px;
   text-align: center;
   font-size: .7rem;
   border-radius: 50%;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  line-height: 1.5rem;
 }
 
 input[type=checkbox]:checked + label::before {
@@ -3338,6 +3328,10 @@ html.js input.form-autocomplete {
   justify-content: space-between;
 }
 
+.page-user-view .left-column .item-checkbox {
+  display: none;
+}
+
 .pane-profile2-form select {
   background: white;
   border: 1px solid #d5d5d5;
@@ -3414,6 +3408,121 @@ html.js input.form-autocomplete {
   color: #047537;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
+}
+
+.page-user-bookmarks select {
+  background: white;
+  border: 1px solid #d5d5d5;
+  height: 41px;
+  width: 100%;
+  font-size: 13px;
+  padding: 10px 30px;
+  color: #969696;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.page-user-bookmarks input[type="text"],
+.page-user-bookmarks input[type="email"],
+.page-user-bookmarks input[type="submit"],
+.page-user-bookmarks input[type="password"] {
+  text-decoration: none;
+  border-radius: 6px;
+  min-width: 250px;
+  display: inline-block;
+  position: relative;
+  height: 41px;
+  border: 1px solid #d5d5d5;
+  color: black;
+  font-size: 15.4px;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.page-user-bookmarks input[type="submit"] {
+  font-family: "SourceSansProSemiBold", sans-serif;
+  line-height: 1em;
+  padding: 15px 22px;
+  margin-top: 1rem;
+  width: 100%;
+  background-color: #95b978;
+  color: white;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.page-user-bookmarks input[type="submit"]:hover {
+  background-color: #7c9b63;
+  cursor: pointer;
+}
+
+.page-user-bookmarks label {
+  font-size: 16px;
+  line-height: 22px;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  color: #505050;
+  margin: 0 0 5px;
+  display: block;
+}
+
+.page-user-bookmarks .description {
+  margin: .5rem 0;
+}
+
+.page-user-bookmarks .form-item {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.page-user-bookmarks form .description {
+  color: #047537;
+  font-family: "SourceSansPro", sans-serif;
+  margin-top: 5px;
+}
+
+.page-user-bookmarks .select-all {
+  margin: 20px 0;
+}
+
+.page-user-bookmarks input[type=checkbox] + label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.page-user-bookmarks input[type=checkbox] + label::before {
+  margin-right: 10px;
+  background-color: #f0f0f0;
+}
+
+.page-user-bookmarks input[type=checkbox]:checked + label::before {
+  background-color: #95b978;
+}
+
+.page-user-bookmarks .left-column {
+  position: relative;
+}
+
+.page-user-bookmarks .left-column .item-checkbox {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+}
+
+.page-user-bookmarks .left-column .item-checkbox label {
+  font-size: 0;
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
