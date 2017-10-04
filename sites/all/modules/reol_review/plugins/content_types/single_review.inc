@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * CTools Content Type for showing a single review.
@@ -36,7 +37,7 @@ function single_review_content_type_render($subtype, $conf, $panel_args, $contex
 
     $block->content = theme('single_review', array(
       'ting_title' => $review->ting_entity->title,
-      'ting_object' => drupal_render($ting_object_view),
+      'ting_object' => $ting_object_view,
       'author' => implode($review->ting_entity->creators, ', '),
       'review_uri' => $review->link,
       'type' => reol_base_get_type_name($review->ting_entity->type),
