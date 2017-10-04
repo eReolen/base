@@ -3023,7 +3023,16 @@ html.js input.form-autocomplete {
 }
 
 .spotlight-box {
+  max-width: 1200px;
+  width: 100%;
   margin: -20px;
+}
+
+@media all and (min-width: 49rem) {
+  .spotlight-box {
+    margin: 0 auto;
+    padding: 0 3.75rem;
+  }
 }
 
 .spotlight-box__top__primary,

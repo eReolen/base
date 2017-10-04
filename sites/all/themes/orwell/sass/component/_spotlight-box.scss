@@ -1,5 +1,6 @@
 
 .spotlight-box {
+  @include content-wrapper;
   // Cancel out the outer padding of the items.
   margin: -20px;
 }
