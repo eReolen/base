@@ -39,8 +39,20 @@ function ereol_inspiration_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'add_mode' => 'select',
-      'allowed_bundles' => array(),
-      'bundle_weights' => array(),
+      'allowed_bundles' => array(
+        'article_carousel' => 'article_carousel',
+        'linkbox' => -1,
+        'material_carousel' => 'material_carousel',
+        'review' => -1,
+        'spotlight_box' => 'spotlight_box',
+      ),
+      'bundle_weights' => array(
+        'article_carousel' => 2,
+        'linkbox' => 3,
+        'material_carousel' => 4,
+        'review' => 5,
+        'spotlight_box' => 6,
+      ),
       'default_edit_mode' => 'open',
       'title' => 'Element',
       'title_multiple' => 'Elementer',
