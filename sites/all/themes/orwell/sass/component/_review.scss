@@ -1,0 +1,125 @@
+@import 'bootstrap/bootstrap';
+
+.review {
+  // Establish a positioning context for the type icons.
+  position: relative;
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .review__wrapper {
+    padding: 40px;
+    background-color: $color__gray-darker;
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  // Hide the cover for desktop per default.
+  .review__content .field-name-ting-cover{
+    display: none;
+  }
+
+  .field-name-ting-cover {
+    height: 280px;
+    margin-right: 40px;
+    flex: none;
+
+    img {
+      width: auto;
+      max-width: inherit;
+      max-height: 280px;
+    }
+  }
+
+  .review__content {
+    flex: 1 1 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+  }
+
+  .review__head,
+  .review__meta {
+    flex: 1 1 50%;
+  }
+
+  .review__meta {
+    // Layout the items from the end.
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+  }
+
+
+  h4 {
+    text-transform: uppercase;
+    font-family: $font-semibold;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .review__subhead {
+    font-family: $font-regular;
+
+    .review__highlight {
+      color: $color__red;
+    }
+  }
+
+  .field-name-ting-title {
+    font-family: $font-light;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .field-name-ting-author {
+    font-family: $font-light;
+    font-size: 1.5rem;
+  }
+
+  @include grid-media($medium) {
+
+    .review__wrapper {
+      padding: 30px;
+    }
+
+    // Hide the mobile cover.
+    .review__cover {
+      display: none;
+    }
+
+    // Show the desktop cover.
+    .review__content .field-name-ting-cover {
+      // Reset forced height from above.
+      height: auto;
+      display: block;
+      margin: 50px 0;
+
+      .ting-cover {
+        display: flex;
+        justify-content: center;
+      }
+
+      img {
+        height: 225px;
+        flex: none;
+      }
+    }
+
+    .review__meta {
+      justify-content: inherit;
+    }
+
+    .field-name-ting-title,
+    .field-name-ting-author {
+      font-family: $font-regular;
+      font-size: 1rem;
+    }
+
+    .field-name-ting-author {
+      font-family: $font-light;
+    }
+  }
+}

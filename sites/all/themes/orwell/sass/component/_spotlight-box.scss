@@ -22,24 +22,28 @@
 // Mobile first implementation, but desktop first design. Explains why
 // this is more fiddly that it should be.
 
-// Only show primary in full width on small screens.
+// Show primary and secondary full width.
 .spotlight-box__top__primary {
   flex-basis: 100%;
 }
 
 .spotlight-box__top__secondary {
-  display: none;
+  flex-basis: 100%;
 }
 
 // 2/3 to primary, the rest to secondary.
 @include grid-media($medium) {
+  .spotlight-box__top {
+    flex-wrap: nowrap;
+  }
+
   .spotlight-box__top__primary {
-    flex-basis: percentage(2 / 3);
+    flex: 0 0 percentage(2 / 3);
   }
 
   .spotlight-box__top__secondary {
     display: block;
-    flex-basis: percentage(1 / 3);
+    flex: 0 0 percentage(1 / 3);
   }
 }
 

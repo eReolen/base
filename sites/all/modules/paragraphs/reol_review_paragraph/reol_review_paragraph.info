@@ -5,6 +5,7 @@ package = ereolen.dk
 version = 7.x-1.0
 dependencies[] = features
 dependencies[] = paragraphs
+dependencies[] = reol_review
 features[features_api][] = api:2
 features[paragraphs][] = review
 project path = sites/all/modules/paragraphs

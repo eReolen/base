@@ -3058,18 +3058,25 @@ html.js input.form-autocomplete {
 }
 
 .spotlight-box__top__secondary {
-  display: none;
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
 }
 
 @media all and (min-width: 49rem) {
+  .spotlight-box__top {
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+  }
   .spotlight-box__top__primary {
-    -ms-flex-preferred-size: 66.66667%;
-    flex-basis: 66.66667%;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 66.66667%;
+    flex: 0 0 66.66667%;
   }
   .spotlight-box__top__secondary {
     display: block;
-    -ms-flex-preferred-size: 33.33333%;
-    flex-basis: 33.33333%;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 33.33333%;
+    flex: 0 0 33.33333%;
   }
 }
 
@@ -3533,6 +3540,176 @@ html.js input.form-autocomplete {
 
 .page-user-bookmarks .left-column .item-checkbox label {
   font-size: 0;
+}
+
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+.review {
+  position: relative;
+}
+
+.review a {
+  text-decoration: none;
+  color: black;
+}
+
+.review .review__wrapper {
+  padding: 40px;
+  background-color: #e6e6e6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+}
+
+.review .review__content .field-name-ting-cover {
+  display: none;
+}
+
+.review .field-name-ting-cover {
+  height: 280px;
+  margin-right: 40px;
+  -webkit-box-flex: 0;
+  -ms-flex: none;
+  flex: none;
+}
+
+.review .field-name-ting-cover img {
+  width: auto;
+  max-width: inherit;
+  max-height: 280px;
+}
+
+.review .review__content {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 100%;
+  flex: 1 1 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.review .review__head,
+.review .review__meta {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 50%;
+  flex: 1 1 50%;
+}
+
+.review .review__meta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.review h4 {
+  text-transform: uppercase;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.review .review__subhead {
+  font-family: "SourceSansPro", sans-serif;
+}
+
+.review .review__subhead .review__highlight {
+  color: #b81b40;
+}
+
+.review .field-name-ting-title {
+  font-family: "SourceSansProLight", sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.review .field-name-ting-author {
+  font-family: "SourceSansProLight", sans-serif;
+  font-size: 1.5rem;
+}
+
+@media all and (min-width: 49rem) {
+  .review .review__wrapper {
+    padding: 30px;
+  }
+  .review .review__cover {
+    display: none;
+  }
+  .review .review__content .field-name-ting-cover {
+    height: auto;
+    display: block;
+    margin: 50px 0;
+  }
+  .review .review__content .field-name-ting-cover .ting-cover {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .review .review__content .field-name-ting-cover img {
+    height: 225px;
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+  }
+  .review .review__meta {
+    -webkit-box-pack: inherit;
+    -ms-flex-pack: inherit;
+    justify-content: inherit;
+  }
+  .review .field-name-ting-title,
+  .review .field-name-ting-author {
+    font-family: "SourceSansPro", sans-serif;
+    font-size: 1rem;
+  }
+  .review .field-name-ting-author {
+    font-family: "SourceSansProLight", sans-serif;
+  }
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
