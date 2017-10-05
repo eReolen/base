@@ -3591,6 +3591,22 @@ html.js input.form-autocomplete {
   flex-flow: row nowrap;
 }
 
+.review .review__content {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 100%;
+  flex: 1 1 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
 .review .review__content .field-name-ting-cover {
   display: none;
 }
@@ -3607,22 +3623,6 @@ html.js input.form-autocomplete {
   width: auto;
   max-width: inherit;
   max-height: 280px;
-}
-
-.review .review__content {
-  -webkit-box-flex: 1;
-  -ms-flex: 1 1 100%;
-  flex: 1 1 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
 }
 
 .review .review__head,
@@ -3681,7 +3681,8 @@ html.js input.form-autocomplete {
   .review .review__content .field-name-ting-cover {
     height: auto;
     display: block;
-    margin: 50px 0;
+    padding: 50px 0;
+    margin: 0;
   }
   .review .review__content .field-name-ting-cover .ting-cover {
     display: -webkit-box;
@@ -3701,6 +3702,12 @@ html.js input.form-autocomplete {
     -webkit-box-pack: inherit;
     -ms-flex-pack: inherit;
     justify-content: inherit;
+  }
+  .review .review__head,
+  .review .review__meta {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
   }
   .review .field-name-ting-title,
   .review .field-name-ting-author {

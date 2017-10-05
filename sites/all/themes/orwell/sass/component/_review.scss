@@ -4,50 +4,6 @@
   // Establish a positioning context for the type icons.
   position: relative;
 
-  @include grid-media($medium) {
-
-    .review__wrapper {
-      padding: 30px;
-    }
-
-    // Hide the mobile cover.
-    .review__cover {
-      display: none;
-    }
-
-    // Show the desktop cover.
-    .review__content .field-name-ting-cover {
-      // Reset forced height on the cover.
-      height: auto;
-      display: block;
-      margin: 50px 0;
-
-      .ting-cover {
-        display: flex;
-        justify-content: center;
-      }
-
-      img {
-        height: 225px;
-        flex: none;
-      }
-    }
-
-    .review__meta {
-      justify-content: inherit;
-    }
-
-    .field-name-ting-title,
-    .field-name-ting-author {
-      font-family: $font-regular;
-      font-size: 1rem;
-    }
-
-    .field-name-ting-author {
-      font-family: $font-light;
-    }
-  }
-
   a {
     text-decoration: none;
     color: black;
@@ -123,4 +79,56 @@
     font-size: 1.5rem;
   }
 
+
+
+  @include grid-media($medium) {
+
+    .review__wrapper {
+      padding: 30px;
+    }
+
+    // Hide the mobile cover.
+    .review__cover {
+      display: none;
+    }
+
+    // Show the desktop cover.
+    .review__content .field-name-ting-cover {
+      // Reset forced height on the cover.
+      height: auto;
+      display: block;
+      padding: 50px 0;
+      margin: 0;
+
+      .ting-cover {
+        display: flex;
+        justify-content: center;
+      }
+
+      img {
+        height: 225px;
+        flex: none;
+      }
+    }
+
+    .review__meta {
+      justify-content: inherit;
+    }
+
+    .review__head,
+    .review__meta {
+      // Reset flex-basis so IE gets it.
+      flex: 1 1 auto;
+    }
+
+    .field-name-ting-title,
+    .field-name-ting-author {
+      font-family: $font-regular;
+      font-size: 1rem;
+    }
+
+    .field-name-ting-author {
+      font-family: $font-light;
+    }
+  }
 }
