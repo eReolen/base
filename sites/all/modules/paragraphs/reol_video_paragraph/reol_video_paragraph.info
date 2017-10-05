@@ -1,0 +1,13 @@
+name = Video paragraph
+description = Video paragraph
+core = 7.x
+package = ereolen.dk
+version = 7.x-1.0
+dependencies[] = entityreference
+dependencies[] = features
+dependencies[] = paragraphs
+features[features_api][] = api:2
+features[field_base][] = field_video_node
+features[field_instance][] = paragraphs_item-video-field_video_node
+features[paragraphs][] = video
+project path = sites/all/modules/paragraphs

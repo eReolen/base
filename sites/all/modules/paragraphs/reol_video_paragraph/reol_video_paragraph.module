@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Video paragraph feature.
+ */
+
+include_once 'reol_video_paragraph.features.inc';

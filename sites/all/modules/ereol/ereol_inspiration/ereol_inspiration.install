@@ -39,3 +39,10 @@ function ereol_inspiration_update_7104() {
 function ereol_inspiration_update_7105() {
   module_enable(array('reol_review_paragraph'), TRUE);
 }
+
+/**
+ * Enable reol_video_paragraph.
+ */
+function ereol_inspiration_update_7106() {
+  module_enable(array('reol_video_paragraph'), TRUE);
+}
