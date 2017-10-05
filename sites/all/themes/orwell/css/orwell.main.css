@@ -3726,4 +3726,25 @@ html.js input.form-autocomplete {
   }
 }
 
+.spotlight-box__top__primary {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.paragraphs-item-video {
+  position: relative;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 100%;
+  flex: 1 1 100%;
+}
+
+.media-youtube-video iframe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */

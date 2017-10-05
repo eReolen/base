@@ -86,6 +86,9 @@ function ereol_video_strongarm() {
       'token' => array(
         'custom_settings' => FALSE,
       ),
+      'workflow_tab' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -96,7 +99,18 @@ function ereol_video_strongarm() {
           'weight' => '3',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'ding_serendipity_info' => array(
+          'teaser' => array(
+            'weight' => '2',
+            'visible' => FALSE,
+          ),
+          'default' => array(
+            'weight' => '2',
+            'visible' => FALSE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__video'] = $strongarm;
