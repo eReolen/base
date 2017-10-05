@@ -23,16 +23,12 @@ input[type=checkbox] + label::before,
   content: '';
   background: transparent;
   border: 1px solid $color__border-gray--dark;
-  vertical-align: middle;
   width: 1.5rem;
   height: 1.5rem;
-  padding: 2px;
   text-align: center;
   font-size: .7rem;
   border-radius: 50%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
+  line-height: 1.5rem;
 }
 
 input[type=checkbox]:checked + label::before {

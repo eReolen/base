@@ -124,11 +124,9 @@ $teaser-bg-default: #393939;
 
 .article--teaser {
   display: block;
-  // TODO: this should be the light version
   height: 440px;
   padding: 2rem 4rem;
   color: white;
-  // TODO: random color in design?
   background-color: $teaser-bg-default;
 
   a {
@@ -140,7 +138,6 @@ $teaser-bg-default: #393939;
     position: relative;
     max-width: 600px;
     margin: 0 auto 2rem;
-    // TODO: this doesn't make sense at the moment.
     font-size: 2rem;
     line-height: 2.6rem;
     text-align: center;

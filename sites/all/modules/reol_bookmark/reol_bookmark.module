@@ -51,6 +51,30 @@ function reol_bookmark_permission() {
 }
 
 /**
+ * Implements hook_element_info_alter().
+ */
+function reol_bookmark_element_info_alter(&$info) {
+  if (isset($info['material_item'])) {
+    $info['material_item']['#process'][] = 'reol_bookmark_element_process_material_item';
+  }
+}
+
+/**
+ * Implements hook_element_process_material_item().
+ */
+function reol_bookmark_element_process_material_item($element) {
+  // Add a title to the material checkbox. Without a title, the label element
+  // isn't included, and overriding the checkbox appearance relies on theming
+  // the label (styling the input element itself is still flaky across
+  // browsers).
+  if (!isset($element[$element['#id']]['#title'])) {
+    $element[$element['#id']]['#title'] = t('Select');
+  }
+
+  return $element;
+}
+
+/**
  * Bookmark (or remove bookmark) a ting_object.
  *
  * @param string $id
@@ -161,7 +185,7 @@ function reol_bookmark_menu_alter(&$items) {
   foreach ($items as $path => $item) {
     if ($path == 'user/%user/bookmarks' || $path == 'user/%pm_arg/bookmarks') {
       $items[$path]['title callback'] = 'reol_bookmark_menu_item_title';
-      $items[$path]['title arguments'] = array($items[$path]['title'], 1);
+      $items[$path]['title arguments'] = array(1);
     }
   }
 }
