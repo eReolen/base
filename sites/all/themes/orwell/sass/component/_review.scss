@@ -4,6 +4,50 @@
   // Establish a positioning context for the type icons.
   position: relative;
 
+  @include grid-media($medium) {
+
+    .review__wrapper {
+      padding: 30px;
+    }
+
+    // Hide the mobile cover.
+    .review__cover {
+      display: none;
+    }
+
+    // Show the desktop cover.
+    .review__content .field-name-ting-cover {
+      // Reset forced height on the cover.
+      height: auto;
+      display: block;
+      margin: 50px 0;
+
+      .ting-cover {
+        display: flex;
+        justify-content: center;
+      }
+
+      img {
+        height: 225px;
+        flex: none;
+      }
+    }
+
+    .review__meta {
+      justify-content: inherit;
+    }
+
+    .field-name-ting-title,
+    .field-name-ting-author {
+      font-family: $font-regular;
+      font-size: 1rem;
+    }
+
+    .field-name-ting-author {
+      font-family: $font-light;
+    }
+  }
+
   a {
     text-decoration: none;
     color: black;
@@ -17,8 +61,15 @@
   }
 
   // Hide the cover for desktop per default.
-  .review__content .field-name-ting-cover{
-    display: none;
+  .review__content {
+    flex: 1 1 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+
+    .field-name-ting-cover {
+      display: none;
+    }
   }
 
   .field-name-ting-cover {
@@ -31,13 +82,6 @@
       max-width: inherit;
       max-height: 280px;
     }
-  }
-
-  .review__content {
-    flex: 1 1 100%;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
   }
 
   .review__head,
@@ -79,47 +123,4 @@
     font-size: 1.5rem;
   }
 
-  @include grid-media($medium) {
-
-    .review__wrapper {
-      padding: 30px;
-    }
-
-    // Hide the mobile cover.
-    .review__cover {
-      display: none;
-    }
-
-    // Show the desktop cover.
-    .review__content .field-name-ting-cover {
-      // Reset forced height from above.
-      height: auto;
-      display: block;
-      margin: 50px 0;
-
-      .ting-cover {
-        display: flex;
-        justify-content: center;
-      }
-
-      img {
-        height: 225px;
-        flex: none;
-      }
-    }
-
-    .review__meta {
-      justify-content: inherit;
-    }
-
-    .field-name-ting-title,
-    .field-name-ting-author {
-      font-family: $font-regular;
-      font-size: 1rem;
-    }
-
-    .field-name-ting-author {
-      font-family: $font-light;
-    }
-  }
 }
