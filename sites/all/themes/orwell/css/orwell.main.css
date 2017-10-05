@@ -879,7 +879,7 @@ div.messages {
   width: 100%;
   top: 20px;
   padding-right: 20px;
-  text-align: end;
+  text-align: right;
 }
 
 .overlay-icons .icon::before {
@@ -3035,11 +3035,11 @@ html.js input.form-autocomplete {
   }
 }
 
-.spotlight-box__top__primary,
-.spotlight-box__top__secondary,
-.spotlight-box__middle__item,
-.spotlight-box__bottom__item {
-  padding: 20px;
+.spotlight-box__top__primary > *,
+.spotlight-box__top__secondary > *,
+.spotlight-box__middle__item > *,
+.spotlight-box__bottom__item > * {
+  margin: 20px;
 }
 
 .spotlight-box__top,

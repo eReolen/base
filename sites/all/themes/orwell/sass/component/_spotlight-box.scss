@@ -5,11 +5,16 @@
   margin: -20px;
 }
 
-.spotlight-box__top__primary,
-.spotlight-box__top__secondary,
-.spotlight-box__middle__item,
-.spotlight-box__bottom__item {
-  padding: 20px;
+// Rather than setting the padding of the item, set the margin of the
+// contained element(s). IE always uses box-sizing: content-box for
+// flex items, causing it to miscalculate the widths when there's a
+// padding/border. Adding the needed space as margin to the contained
+// element makes it able to calculate the proper width.
+.spotlight-box__top__primary > *,
+.spotlight-box__top__secondary > *,
+.spotlight-box__middle__item > *,
+.spotlight-box__bottom__item > * {
+  margin: 20px;
 }
 
 .spotlight-box__top,
