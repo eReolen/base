@@ -2,29 +2,36 @@
 
 .ding-carousel .slick-arrow {
   background: $page-bg;
-  border: 1px solid $icon-color;
+  border: 1px solid $color__border-gray--light;
   border-radius: 1px;
   font-size: 0;
-  padding: 0;
+  padding: .75rem;
   position: absolute;
   bottom: 30px;
   // Ensure that buttons is above the carousel.
   z-index: 1;
 
+  &::before {
+    @include icon;
+    color: $color__dark;
+    font-size: .75rem;
+    text-indent: 0;
+  }
+
   &.slick-prev {
     left: 30px;
+
+    &::before {
+      content: $icon__arrow-left;
+    }
   }
 
   &.slick-next {
     right: 30px;
-  }
 
-  &::before {
-    @include icon;
-    content: $icon__play;
-    color: $icon-color;
-    font-size: 28px;
-    text-indent: 0;
+    &::before {
+      content: $icon__arrow-right;
+    }
   }
 
   @include grid-media($medium) {
