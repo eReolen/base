@@ -73,13 +73,37 @@ img {
 }
 
 div.messages {
+  @include content-wrapper;
   padding: 2rem;
   background-color: $color__white;
+  // Remove Drupal standard icon.
+  background-image: none;
   font-family: $font-regular;
   font-size: 1.2rem;
   color: $color__font-gray--dark;
   line-height: 1.8rem;
   border: 1px solid $color__gray--light;
+
+  @include grid-media($medium) {
+    margin: 1rem auto;
+    padding: 2rem;
+  }
+
+  &.status {
+    background-color: #c5e8c5;
+  }
+
+  &.warning {
+    background-color: #fdffc7;
+  }
+
+  &.error {
+    background-color: #ff7562;
+  }
+
+  ul {
+    margin: 0;
+  }
 }
 
 .logged-in .pane-page-tabs {
