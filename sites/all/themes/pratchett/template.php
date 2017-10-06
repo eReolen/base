@@ -70,8 +70,9 @@ function pratchett_ting_object_cover($variables) {
   // if ($ting_entity->reply->on_quota) {
   //   $icons[] = 'quota';
   // }
-  if (!isset($variables['elements']['#suppress_type_icon']) ||
-    !$variables['elements']['#suppress_type_icon']) {
+  if ((!isset($variables['elements']['#suppress_type_icon']) ||
+      !$variables['elements']['#suppress_type_icon'])
+    && !isset($ting_entity->reol_no_icons)) {
     if ($ting_entity && $ting_entity->reply && isset($ting_entity->reply->on_quota)) {
       $icons[] = reol_base_get_type_name($ting_entity->type);
     }
@@ -79,8 +80,8 @@ function pratchett_ting_object_cover($variables) {
   $icons = theme('reol_overlay_icons', array('icons' => $icons));
 
   // Add link if the id is not to a fake material.
-  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
-  if (!reol_base_fake_id($ding_entity_id)) {
+  $ding_entity_id = $ting_entity->ding_entity_id;
+  if (!reol_base_fake_id($ding_entity_id) && !isset($ting_entity->reol_no_link)) {
     $output = l($output, 'ting/collection/' . $ding_entity_id, array('html' => TRUE));
   }
 

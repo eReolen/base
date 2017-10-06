@@ -27,7 +27,6 @@ function reol_spotlightbox_paragraph_field_default_field_bases() {
     'type' => 'paragraphs',
   );
 
-
   // Exported field_base: 'field_spotlight_row_2'.
   $field_bases['field_spotlight_row_2'] = array(
     'active' => 1,

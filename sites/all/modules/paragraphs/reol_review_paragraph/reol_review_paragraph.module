@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Code for the Litteratursiden paragraph feature.
+ */
+
+include_once 'reol_review_paragraph.features.inc';
+
+/**
+ * Implements hook_preprocess_entity().
+ */
+function reol_review_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'review') {
+      module_load_include('inc', 'reol_review', 'includes/reol_review.reviews');
+
+      // There might be no reviews.
+      if ($reviews = reol_review_get_random_reviews(NULL)) {
+        $review = reset($reviews);
+        // Signal to theming that we'd rather not have the cover turned into a
+        // link, and no icons.
+        $review->ting_entity->reol_no_link = TRUE;
+        $review->ting_entity->reol_no_icons = TRUE;
+        $ting_object_view = ting_object_view($review->ting_entity, 'review');
+
+        $params = array(
+          'ting_title' => $review->ting_entity->title,
+          'ting_object' => $ting_object_view,
+          'author' => implode($review->ting_entity->creators, ', '),
+          'review_uri' => $review->link,
+          'type' => reol_base_get_type_name($review->ting_entity->type),
+          '#object' => $review->ting_entity,
+          'icons' => theme('reol_overlay_icons', array('icons' => array('link'))),
+        );
+        $variables['content'] = theme('single_review', $params);
+      }
+    }
+  }
+}

@@ -1,14 +1,20 @@
 
 .spotlight-box {
+  @include content-wrapper;
   // Cancel out the outer padding of the items.
   margin: -20px;
 }
 
-.spotlight-box__top__primary,
-.spotlight-box__top__secondary,
-.spotlight-box__middle__item,
-.spotlight-box__bottom__item {
-  padding: 20px;
+// Rather than setting the padding of the item, set the margin of the
+// contained element(s). IE always uses box-sizing: content-box for
+// flex items, causing it to miscalculate the widths when there's a
+// padding/border. Adding the needed space as margin to the contained
+// element makes it able to calculate the proper width.
+.spotlight-box__top__primary > *,
+.spotlight-box__top__secondary > *,
+.spotlight-box__middle__item > *,
+.spotlight-box__bottom__item > * {
+  margin: 20px;
 }
 
 .spotlight-box__top,
@@ -21,24 +27,28 @@
 // Mobile first implementation, but desktop first design. Explains why
 // this is more fiddly that it should be.
 
-// Only show primary in full width on small screens.
+// Show primary and secondary full width.
 .spotlight-box__top__primary {
   flex-basis: 100%;
 }
 
 .spotlight-box__top__secondary {
-  display: none;
+  flex-basis: 100%;
 }
 
 // 2/3 to primary, the rest to secondary.
 @include grid-media($medium) {
+  .spotlight-box__top {
+    flex-wrap: nowrap;
+  }
+
   .spotlight-box__top__primary {
-    flex-basis: percentage(2 / 3);
+    flex: 0 0 percentage(2 / 3);
   }
 
   .spotlight-box__top__secondary {
     display: block;
-    flex-basis: percentage(1 / 3);
+    flex: 0 0 percentage(1 / 3);
   }
 }
 

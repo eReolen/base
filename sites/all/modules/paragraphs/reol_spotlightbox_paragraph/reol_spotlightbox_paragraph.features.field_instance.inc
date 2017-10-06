@@ -210,14 +210,16 @@ function reol_spotlightbox_paragraph_field_default_field_instances() {
       'add_mode' => 'select',
       'allowed_bundles' => array(
         'article_carousel' => -1,
-        'linkbox' => 'linkbox',
+        'linkbox' => -1,
         'material_carousel' => -1,
+        'review' => 'review',
         'spotlight_box' => -1,
       ),
       'bundle_weights' => array(
         'article_carousel' => 2,
         'linkbox' => 3,
         'material_carousel' => 4,
+        'review' => 10,
         'spotlight_box' => 5,
       ),
       'default_edit_mode' => 'open',
