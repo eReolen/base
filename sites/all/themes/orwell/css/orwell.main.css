@@ -417,13 +417,46 @@ img {
 }
 
 div.messages {
+  max-width: 1200px;
+  width: 100%;
   padding: 2rem;
   background-color: #ffffff;
+  background-image: none;
   font-family: "SourceSansPro", sans-serif;
   font-size: 1.2rem;
   color: #505050;
   line-height: 1.8rem;
   border: 1px solid #dcdcdc;
+}
+
+@media all and (min-width: 49rem) {
+  div.messages {
+    margin: 0 auto;
+    padding: 0 3.75rem;
+  }
+}
+
+@media all and (min-width: 49rem) {
+  div.messages {
+    margin: 1rem auto;
+    padding: 2rem;
+  }
+}
+
+div.messages.status {
+  background-color: #c5e8c5;
+}
+
+div.messages.warning {
+  background-color: #fdffc7;
+}
+
+div.messages.error {
+  background-color: #ff7562;
+}
+
+div.messages ul {
+  margin: 0;
 }
 
 .logged-in .pane-page-tabs {
