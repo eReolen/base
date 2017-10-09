@@ -12,6 +12,7 @@ dependencies[] = reol_link_paragraph
 dependencies[] = reol_news_paragraph
 dependencies[] = reol_review_paragraph
 dependencies[] = reol_spotlightbox_paragraph
+dependencies[] = reol_video_paragraph
 dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
