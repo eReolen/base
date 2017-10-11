@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 
 // Sass.
 gulp.task('sass', function () {
-  return gulp.src('./sass/*.scss')
+  return gulp.src('./sass/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
       outputStyle: 'expanded'
@@ -23,7 +23,7 @@ gulp.task('sass', function () {
 
 // Sass watch.
 gulp.task('sass:watch', function () {
-  gulp.watch('./sass/*.scss', ['sass']);
+  gulp.watch('./sass/**/*.scss', ['sass']);
 });
 
 // Register workers.

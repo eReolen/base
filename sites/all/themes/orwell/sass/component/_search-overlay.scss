@@ -1,0 +1,25 @@
+@import 'bootstrap/bootstrap';
+
+.search-overlay--wrapper {
+  font-family: $font-regular;
+}
+
+.search-overlay--text {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.search-overlay--inner {
+  background-color: $color__gray;
+  color: white;
+
+  .cancel {
+    //@extend .btn;
+    @include button;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
