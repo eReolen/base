@@ -46,3 +46,10 @@ function ereol_inspiration_update_7105() {
 function ereol_inspiration_update_7106() {
   module_enable(array('reol_video_paragraph'), TRUE);
 }
+
+/**
+ * Enable reol_rec_material_paragraph.
+ */
+function ereol_inspiration_update_7107() {
+  module_enable(array('reol_rec_material_paragraph'), TRUE);
+}
