@@ -907,8 +907,9 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       ),
       'review' => array(
         'label' => 'above',
-        'type' => 'hidden',
-        'weight' => 5,
+        'module' => 'reol_base',
+        'type' => 'reol_base_author_plain',
+        'weight' => 2,
       ),
     ),
 
@@ -993,9 +994,14 @@ function reol_base_field_default_field_instances_alter(&$fields) {
         'weight' => 39,
       ),
       'review' => array(
-        'label' => 'above',
-        'type' => 'hidden',
-        'weight' => 11,
+        'label' => 'hidden',
+        'module' => 'ting',
+        'settings' => array(
+          'link_type' => 'none',
+          'prefix_type' => 'no',
+        ),
+        'type' => 'ting_title_default',
+        'weight' => 1,
       ),
     ),
 
