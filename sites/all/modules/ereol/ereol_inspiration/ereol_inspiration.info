@@ -10,6 +10,7 @@ dependencies[] = paragraphs
 dependencies[] = reol_carousel_paragraph
 dependencies[] = reol_link_paragraph
 dependencies[] = reol_news_paragraph
+dependencies[] = reol_rec_material_paragraph
 dependencies[] = reol_review_paragraph
 dependencies[] = reol_spotlightbox_paragraph
 dependencies[] = reol_video_paragraph

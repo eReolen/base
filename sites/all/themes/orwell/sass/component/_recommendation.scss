@@ -1,0 +1,53 @@
+@import 'bootstrap/bootstrap';
+
+.recommended-material a {
+  text-decoration: none;
+  color: black;
+}
+
+.recommended-material__wrapper {
+  padding: 40px;
+  background-color: $color__gray-darker;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.field-type-ting-cover {
+  min-width: 190px;
+
+  img {
+    height: 270px;
+    width: auto;
+  }
+
+  @include grid-media($small) {
+    min-width: 130px;
+
+    img {
+      height: 190px;
+    }
+  }
+}
+
+.recommended-material__details {
+  padding-left: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+
+  .field-name-field-rec-title {
+    text-transform: uppercase;
+    font-family: $font-semibold;
+    margin-bottom: 1rem;
+  }
+
+  .field-name-ting-title {
+    font-family: $font-light;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .field-name-ting-author {
+    font-family: $font-light;
+  }
+}

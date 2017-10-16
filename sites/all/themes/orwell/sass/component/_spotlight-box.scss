@@ -24,6 +24,16 @@
   flex-wrap: wrap;
 }
 
+// Don't wrap on bigger screens.
+@include grid-media($medium) {
+  .spotlight-box__top,
+  .spotlight-box__middle,
+  .spotlight-box__bottom {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+}
+
 // Mobile first implementation, but desktop first design. Explains why
 // this is more fiddly that it should be.
 

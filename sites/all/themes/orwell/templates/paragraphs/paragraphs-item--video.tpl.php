@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Render a linkbox paragraph.
+ * Render a video paragraph.
  */
 ?>
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
