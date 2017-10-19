@@ -53,3 +53,10 @@ function ereol_inspiration_update_7106() {
 function ereol_inspiration_update_7107() {
   module_enable(array('reol_rec_material_paragraph'), TRUE);
 }
+
+/**
+ * Enable reol_audio_preview_paragraph.
+ */
+function ereol_inspiration_update_7108() {
+  module_enable(array('reol_audio_preview_paragraph'), TRUE);
+}
