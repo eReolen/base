@@ -8,8 +8,9 @@
  * expects jQuery to be bound to $. This should be fixed in an
  * upcoming version.
  */
-/* eslint-disable-next-line no-unused-vars */
+/* eslint-disable no-unused-vars */
 var $ = jQuery;
+/* eslint-enable no-unused-vars */
 
 (function ($) {
   'use strict';
@@ -30,8 +31,9 @@ var $ = jQuery;
   };
 
   var initPlayer = function (element, isbn, metadata) {
-    /* eslint-disable-next-line no-undef */
+    /* eslint-disable no-undef */
     var playerKernel = new PlayerKernel({
+      /* eslint-enable no-undef */
       isbn: isbn,
       duration: metadata.duration,
       streamServer: 'https://audio.api.streaming.pubhub.dk/',
