@@ -15,8 +15,9 @@ function publizon_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'ting_reservable_types';
   $strongarm->value = array(
-    0 => 'lydbog (net)',
-    1 => 'ebog',
+    0 => 'ebog',
+    1 => 'lydbog (net)',
+    2 => 'billedbog (net)',
   );
   $export['ting_reservable_types'] = $strongarm;
 

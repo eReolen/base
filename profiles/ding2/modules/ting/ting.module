@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Enables integration with Ting.
@@ -23,7 +24,6 @@ function ting_ctools_plugin_api($module, $api) {
     return array('version' => 2);
   }
 }
-
 
 /**
  * Implements hook_ctools_plugin_directory().
@@ -82,7 +82,7 @@ function ting_menu() {
     'position' => 'left',
     'weight' => 20,
     'page callback' => 'system_admin_menu_block_page',
-    'access arguments' => array('access administration pages'),
+    'access arguments' => array('administer ting settings'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
@@ -224,7 +224,7 @@ function ting_block_info() {
       'cache' => DRUPAL_CACHE_PER_PAGE,
     ),
     'ting_relation_anchors' => array(
-      'info' => t('Ting relations for material '),
+      'info' => t('Ting relations for material'),
       'cache' => DRUPAL_CACHE_PER_PAGE,
     ),
   );
@@ -362,7 +362,6 @@ function ting_element_info() {
     ),
   );
 }
-
 
 /**
  * Implements hook_theme().
@@ -518,7 +517,8 @@ function ting_ding_entity_is($object, $class) {
     // @todo make this configurable.
     // @todo also make sure that availability information isn't displayed
     //   on the object
-    return in_array(drupal_strtolower($object->type), array('tidsskrift', 'periodikum', 'årbog'));
+    $periodical_types = array('tidsskrift', 'periodikum', 'årbog');
+    return in_array(drupal_strtolower($object->type), $periodical_types);
   }
 }
 
@@ -553,13 +553,18 @@ function ting_page_alter(&$page) {
   if (count($calls) > 5) {
     $calls_str = array();
     foreach ($calls as $call) {
-      $calls_str[] = print_r($calls, TRUE);
+      $calls_str[] = print_r($call, TRUE);
     }
 
-    watchdog('ting', 'Warning, ting_execute called @x times:<br />"@queries"', array('@x' => count($calls), '@queries' => implode('" "', $calls_str)), WATCHDOG_WARNING);
+    $vars = array(
+      '@x' => count($calls),
+      '@queries' => implode('" "', $calls_str),
+    );
+    watchdog('ting', 'Warning, ting_execute called @x times:<br />"@queries"', $vars, WATCHDOG_WARNING);
 
     if (function_exists('dpm') && user_access('access devel information')) {
       drupal_set_message(t('Warning, ting_execute called @x times.', array('@x' => count($calls))), 'error');
+      // @codingStandardsIgnoreLine
       dpm($calls, 'ting_execute queries:');
     }
   }
@@ -847,8 +852,6 @@ function ting_boost_field_element_process($element, $form_state) {
   $element['weight'] = array(
     '#title' => t('Weight'),
     '#type' => 'textfield',
-    // '#type' => 'select',
-    // '#options' => drupal_map_assoc(range(1, 10)),
     '#default_value' => (isset($element['#value']['weight'])) ? $element['#value']['weight'] : NULL,
     '#element_validate' => array('boost_weight_validate'),
   );
@@ -1004,7 +1007,6 @@ function _ting_fetch_well_types() {
     'facets' => array('facet.type'),
     'numFacets' => 99,
     'reply_only' => TRUE,
-    'sort' => 'random',
   );
   module_load_include('client.inc', 'ting');
   $result = ting_do_search("*", 0, 0, $options);
@@ -1035,7 +1037,6 @@ function _ting_fetch_well_sources() {
     'facets' => array('facet.acSource'),
     'numFacets' => 99,
     'reply_only' => TRUE,
-    'sort' => 'random',
   );
   module_load_include('client.inc', 'ting');
   $result = ting_do_search("*", 0, 0, $options);
