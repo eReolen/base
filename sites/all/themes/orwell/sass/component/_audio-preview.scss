@@ -36,6 +36,9 @@
   .audio-preview__title {
     text-transform: uppercase;
     font-family: $font-semibold;
+    .field-name-ting-title {
+      @include fadeout-box(1rem, 2, h2, $color__gray--dark);
+    }
   }
 
   .field-name-ting-author {

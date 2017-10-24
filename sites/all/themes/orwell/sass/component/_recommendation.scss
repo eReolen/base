@@ -29,8 +29,8 @@
   }
 
   .field-name-ting-title {
+    @include fadeout-box(1.5rem, 3, h2, $color__gray-darker);
     font-family: $font-light;
-    font-size: 1.5rem;
     margin-bottom: 1rem;
   }
 
