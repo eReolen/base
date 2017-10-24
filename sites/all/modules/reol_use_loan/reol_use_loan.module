@@ -1,10 +1,12 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen use loan module feature.
  */
 
 include_once 'reol_use_loan.features.inc';
+
 /**
  * Implements hook_menu().
  */
@@ -20,12 +22,14 @@ function reol_use_loan_menu() {
   $items['reol_use_loan/reader'] = array(
     'page callback' => 'reol_use_loan_reader',
     'page arguments' => array(2, 3),
+    // The page checks for access.
     'access callback' => TRUE,
   );
 
   $items['ting/object/%ting_object/%/ajax'] = array(
     'page callback' => 'reol_use_loan_use_loan_ajax',
     'page arguments' => array(2, 3),
+    // The page checks for access.
     'access callback' => TRUE,
     'delivery callback' => 'ajax_deliver',
   );
@@ -189,7 +193,6 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
   $deleted = preg_match('/^publizon:/', $entity->ding_entity_id);
   $loaned = $available = FALSE;
   if (reol_loan_is_right_type($entity) || $deleted) {
-    global $user;
     drupal_add_library('system', 'drupal.ajax');
     $text = t('Try');
     $link = '';
@@ -282,10 +285,10 @@ function reol_use_loan_get_order($local_id) {
  * @param string $type
  *   Either read or listen.
  *
- * @return array
+ * @return array|null
  *   Array as expected by ajax_deliver.
  */
-function reol_use_loan_use_loan_ajax($ting_object, $type) {
+function reol_use_loan_use_loan_ajax(TingEntity $ting_object, $type) {
   module_load_include('inc', 'page_manager', 'plugins/tasks/page');
   module_load_include('inc', 'ctools', 'includes/context');
   $commands = array();
