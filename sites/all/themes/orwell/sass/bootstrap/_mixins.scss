@@ -172,8 +172,8 @@
   #{$sub-element} {
     height: $line-height * $lines;
 
-    &:after {
-      content: "";
+    &::after {
+      content: '';
       text-align: right;
       position: absolute;
       bottom: 0;

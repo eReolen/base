@@ -4027,8 +4027,8 @@ html.js input.form-autocomplete {
   height: 4.5rem;
 }
 
-.recommended-material__details .field-name-ting-title h2:after {
-  content: "";
+.recommended-material__details .field-name-ting-title h2::after {
+  content: '';
   text-align: right;
   position: absolute;
   bottom: 0;
@@ -4162,8 +4162,8 @@ html.js input.form-autocomplete {
   height: 2rem;
 }
 
-.audio-preview__details .audio-preview__title .field-name-ting-title h2:after {
-  content: "";
+.audio-preview__details .audio-preview__title .field-name-ting-title h2::after {
+  content: '';
   text-align: right;
   position: absolute;
   bottom: 0;

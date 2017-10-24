@@ -36,6 +36,7 @@
   .audio-preview__title {
     text-transform: uppercase;
     font-family: $font-semibold;
+
     .field-name-ting-title {
       @include fadeout-box(1rem, 2, h2, $color__gray--dark);
     }
@@ -72,10 +73,10 @@
     float: right;
 
     &::before {
+      @include icon;
       // To make the play icon *appear* centered.
       position: relative;
       left: 2px;
-      @include icon;
       font-size: 1.5rem;
       content: $icon__play;
     }

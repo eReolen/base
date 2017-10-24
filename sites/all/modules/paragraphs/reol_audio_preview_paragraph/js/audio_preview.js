@@ -8,6 +8,7 @@
  * expects jQuery to be bound to $. This should be fixed in an
  * upcoming version.
  */
+/* eslint-disable-next-line no-unused-vars */
 var $ = jQuery;
 
 (function ($) {
@@ -15,6 +16,12 @@ var $ = jQuery;
 
   /**
    * Format time.
+   *
+   * @param {int} time
+   *   Time in seconds.
+   *
+   * @return {string}
+   *   Formatted time.
    */
   var formatTime = function (time) {
     var minutes = Math.floor(time / 60);
@@ -23,11 +30,12 @@ var $ = jQuery;
   };
 
   var initPlayer = function (element, isbn, metadata) {
+    /* eslint-disable-next-line no-undef */
     var playerKernel = new PlayerKernel({
       isbn: isbn,
       duration: metadata.duration,
       streamServer: 'https://audio.api.streaming.pubhub.dk/',
-      title: metadata.artist + ' - ' + metadata.title,
+      title: metadata.artist + ' - ' + metadata.title
     });
 
     var $playerKernel = $(playerKernel);
@@ -55,7 +63,7 @@ var $ = jQuery;
 
         var percentVal = (playedVal / durationVal) * 100;
 
-        $('.audio-preview__progress__complete', element).css({'width': percentVal + "%"});
+        $('.audio-preview__progress__complete', element).css({width: percentVal + '%'});
       });
 
     $btn
@@ -89,5 +97,5 @@ var $ = jQuery;
         });
       });
     }
-  }
+  };
 })(jQuery);
