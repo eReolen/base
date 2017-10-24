@@ -400,6 +400,15 @@ function _reol_base_get_types() {
       'path' => 'eboeger',
       'publizon_formats' => array(50, 58),
     ),
+    'epicturebook' => array(
+      'ext_name' => 'billedbog (net)',
+      // Hackery: Treat these as ebooks.
+      'int_name' => 'ebook',
+      'title' => t('Picture E-book'),
+      'title_plural' => t('Picture E-books'),
+      'path' => 'ebilledboeger',
+      'publizon_formats' => array(50, 58),
+    ),
   );
 }
 
