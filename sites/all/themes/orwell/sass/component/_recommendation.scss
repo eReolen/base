@@ -10,22 +10,9 @@
   background-color: $color__gray-darker;
   display: flex;
   flex-flow: row nowrap;
-}
 
-.field-type-ting-cover {
-  min-width: 190px;
-
-  img {
-    height: 270px;
-    width: auto;
-  }
-
-  @include grid-media($small) {
-    min-width: 130px;
-
-    img {
-      height: 190px;
-    }
+  .field-type-ting-cover {
+    @include box-cover;
   }
 }
 

@@ -143,3 +143,22 @@
   color: $color__font-gray;
   overflow-wrap: break-word;
 }
+
+// Common sizes for covers in boxes (recommendation/audio-preview).
+@mixin box-cover() {
+  min-width: 190px;
+
+  img {
+    vertical-align: middle;
+    height: 270px;
+    width: auto;
+  }
+
+  @include grid-media($small) {
+    min-width: 130px;
+
+    img {
+      height: 190px;
+    }
+  }
+}
