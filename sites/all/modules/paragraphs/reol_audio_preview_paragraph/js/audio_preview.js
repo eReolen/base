@@ -3,6 +3,11 @@
  * Audio preview box JavaScript.
  */
 
+/*
+ * Temporary hack. play.pubhub.dk/1.1.3/js/player-kernel.min.js
+ * expects jQuery to be bound to $. This should be fixed in an
+ * upcoming version.
+ */
 var $ = jQuery;
 
 (function ($) {
