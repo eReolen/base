@@ -21,10 +21,7 @@ function reol_rec_material_paragraph_preprocess_entity(&$variables) {
 
       $wrapper = $variables['paragraphs_item']->wrapper();
       $link = $wrapper->field_rec_material->value();
-      if (preg_match('{ting/(?:object|collection)/(.*)$}', $link, $matches)) {
-        $object_id = urldecode($matches[1]);
-        $ting_entity = ding_entity_load($object_id);
-      }
+      $ting_entity = _reol_base_object_from_url($link);
 
       if ($ting_entity) {
         $ting_entity->reol_no_link = TRUE;
