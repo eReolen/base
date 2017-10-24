@@ -74,3 +74,7 @@ projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/d
 ; And another cover fix.
 ; based on https://github.com/ding2/ding2/pull/196
 projects[ding2][patch][] = "sites/all/patches/ting_covers-4.patch"
+
+; Fix up the type fetching in ting admin pages.
+; based on https://github.com/ding2/ding2/pull/851
+projects[ding2][patch][] = "sites/all/patches/remove-random.patch"
