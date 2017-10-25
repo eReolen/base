@@ -931,6 +931,7 @@ div.messages ul {
   border: 1px solid #eee;
   color: #787878;
   font-size: 16px;
+  margin-left: .5em;
 }
 
 .overlay-icons .ebook::before {
@@ -939,6 +940,10 @@ div.messages ul {
 
 .overlay-icons .audiobook::before {
   content: "";
+}
+
+.overlay-icons .quota::before {
+  content: "";
 }
 
 .overlay-icons .link::before {
@@ -4207,8 +4212,6 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview__player .audio-preview__button::before {
-  position: relative;
-  left: 2px;
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -4218,6 +4221,8 @@ html.js input.form-autocomplete {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
+  position: relative;
+  left: 2px;
   font-size: 1.5rem;
   content: "";
 }

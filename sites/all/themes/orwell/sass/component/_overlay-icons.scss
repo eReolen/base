@@ -20,6 +20,7 @@
     border: 1px solid #eee;
     color: $color__font-gray;
     font-size: 16px;
+    margin-left: .5em;
   }
 
   .ebook::before {
@@ -28,6 +29,10 @@
 
   .audiobook::before {
     content: $icon__badge-sound;
+  }
+
+  .quota::before {
+    content: $icon__quota;
   }
 
   .link::before {
