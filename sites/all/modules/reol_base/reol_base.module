@@ -159,6 +159,45 @@ function reol_base_entity_load($entities, $type) {
 }
 
 /**
+ * Implements hook_wysiwyg_default_profiles_alter().
+ *
+ * Override WYSIWYG profile to be more limited.
+ */
+function reol_base_wysiwyg_default_profiles_alter(&$profiles) {
+  if (isset($profiles['ding_wysiwyg'])) {
+    // Remove Dings hardcoding of DDBasic theming.
+    unset($profiles['ding_wysiwyg']['settings']['css_path']);
+
+    // Limit block elements to the ones we style.
+    $profiles['ding_wysiwyg']['settings']['block_formats'] = 'p,h3,h4';
+
+    // Remove buttons to eliminate the amount of damage an editor can inflict.
+    $profiles['ding_wysiwyg']['settings']['buttons']['default'] = array(
+      'Format' => 1,
+      'Bold' => 1,
+      'Italic' => 1,
+      'BulletedList' => 1,
+      'Link' => 1,
+      'Unlink' => 1,
+      'PasteFromWord' => 1,
+      'ShowBlocks' => 1,
+      'RemoveFormat' => 1,
+    );
+  }
+}
+
+/**
+ * Implements hook_filter_default_formats().
+ *
+ * Limit the elements allowed in WYSIWYG format.
+ */
+function reol_base_filter_default_formats_alter(&$formats) {
+  if (isset($formats['ding_wysiwyg'])) {
+    $formats['ding_wysiwyg']['filters']['filter_html']['settings']['allowed_html'] = '<a> <p> <em> <strong> <ul> <li> <br> <img> <h2> <h3> <h4> <h5> <h6>';
+  }
+}
+
+/**
  * Convert an array of ISBN-numbers to a local id.
  *
  * @param mixed $isbns

@@ -16,18 +16,7 @@ $teaser-bg-default: #393939;
   }
 
   &__title {
-    font-family: $font-light;
-    font-size: 2rem;
-    color: $color__font-gray;
-    margin: 3rem;
-    text-align: center;
-
-    @include grid-media($medium) {
-      width: 100%;
-      order: 1;
-      margin: 0 0 3rem;
-      text-align: left;
-    }
+    @include page-header;
   }
 
   &__byline {

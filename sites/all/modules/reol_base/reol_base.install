@@ -384,3 +384,10 @@ function reol_base_update_7133() {
 function reol_base_update_7134() {
   module_enable(['xautoload']);
 }
+
+/**
+ * Revert wysiwyg profile.
+ */
+function reol_base_update_7135() {
+  features_revert(array('ding_content' => array('wysiwyg')));
+}

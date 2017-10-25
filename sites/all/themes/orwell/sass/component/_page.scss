@@ -1,0 +1,32 @@
+@import 'bootstrap/bootstrap';
+
+$test: (
+  columns: 12,
+  gutter: 0px,
+  media: 'all and (min-width: 1200px)',
+);
+
+
+.page {
+  &__content {
+    padding: 2rem 2rem 0;
+
+    @include grid-media($medium) {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 0 3.5rem;
+    }
+  }
+
+  &__title {
+    @include page-header;
+  }
+
+  &__body {
+    position: relative;
+    padding-bottom: 3.5rem;
+    @include grid-media($medium) {
+      order: 1;
+    }
+  }
+}
