@@ -66,10 +66,11 @@ function pratchett_ting_object_cover($variables) {
 
   // Add type/quota icons.
   $ting_entity = $variables['object'];
-  // Don't know if these should be shown yet.
-  // if ($ting_entity->reply->on_quota) {
-  //   $icons[] = 'quota';
-  // }
+
+  if ($ting_entity->reply->on_quota) {
+    $icons[] = 'quota';
+  }
+
   if ((!isset($variables['elements']['#suppress_type_icon']) ||
       !$variables['elements']['#suppress_type_icon'])
     && !isset($ting_entity->reol_no_icons)) {
