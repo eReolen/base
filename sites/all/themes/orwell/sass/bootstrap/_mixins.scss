@@ -143,3 +143,44 @@
   color: $color__font-gray;
   overflow-wrap: break-word;
 }
+
+// Common sizes for covers in boxes (recommendation/audio-preview).
+@mixin box-cover() {
+  min-width: 190px;
+
+  img {
+    vertical-align: middle;
+    height: 270px;
+    width: auto;
+  }
+
+  @include grid-media($small) {
+    min-width: 130px;
+
+    img {
+      height: 190px;
+    }
+  }
+}
+
+@mixin fadeout-box($line-height, $lines, $sub-element, $color) {
+  font-size: $line-height;
+  max-height: $line-height * ($lines + 1);
+  overflow: hidden;
+  position: relative;
+
+  #{$sub-element} {
+    height: $line-height * $lines;
+
+    &::after {
+      content: '';
+      text-align: right;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: $line-height;
+      background: linear-gradient(to bottom, rgba($color, 0), rgba($color, 1) 50%);
+    }
+  }
+}

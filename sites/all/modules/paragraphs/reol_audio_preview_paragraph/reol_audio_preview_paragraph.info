@@ -1,0 +1,13 @@
+name = Audio preview paragraph
+description = Audio preview paragraph
+core = 7.x
+package = ereolen.dk
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = paragraphs
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_preview_material
+features[field_instance][] = paragraphs_item-audio_preview-field_preview_material
+features[paragraphs][] = audio_preview
+project path = sites/all/modules/paragraphs

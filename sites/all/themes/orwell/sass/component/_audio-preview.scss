@@ -1,0 +1,109 @@
+@import 'bootstrap/bootstrap';
+
+.audio-preview {
+  padding: 40px;
+  background-color: $color__gray--dark;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .field-type-ting-cover {
+    @include box-cover;
+    order: 1;
+
+    @include grid-media($medium) {
+      order: 0;
+    }
+  }
+
+  .audio-preview__details {
+    flex-grow: 2;
+  }
+}
+
+.audio-preview__details {
+  padding-right: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+
+  @include grid-media($medium) {
+    padding-right: 0;
+    padding-left: 40px;
+  }
+
+  .audio-preview__title {
+    text-transform: uppercase;
+    font-family: $font-semibold;
+
+    .field-name-ting-title {
+      @include fadeout-box(1rem, 2, h2, $color__gray--dark);
+    }
+  }
+
+  .field-name-ting-author {
+    font-family: $font-semibold;
+    margin-top: 1rem;
+  }
+}
+
+.audio-preview__player {
+  font-family: $font-semibold;
+  // To contain the button.
+  position: relative;
+  line-height: 2.5rem;
+
+  .audio-preview__time {
+    color: $color__gray;
+  }
+
+  .audio-preview__played {
+    color: white;
+  }
+
+  .audio-preview__button {
+    font-size: 0;
+    color: white;
+    border: 1px solid white;
+    border-radius: 50%;
+    background: none;
+    padding: .5rem;
+    vertical-align: middle;
+    float: right;
+
+    &::before {
+      @include icon;
+      // To make the play icon *appear* centered.
+      position: relative;
+      left: 2px;
+      font-size: 1.5rem;
+      content: $icon__play;
+    }
+
+    &.playing::before {
+      // Undo the play icon "centering".
+      content: $icon__pause;
+      left: 0;
+    }
+  }
+}
+
+.audio-preview__progress {
+  height: 4px;
+  width: 100%;
+  background-color: white;
+  margin-top: 30px;
+
+  @include grid-media($medium) {
+    height: 2px;
+  }
+
+  .audio-preview__progress__complete {
+    height: 100%;
+    width: 0;
+
+    background-color: $color__red;
+  }
+
+}

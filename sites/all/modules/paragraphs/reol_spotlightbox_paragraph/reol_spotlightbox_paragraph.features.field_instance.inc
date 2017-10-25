@@ -158,7 +158,8 @@ function reol_spotlightbox_paragraph_field_default_field_instances() {
       'add_mode' => 'select',
       'allowed_bundles' => array(
         'article_carousel' => -1,
-        'linkbox' => 'linkbox',
+        'audio_preview' => 'audio_preview',
+        'linkbox' => -1,
         'material_carousel' => -1,
         'recommended_material' => 'recommended_material',
         'review' => -1,
@@ -167,6 +168,7 @@ function reol_spotlightbox_paragraph_field_default_field_instances() {
       ),
       'bundle_weights' => array(
         'article_carousel' => 2,
+        'audio_preview' => 16,
         'linkbox' => 3,
         'material_carousel' => 4,
         'recommended_material' => 10,
