@@ -671,7 +671,7 @@ div.messages ul {
 }
 
 .text ul li::before {
-  content: "\2014";
+  content: '\2014';
   margin-right: 1rem;
 }
 

@@ -4,7 +4,6 @@
  * @file
  * Page full view mode.
  */
-dpm($content);
 ?>
 <div class="page <?php print $classes; ?>">
   <div class="content-wrapper">
