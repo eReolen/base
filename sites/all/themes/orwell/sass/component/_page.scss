@@ -22,5 +22,9 @@
     @include grid-media($medium) {
       order: 1;
     }
+
+    img {
+      margin: 2rem 0;
+    }
   }
 }
