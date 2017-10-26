@@ -194,6 +194,29 @@ function reol_frontend_views_query_alter(&$view, &$query) {
 }
 
 /**
+ * Return quota/type icons for a DingEntity.
+ *
+ * @param DingEntity $ding_entity
+ *   The entity to make icons for.
+ *
+ * @return string
+ *   HTML for the icons, or an empty string.
+ */
+function reol_frontend_ding_entity_icons(DingEntity $ding_entity) {
+  if (!isset($ding_entity->reol_no_icons)) {
+    if ($ding_entity->reply->on_quota) {
+      $icons[] = 'quota';
+    }
+
+    if (!isset($ding_entity->reol_no_type_icons)) {
+      $icons[] = reol_base_get_type_name($ding_entity->type);
+    }
+    return theme('reol_overlay_icons', array('icons' => $icons));
+  }
+  return '';
+}
+
+/**
  * View a video from modal.
  *
  * @param object $node
