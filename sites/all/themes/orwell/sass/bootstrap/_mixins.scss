@@ -32,11 +32,45 @@
   }
 }
 
-
 @mixin text-paragraph {
   font-size: 1rem;
   line-height: 1.8rem;
   color: $color__font-gray;
+}
+
+// Common page header.
+@mixin page-header() {
+  font-family: $font-light;
+  font-size: 2rem;
+  color: $color__font-gray;
+  margin: 3rem;
+  text-align: center;
+
+  @include grid-media($medium) {
+    width: 100%;
+    order: 1;
+    margin: 0 0 3rem;
+    text-align: left;
+  }
+}
+
+// Common header. Displayed to the left on larger screens.
+@mixin header {
+  font-family: $font-light;
+  font-size: 1.5rem;
+  color: $color__font-gray;
+  border-top: 1px solid $color__border-gray;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+// Common sub-header.
+@mixin sub-header {
+  font-family: $font-semibold;
+  text-transform: uppercase;
+  color: $color__font-gray--dark;
+  margin-top: 2rem;
 }
 
 @mixin form-default {

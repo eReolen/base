@@ -40,6 +40,7 @@ features[variable][] = menu_parent_article
 features[variable][] = node_options_article
 features[variable][] = node_preview_article
 features[variable][] = node_submitted_article
+features[variable][] = pathauto_node_article_pattern
 features[views_view][] = articles
 features_exclude[Workflow][bpi] = bpi
 features_exclude[dependencies][bpi_features] = bpi_features
