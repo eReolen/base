@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Author quote paragraph feature.
+ */
+
+include_once 'reol_author_quote_paragraph.features.inc';

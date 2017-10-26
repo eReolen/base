@@ -1,0 +1,15 @@
+name = Author quote paragraph
+description = Author quote paragraph
+core = 7.x
+package = ereolen.dk
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = paragraphs
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_author_quote
+features[field_base][] = field_author_quote_material
+features[field_instance][] = paragraphs_item-author_quote-field_author_quote
+features[field_instance][] = paragraphs_item-author_quote-field_author_quote_material
+features[paragraphs][] = author_quote
+project path = sites/all/modules/paragraphs
