@@ -102,7 +102,14 @@ function ereol_article_strongarm() {
           'weight' => '8',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'ding_serendipity_info' => array(
+          'teaser' => array(
+            'weight' => '2',
+            'visible' => FALSE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__article'] = $strongarm;
