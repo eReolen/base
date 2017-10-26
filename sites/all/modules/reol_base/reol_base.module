@@ -1103,10 +1103,15 @@ function reol_base_field_default_field_instances_alter(&$fields) {
  * Should work for ting/object/<id>.
  */
 function _reol_base_object_from_url($url) {
-  if (preg_match('{ting/(?:object|collection)/(.*)$}', $url, $matches)) {
+  if (preg_match('{ting/(?:object|collection)/([^#?]*)([#?].*)?$}', $url, $matches)) {
     // The colon could be urlencoded.
-    $object_id = urldecode($matches[1]);
-    return ding_entity_load($object_id);
+    $ting_entity = ding_entity_load(urldecode($matches[1]));
+
+    // ding_entity_load might still return an object for some invalid IDs. Check
+    // for the OpenSearch reply to guard against this.
+    if (isset($ting_entity->reply)) {
+      return $ting_entity;
+    }
   }
 
   return NULL;
