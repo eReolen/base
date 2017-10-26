@@ -54,7 +54,11 @@ function reol_rec_material_paragraph_field_default_field_instances() {
   // 'paragraphs_item-recommended_material-field_rec_title'.
   $field_instances['paragraphs_item-recommended_material-field_rec_title'] = array(
     'bundle' => 'recommended_material',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 'Redaktøren anbefaler',
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
