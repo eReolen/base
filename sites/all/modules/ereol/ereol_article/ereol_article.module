@@ -28,7 +28,9 @@ function ereol_article_preprocess_node(&$variables) {
 
     $image_for_sizing = image_style_path('reol_article_teaser_background', $image_uri);
     // Make sure image has been generated.
-    image_style_create_derivative(image_style_load('reol_article_teaser_background'), $image_uri, $image_for_sizing);
+    if (!file_exists($image_for_sizing)) {
+      image_style_create_derivative(image_style_load('reol_article_teaser_background'), $image_uri, $image_for_sizing);
+    }
 
     list($image_w, $image_h) = getimagesize($image_for_sizing);
 
