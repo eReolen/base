@@ -194,24 +194,6 @@ function reol_frontend_views_query_alter(&$view, &$query) {
 }
 
 /**
- * Implements hook_flush_caches().
- */
-function reol_frontend_flush_caches() {
-  $types = reol_base_get_type();
-
-  // Create aliases for the type frontpages.
-  foreach ($types as $type) {
-    if (!path_load('reol_frontpage/' . $type['int_name'])) {
-      $path = array(
-        'source' => 'reol_frontpage/' . $type['int_name'],
-        'alias' => $type['path'],
-      );
-      path_save($path);
-    }
-  }
-}
-
-/**
  * View a video from modal.
  *
  * @param object $node

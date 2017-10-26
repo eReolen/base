@@ -37,3 +37,12 @@ function reol_frontend_update_7103() {
   variable_set('ding_frontpage_promoter', 'serendipity');
   variable_set('ding_entity_rating_popular_on_frontpage', TRUE);
 }
+
+/**
+ * Delete reol_frontpage aliases.
+ */
+function reol_frontend_update_7104() {
+  db_delete('url_alias')
+    ->condition('source', db_like('reol_frontpage/') . '%', 'LIKE')
+    ->execute();
+}
