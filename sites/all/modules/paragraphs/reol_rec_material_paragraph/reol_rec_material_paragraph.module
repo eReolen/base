@@ -15,6 +15,7 @@ function reol_rec_material_paragraph_preprocess_entity(&$variables) {
     if ($variables['paragraphs_item']->bundle() == 'recommended_material') {
       $ting_entity = NULL;
 
+      $variables['link'] = '';
       $variables['cover'] =
         $variables['author'] =
         $variables['title'] = array();
