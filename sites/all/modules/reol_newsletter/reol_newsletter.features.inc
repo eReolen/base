@@ -5,6 +5,15 @@
  */
 
 /**
+ * Implements hook_ctools_plugin_api().
+ */
+function reol_newsletter_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "strongarm" && $api == "strongarm") {
+    return array("version" => "1");
+  }
+}
+
+/**
  * Implements hook_default_mailchimp_signup().
  */
 function reol_newsletter_default_mailchimp_signup() {
@@ -49,10 +58,7 @@ function reol_newsletter_default_mailchimp_signup() {
         },
         "SIGNUP_value" : ""
       },
-      "description" : {
-        "value" : "\\u003Cp\\u003ETilmeld dig eReolens\\u003C\\/p\\u003E\\u003Ch2\\u003ENyhedsbrev\\u003C\\/h2\\u003E",
-        "format" : "ding_wysiwyg"
-      },
+      "description" : "\\u003Cp\\u003ETilmeld dig eReolens\\u003C\\/p\\u003E\\n\\u003Ch2\\u003ENyhedsbrev\\u003C\\/h2\\u003E\\n",
       "doublein" : 1,
       "send_welcome" : 0,
       "include_interest_groups" : 0

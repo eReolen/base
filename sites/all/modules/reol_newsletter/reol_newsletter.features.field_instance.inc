@@ -10,7 +10,7 @@
 function reol_newsletter_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'profile2-provider_publizon-field_newsletter'
+  // Exported field_instance: 'profile2-provider_publizon-field_newsletter'.
   $field_instances['profile2-provider_publizon-field_newsletter'] = array(
     'bundle' => 'provider_publizon',
     'default_value' => array(

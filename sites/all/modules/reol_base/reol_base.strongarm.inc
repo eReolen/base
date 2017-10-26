@@ -329,7 +329,7 @@ nonGoogleIframes';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'ting_openlist_wsdl';
-  $strongarm->value = 'http://test.openlist.ddbcms.dk/?wsdl';
+  $strongarm->value = 'http://v2_test.openlist.server003.b14cms.dk/?wsdl';
   $export['ting_openlist_wsdl'] = $strongarm;
 
   $strongarm = new stdClass();
