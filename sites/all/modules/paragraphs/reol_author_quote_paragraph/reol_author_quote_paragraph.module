@@ -6,3 +6,35 @@
  */
 
 include_once 'reol_author_quote_paragraph.features.inc';
+
+/**
+ * Implements hook_preprocess_entity().
+ */
+function reol_author_quote_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'author_quote') {
+      $ting_entity = NULL;
+
+      $variables['link'] = '';
+      $variables['icons'] = '';
+      $variables['author'] =
+        $variables['attribution'] = array();
+
+      $wrapper = $variables['paragraphs_item']->wrapper();
+      $link = $wrapper->field_author_quote_material->value();
+      $ting_entity = _reol_base_object_from_url($link);
+
+      if ($ting_entity) {
+        $ting_entity->reol_no_link = TRUE;
+        $variables['link'] = entity_uri('ting_entity', $ting_entity);
+        $variables['icons'] = reol_frontend_ding_entity_icons($ting_entity);
+        // Just take the first author.
+        list($author,) = $ting_entity->getCreators();
+        $variables['author'] = check_plain($author);
+        $variables['quote'] = check_plain($wrapper->field_author_quote->value());
+        $quoted_title = "<q>" . check_plain($ting_entity->getTitle()) . "</q>";
+        $variables['attribution'] = t('- Except from !quoted_title', array('!quoted_title' => $quoted_title));
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+@import 'bootstrap/bootstrap';
+
+.author-quote a {
+  text-decoration: none;
+  color: black;
+}
+
+.author-quote__wrapper {
+  // To anchor the icons.
+  position: relative;
+  padding: 40px;
+  background-color: $color__blue;
+  color: white;
+  min-height: 175px;
+
+  .overlay-icons {
+    // Right align. This makes it respect the parent padding.
+    right: 0;
+  }
+
+  .author-quote__author {
+    text-transform: uppercase;
+    font-family: $font-semibold;
+    margin-bottom: 1rem;
+  }
+
+  .author-quote__quote {
+    @include quoted;
+    font-family: $font-light;
+    font-size: 1.2rem;
+    font-style: italic;
+  }
+
+  .author-quote__attribution {
+    font-family: $font-regular;
+
+    q {
+      @include quoted;
+    }
+  }
+}
