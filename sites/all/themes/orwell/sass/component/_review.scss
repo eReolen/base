@@ -10,33 +10,33 @@
   }
 
   .review__wrapper {
-    padding: 40px;
+    padding: 20px;
     background-color: $color__gray-darker;
     display: flex;
     flex-flow: row nowrap;
   }
 
-  // Hide the cover for desktop per default.
   .review__content {
     flex: 1 1 100%;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
 
+    // Hide the cover for desktop per default.
     .field-name-ting-cover {
       display: none;
     }
   }
 
   .field-name-ting-cover {
-    height: 280px;
-    margin-right: 40px;
+    height: 140px;
+    margin-right: 20px;
     flex: none;
 
     img {
       width: auto;
       max-width: inherit;
-      max-height: 280px;
+      max-height: 140px;
     }
   }
 

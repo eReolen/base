@@ -2623,18 +2623,18 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel-item {
-  padding-right: 32px;
+  padding-left: 20px;
 }
 
 @media all and (min-width: 49em) {
   .ding-carousel-item {
-    padding-right: 40px;
+    padding-left: 40px;
   }
 }
 
 @media all and (min-width: 65em) {
   .ding-carousel-item {
-    padding-right: 60px;
+    padding-left: 60px;
   }
 }
 
@@ -3079,7 +3079,7 @@ html.js input.form-autocomplete {
 }
 
 .ting-object.view-mode-compact {
-  width: 268px;
+  width: 130px;
 }
 
 .ting-object.view-mode-compact .group-overlay {
@@ -3731,7 +3731,7 @@ html.js input.form-autocomplete {
 }
 
 .review .review__wrapper {
-  padding: 40px;
+  padding: 20px;
   background-color: #e6e6e6;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3763,8 +3763,8 @@ html.js input.form-autocomplete {
 }
 
 .review .field-name-ting-cover {
-  height: 280px;
-  margin-right: 40px;
+  height: 140px;
+  margin-right: 20px;
   -webkit-box-flex: 0;
   -ms-flex: none;
   flex: none;
@@ -3773,7 +3773,7 @@ html.js input.form-autocomplete {
 .review .field-name-ting-cover img {
   width: auto;
   max-width: inherit;
-  max-height: 280px;
+  max-height: 140px;
 }
 
 .review .review__head,
@@ -3998,7 +3998,7 @@ html.js input.form-autocomplete {
 }
 
 .recommended-material__wrapper {
-  padding: 40px;
+  padding: 20px;
   background-color: #e6e6e6;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4009,13 +4009,19 @@ html.js input.form-autocomplete {
   flex-flow: row nowrap;
 }
 
+@media all and (min-width: 49em) {
+  .recommended-material__wrapper {
+    padding: 40px;
+  }
+}
+
 .recommended-material__wrapper .field-type-ting-cover {
-  min-width: 190px;
+  min-width: 95px;
 }
 
 .recommended-material__wrapper .field-type-ting-cover img {
   vertical-align: middle;
-  height: 270px;
+  height: 135px;
   width: auto;
 }
 
@@ -4029,7 +4035,7 @@ html.js input.form-autocomplete {
 }
 
 .recommended-material__details {
-  padding-left: 40px;
+  padding-left: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4124,7 +4130,7 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview .field-type-ting-cover {
-  min-width: 190px;
+  min-width: 95px;
   -webkit-box-ordinal-group: 2;
   -ms-flex-order: 1;
   order: 1;
@@ -4132,7 +4138,7 @@ html.js input.form-autocomplete {
 
 .audio-preview .field-type-ting-cover img {
   vertical-align: middle;
-  height: 270px;
+  height: 135px;
   width: auto;
 }
 

@@ -180,11 +180,11 @@
 
 // Common sizes for covers in boxes (recommendation/audio-preview).
 @mixin box-cover() {
-  min-width: 190px;
+  min-width: 95px;
 
   img {
     vertical-align: middle;
-    height: 270px;
+    height: 135px;
     width: auto;
   }
 

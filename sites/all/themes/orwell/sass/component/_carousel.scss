@@ -41,13 +41,13 @@
 }
 
 .ding-carousel-item {
-  padding-right: 32px;
+  padding-left: 20px;
 
   @include grid-media($medium) {
-    padding-right: 40px;
+    padding-left: 40px;
   }
 
   @include grid-media($large) {
-    padding-right: 60px;
+    padding-left: 60px;
   }
 }
