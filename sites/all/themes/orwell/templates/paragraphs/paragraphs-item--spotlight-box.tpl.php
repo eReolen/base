@@ -28,18 +28,6 @@
 ?>
 <div class="spotlight-box <?php print $classes; ?>"<?php print $attributes; ?>>
   <div class="content"<?php print $content_attributes; ?>>
-    <div class="spotlight-box__top">
-      <div class="spotlight-box__top__primary"><?php print render($content['field_spotlight_primary'][0]); ?></div>
-      <div class="spotlight-box__top__secondary"><?php print render($content['field_spotlight_secondary'][0]); ?></div>
-    </div>
-    <div class="spotlight-box__middle">
-      <div class="spotlight-box__middle__item spotlight-box__middle__item_1"><?php print render($content['field_spotlight_row_2'][0]); ?></div>
-      <div class="spotlight-box__middle__item spotlight-box__middle__item_2"><?php print render($content['field_spotlight_row_2'][1]); ?></div>
-      <div class="spotlight-box__middle__item spotlight-box__middle__item_3"><?php print render($content['field_spotlight_row_2'][2]); ?></div>
-    </div>
-    <div class="spotlight-box__bottom">
-      <div class="spotlight-box__bottom__item"><?php print render($content['field_spotlight_row_3'][0]); ?></div>
-      <div class="spotlight-box__bottom__item"><?php print render($content['field_spotlight_row_3'][1]); ?></div>
-    </div>
+    <?php print render($content); ?>
   </div>
 </div>
