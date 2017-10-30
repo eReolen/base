@@ -33,34 +33,52 @@
     margin-right: 20px;
     flex: none;
 
+    @include grid-media($medium) {
+      height: 280px;
+      margin-right: 40px;
+    }
+
     img {
       width: auto;
       max-width: inherit;
       max-height: 140px;
+
+      @include grid-media($medium) {
+        max-height: 280px;
+      }
     }
   }
 
   .review__head,
   .review__meta {
     flex: 1 1 50%;
+    color: $color__font-gray--dark;
   }
 
   .review__meta {
-    // Layout the items from the end.
     display: flex;
     flex-flow: column nowrap;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
-
 
   h4 {
     text-transform: uppercase;
     font-family: $font-semibold;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
+    font-size: .9rem;
+
+    @include grid-media($medium) {
+      font-size: 1rem;
+    }
   }
 
   .review__subhead {
     font-family: $font-regular;
+    font-size: .7rem;
+
+    @include grid-media($medium) {
+      font-size: 1rem;
+    }
 
     .review__highlight {
       color: $color__red;
@@ -69,14 +87,15 @@
 
   .field-name-ting-title {
     font-family: $font-light;
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    margin-bottom: .5rem;
   }
 
   .field-name-ting-author {
     font-family: $font-light;
+    font-size: .8rem;
+    color: $color__font-gray;
   }
-
-
 
   @include grid-media($medium) {
 
