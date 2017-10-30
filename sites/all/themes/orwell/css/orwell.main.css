@@ -3143,7 +3143,7 @@ html.js input.form-autocomplete {
 }
 
 .linkbox .linkbox__container {
-  height: 250px;
+  height: 125px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3155,10 +3155,23 @@ html.js input.form-autocomplete {
   align-items: center;
 }
 
+@media all and (min-width: 49em) {
+  .linkbox .linkbox__container {
+    height: 250px;
+  }
+}
+
 .linkbox .linkbox__content {
   font-family: "SourceSansPro", sans-serif;
   font-weight: bold;
   text-transform: uppercase;
+  font-size: .7em;
+}
+
+@media all and (min-width: 49em) {
+  .linkbox .linkbox__content {
+    font-size: 1rem;
+  }
 }
 
 .spotlight-box {
