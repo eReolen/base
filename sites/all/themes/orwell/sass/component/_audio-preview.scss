@@ -1,12 +1,16 @@
 @import 'bootstrap/bootstrap';
 
 .audio-preview {
-  padding: 40px;
+  padding: 20px;
   background-color: $color__gray--dark;
   color: white;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+
+  @include grid-media($medium) {
+    padding: 30px;
+  }
 
   .field-type-ting-cover {
     @include box-cover;

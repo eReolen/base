@@ -4094,7 +4094,7 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .recommended-material__wrapper {
-    padding: 40px;
+    padding: 30px;
   }
 }
 
@@ -4236,7 +4236,7 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview {
-  padding: 40px;
+  padding: 20px;
   background-color: #393939;
   color: white;
   display: -webkit-box;
@@ -4249,6 +4249,12 @@ html.js input.form-autocomplete {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+}
+
+@media all and (min-width: 49em) {
+  .audio-preview {
+    padding: 30px;
+  }
 }
 
 .audio-preview .field-type-ting-cover {
@@ -4515,33 +4521,63 @@ html.js input.form-autocomplete {
   src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
 }
 
+.author-quote {
+  position: relative;
+}
+
 .author-quote a {
   text-decoration: none;
   color: black;
 }
 
 .author-quote__wrapper {
-  position: relative;
-  padding: 40px;
+  padding: 20px;
   background-color: #5f7f9f;
   color: white;
-  min-height: 175px;
+  height: 175px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
-.author-quote__wrapper .overlay-icons {
-  right: 0;
+@media all and (min-width: 23em) {
+  .author-quote__wrapper {
+    height: 230px;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .author-quote__wrapper {
+    padding: 30px;
+    height: 250px;
+  }
 }
 
 .author-quote__wrapper .author-quote__author {
   text-transform: uppercase;
   font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: .8rem;
   margin-bottom: 1rem;
+}
+
+@media all and (min-width: 49em) {
+  .author-quote__wrapper .author-quote__author {
+    font-size: 1rem;
+  }
 }
 
 .author-quote__wrapper .author-quote__quote {
   font-family: "SourceSansProLight", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-style: italic;
+  line-height: 1.2rem;
 }
 
 .author-quote__wrapper .author-quote__quote::before {
@@ -4552,8 +4588,22 @@ html.js input.form-autocomplete {
   content: '\201D';
 }
 
+@media all and (min-width: 49em) {
+  .author-quote__wrapper .author-quote__quote {
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+  }
+}
+
 .author-quote__wrapper .author-quote__attribution {
   font-family: "SourceSansPro", sans-serif;
+  font-size: .7rem;
+}
+
+@media all and (min-width: 49em) {
+  .author-quote__wrapper .author-quote__attribution {
+    font-size: .8rem;
+  }
 }
 
 .author-quote__wrapper .author-quote__attribution q::before {

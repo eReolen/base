@@ -12,7 +12,7 @@
   flex-flow: row nowrap;
 
   @include grid-media($medium) {
-    padding: 40px;
+    padding: 30px;
   }
 
   .field-type-ting-cover {
