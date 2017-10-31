@@ -2575,6 +2575,16 @@ html.js input.form-autocomplete {
   src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
 }
 
+.ding-carousel {
+  padding: 10px 0;
+}
+
+@media all and (min-width: 49em) {
+  .ding-carousel {
+    padding: 20px 0;
+  }
+}
+
 .ding-carousel .slick-arrow {
   background: #f0f0f0;
   border: 1px solid #d8d8d8;
@@ -2584,6 +2594,7 @@ html.js input.form-autocomplete {
   position: absolute;
   bottom: 30px;
   z-index: 1;
+  display: none !important;
 }
 
 .ding-carousel .slick-arrow::before {
@@ -2620,6 +2631,7 @@ html.js input.form-autocomplete {
 @media all and (min-width: 49em) {
   .ding-carousel .slick-arrow {
     bottom: 90px;
+    display: inline-block !important;
   }
 }
 
