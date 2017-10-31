@@ -83,6 +83,9 @@ div.messages {
   color: $color__font-gray--dark;
   line-height: 1.8rem;
   border: 1px solid $color__gray--light;
+  // Force long lines to break as to not mess up display on small
+  // screens.
+  word-wrap: break-word;
 
   @include grid-media($medium) {
     margin: 1rem auto;
