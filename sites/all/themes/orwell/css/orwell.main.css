@@ -3850,6 +3850,7 @@ html.js input.form-autocomplete {
 .review h4 {
   text-transform: uppercase;
   font-family: "SourceSansProSemiBold", sans-serif;
+  margin-top: .2rem;
   margin-bottom: .5rem;
   font-size: .9rem;
 }
@@ -3885,6 +3886,7 @@ html.js input.form-autocomplete {
   font-family: "SourceSansProLight", sans-serif;
   font-size: .8rem;
   color: #787878;
+  margin-bottom: .5rem;
 }
 
 @media all and (min-width: 49em) {
@@ -4114,43 +4116,82 @@ html.js input.form-autocomplete {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  color: #505050;
+  width: 100%;
 }
 
 .recommended-material__details .field-name-field-rec-title {
   text-transform: uppercase;
   font-family: "SourceSansProSemiBold", sans-serif;
-  margin-bottom: 1rem;
+  font-size: .8rem;
+  margin-top: .2rem;
+}
+
+@media all and (min-width: 49em) {
+  .recommended-material__details .field-name-field-rec-title {
+    font-size: 1rem;
+  }
 }
 
 .recommended-material__details .field-name-ting-title {
-  font-size: 1.5rem;
-  max-height: 6rem;
+  font-size: 1.1rem;
   overflow: hidden;
   position: relative;
   font-family: "SourceSansProLight", sans-serif;
-  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  margin-bottom: .5rem;
 }
 
 .recommended-material__details .field-name-ting-title h2 {
-  height: 4.5rem;
+  max-height: 4.4rem;
+  padding-bottom: .1rem;
 }
 
 .recommended-material__details .field-name-ting-title h2::after {
   content: '';
   text-align: right;
   position: absolute;
-  bottom: 0;
+  top: 3.3rem;
   right: 0;
   width: 100%;
-  height: 1.5rem;
+  height: 1.1rem;
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(230, 230, 230, 0)), color-stop(50%, #e6e6e6));
   background: -webkit-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
   background: -o-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
   background: linear-gradient(to bottom, rgba(230, 230, 230, 0), #e6e6e6 50%);
 }
 
+@media all and (min-width: 49em) {
+  .recommended-material__details .field-name-ting-title {
+    font-size: 1.5rem;
+    overflow: hidden;
+    position: relative;
+    font-size: 1.5rem;
+  }
+  .recommended-material__details .field-name-ting-title h2 {
+    max-height: 4.5rem;
+    padding-bottom: .1rem;
+  }
+  .recommended-material__details .field-name-ting-title h2::after {
+    content: '';
+    text-align: right;
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    width: 100%;
+    height: 1.5rem;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(230, 230, 230, 0)), color-stop(50%, #e6e6e6));
+    background: -webkit-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
+    background: -o-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
+    background: linear-gradient(to bottom, rgba(230, 230, 230, 0), #e6e6e6 50%);
+  }
+}
+
 .recommended-material__details .field-name-ting-author {
   font-family: "SourceSansProLight", sans-serif;
+  font-size: .8rem;
+  color: #787878;
+  margin-bottom: .5rem;
 }
 
 @font-face {
@@ -4261,20 +4302,20 @@ html.js input.form-autocomplete {
 
 .audio-preview__details .audio-preview__title .field-name-ting-title {
   font-size: 1rem;
-  max-height: 3rem;
   overflow: hidden;
   position: relative;
 }
 
 .audio-preview__details .audio-preview__title .field-name-ting-title h2 {
-  height: 2rem;
+  max-height: 2rem;
+  padding-bottom: .1rem;
 }
 
 .audio-preview__details .audio-preview__title .field-name-ting-title h2::after {
   content: '';
   text-align: right;
   position: absolute;
-  bottom: 0;
+  top: 1rem;
   right: 0;
   width: 100%;
   height: 1rem;

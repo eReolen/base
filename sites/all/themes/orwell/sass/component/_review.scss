@@ -64,6 +64,7 @@
   h4 {
     text-transform: uppercase;
     font-family: $font-semibold;
+    margin-top: .2rem;
     margin-bottom: .5rem;
     font-size: .9rem;
 
@@ -95,6 +96,7 @@
     font-family: $font-light;
     font-size: .8rem;
     color: $color__font-gray;
+    margin-bottom: .5rem;
   }
 
   @include grid-media($medium) {
