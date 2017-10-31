@@ -9,8 +9,8 @@
   <?php print render($cover); ?>
   <div class="audio-preview__details">
     <div class="audio-preview__meta">
-      <span class="audio-preview__title"><?php print t('Audio preview') ?>: <?php print render($title); ?></span>
-      <?php print render($author); ?>
+      <div class="audio-preview__title"><div><?php print t('Audio preview') ?>: <?php print $title; ?></div></div>
+      <div class="audio-preview__author"><?php print $author; ?></div>
     </div>
     <div class="audio-preview__player" data-isbn="<?php print $isbn; ?>">
       <span class="audio-preview__time">

@@ -14,10 +14,10 @@
 
   .field-type-ting-cover {
     @include box-cover;
-    order: 1;
+    order: 0;
 
     @include grid-media($medium) {
-      order: 0;
+      order: 1;
     }
   }
 
@@ -27,27 +27,29 @@
 }
 
 .audio-preview__details {
-  padding-right: $gutter__default;
+  padding-left: $gutter__default;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
 
   @include grid-media($medium) {
-    padding-right: 0;
-    padding-left: $gutter__medium;
+    padding-left: 0;
+    padding-right: $gutter__medium;
   }
 
   .audio-preview__title {
     text-transform: uppercase;
     font-family: $font-semibold;
+    @include fadeout-box(.8rem, 3, div, $color__gray--dark);
 
-    .field-name-ting-title {
-      @include fadeout-box(1rem, 2, h2, $color__gray--dark);
+    @include grid-media($medium) {
+      @include fadeout-box(1rem, 3, div, $color__gray--dark);
     }
   }
 
-  .field-name-ting-author {
-    font-family: $font-semibold;
+  .audio-preview__author {
+    font-family: $font-regular;
+    font-size: .8rem;
     margin-top: 1rem;
   }
 }
@@ -55,11 +57,22 @@
 .audio-preview__player {
   font-family: $font-semibold;
   // To contain the button.
-  position: relative;
+  // position: relative;
   line-height: 2.5rem;
+  font-size: .8rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
 
   .audio-preview__time {
     color: $color__gray;
+    flex: auto;
+
+    @include grid-media($medium) {
+      order: 2;
+      text-align: right;
+    }
   }
 
   .audio-preview__played {
@@ -69,20 +82,32 @@
   .audio-preview__button {
     font-size: 0;
     color: white;
-    border: 1px solid white;
+    border: 1px solid $color__font-gray;
     border-radius: 50%;
     background: none;
     padding: .5rem;
     vertical-align: middle;
-    float: right;
+    // float: right;
+    //flex-basis: 30%;
+    flex: none;
+
+    @include grid-media($medium) {
+      order: 1;
+      // rem seems too loose the centering.
+      padding: 6px;
+    }
 
     &::before {
       @include icon;
       // To make the play icon *appear* centered.
       position: relative;
-      left: 2px;
-      font-size: 1.5rem;
+      left: 1px;
+      font-size: 1rem;
       content: $icon__play;
+
+      @include grid-media($medium) {
+        font-size: .8rem;
+      }
     }
 
     &.playing::before {
@@ -94,14 +119,13 @@
 }
 
 .audio-preview__progress {
-  height: 4px;
+  height: 2px;
   width: 100%;
   background-color: white;
-  margin-top: 30px;
-
-  @include grid-media($medium) {
-    height: 2px;
-  }
+  margin-top: $gutter__default / 2;
+  flex-basis: 100%;
+  flex: none;
+  order: 3;
 
   .audio-preview__progress__complete {
     height: 100%;
