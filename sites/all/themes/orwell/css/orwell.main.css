@@ -4653,11 +4653,11 @@ html.js input.form-autocomplete {
 }
 
 .author-quote__wrapper .author-quote__quote::before {
-  content: '\201C';
+  content: "“";
 }
 
 .author-quote__wrapper .author-quote__quote::after {
-  content: '\201D';
+  content: "”";
 }
 
 @media all and (min-width: 49em) {
@@ -4679,11 +4679,11 @@ html.js input.form-autocomplete {
 }
 
 .author-quote__wrapper .author-quote__attribution q::before {
-  content: '\201C';
+  content: "“";
 }
 
 .author-quote__wrapper .author-quote__attribution q::after {
-  content: '\201D';
+  content: "”";
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */

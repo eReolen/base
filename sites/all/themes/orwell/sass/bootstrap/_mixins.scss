@@ -227,10 +227,10 @@
 // Class for quoting an element with the proper quotes.
 @mixin quoted() {
   &::before {
-    content: '\201C';
+    content: $quote__start;
   }
 
   &::after {
-    content: '\201D';
+    content: $quote__end;
   }
 }
