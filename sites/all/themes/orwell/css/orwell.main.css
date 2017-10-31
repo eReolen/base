@@ -4320,11 +4320,11 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview__details .audio-preview__title {
-  text-transform: uppercase;
-  font-family: "SourceSansProSemiBold", sans-serif;
   font-size: 0.8rem;
   overflow: hidden;
   position: relative;
+  text-transform: uppercase;
+  font-family: "SourceSansProSemiBold", sans-serif;
 }
 
 .audio-preview__details .audio-preview__title div {
