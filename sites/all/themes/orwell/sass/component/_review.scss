@@ -10,7 +10,7 @@
   }
 
   .review__wrapper {
-    padding: 20px;
+    padding: $padding__default;
     background-color: $color__gray-darker;
     display: flex;
     flex-flow: row nowrap;
@@ -30,12 +30,12 @@
 
   .field-name-ting-cover {
     height: 140px;
-    margin-right: 20px;
+    margin-right: $gutter__default;
     flex: none;
 
     @include grid-media($medium) {
       height: 280px;
-      margin-right: 40px;
+      margin-right: $gutter__medium;
     }
 
     img {
@@ -102,7 +102,7 @@
   @include grid-media($medium) {
 
     .review__wrapper {
-      padding: 30px;
+      padding: $padding__medium;
     }
 
     // Hide the mobile cover.

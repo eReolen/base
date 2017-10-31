@@ -1,7 +1,7 @@
 @import 'bootstrap/bootstrap';
 
 .audio-preview {
-  padding: 20px;
+  padding: $padding__default;
   background-color: $color__gray--dark;
   color: white;
   display: flex;
@@ -9,7 +9,7 @@
   justify-content: space-between;
 
   @include grid-media($medium) {
-    padding: 30px;
+    padding: $padding__medium;
   }
 
   .field-type-ting-cover {
@@ -27,14 +27,14 @@
 }
 
 .audio-preview__details {
-  padding-right: 40px;
+  padding-right: $gutter__default;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
 
   @include grid-media($medium) {
     padding-right: 0;
-    padding-left: 40px;
+    padding-left: $gutter__medium;
   }
 
   .audio-preview__title {

@@ -2,10 +2,13 @@
 .spotlight-box {
   @include content-wrapper;
 
-  padding: 10px;
+  // Half of the outer padding comes from here, the other half from
+  // the items.
+  padding: $padding__default / 2;
 
   @include grid-media($medium) {
-    padding: 0;
+    // No outer side padding in larger sizes.
+    padding: ($padding__medium / 2) 0;
   }
 }
 
@@ -14,10 +17,10 @@
 // the needed space as margin to the contained element makes it able
 // to calculate the proper width.
 .spotlight-box__item {
-  margin: 10px;
+  margin: $gutter__default / 2;
 
   @include grid-media($medium) {
-    margin: 30px;
+    margin: $gutter__medium / 2;
   }
 }
 

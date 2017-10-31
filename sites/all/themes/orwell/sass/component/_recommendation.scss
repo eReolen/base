@@ -6,13 +6,13 @@
 }
 
 .recommended-material__wrapper {
-  padding: 20px;
+  padding: $padding__default;
   background-color: $color__gray-darker;
   display: flex;
   flex-flow: row nowrap;
 
   @include grid-media($medium) {
-    padding: 30px;
+    padding: $padding__medium;
   }
 
   .field-type-ting-cover {
@@ -21,13 +21,17 @@
 }
 
 .recommended-material__details {
-  padding-left: 20px;
+  padding-left: $gutter__default;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   color: $color__font-gray--dark;
   // IE10/11 fix. Container overflows if not limited.
   width: 100%;
+
+  @include grid-media($medium) {
+    padding-left: $gutter__medium;
+  }
 
   .field-name-field-rec-title {
     text-transform: uppercase;

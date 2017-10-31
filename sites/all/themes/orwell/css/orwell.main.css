@@ -3202,7 +3202,7 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .spotlight-box {
-    padding: 0;
+    padding: 15px 0;
   }
 }
 
@@ -3212,7 +3212,7 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .spotlight-box__item {
-    margin: 30px;
+    margin: 20px;
   }
 }
 
@@ -4133,6 +4133,12 @@ html.js input.form-autocomplete {
   width: 100%;
 }
 
+@media all and (min-width: 49em) {
+  .recommended-material__details {
+    padding-left: 40px;
+  }
+}
+
 .recommended-material__details .field-name-field-rec-title {
   text-transform: uppercase;
   font-family: "SourceSansProSemiBold", sans-serif;
@@ -4294,7 +4300,7 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview__details {
-  padding-right: 40px;
+  padding-right: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
