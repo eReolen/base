@@ -6,7 +6,7 @@
  */
 ?>
 <div class="recommended-material <?php print $classes; ?>"<?php print $attributes; ?>>
-  <a href="<?php print $link; ?>" target="_blank">
+  <a href="<?php print $link; ?>">
     <div class="recommended-material__wrapper">
       <?php print render($cover); ?>
       <div class="recommended-material__details">

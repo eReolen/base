@@ -60,3 +60,10 @@ function ereol_inspiration_update_7107() {
 function ereol_inspiration_update_7108() {
   module_enable(array('reol_audio_preview_paragraph'), TRUE);
 }
+
+/**
+ * Enable reol_author_quote_paragraph.
+ */
+function ereol_inspiration_update_7109() {
+  module_enable(array('reol_author_quote_paragraph'), TRUE);
+}

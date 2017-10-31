@@ -92,13 +92,13 @@ body {
   background: #f0f0f0;
 }
 
-@media all and (max-width: 49rem) {
+@media all and (max-width: 49em) {
   .desktop-only {
     display: none !important;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .mobile-only {
     display: none !important;
   }
@@ -137,7 +137,7 @@ body {
   position: relative;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-wrapper, .page-search-ting .pane-page-content {
     margin: 0 auto;
     padding: 0 3.75rem;
@@ -149,14 +149,14 @@ body {
   width: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .content-wrapper {
     margin: 0 auto;
     padding: 0 3.75rem;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .pane-node-content {
     padding: 2rem 0 0;
   }
@@ -190,7 +190,7 @@ body {
   src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .topbar .pane-search-form {
     -webkit-box-ordinal-group: 5;
     -ms-flex-order: 4;
@@ -198,7 +198,7 @@ body {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .topbar #header {
     -webkit-box-ordinal-group: 2;
     -ms-flex-order: 1;
@@ -429,14 +429,14 @@ div.messages {
   border: 1px solid #dcdcdc;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   div.messages {
     margin: 0 auto;
     padding: 0 3.75rem;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   div.messages {
     margin: 1rem auto;
     padding: 2rem;
@@ -536,7 +536,7 @@ div.messages ul {
   cursor: pointer;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .btn, .action-button {
     width: auto;
     display: inline-block;
@@ -759,7 +759,7 @@ div.messages ul {
   opacity: 0.6;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
     top: 15px;
     right: 15px;
@@ -774,7 +774,7 @@ div.messages ul {
   font-size: 22px;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .ui-dialog {
     min-width: 600px;
   }
@@ -938,9 +938,10 @@ div.messages ul {
 .overlay-icons {
   position: absolute;
   width: 100%;
-  top: 20px;
-  padding-right: 20px;
+  top: 1rem;
+  padding-right: 1rem;
   text-align: right;
+  line-height: 2rem;
 }
 
 .overlay-icons .icon::before {
@@ -953,13 +954,13 @@ div.messages ul {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  padding: 10px;
+  padding: .5rem;
   background-color: white;
   border-radius: 50%;
   border: 1px solid #eee;
   color: #787878;
-  font-size: 16px;
-  margin-left: .5em;
+  font-size: 1rem;
+  margin-left: .5rem;
 }
 
 .overlay-icons .ebook::before {
@@ -1097,7 +1098,7 @@ div.messages ul {
   text-align: center;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .pane-menu-block-main-menu {
     width: 75%;
     display: inline-block;
@@ -1108,13 +1109,13 @@ div.messages ul {
   overflow: hidden;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .topbar {
     height: 80px;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .topbar__inner {
     max-width: 1200px;
     width: 100%;
@@ -1122,7 +1123,7 @@ div.messages ul {
   }
 }
 
-@media all and (min-width: 49rem) and (min-width: 49rem) {
+@media all and (min-width: 49em) and (min-width: 49em) {
   .topbar__inner {
     margin: 0 auto;
     padding: 0 3.75rem;
@@ -1137,7 +1138,7 @@ div.messages ul {
   height: 5rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .branding {
     width: 9%;
     float: left;
@@ -1175,7 +1176,7 @@ div.messages ul {
   display: flex;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .menu-name-main-menu ul {
     display: inline-block;
     margin: 0 auto;
@@ -1205,7 +1206,7 @@ div.messages ul {
   padding: 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .menu-name-main-menu li a {
     color: #505050;
     font-weight: 700;
@@ -1219,7 +1220,7 @@ div.messages ul {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .menu-name-main-menu li {
     height: 100%;
     display: inline-block;
@@ -1229,7 +1230,7 @@ div.messages ul {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .menu-name-main-menu {
     background-color: transparent;
   }
@@ -1280,7 +1281,7 @@ div.messages ul {
   margin: 0 auto;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .footer__inner {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1303,7 +1304,7 @@ div.messages ul {
   padding: 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .footer ul {
     display: block;
   }
@@ -1315,7 +1316,7 @@ div.messages ul {
   margin: 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .footer ul li {
     display: block !important;
   }
@@ -1329,7 +1330,7 @@ div.messages ul {
   padding: 1rem 2rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .footer .panel-pane {
     -webkit-box-flex: 1;
     -ms-flex: 1;
@@ -1347,7 +1348,7 @@ div.messages ul {
   padding: 2rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .footer .pane-title {
     border-top: none;
   }
@@ -1469,7 +1470,7 @@ fieldset {
   margin-top: -.5rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   fieldset:nth-child(odd) {
     background-color: #eaeaea;
   }
@@ -1549,7 +1550,7 @@ fieldset {
   border-bottom: 1px solid #cfcfcf;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .facets-trigger-wrapper {
     display: none;
   }
@@ -1560,7 +1561,7 @@ fieldset {
   background-color: #f0f0f0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-search-ting .panel-col-first .inside {
     display: block;
   }
@@ -1602,7 +1603,7 @@ fieldset {
   top: 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .pane-search-form {
     position: relative;
     height: auto;
@@ -1616,7 +1617,7 @@ fieldset {
   font-family: "SourceSansPro", sans-serif;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-search .search-form {
     background-color: #b81b40;
   }
@@ -1654,7 +1655,7 @@ fieldset {
   font-size: 2rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .search-form__icon__wrapper::before {
     color: #ffffff;
     font-size: 1.5rem;
@@ -1670,7 +1671,7 @@ fieldset {
   z-index: 1;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .search-form__icon__wrapper.open {
     height: 2rem;
     left: calc(50% - 1rem);
@@ -1686,7 +1687,7 @@ fieldset {
   right: 1.3rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .search-form__icon__wrapper.open::before {
     position: relative;
     font-size: 1rem;
@@ -1695,7 +1696,7 @@ fieldset {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .search-form__icon__wrapper {
     background: #b81b40;
     display: block;
@@ -1723,14 +1724,14 @@ fieldset {
   width: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .search-form__content {
     max-width: 1440px;
     position: relative;
   }
 }
 
-@media all and (min-width: 49rem) and (min-width: 49rem) {
+@media all and (min-width: 49em) and (min-width: 49em) {
   .search-form__content {
     margin: 0 auto;
     padding: 0 3.75rem;
@@ -1742,7 +1743,7 @@ fieldset {
   z-index: 1;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-search .search-form__content {
     height: auto;
     padding: 1.2rem;
@@ -1768,7 +1769,7 @@ fieldset {
   font-size: 1.5rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-search .search-form__content .form-item-search-block-form::before {
     top: 21px;
     color: white;
@@ -1789,7 +1790,7 @@ fieldset {
   width: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .search-form__input--text {
     padding: 0 1.875rem;
   }
@@ -1799,7 +1800,7 @@ fieldset {
   padding-left: 3rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-search .search-form__input--text {
     height: auto;
     background: #b81b40;
@@ -1826,7 +1827,7 @@ fieldset {
   width: 2rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .search-form__icon--close {
     right: auto;
     left: calc(50% - 1rem);
@@ -1851,7 +1852,7 @@ fieldset {
   top: .5rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .search-form {
     border-top: 1px solid #d8d8d8;
   }
@@ -1869,14 +1870,14 @@ html.js input.form-autocomplete {
   padding: 0 2rem;
 }
 
-@media all and (max-width: 49rem) {
+@media all and (max-width: 49em) {
   .page-search-ting .panel-col-first {
     width: 100%;
     background-color: rgba(250, 250, 250, 0.9);
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-search-ting .panel-col-first {
     padding-top: 3.5rem;
     padding-bottom: 3.5rem;
@@ -1886,7 +1887,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 65rem) {
+@media all and (min-width: 65em) {
   .page-search-ting .panel-col-first {
     width: 410px;
   }
@@ -1896,7 +1897,7 @@ html.js input.form-autocomplete {
   width: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-search-ting .panel-col-last {
     width: auto;
     padding-left: 3.5rem;
@@ -1915,7 +1916,7 @@ html.js input.form-autocomplete {
   display: none;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-search-ting .page-title {
     display: block;
   }
@@ -1971,7 +1972,7 @@ html.js input.form-autocomplete {
   height: 5rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .user-login {
     height: 5rem;
   }
@@ -2040,7 +2041,7 @@ html.js input.form-autocomplete {
   top: 31px;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .notifications__count {
     top: 19px;
   }
@@ -2052,7 +2053,7 @@ html.js input.form-autocomplete {
   left: 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .pane-reol-profile-link {
     float: right;
     position: relative;
@@ -2103,7 +2104,7 @@ html.js input.form-autocomplete {
   padding: 2rem 2rem 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article__content {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2122,7 +2123,7 @@ html.js input.form-autocomplete {
   text-align: center;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article__title {
     width: 100%;
     -webkit-box-ordinal-group: 2;
@@ -2147,7 +2148,7 @@ html.js input.form-autocomplete {
   color: #505050;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article__byline__date {
     display: block;
     float: none;
@@ -2158,14 +2159,14 @@ html.js input.form-autocomplete {
   float: right;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article__byline__author {
     display: block;
     float: none;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article__byline {
     padding-right: 3.5rem;
     -webkit-box-ordinal-group: 3;
@@ -2179,7 +2180,7 @@ html.js input.form-autocomplete {
   padding-bottom: 3.5rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article__body {
     -webkit-box-ordinal-group: 4;
     -ms-flex-order: 3;
@@ -2206,7 +2207,7 @@ html.js input.form-autocomplete {
   object-position: top;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article__image {
     padding: 0;
     margin-bottom: 5rem;
@@ -2227,14 +2228,14 @@ html.js input.form-autocomplete {
   border: 0;
 }
 
-@media all and (min-width: 65rem) {
+@media all and (min-width: 65em) {
   .article__materials .view-mode-teaser {
     width: 83%;
     float: right;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article__materials {
     padding: 2rem 0;
   }
@@ -2269,7 +2270,7 @@ html.js input.form-autocomplete {
   text-align: left;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--teaser__title {
     max-width: 100%;
     margin: 0 0 1.2rem;
@@ -2286,7 +2287,7 @@ html.js input.form-autocomplete {
   line-height: 1.4rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--teaser__body {
     display: block;
   }
@@ -2316,13 +2317,13 @@ html.js input.form-autocomplete {
   box-shadow: 11px -1px 28px -13px rgba(0, 0, 0, 0.75);
 }
 
-@media all and (min-width: 20rem) {
+@media all and (min-width: 20em) {
   .article--teaser__covers img:nth-child(1) {
     height: 335px;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--teaser__covers img:nth-child(1) {
     -webkit-transform: translate(59%, 0%) rotate(0deg) scale(1);
     -ms-transform: translate(59%, 0%) rotate(0deg) scale(1);
@@ -2345,13 +2346,13 @@ html.js input.form-autocomplete {
   z-index: 1;
 }
 
-@media all and (min-width: 20rem) {
+@media all and (min-width: 20em) {
   .article--teaser__covers img:nth-child(2) {
     height: 229px;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--teaser__covers img:nth-child(2) {
     -webkit-transform: translate(0%, 39%) rotate(0deg) scale(1);
     -ms-transform: translate(0%, 39%) rotate(0deg) scale(1);
@@ -2398,20 +2399,20 @@ html.js input.form-autocomplete {
   float: right;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--teaser__read-more {
     display: block;
   }
 }
 
-@media all and (min-width: 20rem) {
+@media all and (min-width: 20em) {
   .article--teaser {
     height: 475px;
     padding: 2rem;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--teaser__left, .article--teaser__right {
     float: left;
     width: 50%;
@@ -2423,7 +2424,7 @@ html.js input.form-autocomplete {
   padding: 0 2rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--teaser__info {
     height: 100%;
     display: -webkit-box;
@@ -2472,7 +2473,7 @@ html.js input.form-autocomplete {
   object-position: top;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--teaser__cover {
     height: 475px;
   }
@@ -2508,7 +2509,7 @@ html.js input.form-autocomplete {
   margin-top: calc(50% - 3rem);
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--search-result__title {
     margin: 0;
   }
@@ -2523,7 +2524,7 @@ html.js input.form-autocomplete {
   object-position: top;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--search-result__cover {
     padding-right: 3.5rem;
   }
@@ -2539,7 +2540,7 @@ html.js input.form-autocomplete {
   padding: 0 0 0 2rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .article--search-result__info__inner {
     padding: 1.5rem 0 0;
   }
@@ -2615,7 +2616,7 @@ html.js input.form-autocomplete {
   content: "";
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .ding-carousel .slick-arrow {
     bottom: 90px;
   }
@@ -2625,13 +2626,13 @@ html.js input.form-autocomplete {
   padding-right: 32px;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .ding-carousel-item {
     padding-right: 40px;
   }
 }
 
-@media all and (min-width: 65rem) {
+@media all and (min-width: 65em) {
   .ding-carousel-item {
     padding-right: 60px;
   }
@@ -2670,7 +2671,7 @@ html.js input.form-autocomplete {
   border-bottom: 1px solid #cfcfcf;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material {
     margin: 2rem 0;
     padding: 0 0 2rem;
@@ -2683,7 +2684,7 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 23rem) {
+@media all and (min-width: 23em) {
   .material__cover {
     width: 50%;
     margin-bottom: 0;
@@ -2693,7 +2694,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__cover {
     width: 33.33333%;
     padding-right: 2.5rem;
@@ -2704,7 +2705,7 @@ html.js input.form-autocomplete {
   width: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__cover--teaser {
     width: 25%;
     padding-right: 0;
@@ -2717,7 +2718,7 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 23rem) {
+@media all and (min-width: 23em) {
   .material__content {
     padding-left: 2rem;
     width: 50%;
@@ -2725,14 +2726,14 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__content {
     padding-left: 3.5rem;
     width: 66.66667%;
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__content--teaser {
     width: 75%;
   }
@@ -2771,7 +2772,7 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__abstract {
     display: block;
   }
@@ -2782,7 +2783,7 @@ html.js input.form-autocomplete {
   margin: 2rem 0 1.2rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__subjects {
     display: block;
   }
@@ -2816,7 +2817,7 @@ html.js input.form-autocomplete {
   line-height: 1.3rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__series {
     width: 100%;
     margin-top: 0;
@@ -2838,7 +2839,7 @@ html.js input.form-autocomplete {
   margin-right: 1rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__buttons {
     float: left;
     width: 33.33333%;
@@ -2876,7 +2877,7 @@ html.js input.form-autocomplete {
   width: 100%;
 }
 
-@media all and (max-width: 49rem) {
+@media all and (max-width: 49em) {
   .material__details > h2,
   .material__details .ting-relations__title h2,
   .material__details .field-group-format-title,
@@ -2913,7 +2914,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 23rem) {
+@media all and (min-width: 23em) {
   .material__details > h2,
   .material__details .ting-relations__title h2,
   .material__details .field-group-format-title,
@@ -2927,7 +2928,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__details > h2,
   .material__details .ting-relations__title h2,
   .material__details .field-group-format-title,
@@ -2941,7 +2942,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__details > h2,
   .material__details .ting-relations__title,
   .material .group-material-details > h2,
@@ -2962,7 +2963,7 @@ html.js input.form-autocomplete {
   padding: 2rem 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .material__details .field-group-format-wrapper,
   .material__details .ting-relations__content,
   .material .group-material-details .field-group-format-wrapper,
@@ -2981,7 +2982,7 @@ html.js input.form-autocomplete {
   text-align: left;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .action-button {
     max-width: 47%;
   }
@@ -3006,7 +3007,7 @@ html.js input.form-autocomplete {
   margin: .5rem 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .detail .article--search-result {
     margin: 1.5rem 0 2rem;
   }
@@ -3085,7 +3086,7 @@ html.js input.form-autocomplete {
   display: none;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .ting-object.view-mode-compact .group-overlay {
     display: block;
   }
@@ -3120,13 +3121,13 @@ html.js input.form-autocomplete {
   margin-top: 10px;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .ting-object.view-mode-compact {
     width: 186px;
   }
 }
 
-@media all and (min-width: 65rem) {
+@media all and (min-width: 65em) {
   .ting-object.view-mode-compact {
     width: 225px;
   }
@@ -3166,7 +3167,7 @@ html.js input.form-autocomplete {
   margin: -20px;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .spotlight-box {
     margin: 0 auto;
     padding: 0 3.75rem;
@@ -3190,7 +3191,7 @@ html.js input.form-autocomplete {
   flex-wrap: wrap;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .spotlight-box__top,
   .spotlight-box__middle,
   .spotlight-box__bottom {
@@ -3212,7 +3213,7 @@ html.js input.form-autocomplete {
   flex-basis: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .spotlight-box__top {
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
@@ -3254,7 +3255,7 @@ html.js input.form-autocomplete {
   order: 2;
 }
 
-@media all and (min-width: 23rem) {
+@media all and (min-width: 23em) {
   .spotlight-box__middle__item_1,
   .spotlight-box__middle__item_3 {
     -ms-flex-preferred-size: 50%;
@@ -3262,7 +3263,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .spotlight-box__middle__item_1 {
     -ms-flex-preferred-size: 33.33333%;
     flex-basis: 33.33333%;
@@ -3291,7 +3292,7 @@ html.js input.form-autocomplete {
   flex-basis: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .spotlight-box__bottom__item {
     -ms-flex-preferred-size: 50%;
     flex-basis: 50%;
@@ -3336,7 +3337,7 @@ html.js input.form-autocomplete {
   flex-wrap: wrap;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-user .layout-wrapper {
     margin: 0 auto;
     padding: 0 3.75rem;
@@ -3348,7 +3349,7 @@ html.js input.form-autocomplete {
   flex-basis: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-user .layout-wrapper .primary-content {
     -ms-flex-preferred-size: 75%;
     flex-basis: 75%;
@@ -3363,7 +3364,7 @@ html.js input.form-autocomplete {
   flex-basis: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-user .layout-wrapper .secondary-content {
     -ms-flex-preferred-size: 25%;
     flex-basis: 25%;
@@ -3385,7 +3386,7 @@ html.js input.form-autocomplete {
   padding: 1rem 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-user h2,
   .page-user h3 {
     font-size: 2.1rem;
@@ -3421,7 +3422,7 @@ html.js input.form-autocomplete {
   flex-wrap: wrap;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-user .material-item {
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
@@ -3433,7 +3434,7 @@ html.js input.form-autocomplete {
   flex-basis: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-user .material-item .left-column {
     -ms-flex-preferred-size: 300px;
     flex-basis: 300px;
@@ -3448,7 +3449,7 @@ html.js input.form-autocomplete {
   flex-basis: 100%;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page-user .material-item .right-column {
     -ms-flex-preferred-size: 75%;
     flex-basis: 75%;
@@ -3818,7 +3819,7 @@ html.js input.form-autocomplete {
   font-family: "SourceSansProLight", sans-serif;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .review .review__wrapper {
     padding: 30px;
   }
@@ -3921,7 +3922,7 @@ html.js input.form-autocomplete {
   padding: 2rem 2rem 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .faq-content {
     margin: 0 auto;
     padding: 0 3.75rem;
@@ -4018,7 +4019,7 @@ html.js input.form-autocomplete {
   width: auto;
 }
 
-@media all and (min-width: 23rem) {
+@media all and (min-width: 23em) {
   .recommended-material__wrapper .field-type-ting-cover {
     min-width: 130px;
   }
@@ -4135,7 +4136,7 @@ html.js input.form-autocomplete {
   width: auto;
 }
 
-@media all and (min-width: 23rem) {
+@media all and (min-width: 23em) {
   .audio-preview .field-type-ting-cover {
     min-width: 130px;
   }
@@ -4144,7 +4145,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .audio-preview .field-type-ting-cover {
     -webkit-box-ordinal-group: 1;
     -ms-flex-order: 0;
@@ -4172,7 +4173,7 @@ html.js input.form-autocomplete {
   justify-content: space-between;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .audio-preview__details {
     padding-right: 0;
     padding-left: 40px;
@@ -4267,7 +4268,7 @@ html.js input.form-autocomplete {
   margin-top: 30px;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .audio-preview__progress {
     height: 2px;
   }
@@ -4311,7 +4312,7 @@ html.js input.form-autocomplete {
   padding: 2rem 2rem 0;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page__content {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4330,7 +4331,7 @@ html.js input.form-autocomplete {
   text-align: center;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page__title {
     width: 100%;
     -webkit-box-ordinal-group: 2;
@@ -4346,7 +4347,7 @@ html.js input.form-autocomplete {
   padding-bottom: 3.5rem;
 }
 
-@media all and (min-width: 49rem) {
+@media all and (min-width: 49em) {
   .page__body {
     -webkit-box-ordinal-group: 2;
     -ms-flex-order: 1;
@@ -4356,6 +4357,83 @@ html.js input.form-autocomplete {
 
 .page__body img {
   margin: 2rem 0;
+}
+
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+.author-quote a {
+  text-decoration: none;
+  color: black;
+}
+
+.author-quote__wrapper {
+  position: relative;
+  padding: 40px;
+  background-color: #5f7f9f;
+  color: white;
+  min-height: 175px;
+}
+
+.author-quote__wrapper .overlay-icons {
+  right: 0;
+}
+
+.author-quote__wrapper .author-quote__author {
+  text-transform: uppercase;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  margin-bottom: 1rem;
+}
+
+.author-quote__wrapper .author-quote__quote {
+  font-family: "SourceSansProLight", sans-serif;
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.author-quote__wrapper .author-quote__quote::before {
+  content: '\201C';
+}
+
+.author-quote__wrapper .author-quote__quote::after {
+  content: '\201D';
+}
+
+.author-quote__wrapper .author-quote__attribution {
+  font-family: "SourceSansPro", sans-serif;
+}
+
+.author-quote__wrapper .author-quote__attribution q::before {
+  content: '\201C';
+}
+
+.author-quote__wrapper .author-quote__attribution q::after {
+  content: '\201D';
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */

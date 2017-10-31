@@ -3,32 +3,35 @@
 
 $grid-columns: 12;
 
+// Using ems for media queries, as they're the most consistent:
+// https://zellwk.com/blog/media-query-units/
+
 $xsmall: (
   columns: $grid-columns,
   gutter: 0px,
-  media: 'all and (min-width: 20rem)',
+  media: 'all and (min-width: 20em)',
 );
 
 $small: (
   columns: $grid-columns,
   gutter: 0px,
-  media: 'all and (min-width: 23rem)',
+  media: 'all and (min-width: 23em)',
 );
 
 $medium: (
   columns: $grid-columns,
   gutter: 0px,
-  media: 'all and (min-width: 49rem)',
+  media: 'all and (min-width: 49em)',
 );
 
 $large: (
   columns: $grid-columns,
   gutter: 0px,
-  media: 'all and (min-width: 65rem)',
+  media: 'all and (min-width: 65em)',
 );
 
 $mobile-only: (
   columns: $grid-columns,
   gutter: 0px,
-  media: 'all and (max-width: 49rem)',
+  media: 'all and (max-width: 49em)',
 );

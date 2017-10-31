@@ -218,3 +218,14 @@
     }
   }
 }
+
+// Class for quoting an element with the proper quotes.
+@mixin quoted() {
+  &::before {
+    content: '\201C';
+  }
+
+  &::after {
+    content: '\201D';
+  }
+}
