@@ -30,7 +30,8 @@ function reol_audio_preview_paragraph_preprocess_entity(&$variables) {
 
         $build = ting_object_view($ting_entity, 'compact');
         // For some reason this is an array.
-        $variables['isbn'] = reset($ting_entity->getIsbn());
+        list($isbn,) = $ting_entity->getIsbn();
+        $variables['isbn'] = $isbn;
         $variables['cover'] = $build['ting_cover'];
         $variables['author'] = $build['ting_author'];
         $variables['title'] = $build['ting_title'];
