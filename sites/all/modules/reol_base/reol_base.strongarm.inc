@@ -321,6 +321,13 @@ nonGoogleIframes';
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'ting_cache_lifetime';
+  $strongarm->value = 86400;
+  $export['ting_cache_lifetime'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'ting_online_types';
   $strongarm->value = array();
   $export['ting_online_types'] = $strongarm;
