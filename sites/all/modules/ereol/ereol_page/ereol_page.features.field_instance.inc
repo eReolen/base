@@ -10,8 +10,8 @@
 function ereol_page_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-ereol_page-body'.
-  $field_instances['node-ereol_page-body'] = array(
+  // Exported field_instance: 'node-ereol_page-field_ereol_page_body'.
+  $field_instances['node-ereol_page-field_ereol_page_body'] = array(
     'bundle' => 'ereol_page',
     'default_value' => NULL,
     'deleted' => 0,
@@ -22,24 +22,20 @@ function ereol_page_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'teaser' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_summary_or_trimmed',
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'body',
+    'field_name' => 'field_ereol_page_body',
     'label' => 'Body',
     'required' => 0,
     'settings' => array(
-      'display_summary' => 1,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
@@ -48,10 +44,9 @@ function ereol_page_field_default_field_instances() {
       'module' => 'text',
       'settings' => array(
         'rows' => 20,
-        'summary_rows' => 5,
       ),
-      'type' => 'text_textarea_with_summary',
-      'weight' => 1,
+      'type' => 'text_textarea',
+      'weight' => 2,
     ),
   );
 
