@@ -9,7 +9,7 @@
  * Update body field.
  */
 function ereol_page_update_7101() {
-  features_revert(array('ereol_page' => array('field_instance')));
+  features_revert(array('ereol_page' => array('field_instance', 'variable')));
   $query = new EntityFieldQuery();
 
   $result = $query->entityCondition('entity_type', 'node')
@@ -23,11 +23,16 @@ function ereol_page_update_7101() {
   $nodes = node_load_multiple(array_keys($result['node']));
   foreach ($nodes as $node) {
     $wrapper = entity_metadata_wrapper('node', $node);
-    $wrapper->field_ereol_page_body = $wrapper->body->value();
+    $value = $wrapper->body->value();
+    // Prepend any summary to the body.
+    $value['value'] = $value['summary'] . $value['value'];
+    unset($value['summary'], $value['safe_summary']);
+    $wrapper->field_ereol_page_body = $value;
     node_save($node);
   }
 
   if ($instance = field_info_instance('node', 'body', 'ereol_page')) {
     field_delete_instance($instance);
   }
+  die();
 }
