@@ -966,7 +966,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
         'weight' => 1,
       ),
       'review' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'reol_base',
         'type' => 'reol_base_author_plain',
         'weight' => 2,

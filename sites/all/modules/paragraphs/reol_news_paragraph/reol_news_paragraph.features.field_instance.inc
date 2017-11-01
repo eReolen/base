@@ -24,7 +24,7 @@ function reol_news_paragraph_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'reol_news_paragraph',
         'settings' => array(),
         'type' => 'reol_news_paragraph_carousel',

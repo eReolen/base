@@ -1,53 +1,66 @@
 @import 'bootstrap/bootstrap';
 
-.ding-carousel .slick-arrow {
-  background: $page-bg;
-  border: 1px solid $color__border-gray--light;
-  border-radius: 1px;
-  font-size: 0;
-  padding: .75rem;
-  position: absolute;
-  bottom: 30px;
-  // Ensure that buttons is above the carousel.
-  z-index: 1;
-
-  &::before {
-    @include icon;
-    color: $color__dark;
-    font-size: .75rem;
-    text-indent: 0;
-  }
-
-  &.slick-prev {
-    left: 30px;
-
-    &::before {
-      content: $icon__arrow-left;
-    }
-  }
-
-  &.slick-next {
-    right: 30px;
-
-    &::before {
-      content: $icon__arrow-right;
-    }
-  }
+.ding-carousel {
+  padding: 10px 0;
 
   @include grid-media($medium) {
-    // Move up on non-mobile to account for the author and title.
-    bottom: 90px;
+    padding: 20px 0;
+  }
+
+  .slick-arrow {
+    background: $page-bg;
+    border: 1px solid $color__border-gray--light;
+    border-radius: 1px;
+    font-size: 0;
+    padding: .75rem;
+    position: absolute;
+    bottom: 30px;
+    // Ensure that buttons is above the carousel.
+    z-index: 1;
+    // But don't display per default (mobile first). And we have to use
+    // important because Slick sets the display on the element.
+    display: none !important;
+
+    &::before {
+      @include icon;
+      color: $color__dark;
+      font-size: .75rem;
+      text-indent: 0;
+    }
+
+    &.slick-prev {
+      left: 30px;
+
+      &::before {
+        content: $icon__arrow-left;
+      }
+    }
+
+    &.slick-next {
+      right: 30px;
+
+      &::before {
+        content: $icon__arrow-right;
+      }
+    }
+
+    @include grid-media($medium) {
+      // Move up on non-mobile to account for the author and title.
+      bottom: 90px;
+      // Show arrows on larger sizes.
+      display: inline-block !important;
+    }
   }
 }
 
 .ding-carousel-item {
-  padding-right: 32px;
+  padding-left: 20px;
 
   @include grid-media($medium) {
-    padding-right: 40px;
+    padding-left: 40px;
   }
 
   @include grid-media($large) {
-    padding-right: 60px;
+    padding-left: 60px;
   }
 }

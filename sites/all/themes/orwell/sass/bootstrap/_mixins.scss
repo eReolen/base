@@ -180,11 +180,11 @@
 
 // Common sizes for covers in boxes (recommendation/audio-preview).
 @mixin box-cover() {
-  min-width: 190px;
+  min-width: 95px;
 
   img {
     vertical-align: middle;
-    height: 270px;
+    height: 135px;
     width: auto;
   }
 
@@ -197,23 +197,28 @@
   }
 }
 
-@mixin fadeout-box($line-height, $lines, $sub-element, $color) {
-  font-size: $line-height;
-  max-height: $line-height * ($lines + 1);
+@mixin fadeout-box($font-size, $lines, $sub-element, $color) {
+  font-size: $font-size;
   overflow: hidden;
   position: relative;
 
   #{$sub-element} {
-    height: $line-height * $lines;
+    // Set the max number of lines shown.
+    max-height: $font-size * $lines;
+    // Shift everything up a bit to avoid clipping descenders.
+    padding-bottom: .1rem;
 
+    // Position a fading ::after at the top of the last line. As it's
+    // positioned absolute, it doesn't affect the size of it's parent.
+    // If there's not enough lines to warrant a fade, it wont cover any.
     &::after {
       content: '';
       text-align: right;
       position: absolute;
-      bottom: 0;
+      top: $font-size * ($lines - 1);
       right: 0;
       width: 100%;
-      height: $line-height;
+      height: $font-size;
       background: linear-gradient(to bottom, rgba($color, 0), rgba($color, 1) 50%);
     }
   }
@@ -222,10 +227,10 @@
 // Class for quoting an element with the proper quotes.
 @mixin quoted() {
   &::before {
-    content: '\201C';
+    content: $quote__start;
   }
 
   &::after {
-    content: '\201D';
+    content: $quote__end;
   }
 }

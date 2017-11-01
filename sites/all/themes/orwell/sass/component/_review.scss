@@ -10,57 +10,76 @@
   }
 
   .review__wrapper {
-    padding: 40px;
+    padding: $padding__default;
     background-color: $color__gray-darker;
     display: flex;
     flex-flow: row nowrap;
   }
 
-  // Hide the cover for desktop per default.
   .review__content {
     flex: 1 1 100%;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
 
+    // Hide the cover for desktop per default.
     .field-name-ting-cover {
       display: none;
     }
   }
 
   .field-name-ting-cover {
-    height: 280px;
-    margin-right: 40px;
+    height: 140px;
+    margin-right: $gutter__default;
     flex: none;
+
+    @include grid-media($medium) {
+      height: 280px;
+      margin-right: $gutter__medium;
+    }
 
     img {
       width: auto;
       max-width: inherit;
-      max-height: 280px;
+      max-height: 140px;
+
+      @include grid-media($medium) {
+        max-height: 280px;
+      }
     }
   }
 
   .review__head,
   .review__meta {
     flex: 1 1 50%;
+    color: $color__font-gray--dark;
   }
 
   .review__meta {
-    // Layout the items from the end.
     display: flex;
     flex-flow: column nowrap;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
-
 
   h4 {
     text-transform: uppercase;
     font-family: $font-semibold;
-    margin-bottom: 1rem;
+    margin-top: .2rem;
+    margin-bottom: .5rem;
+    font-size: .9rem;
+
+    @include grid-media($medium) {
+      font-size: 1rem;
+    }
   }
 
   .review__subhead {
     font-family: $font-regular;
+    font-size: .7rem;
+
+    @include grid-media($medium) {
+      font-size: 1rem;
+    }
 
     .review__highlight {
       color: $color__red;
@@ -69,19 +88,21 @@
 
   .field-name-ting-title {
     font-family: $font-light;
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    margin-bottom: .5rem;
   }
 
   .field-name-ting-author {
     font-family: $font-light;
+    font-size: .8rem;
+    color: $color__font-gray;
+    margin-bottom: .5rem;
   }
-
-
 
   @include grid-media($medium) {
 
     .review__wrapper {
-      padding: 30px;
+      padding: $padding__medium;
     }
 
     // Hide the mobile cover.

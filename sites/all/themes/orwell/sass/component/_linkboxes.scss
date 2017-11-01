@@ -8,15 +8,24 @@
   }
 
   .linkbox__container {
-    height: 250px;
+    height: 125px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include grid-media($medium) {
+      height: 250px;
+    }
   }
 
   .linkbox__content {
     font-family: $font-regular;
     font-weight: bold;
     text-transform: uppercase;
+    font-size: .7em;
+
+    @include grid-media($medium) {
+      font-size: 1rem;
+    }
   }
 }

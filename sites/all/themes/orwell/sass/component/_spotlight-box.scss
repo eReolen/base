@@ -1,20 +1,42 @@
 
 .spotlight-box {
   @include content-wrapper;
-  // Cancel out the outer padding of the items.
-  margin: -20px;
+
+  // Half of the outer padding comes from here, the other half from
+  // the items.
+  padding: $padding__default / 2;
+
+  @include grid-media($medium) {
+    // No outer side padding in larger sizes.
+    padding: ($padding__medium / 2) 0;
+  }
 }
 
-// Rather than setting the padding of the item, set the margin of the
-// contained element(s). IE always uses box-sizing: content-box for
-// flex items, causing it to miscalculate the widths when there's a
-// padding/border. Adding the needed space as margin to the contained
-// element makes it able to calculate the proper width.
-.spotlight-box__top__primary > *,
-.spotlight-box__top__secondary > *,
-.spotlight-box__middle__item > *,
-.spotlight-box__bottom__item > * {
-  margin: 20px;
+// IE always uses box-sizing: content-box for flex items, causing it
+// to miscalculate the widths when there's a padding/border. Adding
+// the needed space as margin to the contained element makes it able
+// to calculate the proper width.
+.spotlight-box__item {
+  margin: $gutter__default / 2;
+
+  @include grid-media($medium) {
+    margin: $gutter__medium / 2;
+  }
+}
+
+// Remove the outer right and left margins in desktop mode.
+@include grid-media($medium) {
+  .spotlight-box__top__primary .spotlight-box__item,
+  .spotlight-box__middle__item_1 .spotlight-box__item,
+  .spotlight-box__bottom__item_1 .spotlight-box__item {
+    margin-left: 0;
+  }
+
+  .spotlight-box__top__secondary .spotlight-box__item,
+  .spotlight-box__middle__item_3 .spotlight-box__item,
+  .spotlight-box__bottom__item_2 .spotlight-box__item {
+    margin-right: 0;
+  }
 }
 
 .spotlight-box__top,
@@ -77,6 +99,7 @@
   flex-basis: 100%;
   order: 2;
 }
+
 // Item 1 and 2 at half width, 2 at full.
 @include grid-media($small) {
   .spotlight-box__middle__item_1,
@@ -92,7 +115,6 @@
     order: 1;
   }
 
-
   .spotlight-box__middle__item_2 {
     flex-basis: percentage(1 / 3);
     order: 2;
@@ -105,13 +127,15 @@
 }
 
 // Full width on small screens.
-.spotlight-box__bottom__item {
+.spotlight-box__bottom__item_1,
+.spotlight-box__bottom__item_2 {
   flex-basis: 100%;
 }
 
 // Side by side on bigger.
 @include grid-media($medium) {
-  .spotlight-box__bottom__item {
+  .spotlight-box__bottom__item_1,
+  .spotlight-box__bottom__item_2 {
     flex-basis: percentage(1 / 2);
   }
 }

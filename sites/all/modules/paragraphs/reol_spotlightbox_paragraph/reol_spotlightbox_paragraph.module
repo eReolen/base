@@ -6,3 +6,69 @@
  */
 
 include_once 'reol_spotlightbox_paragraph.features.inc';
+
+/**
+ * Implements hook_theme().
+ */
+function reol_spotlightbox_paragraph_theme() {
+  return array(
+    'spotlight_box' => array(
+      'template' => 'templates/spotlight_box',
+      'variables' => array(
+        'row1' => array(),
+        'row2' => array(),
+        'row3' => array(),
+      ),
+    ),
+    'spotlight_box_item' => array(
+      'template' => 'templates/spotlight_box_item',
+      'variables' => array('content' => NULL),
+    ),
+  );
+}
+
+/**
+ * Template preprocessor for entities.
+ */
+function reol_spotlightbox_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'spotlight_box') {
+      // Definition of rows. The index in the row array is the number of items
+      // to attempt to get from reach field.
+      $fields = array(
+        'row1' => array(
+          1,
+          'field_spotlight_primary',
+          'field_spotlight_secondary',
+        ),
+        'row2' => array(
+          3,
+          'field_spotlight_row_2',
+        ),
+        'row3' => array(
+          2,
+          'field_spotlight_row_3',
+        ),
+      );
+
+      $vars = array();
+      foreach ($fields as $row_name => $row_fields) {
+        $indexes = array_shift($row_fields);
+        $row = array();
+        foreach ($row_fields as $field) {
+          for ($index = 0; $index < $indexes; $index++) {
+            $box = '';
+            if (isset($variables['content'][$field][$index])) {
+              $box = drupal_render($variables['content'][$field][$index]);
+            }
+            $row[] = theme('spotlight_box_item', array('content' => $box));
+          }
+        }
+        $vars[$row_name] = $row;
+      }
+
+      // Replace content.
+      $variables['content'] = theme('spotlight_box', $vars);
+    }
+  }
+}
