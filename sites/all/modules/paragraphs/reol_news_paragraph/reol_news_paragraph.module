@@ -132,6 +132,7 @@ function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta,
   );
 
   if (isset($items[$delta])) {
+    $build = array();
     $item = $items[$delta];
     $articles = _reol_news_paragraph_get_articles($item['value']);
     foreach ($articles as $article) {
