@@ -643,17 +643,17 @@ div.messages ul {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.5rem;
   color: #787878;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   border-top: 1px solid #cfcfcf;
   padding-top: 1.5rem;
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
 }
 
 .text h4 {
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   color: #505050;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .text a {
