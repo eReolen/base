@@ -2635,6 +2635,27 @@ html.js input.form-autocomplete {
   }
 }
 
+.ding-carousel .carousel__header {
+  font-family: "SourceSansProLight", sans-serif;
+  font-size: 1.5rem;
+  color: #787878;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-left: 20px;
+}
+
+@media all and (min-width: 49em) {
+  .ding-carousel .carousel__header {
+    margin-left: 40px;
+  }
+}
+
+@media all and (min-width: 65em) {
+  .ding-carousel .carousel__header {
+    margin-left: 60px;
+  }
+}
+
 .ding-carousel-item {
   padding-left: 20px;
 }

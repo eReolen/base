@@ -51,6 +51,19 @@
       display: inline-block !important;
     }
   }
+
+  .carousel__header {
+    @include base-header;
+    margin-left: 20px;
+
+    @include grid-media($medium) {
+      margin-left: 40px;
+    }
+
+    @include grid-media($large) {
+      margin-left: 60px;
+    }
+  }
 }
 
 .ding-carousel-item {
