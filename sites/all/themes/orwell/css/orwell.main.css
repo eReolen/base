@@ -3977,11 +3977,20 @@ html.js input.form-autocomplete {
   display: flex;
 }
 
+.spotlight-box__top__primary .spotlight-box__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -ms-flex: auto;
+  flex: auto;
+}
+
 .paragraphs-item-video {
   position: relative;
   -webkit-box-flex: 1;
-  -ms-flex: 1 1 100%;
-  flex: 1 1 100%;
+  -ms-flex: auto;
+  flex: auto;
 }
 
 .media-youtube-video iframe {
