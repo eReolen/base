@@ -2,12 +2,18 @@
 // Flex the spotlight-box so the paragraph is stretched out.
 .spotlight-box__top__primary {
   display: flex;
+
+  .spotlight-box__item {
+    display: flex;
+    flex: auto;
+  }
 }
 
 .paragraphs-item-video {
   // Positioning context for iframe.
   position: relative;
-  flex: 1 1 100%;
+  // And fill the space!!!
+  flex: auto;
 }
 
 .media-youtube-video iframe {
