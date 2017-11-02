@@ -56,13 +56,17 @@
 
 // Common header. Displayed to the left on larger screens.
 @mixin header {
+  @include base-header;
+  border-top: 1px solid $color__border-gray;
+  padding-top: 1.5rem;
+}
+
+@mixin base-header {
   font-family: $font-light;
   font-size: 1.5rem;
   color: $color__font-gray;
-  border-top: 1px solid $color__border-gray;
-  padding-top: 1.5rem;
   margin-top: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 // Common sub-header.
@@ -70,7 +74,7 @@
   font-family: $font-semibold;
   text-transform: uppercase;
   color: $color__font-gray--dark;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 @mixin form-default {
