@@ -101,3 +101,11 @@
 .ding-carousel li {
   float: left;
 }
+
+// Content specific tweaks.
+.ding-carousel .article-placeholder {
+  // Hide the read more "link".
+  .article--teaser__read-more {
+    display: none;
+  }
+}

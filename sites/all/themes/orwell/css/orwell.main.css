@@ -2693,6 +2693,10 @@ html.js input.form-autocomplete {
   float: left;
 }
 
+.ding-carousel .article-placeholder .article--teaser__read-more {
+  display: none;
+}
+
 @font-face {
   font-family: "icomoon";
   font-style: normal;
