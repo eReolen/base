@@ -2597,6 +2597,13 @@ html.js input.form-autocomplete {
   display: none !important;
 }
 
+@media all and (min-width: 49em) {
+  .ding-carousel .slick-arrow {
+    bottom: 90px;
+    display: inline-block !important;
+  }
+}
+
 .ding-carousel .slick-arrow::before {
   font-family: "icomoon";
   speak: none;
@@ -2626,13 +2633,6 @@ html.js input.form-autocomplete {
 
 .ding-carousel .slick-arrow.slick-next::before {
   content: "";
-}
-
-@media all and (min-width: 49em) {
-  .ding-carousel .slick-arrow {
-    bottom: 90px;
-    display: inline-block !important;
-  }
 }
 
 .ding-carousel .carousel__header {
@@ -2672,8 +2672,11 @@ html.js input.form-autocomplete {
   }
 }
 
+.ding-carousel .article-placeholder .article--teaser__read-more {
+  display: none;
+}
+
 .ding-carousel {
-  /* Hide the overflow of the extra wide ul below. */
   overflow: hidden;
 }
 
@@ -2683,18 +2686,11 @@ html.js input.form-autocomplete {
   margin: 0;
   padding: 0;
   list-style: none;
-  /* Set the width to ensure (within reason) that all covers are rendered on one
-   * line, let the parent clip. It is restored to 100% by the JS before
-   * activating the carousel. */
   width: 4000px;
 }
 
 .ding-carousel li {
   float: left;
-}
-
-.ding-carousel .article-placeholder .article--teaser__read-more {
-  display: none;
 }
 
 @font-face {
