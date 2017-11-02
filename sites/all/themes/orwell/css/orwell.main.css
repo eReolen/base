@@ -2597,6 +2597,13 @@ html.js input.form-autocomplete {
   display: none !important;
 }
 
+@media all and (min-width: 49em) {
+  .ding-carousel .slick-arrow {
+    bottom: 90px;
+    display: inline-block !important;
+  }
+}
+
 .ding-carousel .slick-arrow::before {
   font-family: "icomoon";
   speak: none;
@@ -2626,13 +2633,6 @@ html.js input.form-autocomplete {
 
 .ding-carousel .slick-arrow.slick-next::before {
   content: "";
-}
-
-@media all and (min-width: 49em) {
-  .ding-carousel .slick-arrow {
-    bottom: 90px;
-    display: inline-block !important;
-  }
 }
 
 .ding-carousel .carousel__header {
@@ -2670,6 +2670,27 @@ html.js input.form-autocomplete {
   .ding-carousel-item {
     padding-left: 60px;
   }
+}
+
+.ding-carousel .article-placeholder .article--teaser__read-more {
+  display: none;
+}
+
+.ding-carousel {
+  overflow: hidden;
+}
+
+.ding-carousel ul {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 4000px;
+}
+
+.ding-carousel li {
+  float: left;
 }
 
 @font-face {

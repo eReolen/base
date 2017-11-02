@@ -6,7 +6,9 @@
  */
 ?>
 <div class="article article--teaser <?php print $classes; ?>">
+  <?php if (!empty($node_url)): ?>
   <a href="<?php print $node_url; ?>">
+  <?php endif; ?>
     <div class="article--teaser__left article--teaser__info">
       <div class="article--teaser__info__inner">
         <h2 class="article--teaser__title"><?php print $title; ?></h2>
@@ -25,5 +27,7 @@
         <?php endforeach; ?>
       </div>
     </div>
+  <?php if (!empty($node_url)): ?>
   </a>
+  <?php endif; ?>
 </div>

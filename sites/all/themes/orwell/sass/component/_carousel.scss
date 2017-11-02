@@ -21,6 +21,13 @@
     // important because Slick sets the display on the element.
     display: none !important;
 
+    @include grid-media($medium) {
+      // Move up on non-mobile to account for the author and title.
+      bottom: 90px;
+      // Show arrows on larger sizes.
+      display: inline-block !important;
+    }
+
     &::before {
       @include icon;
       color: $color__dark;
@@ -42,13 +49,6 @@
       &::before {
         content: $icon__arrow-right;
       }
-    }
-
-    @include grid-media($medium) {
-      // Move up on non-mobile to account for the author and title.
-      bottom: 90px;
-      // Show arrows on larger sizes.
-      display: inline-block !important;
     }
   }
 
@@ -76,4 +76,35 @@
   @include grid-media($large) {
     padding-left: 60px;
   }
+}
+
+// scss-lint:disable MergeableSelector
+// Content specific tweaks.
+.ding-carousel .article-placeholder {
+  // Hide the read more "link".
+  .article--teaser__read-more {
+    display: none;
+  }
+}
+
+// The following has been taken from ding_carousel.css. This avoils load jumping.
+.ding-carousel {
+  // Hide the overflow of the extra wide ul below.
+  overflow: hidden;
+}
+
+.ding-carousel ul {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  // Set the width to ensure (within reason) that all covers are
+  // rendered on one line, let the parent clip. It is restored to 100%
+  // by the JS before activating the carousel.
+  width: 4000px;
+}
+
+.ding-carousel li {
+  float: left;
 }
