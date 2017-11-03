@@ -23,6 +23,8 @@ function menu_block_menu_block_ctools_export_ui() {
     'title plural' => t('menu blocks'),
     'title plural proper' => t('Menu Blocks'),
 
+    'handler' => 'menu_block_ui',
+
     'form' => array(
       'settings' => 'menu_block_export_ui_form',
     ),
@@ -160,20 +162,32 @@ function menu_block_export_ui_form(&$form, &$form_state) {
 
   $form['sort'] = array(
     '#type' => 'checkbox',
-    '#title' => t('<strong>Sort</strong> menu tree by the active menu itemâs trail.'),
+    '#title' => t('<strong>Sort</strong> menu tree by the active menu item’s trail.'),
     '#default_value' => $form_state['item']->sort,
-    '#description' => t('Sort each item in the active trail to the top of its level. When used on a deep or wide menu tree, the active menu itemâs children will be easier to see when the page is reloaded.'),
+    '#description' => t('Sort each item in the active trail to the top of its level. When used on a deep or wide menu tree, the active menu item’s children will be easier to see when the page is reloaded.'),
   );
+
+  $menu_links = menu_parent_options($menus, array('mlid' => 0));
+  $options = array();
+  foreach ($menu_links as $key => $name) {
+    list($menu_name, $mlid) = explode(':', $key, 2);
+    if ($mlid != 0) {
+      $link = menu_link_load($mlid);
+      $identifier = isset($link['menu_name'], $link['link_path']) ? "{$link['menu_name']}:{$link['link_path']}" : FALSE;
+      $options[$identifier] = "{$menu_name}: {$name}";
+    }
+  }
 
   $form['parent_mlid'] = array(
     '#type' => 'select',
     '#title' => t('Fixed parent item'),
-    '#default_value' => $form_state['item']->parent,
-    '#options' => menu_parent_options($menus, array('mlid' => 0)),
+    '#default_value' => $form_state['item']->menu_name . ':' . $form_state['item']->parent_mlid,
+    '#options' => $options,
     '#description' => t('Alter the "starting level" and "maximum depth" options to be relative to the fixed parent item. The tree of links will only contain children of the selected menu item.'),
     '#attributes' => array('class' => array('menu-block-parent-mlid')),
     '#element_validate' => array('menu_block_configure_form_parent_validate'),
   );
+
   $form['parent_mlid']['#options'][MENU_TREE__CURRENT_PAGE_MENU . ':0'] = '<' . t('the menu selected by the page') . '>';
 
   $form['menu-block-wrapper-close'] = array('#markup' => '</div>');
@@ -192,7 +206,7 @@ function menu_block_export_ui_form(&$form, &$form_state) {
  */
 function menu_block_configure_form_parent_validate($element, &$form_state) {
   // Determine the fixed parent item's menu and mlid.
-  list($menu_name, $parent_mlid) = explode(':', $form_state['values']['parent_mlid']);
+  list($menu_name, $parent_mlid) = explode(':', $form_state['values']['parent_mlid'], 2);
   if ($parent_mlid) {
     // If mlid is set, its menu overrides the menu_name option.
     $form_state['values']['menu_name'] = $menu_name;
