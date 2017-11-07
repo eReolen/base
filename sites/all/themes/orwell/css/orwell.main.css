@@ -657,7 +657,7 @@ div.messages ul {
 }
 
 .text a {
-  color: #b81b40;
+  color: #d8133f;
   text-decoration: none;
 }
 
@@ -677,7 +677,7 @@ div.messages ul {
 }
 
 .highlight {
-  color: #b81b40;
+  color: #d8133f;
 }
 
 .ui-dialog {
@@ -723,7 +723,7 @@ div.messages ul {
 .ui-dialog .action-button {
   margin-top: 50px;
   float: none;
-  background: #b81b40;
+  background: #d8133f;
 }
 
 .ui-dialog .action-button::before {
@@ -830,11 +830,11 @@ div.messages ul {
 }
 
 .pager a:hover {
-  color: #b81b40;
+  color: #d8133f;
 }
 
 .pager-current {
-  color: #b81b40;
+  color: #d8133f;
   padding: 1rem;
 }
 
@@ -868,8 +868,8 @@ div.messages ul {
 
 .pager-previous a:hover::before,
 .pager-next a:hover::before {
-  color: #b81b40;
-  border: 1px solid #b81b40;
+  color: #d8133f;
+  border: 1px solid #d8133f;
 }
 
 .pager-next a::before {
@@ -1093,19 +1093,6 @@ div.messages ul {
   background: white;
 }
 
-.pane-menu-block-main-menu {
-  width: 100%;
-  float: left;
-  text-align: center;
-}
-
-@media all and (min-width: 49em) {
-  .pane-menu-block-main-menu {
-    width: 75%;
-    display: inline-block;
-  }
-}
-
 .topbar {
   overflow: hidden;
 }
@@ -1114,6 +1101,14 @@ div.messages ul {
   .topbar {
     height: 80px;
   }
+}
+
+.topbar .pane-main-menu {
+  width: 100%;
+}
+
+.topbar__inner {
+  position: relative;
 }
 
 @media all and (min-width: 49em) {
@@ -1137,10 +1132,13 @@ div.messages ul {
 
 .branding {
   height: 5rem;
+  top: 0;
+  left: 3.75rem;
 }
 
 @media all and (min-width: 49em) {
   .branding {
+    position: absolute;
     width: 9%;
     float: left;
     height: 100%;
@@ -1166,59 +1164,35 @@ div.messages ul {
   max-width: 35vw;
 }
 
-.menu-name-main-menu {
-  height: 5rem;
-  background-color: #b81b40;
-}
-
-.menu-name-main-menu ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.pane-reol-profile-link {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 @media all and (min-width: 49em) {
-  .menu-name-main-menu ul {
-    display: inline-block;
-    margin: 0 auto;
+  .pane-reol-profile-link {
+    left: auto;
+    right: 3.75rem;
   }
+}
+
+#user-login-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.menu-name-main-menu > ul {
+  margin: 0 20px;
 }
 
 .menu-name-main-menu li {
   height: 100%;
   display: inline-block;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
   margin: 0;
   padding: 0;
-  float: left;
-}
-
-.menu-name-main-menu li a {
-  color: white;
-  text-decoration: none;
-  font-family: "SourceSansPro", sans-serif;
-  font-weight: bold;
-  font-size: 1rem;
-  line-height: 5rem;
-  height: 100%;
-  display: block;
-  padding: 0;
-}
-
-@media all and (min-width: 49em) {
-  .menu-name-main-menu li a {
-    color: #505050;
-    font-weight: 700;
-    line-height: 5rem;
-    height: 100%;
-    display: block;
-    padding: 0 2.5rem;
-  }
-  .menu-name-main-menu li a:hover {
-    background: #f0f0f0;
-  }
+  vertical-align: top;
 }
 
 @media all and (min-width: 49em) {
@@ -1227,14 +1201,228 @@ div.messages ul {
     display: inline-block;
     margin: 0;
     padding: 0;
-    float: left;
   }
 }
 
+.menu-name-main-menu li a {
+  text-decoration: none;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: .75rem;
+  line-height: 3rem;
+  display: block;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
 @media all and (min-width: 49em) {
-  .menu-name-main-menu {
-    background-color: transparent;
+  .menu-name-main-menu li a {
+    font-size: 1rem;
+    line-height: 5rem;
+    height: 100%;
+    display: block;
   }
+}
+
+.menu-name-main-menu.menu-level-1 {
+  background-color: #d8133f;
+  text-align: center;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-1 {
+    background-color: white;
+  }
+}
+
+.menu-name-main-menu.menu-level-1 ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 0 20px;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-1 ul {
+    display: inline-block;
+  }
+}
+
+.menu-name-main-menu.menu-level-1 li {
+  padding: 0 1.5rem;
+}
+
+.menu-name-main-menu.menu-level-1 a {
+  color: white;
+  opacity: .7;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-1 a {
+    color: #505050;
+  }
+}
+
+.menu-name-main-menu.menu-level-1 a:hover {
+  background: #f0f0f0;
+}
+
+.menu-name-main-menu.menu-level-1 .active-trail a {
+  opacity: 1;
+}
+
+.menu-name-main-menu.menu-level-2 {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #dcdcdc;
+  color: #787878;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-2 > ul {
+    max-width: 1200px;
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 49em) and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-2 > ul {
+    margin: 0 auto;
+    padding: 0 3.75rem;
+  }
+}
+
+.menu-name-main-menu.menu-level-2 li.expanded {
+  margin-right: 1rem;
+}
+
+.menu-name-main-menu.menu-level-2 li.expanded:last-child {
+  margin-right: 0;
+}
+
+.menu-name-main-menu.menu-level-2 li.expanded > a {
+  text-transform: uppercase;
+}
+
+.menu-name-main-menu.menu-level-2 li.expanded > a::after {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  font-size: .5rem;
+  margin-left: .5rem;
+}
+
+.menu-name-main-menu.menu-level-2 li.expanded ul {
+  display: none;
+}
+
+.menu-name-main-menu.menu-level-2 li.expanded.js-active ul {
+  display: block;
+}
+
+.menu-name-main-menu.menu-level-2 li.expanded.js-active > a,
+.menu-name-main-menu.menu-level-2 li.expanded.js-active > a::after,
+.menu-name-main-menu.menu-level-2 li.expanded > a.active-trail::after {
+  color: #505050;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-2 li.expanded > a {
+    position: relative;
+    overflow: visible;
+  }
+  .menu-name-main-menu.menu-level-2 li.expanded.js-active > a::before {
+    content: '';
+    color: #393939;
+    position: absolute;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    border-bottom: 20px solid;
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    right: -16px;
+    bottom: -1px;
+    z-index: 2;
+  }
+}
+
+.menu-name-main-menu.menu-level-2 a {
+  color: #b4b4b4;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-2 a:hover {
+    color: gray;
+  }
+}
+
+.menu-name-main-menu.menu-level-2 li div {
+  max-width: 1200px;
+  width: 100%;
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-2 li div {
+    margin: 0 auto;
+    padding: 0 3.75rem;
+  }
+}
+
+.menu-name-main-menu.menu-level-2 li ul {
+  -webkit-column-count: 2;
+  column-count: 2;
+  -webkit-column-gap: 2rem;
+  column-gap: 2rem;
+  padding: 1rem 20px;
+  background-color: #393939;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-2 li ul {
+    display: inline-block;
+    -webkit-column-width: 13rem;
+    column-width: 13rem;
+    -webkit-column-count: auto;
+    column-count: auto;
+    padding: 30px;
+  }
+}
+
+.menu-name-main-menu.menu-level-2 li ul li {
+  display: block;
+}
+
+.menu-name-main-menu.menu-level-2 li ul a {
+  color: #b4b4b4;
+  font-family: "SourceSansPro", sans-serif;
+  padding: 0;
+}
+
+@media all and (min-width: 49em) {
+  .menu-name-main-menu.menu-level-2 li ul a {
+    line-height: 2rem;
+  }
+}
+
+.menu-name-main-menu.menu-level-2 li ul a.active-trail {
+  color: white;
 }
 
 @font-face {
@@ -1620,7 +1808,7 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .page-search .search-form {
-    background-color: #b81b40;
+    background-color: #d8133f;
   }
 }
 
@@ -1699,7 +1887,7 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .search-form__icon__wrapper {
-    background: #b81b40;
+    background: #d8133f;
     display: block;
     height: 2rem;
     text-align: center;
@@ -1748,7 +1936,7 @@ fieldset {
   .page-search .search-form__content {
     height: auto;
     padding: 1.2rem;
-    background-color: #b81b40;
+    background-color: #d8133f;
   }
 }
 
@@ -1804,7 +1992,7 @@ fieldset {
 @media all and (min-width: 49em) {
   .page-search .search-form__input--text {
     height: auto;
-    background: #b81b40;
+    background: #d8133f;
     color: white;
     font-size: 1.3rem;
     font-family: "SourceSansPro", sans-serif;
@@ -1821,7 +2009,7 @@ fieldset {
 }
 
 .search-form__icon--close {
-  background: #b81b40;
+  background: #d8133f;
   height: 2rem;
   position: fixed;
   right: 1rem;
@@ -2046,27 +2234,6 @@ html.js input.form-autocomplete {
   .notifications__count {
     top: 19px;
   }
-}
-
-.pane-reol-profile-link {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-@media all and (min-width: 49em) {
-  .pane-reol-profile-link {
-    float: right;
-    position: relative;
-    top: auto;
-    right: auto;
-  }
-}
-
-#user-login-form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2rem;
 }
 
 @font-face {
@@ -2883,7 +3050,7 @@ html.js input.form-autocomplete {
 
 .material__series a {
   text-decoration: none;
-  color: #b81b40;
+  color: #d8133f;
 }
 
 .material__series .field-label {
@@ -3090,7 +3257,7 @@ html.js input.form-autocomplete {
 }
 
 .group-material-details .field-group-format-wrapper .field-items a {
-  color: #b81b40;
+  color: #d8133f;
   text-decoration: none;
 }
 
@@ -3562,7 +3729,7 @@ html.js input.form-autocomplete {
 }
 
 .page-user .library-info a {
-  color: #b81b40;
+  color: #d8133f;
 }
 
 .page-user .ting-cover-wrapper {
@@ -3928,7 +4095,7 @@ html.js input.form-autocomplete {
 }
 
 .review .review__subhead .review__highlight {
-  color: #b81b40;
+  color: #d8133f;
 }
 
 .review .field-name-ting-title {
@@ -4079,7 +4246,7 @@ html.js input.form-autocomplete {
 }
 
 .faq-category-menu .faq-qa a {
-  color: #b81b40;
+  color: #d8133f;
 }
 
 .faq-question {
@@ -4534,7 +4701,7 @@ html.js input.form-autocomplete {
 .audio-preview__progress .audio-preview__progress__complete {
   height: 100%;
   width: 0;
-  background-color: #b81b40;
+  background-color: #d8133f;
 }
 
 @font-face {

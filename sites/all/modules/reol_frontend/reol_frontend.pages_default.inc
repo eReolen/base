@@ -1316,32 +1316,6 @@ search/ting
     $display->content['new-d59734fe-4c31-4b3c-af53-5c2bad02f9cf'] = $pane;
     $display->panels['footer'][3] = 'new-d59734fe-4c31-4b3c-af53-5c2bad02f9cf';
     $pane = new stdClass();
-    $pane->pid = 'new-407ab43a-dfc4-49ea-a537-292b9d04c95c';
-    $pane->panel = 'header';
-    $pane->type = 'block';
-    $pane->subtype = 'user-login';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => '',
-      'override_title_heading' => 'h2',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array(
-      'css_id' => '',
-      'css_class' => 'js-login-form',
-    );
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $pane->uuid = '407ab43a-dfc4-49ea-a537-292b9d04c95c';
-    $display->content['new-407ab43a-dfc4-49ea-a537-292b9d04c95c'] = $pane;
-    $display->panels['header'][0] = 'new-407ab43a-dfc4-49ea-a537-292b9d04c95c';
-    $pane = new stdClass();
     $pane->pid = 'new-b200fc05-2e44-40a0-a5a1-5f59cf864f2d';
     $pane->panel = 'header';
     $pane->type = 'block';
@@ -1359,11 +1333,11 @@ search/ting
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 0;
     $pane->locks = array();
     $pane->uuid = 'b200fc05-2e44-40a0-a5a1-5f59cf864f2d';
     $display->content['new-b200fc05-2e44-40a0-a5a1-5f59cf864f2d'] = $pane;
-    $display->panels['header'][1] = 'new-b200fc05-2e44-40a0-a5a1-5f59cf864f2d';
+    $display->panels['header'][0] = 'new-b200fc05-2e44-40a0-a5a1-5f59cf864f2d';
     $pane = new stdClass();
     $pane->pid = 'new-42da6d6c-e8e4-49b8-89d6-35c1f48aa665';
     $pane->panel = 'header';
@@ -1393,11 +1367,37 @@ search/ting
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = '42da6d6c-e8e4-49b8-89d6-35c1f48aa665';
     $display->content['new-42da6d6c-e8e4-49b8-89d6-35c1f48aa665'] = $pane;
-    $display->panels['header'][2] = 'new-42da6d6c-e8e4-49b8-89d6-35c1f48aa665';
+    $display->panels['header'][1] = 'new-42da6d6c-e8e4-49b8-89d6-35c1f48aa665';
+    $pane = new stdClass();
+    $pane->pid = 'new-407ab43a-dfc4-49ea-a537-292b9d04c95c';
+    $pane->panel = 'header';
+    $pane->type = 'block';
+    $pane->subtype = 'user-login';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+      'override_title_heading' => 'h2',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'js-login-form',
+    );
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = '407ab43a-dfc4-49ea-a537-292b9d04c95c';
+    $display->content['new-407ab43a-dfc4-49ea-a537-292b9d04c95c'] = $pane;
+    $display->panels['header'][2] = 'new-407ab43a-dfc4-49ea-a537-292b9d04c95c';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

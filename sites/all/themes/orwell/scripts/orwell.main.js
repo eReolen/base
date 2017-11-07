@@ -37,4 +37,45 @@
     }
   };
 
+  /**
+   * Menu dropdown behavior.
+   */
+  Drupal.behaviors.menuDropdown = {
+    attach: function (context) {
+      $('.menu-level-2 li.expanded').once(function () {
+        var menu = $(this);
+        var trigger = menu.find('> a');
+        var submenu = menu.find('ul');
+
+        trigger.on('click', function (e) {
+          e.preventDefault();
+          // Stop propagation, so we don't immediately trigger the
+          // click event we attach to the body.
+          e.stopPropagation();
+
+          // Close any other open submenus.
+          menu.parent().find('.js-active').not(menu).click();
+
+          if (!menu.hasClass('js-active')) {
+            menu.addClass('js-active');
+            // Dismiss the submenu when the mouse leaves it.
+            submenu.on('mouseleave.ereolen', function () {
+              trigger.click();
+            });
+
+            // Add a click handler to body to dismiss the submenu.
+            $('body').on('click.ereolen', function (e) {
+              trigger.click();
+            });
+          }
+          else {
+            menu.removeClass('js-active');
+            submenu.off('mouseleave.ereolen');
+            $('body').off('click.ereolen');
+          }
+        });
+      });
+    }
+  };
+
 })(jQuery);
