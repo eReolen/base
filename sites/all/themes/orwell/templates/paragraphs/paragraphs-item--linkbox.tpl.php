@@ -10,6 +10,11 @@
     <a href='<?php print $href; ?>'>
   <?php endif; ?>
   <div class="linkbox__container">
+    <?php if (isset($image)): ?>
+      <div class="linkbox__image">
+        <?php print $image; ?>
+      </div>
+    <?php endif; ?>
     <div class="linkbox__content"<?php print $content_attributes; ?>>
       <?php print $title; ?>
     </div>

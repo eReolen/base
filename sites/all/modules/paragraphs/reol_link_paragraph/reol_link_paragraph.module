@@ -30,6 +30,15 @@ function reol_link_paragraph_preprocess_entity(&$variables) {
           $variables['icons'] = theme('reol_overlay_icons', array('icons' => array('link')));
         }
       }
+      $image = $wrapper->field_link_gfx->value();
+      if ($image['uri']) {
+        $params = array(
+          'style_name' => 'medium',
+          'path' => $image['uri'],
+        );
+        $variables['image'] = theme('image_style', $params);
+        $variables['classes_array'][] = 'linkbox--with-image';
+      }
       if (isset($link['title'])) {
         $variables['title'] = check_plain($link['title']);
       }
