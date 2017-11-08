@@ -1,61 +1,224 @@
-$menu-height: 5rem;
+$menu-height__default: 3rem;
+$menu-height__medium: 5rem;
 
 .menu-name-main-menu {
-  height: $menu-height;
-  background-color: $color__red;
-
-  ul {
-    display: flex;
-
-    @include grid-media($medium) {
-      display: inline-block;
-      margin: 0 auto;
-    }
+  // List styling for first and second level.
+  > ul {
+    margin: 0 $padding__default;
   }
 
+  // Item styling.
   li {
     height: 100%;
     display: inline-block;
-    flex: 1;
     margin: 0;
     padding: 0;
-    float: left;
-
-    a {
-      color: white;
-      text-decoration: none;
-      font-family: $font-regular;
-      font-weight: bold;
-      font-size: 1rem;
-      line-height: 5rem;
-      height: 100%;
-      display: block;
-      padding: 0;
-
-      @include grid-media($medium) {
-        color: $color__font-gray--dark;
-        font-weight: 700;
-        line-height: 5rem;
-        height: 100%;
-        display: block;
-        padding: 0 2.5rem;
-
-        &:hover {
-          background: $page-bg;
-        }
-      }
-    }
+    // Don't leave room for descenders at bottom.
+    vertical-align: top;
 
     @include grid-media($medium) {
       height: 100%;
       display: inline-block;
       margin: 0;
       padding: 0;
-      float: left;
+    }
+
+    a {
+      text-decoration: none;
+      font-family: $font-semibold;
+      font-size: .75rem;
+      line-height: $menu-height__default;
+      display: block;
+      padding: 0;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @include grid-media($medium) {
+        font-size: 1rem;
+        line-height: $menu-height__medium;
+        height: 100%;
+        display: block;
+      }
     }
   }
 
-  @include grid-media($medium){
-    background-color: transparent;
+  // Top level menu.
+  &.menu-level-1 {
+    background-color: $color__red;
+    text-align: center;
+
+    @include grid-media($medium) {
+      background-color: white;
+    }
+
+    ul {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 $padding__default;
+
+      @include grid-media($medium) {
+        display: inline-block;
+      }
+    }
+
+    li {
+      padding: 0 1.5rem;
+    }
+
+    a {
+      color: white;
+      opacity: .7;
+
+      @include grid-media($medium) {
+        color: $color__font-gray--dark;
+      }
+
+      &:hover {
+        background: $page-bg;
+      }
+    }
+
+    .active-trail a {
+      opacity: 1;
+    }
+  }
+
+  // Submenu.
+  &.menu-level-2 {
+    background-color: $color__gray--lighter;
+    border-bottom: 1px solid $color__gray--light;
+    color: $color__font-gray;
+
+    // Limit the width of the menu to the content width.
+    > ul {
+      @include grid-media($medium) {
+        @include content-wrapper;
+      }
+    }
+
+    li.expanded {
+      // Spacing between items.
+      margin-right: 1rem;
+
+      // But not the last.
+      &:last-child {
+        margin-right: 0;
+      }
+
+      > a {
+        text-transform: uppercase;
+
+        // Add small triangle down to items.
+        &::after {
+          @include icon;
+          content: $icon__arrow-down;
+          font-size: .5rem;
+          margin-left: .5rem;
+        }
+      }
+
+      ul {
+        // Hide submenu per default.
+        display: none;
+      }
+
+      // Display submenu.
+      &.js-active {
+        ul {
+          display: block;
+        }
+      }
+
+      // Change the color of the submenu parent item when JS has shown
+      // the submenu, but just change color of the arrow icon when the
+      // menu is in the active trail.
+      &.js-active > a,
+      &.js-active > a::after,
+      & > a.active-trail::after {
+        color: $color__font-gray--dark;
+      }
+
+      @include grid-media($medium) {
+        > a {
+          // Needed for the triangle.
+          position: relative;
+          overflow: visible;
+        }
+
+        // A triangle on the top of the menu.
+        &.js-active > a::before {
+          content: '';
+          color: $color__gray--dark;
+          position: absolute;
+          width: 0;
+          height: 0;
+          vertical-align: middle;
+          border-bottom: 20px solid;
+          border-right: 20px solid transparent;
+          border-left: 20px solid transparent;
+          right: -16px;
+          bottom: -1px;
+          z-index: 2;
+        }
+      }
+    }
+
+    // Shared between level 2 and 3.
+    a {
+      color: $color__font-gray--light;
+
+      @include grid-media($medium) {
+        &:hover {
+          color: $color__gray;
+        }
+      }
+    }
+
+
+    li {
+      div {
+        @include content-wrapper;
+        position: absolute;
+        display: block;
+        left: 0;
+        right: 0;
+        // Override z-index of carousel arrows.
+        z-index: 2;
+      }
+
+      ul {
+        column-count: 2;
+        column-gap: 2rem;
+        padding: 1rem $padding__default;
+        background-color: $color__gray--dark;
+
+        @include grid-media($medium) {
+          display: inline-block;
+          column-width: 13rem;
+          column-count: auto;
+          padding: $padding__medium;
+        }
+
+        li {
+          display: block;
+        }
+
+        a {
+          color: $color__font-gray--light;
+          font-family: $font-regular;
+          padding: 0;
+
+          @include grid-media($medium) {
+            line-height: 2rem;
+          }
+
+          &.active-trail {
+            color: white;
+          }
+        }
+      }
+    }
   }
 }

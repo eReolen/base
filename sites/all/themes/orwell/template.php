@@ -164,3 +164,20 @@ function orwell_preprocess_entity(&$variables) {
     }
   }
 }
+
+/**
+ * Theme menu links.
+ *
+ * We need a div around the submenu for theming purposes.
+ */
+function orwell_menu_link(array $variables) {
+  $element = $variables['element'];
+  $sub_menu = '';
+
+  if ($element['#below']) {
+    $sub_menu = '<div>' . drupal_render($element['#below']) . '</div>';
+  }
+
+  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+  return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
+}

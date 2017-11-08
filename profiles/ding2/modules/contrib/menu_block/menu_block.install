@@ -44,12 +44,14 @@ function menu_block_schema() {
       ),
       'depth' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 0,
       ),
       'expanded' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 0,
       ),
       'follow' => array(
@@ -59,7 +61,8 @@ function menu_block_schema() {
       ),
       'level' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 1,
       ),
       'parent' => array(
@@ -69,12 +72,14 @@ function menu_block_schema() {
       ),
       'sort' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 0,
       ),
       'title_link' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 0,
       ),
     ),
@@ -83,6 +88,7 @@ function menu_block_schema() {
 
   return $schema;
 }
+
 
 /**
  * Implements hook_uninstall().
@@ -93,16 +99,13 @@ function menu_block_uninstall() {
   variable_del('menu_block_menu_order');
 
   // Remove block configurations.
-  if (module_exists('block')) {
-    db_delete('block')
-      ->condition('module', 'menu_block')
-      ->execute();
-    db_delete('block_role')
-      ->condition('module', 'menu_block')
-      ->execute();
+  foreach (array('block', 'block_node_type', 'block_role') as $table) {
+    if (db_table_exists($table)) {
+      db_delete($table)
+        ->condition('module', 'menu_block')
+        ->execute();
+    }
   }
-
-  cache_clear_all();
 }
 
 /**
@@ -120,7 +123,7 @@ function menu_block_update_5100() {
   $enabled_blocks = array();
 
   // Find the old enabled blocks.
-  foreach (variable_get('menu_block_enabled_blocks', array()) AS $old_delta => $enabled) {
+  foreach (variable_get('menu_block_enabled_blocks', array()) as $old_delta => $enabled) {
     list($mid, $level) = explode('-', $old_delta);
     if ($enabled) {
       $enabled_blocks[++$delta] = TRUE;
@@ -143,7 +146,7 @@ function menu_block_update_5100() {
  */
 function menu_block_update_5200() {
   $block_ids = array();
-  foreach (variable_get('menu_block_enabled_blocks', array()) AS $delta => $enabled) {
+  foreach (variable_get('menu_block_enabled_blocks', array()) as $delta => $enabled) {
     if ($enabled) {
       $block_ids[] = $delta; // Build new $menu_block_ids.
       // Convert $menu_block_DELTA_mid to $menu_block_DELTA_menu_name.
@@ -184,7 +187,7 @@ function menu_block_update_5200() {
  */
 function menu_block_update_6200() {
   $menus = menu_get_menus();
-  foreach (variable_get('menu_block_ids', array()) AS $delta) {
+  foreach (variable_get('menu_block_ids', array()) as $delta) {
     // Drupal 6 uses the menu title to create the new menu_name.
     $menu_name = preg_replace('/[^a-zA-Z0-9]/', '-', strtolower(variable_get("menu_block_{$delta}_title", '')));
     // If we can't find the new menu_name, default to the navigation menu.
@@ -202,7 +205,7 @@ function menu_block_update_6200() {
  */
 function menu_block_update_6201() {
   $menus = menu_get_menus();
-  foreach (variable_get('menu_block_ids', array()) AS $delta) {
+  foreach (variable_get('menu_block_ids', array()) as $delta) {
     variable_set("menu_block_{$delta}_parent", variable_get("menu_block_{$delta}_menu_name", 'navigation') . ':0');
     variable_del("menu_block_{$delta}_menu_name");
   }
@@ -213,7 +216,7 @@ function menu_block_update_6201() {
  * Converts to Drupal 7 menu names.
  */
 function menu_block_update_7200() {
-  foreach (variable_get('menu_block_ids', array()) AS $delta) {
+  foreach (variable_get('menu_block_ids', array()) as $delta) {
     $menu_name = '';
     list($old_menu_name, $parent_mlid) = explode(':', variable_get("menu_block_{$delta}_parent", ' : '));
     switch ($old_menu_name) {
@@ -264,10 +267,18 @@ function menu_block_update_7202() {
 }
 
 /**
+ * Trigger a menu rebuild.
+ */
+function menu_block_update_7203() {
+  // Nothing needed here.
+}
+
+
+/**
  * Add database table, migrate variables into database and enable CTools if
  * availble.
  */
-function menu_block_update_7203() {
+function menu_block_update_7204() {
   // Add database table.
   $schema['menu_blocks'] = array(
     'fields' => array(
@@ -291,12 +302,14 @@ function menu_block_update_7203() {
       ),
       'depth' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 0,
       ),
       'expanded' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 0,
       ),
       'follow' => array(
@@ -306,7 +319,8 @@ function menu_block_update_7203() {
       ),
       'level' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 1,
       ),
       'parent' => array(
@@ -316,19 +330,20 @@ function menu_block_update_7203() {
       ),
       'sort' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 0,
       ),
       'title_link' => array(
         'type' => 'int',
-        'length' => 1,
+        'not null' => TRUE,
+        'size' => 'small',
         'default' => 0,
       ),
     ),
     'primary key' => array('name'),
   );
   db_create_table('menu_blocks', $schema['menu_blocks']);
-
   // Migrate variables into database.
   foreach (variable_get('menu_block_ids', array()) AS $delta) {
     $config = menu_block_get_config($delta);

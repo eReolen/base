@@ -60,22 +60,3 @@
     top: 19px;
   }
 }
-
-.pane-reol-profile-link {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  @include grid-media($medium) {
-    float: right;
-    position: relative;
-    top: auto;
-    right: auto;
-  }
-}
-
-#user-login-form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2rem;
-}
