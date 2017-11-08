@@ -31,6 +31,7 @@ $linkbox__height--medium: 250px;
 
   .linkbox__image {
     padding-bottom: $gutter__default;
+
     img {
       max-height: $linkbox__height--default / 3;
       width: auto;
@@ -38,6 +39,7 @@ $linkbox__height--medium: 250px;
 
     @include grid-media($medium) {
       padding-bottom: $gutter__medium;
+
       img {
         max-height: $linkbox__height--medium / 3;
       }
