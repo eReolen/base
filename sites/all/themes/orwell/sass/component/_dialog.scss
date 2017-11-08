@@ -90,14 +90,15 @@
     }
 
     .ui-dialog-titlebar-close {
-      top: 5px;
-      right: 0px;
+      top: 0;
+      right: 0;
       position: absolute;
       font-size: 10px;
-      opacity: 0.6;
+      padding: 0;
+      margin: 0;
 
       @include grid-media($medium) {
-        top: 15px;
+        top: 0;
         right: 15px;
       }
     }
@@ -105,12 +106,16 @@
 
   .ui-icon-closethick {
     // Resetting.
-    width: auto;
-    height: auto;
     text-indent: inherit;
+    background: none;
+    height: 16px;
+    width: 16px;
 
-    background-image: none;
-    font-size: 22px;
+    &::before {
+      @include icon;
+      content: $icon__cross;
+      font-size: 16px;
+    }
   }
 
   @include grid-media($medium) {
