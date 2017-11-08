@@ -34,6 +34,8 @@
   height: 5rem;
   top: 0;
   left: 3.75rem;
+  // Ensure we overlap the following elements.
+  z-index: 1;
 
   @include grid-media($medium) {
     position: absolute;
