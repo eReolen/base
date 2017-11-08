@@ -46,3 +46,10 @@ function reol_frontend_update_7104() {
     ->condition('source', db_like('reol_frontpage/') . '%', 'LIKE')
     ->execute();
 }
+
+/**
+ * Revert page_manager site template.
+ */
+function reol_frontend_update_7105() {
+  features_revert(array('page_manager_handlers' => array('site_template_panel_context_2')));
+}
