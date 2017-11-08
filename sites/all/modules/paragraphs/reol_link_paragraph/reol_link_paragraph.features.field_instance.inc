@@ -67,7 +67,11 @@ function reol_link_paragraph_field_default_field_instances() {
   // Exported field_instance: 'paragraphs_item-linkbox-field_link_color'.
   $field_instances['paragraphs_item-linkbox-field_link_color'] = array(
     'bundle' => 'linkbox',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'rgb' => '#797979',
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
