@@ -34,5 +34,4 @@ function ereol_page_update_7101() {
   if ($instance = field_info_instance('node', 'body', 'ereol_page')) {
     field_delete_instance($instance);
   }
-  die();
 }
