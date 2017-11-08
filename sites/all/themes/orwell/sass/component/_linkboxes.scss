@@ -11,6 +11,10 @@ $linkbox__height--medium: 250px;
     text-decoration: none;
   }
 
+  &.linkbox--dark-text a {
+    color: $color__font-gray--dark;
+  }
+
   .linkbox__container {
     height: $linkbox__height--default;
     padding: $padding__default;

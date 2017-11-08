@@ -3407,6 +3407,10 @@ html.js input.form-autocomplete {
   text-decoration: none;
 }
 
+.linkbox.linkbox--dark-text a {
+  color: #505050;
+}
+
 .linkbox .linkbox__container {
   height: 125px;
   padding: 20px;

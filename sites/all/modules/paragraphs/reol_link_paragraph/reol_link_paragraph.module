@@ -19,6 +19,14 @@ function reol_link_paragraph_preprocess_entity(&$variables) {
       $color = $wrapper->field_link_color->value();
       if (isset($color['rgb'])) {
         $variables['attributes_array']['style'] = 'background-color: ' . $color['rgb'] . ';';
+        // Use dark text for light color.
+        if ($color['rgb'] == '#e3e3e3') {
+          $variables['classes_array'][] = 'linkbox--dark-text';
+        }
+      }
+      else {
+        // Use dark text for transparent color.
+        $variables['classes_array'][] = 'linkbox--dark-text';
       }
 
       $variables['icons'] = '';
