@@ -3060,6 +3060,10 @@ html.js input.form-autocomplete {
   font-size: 2.1rem;
 }
 
+.material__title .search-result--heading-type {
+  display: none;
+}
+
 .material__title a {
   text-decoration: none;
   font-family: "SourceSansProLight", sans-serif;

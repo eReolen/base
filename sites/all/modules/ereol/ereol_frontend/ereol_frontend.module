@@ -22,19 +22,9 @@ function ereol_frontend_entity_info_alter(&$entity_info) {
 /**
  * Implements hook_field_display_ENTITY_TYPE_alter().
  *
- * Force search results to use teaser view mode.
- */
-function ereol_frontend_field_display_ting_collection_alter(&$display, $context) {
-  if ($context['entity_type'] == 'ting_collection' &&
-    $context['instance']['field_name'] == 'ting_primary_object') {
-    $display['settings']['view_mode'] = 'teaser';
-  }
-}
-
-/**
- * Implements hook_field_display_ENTITY_TYPE_alter().
- *
  * Alter field display settings.
+ *
+ * @todo move this to field_default_field_instances_alter() instead.
  */
 function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
   switch ($context['view_mode']) {
@@ -62,6 +52,7 @@ function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
       break;
 
     default:
+      // Remove rating widget in all view modes.
       $rating_fields = array(
         'ding_entity_rating_action',
         'ding_entity_rating_result',
