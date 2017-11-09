@@ -5066,4 +5066,27 @@ html.js input.form-autocomplete {
   content: "”";
 }
 
+.pane-ting-collection {
+  margin-top: 3rem;
+}
+
+.pane-ting-collection .content-wrapper--material > .field > .field-items > .field-item > h2 {
+  font-family: "SourceSansProLight", sans-serif;
+  font-size: 2rem;
+  color: #787878;
+  margin: 3rem;
+  text-align: center;
+}
+
+@media all and (min-width: 49em) {
+  .pane-ting-collection .content-wrapper--material > .field > .field-items > .field-item > h2 {
+    width: 100%;
+    -webkit-box-ordinal-group: 2;
+    -ms-flex-order: 1;
+    order: 1;
+    margin: 0 0 3rem;
+    text-align: left;
+  }
+}
+
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
