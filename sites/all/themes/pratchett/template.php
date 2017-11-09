@@ -47,7 +47,7 @@ function pratchett_ting_collection_view_alter(&$build) {
       $collection = $build['ting_primary_object']['#object'];
       if (count($collection->entities) > 1) {
         if (isset($build['ting_primary_object'][$key]['ting_cover'])) {
-          $build['ting_primary_object'][$key]['ting_cover'][0]['object']->reol_no_type_icons = TRUE;
+          $build['ting_primary_object'][$key]['ting_cover'][0]['#object']->reol_no_type_icons = TRUE;
         }
       }
     }
