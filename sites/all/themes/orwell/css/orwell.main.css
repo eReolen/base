@@ -2426,10 +2426,18 @@ html.js input.form-autocomplete {
 
 .article--teaser {
   display: block;
-  height: 440px;
+  height: 370px;
   padding: 2rem 4rem;
   color: white;
   background-color: #393939;
+  position: relative;
+}
+
+@media all and (min-width: 49em) {
+  .article--teaser {
+    max-width: 100vw;
+    width: 1049px;
+  }
 }
 
 .article--teaser a {
@@ -2590,8 +2598,13 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 20em) {
   .article--teaser {
-    height: 475px;
-    padding: 2rem;
+    height: 370px;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .article--teaser {
+    height: 400px;
   }
 }
 
@@ -2639,7 +2652,7 @@ html.js input.form-autocomplete {
 
 .article--teaser__cover {
   position: absolute;
-  height: 440px;
+  height: 370px;
   width: 1200px;
   max-width: 100%;
 }
@@ -2658,7 +2671,7 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .article--teaser__cover {
-    height: 475px;
+    height: 400px;
   }
 }
 
@@ -2817,6 +2830,44 @@ html.js input.form-autocomplete {
   content: "";
 }
 
+.ding-carousel .slick-dots {
+  background-color: #393939;
+  padding: 20px 0;
+  width: 100%;
+  text-align: center;
+  display: none !important;
+}
+
+.ding-carousel .slick-dots li {
+  display: inline-block;
+}
+
+.ding-carousel .slick-dots button {
+  background: none;
+  border: 0;
+  font-size: 0;
+}
+
+.ding-carousel .slick-dots button::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  color: #505050;
+  font-size: .75rem;
+  text-indent: 0;
+}
+
+.ding-carousel .slick-dots .slick-active button::before {
+  color: #dcdcdc;
+}
+
 .ding-carousel .carousel__header {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.5rem;
@@ -2854,6 +2905,34 @@ html.js input.form-autocomplete {
   }
 }
 
+.paragraphs-item-article-carousel .ding-carousel-item {
+  width: 100vw;
+  padding-left: 0;
+}
+
+@media all and (min-width: 49em) {
+  .paragraphs-item-article-carousel .ding-carousel-item {
+    width: auto;
+    padding-left: 40px;
+  }
+}
+
+@media all and (min-width: 65em) {
+  .paragraphs-item-article-carousel .ding-carousel-item {
+    padding-left: 60px;
+  }
+}
+
+.paragraphs-item-article-carousel .slick-dots {
+  display: block !important;
+}
+
+@media all and (min-width: 49em) {
+  .paragraphs-item-article-carousel .slick-dots {
+    display: none !important;
+  }
+}
+
 .ding-carousel .article-placeholder .article--teaser__read-more {
   display: none;
 }
@@ -2868,11 +2947,11 @@ html.js input.form-autocomplete {
   margin: 0;
   padding: 0;
   list-style: none;
-  width: 4000px;
+  width: 8000px;
 }
 
 .ding-carousel li {
-  float: left;
+  display: inline-block;
 }
 
 @font-face {

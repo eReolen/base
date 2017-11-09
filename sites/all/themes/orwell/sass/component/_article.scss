@@ -1,6 +1,7 @@
 @import 'bootstrap/bootstrap';
 
-$teaser-bg-default: #393939;
+$teaser-height--default: 370px;
+$teaser-height--medium: 400px;
 
 .article {
   font-family: $font-regular;
@@ -85,7 +86,7 @@ $teaser-bg-default: #393939;
   }
 
   &__materials {
-    background-color: #e6e6e6;
+    background-color: $color__gray-darker;
     width: 100%;
     display: block;
     clear: both;
@@ -113,10 +114,17 @@ $teaser-bg-default: #393939;
 
 .article--teaser {
   display: block;
-  height: 440px;
+  height: $teaser-height--default;
   padding: 2rem 4rem;
   color: white;
-  background-color: $teaser-bg-default;
+  background-color: $color__gray--dark;
+  // Establish bounding box for image.
+  position: relative;
+
+  @include grid-media($medium) {
+    max-width: 100vw;
+    width: 1049px;
+  }
 
   a {
     color: white;
@@ -249,8 +257,11 @@ $teaser-bg-default: #393939;
   }
 
   @include grid-media($xsmall) {
-    height: 475px;
-    padding: 2rem;
+    height: $teaser-height--default;
+  }
+
+  @include grid-media($medium) {
+    height: $teaser-height--medium;
   }
 
   &__left,
@@ -292,7 +303,7 @@ $teaser-bg-default: #393939;
 
   &__cover {
     position: absolute;
-    height: 440px;
+    height: $teaser-height--default;
     width: 1200px;
     max-width: 100%;
 
@@ -307,7 +318,7 @@ $teaser-bg-default: #393939;
     }
 
     @include grid-media($medium) {
-      height: 475px;
+      height: $teaser-height--medium;
     }
   }
 }
