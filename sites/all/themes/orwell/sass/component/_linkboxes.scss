@@ -1,3 +1,7 @@
+@import 'bootstrap/bootstrap';
+
+$linkbox__height--default: 125px;
+$linkbox__height--medium: 250px;
 
 .linkbox {
   overflow: hidden;
@@ -7,15 +11,40 @@
     text-decoration: none;
   }
 
+  &.linkbox--dark-text a {
+    color: $color__font-gray--dark;
+  }
+
   .linkbox__container {
-    height: 125px;
+    height: $linkbox__height--default;
+    padding: $padding__default;
     display: flex;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
 
     @include grid-media($medium) {
-      height: 250px;
+      height: $linkbox__height--medium;
+      padding: $padding__medium;
     }
+  }
+
+  .linkbox__image {
+    padding-bottom: $gutter__default;
+
+    img {
+      max-height: $linkbox__height--default / 3;
+      width: auto;
+    }
+
+    @include grid-media($medium) {
+      padding-bottom: $gutter__medium;
+
+      img {
+        max-height: $linkbox__height--medium / 3;
+      }
+    }
+
   }
 
   .linkbox__content {

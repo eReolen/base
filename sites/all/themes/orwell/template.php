@@ -136,36 +136,6 @@ function orwell_preprocess_ting_relation(&$vars) {
 }
 
 /**
- * Template preprocessor for entities.
- */
-function orwell_preprocess_entity(&$variables) {
-  if ($variables['entity_type'] == 'paragraphs_item') {
-    if ($variables['paragraphs_item']->bundle() == 'linkbox') {
-      $wrapper = $variables['paragraphs_item']->wrapper();
-      $variables['classes_array'][] = 'linkbox';
-
-      $color = $wrapper->field_link_color->value();
-      if (isset($color['rgb'])) {
-        $variables['attributes_array']['style'] = 'background-color: ' . $color['rgb'] . ';';
-      }
-
-      $variables['icons'] = '';
-      $link = $wrapper->field_link->value();
-      if (isset($link['url'])) {
-        $variables['href'] = $link['url'];
-
-        if (!preg_match('{^' . preg_quote($GLOBALS['base_url']) . '}', $link['url'])) {
-          $variables['icons'] = theme('reol_overlay_icons', array('icons' => array('link')));
-        }
-      }
-      if (isset($link['title'])) {
-        $variables['title'] = check_plain($link['title']);
-      }
-    }
-  }
-}
-
-/**
  * Theme menu links.
  *
  * We need a div around the submenu for theming purposes.

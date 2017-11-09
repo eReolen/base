@@ -160,7 +160,7 @@ function reol_spotlightbox_paragraph_field_default_field_instances() {
         'article_carousel' => -1,
         'audio_preview' => 'audio_preview',
         'author_quote' => 'author_quote',
-        'linkbox' => -1,
+        'linkbox' => 'linkbox',
         'material_carousel' => -1,
         'recommended_material' => 'recommended_material',
         'review' => -1,
