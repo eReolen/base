@@ -52,6 +52,39 @@
     }
   }
 
+  .slick-dots {
+    background-color: $color__gray--dark;
+    padding: $padding__default 0;
+    width: 100%;
+    text-align: center;
+
+    // Hide generally. We'll add overrides for specific carousels later.
+    // scss-lint:disable ImportantRule
+    display: none !important;
+
+    li {
+      display: inline-block;
+    }
+
+    button {
+      background: none;
+      border: 0;
+      font-size: 0;
+
+      &::before {
+        @include icon;
+        content: $icon__circle;
+        color: $color__dark;
+        font-size: .75rem;
+        text-indent: 0;
+      }
+    }
+
+    .slick-active button::before {
+      color: $color__gray--light;
+    }
+  }
+
   .carousel__header {
     @include base-header;
     margin-left: 20px;
@@ -75,6 +108,35 @@
 
   @include grid-media($large) {
     padding-left: 60px;
+  }
+}
+
+// Paragraph specific tweaks.
+.paragraphs-item-article-carousel {
+  .ding-carousel-item {
+    width: 100vw;
+    padding-left: 0;
+
+    @include grid-media($medium) {
+      width: auto;
+      padding-left: 40px;
+    }
+
+    @include grid-media($large) {
+      padding-left: 60px;
+    }
+  }
+
+  // Show dots.
+  .slick-dots {
+    // scss-lint:disable ImportantRule
+    display: block !important;
+
+    // ..but not on desktop.
+    @include grid-media($medium) {
+      // scss-lint:disable ImportantRule
+      display: none !important;
+    }
   }
 }
 
@@ -102,9 +164,9 @@
   // Set the width to ensure (within reason) that all covers are
   // rendered on one line, let the parent clip. It is restored to 100%
   // by the JS before activating the carousel.
-  width: 4000px;
+  width: 8000px;
 }
 
 .ding-carousel li {
-  float: left;
+  display: inline-block;
 }
