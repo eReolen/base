@@ -460,5 +460,184 @@ search/ting
   $handler->conf['display'] = $display;
   $export['search_ting_search__ereolen-search'] = $handler;
 
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'ting_object__ereolen-ting-object';
+  $handler->task = 'ting_object';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = -100;
+  $handler->conf = array(
+    'title' => 'eReolen ting object',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'css_id' => '',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'metatag_panels' => array(
+      'enabled' => 1,
+      'metatags' => array(
+        'title' => array(
+          'value' => 'Ting object | %ting_object:title_full | [current-page:pager][site:name]',
+        ),
+      ),
+    ),
+    'name' => 'ereolen-ting-object',
+  );
+  $display = new panels_display();
+  $display->layout = '25_50_25';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left' => NULL,
+      'middle' => NULL,
+      'right' => NULL,
+      'left_sidebar' => NULL,
+      'main_content' => NULL,
+      'right_sidebar' => NULL,
+      'attachment_4_1' => NULL,
+      'attachment_4_2' => NULL,
+      'attachment_4_3' => NULL,
+      'attachment_4_4' => NULL,
+      'attachment_3_1' => NULL,
+      'attachment_3_2' => NULL,
+      'attachment_3_3' => NULL,
+      'attachment_2_1' => NULL,
+      'attachment_2_2' => NULL,
+      'attachment_1_1' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = '';
+  $display->uuid = '7da7c33f-8425-44e8-a02d-0f497e4945e0';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-df83b6f7-4452-4d90-8566-5efb41b2cfbf';
+    $pane->panel = 'left_sidebar';
+    $pane->type = 'block';
+    $pane->subtype = 'ting-ting_collection_types';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = '';
+    $pane->uuid = 'df83b6f7-4452-4d90-8566-5efb41b2cfbf';
+    $display->content['new-df83b6f7-4452-4d90-8566-5efb41b2cfbf'] = $pane;
+    $display->panels['left_sidebar'][0] = 'new-df83b6f7-4452-4d90-8566-5efb41b2cfbf';
+    $pane = new stdClass();
+    $pane->pid = 'new-1ec262e6-838d-429a-a83c-34fcb532f547';
+    $pane->panel = 'left_sidebar';
+    $pane->type = 'block';
+    $pane->subtype = 'ting-ting_object_types';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = '';
+    $pane->uuid = '1ec262e6-838d-429a-a83c-34fcb532f547';
+    $display->content['new-1ec262e6-838d-429a-a83c-34fcb532f547'] = $pane;
+    $display->panels['left_sidebar'][1] = 'new-1ec262e6-838d-429a-a83c-34fcb532f547';
+    $pane = new stdClass();
+    $pane->pid = 'new-8fe5bb7f-41a6-4f5a-b6d1-eed5cc759f92';
+    $pane->panel = 'left_sidebar';
+    $pane->type = 'block';
+    $pane->subtype = 'ting-ting_relation_anchors';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = '';
+    $pane->uuid = '8fe5bb7f-41a6-4f5a-b6d1-eed5cc759f92';
+    $display->content['new-8fe5bb7f-41a6-4f5a-b6d1-eed5cc759f92'] = $pane;
+    $display->panels['left_sidebar'][2] = 'new-8fe5bb7f-41a6-4f5a-b6d1-eed5cc759f92';
+    $pane = new stdClass();
+    $pane->pid = 'new-2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a';
+    $pane->panel = 'left_sidebar';
+    $pane->type = 'campaign';
+    $pane->subtype = 'campaign';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'ding_campaign_count' => 3,
+      'ding_campaign_offset' => 0,
+      'context' => array(
+        0 => 'empty',
+        1 => 'empty',
+        2 => 'empty',
+        3 => 'empty',
+      ),
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = '';
+    $pane->uuid = '2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a';
+    $display->content['new-2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a'] = $pane;
+    $display->panels['left_sidebar'][3] = 'new-2c6af9c6-63ae-4100-9b56-e3b1bee1ce9a';
+    $pane = new stdClass();
+    $pane->pid = 'new-eda37090-d344-4baa-8c21-78573268da3d';
+    $pane->panel = 'main_content';
+    $pane->type = 'ting_object';
+    $pane->subtype = 'ting_object';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => 'argument_ting_object_id_17',
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = '';
+    $pane->uuid = 'eda37090-d344-4baa-8c21-78573268da3d';
+    $display->content['new-eda37090-d344-4baa-8c21-78573268da3d'] = $pane;
+    $display->panels['main_content'][0] = 'new-eda37090-d344-4baa-8c21-78573268da3d';
+  $display->hide_title = PANELS_TITLE_NONE;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $export['ting_object__ereolen-ting-object'] = $handler;
+
   return $export;
 }

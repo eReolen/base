@@ -13,5 +13,6 @@ features[features_api][] = api:2
 features[image][] = ereol_cover_base
 features[page_manager_handlers][] = search_node__ereolen-search-nodes
 features[page_manager_handlers][] = search_ting_search__ereolen-search
+features[page_manager_handlers][] = ting_object__ereolen-ting-object
 features[variable][] = ding_facetbrowser_facets
 project path = sites/all/modules/ereol
