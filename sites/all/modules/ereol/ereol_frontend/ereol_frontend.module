@@ -72,3 +72,15 @@ function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
       break;
   }
 }
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Remove ding_list from the implementors of hook_ding_entity_buttons(). We
+ * don't want it to add a button.
+ */
+function ereol_frontend_module_implements_alter(&$hooks, $hook) {
+  if ($hook == 'ding_entity_buttons') {
+    unset($hooks['ding_list']);
+  }
+}
