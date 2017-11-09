@@ -3829,6 +3829,7 @@ html.js input.form-autocomplete {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
 
 @media all and (min-width: 49em) {
@@ -3864,6 +3865,10 @@ html.js input.form-autocomplete {
     flex-basis: 75%;
     padding: 0 20px;
   }
+}
+
+.page-user .material-item img {
+  width: 100%;
 }
 
 .page-user h3 {
@@ -4088,18 +4093,21 @@ html.js input.form-autocomplete {
 
 .page-user-bookmarks .left-column {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .page-user-bookmarks .left-column .item-checkbox {
-  display: block;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 1;
+  display: inline-block;
 }
 
 .page-user-bookmarks .left-column .item-checkbox label {
   font-size: 0;
+}
+
+.page-user-bookmarks .item-information-list a {
+  color: #d8133f;
 }
 
 @font-face {
