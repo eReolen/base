@@ -69,6 +69,11 @@ $material--teaser__margin-bottom: 1.2rem;
     margin-bottom: $material--teaser__margin-bottom;
     font-size: 2.1rem;
 
+    // Don't display material types on collections.
+    .search-result--heading-type {
+      display: none;
+    }
+
     a {
       text-decoration: none;
       font-family: $font-light;

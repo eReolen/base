@@ -1095,6 +1095,23 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   if (isset($fields['ting_object-ting_object-ting_title'])) {
     $fields['ting_object-ting_object-ting_title']['display']['teaser']['settings']['link_type'] = 'object';
   }
+
+  // Add ting_subjects to search_result view_mode.
+  // @see reol_base_field_group_info_alter().
+  if (isset($fields['ting_object-ting_object-ting_subjects'])) {
+    $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['type'] = 'ting_subjects_default';
+    $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['module'] = 'ting';
+  }
+}
+
+/**
+ * Implements hook_field_group_info_alter().
+ */
+function reol_base_field_group_info_alter(&$groups) {
+  if (isset($groups['group_ting_right_col_search|ting_object|ting_object|search_result'])) {
+    // Put ting_subjects in the right column in search_result view_mode.
+    $groups['group_ting_right_col_search|ting_object|ting_object|search_result']->data['children'][] = 'ting_subjects';
+  }
 }
 
 /**

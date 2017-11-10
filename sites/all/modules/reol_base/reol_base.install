@@ -391,3 +391,10 @@ function reol_base_update_7134() {
 function reol_base_update_7135() {
   features_revert(array('ding_content' => array('wysiwyg')));
 }
+
+/**
+ * Revert groups and fields instances of ding_ting_frontend.
+ */
+function reol_base_update_7136() {
+  features_revert(array('ding_ting_frontend' => array('field_group', 'field_instance')));
+}

@@ -1,0 +1,10 @@
+
+.pane-ting-collection {
+  margin-top: 3rem;
+
+  // Horrible selector, but we need to avoid hitting the H2 in the
+  // material itself.
+  .content-wrapper--material > .field > .field-items > .field-item > h2 {
+    @include page-header;
+  }
+}
