@@ -1103,14 +1103,45 @@ search/ting
     $display->content['new-8c79c7df-e311-4af4-965f-50d239f6ecec'] = $pane;
     $display->panels['branding'][2] = 'new-8c79c7df-e311-4af4-965f-50d239f6ecec';
     $pane = new stdClass();
-    $pane->pid = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
+    $pane->pid = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
     $pane->panel = 'content';
-    $pane->type = 'announcement';
-    $pane->subtype = 'announcement';
+    $pane->type = 'page_tabs';
+    $pane->subtype = 'page_tabs';
     $pane->shown = TRUE;
-    $pane->access = array();
+    $pane->access = array(
+      'plugins' => array(
+        2 => array(
+          'name' => 'path_visibility',
+          'settings' => array(
+            'visibility_setting' => '1',
+            'paths' => 'user/*',
+          ),
+          'context' => 'empty',
+          'not' => TRUE,
+        ),
+        3 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 3,
+              1 => 4,
+              2 => 5,
+              3 => 6,
+              4 => 7,
+              5 => 9,
+              6 => 10,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    );
     $pane->configuration = array(
-      'override_title' => 0,
+      'type' => 'both',
+      'id' => 'tabs',
+      'override_title' => 1,
       'override_title_text' => '',
     );
     $pane->cache = array();
@@ -1121,9 +1152,9 @@ search/ting
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = 'bae52ec8-286d-435c-8d38-eb2e157996ac';
-    $display->content['new-bae52ec8-286d-435c-8d38-eb2e157996ac'] = $pane;
-    $display->panels['content'][0] = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
+    $pane->uuid = '76338aa5-3ee9-4256-9414-eab9979db07b';
+    $display->content['new-76338aa5-3ee9-4256-9414-eab9979db07b'] = $pane;
+    $display->panels['content'][0] = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
     $pane = new stdClass();
     $pane->pid = 'new-1769a64d-2cbe-490d-87aa-a2c3ee082997';
     $pane->panel = 'content';
@@ -1148,37 +1179,14 @@ search/ting
     $display->content['new-1769a64d-2cbe-490d-87aa-a2c3ee082997'] = $pane;
     $display->panels['content'][1] = 'new-1769a64d-2cbe-490d-87aa-a2c3ee082997';
     $pane = new stdClass();
-    $pane->pid = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
+    $pane->pid = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
     $pane->panel = 'content';
-    $pane->type = 'page_tabs';
-    $pane->subtype = 'page_tabs';
+    $pane->type = 'announcement';
+    $pane->subtype = 'announcement';
     $pane->shown = TRUE;
-    $pane->access = array(
-      'plugins' => array(
-        1 => array(
-          'name' => 'external_user',
-          'settings' => NULL,
-          'context' => array(
-            0 => 'logged-in-user',
-          ),
-          'not' => TRUE,
-        ),
-        2 => array(
-          'name' => 'path_visibility',
-          'settings' => array(
-            'visibility_setting' => '1',
-            'paths' => 'user/*',
-          ),
-          'context' => 'empty',
-          'not' => TRUE,
-        ),
-      ),
-      'logic' => 'or',
-    );
+    $pane->access = array();
     $pane->configuration = array(
-      'type' => 'both',
-      'id' => 'tabs',
-      'override_title' => 1,
+      'override_title' => 0,
       'override_title_text' => '',
     );
     $pane->cache = array();
@@ -1189,9 +1197,9 @@ search/ting
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $pane->uuid = '76338aa5-3ee9-4256-9414-eab9979db07b';
-    $display->content['new-76338aa5-3ee9-4256-9414-eab9979db07b'] = $pane;
-    $display->panels['content'][2] = 'new-76338aa5-3ee9-4256-9414-eab9979db07b';
+    $pane->uuid = 'bae52ec8-286d-435c-8d38-eb2e157996ac';
+    $display->content['new-bae52ec8-286d-435c-8d38-eb2e157996ac'] = $pane;
+    $display->panels['content'][2] = 'new-bae52ec8-286d-435c-8d38-eb2e157996ac';
     $pane = new stdClass();
     $pane->pid = 'new-4637ed6a-8c15-46bb-ae3b-4de4089e860d';
     $pane->panel = 'content';
