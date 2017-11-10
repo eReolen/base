@@ -3159,6 +3159,20 @@ html.js input.form-autocomplete {
   margin-right: 1rem;
 }
 
+.material__also_available {
+  font-family: "SourceSansPro", sans-serif;
+}
+
+.material__also_available .item-list,
+.material__also_available ul,
+.material__also_available li {
+  display: inline-block;
+}
+
+.material__also_available a {
+  color: #d8133f;
+}
+
 @media all and (min-width: 49em) {
   .material__buttons {
     float: left;

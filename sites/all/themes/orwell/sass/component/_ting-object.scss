@@ -163,6 +163,20 @@ $material--teaser__margin-bottom: 1.2rem;
     }
   }
 
+  &__also_available {
+    font-family: $font-regular;
+
+    .item-list,
+    ul,
+    li {
+      display: inline-block;
+    }
+
+    a {
+      color: $color__link__default;
+    }
+  }
+
   &__buttons {
     @include grid-media($medium) {
       float: left;

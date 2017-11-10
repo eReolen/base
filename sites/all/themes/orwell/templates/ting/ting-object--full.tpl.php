@@ -39,6 +39,12 @@
         <div class="material__series material__series--desktop desktop-only">
           <?php echo render($content['group_ting_object_right_column']['ting_series']); ?>
         </div>
+        <?php if ($also_available): ?>
+          <div class="material__also_available material__buttons--desktop">
+            <span class="material__also_available_label"><?php print t('Also available as'); ?>: </span>
+            <?php echo render($also_available); ?>
+          </div>
+        <?php endif; ?>
         <div class="material__buttons material__buttons--desktop mobile-only">
           <?php echo render($content['group_ting_object_right_column']['ding_entity_buttons']); ?>
         </div>
