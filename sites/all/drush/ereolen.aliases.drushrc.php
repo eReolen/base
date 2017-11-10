@@ -24,7 +24,7 @@ $aliases['prod'] = array(
     'dump-dir' => '/data/backup/prod',
     // Updb clears the cache.
     'no-cc-all' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'flowdock-token' => '7f3ef5b322ac7cb657a7f7ccae990f90',
     'newrelic-api-key' => '36372beaa3607d3b8082f6ed3d1ed986609d7359def9a47',
     'newrelic-app-name' => 'ereolen.dk',
     'post-online' => array(
@@ -43,7 +43,7 @@ $aliases['stg'] = array(
     'no-cc-all' => TRUE,
     // Don't bother with db.
     'no-dump' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'flowdock-token' => '7f3ef5b322ac7cb657a7f7ccae990f90',
   ),
 );
 
@@ -56,7 +56,7 @@ $aliases['dev'] = array(
     'no-dump' => TRUE,
     // Updb clears the cache.
     'no-cc-all' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'flowdock-token' => '7f3ef5b322ac7cb657a7f7ccae990f90',
   ),
 );
 
@@ -69,7 +69,7 @@ $aliases['ego-prod'] = array(
     'dump-dir' => '/data/backup/ego-prod',
     // Updb clears the cache.
     'no-cc-all' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'flowdock-token' => '7f3ef5b322ac7cb657a7f7ccae990f90',
     'newrelic-api-key' => '36372beaa3607d3b8082f6ed3d1ed986609d7359def9a47',
     'newrelic-app-name' => 'ereolengo.dk',
     'post-online' => array(
@@ -87,7 +87,7 @@ $aliases['ego-stg'] = array(
     'dump-dir' => '/data/backup/ego-stg',
     // Updb clears the cache.
     'no-cc-all' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'flowdock-token' => '7f3ef5b322ac7cb657a7f7ccae990f90',
   ),
 );
 
@@ -100,7 +100,7 @@ $aliases['ego-dev'] = array(
     'dump-dir' => '/data/backup/ego-dev',
     // Updb clears the cache.
     'no-cc-all' => TRUE,
-    'flowdock-token' => '2665ccaf6a5e3a4939c06a10adab861f',
+    'flowdock-token' => '7f3ef5b322ac7cb657a7f7ccae990f90',
   ),
 );
 
