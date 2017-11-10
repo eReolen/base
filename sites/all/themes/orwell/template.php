@@ -99,7 +99,6 @@ function orwell_preprocess_panels_pane(&$variables) {
  * Template preprocessor for ting objects.
  */
 function orwell_preprocess_ting_object(&$variables) {
-
   $variables['bundle'] = $variables['elements']['#bundle'];
 
   $variables['theme_hook_suggestions'][] = 'ting_object__' . $variables['elements']['#view_mode'];
@@ -107,6 +106,46 @@ function orwell_preprocess_ting_object(&$variables) {
   // Add font-awesome - used for ratings.
   $font_awesome = variable_get('ereol_font_awesome_path', '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
   drupal_add_css($font_awesome, array('type' => 'external'));
+
+  // Add "also available" to material details.
+  $variables['also_available'] = '';
+  // Copied and adapted from ting_block_view().
+  if ($variables['elements']['#view_mode'] == 'full') {
+    if ($collection = ting_collection_load($variables['object']->id)) {
+      $items = array();
+      foreach ($collection->types as $k => $type) {
+        if ($collection->types_count[$type] == 1) {
+          $uri = entity_uri('ting_object', $collection);
+          // Don't link to ourselves.
+          if (isset($uri['options']['entity']->entities[$k]->ding_entity_id) &&
+            $variables['object']->id == $uri['options']['entity']->entities[$k]->ding_entity_id) {
+            continue;
+          }
+          $uri['path'] = urldecode(url('ting/object/' . $uri['options']['entity']->entities[$k]->ding_entity_id));
+        }
+        else {
+          // This shouldn't happen on eReolen, but we're keeping this code
+          // anyway.
+          $uri = entity_uri('ting_collection', $collection);
+          $uri['options']['fragment'] = $type;
+          $uri['options']['attributes'] = array('class' => array('js-search-overlay'));
+        }
+
+        $items[] = l(ting_type_label($type), $uri['path'], $uri['options']);
+      }
+
+      // Only display if there are more than on item.
+      if (count($items) > 1) {
+        $variables['also_available'] = array(
+          '#theme' => 'item_list',
+          '#items' => $items,
+        );
+
+        // Add search overlay trigger.
+        drupal_add_js(drupal_get_path('module', 'ting') . '/js/ting.js');
+      }
+    }
+  }
 }
 
 /**
