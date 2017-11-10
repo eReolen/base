@@ -117,7 +117,8 @@ function orwell_preprocess_ting_object(&$variables) {
         if ($collection->types_count[$type] == 1) {
           $uri = entity_uri('ting_object', $collection);
           // Don't link to ourselves.
-          if ($variables['object']->id == $uri['options']['entity']->entities[$k]->ding_entity_id) {
+          if (isset($uri['options']['entity']->entities[$k]->ding_entity_id) &&
+            $variables['object']->id == $uri['options']['entity']->entities[$k]->ding_entity_id) {
             continue;
           }
           $uri['path'] = urldecode(url('ting/object/' . $uri['options']['entity']->entities[$k]->ding_entity_id));
@@ -134,7 +135,7 @@ function orwell_preprocess_ting_object(&$variables) {
       }
 
       // Only display if there are more than on item.
-      if ($items > 1) {
+      if (count($items) > 1) {
         $variables['also_available'] = array(
           '#theme' => 'item_list',
           '#items' => $items,
