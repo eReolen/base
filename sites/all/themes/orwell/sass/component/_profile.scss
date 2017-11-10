@@ -76,6 +76,7 @@
   .material-item {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 2rem;
 
     @include grid-media($medium) {
       flex-wrap: nowrap;
@@ -97,6 +98,11 @@
         flex-basis: 75%;
         padding: 0 20px;
       }
+    }
+
+    img {
+      // Equal width covers.
+      width: 100%;
     }
   }
 
@@ -170,19 +176,22 @@
 
   .left-column {
     position: relative;
+    display: flex;
 
     .item-checkbox {
       // Show material checkboxes on this page.
-      display: block;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 1;
+      display: inline-block;
 
       label {
         // Hide labels on material-items.
         font-size: 0;
       }
+    }
+  }
+
+  .item-information-list {
+    a {
+      color: $color__link__default;
     }
   }
 }
