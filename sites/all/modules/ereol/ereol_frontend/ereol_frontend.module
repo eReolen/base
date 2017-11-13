@@ -75,3 +75,12 @@ function ereol_frontend_module_implements_alter(&$hooks, $hook) {
     unset($hooks['ding_list']);
   }
 }
+
+/**
+ * Preprocess materials_item.
+ *
+ * Remove the rating widget added by ding_entity_rating.
+ */
+function ereol_frontend_preprocess_material_item(&$variables) {
+  unset($variables['information']['ding_entity_rating']);
+}
