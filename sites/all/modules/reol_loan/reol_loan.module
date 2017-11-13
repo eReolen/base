@@ -136,12 +136,12 @@ function reol_loan_ding_entity_buttons($type, $entity) {
 
       switch (_reol_loan_map_availability($availability)) {
         case REOL_LOAN_STATUS_LOANABLE:
-          $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id, array('btn', 'btn--loan'));
+          $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id, array('btn', 'btn--loan', 'use-ajax'));
           break;
 
         case REOL_LOAN_STATUS_RESERVED:
           global $user;
-          $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id);
+          $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id, array('use-ajax'));
           break;
 
         case REOL_LOAN_STATUS_NOT_LOANABLE:
