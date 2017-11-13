@@ -1,0 +1,18 @@
+@import 'bootstrap/bootstrap';
+
+.node-webform {
+  @include content-wrapper;
+  @include form-default;
+
+  @include grid-media($medium) {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+
+  .webform__title {
+    @include page-header;
+  }
+}
