@@ -128,3 +128,21 @@
 .ui-widget-overlay {
   opacity: .4;
 }
+
+// Specific dialogs.
+
+#ding-reservation-delete-reservations-form {
+  a {
+    @include button;
+
+    display: inline-block;
+
+    @include grid-media($small) {
+      width: 49%;
+
+      &#edit-cancel {
+        float: right;
+      }
+    }
+  }
+}
