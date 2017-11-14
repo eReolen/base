@@ -45,8 +45,11 @@ function pratchett_ting_collection_view_alter(&$build) {
   if (isset($build['ting_primary_object'])) {
     foreach (element_children($build['ting_primary_object']) as $key) {
       $collection = $build['ting_primary_object']['#object'];
-      if (count($collection->entities) > 1) {
-        if (isset($build['ting_primary_object'][$key]['ting_cover'])) {
+      if (isset($build['ting_primary_object'][$key]['ting_cover'])) {
+        // Signal to pratchett_ting_object_cover that this is a collection, so
+        // it can build the correct link.
+        $build['ting_primary_object'][$key]['ting_cover'][0]['#object']->reol_is_collection = TRUE;
+        if (count($collection->entities) > 1) {
           $build['ting_primary_object'][$key]['ting_cover'][0]['#object']->reol_no_type_icons = TRUE;
         }
       }
@@ -70,7 +73,8 @@ function pratchett_ting_object_cover($variables) {
   // Add link if the id is not to a fake material.
   $ding_entity_id = $ding_entity->ding_entity_id;
   if (!reol_base_fake_id($ding_entity_id) && !isset($ding_entity->reol_no_link)) {
-    $output = l($output, 'ting/collection/' . $ding_entity_id, array('html' => TRUE));
+    $path = isset($ding_entity->reol_is_collection) ? 'ting/collection/' : 'ting/object/';
+    $output = l($output, $path . $ding_entity_id, array('html' => TRUE));
   }
 
   return '<div class="ting-cover-wrapper">' . $output . $icons . '</div>';
