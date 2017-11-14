@@ -46,8 +46,15 @@
   }
 
   .pane-content {
-    font-family: $font-regular;
+    @include text-paragraph;
   }
+
+  .pane-library-info .pane-content {
+    a {
+      color: $color__link__default;
+    }
+  }
+
 
   .pane-user-menu {
     li,
@@ -115,12 +122,6 @@
     a {
       color: black;
       text-decoration: none;
-    }
-  }
-
-  .library-info {
-    a {
-      color: $color__link__default;
     }
   }
 
