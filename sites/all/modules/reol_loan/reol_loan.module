@@ -245,10 +245,10 @@ function _reol_loan_map_availability(array $availability) {
  *
  * @param object $user
  *   The user from request.
- * @param array $local_ids
- *   The local ids to delete reservations for.
+ * @param string $local_ids
+ *   The local ids to delete reservations for, comma separated.
  */
-function reol_loan_delete_reservations_ajax($user, array $local_ids) {
+function reol_loan_delete_reservations_ajax($user, $local_ids) {
   $response = array(
     '#type' => 'ajax',
     '#commands' => array(),
