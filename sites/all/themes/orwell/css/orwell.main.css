@@ -1172,6 +1172,10 @@ div.messages ul {
   display: none;
 }
 
+.login-failed .js-login-form {
+  display: block;
+}
+
 .branding {
   height: 5rem;
   top: 0;

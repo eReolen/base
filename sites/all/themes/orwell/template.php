@@ -33,6 +33,33 @@ function orwell_form_search_block_form_alter(&$form, &$form_state) {
 function orwell_form_user_login_block_alter(&$form, &$form_state) {
   // Hide links.
   $form['links']['#access'] = FALSE;
+
+  // Add validate handler so we can detect failed login.
+  $form['#validate'][] = 'orwel_form_user_login_block_validate';
+}
+
+/**
+ * Form validate callback.
+ *
+ * Makes a note if the login failed.
+ */
+function orwel_form_user_login_block_validate(&$form, &$form_state) {
+  $failed = &drupal_static('orwell_login_failed', FALSE);
+  if (!isset($form_state['uid']) || !$form_state['uid']) {
+    $failed = TRUE;
+  }
+}
+
+/**
+ * Preprocess html element.
+ *
+ * Adds a class to body when the login failed.
+ */
+function orwell_preprocess_html(&$vars) {
+  $failed = &drupal_static('orwell_login_failed', FALSE);
+  if ($failed) {
+    $vars['classes_array'][] = 'login-failed';
+  }
 }
 
 /**
