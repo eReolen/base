@@ -118,8 +118,12 @@
     }
   }
 
-  .library-info {
-    a {
+  .pane-content {
+    @include text-paragraph;
+  }
+
+  .pane-library-info .pane-content {
+      a {
       color: $color__link__default;
     }
   }

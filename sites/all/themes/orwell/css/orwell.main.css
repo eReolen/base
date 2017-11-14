@@ -3929,7 +3929,13 @@ html.js input.form-autocomplete {
   text-decoration: none;
 }
 
-.page-user .library-info a {
+.page-user .pane-content {
+  font-size: 1rem;
+  line-height: 1.8rem;
+  color: #787878;
+}
+
+.page-user .pane-library-info .pane-content a {
   color: #d8133f;
 }
 

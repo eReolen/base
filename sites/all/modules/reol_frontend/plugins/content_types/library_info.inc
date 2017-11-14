@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * CTools Content Type for showing the library info.
@@ -49,6 +50,7 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
       )),
     )),
   );
+  $block->title = t('Restrictions');
   $block->content = theme('library_info', $variables);
 
   return $block;
