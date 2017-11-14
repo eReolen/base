@@ -135,7 +135,7 @@ function orwell_preprocess_ting_object(&$variables) {
       }
 
       // Only display if there are more than on item.
-      if (count($items) > 1) {
+      if (count($items) > 0) {
         $variables['also_available'] = array(
           '#theme' => 'item_list',
           '#items' => $items,
