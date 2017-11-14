@@ -581,10 +581,9 @@ div.messages ul {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  content: "";
+  content: "";
   position: absolute;
   right: .5rem;
-  top: 12px;
   font-size: 2rem;
 }
 

@@ -706,7 +706,6 @@ function reol_base_get_entity_button($text, $link, $id, $classes = array()) {
       'attributes' => array(
         'class' => array_merge(array(
           'action-button',
-          'use-ajax',
         ), $classes),
         'id' => $id,
       ),

@@ -225,7 +225,7 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
             $text = t('Bookmark');
           }
 
-          $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id);
+          $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id, array('use-ajax'));
         }
       }
     }
@@ -246,7 +246,7 @@ function reol_bookmark_get_bookmark_button(TingEntity $entity) {
   list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
   if (!@$availability['bookmarked']) {
-    return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id);
+    return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id, array('use-ajax'));
   }
 }
 
