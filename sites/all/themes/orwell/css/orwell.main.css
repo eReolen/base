@@ -799,6 +799,34 @@ div.messages ul {
   opacity: .4;
 }
 
+#ding-reservation-delete-reservations-form a {
+  font-family: "SourceSansProSemiBold", sans-serif;
+  line-height: 1em;
+  padding: 10px 22px;
+  margin-top: 1rem;
+  background-color: #95b978;
+  color: white;
+  border-radius: 2px;
+  text-transform: uppercase;
+  width: 100%;
+  font-size: .9rem;
+  display: inline-block;
+}
+
+#ding-reservation-delete-reservations-form a:hover {
+  background-color: #7c9b63;
+  cursor: pointer;
+}
+
+@media all and (min-width: 23em) {
+  #ding-reservation-delete-reservations-form a {
+    width: 49%;
+  }
+  #ding-reservation-delete-reservations-form a#edit-cancel {
+    float: right;
+  }
+}
+
 @font-face {
   font-family: "icomoon";
   font-style: normal;
