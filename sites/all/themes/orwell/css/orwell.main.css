@@ -2455,7 +2455,7 @@ html.js input.form-autocomplete {
 .article--teaser {
   display: block;
   height: 370px;
-  padding: 2rem 4rem;
+  padding: 2rem;
   color: white;
   background-color: #393939;
   position: relative;
@@ -2463,25 +2463,46 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .article--teaser {
+    padding: 2rem 4rem;
     max-width: 100vw;
     width: 1049px;
   }
 }
 
-.article--teaser a {
+.article--teaser > a {
   color: white;
   text-decoration: none;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+}
+
+@media all and (min-width: 49em) {
+  .article--teaser > a {
+    display: block;
+  }
 }
 
 .article--teaser__title {
   position: relative;
   max-width: 600px;
   margin: 0 auto 2rem;
-  font-size: 2rem;
-  line-height: 2.6rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
   text-align: center;
   font-family: "SourceSansProLight", sans-serif;
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.78);
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0;
+  flex: 0 0;
 }
 
 .article--teaser--image .article--teaser__title {
@@ -2494,7 +2515,13 @@ html.js input.form-autocomplete {
     max-width: 100%;
     margin: 0 0 1.2rem;
     text-align: left;
+    font-size: 2rem;
+    line-height: 2.6rem;
   }
+}
+
+.article--teaser__teaser_right {
+  position: relative;
 }
 
 .article--teaser__body {
@@ -2520,6 +2547,13 @@ html.js input.form-autocomplete {
   margin: auto;
 }
 
+@media all and (min-width: 49em) {
+  .article--teaser__covers {
+    max-height: 340px;
+    max-width: 400px;
+  }
+}
+
 .article--teaser__covers img {
   position: absolute;
   width: auto;
@@ -2530,7 +2564,7 @@ html.js input.form-autocomplete {
 
 .article--teaser__covers img:nth-child(1) {
   max-width: 60%;
-  right: 40%;
+  right: 38%;
   bottom: 0;
   z-index: 2;
   -webkit-box-shadow: 11px -1px 28px -13px rgba(0, 0, 0, 0.75);
@@ -2539,8 +2573,10 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .article--teaser__covers img:nth-child(1) {
+    max-width: none;
+    max-height: 100%;
     right: auto;
-    left: 40%;
+    left: 38%;
     -webkit-box-shadow: -11px -1px 28px -13px rgba(0, 0, 0, 0.75);
     box-shadow: -11px -1px 28px -13px rgba(0, 0, 0, 0.75);
   }
@@ -2548,15 +2584,17 @@ html.js input.form-autocomplete {
 
 .article--teaser__covers img:nth-child(2) {
   max-width: 40%;
-  left: 60%;
+  left: 58%;
   bottom: 6%;
   z-index: 1;
 }
 
 @media all and (min-width: 49em) {
   .article--teaser__covers img:nth-child(2) {
+    max-width: none;
+    max-height: 70%;
     left: auto;
-    right: 60%;
+    right: 58%;
   }
 }
 
