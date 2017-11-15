@@ -25,14 +25,9 @@
   }
 }
 
-// Hide the login form, it'll be toggled by JS.
-.js .js-login-form {
+// Hide the login form if JS is active, it'll be toggled by JS.
+.js .hide-login .main-login-form {
   display: none;
-}
-
-// But show it if login just failed.
-.login-failed .js-login-form {
-  display: block;
 }
 
 .branding {

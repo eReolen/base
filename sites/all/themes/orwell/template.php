@@ -45,7 +45,9 @@ function orwell_form_user_login_block_alter(&$form, &$form_state) {
  */
 function orwel_form_user_login_block_validate(&$form, &$form_state) {
   $failed = &drupal_static('orwell_login_failed', FALSE);
-  if (!isset($form_state['uid']) || !$form_state['uid']) {
+
+  // If UID is not set, login failed.
+  if (empty($form_state['uid'])) {
     $failed = TRUE;
   }
 }
@@ -57,8 +59,9 @@ function orwel_form_user_login_block_validate(&$form, &$form_state) {
  */
 function orwell_preprocess_html(&$vars) {
   $failed = &drupal_static('orwell_login_failed', FALSE);
-  if ($failed) {
-    $vars['classes_array'][] = 'login-failed';
+  if (!$failed) {
+    // Hide the main login form unless the user just failed logging in.
+    $vars['classes_array'][] = 'hide-login';
   }
 }
 

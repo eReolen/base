@@ -1398,7 +1398,7 @@ search/ting
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'js-login-form',
+      'css_class' => 'main-login-form',
     );
     $pane->extras = array();
     $pane->position = 2;
