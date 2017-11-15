@@ -16,14 +16,14 @@ function ereol_frontend_strongarm() {
   $strongarm->name = 'ding_facetbrowser_facets';
   $strongarm->value = array(
     0 => array(
-      'name' => 'facet.type',
-      'title' => 'Materialetype',
+      'name' => 'facet.extraTitles',
+      'title' => 'Ekstra lån',
       'sorting' => 'default',
       'weight' => '-10',
     ),
     1 => array(
-      'name' => 'facet.extraTitles',
-      'title' => 'Ekstra lån',
+      'name' => 'facet.type',
+      'title' => 'Materialetype',
       'sorting' => 'default',
       'weight' => '-9',
     ),
@@ -40,9 +40,9 @@ function ereol_frontend_strongarm() {
       'weight' => '-7',
     ),
     4 => array(
-      'name' => 'facet.date',
-      'title' => 'Årstal',
-      'sorting' => 'numeric_reverse',
+      'name' => 'facet.language',
+      'title' => 'Sprog',
+      'sorting' => 'default',
       'weight' => '-6',
     ),
     5 => array(
@@ -52,10 +52,16 @@ function ereol_frontend_strongarm() {
       'weight' => '-5',
     ),
     6 => array(
-      'name' => 'facet.language',
-      'title' => 'Sprog',
-      'sorting' => 'default',
+      'name' => 'facet.date',
+      'title' => 'Årstal',
+      'sorting' => 'numeric_reverse',
       'weight' => '-4',
+    ),
+    7 => array(
+      'name' => 'facet.acSource',
+      'title' => 'Kilde',
+      'sorting' => 'default',
+      'weight' => '10',
     ),
   );
   $export['ding_facetbrowser_facets'] = $strongarm;
