@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen review module feature.
@@ -20,11 +21,11 @@ function reol_review_cron() {
   $timestamp = REQUEST_TIME - ($days * 86400);
 
   $query = db_select('reol_review_reviews', 'r')
-         ->fields('r', array('rrid'))
-         ->condition('ding_entity_id', '')
-         ->condition('process', 0)
-         ->condition('processed', $timestamp, '<')
-         ->range(0, 50);
+    ->fields('r', array('rrid'))
+    ->condition('ding_entity_id', '')
+    ->condition('process', 0)
+    ->condition('processed', $timestamp, '<')
+    ->range(0, 50);
 
   $rrids = array();
   $queue = DrupalQueue::get('reol_review_old');
@@ -112,10 +113,10 @@ function reol_review_fetch_reviews($items, $start) {
  */
 function reol_review_get_random_reviews($type = NULL, $count = 1) {
   $query = db_select('reol_review_reviews', 'r')
-         ->fields('r')
-         ->condition('processed', 0, '<>')
-         ->condition('ding_entity_id', '', '<>')
-         ->orderRandom();
+    ->fields('r')
+    ->condition('processed', 0, '<>')
+    ->condition('ding_entity_id', '', '<>')
+    ->orderRandom();
 
   if ($type) {
     $query->condition('type', $type);
@@ -132,7 +133,6 @@ function reol_review_get_random_reviews($type = NULL, $count = 1) {
     else {
       // If we can't find the object anymore, remove the review from
       // selection.
-      // $review->processed = REQUEST_TIME;
       db_update('reol_review_reviews')
         ->fields(array(
           'process' => $review->process,
@@ -181,7 +181,7 @@ function reol_review_fetch_old() {
 function reol_review_fetch_and_queue($count, $offset, $queue_name = 'reol_review_new') {
   $reviews = reol_review_fetch_reviews($count, $offset);
 
-  if (isset($reviews->error) && !$reviews->error) {
+  if (empty($reviews) || isset($reviews->error) && !$reviews->error) {
     return FALSE;
   }
 
@@ -210,7 +210,7 @@ function reol_review_fetch_and_queue($count, $offset, $queue_name = 'reol_review
 
     // Skip if they're too long. Not using drupal_strlen() as we want
     // the ASCII length, not multibyte length.
-    if (strlen($isbn) > 13 || strlen($link) >255) {
+    if (strlen($isbn) > 13 || strlen($link) > 255) {
       continue;
     }
 
@@ -243,7 +243,7 @@ function reol_review_process_queue($rrid) {
     ->fetch();
 
   if (!$review) {
-    watchdog('reol_review', 'Could not load queued review rrid @rrid', array('@rrid' => $rid), WATCHDOG_ERROR);
+    watchdog('reol_review', 'Could not load queued review rrid @rrid', array('@rrid' => $rrid), WATCHDOG_ERROR);
     return;
   }
 
