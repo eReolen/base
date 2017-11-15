@@ -226,6 +226,7 @@ $teaser-height--medium: 400px;
         left: 58%;
         bottom: 6%;
         z-index: 1;
+
         @include grid-media($medium) {
           max-width: none;
           max-height: 70%;

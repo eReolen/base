@@ -6,7 +6,8 @@
   font-family: $font-semibold;
   font-size: 1rem;
 
-  a {
+  a,
+  .pager-ellipsis {
     display: inline-block;
     padding: 1rem;
     color: $color__font-gray;
@@ -16,6 +17,11 @@
       color: $color__red;
     }
   }
+}
+
+.pager-first,
+.pager-last {
+  display: none;
 }
 
 .pager-current {
