@@ -2515,67 +2515,48 @@ html.js input.form-autocomplete {
 .article--teaser__covers {
   position: relative;
   height: 100vw;
-  max-height: 360px;
-  max-width: 400px;
+  max-height: 220px;
+  max-width: 300px;
   margin: auto;
 }
 
-.article--teaser__covers img:nth-child(1) {
+.article--teaser__covers img {
   position: absolute;
-  width: 59%;
-  height: 212px;
-  max-width: 17rem;
-  left: 2%;
+  width: auto;
   -o-object-fit: cover;
   object-fit: cover;
-  -webkit-transform: translate(0%, 0%) rotate(0deg) scale(1);
-  -ms-transform: translate(0%, 0%) rotate(0deg) scale(1);
-  transform: translate(0%, 0%) rotate(0deg) scale(1);
+  max-height: 100%;
+}
+
+.article--teaser__covers img:nth-child(1) {
+  max-width: 60%;
+  right: 40%;
+  bottom: 0;
   z-index: 2;
   -webkit-box-shadow: 11px -1px 28px -13px rgba(0, 0, 0, 0.75);
   box-shadow: 11px -1px 28px -13px rgba(0, 0, 0, 0.75);
 }
 
-@media all and (min-width: 20em) {
-  .article--teaser__covers img:nth-child(1) {
-    height: 335px;
-  }
-}
-
 @media all and (min-width: 49em) {
   .article--teaser__covers img:nth-child(1) {
-    -webkit-transform: translate(59%, 0%) rotate(0deg) scale(1);
-    -ms-transform: translate(59%, 0%) rotate(0deg) scale(1);
-    transform: translate(59%, 0%) rotate(0deg) scale(1);
+    right: auto;
+    left: 40%;
     -webkit-box-shadow: -11px -1px 28px -13px rgba(0, 0, 0, 0.75);
     box-shadow: -11px -1px 28px -13px rgba(0, 0, 0, 0.75);
   }
 }
 
 .article--teaser__covers img:nth-child(2) {
-  position: absolute;
-  height: 136px;
-  width: 39%;
-  max-width: 12.5rem;
-  -o-object-fit: cover;
-  object-fit: cover;
-  -webkit-transform: translate(150%, 39%) rotate(0deg) scale(1);
-  -ms-transform: translate(150%, 39%) rotate(0deg) scale(1);
-  transform: translate(150%, 39%) rotate(0deg) scale(1);
+  max-width: 40%;
+  left: 60%;
+  bottom: 6%;
   z-index: 1;
-}
-
-@media all and (min-width: 20em) {
-  .article--teaser__covers img:nth-child(2) {
-    height: 229px;
-  }
 }
 
 @media all and (min-width: 49em) {
   .article--teaser__covers img:nth-child(2) {
-    -webkit-transform: translate(0%, 39%) rotate(0deg) scale(1);
-    -ms-transform: translate(0%, 39%) rotate(0deg) scale(1);
-    transform: translate(0%, 39%) rotate(0deg) scale(1);
+    left: auto;
+    right: 60%;
   }
 }
 
