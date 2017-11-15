@@ -3036,6 +3036,10 @@ html.js input.form-autocomplete {
   text-decoration: none;
 }
 
+.group-material-details .field-group-format-wrapper .field-items span {
+  margin-right: 1rem;
+}
+
 .abstract {
   font-size: 1rem;
   line-height: 1.8rem;
