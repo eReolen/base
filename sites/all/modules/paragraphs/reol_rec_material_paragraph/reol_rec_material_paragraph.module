@@ -27,7 +27,8 @@ function reol_rec_material_paragraph_preprocess_entity(&$variables) {
       if ($ting_entity) {
         $ting_entity->reol_no_link = TRUE;
         $build = ting_object_view($ting_entity, 'compact');
-        $variables['link'] = entity_uri('ting_entity', $ting_entity);
+        $uri = entity_uri('ting_object', $ting_entity);
+        $variables['link'] = url($uri['path'], $uri['options']);
         $variables['cover'] = $build['ting_cover'];
         $variables['author'] = $build['ting_author'];
         $variables['title'] = $build['ting_title'];
