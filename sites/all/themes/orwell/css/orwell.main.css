@@ -1168,7 +1168,7 @@ div.messages ul {
   }
 }
 
-.js .js-login-form {
+.js .hide-login .main-login-form {
   display: none;
 }
 
