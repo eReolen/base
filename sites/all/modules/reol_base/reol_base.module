@@ -1101,6 +1101,11 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['type'] = 'ting_subjects_default';
     $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['module'] = 'ting';
   }
+
+  // Remove subjects from material details.
+  if (isset($fields['ting_object-ting_object-ting_details_subjects'])) {
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['default']['type'] = 'hidden';
+  }
 }
 
 /**
