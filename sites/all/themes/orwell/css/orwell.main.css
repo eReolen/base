@@ -5367,4 +5367,66 @@ html.js input.form-autocomplete {
   padding: 3.75rem 0;
 }
 
+@font-face {
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/icomoon/icomoon.woff") format("woff"), url("/sites/all/themes/orwell/fonts/icomoon/icomoon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SourceSansProLight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light.svg#SourceSansProLight") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular.svg#SourceSansPro") format("svg");
+}
+
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
+}
+
+.announcement {
+  max-width: 1200px;
+  width: 100%;
+  padding: 2rem;
+  font-family: "SourceSansPro", sans-serif;
+  font-size: 1.2rem;
+  color: #505050;
+  line-height: 1.8rem;
+  border: 1px solid #dcdcdc;
+  margin: 6px 0;
+}
+
+@media all and (min-width: 49em) {
+  .announcement {
+    margin: 0 auto;
+    padding: 0 3.75rem;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .announcement {
+    margin: 1rem auto;
+    padding: 2rem;
+  }
+}
+
+.announcement.info {
+  background: #b7dce5;
+}
+
+.announcement.warning {
+  background: #e5dbb7;
+}
+
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
