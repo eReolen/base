@@ -3904,6 +3904,13 @@ html.js input.form-autocomplete {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  height: 56vw;
+}
+
+@media all and (min-width: 49em) {
+  .spotlight-box__top__primary {
+    height: auto;
+  }
 }
 
 .spotlight-box__top__primary .spotlight-box__item {
