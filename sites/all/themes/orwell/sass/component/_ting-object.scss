@@ -304,8 +304,12 @@ $material--teaser__margin-bottom: 1.2rem;
     color: $color__font-gray;
 
     a {
-      color: $color__red;
+      color: $color__link__default;
       text-decoration: none;
+    }
+
+    span {
+      margin-right: 1rem;
     }
   }
 }

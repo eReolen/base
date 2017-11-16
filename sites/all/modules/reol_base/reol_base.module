@@ -1101,6 +1101,22 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['type'] = 'ting_subjects_default';
     $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['module'] = 'ting';
   }
+
+  // Remove subjects from material details.
+  if (isset($fields['ting_object-ting_object-ting_details_subjects'])) {
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['default']['type'] = 'hidden';
+  }
+
+  // Link publisher to a search.
+  if (isset($fields['ting_object-ting_object-ting_details_publisher'])) {
+    $fields['ting_object-ting_object-ting_details_publisher']['display']['default']['type'] = 'ting_details_generic_search';
+    $fields['ting_object-ting_object-ting_details_publisher']['display']['default']['settings'] = array('index' => 'term.publisher');
+  }
+
+  // Move audience above genre.
+  if (isset($fields['ting_object-ting_object-ting_details_audience'])) {
+    $fields['ting_object-ting_object-ting_details_audience']['display']['default']['weigth'] = 65;
+  }
 }
 
 /**
