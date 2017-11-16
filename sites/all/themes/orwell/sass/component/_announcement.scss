@@ -1,0 +1,26 @@
+@import 'bootstrap/bootstrap';
+
+.announcement {
+  @include content-wrapper;
+  padding: 2rem;
+  font-family: $font-regular;
+  font-size: 1.2rem;
+  color: $color__font-gray--dark;
+  line-height: 1.8rem;
+  border: 1px solid $color__gray--light;
+  // Same as messages.
+  margin: 6px 0;
+
+  @include grid-media($medium) {
+    margin: 1rem auto;
+    padding: 2rem;
+  }
+
+  &.info {
+    background: #b7dce5;
+  }
+
+  &.warning {
+    background: #e5dbb7;
+  }
+}
