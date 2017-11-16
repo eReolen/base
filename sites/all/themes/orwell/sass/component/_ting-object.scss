@@ -249,78 +249,78 @@ $material--teaser__margin-bottom: 1.2rem;
       }
     }
   }
-}
 
-.action-button {
-  @extend .btn;
-  float: left;
-  text-align: left;
-
-  @include grid-media($medium) {
-    max-width: 47%;
-  }
-}
-
-.content-wrapper--material {
-  padding: 0 2rem;
-}
-
-.detail {
-  width: 100%;
-  display: inline-block;
-  clear: left;
-  padding: 1.5rem 0;
-  border-top: 1px solid $color__border-gray;
-  margin: 0;
-
-  .article--search-result {
+  .action-button {
+    @extend .btn;
     float: left;
-    width: 100%;
-    margin: .5rem 0;
+    text-align: left;
 
     @include grid-media($medium) {
-      margin: 1.5rem 0 2rem;
+      max-width: 47%;
     }
   }
-}
 
-.group-material-details .field-group-format-wrapper {
-  font-family: $font-regular;
-  font-weight: normal;
+  .detail {
+    width: 100%;
+    display: inline-block;
+    clear: left;
+    padding: 1.5rem 0;
+    border-top: 1px solid $color__border-gray;
+    margin: 0;
 
-  .field-label,
-  .field-items {
-    width: 50%;
-    float: left;
-    padding: 1rem .5rem 1rem 0;
+    .article--search-result {
+      float: left;
+      width: 100%;
+      margin: .5rem 0;
+
+      @include grid-media($medium) {
+        margin: 1.5rem 0 2rem;
+      }
+    }
   }
 
-  .field-label {
-    font-family: $font-semibold;
+  .group-material-details .field-group-format-wrapper {
+    font-family: $font-regular;
     font-weight: normal;
-  }
 
-  .field-items {
-    color: $color__font-gray;
+    .field-label,
+    .field-items {
+      width: 50%;
+      float: left;
+      padding: 1rem .5rem 1rem 0;
+    }
 
-    a {
-      color: $color__link__default;
-      text-decoration: none;
+    .field-label {
+      font-family: $font-semibold;
+      font-weight: normal;
+    }
+
+    .field-items {
+      color: $color__font-gray;
+
+      a {
+        color: $color__link__default;
+        text-decoration: none;
+      }
     }
 
     span {
       margin-right: 1rem;
     }
   }
-}
 
-.abstract {
-  @include text-paragraph;
-}
-
-.ting-fulltext-inner-wrapper {
-  h1 {
-    color: $color__font-gray--dark;
-    font-family: $font-semibold;
+  .abstract {
+    @include text-paragraph;
   }
+
+  .ting-fulltext-inner-wrapper {
+    h1 {
+      color: $color__font-gray--dark;
+      font-family: $font-semibold;
+    }
+  }
+}
+
+.content-wrapper--material {
+  padding: 0 2rem;
 }

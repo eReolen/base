@@ -428,7 +428,7 @@ div.messages ul {
   padding: .5rem 1rem;
 }
 
-.btn, .action-button {
+.btn, .material .action-button {
   font-family: "SourceSansProSemiBold", sans-serif;
   line-height: 1em;
   padding: 10px 22px;
@@ -444,13 +444,13 @@ div.messages ul {
   position: relative;
 }
 
-.btn:hover, .action-button:hover {
+.btn:hover, .material .action-button:hover {
   background-color: #7c9b63;
   cursor: pointer;
 }
 
 @media all and (min-width: 49em) {
-  .btn, .action-button {
+  .btn, .material .action-button {
     width: auto;
     display: inline-block;
     text-align: center;
@@ -458,7 +458,7 @@ div.messages ul {
   }
 }
 
-.btn.a, .a.action-button {
+.btn.a, .material .a.action-button {
   color: inherit !important;
 }
 
@@ -610,13 +610,21 @@ div.messages ul {
 }
 
 .ui-dialog .action-button {
-  margin-top: 50px;
-  float: none;
-  background: #d8133f;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  line-height: 1em;
+  padding: 10px 22px;
+  margin-top: 1rem;
+  background-color: #95b978;
+  color: white;
+  border-radius: 2px;
+  text-transform: uppercase;
+  width: 100%;
+  font-size: .9rem;
 }
 
-.ui-dialog .action-button::before {
-  color: white;
+.ui-dialog .action-button:hover {
+  background-color: #7c9b63;
+  cursor: pointer;
 }
 
 .ui-dialog .ui-corner-all {
@@ -2974,22 +2982,18 @@ html.js input.form-autocomplete {
   }
 }
 
-.action-button {
+.material .action-button {
   float: left;
   text-align: left;
 }
 
 @media all and (min-width: 49em) {
-  .action-button {
+  .material .action-button {
     max-width: 47%;
   }
 }
 
-.content-wrapper--material {
-  padding: 0 2rem;
-}
-
-.detail {
+.material .detail {
   width: 100%;
   display: inline-block;
   clear: left;
@@ -2998,57 +3002,61 @@ html.js input.form-autocomplete {
   margin: 0;
 }
 
-.detail .article--search-result {
+.material .detail .article--search-result {
   float: left;
   width: 100%;
   margin: .5rem 0;
 }
 
 @media all and (min-width: 49em) {
-  .detail .article--search-result {
+  .material .detail .article--search-result {
     margin: 1.5rem 0 2rem;
   }
 }
 
-.group-material-details .field-group-format-wrapper {
+.material .group-material-details .field-group-format-wrapper {
   font-family: "SourceSansPro", sans-serif;
   font-weight: normal;
 }
 
-.group-material-details .field-group-format-wrapper .field-label,
-.group-material-details .field-group-format-wrapper .field-items {
+.material .group-material-details .field-group-format-wrapper .field-label,
+.material .group-material-details .field-group-format-wrapper .field-items {
   width: 50%;
   float: left;
   padding: 1rem .5rem 1rem 0;
 }
 
-.group-material-details .field-group-format-wrapper .field-label {
+.material .group-material-details .field-group-format-wrapper .field-label {
   font-family: "SourceSansProSemiBold", sans-serif;
   font-weight: normal;
 }
 
-.group-material-details .field-group-format-wrapper .field-items {
+.material .group-material-details .field-group-format-wrapper .field-items {
   color: #787878;
 }
 
-.group-material-details .field-group-format-wrapper .field-items a {
+.material .group-material-details .field-group-format-wrapper .field-items a {
   color: #d8133f;
   text-decoration: none;
 }
 
-.group-material-details .field-group-format-wrapper .field-items span {
+.material .group-material-details .field-group-format-wrapper span {
   margin-right: 1rem;
 }
 
-.abstract {
+.material .abstract {
   font-size: 1rem;
   line-height: 1.8rem;
   color: #787878;
 }
 
-.ting-fulltext-inner-wrapper h1 {
+.material .ting-fulltext-inner-wrapper h1 {
   color: #505050;
   font-family: "SourceSansProSemiBold", sans-serif;
+}
+
+.content-wrapper--material {
+  padding: 0 2rem;
 }
 
 .ting-object.view-mode-compact {

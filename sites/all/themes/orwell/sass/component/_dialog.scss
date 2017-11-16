@@ -61,13 +61,7 @@
   }
 
   .action-button {
-    margin-top: 50px;
-    float: none;
-    background: $color__red;
-
-    &::before {
-      color: white;
-    }
+    @include button;
   }
 
   .ui-corner-all {
