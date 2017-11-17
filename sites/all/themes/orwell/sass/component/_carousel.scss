@@ -1,6 +1,8 @@
 @import 'bootstrap/bootstrap';
 
 .ding-carousel {
+  @include content-wrapper;
+
   padding: 10px 0;
 
   @include grid-media($medium) {
