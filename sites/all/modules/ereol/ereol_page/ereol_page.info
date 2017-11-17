@@ -1,7 +1,7 @@
 name = eReolen page
 description = Page content type for eReolen.dk
 core = 7.x
-package = ereolen.dk
+package = eReolen
 version = 7.x-1.0
 dependencies[] = ctools
 dependencies[] = features
