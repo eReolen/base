@@ -1,7 +1,7 @@
 name = Publizon provider
 description = Ding provider for Publizon API.
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 dependencies[] = ctools
 dependencies[] = ding_provider
 dependencies[] = email

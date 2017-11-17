@@ -1,7 +1,7 @@
 name = eReolen use loan module
 description = Module handling the usage of loans (reading or listening)
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 dependencies[] = ctools
 dependencies[] = page_manager
 dependencies[] = reol_loan

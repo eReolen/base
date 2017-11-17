@@ -1,7 +1,7 @@
 name = eReolen help module
 description = Module handling help for eReolen
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 dependencies[] = ctools
 dependencies[] = ding_page
 dependencies[] = faq

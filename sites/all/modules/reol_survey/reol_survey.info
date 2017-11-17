@@ -1,5 +1,5 @@
 name = Reol Survey
 description = Simple survey for eReolen
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 dependencies[] = ding_popup

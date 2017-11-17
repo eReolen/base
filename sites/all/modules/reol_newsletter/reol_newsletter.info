@@ -1,7 +1,7 @@
 name = eReolen newsletter module
 description = Module containing newsletter functionality
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 dependencies[] = ctools
 dependencies[] = entity
 dependencies[] = features

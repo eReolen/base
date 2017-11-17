@@ -1,7 +1,7 @@
 name = eReolen frontend
 description = Global frontend module for eReolen.
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 version = 7.x-1.3
 project = reol_frontend
 dependencies[] = better_exposed_filters
