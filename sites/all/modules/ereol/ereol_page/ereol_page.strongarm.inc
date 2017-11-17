@@ -111,6 +111,10 @@ function ereol_page_strongarm() {
             'weight' => '1',
             'visible' => FALSE,
           ),
+          'teaser' => array(
+            'weight' => '0',
+            'visible' => FALSE,
+          ),
         ),
       ),
     ),

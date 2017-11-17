@@ -12,6 +12,9 @@
       <div class="page__body text">
         <?php print render($content['field_ereol_page_body']); ?>
       </div>
+      <div class="page__files text">
+        <?php print render($content['field_ereol_page_files']); ?>
+      </div>
     </div>
   </div>
 </div>

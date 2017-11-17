@@ -4383,11 +4383,6 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .page__content {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
     padding: 0 0 3.5rem;
   }
 }
@@ -4426,6 +4421,12 @@ html.js input.form-autocomplete {
 
 .page__body img {
   margin: 2rem 0;
+}
+
+.page__files {
+  font-size: 1rem;
+  line-height: 1.8rem;
+  color: #787878;
 }
 
 .author-quote {
