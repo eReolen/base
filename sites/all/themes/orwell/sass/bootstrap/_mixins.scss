@@ -35,6 +35,14 @@
   font-size: 1rem;
   line-height: 1.8rem;
   color: $color__font-gray;
+
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
 }
 
 // Common page header.
