@@ -862,7 +862,7 @@ div.messages ul {
   content: "";
 }
 
-.overlay-icons .quota::before {
+.overlay-icons .no-quota::before {
   content: "";
 }
 
