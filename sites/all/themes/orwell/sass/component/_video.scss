@@ -2,6 +2,13 @@
 // Flex the spotlight-box so the paragraph is stretched out.
 .spotlight-box__top__primary {
   display: flex;
+  // Set height so we get approximately 16/9 format on mobile.
+  height: 56vw;
+
+  @include grid-media($medium) {
+    // Reset height and let our parent set it (flexbox).
+    height: auto;
+  }
 
   .spotlight-box__item {
     display: flex;
