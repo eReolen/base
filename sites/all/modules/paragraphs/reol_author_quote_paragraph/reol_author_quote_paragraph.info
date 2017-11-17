@@ -1,7 +1,7 @@
 name = Author quote paragraph
 description = Author quote paragraph
 core = 7.x
-package = ereolen.dk
+package = eReolen paragraphs
 version = 7.x-1.0
 dependencies[] = features
 dependencies[] = paragraphs

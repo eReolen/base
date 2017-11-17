@@ -1,7 +1,7 @@
 name = Recomended material paragraph
 description = Recomended material paragraph
 core = 7.x
-package = ereolen.dk
+package = eReolen paragraphs
 version = 7.x-1.0
 dependencies[] = features
 dependencies[] = paragraphs
