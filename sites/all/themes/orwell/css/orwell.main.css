@@ -1654,7 +1654,7 @@ fieldset {
   content: '\ea0f';
   font-size: 1.5rem;
   right: 17px;
-  top: 0px;
+  top: 0;
 }
 
 @media all and (min-width: 49em) {
