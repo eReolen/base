@@ -29,7 +29,7 @@
  * @see template_preprocess_search_block_form()
  */
 ?>
-<div class="search-form">
+<div class="search-form js-search-form <?php print(arg(0) == 'search' ? 'open' : ''); ?>">
   <div class="search-form__icon__wrapper js-search-form-trigger">
     <i class="search-form__icon"></i>
   </div>

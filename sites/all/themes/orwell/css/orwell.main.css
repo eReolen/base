@@ -1569,6 +1569,7 @@ fieldset {
   position: absolute;
   right: 0;
   top: 0;
+  z-index: 1;
 }
 
 @media all and (min-width: 49em) {
@@ -1632,7 +1633,7 @@ fieldset {
   }
 }
 
-.search-form__icon__wrapper.open {
+.open .search-form__icon__wrapper {
   position: fixed;
   top: 0;
   right: 0;
@@ -1640,7 +1641,7 @@ fieldset {
 }
 
 @media all and (min-width: 49em) {
-  .search-form__icon__wrapper.open {
+  .open .search-form__icon__wrapper {
     height: 2rem;
     left: calc(50% - 1rem);
     position: relative;
@@ -1648,19 +1649,26 @@ fieldset {
   }
 }
 
-.search-form__icon__wrapper.open::before {
+.open .search-form__icon__wrapper::before {
   position: relative;
   content: '\ea0f';
   font-size: 1.5rem;
-  right: 1.3rem;
+  right: 17px;
+  top: 0px;
 }
 
 @media all and (min-width: 49em) {
-  .search-form__icon__wrapper.open::before {
+  .open .search-form__icon__wrapper::before {
     position: relative;
     font-size: 1rem;
     top: 8px;
     right: 0;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .page-search .open .search-form__icon__wrapper {
+    display: none;
   }
 }
 
@@ -1671,10 +1679,6 @@ fieldset {
     height: 2rem;
     text-align: center;
   }
-}
-
-.page-search .search-form__icon__wrapper {
-  display: none;
 }
 
 .search-form__icon {
@@ -1706,9 +1710,8 @@ fieldset {
   }
 }
 
-.page-search .search-form__content {
+.open .search-form__content {
   display: block;
-  z-index: 1;
 }
 
 @media all and (min-width: 49em) {
@@ -1719,7 +1722,7 @@ fieldset {
   }
 }
 
-.page-search .search-form__content .form-item-search-block-form::before {
+.search-form .form-item-search-block-form::before {
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -1738,7 +1741,7 @@ fieldset {
 }
 
 @media all and (min-width: 49em) {
-  .page-search .search-form__content .form-item-search-block-form::before {
+  .search-form .form-item-search-block-form::before {
     top: 21px;
     color: #fff;
     font-size: 1.2rem;
@@ -1754,7 +1757,7 @@ fieldset {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 2rem;
   height: 5rem;
-  padding: 0 1rem;
+  padding: 0 1rem 0 3rem;
   width: 100%;
 }
 
@@ -1762,10 +1765,6 @@ fieldset {
   .search-form__input--text {
     padding: 0 1.875rem;
   }
-}
-
-.page-search .search-form__input--text {
-  padding-left: 3rem;
 }
 
 @media all and (min-width: 49em) {

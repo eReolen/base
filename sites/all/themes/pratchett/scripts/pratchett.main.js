@@ -98,17 +98,15 @@
   Drupal.behaviors.searchDropDown = {
     attach : function(context, settings) {
       // If the block is not present in the DOM abort.
-      if ($('.pane-search-form').length === 0) {
+      if ($('.js-search-form').length === 0) {
         return;
       }
 
-      var searchFormWrapper = $('.js-search-form-target', context);
-      var openTrigger = $('.js-search-form-trigger', context);
+      var searchFormWrapper = $('.js-search-form', context);
 
-      $(openTrigger).click(function(event) {
+      $(openTrigger, searchFormWrapper).click(function(event) {
         event.preventDefault();
-        searchFormWrapper.toggle();
-        openTrigger.toggleClass('open');
+        searchFormWrapper.toggleClass('open');
       });
     }
   };
