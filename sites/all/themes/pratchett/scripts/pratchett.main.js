@@ -105,7 +105,7 @@
 
       var searchFormWrapper = $('.js-search-form', context);
 
-      $(openTrigger, searchFormWrapper).click(function (event) {
+      $('.js-search-form-trigger', searchFormWrapper).click(function (event) {
         event.preventDefault();
         searchFormWrapper.toggleClass('open');
       });
