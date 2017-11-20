@@ -715,7 +715,7 @@ div.messages ul {
   cursor: pointer;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   #ding-reservation-delete-reservations-form a {
     width: 49%;
   }
@@ -2680,7 +2680,7 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 25em) {
+@media all and (min-width: 26em) {
   .material__cover {
     width: 50%;
     margin-bottom: 0;
@@ -2714,9 +2714,10 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 25em) {
+@media all and (min-width: 26em) {
   .material__content {
-    width: 100%;
+    padding-left: 2rem;
+    width: 50%;
     margin-bottom: 0;
   }
 }
@@ -2927,7 +2928,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .material__details > h2,
   .material__details .ting-relations__title h2,
   .material__details .field-group-format-title,
@@ -3307,7 +3308,7 @@ html.js input.form-autocomplete {
   order: 2;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .spotlight-box__middle__item_1,
   .spotlight-box__middle__item_3 {
     -ms-flex-preferred-size: 50%;
@@ -4026,7 +4027,7 @@ html.js input.form-autocomplete {
   width: auto;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .recommended-material__wrapper .field-type-ting-cover {
     min-width: 130px;
   }
@@ -4165,7 +4166,7 @@ html.js input.form-autocomplete {
   width: auto;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .audio-preview .field-type-ting-cover {
     min-width: 130px;
   }
@@ -4454,7 +4455,7 @@ html.js input.form-autocomplete {
   justify-content: space-between;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .author-quote__wrapper {
     height: 230px;
   }

@@ -15,13 +15,7 @@ $xsmall: (
 $small: (
   columns: $grid-columns,
   gutter: 0px,
-  media: 'all and (min-width: 23em)',
-);
-
-$medium-smartphone: (
-  columns: $grid-columns,
-  gutter: 0px,
-  media: 'all and (min-width: 25em)'
+  media: 'all and (min-width: 26em)',
 );
 
 $medium: (

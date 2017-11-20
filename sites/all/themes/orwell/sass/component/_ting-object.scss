@@ -16,7 +16,7 @@ $material--teaser__margin-bottom: 1.2rem;
     float: left;
     margin-bottom: $material--teaser__margin-bottom;
 
-    @include grid-media($medium-smartphone) {
+    @include grid-media($small) {
       width: 50%;
       margin-bottom: 0;
 
@@ -47,8 +47,9 @@ $material--teaser__margin-bottom: 1.2rem;
     float: left;
     margin-bottom: $material--teaser__margin-bottom;
 
-    @include grid-media($medium-smartphone) {
-      width: 100%;
+    @include grid-media($small) {
+      padding-left: 2rem;
+      width: 50%;
       margin-bottom: 0;
     }
 
