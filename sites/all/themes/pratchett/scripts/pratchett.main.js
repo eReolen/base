@@ -3,13 +3,13 @@
  * Main javascript file for Pratchett theme.
  */
 
-(function($) {
+(function ($) {
 
   /**
    * Detect tablets and mobile devices.
    */
   Drupal.behaviors.isDesktop = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
 
       // Add class if we are on desktop.
       if (!isMobile()) {
@@ -22,9 +22,9 @@
    * Toggle the footer menus.
    */
   Drupal.behaviors.footerToggle = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
 
-      $('.footer .pane-title', context).click(function() {
+      $('.footer .pane-title', context).click(function () {
 
         var element = $(this).next().find('ul');
 
@@ -48,8 +48,8 @@
    * Modify the DOM.
    */
   Drupal.behaviors.availabilityAttach = {
-    attach : function(context, settings) {
-      $('.search-snippet-info').each(function() {
+    attach : function (context, settings) {
+      $('.search-snippet-info').each(function () {
         $(this).addClass('js-processed');
         var metaData = $(this).find('.ting-object-right', context);
         var availability = $(this).find('.js-online, .js-pending');
@@ -62,10 +62,10 @@
    * Make ting object details collapsible.
    */
   Drupal.behaviors.tingObject = {
-    attach : function(context, settings) {
-      $('.js-collaps').each(function(id, element) {
+    attach : function (context, settings) {
+      $('.js-collaps').each(function (id, element) {
         $(element).find('.ting-relations__content').hide();
-        $(element).find('h2').first().click(function() {
+        $(element).find('h2').first().click(function () {
           $(element).find('.ting-relations__content').slideToggle();
         });
       });
@@ -76,16 +76,17 @@
    * Detect if jquery ui-dialog is open.
    */
   Drupal.behaviors.uiDialog = {
-    attach : function(context, settings) {
-      if($('.ui-dialog', context).css('display') == 'none' || $('.ui-dialog').length === 0) {
+    attach : function (context, settings) {
+      if ($('.ui-dialog', context).css('display') == 'none' || $('.ui-dialog').length === 0) {
         // Fallback.
         $('body').removeClass('ui-dialog-is-open');
-      } else {
+      }
+      else {
         // Add Class that indicates the dialog is open.
         $('body').addClass('ui-dialog-is-open');
 
         // Make sure we remove the class when users close the dialog.
-        $('.ui-button-icon-primary').click(function() {
+        $('.ui-button-icon-primary').click(function () {
           $('body').removeClass('ui-dialog-is-open');
         });
       }
@@ -96,7 +97,7 @@
    * Search drop down.
    */
   Drupal.behaviors.searchDropDown = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
       // If the block is not present in the DOM abort.
       if ($('.js-search-form').length === 0) {
         return;
@@ -104,7 +105,7 @@
 
       var searchFormWrapper = $('.js-search-form', context);
 
-      $(openTrigger, searchFormWrapper).click(function(event) {
+      $(openTrigger, searchFormWrapper).click(function (event) {
         event.preventDefault();
         searchFormWrapper.toggleClass('open');
       });
