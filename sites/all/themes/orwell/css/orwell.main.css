@@ -428,7 +428,7 @@ div.messages ul {
   padding: .5rem 1rem;
 }
 
-.btn, .material .action-button {
+.btn, .material .action-button, .page-user .material-buttons .action-button {
   font-family: "SourceSansProSemiBold", sans-serif;
   line-height: 1em;
   padding: 10px 22px;
@@ -444,13 +444,13 @@ div.messages ul {
   position: relative;
 }
 
-.btn:hover, .material .action-button:hover {
+.btn:hover, .material .action-button:hover, .page-user .material-buttons .action-button:hover {
   background-color: #7c9b63;
   cursor: pointer;
 }
 
 @media all and (min-width: 49em) {
-  .btn, .material .action-button {
+  .btn, .material .action-button, .page-user .material-buttons .action-button {
     width: auto;
     display: inline-block;
     text-align: center;
@@ -458,7 +458,7 @@ div.messages ul {
   }
 }
 
-.btn.a, .material .a.action-button {
+.btn.a, .material .a.action-button, .page-user .material-buttons .a.action-button {
   color: inherit !important;
 }
 
