@@ -18,6 +18,12 @@ $small: (
   media: 'all and (min-width: 23em)',
 );
 
+$medium-smartphone: (
+  columns: $grid-columns,
+  gutter: 0px,
+  media: 'all and (min-width: 25em)'
+);
+
 $medium: (
   columns: $grid-columns,
   gutter: 0px,

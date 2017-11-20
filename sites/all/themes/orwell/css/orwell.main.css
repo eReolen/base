@@ -2680,7 +2680,7 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 25em) {
   .material__cover {
     width: 50%;
     margin-bottom: 0;
@@ -2714,10 +2714,9 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 25em) {
   .material__content {
-    padding-left: 2rem;
-    width: 50%;
+    width: 100%;
     margin-bottom: 0;
   }
 }
