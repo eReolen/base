@@ -58,7 +58,6 @@
   font-family: $font-semibold;
   // To contain the button.
   // position: relative;
-  line-height: 2.5rem;
   font-size: .8rem;
   display: flex;
   flex-flow: row wrap;
@@ -95,6 +94,9 @@
       order: 1;
       // rem seems too loose the centering.
       padding: 6px;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: .85rem;
     }
 
     &::before {
