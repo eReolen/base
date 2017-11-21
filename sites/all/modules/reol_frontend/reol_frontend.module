@@ -206,8 +206,8 @@ function reol_frontend_views_query_alter(&$view, &$query) {
 function reol_frontend_ding_entity_icons(DingEntity $ding_entity) {
   if (!isset($ding_entity->reol_no_icons)) {
     $icons = array();
-    if ($ding_entity->reply->on_quota) {
-      $icons[] = 'quota';
+    if (!$ding_entity->reply->on_quota) {
+      $icons[] = 'no-quota';
     }
 
     if (!isset($ding_entity->reol_no_type_icons)) {
