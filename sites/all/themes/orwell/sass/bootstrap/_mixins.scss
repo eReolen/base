@@ -84,7 +84,7 @@
     width: 100%;
     font-size: 13px;
     padding: 10px 30px;
-    color: #969696;
+    color: $color__font-gray;
     font-family: $font-semibold;
     text-transform: uppercase;
     font-weight: normal;
@@ -132,7 +132,7 @@
     font-size: 16px;
     line-height: 22px;
     font-family: $font-semibold;
-    color: #505050;
+    color: $color__font-gray--dark;
     margin: 0 0 5px;
     display: block;
   }
@@ -148,7 +148,7 @@
 
   form {
     .description {
-      color: #047537;
+      color: $color__font--form-description;
       font-family: $font-regular;
       margin-top: 5px;
     }

@@ -171,7 +171,7 @@ img {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -237,7 +237,7 @@ img {
 }
 
 .pane-user-login form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -253,7 +253,7 @@ img {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -319,7 +319,7 @@ img {
 }
 
 .ui-dialog form form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -846,7 +846,7 @@ div.messages ul {
   font-variant: normal;
   text-transform: none;
   padding: .5rem;
-  background-color: white;
+  background-color: #fff;
   border-radius: 50%;
   border: 1px solid #eee;
   color: #787878;
@@ -868,7 +868,7 @@ div.messages ul {
 
 .overlay-icons .link::before {
   content: "";
-  color: #db2b52;
+  color: #b81b40;
 }
 
 .reader__back-button {
@@ -1468,7 +1468,7 @@ fieldset {
 
 @media all and (min-width: 49em) {
   fieldset:nth-child(odd) {
-    background-color: #eaeaea;
+    background-color: #ebebeb;
   }
 }
 
@@ -1618,7 +1618,7 @@ fieldset {
   position: relative;
   top: -3px;
   right: 3px;
-  color: #9c9c9c;
+  color: #dcdcdc;
   content: "";
   font-size: 2rem;
 }
@@ -3540,7 +3540,7 @@ html.js input.form-autocomplete {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -3606,7 +3606,7 @@ html.js input.form-autocomplete {
 }
 
 .pane-profile2-form form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -3618,7 +3618,7 @@ html.js input.form-autocomplete {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -3684,7 +3684,7 @@ html.js input.form-autocomplete {
 }
 
 .page-user-bookmarks form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -4566,7 +4566,7 @@ html.js input.form-autocomplete {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -4632,7 +4632,7 @@ html.js input.form-autocomplete {
 }
 
 .node-webform form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }

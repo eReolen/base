@@ -16,7 +16,7 @@
   .icon::before {
     @include icon;
     padding: .5rem;
-    background-color: white;
+    background-color: $color__white;
     border-radius: 50%;
     border: 1px solid #eee;
     color: $color__font-gray;
@@ -38,7 +38,6 @@
 
   .link::before {
     content: $icon__link;
-    // Special color, for some odd reason.
-    color: #db2b52;
+    color: $color__link__default;
   }
 }

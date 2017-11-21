@@ -96,7 +96,7 @@ fieldset {
 
   @include grid-media($medium) {
     &:nth-child(odd) {
-      background-color: #eaeaea;
+      background-color: $color__facetbrowser-odd;
     }
   }
 }

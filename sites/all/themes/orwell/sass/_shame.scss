@@ -88,15 +88,15 @@ div.messages {
   }
 
   &.status {
-    background-color: #c5e8c5;
+    background-color: $color__messages--status;
   }
 
   &.warning {
-    background-color: #fdffc7;
+    background-color: $color__messages--warning;
   }
 
   &.error {
-    background-color: #ff7562;
+    background-color: $color__messages--error;
   }
 
   ul {

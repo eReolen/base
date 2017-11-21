@@ -36,12 +36,22 @@ $color__font-gray--dark:   $coler__geist--grey3;
 $color__font-gray:         $coler__geist--grey4;
 $color__font-gray--light:  $coler__geist--grey5;
 
+$color__font--form-description:  $color__geist--green-dark;
+
+$color__icon--light:  $coler__geist--grey6;
+
 $color__border-gray--light:  $coler__geist--grey6;
 $color__border-gray:         $coler__geist--hr;
 $color__border-gray--dark:   $coler__geist--grey5;
 
 $coler__material-list-bg: $coler__geist--material-list-bg;
 $coler__boxes-bg: $coler__geist--boxes-bg;
+$color__facetbrowser-odd: $coler__geist--grey7;
+
+// Freestyled colors for messages.
+$color__messages--status: #c5e8c5;
+$color__messages--warning: #fdffc7;
+$color__messages--error: #ff7562;
 
 $color__link__default: $color__geist--red;
 
