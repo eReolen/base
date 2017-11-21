@@ -2821,7 +2821,7 @@ html.js input.form-autocomplete {
   .material__series {
     width: 100%;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: .5rem;
     clear: none;
   }
 }
@@ -4270,7 +4270,6 @@ html.js input.form-autocomplete {
 
 .audio-preview__player {
   font-family: "SourceSansProSemiBold", sans-serif;
-  line-height: 2.5rem;
   font-size: .8rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4326,6 +4325,9 @@ html.js input.form-autocomplete {
     -ms-flex-order: 1;
     order: 1;
     padding: 6px;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: .85rem;
   }
 }
 
