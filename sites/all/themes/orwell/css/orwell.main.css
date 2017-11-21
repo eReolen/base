@@ -509,6 +509,14 @@ div.messages ul {
   color: #787878;
 }
 
+.text p strong {
+  font-weight: bold;
+}
+
+.text p em {
+  font-style: italic;
+}
+
 .text h1,
 .text h2,
 .text h3,
@@ -2458,6 +2466,14 @@ html.js input.form-autocomplete {
   color: #787878;
 }
 
+.article--search-result p strong {
+  font-weight: bold;
+}
+
+.article--search-result p em {
+  font-style: italic;
+}
+
 .article--search-result__info__inner {
   padding: 0 0 0 2rem;
 }
@@ -2771,6 +2787,14 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
+.material__abstract strong {
+  font-weight: bold;
+}
+
+.material__abstract em {
+  font-style: italic;
+}
+
 @media all and (min-width: 49em) {
   .material__abstract {
     display: block;
@@ -3056,6 +3080,14 @@ html.js input.form-autocomplete {
   font-size: 1rem;
   line-height: 1.8rem;
   color: #787878;
+}
+
+.material .abstract strong {
+  font-weight: bold;
+}
+
+.material .abstract em {
+  font-style: italic;
 }
 
 .material .ting-fulltext-inner-wrapper h1 {
@@ -3423,6 +3455,14 @@ html.js input.form-autocomplete {
   font-size: 1rem;
   line-height: 1.8rem;
   color: #787878;
+}
+
+.page-user .pane-content strong {
+  font-weight: bold;
+}
+
+.page-user .pane-content em {
+  font-style: italic;
 }
 
 .page-user .pane-library-info .pane-content a {
@@ -3993,6 +4033,14 @@ html.js input.form-autocomplete {
   margin: 0;
 }
 
+.faq-answer strong {
+  font-weight: bold;
+}
+
+.faq-answer em {
+  font-style: italic;
+}
+
 .recommended-material a {
   text-decoration: none;
   color: black;
@@ -4428,6 +4476,14 @@ html.js input.form-autocomplete {
   font-size: 1rem;
   line-height: 1.8rem;
   color: #787878;
+}
+
+.page__files strong {
+  font-weight: bold;
+}
+
+.page__files em {
+  font-style: italic;
 }
 
 .author-quote {
