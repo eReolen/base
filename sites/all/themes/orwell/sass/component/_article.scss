@@ -86,7 +86,7 @@ $teaser-height--medium: 400px;
   }
 
   &__materials {
-    background-color: $color__gray-darker;
+    background-color: $color__material-list-bg;
     width: 100%;
     display: block;
     clear: both;
@@ -116,7 +116,7 @@ $teaser-height--medium: 400px;
   display: block;
   height: $teaser-height--default;
   padding: 2rem;
-  color: white;
+  color: $color__white;
   background-color: $color__gray--dark;
   // Establish bounding box for image.
   position: relative;
@@ -128,7 +128,7 @@ $teaser-height--medium: 400px;
   }
 
   > a {
-    color: white;
+    color: $color__white;
     text-decoration: none;
 
     height: 100%;

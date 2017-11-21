@@ -41,7 +41,7 @@ $icon-color: #9c9c9c;
       position: relative;
       top: -3px;
       right: 3px;
-      color: $icon-color;
+      color: $color__icon--light;
       content: $icon__search;
       font-size: 2rem;
 
@@ -136,7 +136,7 @@ $icon-color: #9c9c9c;
 
           @include grid-media($medium) {
             top: 21px;
-            color: white;
+            color: $color__white;
             font-size: 1.2rem;
           }
         }
@@ -165,7 +165,7 @@ $icon-color: #9c9c9c;
       @include grid-media($medium) {
         height: auto;
         background: $color__red;
-        color: white;
+        color: $color__white;
         font-size: 1.3rem;
         font-family: $font-regular;
 

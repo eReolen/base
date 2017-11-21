@@ -42,7 +42,7 @@ img {
 
 .ui-dialog {
   border-radius: 0;
-  background-color: white;
+  background-color: $color__white;
   // Try to make it responsive.
   left: 0 !important;
   right: 0 !important;
@@ -88,15 +88,15 @@ div.messages {
   }
 
   &.status {
-    background-color: #c5e8c5;
+    background-color: $color__messages--status;
   }
 
   &.warning {
-    background-color: #fdffc7;
+    background-color: $color__messages--warning;
   }
 
   &.error {
-    background-color: #ff7562;
+    background-color: $color__messages--error;
   }
 
   ul {

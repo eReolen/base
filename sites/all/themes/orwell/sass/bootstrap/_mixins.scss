@@ -84,7 +84,7 @@
     width: 100%;
     font-size: 13px;
     padding: 10px 30px;
-    color: #969696;
+    color: $color__font-gray;
     font-family: $font-semibold;
     text-transform: uppercase;
     font-weight: normal;
@@ -118,7 +118,7 @@
     margin-top: 1rem;
     width: 100%;
     background-color: $color__green;
-    color: white;
+    color: $color__white;
     border-radius: 2px;
     text-transform: uppercase;
 
@@ -132,7 +132,7 @@
     font-size: 16px;
     line-height: 22px;
     font-family: $font-semibold;
-    color: #505050;
+    color: $color__font-gray--dark;
     margin: 0 0 5px;
     display: block;
   }
@@ -148,7 +148,7 @@
 
   form {
     .description {
-      color: #047537;
+      color: $color__font--form-description;
       font-family: $font-regular;
       margin-top: 5px;
     }
@@ -161,7 +161,7 @@
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: $color__green;
-  color: white;
+  color: $color__white;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;

@@ -3,7 +3,7 @@
 .audio-preview {
   padding: $padding__default;
   background-color: $color__gray--dark;
-  color: white;
+  color: $color__white;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -75,12 +75,12 @@
   }
 
   .audio-preview__played {
-    color: white;
+    color: $color__white;
   }
 
   .audio-preview__button {
     font-size: 0;
-    color: white;
+    color: $color__white;
     border: 1px solid $color__font-gray;
     border-radius: 50%;
     background: none;
@@ -123,7 +123,7 @@
 .audio-preview__progress {
   height: 2px;
   width: 100%;
-  background-color: white;
+  background-color: $color__white;
   margin-top: $gutter__default / 2;
   flex-basis: 100%;
   flex: none;
