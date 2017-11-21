@@ -1765,12 +1765,13 @@ search/ting
       ),
       'reservation_title' => 'Redeemable reservations',
       'reservation_form_id' => 'ding_reservation_reservations_ready_form',
-      'form_build_id' => 'form-4IgdX9lFV0Um3jtKg4JHixkkT4Zyiq4x-rUGltYiNOw',
-      'form_token' => 'ZeyaEkUO_YrkKw-kg15e6SkTPPC9H6w95aTL40LpBtg',
+      'form_build_id' => 'form-HqKDYeifXl62yzInE4LkOmWdpJG26hwOx5nzcDMntxY',
+      'form_token' => 'LhXHXSx98EKVaWoeFWTVKu1q_fiBdnvk7uDz77Td4Zg',
       'form_id' => 'ding_reservation_reservations_content_type_edit_form',
-      'override_title' => 1,
+      'override_title' => 0,
       'override_title_text' => 'Redeemable reservations',
       'reservation_empty_text' => 'There are no reservations ready.',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(

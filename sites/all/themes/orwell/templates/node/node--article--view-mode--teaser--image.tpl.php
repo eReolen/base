@@ -12,7 +12,7 @@
     </div>
     <div class="article--teaser__info">
       <div class="article--teaser__info__inner">
-        <p class="article--teaser__label"><?php print('Article'); ?></p>
+        <p class="article--teaser__label"><?php print('Tema'); ?></p>
         <h2 class="article--teaser__title"><?php print $title; ?></h2>
         <button class="article--teaser__read-more">
           <?php print(t('read article'))?>
