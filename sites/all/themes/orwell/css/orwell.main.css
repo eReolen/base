@@ -171,7 +171,7 @@ img {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -208,7 +208,7 @@ img {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -237,7 +237,7 @@ img {
 }
 
 .pane-user-login form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -253,7 +253,7 @@ img {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -290,7 +290,7 @@ img {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -319,7 +319,7 @@ img {
 }
 
 .ui-dialog form form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -332,7 +332,7 @@ img {
 
 .ui-dialog {
   border-radius: 0;
-  background-color: white;
+  background-color: #fff;
   left: 0 !important;
   right: 0 !important;
   margin: 0 auto;
@@ -360,7 +360,7 @@ div.messages {
   max-width: 1200px;
   width: 100%;
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: #fff;
   background-image: none;
   font-family: "SourceSansPro", sans-serif;
   font-size: 1.2rem;
@@ -408,7 +408,7 @@ div.messages ul {
 }
 
 .logged-in .pane-page-tabs a {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
   font-family: "SourceSansProSemiBold", sans-serif;
   font-size: 1.1rem;
@@ -428,29 +428,29 @@ div.messages ul {
   padding: .5rem 1rem;
 }
 
-.btn, .material .action-button {
+.btn, .material .action-button, .page-user .material-buttons .action-button {
   font-family: "SourceSansProSemiBold", sans-serif;
   line-height: 1em;
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
   font-size: .9rem;
-  color: #ffffff !important;
+  color: #fff !important;
   text-decoration: none;
   position: relative;
 }
 
-.btn:hover, .material .action-button:hover {
+.btn:hover, .material .action-button:hover, .page-user .material-buttons .action-button:hover {
   background-color: #7c9b63;
   cursor: pointer;
 }
 
 @media all and (min-width: 49em) {
-  .btn, .material .action-button {
+  .btn, .material .action-button, .page-user .material-buttons .action-button {
     width: auto;
     display: inline-block;
     text-align: center;
@@ -458,7 +458,7 @@ div.messages ul {
   }
 }
 
-.btn.a, .material .a.action-button {
+.btn.a, .material .a.action-button, .page-user .material-buttons .a.action-button {
   color: inherit !important;
 }
 
@@ -528,7 +528,7 @@ div.messages ul {
   color: #787878;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  border-top: 1px solid #cfcfcf;
+  border-top: 1px solid #d8d8d8;
   padding-top: 1.5rem;
 }
 
@@ -540,7 +540,7 @@ div.messages ul {
 }
 
 .text a {
-  color: #d8133f;
+  color: #b81b40;
   text-decoration: none;
 }
 
@@ -560,7 +560,7 @@ div.messages ul {
 }
 
 .highlight {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .ui-dialog {
@@ -591,7 +591,7 @@ div.messages ul {
 }
 
 .ui-dialog a {
-  color: white;
+  color: #fff;
   text-align: center;
 }
 
@@ -615,7 +615,7 @@ div.messages ul {
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
@@ -702,7 +702,7 @@ div.messages ul {
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
@@ -715,7 +715,7 @@ div.messages ul {
   cursor: pointer;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   #ding-reservation-delete-reservations-form a {
     width: 49%;
   }
@@ -743,7 +743,7 @@ div.messages ul {
 
 .pager a:hover,
 .pager .pager-ellipsis:hover {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .pager-first,
@@ -752,7 +752,7 @@ div.messages ul {
 }
 
 .pager-current {
-  color: #d8133f;
+  color: #b81b40;
   padding: 1rem;
 }
 
@@ -779,15 +779,15 @@ div.messages ul {
   text-transform: none;
   font-size: .9rem;
   color: #505050;
-  border: 1px solid #d8d8d8;
+  border: 1px solid #dcdcdc;
   padding: 1rem;
   border-radius: 2px;
 }
 
 .pager-previous a:hover::before,
 .pager-next a:hover::before {
-  color: #d8133f;
-  border: 1px solid #d8133f;
+  color: #b81b40;
+  border: 1px solid #b81b40;
 }
 
 .pager-next a::before {
@@ -846,7 +846,7 @@ div.messages ul {
   font-variant: normal;
   text-transform: none;
   padding: .5rem;
-  background-color: white;
+  background-color: #fff;
   border-radius: 50%;
   border: 1px solid #eee;
   color: #787878;
@@ -868,7 +868,7 @@ div.messages ul {
 
 .overlay-icons .link::before {
   content: "";
-  color: #db2b52;
+  color: #b81b40;
 }
 
 .reader__back-button {
@@ -891,13 +891,13 @@ div.messages ul {
 }
 
 .search-overlay--text {
-  color: white;
+  color: #fff;
   font-size: 1.5rem;
 }
 
 .search-overlay--inner {
-  background-color: gray;
-  color: white;
+  background-color: #505050;
+  color: #fff;
 }
 
 .search-overlay--inner .cancel {
@@ -906,7 +906,7 @@ div.messages ul {
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
@@ -919,7 +919,7 @@ div.messages ul {
 }
 
 .search-overlay--inner .cancel a {
-  color: white;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -1062,13 +1062,13 @@ div.messages ul {
 }
 
 .menu-name-main-menu.menu-level-1 {
-  background-color: #d8133f;
+  background-color: #b81b40;
   text-align: center;
 }
 
 @media all and (min-width: 49em) {
   .menu-name-main-menu.menu-level-1 {
-    background-color: white;
+    background-color: #fff;
   }
 }
 
@@ -1093,7 +1093,7 @@ div.messages ul {
 }
 
 .menu-name-main-menu.menu-level-1 a {
-  color: white;
+  color: #fff;
   opacity: .7;
 }
 
@@ -1179,7 +1179,7 @@ div.messages ul {
   }
   .menu-name-main-menu.menu-level-2 li.expanded.js-active > a::before {
     content: '';
-    color: #393939;
+    color: #3c3c3c;
     position: absolute;
     width: 0;
     height: 0;
@@ -1199,7 +1199,7 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .menu-name-main-menu.menu-level-2 a:hover {
-    color: gray;
+    color: #505050;
   }
 }
 
@@ -1226,7 +1226,7 @@ div.messages ul {
   -webkit-column-gap: 2rem;
   column-gap: 2rem;
   padding: 1rem 20px;
-  background-color: #393939;
+  background-color: #3c3c3c;
 }
 
 @media all and (min-width: 49em) {
@@ -1257,12 +1257,12 @@ div.messages ul {
 }
 
 .menu-name-main-menu.menu-level-2 li ul a.active-trail {
-  color: white;
+  color: #fff;
 }
 
 .footer {
   background-color: #282828;
-  color: white;
+  color: #fff;
   font-size: 100%;
   font-family: "SourceSansPro", sans-serif;
   overflow: hidden;
@@ -1335,7 +1335,7 @@ div.messages ul {
 }
 
 .footer .pane-title {
-  color: white;
+  color: #fff;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   text-transform: uppercase;
@@ -1378,7 +1378,7 @@ input[type=checkbox] + label::before,
 .radio-custom + .radio-custom-label::before {
   content: '';
   background: transparent;
-  border: 1px solid #b5b5b5;
+  border: 1px solid #b4b4b4;
   width: 1.5rem;
   height: 1.5rem;
   text-align: center;
@@ -1399,7 +1399,7 @@ input[type=checkbox]:checked + label::before {
   text-transform: none;
   content: "";
   background-color: #95b978;
-  color: #ffffff;
+  color: #fff;
 }
 
 .radio-custom + .radio-custom-label::before {
@@ -1461,14 +1461,14 @@ input[type=checkbox]:focus + label,
 
 fieldset {
   padding: 2rem;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #d8d8d8;
   background-color: #f0f0f0;
   margin-top: -.5rem;
 }
 
 @media all and (min-width: 49em) {
   fieldset:nth-child(odd) {
-    background-color: #eaeaea;
+    background-color: #ebebeb;
   }
 }
 
@@ -1543,7 +1543,7 @@ fieldset {
   -ms-flex-pack: end;
   justify-content: flex-end;
   padding: 1rem;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #d8d8d8;
 }
 
 @media all and (min-width: 49em) {
@@ -1587,7 +1587,7 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .page-search .search-form {
-    background-color: #d8133f;
+    background-color: #b81b40;
   }
 }
 
@@ -1618,14 +1618,14 @@ fieldset {
   position: relative;
   top: -3px;
   right: 3px;
-  color: #9c9c9c;
+  color: #dcdcdc;
   content: "";
   font-size: 2rem;
 }
 
 @media all and (min-width: 49em) {
   .search-form__icon__wrapper::before {
-    color: #ffffff;
+    color: #fff;
     font-size: 1.5rem;
     position: relative;
     top: 3px;
@@ -1666,7 +1666,7 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .search-form__icon__wrapper {
-    background: #d8133f;
+    background: #b81b40;
     display: block;
     height: 2rem;
     text-align: center;
@@ -1682,7 +1682,7 @@ fieldset {
 }
 
 .search-form__content {
-  background: #ffffff;
+  background: #fff;
   display: none;
   height: 5rem;
   left: 0;
@@ -1715,7 +1715,7 @@ fieldset {
   .page-search .search-form__content {
     height: auto;
     padding: 1.2rem;
-    background-color: #d8133f;
+    background-color: #b81b40;
   }
 }
 
@@ -1740,7 +1740,7 @@ fieldset {
 @media all and (min-width: 49em) {
   .page-search .search-form__content .form-item-search-block-form::before {
     top: 21px;
-    color: white;
+    color: #fff;
     font-size: 1.2rem;
   }
 }
@@ -1749,7 +1749,7 @@ fieldset {
   border: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  color: gray;
+  color: #505050;
   display: block;
   font-family: "SourceSansProLight", sans-serif;
   font-size: 2rem;
@@ -1771,24 +1771,24 @@ fieldset {
 @media all and (min-width: 49em) {
   .page-search .search-form__input--text {
     height: auto;
-    background: #d8133f;
-    color: white;
+    background: #b81b40;
+    color: #fff;
     font-size: 1.3rem;
     font-family: "SourceSansPro", sans-serif;
   }
   .page-search .search-form__input--text::-webkit-input-placeholder {
-    color: #ffffff;
+    color: #fff;
   }
   .page-search .search-form__input--text:-ms-input-placeholder {
-    color: #ffffff;
+    color: #fff;
   }
   .page-search .search-form__input--text::placeholder {
-    color: #ffffff;
+    color: #fff;
   }
 }
 
 .search-form__icon--close {
-  background: #d8133f;
+  background: #b81b40;
   height: 2rem;
   position: fixed;
   right: 1rem;
@@ -1812,7 +1812,7 @@ fieldset {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  color: #ffffff;
+  color: #fff;
   content: "";
   font-size: 1rem;
   left: .5rem;
@@ -1851,7 +1851,7 @@ html.js input.form-autocomplete {
     padding-bottom: 3.5rem;
     float: left;
     width: 300px;
-    border-right: 1px solid #cfcfcf;
+    border-right: 1px solid #d8d8d8;
   }
 }
 
@@ -1962,7 +1962,7 @@ html.js input.form-autocomplete {
   position: absolute;
   background-color: #95b978;
   padding: 4px;
-  color: white;
+  color: #fff;
   border-radius: 50%;
   font-size: 13px;
   font-family: "SourceSansProSemiBold", sans-serif;
@@ -2136,8 +2136,8 @@ html.js input.form-autocomplete {
   display: block;
   height: 370px;
   padding: 2rem;
-  color: white;
-  background-color: #393939;
+  color: #fff;
+  background-color: #3c3c3c;
   position: relative;
 }
 
@@ -2150,7 +2150,7 @@ html.js input.form-autocomplete {
 }
 
 .article--teaser > a {
-  color: white;
+  color: #fff;
   text-decoration: none;
   height: 100%;
   display: -webkit-box;
@@ -2281,7 +2281,7 @@ html.js input.form-autocomplete {
 .article--teaser__label {
   position: relative;
   margin-bottom: 1rem;
-  color: #ffffff;
+  color: #fff;
   font-size: 1rem;
   font-family: "SourceSansProSemiBold", sans-serif;
   font-weight: 700;
@@ -2299,7 +2299,7 @@ html.js input.form-autocomplete {
   border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 0.7rem 1.2rem;
   font-family: "SourceSansProSemiBold", sans-serif;
-  color: #ffffff;
+  color: #fff;
   text-transform: uppercase;
   font-size: 0.75rem;
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.78);
@@ -2490,7 +2490,7 @@ html.js input.form-autocomplete {
 
 .ding-carousel .slick-arrow {
   background: #f0f0f0;
-  border: 1px solid #d8d8d8;
+  border: 1px solid #dcdcdc;
   border-radius: 1px;
   font-size: 0;
   padding: .75rem;
@@ -2539,7 +2539,7 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel .slick-dots {
-  background-color: #393939;
+  background-color: #3c3c3c;
   padding: 20px 0;
   width: 100%;
   text-align: center;
@@ -2664,7 +2664,7 @@ html.js input.form-autocomplete {
 
 .material {
   padding: 2rem 0;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #d8d8d8;
 }
 
 @media all and (min-width: 49em) {
@@ -2680,7 +2680,7 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .material__cover {
     width: 50%;
     margin-bottom: 0;
@@ -2714,7 +2714,7 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .material__content {
     padding-left: 2rem;
     width: 50%;
@@ -2801,7 +2801,7 @@ html.js input.form-autocomplete {
 
 .material__subjects .subject:hover {
   background-color: #787878;
-  color: #ffffff;
+  color: #fff;
 }
 
 .material__rating {
@@ -2821,14 +2821,14 @@ html.js input.form-autocomplete {
   .material__series {
     width: 100%;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: .5rem;
     clear: none;
   }
 }
 
 .material__series a {
   text-decoration: none;
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .material__series .field-label {
@@ -2850,7 +2850,7 @@ html.js input.form-autocomplete {
 }
 
 .material__also_available a {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 @media all and (min-width: 49em) {
@@ -2928,7 +2928,7 @@ html.js input.form-autocomplete {
   }
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .material__details > h2,
   .material__details .ting-relations__title h2,
   .material__details .field-group-format-title,
@@ -3007,7 +3007,7 @@ html.js input.form-autocomplete {
   display: inline-block;
   clear: left;
   padding: 1.5rem 0;
-  border-top: 1px solid #cfcfcf;
+  border-top: 1px solid #d8d8d8;
   margin: 0;
 }
 
@@ -3045,7 +3045,7 @@ html.js input.form-autocomplete {
 }
 
 .material .group-material-details .field-group-format-wrapper .field-items a {
-  color: #d8133f;
+  color: #b81b40;
   text-decoration: none;
 }
 
@@ -3128,7 +3128,7 @@ html.js input.form-autocomplete {
 }
 
 .linkbox a {
-  color: white;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -3308,7 +3308,7 @@ html.js input.form-autocomplete {
   order: 2;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .spotlight-box__middle__item_1,
   .spotlight-box__middle__item_3 {
     -ms-flex-preferred-size: 50%;
@@ -3427,7 +3427,7 @@ html.js input.form-autocomplete {
 }
 
 .page-user .pane-library-info .pane-content a {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .page-user .pane-user-menu li,
@@ -3435,7 +3435,7 @@ html.js input.form-autocomplete {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.2rem;
   padding: 1rem 0;
-  border-top: 1px solid #d8d8d8;
+  border-top: 1px solid #dcdcdc;
 }
 
 .page-user .pane-user-menu a {
@@ -3540,7 +3540,7 @@ html.js input.form-autocomplete {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -3577,7 +3577,7 @@ html.js input.form-autocomplete {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -3606,7 +3606,7 @@ html.js input.form-autocomplete {
 }
 
 .pane-profile2-form form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -3618,7 +3618,7 @@ html.js input.form-autocomplete {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -3655,7 +3655,7 @@ html.js input.form-autocomplete {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -3684,7 +3684,7 @@ html.js input.form-autocomplete {
 }
 
 .page-user-bookmarks form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -3727,7 +3727,7 @@ html.js input.form-autocomplete {
 }
 
 .page-user-bookmarks .item-information-list a {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .review {
@@ -3741,7 +3741,7 @@ html.js input.form-autocomplete {
 
 .review .review__wrapper {
   padding: 20px;
-  background-color: #e6e6e6;
+  background-color: #e2e2e2;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3845,7 +3845,7 @@ html.js input.form-autocomplete {
 }
 
 .review .review__subhead .review__highlight {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .review .field-name-ting-title {
@@ -3975,7 +3975,7 @@ html.js input.form-autocomplete {
 }
 
 .faq-category-menu .faq-qa a {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .faq-question {
@@ -4001,7 +4001,7 @@ html.js input.form-autocomplete {
 
 .recommended-material__wrapper {
   padding: 20px;
-  background-color: #e6e6e6;
+  background-color: #e2e2e2;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4027,7 +4027,7 @@ html.js input.form-autocomplete {
   width: auto;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .recommended-material__wrapper .field-type-ting-cover {
     min-width: 130px;
   }
@@ -4093,10 +4093,10 @@ html.js input.form-autocomplete {
   right: 0;
   width: 100%;
   height: 1.1rem;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(230, 230, 230, 0)), color-stop(50%, #e6e6e6));
-  background: -webkit-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
-  background: -o-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
-  background: linear-gradient(to bottom, rgba(230, 230, 230, 0), #e6e6e6 50%);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(226, 226, 226, 0)), color-stop(50%, #e2e2e2));
+  background: -webkit-linear-gradient(top, rgba(226, 226, 226, 0), #e2e2e2 50%);
+  background: -o-linear-gradient(top, rgba(226, 226, 226, 0), #e2e2e2 50%);
+  background: linear-gradient(to bottom, rgba(226, 226, 226, 0), #e2e2e2 50%);
 }
 
 @media all and (min-width: 49em) {
@@ -4117,10 +4117,10 @@ html.js input.form-autocomplete {
     right: 0;
     width: 100%;
     height: 1.5rem;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(230, 230, 230, 0)), color-stop(50%, #e6e6e6));
-    background: -webkit-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
-    background: -o-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
-    background: linear-gradient(to bottom, rgba(230, 230, 230, 0), #e6e6e6 50%);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(226, 226, 226, 0)), color-stop(50%, #e2e2e2));
+    background: -webkit-linear-gradient(top, rgba(226, 226, 226, 0), #e2e2e2 50%);
+    background: -o-linear-gradient(top, rgba(226, 226, 226, 0), #e2e2e2 50%);
+    background: linear-gradient(to bottom, rgba(226, 226, 226, 0), #e2e2e2 50%);
   }
 }
 
@@ -4133,8 +4133,8 @@ html.js input.form-autocomplete {
 
 .audio-preview {
   padding: 20px;
-  background-color: #393939;
-  color: white;
+  background-color: #3c3c3c;
+  color: #fff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4166,7 +4166,7 @@ html.js input.form-autocomplete {
   width: auto;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .audio-preview .field-type-ting-cover {
     min-width: 130px;
   }
@@ -4231,10 +4231,10 @@ html.js input.form-autocomplete {
   right: 0;
   width: 100%;
   height: 0.8rem;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(57, 57, 57, 0)), color-stop(50%, #393939));
-  background: -webkit-linear-gradient(top, rgba(57, 57, 57, 0), #393939 50%);
-  background: -o-linear-gradient(top, rgba(57, 57, 57, 0), #393939 50%);
-  background: linear-gradient(to bottom, rgba(57, 57, 57, 0), #393939 50%);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(60, 60, 60, 0)), color-stop(50%, #3c3c3c));
+  background: -webkit-linear-gradient(top, rgba(60, 60, 60, 0), #3c3c3c 50%);
+  background: -o-linear-gradient(top, rgba(60, 60, 60, 0), #3c3c3c 50%);
+  background: linear-gradient(to bottom, rgba(60, 60, 60, 0), #3c3c3c 50%);
 }
 
 @media all and (min-width: 49em) {
@@ -4255,10 +4255,10 @@ html.js input.form-autocomplete {
     right: 0;
     width: 100%;
     height: 1rem;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(57, 57, 57, 0)), color-stop(50%, #393939));
-    background: -webkit-linear-gradient(top, rgba(57, 57, 57, 0), #393939 50%);
-    background: -o-linear-gradient(top, rgba(57, 57, 57, 0), #393939 50%);
-    background: linear-gradient(to bottom, rgba(57, 57, 57, 0), #393939 50%);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(60, 60, 60, 0)), color-stop(50%, #3c3c3c));
+    background: -webkit-linear-gradient(top, rgba(60, 60, 60, 0), #3c3c3c 50%);
+    background: -o-linear-gradient(top, rgba(60, 60, 60, 0), #3c3c3c 50%);
+    background: linear-gradient(to bottom, rgba(60, 60, 60, 0), #3c3c3c 50%);
   }
 }
 
@@ -4270,7 +4270,6 @@ html.js input.form-autocomplete {
 
 .audio-preview__player {
   font-family: "SourceSansProSemiBold", sans-serif;
-  line-height: 2.5rem;
   font-size: .8rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4288,7 +4287,7 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview__player .audio-preview__time {
-  color: gray;
+  color: #505050;
   -webkit-box-flex: 1;
   -ms-flex: auto;
   flex: auto;
@@ -4304,12 +4303,12 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview__player .audio-preview__played {
-  color: white;
+  color: #fff;
 }
 
 .audio-preview__player .audio-preview__button {
   font-size: 0;
-  color: white;
+  color: #fff;
   border: 1px solid #787878;
   border-radius: 50%;
   background: none;
@@ -4326,6 +4325,9 @@ html.js input.form-autocomplete {
     -ms-flex-order: 1;
     order: 1;
     padding: 6px;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: .85rem;
   }
 }
 
@@ -4359,7 +4361,7 @@ html.js input.form-autocomplete {
 .audio-preview__progress {
   height: 2px;
   width: 100%;
-  background-color: white;
+  background-color: #fff;
   margin-top: 10px;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -4374,7 +4376,7 @@ html.js input.form-autocomplete {
 .audio-preview__progress .audio-preview__progress__complete {
   height: 100%;
   width: 0;
-  background-color: #d8133f;
+  background-color: #b81b40;
 }
 
 .page__content {
@@ -4441,7 +4443,7 @@ html.js input.form-autocomplete {
 .author-quote__wrapper {
   padding: 20px;
   background-color: #5f7f9f;
-  color: white;
+  color: #fff;
   height: 175px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4455,7 +4457,7 @@ html.js input.form-autocomplete {
   justify-content: space-between;
 }
 
-@media all and (min-width: 23em) {
+@media all and (min-width: 26em) {
   .author-quote__wrapper {
     height: 230px;
   }
@@ -4566,7 +4568,7 @@ html.js input.form-autocomplete {
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
-  color: #969696;
+  color: #787878;
   font-family: "SourceSansProSemiBold", sans-serif;
   text-transform: uppercase;
   font-weight: normal;
@@ -4603,7 +4605,7 @@ html.js input.form-autocomplete {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -4632,7 +4634,7 @@ html.js input.form-autocomplete {
 }
 
 .node-webform form .description {
-  color: #047537;
+  color: #7c9b63;
   font-family: "SourceSansPro", sans-serif;
   margin-top: 5px;
 }
@@ -4683,8 +4685,8 @@ html.js input.form-autocomplete {
 }
 
 .view-articles .view-content {
-  border-top: 1px solid #cfcfcf;
-  border-bottom: 1px solid #cfcfcf;
+  border-top: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
 }
 
 .view-articles .view-content .views-row {

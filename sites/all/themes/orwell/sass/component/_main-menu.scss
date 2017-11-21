@@ -50,7 +50,7 @@ $menu-height__medium: 5rem;
     text-align: center;
 
     @include grid-media($medium) {
-      background-color: white;
+      background-color: $color__white;
     }
 
     ul {
@@ -68,7 +68,7 @@ $menu-height__medium: 5rem;
     }
 
     a {
-      color: white;
+      color: $color__white;
       opacity: .7;
 
       @include grid-media($medium) {
@@ -215,7 +215,7 @@ $menu-height__medium: 5rem;
           }
 
           &.active-trail {
-            color: white;
+            color: $color__white;
           }
         }
       }

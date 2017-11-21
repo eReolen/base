@@ -32,7 +32,7 @@
 
     &::before {
       @include icon;
-      color: $color__dark;
+      color: $color__gray;
       font-size: .75rem;
       text-indent: 0;
     }
@@ -76,7 +76,7 @@
       &::before {
         @include icon;
         content: $icon__circle;
-        color: $color__dark;
+        color: $color__gray;
         font-size: .75rem;
         text-indent: 0;
       }
