@@ -1,0 +1,30 @@
+@import 'bootstrap/bootstrap';
+
+body.page-nyhedsbrev-app,
+body.page-nyhedsbrev-web {
+
+  .pane-page-content {
+    padding: 0 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .pane-title {
+    font-size: 1.8rem;
+    font-family: $font-semibold;
+  }
+
+  // in case the form changes name and gets a new classname
+  form[class^="mailchimp-"] {
+    // include all the default form stylings from _mixins.scss:87
+    @include form-default;
+    // overwrite submit button
+    input[type="submit"].form-submit {
+      padding: 0 1rem;
+      margin-top: 0;
+    }
+
+    .form-required {
+      color: $color__red;
+    }
+  }
+}

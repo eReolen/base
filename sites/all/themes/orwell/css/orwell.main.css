@@ -4787,4 +4787,116 @@ html.js input.form-autocomplete {
   background: #e5dbb7;
 }
 
+body.page-nyhedsbrev-app .pane-page-content,
+body.page-nyhedsbrev-web .pane-page-content {
+  padding: 0 2rem;
+  margin-bottom: 4rem;
+}
+
+body.page-nyhedsbrev-app .pane-title,
+body.page-nyhedsbrev-web .pane-title {
+  font-size: 1.8rem;
+  font-family: "SourceSansProSemiBold", sans-serif;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] select,
+body.page-nyhedsbrev-web form[class^="mailchimp-"] select {
+  background: white;
+  border: 1px solid #d5d5d5;
+  height: 41px;
+  width: 100%;
+  font-size: 13px;
+  padding: 10px 30px;
+  color: #787878;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] input[type="text"],
+body.page-nyhedsbrev-app form[class^="mailchimp-"] input[type="email"],
+body.page-nyhedsbrev-app form[class^="mailchimp-"] input[type="submit"],
+body.page-nyhedsbrev-app form[class^="mailchimp-"] input[type="password"],
+body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="text"],
+body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="email"],
+body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="submit"],
+body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="password"] {
+  text-decoration: none;
+  border-radius: 6px;
+  min-width: 250px;
+  display: inline-block;
+  position: relative;
+  height: 41px;
+  border: 1px solid #d5d5d5;
+  color: black;
+  font-size: 15.4px;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] input[type="submit"],
+body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="submit"] {
+  font-family: "SourceSansProSemiBold", sans-serif;
+  line-height: 1em;
+  padding: 15px 22px;
+  margin-top: 1rem;
+  width: 100%;
+  background-color: #95b978;
+  color: #fff;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] input[type="submit"]:hover,
+body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="submit"]:hover {
+  background-color: #7c9b63;
+  cursor: pointer;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] label,
+body.page-nyhedsbrev-web form[class^="mailchimp-"] label {
+  font-size: 16px;
+  line-height: 22px;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  color: #505050;
+  margin: 0 0 5px;
+  display: block;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] .description,
+body.page-nyhedsbrev-web form[class^="mailchimp-"] .description {
+  margin: .5rem 0;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] .form-item,
+body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-item {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] form .description,
+body.page-nyhedsbrev-web form[class^="mailchimp-"] form .description {
+  color: #7c9b63;
+  font-family: "SourceSansPro", sans-serif;
+  margin-top: 5px;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] input[type="submit"].form-submit,
+body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="submit"].form-submit {
+  padding: 0 1rem;
+  margin-top: 0;
+}
+
+body.page-nyhedsbrev-app form[class^="mailchimp-"] .form-required,
+body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-required {
+  color: #b81b40;
+}
+
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
