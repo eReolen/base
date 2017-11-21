@@ -360,7 +360,7 @@ div.messages {
   max-width: 1200px;
   width: 100%;
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: #fff;
   background-image: none;
   font-family: "SourceSansPro", sans-serif;
   font-size: 1.2rem;
@@ -408,7 +408,7 @@ div.messages ul {
 }
 
 .logged-in .pane-page-tabs a {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
   font-family: "SourceSansProSemiBold", sans-serif;
   font-size: 1.1rem;
@@ -439,7 +439,7 @@ div.messages ul {
   text-transform: uppercase;
   width: 100%;
   font-size: .9rem;
-  color: #ffffff !important;
+  color: #fff !important;
   text-decoration: none;
   position: relative;
 }
@@ -528,7 +528,7 @@ div.messages ul {
   color: #787878;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  border-top: 1px solid #cfcfcf;
+  border-top: 1px solid #d8d8d8;
   padding-top: 1.5rem;
 }
 
@@ -540,7 +540,7 @@ div.messages ul {
 }
 
 .text a {
-  color: #d8133f;
+  color: #b81b40;
   text-decoration: none;
 }
 
@@ -560,7 +560,7 @@ div.messages ul {
 }
 
 .highlight {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .ui-dialog {
@@ -743,7 +743,7 @@ div.messages ul {
 
 .pager a:hover,
 .pager .pager-ellipsis:hover {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .pager-first,
@@ -752,7 +752,7 @@ div.messages ul {
 }
 
 .pager-current {
-  color: #d8133f;
+  color: #b81b40;
   padding: 1rem;
 }
 
@@ -779,15 +779,15 @@ div.messages ul {
   text-transform: none;
   font-size: .9rem;
   color: #505050;
-  border: 1px solid #d8d8d8;
+  border: 1px solid #dcdcdc;
   padding: 1rem;
   border-radius: 2px;
 }
 
 .pager-previous a:hover::before,
 .pager-next a:hover::before {
-  color: #d8133f;
-  border: 1px solid #d8133f;
+  color: #b81b40;
+  border: 1px solid #b81b40;
 }
 
 .pager-next a::before {
@@ -896,7 +896,7 @@ div.messages ul {
 }
 
 .search-overlay--inner {
-  background-color: gray;
+  background-color: #505050;
   color: white;
 }
 
@@ -1062,7 +1062,7 @@ div.messages ul {
 }
 
 .menu-name-main-menu.menu-level-1 {
-  background-color: #d8133f;
+  background-color: #b81b40;
   text-align: center;
 }
 
@@ -1179,7 +1179,7 @@ div.messages ul {
   }
   .menu-name-main-menu.menu-level-2 li.expanded.js-active > a::before {
     content: '';
-    color: #393939;
+    color: #3c3c3c;
     position: absolute;
     width: 0;
     height: 0;
@@ -1199,7 +1199,7 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .menu-name-main-menu.menu-level-2 a:hover {
-    color: gray;
+    color: #505050;
   }
 }
 
@@ -1226,7 +1226,7 @@ div.messages ul {
   -webkit-column-gap: 2rem;
   column-gap: 2rem;
   padding: 1rem 20px;
-  background-color: #393939;
+  background-color: #3c3c3c;
 }
 
 @media all and (min-width: 49em) {
@@ -1378,7 +1378,7 @@ input[type=checkbox] + label::before,
 .radio-custom + .radio-custom-label::before {
   content: '';
   background: transparent;
-  border: 1px solid #b5b5b5;
+  border: 1px solid #b4b4b4;
   width: 1.5rem;
   height: 1.5rem;
   text-align: center;
@@ -1399,7 +1399,7 @@ input[type=checkbox]:checked + label::before {
   text-transform: none;
   content: "";
   background-color: #95b978;
-  color: #ffffff;
+  color: #fff;
 }
 
 .radio-custom + .radio-custom-label::before {
@@ -1461,7 +1461,7 @@ input[type=checkbox]:focus + label,
 
 fieldset {
   padding: 2rem;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #d8d8d8;
   background-color: #f0f0f0;
   margin-top: -.5rem;
 }
@@ -1543,7 +1543,7 @@ fieldset {
   -ms-flex-pack: end;
   justify-content: flex-end;
   padding: 1rem;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #d8d8d8;
 }
 
 @media all and (min-width: 49em) {
@@ -1587,7 +1587,7 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .page-search .search-form {
-    background-color: #d8133f;
+    background-color: #b81b40;
   }
 }
 
@@ -1625,7 +1625,7 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .search-form__icon__wrapper::before {
-    color: #ffffff;
+    color: #fff;
     font-size: 1.5rem;
     position: relative;
     top: 3px;
@@ -1666,7 +1666,7 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .search-form__icon__wrapper {
-    background: #d8133f;
+    background: #b81b40;
     display: block;
     height: 2rem;
     text-align: center;
@@ -1682,7 +1682,7 @@ fieldset {
 }
 
 .search-form__content {
-  background: #ffffff;
+  background: #fff;
   display: none;
   height: 5rem;
   left: 0;
@@ -1715,7 +1715,7 @@ fieldset {
   .page-search .search-form__content {
     height: auto;
     padding: 1.2rem;
-    background-color: #d8133f;
+    background-color: #b81b40;
   }
 }
 
@@ -1749,7 +1749,7 @@ fieldset {
   border: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  color: gray;
+  color: #505050;
   display: block;
   font-family: "SourceSansProLight", sans-serif;
   font-size: 2rem;
@@ -1771,24 +1771,24 @@ fieldset {
 @media all and (min-width: 49em) {
   .page-search .search-form__input--text {
     height: auto;
-    background: #d8133f;
+    background: #b81b40;
     color: white;
     font-size: 1.3rem;
     font-family: "SourceSansPro", sans-serif;
   }
   .page-search .search-form__input--text::-webkit-input-placeholder {
-    color: #ffffff;
+    color: #fff;
   }
   .page-search .search-form__input--text:-ms-input-placeholder {
-    color: #ffffff;
+    color: #fff;
   }
   .page-search .search-form__input--text::placeholder {
-    color: #ffffff;
+    color: #fff;
   }
 }
 
 .search-form__icon--close {
-  background: #d8133f;
+  background: #b81b40;
   height: 2rem;
   position: fixed;
   right: 1rem;
@@ -1812,7 +1812,7 @@ fieldset {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  color: #ffffff;
+  color: #fff;
   content: "";
   font-size: 1rem;
   left: .5rem;
@@ -1851,7 +1851,7 @@ html.js input.form-autocomplete {
     padding-bottom: 3.5rem;
     float: left;
     width: 300px;
-    border-right: 1px solid #cfcfcf;
+    border-right: 1px solid #d8d8d8;
   }
 }
 
@@ -2137,7 +2137,7 @@ html.js input.form-autocomplete {
   height: 370px;
   padding: 2rem;
   color: white;
-  background-color: #393939;
+  background-color: #3c3c3c;
   position: relative;
 }
 
@@ -2281,7 +2281,7 @@ html.js input.form-autocomplete {
 .article--teaser__label {
   position: relative;
   margin-bottom: 1rem;
-  color: #ffffff;
+  color: #fff;
   font-size: 1rem;
   font-family: "SourceSansProSemiBold", sans-serif;
   font-weight: 700;
@@ -2299,7 +2299,7 @@ html.js input.form-autocomplete {
   border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 0.7rem 1.2rem;
   font-family: "SourceSansProSemiBold", sans-serif;
-  color: #ffffff;
+  color: #fff;
   text-transform: uppercase;
   font-size: 0.75rem;
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.78);
@@ -2490,7 +2490,7 @@ html.js input.form-autocomplete {
 
 .ding-carousel .slick-arrow {
   background: #f0f0f0;
-  border: 1px solid #d8d8d8;
+  border: 1px solid #dcdcdc;
   border-radius: 1px;
   font-size: 0;
   padding: .75rem;
@@ -2539,7 +2539,7 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel .slick-dots {
-  background-color: #393939;
+  background-color: #3c3c3c;
   padding: 20px 0;
   width: 100%;
   text-align: center;
@@ -2664,7 +2664,7 @@ html.js input.form-autocomplete {
 
 .material {
   padding: 2rem 0;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #d8d8d8;
 }
 
 @media all and (min-width: 49em) {
@@ -2801,7 +2801,7 @@ html.js input.form-autocomplete {
 
 .material__subjects .subject:hover {
   background-color: #787878;
-  color: #ffffff;
+  color: #fff;
 }
 
 .material__rating {
@@ -2828,7 +2828,7 @@ html.js input.form-autocomplete {
 
 .material__series a {
   text-decoration: none;
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .material__series .field-label {
@@ -2850,7 +2850,7 @@ html.js input.form-autocomplete {
 }
 
 .material__also_available a {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 @media all and (min-width: 49em) {
@@ -3007,7 +3007,7 @@ html.js input.form-autocomplete {
   display: inline-block;
   clear: left;
   padding: 1.5rem 0;
-  border-top: 1px solid #cfcfcf;
+  border-top: 1px solid #d8d8d8;
   margin: 0;
 }
 
@@ -3045,7 +3045,7 @@ html.js input.form-autocomplete {
 }
 
 .material .group-material-details .field-group-format-wrapper .field-items a {
-  color: #d8133f;
+  color: #b81b40;
   text-decoration: none;
 }
 
@@ -3427,7 +3427,7 @@ html.js input.form-autocomplete {
 }
 
 .page-user .pane-library-info .pane-content a {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .page-user .pane-user-menu li,
@@ -3435,7 +3435,7 @@ html.js input.form-autocomplete {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.2rem;
   padding: 1rem 0;
-  border-top: 1px solid #d8d8d8;
+  border-top: 1px solid #dcdcdc;
 }
 
 .page-user .pane-user-menu a {
@@ -3727,7 +3727,7 @@ html.js input.form-autocomplete {
 }
 
 .page-user-bookmarks .item-information-list a {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .review {
@@ -3741,7 +3741,7 @@ html.js input.form-autocomplete {
 
 .review .review__wrapper {
   padding: 20px;
-  background-color: #e6e6e6;
+  background-color: #e2e2e2;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3845,7 +3845,7 @@ html.js input.form-autocomplete {
 }
 
 .review .review__subhead .review__highlight {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .review .field-name-ting-title {
@@ -3975,7 +3975,7 @@ html.js input.form-autocomplete {
 }
 
 .faq-category-menu .faq-qa a {
-  color: #d8133f;
+  color: #b81b40;
 }
 
 .faq-question {
@@ -4001,7 +4001,7 @@ html.js input.form-autocomplete {
 
 .recommended-material__wrapper {
   padding: 20px;
-  background-color: #e6e6e6;
+  background-color: #e2e2e2;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4093,10 +4093,10 @@ html.js input.form-autocomplete {
   right: 0;
   width: 100%;
   height: 1.1rem;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(230, 230, 230, 0)), color-stop(50%, #e6e6e6));
-  background: -webkit-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
-  background: -o-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
-  background: linear-gradient(to bottom, rgba(230, 230, 230, 0), #e6e6e6 50%);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(226, 226, 226, 0)), color-stop(50%, #e2e2e2));
+  background: -webkit-linear-gradient(top, rgba(226, 226, 226, 0), #e2e2e2 50%);
+  background: -o-linear-gradient(top, rgba(226, 226, 226, 0), #e2e2e2 50%);
+  background: linear-gradient(to bottom, rgba(226, 226, 226, 0), #e2e2e2 50%);
 }
 
 @media all and (min-width: 49em) {
@@ -4117,10 +4117,10 @@ html.js input.form-autocomplete {
     right: 0;
     width: 100%;
     height: 1.5rem;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(230, 230, 230, 0)), color-stop(50%, #e6e6e6));
-    background: -webkit-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
-    background: -o-linear-gradient(top, rgba(230, 230, 230, 0), #e6e6e6 50%);
-    background: linear-gradient(to bottom, rgba(230, 230, 230, 0), #e6e6e6 50%);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(226, 226, 226, 0)), color-stop(50%, #e2e2e2));
+    background: -webkit-linear-gradient(top, rgba(226, 226, 226, 0), #e2e2e2 50%);
+    background: -o-linear-gradient(top, rgba(226, 226, 226, 0), #e2e2e2 50%);
+    background: linear-gradient(to bottom, rgba(226, 226, 226, 0), #e2e2e2 50%);
   }
 }
 
@@ -4133,7 +4133,7 @@ html.js input.form-autocomplete {
 
 .audio-preview {
   padding: 20px;
-  background-color: #393939;
+  background-color: #3c3c3c;
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4231,10 +4231,10 @@ html.js input.form-autocomplete {
   right: 0;
   width: 100%;
   height: 0.8rem;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(57, 57, 57, 0)), color-stop(50%, #393939));
-  background: -webkit-linear-gradient(top, rgba(57, 57, 57, 0), #393939 50%);
-  background: -o-linear-gradient(top, rgba(57, 57, 57, 0), #393939 50%);
-  background: linear-gradient(to bottom, rgba(57, 57, 57, 0), #393939 50%);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(60, 60, 60, 0)), color-stop(50%, #3c3c3c));
+  background: -webkit-linear-gradient(top, rgba(60, 60, 60, 0), #3c3c3c 50%);
+  background: -o-linear-gradient(top, rgba(60, 60, 60, 0), #3c3c3c 50%);
+  background: linear-gradient(to bottom, rgba(60, 60, 60, 0), #3c3c3c 50%);
 }
 
 @media all and (min-width: 49em) {
@@ -4255,10 +4255,10 @@ html.js input.form-autocomplete {
     right: 0;
     width: 100%;
     height: 1rem;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(57, 57, 57, 0)), color-stop(50%, #393939));
-    background: -webkit-linear-gradient(top, rgba(57, 57, 57, 0), #393939 50%);
-    background: -o-linear-gradient(top, rgba(57, 57, 57, 0), #393939 50%);
-    background: linear-gradient(to bottom, rgba(57, 57, 57, 0), #393939 50%);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(60, 60, 60, 0)), color-stop(50%, #3c3c3c));
+    background: -webkit-linear-gradient(top, rgba(60, 60, 60, 0), #3c3c3c 50%);
+    background: -o-linear-gradient(top, rgba(60, 60, 60, 0), #3c3c3c 50%);
+    background: linear-gradient(to bottom, rgba(60, 60, 60, 0), #3c3c3c 50%);
   }
 }
 
@@ -4288,7 +4288,7 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview__player .audio-preview__time {
-  color: gray;
+  color: #505050;
   -webkit-box-flex: 1;
   -ms-flex: auto;
   flex: auto;
@@ -4374,7 +4374,7 @@ html.js input.form-autocomplete {
 .audio-preview__progress .audio-preview__progress__complete {
   height: 100%;
   width: 0;
-  background-color: #d8133f;
+  background-color: #b81b40;
 }
 
 .page__content {
@@ -4683,8 +4683,8 @@ html.js input.form-autocomplete {
 }
 
 .view-articles .view-content {
-  border-top: 1px solid #cfcfcf;
-  border-bottom: 1px solid #cfcfcf;
+  border-top: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
 }
 
 .view-articles .view-content .views-row {

@@ -1,28 +1,60 @@
-$page-bg: rgb(240, 240, 240);
-$footer-bg: #282828;
+// Official colors from design.
+$color__geist--red: #b81b40;
+$color__geist--green: #95b978;
+$color__geist--green-dark: #7c9b63;
+$color__geist--blue: #5f7f9f;
 
-$color__font-gray--dark: #505050;
-$color__font-gray: #787878;
-$color__font-gray--light: #b4b4b4;
+$coler__geist--grey1: #282828; // 40
+$coler__geist--grey2: #3c3c3c; // 60
+$coler__geist--grey3: #505050; // 80
+$coler__geist--grey4: #787878; // 120
+$coler__geist--grey5: #b4b4b4; // 180
+$coler__geist--grey6: #dcdcdc; // 220
+$coler__geist--grey7: #ebebeb; // 230
+$coler__geist--grey8: #f0f0f0; // 240
 
-$color__red: #d8133f;
-$color__red--light: #eca7b1;
-$color__white: #ffffff;
+$coler__geist--litteratursiden: #de5114;
+$coler__geist--litteratursiden-light: #eadfc7;
 
-$color__gray--lighter: #f0f0f0;
-$color__gray--light: #dcdcdc;
-$color__gray: gray; // #808080
-$color__gray-darker: #e6e6e6;
-$color__dark: #505050;
-$color__gray--dark: #393939;
+$coler__geist--forfatterweb: #589dd1;
+$coler__geist--forfatterweb-light: #d6e0e8;
 
-$color__green: #95b978;
-$color__green--dark: #7c9b63;
+// Not specified, but apparently the color used for horizontal rules.
+$coler__geist--hr: #d8d8d8;
 
-$color__blue: #5f7f9f;
+// Same, background for some spotlight box boxes.
+$coler__geist--boxes-bg: #e2e2e2;
 
-$color__border-gray--light: #d8d8d8;
-$color__border-gray: #cfcfcf;
-$color__border-gray--dark: #b5b5b5;
+// Background for materials on articles.
+$coler__geist--material-list-bg: #e6e6e6;
 
-$color__link__default: $color__red;
+// Semantic naming.
+$page-bg:    $coler__geist--grey8;
+$footer-bg:  $coler__geist--grey1;
+
+$color__font-gray--dark:   $coler__geist--grey3;
+$color__font-gray:         $coler__geist--grey4;
+$color__font-gray--light:  $coler__geist--grey5;
+
+$color__border-gray--light:  $coler__geist--grey6;
+$color__border-gray:         $coler__geist--hr;
+$color__border-gray--dark:   $coler__geist--grey5;
+
+$coler__material-list-bg: $coler__geist--material-list-bg;
+$coler__boxes-bg: $coler__geist--boxes-bg;
+
+$color__link__default: $color__geist--red;
+
+// Not so semantic.
+$color__red:    $color__geist--red;
+$color__white:  #fff;
+
+$color__gray--lighter:  $coler__geist--grey8;
+$color__gray--light:    $coler__geist--grey6;
+$color__gray:           $coler__geist--grey3;
+$color__gray--dark:     $coler__geist--grey2;
+
+$color__green:        $color__geist--green;
+$color__green--dark:  $color__geist--green-dark;
+
+$color__blue: $color__geist--blue;

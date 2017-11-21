@@ -62,7 +62,7 @@ input[type=checkbox]:focus + label,
   }
 
   a {
-    color: $color__dark;
+    color: $color__gray;
     text-decoration: none;
   }
 
@@ -118,7 +118,7 @@ fieldset {
     position: relative;
     left: -10px;
     top: 1px;
-    color: $color__dark;
+    color: $color__gray;
     font-weight: bold;
   }
 }
@@ -132,7 +132,7 @@ fieldset {
     position: relative;
     right: -10px;
     top: 1px;
-    color: $color__dark;
+    color: $color__gray;
     font-weight: bold;
   }
 }
