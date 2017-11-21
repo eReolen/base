@@ -159,7 +159,7 @@ $icon-color: #9c9c9c;
     font-family: $font-light;
     font-size: 2rem;
     height: $item-height;
-    padding: 0 1rem 0 3rem;
+    padding: 0 3.5rem 0 3rem;
     width: 100%;
 
     @include grid-media($medium) {
