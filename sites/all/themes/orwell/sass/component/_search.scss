@@ -10,6 +10,8 @@ $icon-color: #9c9c9c;
   position: absolute;
   right: 0;
   top: 0;
+  // Ensure that search form overlaps page content.
+  z-index: 1;
 
   @include grid-media($medium) {
     position: relative;
@@ -53,7 +55,7 @@ $icon-color: #9c9c9c;
       }
     }
 
-    &.open {
+    .open & {
       position: fixed;
       top: 0;
       right: 0;
@@ -70,13 +72,20 @@ $icon-color: #9c9c9c;
         position: relative;
         content: '\ea0f';
         font-size: 1.5rem;
-        right: 1.3rem;
+        right: 17px;
+        top: 0;
 
         @include grid-media($medium) {
           position: relative;
           font-size: 1rem;
           top: 8px;
           right: 0;
+        }
+      }
+
+      @include grid-media($medium) {
+        .page-search & {
+          display: none;
         }
       }
     }
@@ -86,11 +95,6 @@ $icon-color: #9c9c9c;
       display: block;
       height: 2rem;
       text-align: center;
-    }
-
-    // Hide on search page.
-    .page-search & {
-      display: none;
     }
   }
 
@@ -113,33 +117,36 @@ $icon-color: #9c9c9c;
       @include content-wrapper__large;
     }
 
-    // Show always on search page.
-    .page-search & {
+    .open & {
       display: block;
-      z-index: 1;
+    }
 
+    // For some reason the search form should look different on the
+    // search page.
+    .page-search & {
       @include grid-media($medium) {
         height: auto;
         padding: 1.2rem;
         background-color: $color__red;
       }
 
-      .form-item-search-block-form {
-        &::before {
-          @include icon;
-          content: $icon__search;
-          position: absolute;
-          color: $color__font-gray;
-          top: 27px;
-          left: 7px;
-          font-size: 1.5rem;
+    }
+  }
 
-          @include grid-media($medium) {
-            top: 21px;
-            color: $color__white;
-            font-size: 1.2rem;
-          }
-        }
+  .form-item-search-block-form {
+    &::before {
+      @include icon;
+      content: $icon__search;
+      position: absolute;
+      color: $color__font-gray;
+      top: 27px;
+      left: 7px;
+      font-size: 1.5rem;
+
+      @include grid-media($medium) {
+        top: 21px;
+        color: $color__white;
+        font-size: 1.2rem;
       }
     }
   }
@@ -152,16 +159,15 @@ $icon-color: #9c9c9c;
     font-family: $font-light;
     font-size: 2rem;
     height: $item-height;
-    padding: 0 1rem;
+    padding: 0 1rem 0 3rem;
     width: 100%;
 
     @include grid-media($medium) {
       padding: 0 1.875rem;
     }
 
+    // Different look on the search page.
     .page-search & {
-      padding-left: 3rem;
-
       @include grid-media($medium) {
         height: auto;
         background: $color__red;
