@@ -7,7 +7,7 @@
 
 .recommended-material__wrapper {
   padding: $padding__default;
-  background-color: $coler__boxes-bg;
+  background-color: $color__boxes-bg;
   display: flex;
   flex-flow: row nowrap;
 
@@ -45,13 +45,13 @@
   }
 
   .field-name-ting-title {
-    @include fadeout-box(1.1rem, 4, h2, $coler__boxes-bg);
+    @include fadeout-box(1.1rem, 4, h2, $color__boxes-bg);
     font-family: $font-light;
     font-size: 1.1rem;
     margin-bottom: .5rem;
 
     @include grid-media($medium) {
-      @include fadeout-box(1.5rem, 3, h2, $coler__boxes-bg);
+      @include fadeout-box(1.5rem, 3, h2, $color__boxes-bg);
     }
   }
 
