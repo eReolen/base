@@ -86,14 +86,19 @@ function reol_frontend_theme_registry_alter(&$theme_registry) {
 }
 
 /**
- * Implements hook_panel_pane_prerender().
+ * Implements hook_panels_pane_content_alter().
  */
-function reol_frontend_panels_pane_prerender($pane) {
+function reol_frontend_panels_pane_content_alter($content, $pane, $args, $contexts) {
   if ($pane->type == 'profile2_form' && $pane->subtype == 'profile2_form') {
     // Override title on profile form. DDBasic does it by passing the titles
     // through t() in the template, which is not the way to do it.
-    $pane->configuration['override_title'] = 1;
-    $pane->configuration['override_title_text'] = t('User profile');
+    $content->title = t('User profile');
+  }
+  if ($pane->type == 'reservations' && $pane->subtype == 'reservations') {
+    // Same issue as above.
+    if (!empty($pane->configuration['reservation_type_list']['ready_for_pickup'])) {
+      $content->title = t('Redeemable reservations');
+    }
   }
 }
 
