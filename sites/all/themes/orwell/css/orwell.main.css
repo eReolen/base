@@ -208,7 +208,7 @@ img {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -290,7 +290,7 @@ img {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -332,7 +332,7 @@ img {
 
 .ui-dialog {
   border-radius: 0;
-  background-color: white;
+  background-color: #fff;
   left: 0 !important;
   right: 0 !important;
   margin: 0 auto;
@@ -434,7 +434,7 @@ div.messages ul {
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
@@ -591,7 +591,7 @@ div.messages ul {
 }
 
 .ui-dialog a {
-  color: white;
+  color: #fff;
   text-align: center;
 }
 
@@ -615,7 +615,7 @@ div.messages ul {
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
@@ -702,7 +702,7 @@ div.messages ul {
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
@@ -891,13 +891,13 @@ div.messages ul {
 }
 
 .search-overlay--text {
-  color: white;
+  color: #fff;
   font-size: 1.5rem;
 }
 
 .search-overlay--inner {
   background-color: #505050;
-  color: white;
+  color: #fff;
 }
 
 .search-overlay--inner .cancel {
@@ -906,7 +906,7 @@ div.messages ul {
   padding: 10px 22px;
   margin-top: 1rem;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
   width: 100%;
@@ -919,7 +919,7 @@ div.messages ul {
 }
 
 .search-overlay--inner .cancel a {
-  color: white;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -1068,7 +1068,7 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .menu-name-main-menu.menu-level-1 {
-    background-color: white;
+    background-color: #fff;
   }
 }
 
@@ -1093,7 +1093,7 @@ div.messages ul {
 }
 
 .menu-name-main-menu.menu-level-1 a {
-  color: white;
+  color: #fff;
   opacity: .7;
 }
 
@@ -1257,12 +1257,12 @@ div.messages ul {
 }
 
 .menu-name-main-menu.menu-level-2 li ul a.active-trail {
-  color: white;
+  color: #fff;
 }
 
 .footer {
   background-color: #282828;
-  color: white;
+  color: #fff;
   font-size: 100%;
   font-family: "SourceSansPro", sans-serif;
   overflow: hidden;
@@ -1335,7 +1335,7 @@ div.messages ul {
 }
 
 .footer .pane-title {
-  color: white;
+  color: #fff;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   text-transform: uppercase;
@@ -1740,7 +1740,7 @@ fieldset {
 @media all and (min-width: 49em) {
   .page-search .search-form__content .form-item-search-block-form::before {
     top: 21px;
-    color: white;
+    color: #fff;
     font-size: 1.2rem;
   }
 }
@@ -1772,7 +1772,7 @@ fieldset {
   .page-search .search-form__input--text {
     height: auto;
     background: #b81b40;
-    color: white;
+    color: #fff;
     font-size: 1.3rem;
     font-family: "SourceSansPro", sans-serif;
   }
@@ -1962,7 +1962,7 @@ html.js input.form-autocomplete {
   position: absolute;
   background-color: #95b978;
   padding: 4px;
-  color: white;
+  color: #fff;
   border-radius: 50%;
   font-size: 13px;
   font-family: "SourceSansProSemiBold", sans-serif;
@@ -2136,7 +2136,7 @@ html.js input.form-autocomplete {
   display: block;
   height: 370px;
   padding: 2rem;
-  color: white;
+  color: #fff;
   background-color: #3c3c3c;
   position: relative;
 }
@@ -2150,7 +2150,7 @@ html.js input.form-autocomplete {
 }
 
 .article--teaser > a {
-  color: white;
+  color: #fff;
   text-decoration: none;
   height: 100%;
   display: -webkit-box;
@@ -3128,7 +3128,7 @@ html.js input.form-autocomplete {
 }
 
 .linkbox a {
-  color: white;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -3577,7 +3577,7 @@ html.js input.form-autocomplete {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -3655,7 +3655,7 @@ html.js input.form-autocomplete {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }
@@ -4134,7 +4134,7 @@ html.js input.form-autocomplete {
 .audio-preview {
   padding: 20px;
   background-color: #3c3c3c;
-  color: white;
+  color: #fff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4304,12 +4304,12 @@ html.js input.form-autocomplete {
 }
 
 .audio-preview__player .audio-preview__played {
-  color: white;
+  color: #fff;
 }
 
 .audio-preview__player .audio-preview__button {
   font-size: 0;
-  color: white;
+  color: #fff;
   border: 1px solid #787878;
   border-radius: 50%;
   background: none;
@@ -4359,7 +4359,7 @@ html.js input.form-autocomplete {
 .audio-preview__progress {
   height: 2px;
   width: 100%;
-  background-color: white;
+  background-color: #fff;
   margin-top: 10px;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -4441,7 +4441,7 @@ html.js input.form-autocomplete {
 .author-quote__wrapper {
   padding: 20px;
   background-color: #5f7f9f;
-  color: white;
+  color: #fff;
   height: 175px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4603,7 +4603,7 @@ html.js input.form-autocomplete {
   margin-top: 1rem;
   width: 100%;
   background-color: #95b978;
-  color: white;
+  color: #fff;
   border-radius: 2px;
   text-transform: uppercase;
 }

@@ -2,7 +2,7 @@
 
 .footer {
   background-color: $footer-bg;
-  color: white;
+  color: $color__white;
   font-size: 100%;
   font-family: $font-regular;
   overflow: hidden;
@@ -69,7 +69,7 @@
   }
 
   .pane-title {
-    color: white;
+    color: $color__white;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     text-transform: uppercase;
