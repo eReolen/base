@@ -279,7 +279,7 @@ $teaser-height--medium: 400px;
     }
   }
 
-  @include grid-media($xsmall) {
+  @include grid-media($xxsmall) {
     height: $teaser-height--default;
   }
 
