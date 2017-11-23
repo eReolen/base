@@ -3972,7 +3972,7 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .expand-parent-to {
+  .expand-parent-to__16by9 {
     padding-bottom: 0;
   }
 }
