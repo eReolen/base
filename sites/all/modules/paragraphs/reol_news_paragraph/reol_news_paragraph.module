@@ -134,7 +134,7 @@ function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta,
   if (isset($items[$delta])) {
     $build = array();
     $item = $items[$delta];
-    $articles = _reol_news_paragraph_get_articles($item['value']);
+    list($more, $articles) = ereol_article_get_articles($item['value']);
     foreach ($articles as $article) {
       $build[] = array(
         '#type' => 'ding_carousel_item',
@@ -147,36 +147,4 @@ function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta,
 
   // Return JSON output.
   drupal_json_output($return);
-}
-
-/**
- * Returns list of newest articles.
- *
- * @param int $count
- *   Number of articles to fetch.
- *
- * @return array
- *   Build array of articles, indexed by nid.
- */
-function _reol_news_paragraph_get_articles($count) {
-  $articles = array();
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'article')
-    ->propertyCondition('status', NODE_PUBLISHED)
-    ->propertyOrderBy('created', 'DESC')
-    ->range(0, $count);
-
-  $result = $query->execute();
-  if (isset($result['node'])) {
-    $articles = entity_load('node', array_keys($result['node']));
-    if ($articles) {
-      $rendered_nodes = node_view_multiple($articles);
-      foreach (element_children($rendered_nodes['nodes']) as $key) {
-        $articles[$key] = $rendered_nodes['nodes'][$key];
-      }
-    }
-  }
-
-  return $articles;
 }
