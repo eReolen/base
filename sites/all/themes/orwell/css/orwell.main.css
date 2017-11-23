@@ -3988,7 +3988,6 @@ html.js input.form-autocomplete {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 56vw;
 }
 
 @media all and (min-width: 49em) {
@@ -4004,6 +4003,22 @@ html.js input.form-autocomplete {
   -webkit-box-flex: 1;
   -ms-flex: auto;
   flex: auto;
+}
+
+.expand-parent-to {
+  position: absolute;
+  width: 100%;
+  height: 0;
+}
+
+.expand-parent-to__16by9 {
+  padding-bottom: 56.25%;
+}
+
+@media all and (min-width: 49em) {
+  .expand-parent-to__16by9 {
+    padding-bottom: 0;
+  }
 }
 
 .paragraphs-item-video {
@@ -4837,7 +4852,6 @@ body.page-nyhedsbrev-app form[class^="mailchimp-"] select,
 body.page-nyhedsbrev-web form[class^="mailchimp-"] select {
   background: white;
   border: 1px solid #d5d5d5;
-  height: 41px;
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
@@ -4861,7 +4875,6 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="password"] {
   min-width: 250px;
   display: inline-block;
   position: relative;
-  height: 41px;
   border: 1px solid #d5d5d5;
   color: black;
   font-size: 15.4px;
@@ -4869,7 +4882,7 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="password"] {
   width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 10px 30px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
