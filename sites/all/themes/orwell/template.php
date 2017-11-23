@@ -77,41 +77,43 @@ function orwell_preprocess_node(&$variables) {
 
   if ($node->type === 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
     $variables['covers'] = array();
-    $entity_ids = array();
-    // Sadly no entity_wrapper support in ting_reference, so we'll do it the
-    // hard way.
-    if (isset($node->field_ding_news_materials[LANGUAGE_NONE])) {
-      foreach ($node->field_ding_news_materials[LANGUAGE_NONE] as $item) {
-        if (isset($item['value']->endpoints[LANGUAGE_NONE][1])) {
-          $entity_ids[] = $item['value']->endpoints[LANGUAGE_NONE][1]['entity_id'];
-        }
-      }
-    }
-
-    if ($entity_ids) {
-      // Pick two randomly.
-      shuffle($entity_ids);
-      $entity_ids = array_slice($entity_ids, 0, 2);
-
-      // Load the entities so we can get the well ID of them.
-      $ding_entities = entity_load('ting_object', $entity_ids);
-      $ids = array_map(function ($ding_entity) {
-        return $ding_entity->getId();
-      }, $ding_entities);
-
-      $variables['covers'] = array_map(function ($file) {
-        $variables = array(
-          'style_name' => 'ereol_article_covers',
-          'path' => $file,
-        );
-        return theme('image_style', $variables);
-      }, ting_covers_get(array_values($ids)));
-    }
-
     // Add template suggestion if teaser should use article_image
     // as background.
-    if ($variables['is_image_teaser']) {
+    if ($variables['is_image_teaser'] && $variables['view_mode'] == 'teaser') {
       $variables['theme_hook_suggestions'][] = 'node__article__view_mode__teaser__image';
+    }
+    else {
+      // Else render covers.
+      $entity_ids = array();
+      // Sadly no entity_wrapper support in ting_reference, so we'll do it the
+      // hard way.
+      if (isset($node->field_ding_news_materials[LANGUAGE_NONE])) {
+        foreach ($node->field_ding_news_materials[LANGUAGE_NONE] as $item) {
+          if (isset($item['value']->endpoints[LANGUAGE_NONE][1])) {
+            $entity_ids[] = $item['value']->endpoints[LANGUAGE_NONE][1]['entity_id'];
+          }
+        }
+      }
+
+      if ($entity_ids) {
+        // Pick two randomly.
+        shuffle($entity_ids);
+        $entity_ids = array_slice($entity_ids, 0, 2);
+
+        // Load the entities so we can get the well ID of them.
+        $ding_entities = entity_load('ting_object', $entity_ids);
+        $ids = array_map(function ($ding_entity) {
+          return $ding_entity->getId();
+        }, $ding_entities);
+
+        $variables['covers'] = array_map(function ($file) {
+          $variables = array(
+            'style_name' => 'ereol_article_covers',
+            'path' => $file,
+          );
+          return theme('image_style', $variables);
+        }, ting_covers_get(array_values($ids)));
+      }
     }
   }
 }

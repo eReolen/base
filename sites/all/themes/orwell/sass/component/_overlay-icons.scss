@@ -18,10 +18,14 @@
     padding: .5rem;
     background-color: $color__white;
     border-radius: 50%;
-    border: 1px solid #eee;
     color: $color__font-gray;
     font-size: 1rem;
     margin-left: .5rem;
+  }
+
+  &.no-quota .icon::before {
+    background-color: $color__quota;
+    color: $color__white;
   }
 
   .ebook::before {
@@ -30,10 +34,6 @@
 
   .audiobook::before {
     content: $icon__badge-sound;
-  }
-
-  .no-quota::before {
-    content: $icon__quota;
   }
 
   .link::before {

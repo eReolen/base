@@ -9,3 +9,8 @@ $font-light: 'SourceSansProLight', sans-serif;
 $font-regular: 'SourceSansPro', sans-serif;
 $font-semibold: 'SourceSansProSemiBold', sans-serif;
 $font-icon: 'icomoon';
+
+// Set a base font.
+body {
+  font-family: $font-regular;
+}
