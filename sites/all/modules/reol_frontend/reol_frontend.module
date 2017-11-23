@@ -51,6 +51,7 @@ function reol_frontend_theme() {
     'reol_overlay_icons' => array(
       'variables' => array(
         'icons' => array(),
+        'classes' => array(),
       ),
     ),
   );
@@ -61,6 +62,12 @@ function reol_frontend_theme() {
  */
 function theme_reol_overlay_icons($variables) {
   $spans = '';
+
+  if (!is_array($variables['classes'])) {
+    $variables['classes'] = array();
+  }
+  $variables['classes'][] = 'overlay-icons';
+
   foreach ($variables['icons'] as $icon) {
     $spans .= '<span class="icon ' . $icon . '"></span>';
   }
@@ -69,7 +76,7 @@ function theme_reol_overlay_icons($variables) {
     return '';
   }
 
-  return '<div class="overlay-icons">' . $spans . '</div>';
+  return '<div class="' . implode(' ', $variables['classes']) . '">' . $spans . '</div>';
 }
 
 /**
@@ -210,15 +217,16 @@ function reol_frontend_views_query_alter(&$view, &$query) {
  */
 function reol_frontend_ding_entity_icons(DingEntity $ding_entity) {
   if (!isset($ding_entity->reol_no_icons)) {
+    $classes = array();
     $icons = array();
     if (!$ding_entity->reply->on_quota) {
-      $icons[] = 'no-quota';
+      $classes[] = 'no-quota';
     }
 
     if (!isset($ding_entity->reol_no_type_icons)) {
       $icons[] = reol_base_get_type_name($ding_entity->type);
     }
-    return theme('reol_overlay_icons', array('icons' => $icons));
+    return theme('reol_overlay_icons', array('icons' => $icons, 'classes' => $classes));
   }
   return '';
 }
