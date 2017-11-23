@@ -4946,4 +4946,79 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-required {
   color: #b81b40;
 }
 
+.author-portrait {
+  overflow: hidden;
+  position: relative;
+}
+
+.author-portrait a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.author-portrait.author-portrait--dark-text a {
+  color: #505050;
+}
+
+.author-portrait__container {
+  height: 125px;
+  padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+@media all and (min-width: 49em) {
+  .author-portrait__container {
+    height: 250px;
+    padding: 30px;
+  }
+}
+
+.author-portrait__image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.author-portrait__image img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.author-portrait__overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: .8;
+}
+
+.author-portrait__content {
+  position: relative;
+  z-index: 1;
+  font-family: "SourceSansPro", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: .7em;
+}
+
+@media all and (min-width: 49em) {
+  .author-portrait__content {
+    font-size: 1rem;
+  }
+}
+
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
