@@ -533,7 +533,7 @@ div.messages ul {
 .text h3 {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.5rem;
-  color: #787878;
+  color: #505050;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   border-top: 1px solid #d8d8d8;
@@ -2338,7 +2338,6 @@ html.js input.form-autocomplete {
 
 .article--teaser__read-more {
   position: relative;
-  display: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -2349,15 +2348,22 @@ html.js input.form-autocomplete {
   color: #fff;
   text-transform: uppercase;
   font-size: 0.75rem;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.78);
   font-weight: bold;
   border-radius: 2px;
   text-align: center;
   cursor: pointer;
+  position: relative;
+  display: none;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.78);
 }
 
 .article--teaser__read-more:hover {
   border: 1px solid white;
+}
+
+.article--teaser__read-more a {
+  color: #fff;
+  text-decoration: none;
 }
 
 .article--teaser--image .article--teaser__read-more {
@@ -2634,7 +2640,7 @@ html.js input.form-autocomplete {
 .ding-carousel .carousel__header {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.5rem;
-  color: #787878;
+  color: #505050;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   margin-left: 20px;
@@ -2650,6 +2656,35 @@ html.js input.form-autocomplete {
   .ding-carousel .carousel__header {
     margin-left: 60px;
   }
+}
+
+.ding-carousel .carousel__more-link {
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: 1px solid rgba(180, 180, 180, 0.5);
+  padding: 0.7rem 1.2rem;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  color: #505050;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 2px;
+  text-align: center;
+  cursor: pointer;
+  float: right;
+  margin-top: -.4rem;
+}
+
+.ding-carousel .carousel__more-link:hover {
+  border: 1px solid #b4b4b4;
+}
+
+.ding-carousel .carousel__more-link a {
+  color: #505050;
+  text-decoration: none;
 }
 
 .ding-carousel-item {

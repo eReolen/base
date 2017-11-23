@@ -51,7 +51,8 @@ function ereol_article_preprocess_node(&$variables) {
 
     $variables['other_articles'] = array(
       '#type' => 'ding_carousel',
-      '#title' => '',
+      '#title' => t('More articles'),
+      '#more_link' => l(t('All articles'), 'articles'),
       '#path' => $ajax_path,
       '#offset' => 0,
       '#items' => array(),

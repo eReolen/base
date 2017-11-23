@@ -249,26 +249,11 @@ $teaser-height--medium: 400px;
   }
 
   &__read-more {
+    @include outline-button;
     position: relative;
     // Not displayed on mobile.
     display: none;
-    appearance: none;
-    background: none;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 0.7rem 1.2rem;
-    font-family: $font-semibold;
-    color: $color__white;
-    text-transform: uppercase;
-    font-size: 0.75rem;
     text-shadow: 0 0 6px rgba(0,0,0,.78);
-    font-weight: bold;
-    border-radius: 2px;
-    text-align: center;
-    cursor: pointer;
-
-    &:hover {
-      border: 1px solid rgba(255, 255, 255, 1);
-    }
 
     .article--teaser--image & {
       float: right;

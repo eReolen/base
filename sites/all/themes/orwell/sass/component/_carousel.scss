@@ -99,6 +99,12 @@
       margin-left: 60px;
     }
   }
+
+  .carousel__more-link {
+    @include outline-button($color__font-gray--dark, $color__border-gray--dark);
+    float: right;
+    margin-top: -.4rem;
+  }
 }
 
 .ding-carousel-item {
