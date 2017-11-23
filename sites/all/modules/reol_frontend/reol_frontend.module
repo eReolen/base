@@ -63,7 +63,7 @@ function reol_frontend_theme() {
 function theme_reol_overlay_icons($variables) {
   $spans = '';
 
-  if (!is_array($variables['classes'])) {
+  if (!isset($variables['classes']) || !is_array($variables['classes'])) {
     $variables['classes'] = array();
   }
   $variables['classes'][] = 'overlay-icons';
