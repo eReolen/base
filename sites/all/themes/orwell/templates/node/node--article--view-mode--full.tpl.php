@@ -27,8 +27,6 @@
     </div>
   </div>
   <div class="article__other-articles">
-    <div class="content-wrapper">
-      <?php print render($other_articles); ?>
-    </div>
+    <?php print render($other_articles); ?>
   </div>
 </div>
