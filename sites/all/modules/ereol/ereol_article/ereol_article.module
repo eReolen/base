@@ -26,6 +26,18 @@ function ereol_article_menu() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function ereol_article_theme() {
+  return array(
+    'ereol_article_placeholder' => array(
+      'template' => 'templates/ereol_article_placeholder',
+      'variables' => array(),
+    ),
+  );
+}
+
+/**
  * Implements hook_preprocess_node().
  */
 function ereol_article_preprocess_node(&$variables) {

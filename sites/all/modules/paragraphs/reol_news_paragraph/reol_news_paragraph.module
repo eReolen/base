@@ -40,18 +40,6 @@ function reol_news_paragraph_menu() {
 }
 
 /**
- * Implements hook_theme().
- */
-function reol_news_paragraph_theme() {
-  return array(
-    'reol_news_paragraph_placeholder' => array(
-      'template' => 'templates/reol_news_paragraph_placeholder',
-      'variables' => array(),
-    ),
-  );
-}
-
-/**
  * Implements hook_field_formatter_view().
  */
 function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
@@ -75,7 +63,7 @@ function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field,
       '#offset' => 0,
       '#items' => array(),
       '#placeholder' => array(
-        '#theme' => 'reol_news_paragraph_placeholder',
+        '#theme' => 'ereol_article_placeholder',
       ),
       '#placeholders' => 5,
     );
