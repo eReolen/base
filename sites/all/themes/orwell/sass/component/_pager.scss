@@ -71,3 +71,43 @@
     }
   }
 }
+
+.pager-item-prev-1,
+.pager-item-prev-2,
+.pager-item-prev-3,
+.pager-item-prev-4,
+.pager-item-prev-5,
+.pager-item-prev-6,
+.pager-item-prev-7,
+.pager-item-next-1 {
+  display: none;
+}
+
+@include grid-media($xxsmall) {
+  .pager-item-prev-1 {
+    display: list-item;
+  }
+}
+
+@include grid-media($xsmall) {
+  .pager-item-prev-2,
+  .pager-item-next-1 {
+    display: list-item;
+  }
+}
+
+@include grid-media($small) {
+  .pager-item-prev-3,
+  .pager-item-next-1 {
+    display: list-item;
+  }
+}
+
+@include grid-media($large) {
+  .pager-item-prev-4,
+  .pager-item-prev-5,
+  .pager-item-prev-6,
+  .pager-item-prev-7 {
+    display: list-item;
+  }
+}
