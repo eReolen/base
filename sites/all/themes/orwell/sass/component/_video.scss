@@ -2,7 +2,7 @@
 // Flex the spotlight-box so the paragraph is stretched out.
 .spotlight-box__top__primary {
   display: flex;
-  
+
   @include grid-media($medium) {
     // Reset height and let our parent set it (flexbox).
     height: auto;
