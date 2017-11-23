@@ -115,7 +115,9 @@ $teaser-height--medium: 400px;
 .article--teaser {
   display: block;
   height: $teaser-height--default;
-  padding: 2rem;
+  // Bottom padding to leave room for carousel dots. Also, doesn't
+  // look too bad on /articles.
+  padding: 2rem 2rem 56px;
   color: $color__white;
   background-color: $color__gray--dark;
   // Establish bounding box for image.

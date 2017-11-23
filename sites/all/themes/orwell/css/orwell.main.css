@@ -2182,7 +2182,7 @@ html.js input.form-autocomplete {
 .article--teaser {
   display: block;
   height: 370px;
-  padding: 2rem;
+  padding: 2rem 2rem 56px;
   color: #fff;
   background-color: #3c3c3c;
   position: relative;
@@ -2600,7 +2600,8 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel .slick-dots {
-  background-color: #3c3c3c;
+  position: absolute;
+  bottom: 0;
   padding: 20px 0;
   width: 100%;
   text-align: center;
