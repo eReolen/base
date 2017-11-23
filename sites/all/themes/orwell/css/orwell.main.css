@@ -2786,6 +2786,13 @@ html.js input.form-autocomplete {
   margin-bottom: 1.2rem;
 }
 
+.material__cover .ting-cover {
+  min-height: 150px;
+  background-image: url(../images/placeholder.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 @media all and (min-width: 26em) {
   .material__cover {
     width: 50%;
