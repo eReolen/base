@@ -79,7 +79,7 @@ function orwell_preprocess_node(&$variables) {
     $variables['covers'] = array();
     // Add template suggestion if teaser should use article_image
     // as background.
-    if ($variables['is_image_teaser']) {
+    if ($variables['is_image_teaser'] && $variables['view_mode'] == 'teaser') {
       $variables['theme_hook_suggestions'][] = 'node__article__view_mode__teaser__image';
     }
     else {
