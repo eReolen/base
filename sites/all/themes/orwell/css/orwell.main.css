@@ -2658,6 +2658,16 @@ html.js input.form-autocomplete {
   }
 }
 
+.article__other-articles .ding-carousel .carousel__header {
+  display: none;
+}
+
+@media all and (min-width: 49em) {
+  .article__other-articles .ding-carousel .carousel__header {
+    display: block;
+  }
+}
+
 .ding-carousel .carousel__more-link {
   position: relative;
   -webkit-appearance: none;
@@ -2703,30 +2713,35 @@ html.js input.form-autocomplete {
   }
 }
 
-.paragraphs-item-article-carousel .ding-carousel-item {
+.paragraphs-item-article-carousel .ding-carousel-item,
+.article__other-articles .ding-carousel-item {
   width: 100vw;
   padding-left: 0;
 }
 
 @media all and (min-width: 49em) {
-  .paragraphs-item-article-carousel .ding-carousel-item {
+  .paragraphs-item-article-carousel .ding-carousel-item,
+  .article__other-articles .ding-carousel-item {
     width: auto;
     padding-left: 40px;
   }
 }
 
 @media all and (min-width: 65em) {
-  .paragraphs-item-article-carousel .ding-carousel-item {
+  .paragraphs-item-article-carousel .ding-carousel-item,
+  .article__other-articles .ding-carousel-item {
     padding-left: 60px;
   }
 }
 
-.paragraphs-item-article-carousel .slick-dots {
+.paragraphs-item-article-carousel .slick-dots,
+.article__other-articles .slick-dots {
   display: block !important;
 }
 
 @media all and (min-width: 49em) {
-  .paragraphs-item-article-carousel .slick-dots {
+  .paragraphs-item-article-carousel .slick-dots,
+  .article__other-articles .slick-dots {
     display: none !important;
   }
 }

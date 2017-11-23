@@ -98,6 +98,15 @@
     @include grid-media($large) {
       margin-left: 60px;
     }
+
+    // Don't show header for the article carousel on the article page.
+    .article__other-articles & {
+      display: none;
+
+      @include grid-media($medium) {
+        display: block;
+      }
+    }
   }
 
   .carousel__more-link {
@@ -120,7 +129,8 @@
 }
 
 // Paragraph specific tweaks.
-.paragraphs-item-article-carousel {
+.paragraphs-item-article-carousel,
+.article__other-articles {
   .ding-carousel-item {
     width: 100vw;
     padding-left: 0;
