@@ -167,7 +167,6 @@ img {
 .pane-user-login select {
   background: white;
   border: 1px solid #d5d5d5;
-  height: 41px;
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
@@ -187,7 +186,6 @@ img {
   min-width: 250px;
   display: inline-block;
   position: relative;
-  height: 41px;
   border: 1px solid #d5d5d5;
   color: black;
   font-size: 15.4px;
@@ -195,7 +193,7 @@ img {
   width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 10px 30px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -249,7 +247,6 @@ img {
 .ui-dialog form select {
   background: white;
   border: 1px solid #d5d5d5;
-  height: 41px;
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
@@ -269,7 +266,6 @@ img {
   min-width: 250px;
   display: inline-block;
   position: relative;
-  height: 41px;
   border: 1px solid #d5d5d5;
   color: black;
   font-size: 15.4px;
@@ -277,7 +273,7 @@ img {
   width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 10px 30px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -810,6 +806,46 @@ div.messages ul {
 
 .pager-previous a::before {
   content: "";
+}
+
+.pager-item-prev-1,
+.pager-item-prev-2,
+.pager-item-prev-3,
+.pager-item-prev-4,
+.pager-item-prev-5,
+.pager-item-prev-6,
+.pager-item-prev-7,
+.pager-item-next-1 {
+  display: none;
+}
+
+@media all and (min-width: 20em) {
+  .pager-item-prev-1 {
+    display: list-item;
+  }
+}
+
+@media all and (min-width: 23em) {
+  .pager-item-prev-2,
+  .pager-item-next-1 {
+    display: list-item;
+  }
+}
+
+@media all and (min-width: 26em) {
+  .pager-item-prev-3,
+  .pager-item-next-1 {
+    display: list-item;
+  }
+}
+
+@media all and (min-width: 65em) {
+  .pager-item-prev-4,
+  .pager-item-prev-5,
+  .pager-item-prev-6,
+  .pager-item-prev-7 {
+    display: list-item;
+  }
 }
 
 .fa-star-o {
@@ -1765,7 +1801,7 @@ fieldset {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 2rem;
   height: 5rem;
-  padding: 0 1rem 0 3rem;
+  padding: 0 3.5rem 0 3rem;
   width: 100%;
 }
 
@@ -3575,7 +3611,6 @@ html.js input.form-autocomplete {
 .pane-profile2-form select {
   background: white;
   border: 1px solid #d5d5d5;
-  height: 41px;
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
@@ -3595,7 +3630,6 @@ html.js input.form-autocomplete {
   min-width: 250px;
   display: inline-block;
   position: relative;
-  height: 41px;
   border: 1px solid #d5d5d5;
   color: black;
   font-size: 15.4px;
@@ -3603,7 +3637,7 @@ html.js input.form-autocomplete {
   width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 10px 30px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -3653,7 +3687,6 @@ html.js input.form-autocomplete {
 .page-user-bookmarks select {
   background: white;
   border: 1px solid #d5d5d5;
-  height: 41px;
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
@@ -3673,7 +3706,6 @@ html.js input.form-autocomplete {
   min-width: 250px;
   display: inline-block;
   position: relative;
-  height: 41px;
   border: 1px solid #d5d5d5;
   color: black;
   font-size: 15.4px;
@@ -3681,7 +3713,7 @@ html.js input.form-autocomplete {
   width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 10px 30px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -4619,7 +4651,6 @@ html.js input.form-autocomplete {
 .node-webform select {
   background: white;
   border: 1px solid #d5d5d5;
-  height: 41px;
   width: 100%;
   font-size: 13px;
   padding: 10px 30px;
@@ -4639,7 +4670,6 @@ html.js input.form-autocomplete {
   min-width: 250px;
   display: inline-block;
   position: relative;
-  height: 41px;
   border: 1px solid #d5d5d5;
   color: black;
   font-size: 15.4px;
@@ -4647,7 +4677,7 @@ html.js input.form-autocomplete {
   width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 10px 30px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

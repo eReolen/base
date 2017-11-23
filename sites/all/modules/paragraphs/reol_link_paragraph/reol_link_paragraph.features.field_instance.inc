@@ -69,7 +69,7 @@ function reol_link_paragraph_field_default_field_instances() {
     'bundle' => 'linkbox',
     'default_value' => array(
       0 => array(
-        'rgb' => '#797979',
+        'rgb' => '#787878',
       ),
     ),
     'deleted' => 0,

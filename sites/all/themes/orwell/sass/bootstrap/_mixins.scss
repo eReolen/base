@@ -88,7 +88,6 @@
   select {
     background: white;
     border: 1px solid #d5d5d5;
-    height: 41px;
     width: 100%;
     font-size: 13px;
     padding: 10px 30px;
@@ -108,14 +107,13 @@
     min-width: 250px;
     display: inline-block;
     position: relative;
-    height: 41px;
     border: 1px solid #d5d5d5;
     color: black;
     font-size: 15.4px;
     font-family: $font-semibold;
     width: 100%;
     box-sizing: border-box;
-    padding: 1rem;
+    padding: 10px 30px;
     appearance: none;
   }
 
