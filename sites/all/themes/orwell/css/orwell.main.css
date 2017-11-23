@@ -808,6 +808,46 @@ div.messages ul {
   content: "";
 }
 
+.pager-item-prev-1,
+.pager-item-prev-2,
+.pager-item-prev-3,
+.pager-item-prev-4,
+.pager-item-prev-5,
+.pager-item-prev-6,
+.pager-item-prev-7,
+.pager-item-next-1 {
+  display: none;
+}
+
+@media all and (min-width: 20em) {
+  .pager-item-prev-1 {
+    display: list-item;
+  }
+}
+
+@media all and (min-width: 23em) {
+  .pager-item-prev-2,
+  .pager-item-next-1 {
+    display: list-item;
+  }
+}
+
+@media all and (min-width: 26em) {
+  .pager-item-prev-3,
+  .pager-item-next-1 {
+    display: list-item;
+  }
+}
+
+@media all and (min-width: 65em) {
+  .pager-item-prev-4,
+  .pager-item-prev-5,
+  .pager-item-prev-6,
+  .pager-item-prev-7 {
+    display: list-item;
+  }
+}
+
 .fa-star-o {
   color: rgba(0, 0, 0, 0.2);
   font-size: 1.1rem;

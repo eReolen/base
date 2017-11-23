@@ -6,10 +6,16 @@ $grid-columns: 12;
 // Using ems for media queries, as they're the most consistent:
 // https://zellwk.com/blog/media-query-units/
 
-$xsmall: (
+$xxsmall: (
   columns: $grid-columns,
   gutter: 0px,
   media: 'all and (min-width: 20em)',
+);
+
+$xsmall: (
+  columns: $grid-columns,
+  gutter: 0px,
+  media: 'all and (min-width: 23em)',
 );
 
 $small: (

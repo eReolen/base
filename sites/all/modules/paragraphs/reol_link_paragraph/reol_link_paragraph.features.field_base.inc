@@ -25,7 +25,7 @@ function reol_link_paragraph_field_default_field_bases() {
     'locked' => 0,
     'module' => 'color_field',
     'settings' => array(
-      'default_colors' => '#797979,#e3e3e3,#d8133f,#3b73a0,#84ba76',
+      'default_colors' => '#787878,#dcdcdc,#b81b40,#3b5998,#95b978,#70848e,#3c3c3c,#5f7f9f',
       'profile2_private' => FALSE,
     ),
     'translatable' => 0,
