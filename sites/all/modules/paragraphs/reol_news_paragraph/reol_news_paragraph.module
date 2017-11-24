@@ -122,7 +122,7 @@ function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta,
   if (isset($items[$delta])) {
     $build = array();
     $item = $items[$delta];
-    list($more, $articles) = ereol_article_get_articles($item['value']);
+    list(, $articles) = ereol_article_get_articles($item['value']);
     foreach ($articles as $article) {
       $build[] = array(
         '#type' => 'ding_carousel_item',

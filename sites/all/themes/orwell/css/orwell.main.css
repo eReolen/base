@@ -2343,11 +2343,11 @@ html.js input.form-autocomplete {
   appearance: none;
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  padding: 0.7rem 1.2rem;
+  padding: .7rem 1.2rem;
   font-family: "SourceSansProSemiBold", sans-serif;
   color: #fff;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: .75rem;
   font-weight: bold;
   border-radius: 2px;
   text-align: center;
@@ -2676,11 +2676,11 @@ html.js input.form-autocomplete {
   appearance: none;
   background: none;
   border: 1px solid rgba(180, 180, 180, 0.5);
-  padding: 0.7rem 1.2rem;
+  padding: .7rem 1.2rem;
   font-family: "SourceSansProSemiBold", sans-serif;
   color: #505050;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: .75rem;
   font-weight: bold;
   border-radius: 2px;
   text-align: center;
