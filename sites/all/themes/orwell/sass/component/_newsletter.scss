@@ -1,5 +1,6 @@
 @import 'bootstrap/bootstrap';
 
+// Newsletter form used in app
 body.page-nyhedsbrev-app,
 body.page-nyhedsbrev-web {
 
@@ -25,6 +26,86 @@ body.page-nyhedsbrev-web {
 
     .form-required {
       color: $color__red;
+    }
+  }
+}
+
+// Newsletter element
+form.mailchimp-signup-subscribe-form {
+  padding-bottom: 2rem;
+
+  > div {
+    position: relative;
+  }
+
+  .mailchimp-signup-subscribe-form-description {
+    margin-bottom: 2rem;
+
+    p {
+      text-transform: uppercase;
+      font-family: $font-semibold;
+      font-size: 1rem;
+      color: $color__gray;
+      margin-bottom: .8rem;
+    }
+    h2 {
+      font-family: $font-semibold;
+      font-size: 1rem;
+      font-weight: normal;
+      color: $color__gray;
+    }
+  }
+
+  .form-item {
+
+    label[for] {
+      display: none;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: $font-regular;
+      font-size: 2rem;
+      border-bottom: 2px solid $color__geist--hr;
+      padding: 1rem 0;
+      color: $color__geist--grey4;
+      padding-right: 4rem;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .form-actions {
+    position: absolute;
+    bottom: 1rem;
+    right: 0;
+
+    &:after {
+      display: block;
+      position: absolute;
+      @include icon;
+      content: $icon__arrow-right;
+      color: white;
+      right: 1.1rem;
+      bottom: 1rem;
+    }
+
+    input[type="submit"] {
+      // Reset button styling, hide default text
+      -webkit-appearance: none;
+      text-indent: -9999px;
+      overflow: hidden;
+      // make into circle
+      width: 3.2rem;
+      height: 3.2rem;
+      border-radius: 1.6rem;
+      background-color: $color__geist--grey5;
+      cursor: pointer;
     }
   }
 }
