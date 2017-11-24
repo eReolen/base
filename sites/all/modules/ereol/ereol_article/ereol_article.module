@@ -8,47 +8,137 @@
 include_once 'ereol_article.features.inc';
 
 /**
+ * Implements hook_menu().
+ */
+function ereol_article_menu() {
+  $items = array();
+
+  $items['news/ajax/%/%'] = array(
+    'title' => 'Get article carousel results',
+    'page callback' => 'ereol_article_ajax',
+    'page arguments' => array(2, 3),
+    // Free access to view article carousel.
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function ereol_article_theme() {
+  return array(
+    'ereol_article_placeholder' => array(
+      'template' => 'templates/ereol_article_placeholder',
+      'variables' => array(),
+    ),
+  );
+}
+
+/**
  * Implements hook_preprocess_node().
  */
 function ereol_article_preprocess_node(&$variables) {
   $node = $variables['node'];
-  $node_wrapper = entity_metadata_wrapper('node', $node);
 
-  // Add background image on teaser for article.
-  if ($node->type == 'article' && ($variables['view_mode'] == 'teaser' || $variables['view_mode'] == 'search_result')) {
-
-    // Get image info.
-    $image_field = $node_wrapper->field_ding_news_list_image->value();
-    $image_uri = $image_field['uri'];
-
-    // If stage_file proxy is enabled, give it a chance to download the file.
-    if (function_exists('stage_file_proxy_process_file_uri')) {
-      stage_file_proxy_process_file_uri($image_uri);
-    }
-
-    $image_for_sizing = image_style_path('reol_article_teaser_background', $image_uri);
-    // Make sure image has been generated.
-    if (!file_exists($image_for_sizing)) {
-      image_style_create_derivative(image_style_load('reol_article_teaser_background'), $image_uri, $image_for_sizing);
-    }
-
-    list($image_w, $image_h) = getimagesize($image_for_sizing);
-
-    // Add image style image.
-    $params = array(
-      'style_name' => 'reol_article_teaser_background',
-      'path' => $image_uri,
-      'getsize' => TRUE,
-      'attributes' => array(
-        'width' => $image_w,
-        'height' => $image_h,
-      ),
+  if ($node->type == 'article' && $variables['view_mode'] == 'full') {
+    $ajax_path = sprintf(
+      'news/ajax/%s',
+      5
     );
-    $variables['image_background'] = theme('image_style', $params);
 
-    // Change text for read more link.
-    $variables['readmore_text'] = t('Read entire article');
-    $uri = entity_uri('node', $node);
-    $variables['readmore'] = url($uri['path'], $uri['options']);
+    $variables['other_articles'] = array(
+      '#type' => 'ding_carousel',
+      '#title' => t('More articles'),
+      '#more_link' => l(t('All articles'), 'articles'),
+      '#path' => $ajax_path,
+      '#offset' => 0,
+      '#items' => array(),
+      '#placeholder' => array(
+        '#theme' => 'reol_news_paragraph_placeholder',
+      ),
+      '#placeholders' => 5,
+    );
   }
+}
+
+/**
+ * AJAX callback to retrieve carousel items article carousel.
+ *
+ * @param int $count
+ *   Number of items to fetch. Limited to 20.
+ * @param int $offset
+ *   Offset into result to fetch from.
+ */
+function ereol_article_ajax($count, $offset) {
+  if ($count > 20) {
+    $count = 20;
+  }
+
+  list($more, $articles) = ereol_article_get_articles((int) $count, (int) $offset);
+
+  $return = array(
+    'content' => '',
+    'offset' => $more ? $count + $offset : -1,
+  );
+
+  if (!empty($articles)) {
+    foreach ($articles as $article) {
+      $build[] = array(
+        '#type' => 'ding_carousel_item',
+        '#content' => $article,
+      );
+    }
+
+    $return['content'] = drupal_render($build);
+  }
+
+  // Return JSON output.
+  drupal_json_output($return);
+}
+
+/**
+ * Returns list of newest articles.
+ *
+ * @param int $count
+ *   Number of articles to fetch.
+ * @param int $offset
+ *   Offset to start from.
+ *
+ * @return array
+ *   A two element array, a boolean indicating whether there's more to be
+ *   fetched, and a build array of articles, indexed by nid.
+ */
+function ereol_article_get_articles($count, $offset = 0) {
+  $articles = array();
+  $more = FALSE;
+  $query = new EntityFieldQuery();
+
+  // Fetch one more than count to check if there's more.
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'article')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->propertyOrderBy('created', 'DESC')
+    ->range($offset, $count + 1);
+
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    if (count($nids) > $count) {
+      $more = TRUE;
+      // Remove the extra article.
+      array_pop($nids);
+    }
+    $articles = entity_load('node', $nids);
+    if ($articles) {
+      $rendered_nodes = node_view_multiple($articles);
+      foreach (element_children($rendered_nodes['nodes']) as $key) {
+        $articles[$key] = $rendered_nodes['nodes'][$key];
+      }
+    }
+  }
+
+  return array($more, $articles);
 }

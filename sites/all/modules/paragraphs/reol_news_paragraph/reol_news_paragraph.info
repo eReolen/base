@@ -6,6 +6,7 @@ version = 7.x-1.0
 dependencies[] = features
 dependencies[] = number
 dependencies[] = paragraphs
+dependencies[] = ereol_article
 features[features_api][] = api:2
 features[field_base][] = field_carousel_count
 features[field_instance][] = paragraphs_item-article_carousel-field_carousel_count

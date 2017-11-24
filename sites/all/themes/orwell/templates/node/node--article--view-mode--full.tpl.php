@@ -26,4 +26,7 @@
       <?php print render($content['field_ding_news_materials']); ?>
     </div>
   </div>
+  <div class="article__other-articles">
+    <?php print render($other_articles); ?>
+  </div>
 </div>
