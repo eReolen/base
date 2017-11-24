@@ -54,28 +54,7 @@ function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field,
 
   switch ($display['type']) {
     case 'reol_news_paragraph_carousel':
-      // Rendering multiple carousels using different delta values doesn't make
-      // sense, so we just pick the first one.
-      $ajax_path = sprintf(
-        'reol_news_paragraph/ajax/%s/%s/%s/%s',
-        $entity_type,
-        $entity_id,
-        $field['field_name'],
-        0
-      );
-
-      $element[0] = array(
-        '#type' => 'ding_carousel',
-        '#title' => '',
-        '#path' => $ajax_path,
-        '#offset' => 0,
-        '#items' => array(),
-        '#placeholder' => array(
-          '#theme' => 'ereol_article_placeholder',
-        ),
-        '#placeholders' => 5,
-      );
-      break;
+      return;
 
     case 'reol_article_carousel':
       // Render a carousel that'll fetch it's content over AJAX.
@@ -103,6 +82,28 @@ function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field,
       break;
   }
   return $element;
+}
+
+/**
+ * Implements hook_preprocess_entity().
+ */
+function reol_news_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'article_carousel') {
+      $variables['content'] = array(
+        '#type' => 'ding_carousel',
+        '#title' => '',
+        // Use the ajax callback in ereol_article.
+        '#path' => 'news/ajax/5',
+        '#offset' => 0,
+        '#items' => array(),
+        '#placeholder' => array(
+          '#theme' => 'ereol_article_placeholder',
+        ),
+        '#placeholders' => 5,
+      );
+    }
+  }
 }
 
 /**
