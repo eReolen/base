@@ -33,7 +33,7 @@ function reol_news_paragraph_field_formatter_info() {
 function reol_news_paragraph_menu() {
   $items = array();
 
-  $items['reol_news_paragraph/ajax/%/%/%/%/%'] = array(
+  $items['reol_news_paragraph/ajax/%/%/%/%'] = array(
     'title' => 'Show search carousel results',
     'page callback' => 'reol_news_paragraph_ajax',
     'page arguments' => array(2, 3, 4, 5, 6, 7),
@@ -57,14 +57,11 @@ function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field,
       return;
 
     case 'reol_article_carousel':
-      // Render a carousel that'll fetch it's content over AJAX.
       $ajax_path = sprintf(
-        'reol_news_paragraph/ajax/%s/%s/%s/%s',
+        'reol_news_paragraph/ajax/%s/%s/%s',
         $entity_type,
         $entity_id,
-        $field['field_name'],
-        // Temporary magic value.
-        'magic'
+        $field['field_name']
       );
 
       $element[0] = array(
@@ -135,12 +132,10 @@ function reol_news_paragraph_ajax_access($entity_type, $entity_id, $field_name) 
  *   The id of the entity the field is attached to.
  * @param string $field_name
  *   Name of the field.
- * @param string $delta
- *   Field delta.
  * @param int $offset
  *   Offset into result to fetch from.
  */
-function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta, $offset) {
+function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $offset) {
   // The access callback has already checked that these exists.
   $entity = entity_load($entity_type, array($entity_id));
   $entity = reset($entity);
@@ -152,42 +147,25 @@ function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta,
     'offset' => -1,
   );
 
-  if ($delta === 'magic') {
-    $nids = array_map(function ($item) {
-      return $item['target_id'];
-    }, $items);
+  $nids = array_map(function ($item) {
+    return $item['target_id'];
+  }, $items);
 
-    $return['offset'] = count($nids) > $offset + 5 ? $offset + 5 : -1;
-    $nids = array_slice($nids, $offset, 5);
+  $return['offset'] = count($nids) > $offset + 5 ? $offset + 5 : -1;
+  $nids = array_slice($nids, $offset, 5);
 
-    $articles = entity_load('node', $nids);
-    if ($articles) {
-      $rendered = node_view_multiple($articles);
-      // Use element_children to weed out the #sorted key.
-      foreach (element_children($rendered['nodes']) as $key) {
-        $build[] = array(
-          '#type' => 'ding_carousel_item',
-          '#content' => $rendered['nodes'][$key],
-        );
-      }
-
-      $return['content'] = drupal_render($build);
+  $articles = entity_load('node', $nids);
+  if ($articles) {
+    $rendered = node_view_multiple($articles);
+    // Use element_children to weed out the #sorted key.
+    foreach (element_children($rendered['nodes']) as $key) {
+      $build[] = array(
+        '#type' => 'ding_carousel_item',
+        '#content' => $rendered['nodes'][$key],
+      );
     }
-  }
-  else {
-    if (isset($items[$delta])) {
-      $build = array();
-      $item = $items[$delta];
-      list(, $articles) = ereol_article_get_articles($item['value']);
-      foreach ($articles as $article) {
-        $build[] = array(
-          '#type' => 'ding_carousel_item',
-          '#content' => $article,
-        );
-      }
 
-      $return['content'] = drupal_render($build);
-    }
+    $return['content'] = drupal_render($build);
   }
 
   // Return JSON output.
