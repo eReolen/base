@@ -1937,14 +1937,6 @@ html.js input.form-autocomplete {
   }
 }
 
-.search-results {
-  padding: 2rem 0 0;
-}
-
-.search-results .pager {
-  padding: 3.75rem 0;
-}
-
 .arrangement-toggles {
   display: none;
   -webkit-box-orient: horizontal;
@@ -2026,7 +2018,15 @@ html.js input.form-autocomplete {
 }
 
 .arrangement-toggles .arrangement-toggle.toggle-grid::before {
-  content: "";
+  content: "";
+}
+
+.search-results {
+  padding: 2rem 0 0;
+}
+
+.search-results .pager {
+  padding: 3.75rem 0;
 }
 
 .user-login {

@@ -268,14 +268,6 @@ html.js input.form-autocomplete {
   }
 }
 
-.search-results {
-  padding: 2rem 0 0;
-
-  .pager {
-    padding: 3.75rem 0;
-  }
-}
-
 .arrangement-toggles {
   display: none; // (hidden on mobile)
   flex-direction: row;
@@ -340,8 +332,16 @@ html.js input.form-autocomplete {
     &.toggle-grid {
 
       &::before {
-        content: $icon__grid-simple;
+        content: $icon__grid-dense;
       }
     }
+  }
+}
+
+.search-results {
+  padding: 2rem 0 0;
+
+  .pager {
+    padding: 3.75rem 0;
   }
 }

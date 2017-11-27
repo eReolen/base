@@ -12,8 +12,8 @@
 <?php if ($search_results) : ?>
   <div class="search-results">
     <div class="arrangement-toggles">
-      <a href="#" class="arrangement-toggle toggle-list"></a>
-      <a href="#" class="arrangement-toggle toggle-grid"></a>
+      <div class="arrangement-toggle toggle-list"></div>
+      <div class="arrangement-toggle toggle-grid"></div>
     </div>
     <ul class="list floated">
       <?php print $search_results; ?>
