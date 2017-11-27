@@ -12,7 +12,7 @@
 }
 
 @mixin content-wrapper() {
-  max-width: 1200px;
+  max-width: 1080px;
   width: 100%;
 
   @include grid-media($medium) {
@@ -22,7 +22,7 @@
 }
 
 @mixin content-wrapper__large() {
-  max-width: 1440px;
+  max-width: 1208px;
   position: relative;
 
   @include grid-media($medium) {
