@@ -136,33 +136,6 @@ function reol_frontend_ctools_plugin_directory($owner, $plugin_type) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
- */
-function reol_frontend_form_ding_page_node_form_alter(&$form, &$form_state) {
-  $value = variable_get('reol_frontend_quick_guide_nid', 0) == (isset($form['#node']->nid) ? $form['#node']->nid : -1);
-  $form['options']['quick_guide'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Use as quick guide'),
-    '#description' => t('Use this page as the quick guide page. If another one has been set earlier, this one takes over.'),
-    '#default_value' => $value,
-  );
-
-  $form['actions']['submit']['#submit'][] = 'reol_frontend_form_ding_page_node_form_submit';
-}
-
-/**
- * Custom submit handler for saving the quick guide nid.
- */
-function reol_frontend_form_ding_page_node_form_submit($form, &$form_state) {
-  if ($form_state['values']['quick_guide']) {
-    variable_set('reol_frontend_quick_guide_nid', $form_state['nid']);
-  }
-  elseif (variable_get('reol_frontend_quick_guide_nid', 0) == $form_state['nid']) {
-    variable_del('reol_frontend_quick_guide_nid');
-  }
-}
-
-/**
  * Implements hook_views_query_alter().
  *
  * When the field reol_entity_type is present in the where
