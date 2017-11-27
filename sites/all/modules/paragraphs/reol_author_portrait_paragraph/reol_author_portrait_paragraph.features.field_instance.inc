@@ -19,10 +19,10 @@ function reol_author_portrait_paragraph_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'entityreference',
         'settings' => array(
-          'link' => FALSE,
+          'link' => 0,
         ),
         'type' => 'entityreference_label',
         'weight' => 0,
@@ -66,7 +66,7 @@ function reol_author_portrait_paragraph_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'color_field',
         'settings' => array(),
         'type' => 'color_field_default_formatter',

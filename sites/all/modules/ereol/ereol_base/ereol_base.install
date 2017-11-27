@@ -51,8 +51,7 @@ function ereol_base_update_7105() {
 }
 
 /**
- * Enable reol_author_portrait_paragraph.
+ * Skipping, this update was relocated to ereol_inspiration_update_7110.
  */
 function ereol_base_update_7106() {
-  module_enable(array('reol_author_portrait_paragraph'));
 }

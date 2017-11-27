@@ -5004,6 +5004,89 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-required {
   color: #b81b40;
 }
 
+form.mailchimp-signup-subscribe-form {
+  padding-bottom: 2rem;
+}
+
+form.mailchimp-signup-subscribe-form > div {
+  position: relative;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description {
+  margin-bottom: 2rem;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description p {
+  text-transform: uppercase;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+  color: #505050;
+  margin-bottom: .8rem;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description h2 {
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #505050;
+}
+
+form.mailchimp-signup-subscribe-form .form-item label[for] {
+  display: none;
+}
+
+form.mailchimp-signup-subscribe-form .form-item input[type="text"] {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: "SourceSansPro", sans-serif;
+  font-size: 2rem;
+  border-bottom: 2px solid #d8d8d8;
+  padding: 1rem 0;
+  color: #787878;
+  padding-right: 4rem;
+}
+
+form.mailchimp-signup-subscribe-form .form-item input[type="text"]:focus {
+  outline: none;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions::after {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  display: block;
+  position: absolute;
+  content: "";
+  color: white;
+  right: 1.1rem;
+  bottom: 1rem;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions input[type="submit"] {
+  -webkit-appearance: none;
+  text-indent: -9999px;
+  overflow: hidden;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 1.6rem;
+  background-color: #b4b4b4;
+  cursor: pointer;
+}
+
 .author-portrait {
   overflow: hidden;
   position: relative;

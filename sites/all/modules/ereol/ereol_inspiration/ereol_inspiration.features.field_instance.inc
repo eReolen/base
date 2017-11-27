@@ -49,6 +49,7 @@ function ereol_inspiration_field_default_field_instances() {
         'newsletter_signup' => 'newsletter_signup',
         'picked_article_carousel' => 'picked_article_carousel',
         'recommended_material' => -1,
+        'newsletter_signup' => 'newsletter_signup',
         'review' => -1,
         'spotlight_box' => 'spotlight_box',
         'video' => -1,
