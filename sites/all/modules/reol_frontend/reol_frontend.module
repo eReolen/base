@@ -320,6 +320,40 @@ function reol_frontend_form_article_node_form_alter(&$form, &$form_state) {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for search_block_form().
+ *
+ * Disable ting_search_autocompletes autocomplete, we don't use it. Ideally we'd
+ * just disable the module, but ding_ting_frontend depends on it.
+ *
+ * @see reol_frontend_module_implements_alter()
+ */
+function reol_frontend_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'search_block_form') {
+    if (isset($form['search_block_form']['#autocomplete_path'])) {
+      unset($form['search_block_form']['#autocomplete_path']);
+    }
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Adjusts hooks so we get in after
+ * ting_search_autocomplete_form_search_block_form_alter().
+ *
+ * @see reol_frontend_form_search_block_form_alter()
+ */
+function reol_frontend_module_implements_alter(&$implementations, $hook) {
+  // You'd think we should look for form_search_block_form_alter, but, no.
+  if ($hook == 'form_alter' &&
+    isset($implementations['reol_frontend'])) {
+    $group = $implementations['reol_frontend'];
+    unset($implementations['reol_frontend']);
+    $implementations['reol_frontend'] = $group;
+  }
+}
+
+/**
  * Implements hook_ting_pre_execute().
  *
  * @todo merge with breol_frontend_ting_pre_execute().
