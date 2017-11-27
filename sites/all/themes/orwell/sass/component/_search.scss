@@ -275,3 +275,73 @@ html.js input.form-autocomplete {
     padding: 3.75rem 0;
   }
 }
+
+.arrangement-toggles {
+  display: none; // (hidden on mobile)
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-bottom: 1.85rem;
+  border-bottom: 1px solid $color__geist--hr;
+
+  @include grid-media($medium) {
+    display: flex;
+  }
+
+  .arrangement-toggle {
+    // Reset
+    text-decoration: none;
+    // Align icon inside anchor tag
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    // Set button size
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 1.1rem;
+    cursor: pointer;
+    background-color: white;
+    // Transition
+    transition: background-color .12s $global__hover-easing;
+
+    &:hover {
+      background-color: $color__geist--grey6;
+    }
+
+    // distance between the two buttons
+    + .arrangement-toggle {
+      margin-left: .7rem;
+    }
+
+    &::before {
+      @include icon;
+      color: $color__geist--grey4;
+    }
+
+    &.toggle-active {
+      background-color: $color__geist--green;
+      
+      &::before {
+        color: white;
+      }
+
+      &:hover {
+        background-color: $color__geist--green;
+      }
+    }
+
+    &.toggle-list {
+
+      &::before {
+        content: $icon__list-square;
+      }
+    }
+
+    &.toggle-grid {
+
+      &::before {
+        content: $icon__grid-simple;
+      }
+    }
+  }
+}
