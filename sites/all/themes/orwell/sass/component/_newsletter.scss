@@ -48,6 +48,7 @@ form.mailchimp-signup-subscribe-form {
       color: $color__gray;
       margin-bottom: .8rem;
     }
+
     h2 {
       font-family: $font-semibold;
       font-size: 1rem;
@@ -64,7 +65,7 @@ form.mailchimp-signup-subscribe-form {
 
     input[type="text"] {
       width: 100%;
-      border: none;
+      border: 0;
       outline: none;
       background: transparent;
       font-family: $font-regular;
@@ -85,10 +86,10 @@ form.mailchimp-signup-subscribe-form {
     bottom: 1rem;
     right: 0;
 
-    &:after {
+    &::after {
+      @include icon;
       display: block;
       position: absolute;
-      @include icon;
       content: $icon__arrow-right;
       color: white;
       right: 1.1rem;

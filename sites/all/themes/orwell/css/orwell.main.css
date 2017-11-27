@@ -5037,7 +5037,7 @@ form.mailchimp-signup-subscribe-form .form-item label[for] {
 
 form.mailchimp-signup-subscribe-form .form-item input[type="text"] {
   width: 100%;
-  border: none;
+  border: 0;
   outline: none;
   background: transparent;
   font-family: "SourceSansPro", sans-serif;
@@ -5058,9 +5058,7 @@ form.mailchimp-signup-subscribe-form .form-actions {
   right: 0;
 }
 
-form.mailchimp-signup-subscribe-form .form-actions:after {
-  display: block;
-  position: absolute;
+form.mailchimp-signup-subscribe-form .form-actions::after {
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -5070,6 +5068,8 @@ form.mailchimp-signup-subscribe-form .form-actions:after {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
+  display: block;
+  position: absolute;
   content: "";
   color: white;
   right: 1.1rem;
