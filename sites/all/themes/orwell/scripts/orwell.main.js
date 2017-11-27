@@ -10,16 +10,17 @@
   function setCookie(c_name, value, exdays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    var c_value = escape(value) + ((exdays==null) ? "" : ("; expires="+exdate.toUTCString()));
-    document.cookie = c_name + "=" + c_value;
+    var c_value = escape(value) + ((exdays === null) ? '' : ('; expires=' + exdate.toUTCString()));
+    document.cookie = c_name + '=' + c_value;
   }
   function getCookie(c_name) {
-    var i,x,y,ARRcookies = document.cookie.split(";");
+    var i, x , y;
+    var ARRcookies = document.cookie.split(';');
     for (i = 0; i < ARRcookies.length; i++) {
-      x = ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-      y = ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-      x = x.replace(/^\s+|\s+$/g,"");
-      if (x==c_name) {
+      x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
+      y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
+      x = x.replace(/^\s+|\s+$/g,'');
+      if (x === c_name) {
         return unescape(y);
       }
     }
@@ -45,7 +46,6 @@
    */
   Drupal.behaviors.searchResultsGridToggle = {
     attach: function (context) {
-      var initialView = 'list-view';
       var cookieName = 'eReol_2__searchResultArrangement';
       var expires = 1;
 
@@ -57,13 +57,14 @@
         if (getCookie(cookieName) == 'list-view') {
           $('.search-results').addClass('list-view');
           $('.arrangement-toggle.toggle-list').addClass('toggle-active');
-        } else {
+        }
+        else {
           $('.search-results').addClass('grid-view');
           $('.arrangement-toggle.toggle-grid').addClass('toggle-active');
         }
 
         // When either toggle is clicked
-        $toggle.on('click', function() {
+        $toggle.on('click', function () {
           var $this = $(this);
 
           // Visually toggle button states
@@ -72,10 +73,11 @@
 
           // Set/update cookie to arrangement/view type
           if ($this.hasClass('toggle-list')) {
-            setCookie(cookieName, "list-view", expires);
+            setCookie(cookieName, 'list-view', expires);
             $('.search-results').addClass('list-view').removeClass('grid-view');
-          } else {
-            setCookie(cookieName, "grid-view", expires);
+          }
+          else {
+            setCookie(cookieName, 'grid-view', expires);
             $('.search-results').addClass('grid-view').removeClass('list-view');
           }
         });

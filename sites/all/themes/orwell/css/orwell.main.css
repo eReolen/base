@@ -2046,16 +2046,16 @@ html.js input.form-autocomplete {
     align-items: end;
     -ms-flex-flow: wrap;
     flex-flow: wrap;
-    margin-left: -0.75rem;
-    margin-right: -0.75rem;
-    margin-top: -0.75rem;
+    margin-left: -.75rem;
+    margin-right: -.75rem;
+    margin-top: -.75rem;
   }
 }
 
 @media all and (min-width: 49em) {
   .search-results.grid-view .list .search-result {
     width: 33.3333%;
-    padding: 0.75rem;
+    padding: .75rem;
   }
 }
 
@@ -2064,12 +2064,6 @@ html.js input.form-autocomplete {
     border-bottom: 0;
     margin-top: 0;
     padding: 0;
-  }
-}
-
-@media all and (min-width: 49em) {
-  .search-results.grid-view .list .search-result .material__title .text h2 {
-    font-size: 1.5rem;
   }
 }
 
@@ -2087,7 +2081,8 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .search-results.grid-view .list .search-result .material__abstract, .search-results.grid-view .list .search-result .material__subjects {
+  .search-results.grid-view .list .search-result .material__abstract,
+  .search-results.grid-view .list .search-result .material__subjects {
     display: none;
   }
 }

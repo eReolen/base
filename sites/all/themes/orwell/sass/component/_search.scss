@@ -312,7 +312,7 @@ html.js input.form-autocomplete {
 
     &.toggle-active {
       background-color: $color__geist--green;
-      
+
       &::before {
         color: white;
       }
@@ -356,17 +356,17 @@ html.js input.form-autocomplete {
         display: flex;
         justify-content: flex-start;
         align-items: end;
-        flex-flow: wrap;        
-        margin-left: -0.75rem;
-        margin-right: -0.75rem;
-        margin-top: -0.75rem;
+        flex-flow: wrap;
+        margin-left: -.75rem;
+        margin-right: -.75rem;
+        margin-top: -.75rem;
       }
 
       .search-result { // li
 
         @include grid-media($medium) {
           width: 33.3333%;
-          padding: 0.75rem;
+          padding: .75rem;
         }
 
         .material {
@@ -375,19 +375,6 @@ html.js input.form-autocomplete {
             border-bottom: 0;
             margin-top: 0;
             padding: 0;
-          }  
-        }
-
-        .material__title {
-
-          .text {
-            
-            h2 {
-              
-              @include grid-media($medium) {
-                font-size: 1.5rem;
-              }
-            }
           }
         }
 
@@ -406,7 +393,8 @@ html.js input.form-autocomplete {
           }
         }
 
-        .material__abstract, .material__subjects {
+        .material__abstract,
+        .material__subjects {
 
           @include grid-media($medium) {
             display: none;
