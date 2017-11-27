@@ -55,8 +55,10 @@
 
         // Set initial view to what's stored in the cookie, otherwise set to list-view
         if (getCookie(cookieName) == 'list-view') {
+          $('.search-results').addClass('list-view');
           $('.arrangement-toggle.toggle-list').addClass('toggle-active');
         } else {
+          $('.search-results').addClass('grid-view');
           $('.arrangement-toggle.toggle-grid').addClass('toggle-active');
         }
 
@@ -71,8 +73,10 @@
           // Set/update cookie to arrangement/view type
           if ($this.hasClass('toggle-list')) {
             setCookie(cookieName, "list-view", expires);
+            $('.search-results').addClass('list-view').removeClass('grid-view');
           } else {
             setCookie(cookieName, "grid-view", expires);
+            $('.search-results').addClass('grid-view').removeClass('list-view');
           }
         });
       }
