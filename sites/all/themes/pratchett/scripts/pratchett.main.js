@@ -108,6 +108,9 @@
       $('.js-search-form-trigger', searchFormWrapper).click(function (event) {
         event.preventDefault();
         searchFormWrapper.toggleClass('open');
+        if (searchFormWrapper.is(':visible')) {
+          searchFormWrapper.find('input[name=search_block_form]').focus();
+        }
       });
     }
   };

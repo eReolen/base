@@ -533,7 +533,7 @@ div.messages ul {
 .text h3 {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.5rem;
-  color: #787878;
+  color: #505050;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   border-top: 1px solid #d8d8d8;
@@ -2182,7 +2182,7 @@ html.js input.form-autocomplete {
 .article--teaser {
   display: block;
   height: 370px;
-  padding: 2rem;
+  padding: 2rem 2rem 56px;
   color: #fff;
   background-color: #3c3c3c;
   position: relative;
@@ -2338,26 +2338,32 @@ html.js input.form-autocomplete {
 
 .article--teaser__read-more {
   position: relative;
-  display: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  padding: 0.7rem 1.2rem;
+  padding: .7rem 1.2rem;
   font-family: "SourceSansProSemiBold", sans-serif;
   color: #fff;
   text-transform: uppercase;
-  font-size: 0.75rem;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.78);
+  font-size: .75rem;
   font-weight: bold;
   border-radius: 2px;
   text-align: center;
   cursor: pointer;
+  position: relative;
+  display: none;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.78);
 }
 
 .article--teaser__read-more:hover {
   border: 1px solid white;
+}
+
+.article--teaser__read-more a {
+  color: #fff;
+  text-decoration: none;
 }
 
 .article--teaser--image .article--teaser__read-more {
@@ -2594,7 +2600,8 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel .slick-dots {
-  background-color: #3c3c3c;
+  position: absolute;
+  bottom: 0;
   padding: 20px 0;
   width: 100%;
   text-align: center;
@@ -2634,7 +2641,7 @@ html.js input.form-autocomplete {
 .ding-carousel .carousel__header {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.5rem;
-  color: #787878;
+  color: #505050;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   margin-left: 20px;
@@ -2650,6 +2657,45 @@ html.js input.form-autocomplete {
   .ding-carousel .carousel__header {
     margin-left: 60px;
   }
+}
+
+.article__other-articles .ding-carousel .carousel__header {
+  display: none;
+}
+
+@media all and (min-width: 49em) {
+  .article__other-articles .ding-carousel .carousel__header {
+    display: block;
+  }
+}
+
+.ding-carousel .carousel__more-link {
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: 1px solid rgba(180, 180, 180, 0.5);
+  padding: .7rem 1.2rem;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  color: #505050;
+  text-transform: uppercase;
+  font-size: .75rem;
+  font-weight: bold;
+  border-radius: 2px;
+  text-align: center;
+  cursor: pointer;
+  float: right;
+  margin-top: -.4rem;
+}
+
+.ding-carousel .carousel__more-link:hover {
+  border: 1px solid #b4b4b4;
+}
+
+.ding-carousel .carousel__more-link a {
+  color: #505050;
+  text-decoration: none;
 }
 
 .ding-carousel-item {
@@ -2668,30 +2714,35 @@ html.js input.form-autocomplete {
   }
 }
 
-.paragraphs-item-article-carousel .ding-carousel-item {
+.paragraphs-item-article-carousel .ding-carousel-item,
+.article__other-articles .ding-carousel-item {
   width: 100vw;
   padding-left: 0;
 }
 
 @media all and (min-width: 49em) {
-  .paragraphs-item-article-carousel .ding-carousel-item {
+  .paragraphs-item-article-carousel .ding-carousel-item,
+  .article__other-articles .ding-carousel-item {
     width: auto;
     padding-left: 40px;
   }
 }
 
 @media all and (min-width: 65em) {
-  .paragraphs-item-article-carousel .ding-carousel-item {
+  .paragraphs-item-article-carousel .ding-carousel-item,
+  .article__other-articles .ding-carousel-item {
     padding-left: 60px;
   }
 }
 
-.paragraphs-item-article-carousel .slick-dots {
+.paragraphs-item-article-carousel .slick-dots,
+.article__other-articles .slick-dots {
   display: block !important;
 }
 
 @media all and (min-width: 49em) {
-  .paragraphs-item-article-carousel .slick-dots {
+  .paragraphs-item-article-carousel .slick-dots,
+  .article__other-articles .slick-dots {
     display: none !important;
   }
 }
@@ -2733,6 +2784,13 @@ html.js input.form-autocomplete {
   width: 100%;
   float: left;
   margin-bottom: 1.2rem;
+}
+
+.material__cover .ting-cover {
+  min-height: 150px;
+  background-image: url("../images/placeholder.png");
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 @media all and (min-width: 26em) {
@@ -4943,6 +5001,164 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] input[type="submit"].form-sub
 body.page-nyhedsbrev-app form[class^="mailchimp-"] .form-required,
 body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-required {
   color: #b81b40;
+}
+
+form.mailchimp-signup-subscribe-form {
+  padding-bottom: 2rem;
+}
+
+form.mailchimp-signup-subscribe-form > div {
+  position: relative;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description {
+  margin-bottom: 2rem;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description p {
+  text-transform: uppercase;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+  color: #505050;
+  margin-bottom: .8rem;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description h2 {
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #505050;
+}
+
+form.mailchimp-signup-subscribe-form .form-item label[for] {
+  display: none;
+}
+
+form.mailchimp-signup-subscribe-form .form-item input[type="text"] {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: "SourceSansPro", sans-serif;
+  font-size: 2rem;
+  border-bottom: 2px solid #d8d8d8;
+  padding: 1rem 0;
+  color: #787878;
+  padding-right: 4rem;
+}
+
+form.mailchimp-signup-subscribe-form .form-item input[type="text"]:focus {
+  outline: none;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions::after {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  display: block;
+  position: absolute;
+  content: "";
+  color: white;
+  right: 1.1rem;
+  bottom: 1rem;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions input[type="submit"] {
+  -webkit-appearance: none;
+  text-indent: -9999px;
+  overflow: hidden;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 1.6rem;
+  background-color: #b4b4b4;
+  cursor: pointer;
+}
+
+.author-portrait {
+  overflow: hidden;
+  position: relative;
+}
+
+.author-portrait a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.author-portrait.author-portrait--dark-text a {
+  color: #505050;
+}
+
+.author-portrait__container {
+  height: 125px;
+  padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+@media all and (min-width: 49em) {
+  .author-portrait__container {
+    height: 250px;
+    padding: 30px;
+  }
+}
+
+.author-portrait__image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.author-portrait__image img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.author-portrait__overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: .8;
+}
+
+.author-portrait__content {
+  position: relative;
+  z-index: 1;
+  font-family: "SourceSansPro", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: .7em;
+}
+
+@media all and (min-width: 49em) {
+  .author-portrait__content {
+    font-size: 1rem;
+  }
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */

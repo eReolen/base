@@ -15,7 +15,8 @@ services:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
-
+      VIRTUAL_PROTO: https
+      VIRTUAL_HOST: ereol.docker
   ego:
     build: './private/docker/web'
     ports:
@@ -31,7 +32,8 @@ services:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
-
+      VIRTUAL_PROTO: https
+      VIRTUAL_HOST: ego.docker
   db-ereol:
     image: mariadb:5
     environment:
