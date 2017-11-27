@@ -12,14 +12,10 @@ function reol_news_paragraph_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance:
-  // 'paragraphs_item-article_carousel-field_carousel_count'.
-  $field_instances['paragraphs_item-article_carousel-field_carousel_count'] = array(
-    'bundle' => 'article_carousel',
-    'default_value' => array(
-      0 => array(
-        'value' => 10,
-      ),
-    ),
+  // 'paragraphs_item-picked_article_carousel-field_picked_articles'.
+  $field_instances['paragraphs_item-picked_article_carousel-field_picked_articles'] = array(
+    'bundle' => 'picked_article_carousel',
+    'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -27,7 +23,7 @@ function reol_news_paragraph_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'reol_news_paragraph',
         'settings' => array(),
-        'type' => 'reol_news_paragraph_carousel',
+        'type' => 'reol_article_carousel',
         'weight' => 0,
       ),
       'paragraphs_editor_preview' => array(
@@ -38,28 +34,28 @@ function reol_news_paragraph_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'paragraphs_item',
-    'field_name' => 'field_carousel_count',
-    'label' => 'Antal',
-    'required' => 1,
+    'field_name' => 'field_picked_articles',
+    'label' => 'Nyheder',
+    'required' => 0,
     'settings' => array(
-      'max' => 50,
-      'min' => 0,
-      'prefix' => '',
-      'suffix' => '',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 0,
-      'module' => 'number',
-      'settings' => array(),
-      'type' => 'number',
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
       'weight' => 1,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Antal');
+  t('Nyheder');
 
   return $field_instances;
 }

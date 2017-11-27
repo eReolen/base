@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the reol_news_paragraph module.
+ */
+
+/**
+ * Delete field_carousel_count.
+ */
+function reol_news_paragraph_update_7101() {
+  field_delete_field('field_carousel_count');
+}

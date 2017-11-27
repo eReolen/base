@@ -11,8 +11,13 @@
 function reol_news_paragraph_paragraphs_info() {
   $items = array(
     'article_carousel' => array(
-      'name' => 'Nyheds karrusel',
+      'name' => 'Nyeste nyheds karrusel',
       'bundle' => 'article_carousel',
+      'locked' => '1',
+    ),
+    'picked_article_carousel' => array(
+      'name' => 'Nyheds karrusel',
+      'bundle' => 'picked_article_carousel',
       'locked' => '1',
     ),
   );
