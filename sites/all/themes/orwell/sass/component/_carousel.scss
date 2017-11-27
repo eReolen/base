@@ -3,12 +3,6 @@
 .ding-carousel {
   @include content-wrapper;
 
-  padding: 10px 0;
-
-  @include grid-media($medium) {
-    padding: 20px 0;
-  }
-
   .slick-arrow {
     background: $page-bg;
     border: 1px solid $color__border-gray--light;
@@ -89,18 +83,11 @@
   }
 
   .carousel__header {
+    @include content-wrapper-no-padding;
     @include base-header;
-    margin-left: 20px;
 
-    @include grid-media($medium) {
-      margin-left: 40px;
-    }
-
-    @include grid-media($large) {
-      margin-left: 60px;
-    }
-
-    // Don't show header for the article carousel on the article page.
+    // Don't show header for the article carousel on the article page,
+    // on mobile.
     .article__other-articles & {
       display: none;
 
@@ -117,32 +104,47 @@
   }
 }
 
+// Spacing between carousel items.
 .ding-carousel-item {
-  padding-left: 20px;
+  padding-right: 20px;
 
   @include grid-media($medium) {
-    padding-left: 40px;
+    padding-right: 40px;
   }
 
   @include grid-media($large) {
-    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  // Remove it from the last.
+  &:last-child {
+    padding-right: 0;
   }
 }
 
 // Paragraph specific tweaks.
 .paragraphs-item-article-carousel,
 .article__other-articles {
+  .ding-carousel {
+    @include content-wrapper__large;
+    padding: 0;
+  }
+
   .ding-carousel-item {
     width: 100vw;
-    padding-left: 0;
+    padding-right: 0;
 
     @include grid-media($medium) {
       width: auto;
-      padding-left: 40px;
+      padding-right: 40px;
     }
 
     @include grid-media($large) {
-      padding-left: 60px;
+      padding-right: 60px;
+    }
+
+    &:last-child {
+      padding-right: 0;
     }
   }
 

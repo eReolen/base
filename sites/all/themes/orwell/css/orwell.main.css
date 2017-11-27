@@ -77,26 +77,32 @@ body {
 }
 
 .page-wrapper, .page-search-ting .pane-page-content {
-  max-width: 1208px;
+  max-width: 1248px;
   position: relative;
 }
 
 @media all and (min-width: 49em) {
   .page-wrapper, .page-search-ting .pane-page-content {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1268px;
   }
 }
 
 .content-wrapper {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media all and (min-width: 49em) {
   .content-wrapper {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -357,8 +363,10 @@ img {
 }
 
 div.messages {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   padding: 2rem;
   background-color: #fff;
   background-image: none;
@@ -372,8 +380,11 @@ div.messages {
 
 @media all and (min-width: 49em) {
   div.messages {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -995,16 +1006,21 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .topbar__inner {
-    max-width: 1080px;
+    max-width: 1120px;
     width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
     height: 100%;
   }
 }
 
 @media all and (min-width: 49em) and (min-width: 49em) {
   .topbar__inner {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -1167,15 +1183,20 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .menu-name-main-menu.menu-level-2 > ul {
-    max-width: 1080px;
+    max-width: 1120px;
     width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
 @media all and (min-width: 49em) and (min-width: 49em) {
   .menu-name-main-menu.menu-level-2 > ul {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -1252,8 +1273,10 @@ div.messages ul {
 }
 
 .menu-name-main-menu.menu-level-2 li div {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   position: absolute;
   display: block;
   left: 0;
@@ -1263,8 +1286,11 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .menu-name-main-menu.menu-level-2 li div {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -1746,15 +1772,16 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .search-form__content {
-    max-width: 1208px;
+    max-width: 1248px;
     position: relative;
   }
 }
 
 @media all and (min-width: 49em) and (min-width: 49em) {
   .search-form__content {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1268px;
   }
 }
 
@@ -2531,21 +2558,19 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
-  padding: 10px 0;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media all and (min-width: 49em) {
   .ding-carousel {
-    margin: 0 auto;
-    padding: 0 3.75rem;
-  }
-}
-
-@media all and (min-width: 49em) {
-  .ding-carousel {
-    padding: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -2639,23 +2664,20 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel .carousel__header {
+  max-width: 1080px;
+  width: 100%;
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.5rem;
   color: #505050;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  margin-left: 20px;
 }
 
 @media all and (min-width: 49em) {
   .ding-carousel .carousel__header {
-    margin-left: 40px;
-  }
-}
-
-@media all and (min-width: 65em) {
-  .ding-carousel .carousel__header {
-    margin-left: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1080px;
   }
 }
 
@@ -2699,40 +2721,65 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel-item {
-  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media all and (min-width: 49em) {
   .ding-carousel-item {
-    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 
 @media all and (min-width: 65em) {
   .ding-carousel-item {
-    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+
+.ding-carousel-item:last-child {
+  padding-right: 0;
+}
+
+.paragraphs-item-article-carousel .ding-carousel,
+.article__other-articles .ding-carousel {
+  max-width: 1248px;
+  position: relative;
+  padding: 0;
+}
+
+@media all and (min-width: 49em) {
+  .paragraphs-item-article-carousel .ding-carousel,
+  .article__other-articles .ding-carousel {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1268px;
   }
 }
 
 .paragraphs-item-article-carousel .ding-carousel-item,
 .article__other-articles .ding-carousel-item {
   width: 100vw;
-  padding-left: 0;
+  padding-right: 0;
 }
 
 @media all and (min-width: 49em) {
   .paragraphs-item-article-carousel .ding-carousel-item,
   .article__other-articles .ding-carousel-item {
     width: auto;
-    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 
 @media all and (min-width: 65em) {
   .paragraphs-item-article-carousel .ding-carousel-item,
   .article__other-articles .ding-carousel-item {
-    padding-left: 60px;
+    padding-right: 60px;
   }
+}
+
+.paragraphs-item-article-carousel .ding-carousel-item:last-child,
+.article__other-articles .ding-carousel-item:last-child {
+  padding-right: 0;
 }
 
 .paragraphs-item-article-carousel .slick-dots,
@@ -3321,31 +3368,31 @@ html.js input.form-autocomplete {
 }
 
 .spotlight-box {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
-  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media all and (min-width: 49em) {
   .spotlight-box {
-    margin: 0 auto;
-    padding: 0 3.75rem;
-  }
-}
-
-@media all and (min-width: 49em) {
-  .spotlight-box {
-    padding: 15px 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
 .spotlight-box__item {
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 @media all and (min-width: 49em) {
   .spotlight-box__item {
-    margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 
@@ -3403,12 +3450,14 @@ html.js input.form-autocomplete {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 66.66667%;
     flex: 0 0 66.66667%;
+    padding-right: 20px;
   }
   .spotlight-box__top__secondary {
     display: block;
     -webkit-box-flex: 0;
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
+    padding-left: 20px;
   }
 }
 
@@ -3437,10 +3486,15 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 26em) {
-  .spotlight-box__middle__item_1,
+  .spotlight-box__middle__item_1 {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    padding-right: 10px;
+  }
   .spotlight-box__middle__item_3 {
     -ms-flex-preferred-size: 50%;
     flex-basis: 50%;
+    padding-left: 10px;
   }
 }
 
@@ -3451,6 +3505,7 @@ html.js input.form-autocomplete {
     -webkit-box-ordinal-group: 2;
     -ms-flex-order: 1;
     order: 1;
+    padding-right: 20px;
   }
   .spotlight-box__middle__item_2 {
     -ms-flex-preferred-size: 33.33333%;
@@ -3458,6 +3513,8 @@ html.js input.form-autocomplete {
     -webkit-box-ordinal-group: 3;
     -ms-flex-order: 2;
     order: 2;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .spotlight-box__middle__item_3 {
     -ms-flex-preferred-size: 33.33333%;
@@ -3465,6 +3522,7 @@ html.js input.form-autocomplete {
     -webkit-box-ordinal-group: 4;
     -ms-flex-order: 3;
     order: 3;
+    padding-left: 20px;
   }
 }
 
@@ -3475,16 +3533,23 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .spotlight-box__bottom__item_1,
+  .spotlight-box__bottom__item_1 {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    padding-right: 20px;
+  }
   .spotlight-box__bottom__item_2 {
     -ms-flex-preferred-size: 50%;
     flex-basis: 50%;
+    padding-left: 20px;
   }
 }
 
 .page-user .layout-wrapper {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3494,8 +3559,11 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .page-user .layout-wrapper {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -4094,15 +4162,20 @@ html.js input.form-autocomplete {
 }
 
 .faq-content {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   padding: 2rem 2rem 0;
 }
 
 @media all and (min-width: 49em) {
   .faq-content {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -4711,16 +4784,21 @@ html.js input.form-autocomplete {
 }
 
 .node-webform {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
 
 @media all and (min-width: 49em) {
   .node-webform {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -4860,8 +4938,10 @@ html.js input.form-autocomplete {
 }
 
 .announcement {
-  max-width: 1080px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   padding: 2rem;
   font-family: "SourceSansPro", sans-serif;
   font-size: 1.2rem;
@@ -4873,8 +4953,11 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .announcement {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
