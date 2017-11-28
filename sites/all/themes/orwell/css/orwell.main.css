@@ -2053,14 +2053,14 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .search-results.grid-view .list .search-result {
+  .search-results.grid-view .search-result {
     width: 33.3333%;
     padding: .75rem;
   }
 }
 
 @media all and (min-width: 49em) {
-  .search-results.grid-view .list .search-result .material {
+  .search-results.grid-view .search-result .material {
     border-bottom: 0;
     margin-top: 0;
     padding: 0;
@@ -2068,21 +2068,21 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .search-results.grid-view .list .search-result .material__cover--teaser {
+  .search-results.grid-view .search-result .material__cover--teaser {
     width: 100%;
   }
 }
 
 @media all and (min-width: 49em) {
-  .search-results.grid-view .list .search-result .material__content {
+  .search-results.grid-view .search-result .material__content {
     padding-left: 0;
     width: 100%;
   }
 }
 
 @media all and (min-width: 49em) {
-  .search-results.grid-view .list .search-result .material__abstract,
-  .search-results.grid-view .list .search-result .material__subjects {
+  .search-results.grid-view .search-result .material__abstract,
+  .search-results.grid-view .search-result .material__subjects {
     display: none;
   }
 }
