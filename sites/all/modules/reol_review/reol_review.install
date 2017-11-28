@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Installation of reol_review module.
@@ -10,7 +11,6 @@
 function reol_review_install() {
   variable_set('reol_review_fetch_offset', 0);
 }
-
 
 /**
  * Implements hook_schema().
@@ -65,7 +65,7 @@ function _reol_review_schema_0() {
         'default' => '',
       ),
       'process' => array(
-        'description' => 'Whether this has been scheduled fer processing.',
+        'description' => 'Whether this has been scheduled for processing.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
@@ -108,11 +108,36 @@ function _reol_review_schema_1() {
   );
 
   $schema['reol_review_reviews']['fields']['created'] = array(
-    'description' => 'Creation date of review..',
+    'description' => 'Creation date of review.',
     'type' => 'int',
     'unsigned' => TRUE,
     'not null' => TRUE,
     'default' => 0,
+  );
+
+  return $schema;
+}
+
+/**
+ * Third schema version.
+ */
+function _reol_review_schema_2() {
+  $schema = _reol_review_schema_1();
+
+  $schema['reol_review_reviews']['fields']['title'] = array(
+    'description' => 'Title of material.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+  );
+
+  $schema['reol_review_reviews']['fields']['author'] = array(
+    'description' => 'Author of material.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
   );
 
   return $schema;
@@ -140,8 +165,21 @@ function reol_review_update_7102() {
   db_add_field('reol_review_reviews', 'created', $schema['reol_review_reviews']['fields']['created']);
 
   // Clear out reviews.
-  db_query('TRUNCATE TABLE {reol_review_reviews}');
+  db_truncate('reol_review_reviews')->execute();
 
   // And start over.
   variable_set('reol_review_fetch_offset', 0);
+}
+
+/**
+ * Flush out reviews from the old Litteratursiden.
+ */
+function reol_review_update_7103() {
+  db_truncate('reol_review_reviews')->execute();
+  variable_del('reol_review_fetch_offset');
+
+  // Yes, this is OK, and I'll tell you why if you ask me...
+  $schema = _reol_review_schema_2();
+  db_add_field('reol_review_reviews', 'title', $schema['reol_review_reviews']['fields']['title']);
+  db_add_field('reol_review_reviews', 'author', $schema['reol_review_reviews']['fields']['author']);
 }
