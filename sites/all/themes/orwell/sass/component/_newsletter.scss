@@ -32,7 +32,15 @@ body.page-nyhedsbrev-web {
 
 // Newsletter element
 form.mailchimp-signup-subscribe-form {
+  @include content-wrapper;
+
+  padding-top: 2rem;
   padding-bottom: 2rem;
+
+  @include grid-media($medium) {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
 
   > div {
     position: relative;
@@ -86,16 +94,6 @@ form.mailchimp-signup-subscribe-form {
     bottom: 1rem;
     right: 0;
 
-    &::after {
-      @include icon;
-      display: block;
-      position: absolute;
-      content: $icon__arrow-right;
-      color: white;
-      right: 1.1rem;
-      bottom: 1rem;
-    }
-
     input[type="submit"] {
       // Reset button styling, hide default text
       -webkit-appearance: none;
@@ -104,8 +102,15 @@ form.mailchimp-signup-subscribe-form {
       // make into circle
       width: 3.2rem;
       height: 3.2rem;
+      border: 1px solid $color__geist--hr;
       border-radius: 1.6rem;
       background-color: $color__geist--grey5;
+      // Using a background SVG because we can't use ::before on input
+      // elements, and changing it to button is way too difficult.
+      background-image: url('../svg/white-arrow-right.svg');
+      background-size: 1rem;
+      background-position: center;
+      background-repeat: no-repeat;
       cursor: pointer;
     }
   }

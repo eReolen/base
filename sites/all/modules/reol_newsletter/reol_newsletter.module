@@ -51,6 +51,9 @@ function reol_newsletter_form_alter(&$form, &$form_state, $form_id) {
 
       $form['#prefix'] = '<div id="' . $wrapper_id . '">';
       $form['#suffix'] = '</div>';
+
+      // Set placeholder for email field.
+      $form['mergevars']['EMAIL']['#attributes']['placeholder'] = t('Your E-mail address');
     }
   }
 }
