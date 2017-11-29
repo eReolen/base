@@ -57,7 +57,7 @@ function ereol_base_update_7106() {
 }
 
 /**
- * Implements hook_update_N().
+ * Enable reol_carousel.
  */
 function ereol_base_update_7107() {
   module_enable(array('reol_carousel'), TRUE);
