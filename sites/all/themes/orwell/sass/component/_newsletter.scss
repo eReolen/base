@@ -1,35 +1,5 @@
 @import 'bootstrap/bootstrap';
 
-// Newsletter form used in app
-body.page-nyhedsbrev-app,
-body.page-nyhedsbrev-web {
-
-  .pane-page-content {
-    padding: 0 2rem;
-    margin-bottom: 4rem;
-  }
-
-  .pane-title {
-    font-size: 1.8rem;
-    font-family: $font-semibold;
-  }
-
-  // in case the form changes name and gets a new classname
-  form[class^="mailchimp-"] {
-    // include all the default form stylings from _mixins.scss:87
-    @include form-default;
-    // overwrite submit button
-    input[type="submit"].form-submit {
-      padding: 0 1rem;
-      margin-top: 0;
-    }
-
-    .form-required {
-      color: $color__red;
-    }
-  }
-}
-
 // Newsletter element
 form.mailchimp-signup-subscribe-form {
   @include content-wrapper;
@@ -112,6 +82,53 @@ form.mailchimp-signup-subscribe-form {
       background-position: center;
       background-repeat: no-repeat;
       cursor: pointer;
+    }
+  }
+}
+
+// Newsletter form used in app
+body.page-nyhedsbrev-app,
+body.page-nyhedsbrev-web {
+
+  .pane-page-content {
+    padding: 0 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .pane-title {
+    font-size: 1.8rem;
+    font-family: $font-semibold;
+  }
+
+  // in case the form changes name and gets a new classname
+  form[class^="mailchimp-"] {
+    // include all the default form stylings from _mixins.scss:87
+    @include form-default;
+    // overwrite submit button
+    input[type="submit"].form-submit {
+      padding: 0 1rem;
+      margin-top: 0;
+    }
+
+    .form-required {
+      color: $color__red;
+    }
+  }
+
+  form.mailchimp-signup-subscribe-form {
+
+    .form-actions {
+      position: relative;
+      bottom: auto;
+      right: auto;
+
+      &::after {
+        display: none;
+      }
+
+      input[type="submit"] {
+        text-indent: 0;
+      }
     }
   }
 }

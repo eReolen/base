@@ -4976,6 +4976,98 @@ html.js input.form-autocomplete {
   background: #e5dbb7;
 }
 
+form.mailchimp-signup-subscribe-form {
+  max-width: 1120px;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media all and (min-width: 49em) {
+  form.mailchimp-signup-subscribe-form {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media all and (min-width: 49em) {
+  form.mailchimp-signup-subscribe-form {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+form.mailchimp-signup-subscribe-form > div {
+  position: relative;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description {
+  margin-bottom: 2rem;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description p {
+  text-transform: uppercase;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+  color: #505050;
+  margin-bottom: .8rem;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description h2 {
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #505050;
+}
+
+form.mailchimp-signup-subscribe-form .form-item label[for] {
+  display: none;
+}
+
+form.mailchimp-signup-subscribe-form .form-item input[type="text"] {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: "SourceSansPro", sans-serif;
+  font-size: 2rem;
+  border-bottom: 2px solid #d8d8d8;
+  padding: 1rem 0;
+  color: #787878;
+  padding-right: 4rem;
+}
+
+form.mailchimp-signup-subscribe-form .form-item input[type="text"]:focus {
+  outline: none;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions input[type="submit"] {
+  -webkit-appearance: none;
+  text-indent: -9999px;
+  overflow: hidden;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 1px solid #d8d8d8;
+  border-radius: 1.6rem;
+  background-color: #b4b4b4;
+  background-image: url("../svg/white-arrow-right.svg");
+  background-size: 1rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
 body.page-nyhedsbrev-app .pane-page-content,
 body.page-nyhedsbrev-web .pane-page-content {
   padding: 0 2rem;
@@ -5086,96 +5178,21 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-required {
   color: #b81b40;
 }
 
-form.mailchimp-signup-subscribe-form {
-  max-width: 1120px;
-  width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-@media all and (min-width: 49em) {
-  form.mailchimp-signup-subscribe-form {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1140px;
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-}
-
-@media all and (min-width: 49em) {
-  form.mailchimp-signup-subscribe-form {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-}
-
-form.mailchimp-signup-subscribe-form > div {
+body.page-nyhedsbrev-app form.mailchimp-signup-subscribe-form .form-actions,
+body.page-nyhedsbrev-web form.mailchimp-signup-subscribe-form .form-actions {
   position: relative;
+  bottom: auto;
+  right: auto;
 }
 
-form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description {
-  margin-bottom: 2rem;
-}
-
-form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description p {
-  text-transform: uppercase;
-  font-family: "SourceSansProSemiBold", sans-serif;
-  font-size: 1rem;
-  color: #505050;
-  margin-bottom: .8rem;
-}
-
-form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description h2 {
-  font-family: "SourceSansProSemiBold", sans-serif;
-  font-size: 1rem;
-  font-weight: normal;
-  color: #505050;
-}
-
-form.mailchimp-signup-subscribe-form .form-item label[for] {
+body.page-nyhedsbrev-app form.mailchimp-signup-subscribe-form .form-actions::after,
+body.page-nyhedsbrev-web form.mailchimp-signup-subscribe-form .form-actions::after {
   display: none;
 }
 
-form.mailchimp-signup-subscribe-form .form-item input[type="text"] {
-  width: 100%;
-  border: 0;
-  outline: none;
-  background: transparent;
-  font-family: "SourceSansPro", sans-serif;
-  font-size: 2rem;
-  border-bottom: 2px solid #d8d8d8;
-  padding: 1rem 0;
-  color: #787878;
-  padding-right: 4rem;
-}
-
-form.mailchimp-signup-subscribe-form .form-item input[type="text"]:focus {
-  outline: none;
-}
-
-form.mailchimp-signup-subscribe-form .form-actions {
-  position: absolute;
-  bottom: 1rem;
-  right: 0;
-}
-
-form.mailchimp-signup-subscribe-form .form-actions input[type="submit"] {
-  -webkit-appearance: none;
-  text-indent: -9999px;
-  overflow: hidden;
-  width: 3.2rem;
-  height: 3.2rem;
-  border: 1px solid #d8d8d8;
-  border-radius: 1.6rem;
-  background-color: #b4b4b4;
-  background-image: url("../svg/white-arrow-right.svg");
-  background-size: 1rem;
-  background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
+body.page-nyhedsbrev-app form.mailchimp-signup-subscribe-form .form-actions input[type="submit"],
+body.page-nyhedsbrev-web form.mailchimp-signup-subscribe-form .form-actions input[type="submit"] {
+  text-indent: 0;
 }
 
 .author-portrait {
