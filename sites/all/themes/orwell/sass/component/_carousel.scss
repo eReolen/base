@@ -124,6 +124,7 @@
 
 // Paragraph specific tweaks.
 .paragraphs-item-article-carousel,
+.paragraphs-item-picked-article-carousel,
 .article__other-articles {
   .ding-carousel {
     @include content-wrapper__large;

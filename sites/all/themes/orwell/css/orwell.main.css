@@ -2741,6 +2741,7 @@ html.js input.form-autocomplete {
 }
 
 .paragraphs-item-article-carousel .ding-carousel,
+.paragraphs-item-picked-article-carousel .ding-carousel,
 .article__other-articles .ding-carousel {
   max-width: 1248px;
   position: relative;
@@ -2749,6 +2750,7 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .paragraphs-item-article-carousel .ding-carousel,
+  .paragraphs-item-picked-article-carousel .ding-carousel,
   .article__other-articles .ding-carousel {
     margin-left: auto;
     margin-right: auto;
@@ -2757,6 +2759,7 @@ html.js input.form-autocomplete {
 }
 
 .paragraphs-item-article-carousel .ding-carousel-item,
+.paragraphs-item-picked-article-carousel .ding-carousel-item,
 .article__other-articles .ding-carousel-item {
   width: 100vw;
   padding-right: 0;
@@ -2764,6 +2767,7 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .paragraphs-item-article-carousel .ding-carousel-item,
+  .paragraphs-item-picked-article-carousel .ding-carousel-item,
   .article__other-articles .ding-carousel-item {
     width: auto;
     padding-right: 40px;
@@ -2772,23 +2776,27 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 65em) {
   .paragraphs-item-article-carousel .ding-carousel-item,
+  .paragraphs-item-picked-article-carousel .ding-carousel-item,
   .article__other-articles .ding-carousel-item {
     padding-right: 60px;
   }
 }
 
 .paragraphs-item-article-carousel .ding-carousel-item:last-child,
+.paragraphs-item-picked-article-carousel .ding-carousel-item:last-child,
 .article__other-articles .ding-carousel-item:last-child {
   padding-right: 0;
 }
 
 .paragraphs-item-article-carousel .slick-dots,
+.paragraphs-item-picked-article-carousel .slick-dots,
 .article__other-articles .slick-dots {
   display: block !important;
 }
 
 @media all and (min-width: 49em) {
   .paragraphs-item-article-carousel .slick-dots,
+  .paragraphs-item-picked-article-carousel .slick-dots,
   .article__other-articles .slick-dots {
     display: none !important;
   }
