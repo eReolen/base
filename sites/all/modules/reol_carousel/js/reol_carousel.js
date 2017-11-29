@@ -193,18 +193,18 @@
       return;
     }
     running = true;
-    var item = queue.shift();
+    var swiper = queue.shift();
 
     $.ajax({
       type: 'get',
-      url : Drupal.settings.basePath + item.tab.data('path') + '/' + item.tab.data('offset'),
+      url : Drupal.settings.basePath + $(swiper.el).data('path') + '/' + $(swiper.el).data('offset'),
       dataType : 'json',
       success : function (data) {
         // Remove placeholders.
-        item.target.find('.ding-carousel-item.placeholder').remove();
-        item.target.slick('slickAdd', data.content);
-        item.tab.data('offset', data.offset);
-        item.tab.data('updating', false);
+        $(swiper.el).find('.ding-carousel-item.placeholder').remove();
+        swiper.appendSlide(data.content);
+        $(swiper.el).data('offset', data.offset);
+        $(swiper.el).data('updating', false);
         // Carry on processing the queue.
         running = false;
         update();
@@ -215,19 +215,18 @@
   /**
    * Event handler for progressively loading more covers.
    */
-  var update_handler = function (e, slick) {
-    var tab = e.data;
+  var update_handler = function () {
+    var tab = $(this.el);
 
     if (!tab.data('updating')) {
       // If its the first batch or we're near the end.
       if (tab.data('offset') === 0 ||
           (tab.data('offset') > -1 &&
-           (slick.slideCount - slick.currentSlide) <
-           (slick.options.slidesToScroll * 2))) {
+           this.progress > .8)) {
         // Disable updates while updating.
         tab.data('updating', true);
         // Add to queue.
-        queue.push({'tab': tab, 'slick': slick, 'target': $(e.target)});
+        queue.push(this);
       }
     }
     // Run queue.
@@ -263,14 +262,28 @@
           settings = $(this).data('settings');
         }
 
-        // Reset ul to 100% width before we start Slick. See the CSS.
-        carousel.find('ul').css('width', '100%');
-        // Init carousels. In order to react to the init event, the
-        // event handler needs to be defined before triggering Slick
-        // (obviously in hindsight).
-        $('.carousel', this).on('init reInit afterChange', carousel, update_handler)
-          .on('setPosition', carousel, update_slides_to_scroll)
-          .slick(settings);
+        // Add prev/next buttons.
+        carousel.find('ul').after('<div class="button-prev"></div><div class="button-next"></div>');
+        var swiper = new Swiper(this, {
+          speed: 400,
+          slidesPerView: 'auto',
+          //slidesPerGroup: 3,
+          wrapperClass: 'carousel',
+          slideClass: 'ding-carousel-item',
+          freeMode: true,
+          //freeModeSticky: true,
+          freeModeMinimumVelocity: 0.0002,
+          // freeModeMomentumRatio: 0.5,
+          // freeModeMomentumVelocityRatio: 2,
+          navigation: {
+            nextEl: '.button-next',
+            prevEl: '.button-prev',
+          },
+          init: false
+        });
+        swiper.on('init', update_handler)
+        swiper.on('slideChange', update_handler);
+        swiper.init();
       });
 
       // Initialize tab behavior on tabbed carousels.

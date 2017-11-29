@@ -2,8 +2,10 @@
 
 .ding-carousel {
   @include content-wrapper;
+  position: relative;
 
-  .slick-arrow {
+  .button-prev,
+  .button-next {
     background: $page-bg;
     border: 1px solid $color__border-gray--light;
     border-radius: 1px;
@@ -30,21 +32,22 @@
       font-size: .75rem;
       text-indent: 0;
     }
+  }
 
-    &.slick-prev {
-      left: 30px;
 
-      &::before {
-        content: $icon__arrow-left;
-      }
+  .button-prev {
+    left: 30px;
+
+    &::before {
+      content: $icon__arrow-left;
     }
+  }
 
-    &.slick-next {
-      right: 30px;
+  .button-next {
+    right: 30px;
 
-      &::before {
-        content: $icon__arrow-right;
-      }
+    &::before {
+      content: $icon__arrow-right;
     }
   }
 
@@ -178,17 +181,14 @@
 }
 
 .ding-carousel ul {
-  display: inline-block;
+  display: flex;
   vertical-align: top;
   margin: 0;
   padding: 0;
   list-style: none;
-  // Set the width to ensure (within reason) that all covers are
-  // rendered on one line, let the parent clip. It is restored to 100%
-  // by the JS before activating the carousel.
-  width: 8000px;
 }
 
 .ding-carousel li {
   display: inline-block;
+  flex: none;
 }
