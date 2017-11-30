@@ -142,8 +142,9 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
           '#path' => $ajax_path,
           '#items' => $covers,
           '#offset' => $chunk['next_offset'],
+          // Add a placeholder if there's more.
           // TODO: should be field configurable.
-          '#placeholders' => TING_SEARCH_CAROUSEL_CHUNK_SIZE,
+          '#placeholders' => $chunk['next_offset'] > -1 ? TING_SEARCH_CAROUSEL_CHUNK_SIZE + 1 : TING_SEARCH_CAROUSEL_CHUNK_SIZE,
           '#placeholder' => reol_field_carousel_build_placeholder($render_method),
 
         );

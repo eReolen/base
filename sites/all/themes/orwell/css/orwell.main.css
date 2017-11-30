@@ -2592,6 +2592,7 @@ html.js input.form-autocomplete {
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
+  position: relative;
 }
 
 @media all and (min-width: 49em) {
@@ -2604,7 +2605,8 @@ html.js input.form-autocomplete {
   }
 }
 
-.ding-carousel .slick-arrow {
+.ding-carousel .button-prev,
+.ding-carousel .button-next {
   background: #f0f0f0;
   border: 1px solid #dcdcdc;
   border-radius: 1px;
@@ -2617,13 +2619,15 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .ding-carousel .slick-arrow {
+  .ding-carousel .button-prev,
+  .ding-carousel .button-next {
     bottom: 90px;
     display: inline-block !important;
   }
 }
 
-.ding-carousel .slick-arrow::before {
+.ding-carousel .button-prev::before,
+.ding-carousel .button-next::before {
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -2638,19 +2642,19 @@ html.js input.form-autocomplete {
   text-indent: 0;
 }
 
-.ding-carousel .slick-arrow.slick-prev {
+.ding-carousel .button-prev {
   left: 30px;
 }
 
-.ding-carousel .slick-arrow.slick-prev::before {
+.ding-carousel .button-prev::before {
   content: "";
 }
 
-.ding-carousel .slick-arrow.slick-next {
+.ding-carousel .button-next {
   right: 30px;
 }
 
-.ding-carousel .slick-arrow.slick-next::before {
+.ding-carousel .button-next::before {
   content: "";
 }
 
@@ -2841,16 +2845,20 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel ul {
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   vertical-align: top;
   margin: 0;
   padding: 0;
   list-style: none;
-  width: 8000px;
 }
 
 .ding-carousel li {
   display: inline-block;
+  -webkit-box-flex: 0;
+  -ms-flex: none;
+  flex: none;
 }
 
 .material {
