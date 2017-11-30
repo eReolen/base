@@ -234,19 +234,32 @@
   };
 
   /**
-   * Fudge slidesToScroll for slick.
+   * Init handler for Swiper.
    *
-   * In variableWith mode, we don't know how many slides are shown, so
-   * we can't set slidesToScroll to any sane value apart from 1, which
-   * isn't cool. So we calculate it here.
-   *
-   * Obviously this can more or less fail if the first slide has an
-   * odd width, but we expect all slides to be pretty similar.
+   * Sets sticky mode and number of slides per "page" depending on the
+   * widths of the carousel and first slide.
    */
-  var update_slides_to_scroll = function (e, slick) {
-    var slidesToScroll = Math.floor(slick.$slider.width() / slick.$slides.eq(0).outerWidth(true)) - 1;
-    slick.options.slidesToScroll = Math.max(slidesToScroll, 1);
-  };
+  var init_handler = function () {
+    var carouselWidth = $(this.el).width();
+    var slideWidth = $(this.slides[0]).outerWidth();
+
+    // If the first slide is more than 80% of the carousel width, enable sticky
+    // mode.
+    if (slideWidth > (carouselWidth * .8)) {
+      this.params['freeModeSticky'] = true;
+    }
+    else {
+      // Else we calculate how many slides to scroll with the arrows.
+      // This will set it to low if the page was loaded at a small
+      // mobile width, and resized afterwards, but it's an edge case
+      // we're living with.
+      this.params['slidesPerGroup'] = Math.floor(carouselWidth / slideWidth)
+      // Apparently swiper needs to be updated for this to take effect.
+      this.update();
+    }
+    // Call update_handler with the same 'this'.
+    update_handler.apply(this);
+  }
 
   /**
    * Start the carousel when the document is ready.
@@ -267,21 +280,18 @@
         var swiper = new Swiper(this, {
           speed: 400,
           slidesPerView: 'auto',
-          //slidesPerGroup: 3,
           wrapperClass: 'carousel',
           slideClass: 'ding-carousel-item',
           freeMode: true,
-          //freeModeSticky: true,
           freeModeMinimumVelocity: 0.0002,
           freeModeMomentumRatio: 0.5,
-          // freeModeMomentumVelocityRatio: 0.5,
           navigation: {
             nextEl: '.button-next',
             prevEl: '.button-prev',
           },
           init: false
         });
-        swiper.on('init', update_handler)
+        swiper.on('init', init_handler)
         swiper.on('slideChange', update_handler);
         swiper.init();
       });
