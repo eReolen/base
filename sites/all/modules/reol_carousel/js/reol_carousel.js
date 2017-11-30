@@ -273,8 +273,8 @@
           freeMode: true,
           //freeModeSticky: true,
           freeModeMinimumVelocity: 0.0002,
-          // freeModeMomentumRatio: 0.5,
-          // freeModeMomentumVelocityRatio: 2,
+          freeModeMomentumRatio: 0.5,
+          // freeModeMomentumVelocityRatio: 0.5,
           navigation: {
             nextEl: '.button-next',
             prevEl: '.button-prev',
