@@ -1360,6 +1360,36 @@ div.messages ul {
   }
 }
 
+.footer__brand {
+  background-color: #fff;
+  color: #b81b40;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  padding: 1rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.footer__brand::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  font-size: 2rem;
+}
+
 .footer .menu a {
   text-transform: none;
 }
