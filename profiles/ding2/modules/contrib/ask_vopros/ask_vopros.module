@@ -23,6 +23,18 @@ function ask_vopros_menu() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function ask_vopros_theme() {
+  return array(
+    'ask_vopros_opening_hours' => array(
+      'render element' => 'elements',
+      'file' => 'ask_vopros.admin.inc',
+    ),
+  );
+}
+
+/**
  * Preprocess variables for html.tpl.php
  *
  * This adds in our bottom tab. Using hook_page_build() is no good, as
@@ -37,14 +49,14 @@ function ask_vopros_preprocess_html(&$vars) {
   }
 
   // JavaScript settings var. Basic settings, id and mail.
-  $settings = array(
+  $widget_settings = array(
     'agency_id' => $agency_id,
     'agency_mail' => variable_get('ask_vopros_agency_mail', variable_get('site_mail', '')),
   );
 
   $answer_preference = variable_get('ask_vopros_answer_preference', 'mail');
   if ($answer_preference !== 'mail') {
-    $settings['answer_preference'] = $answer_preference;
+    $widget_settings['answer_preference'] = $answer_preference;
   }
 
   // Check if a ding user is logged in and add in their name/zip/mail/phone if
@@ -62,7 +74,7 @@ function ask_vopros_preprocess_html(&$vars) {
 
       $field_value = field_get_items('profile2', $profile, $field_name);
       if (!empty($field_value[0]['value'])) {
-        $settings[$name] = $field_value[0]['value'];
+        $widget_settings[$name] = $field_value[0]['value'];
       }
     }
 
@@ -70,13 +82,9 @@ function ask_vopros_preprocess_html(&$vars) {
     // profile. It should've been copied to the mail of the Drupal user, so use
     // that.
     if (!empty($user->mail)) {
-      $settings['mail'] = $user->mail;
+      $widget_settings['mail'] = $user->mail;
     }
   }
-
-  $settings_js = 'var ask_vopros = ' . json_encode($settings) . ';';
-
-  $base = rtrim(variable_get('ask_vopros_uri', 'http://adm.biblioteksvagten.dk'), '/') . '/embed/';
 
   // Check visibility settings. We add the query argument to get
   // question_modal.js to add the tab for us.
@@ -94,47 +102,97 @@ function ask_vopros_preprocess_html(&$vars) {
     if ($path != $_GET['q']) {
       $page_match = $page_match || drupal_match_path($_GET['q'], $visibility_pages);
     }
-    if ($page_match xor ($visibility_type == 'on')) {
-      $visible = FALSE;
-    }
+
+    $visible = ($visible xor $page_match);
   }
 
-  // We can't set the async attribute for an attached JS, so we build the script
-  // element by hand, in the same way drupal_get_js() does.
-  // Using async and defer is the currently recommend practice to avoid having
-  // the page hang on the script.
-  // @see https://www.igvita.com/2014/05/20/script-injected-async-scripts-considered-harmful/
+  $settings = array();
+  $settings['ask_vopros_opening_hours'] = _ask_vopros_opening_hours_today(variable_get('ask_vopros_opening_hours', array()));
 
-  $element = array(
-    '#tag' => 'script',
-    '#value' => '',
-    '#attributes' => array(
-      'type' => 'text/javascript',
-      'src' => $base . 'question_modal.js' . ($visible ? '?tab=true' : ''),
-      'defer' => 'defer',
-      'async' => 'async',
-    ),
-  );
+  $widget_settings_js = 'var ask_vopros = ' . json_encode($widget_settings) . ';';
+  $widget_settings_js .= 'var ask_vopros_offset = ' . (time() * 1000) . ' - Date.now();';
 
   // Add the settings.
-  $attachment = array(
-    '#attached' => array(
-      'js' => array(
-        $settings_js => array('type' => 'inline'),
-      ),
+  $attachments = array(
+    'js' => array(
+      array('data' => $settings, 'type' => 'setting'),
+      array('data' => $widget_settings_js, 'type' => 'inline'),
+      drupal_get_path('module', 'ask_vopros') . '/js/ask_vopros.js',
     ),
-    '#markup' => theme('html_tag', array('element' => $element)),
+    'css' => array(),
   );
 
   $right = variable_get('ask_vopros_right', '');
-  if (!empty($right) || $right === '0') {
-    $attachment['#attached']['css'] = array(
-      'body .ask-vopros-tab {right: ' . $right . '}' => array('type' => 'inline'),
+
+  $color = variable_get('ask_vopros_color', '');
+  if (!empty($color)) {
+    $css = <<<EOF
+body.html .ask-vopros-tab,
+body.html .ask-vopros-tab .ask-vopros-icon,
+body.html .ask-vopros-tab .ask-vopros-text,
+body.html .ask-vopros-tab .ask-vopros-minimize {
+  background-color: $color;
+}
+EOF;
+    $attachments['css'][] = array(
+      'data' => $css,
+      'type' => 'inline',
     );
   }
 
-  $vars['page']['page_bottom'][] = $attachment;
+  $tabs = array(
+    'external' => variable_get('ask_vopros_uri', 'http://adm.biblioteksvagten.dk'),
+    'local' => variable_get('ask_vopros_secondary_uri', ''),
+  );
 
+  foreach ($tabs as $class => $base) {
+    if (empty($base)) {
+      continue;
+    }
+    $base = rtrim($base, '/') . '/embed/';
+
+    // We can't set the async attribute for an attached JS, so we build the
+    // script element by hand, in the same way drupal_get_js() does. Using
+    // async and defer is the currently recommend practice to avoid having the
+    // page hang on the script. @see
+    // https://www.igvita.com/2014/05/20/script-injected-async-scripts-considered-harmful/
+    $element = array(
+      '#tag' => 'script',
+      '#value' => '',
+      '#attributes' => array(
+        'type' => 'text/javascript',
+        'src' => $base . 'question_modal.js?class=' . $class . ($visible ? '&tab=true' : ''),
+        'defer' => 'defer',
+        'async' => 'async',
+      ),
+    );
+
+    $element = array(
+      '#markup' => theme('html_tag', array('element' => $element)),
+    );
+
+    // Need to add the margin for each class, as we can't fix it with
+    // specificity.
+    if (!empty($right) || $right === '0') {
+      $attachments['css'][] = array(
+        'data' => 'body .ask-vopros-tab.' . $class . ' {right: ' . $right . '}',
+        'type' => 'inline',
+      );
+    }
+
+    // Only attach once.
+    if ($attachments) {
+      $element['#attached'] = $attachments;
+      $attachments = NULL;
+    }
+    // Hide tabs per default.
+    $element['#attached']['css'][] = array(
+      'data' => 'body .ask-vopros-tab.' . $class . ' {display: none}',
+      'type' => 'inline',
+    );
+
+    $vars['page']['page_bottom'][] = $element;
+  }
 }
 
 /**
@@ -152,4 +210,26 @@ function _ask_vopros_ting_agency_id() {
   }
 
   return NULL;
+}
+
+/**
+ * Get opening hours for today for JavaScript.
+ */
+function _ask_vopros_opening_hours_today($opening_hours) {
+  $day = date('N') - 1;
+  $time = new DateTime();
+  $time->setTime(0, 0, 0);
+  $times = array(
+    'open' => NULL,
+    'close' => NULL,
+  );
+  foreach (array('open', 'close') as $state) {
+    if ($opening_hours[$state][$day]) {
+      list($hours, $minutes) = explode(':', $opening_hours[$state][$day]);
+      $time->setTime($hours, $minutes, 0);
+      // JS timestamps is in milliseconds.
+      $times[$state] = $time->format('U') * 1000;
+    }
+  }
+  return $times;
 }

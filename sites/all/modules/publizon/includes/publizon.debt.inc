@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * publizon debt provider for Ding.
+ * Publizon debt provider for Ding.
  */
 
 /**

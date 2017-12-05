@@ -7,6 +7,7 @@
  */
 
 namespace Bpi\Sdk;
+
 use Bpi\Sdk\Item\Facet;
 
 /**
@@ -15,8 +16,8 @@ use Bpi\Sdk\Item\Facet;
  *
  * All facets object.
  */
-class Facets {
-
+class Facets
+{
     /**
      * Array of build facets
      * @var array
@@ -28,7 +29,7 @@ class Facets {
      * @param $facet \Bpi\Sdk\Item\Facet
      * @return $this
      */
-    public function addFacets($facet)
+    public function addFacet($facet)
     {
         $this->facets[] = $facet;
         return $this;
@@ -60,7 +61,7 @@ class Facets {
             foreach ($facetsData->properties->children() as $facetData) {
                 $facet->addFacetTerm($facetData['name']->__toString(), $facetData['title']->__toString(), $facetData->__toString());
             }
-            $this->addFacets($facet);
+            $this->addFacet($facet);
         }
     }
 }

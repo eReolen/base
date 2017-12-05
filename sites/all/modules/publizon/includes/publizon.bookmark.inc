@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Ding bookmark provider for Publizon.
@@ -14,8 +15,6 @@
  *   Array of ISBN numbers of the bookmarks for the user.
  */
 function publizon_bookmark_list($account) {
-  $result = array();
-
   // Throw exception if we're not logged in.
   $creds = ding_user_get_creds($account);
 
@@ -50,9 +49,9 @@ function publizon_bookmark_create($account, $local_id) {
   try {
     // Add to checklist in Publizon.
     $client = PublizonChecklistClient::getClient();
-    $checklist = $client->addChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+    $client->addChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
     if (module_exists('ding_session_cache')) {
-      $bookmarks = ding_session_cache_clear('reol_bookmark', 'bookmarks');
+      ding_session_cache_clear('reol_bookmark', 'bookmarks');
     }
   }
   catch (PublizonException $e) {
@@ -77,9 +76,9 @@ function publizon_bookmark_delete($account, $local_id) {
   try {
     // Delete from checklist in Publizon.
     $client = PublizonChecklistClient::getClient();
-    $checklist = $client->deleteChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+    $client->deleteChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
     if (module_exists('ding_session_cache')) {
-      $bookmarks = ding_session_cache_clear('reol_bookmark', 'bookmarks');
+      ding_session_cache_clear('reol_bookmark', 'bookmarks');
     }
   }
   catch (PublizonException $e) {

@@ -82,6 +82,18 @@ function reol_review_ctools_plugin_directory($owner, $plugin_type) {
 }
 
 /**
+ * Ctools block theme function.
+ */
+function reol_review_theme(&$theme, $plugin) {
+  return array(
+    'single_review' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'templates/single_review',
+    ),
+  );
+}
+
+/**
  * Get a random review.
  *
  * @param string $type
@@ -145,6 +157,7 @@ function reol_review_load_file($index) {
   if (!is_array($data)) {
     return;
   }
+
   foreach ($data as $review) {
     // Skip invalid reviews.
     if (!is_object($review) ||

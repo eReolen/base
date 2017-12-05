@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen newsletter module feature.
@@ -38,7 +39,30 @@ function reol_newsletter_form_alter(&$form, &$form_state, $form_id) {
     if (strpos($form_id, 'mailchimp_signup_subscribe_page') === 0 && isset($settings['app_mode']) && $settings['app_mode']) {
       reol_newsletter_set_app_mode();
     }
+
+    // If it's a block, modify it to use AJAX submission.
+    if (strpos($form_id, 'mailchimp_signup_subscribe_block') === 0 && isset($form['actions']['submit'])) {
+      $wrapper_id = drupal_html_id('subscribe-ajax');
+      $form['actions']['submit']['#ajax'] = array(
+        'callback' => 'reol_newsletter_subscribe_form_ajax_handler',
+        'effect' => 'fade',
+        'wrapper' => $wrapper_id,
+      );
+
+      $form['#prefix'] = '<div id="' . $wrapper_id . '">';
+      $form['#suffix'] = '</div>';
+
+      // Set placeholder for email field.
+      $form['mergevars']['EMAIL']['#attributes']['placeholder'] = t('Your E-mail address');
+    }
   }
+}
+
+/**
+ * Ajax callback for subscribe form.
+ */
+function reol_newsletter_subscribe_form_ajax_handler(&$form, &$form_state) {
+  return $form;
 }
 
 /**
@@ -73,7 +97,9 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
       '#default_value' => isset($default_values['SIGNUP_value']) ? $default_values['SIGNUP_value'] : '',
       '#states' => [
         'visible' => [
-          "input[name='mergefields[" . REOL_NEWSLETTER_SIGNUP_FIELD_NAME . "]']" => ["checked" => TRUE]
+          "input[name='mergefields[" . REOL_NEWSLETTER_SIGNUP_FIELD_NAME . "]']" => [
+            "checked" => TRUE,
+          ],
         ],
       ],
     ];
@@ -89,7 +115,9 @@ function reol_newsletter_form_mailchimp_signup_form_alter(&$form, &$form_state) 
     '#weight' => -1,
     '#states' => [
       'visible' => [
-        "input[name='mode[2]']" => ["checked" => TRUE]
+        "input[name='mode[2]']" => [
+          "checked" => TRUE,
+        ],
       ],
     ],
   ];

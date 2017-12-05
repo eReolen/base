@@ -19,3 +19,10 @@ $conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
 
 // Set error_level to print all errors.
 $conf['error_level'] = 2;
+
+$conf['cache'] = FALSE;
+$conf['block_cache'] = FALSE;
+$conf['preprocess_css'] = FALSE;
+$conf['preprocess_js'] = FALSE;
+
+$conf['theme_debug'] = TRUE;

@@ -1,6 +1,6 @@
 name = eReolen feed module
 description = Module handling the feeds for the app
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 features[features_api][] = api:2
 php = 5.4

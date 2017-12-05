@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ereol_inspiration module.
+ */
+
+/**
+ * Enable reol_carousel_paragraph.
+ */
+function ereol_inspiration_update_7101() {
+  module_enable(array('reol_carousel_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_news_paragraph.
+ */
+function ereol_inspiration_update_7102() {
+  module_enable(array('reol_news_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_link_paragraph.
+ */
+function ereol_inspiration_update_7103() {
+  module_enable(array('reol_link_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_spotlightbox_paragraph.
+ */
+function ereol_inspiration_update_7104() {
+  module_enable(array('reol_spotlightbox_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_review_paragraph.
+ */
+function ereol_inspiration_update_7105() {
+  module_enable(array('reol_review_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_video_paragraph.
+ */
+function ereol_inspiration_update_7106() {
+  module_enable(array('reol_video_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_rec_material_paragraph.
+ */
+function ereol_inspiration_update_7107() {
+  module_enable(array('reol_rec_material_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_audio_preview_paragraph.
+ */
+function ereol_inspiration_update_7108() {
+  module_enable(array('reol_audio_preview_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_author_quote_paragraph.
+ */
+function ereol_inspiration_update_7109() {
+  module_enable(array('reol_author_quote_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_author_portrait_paragraph.
+ */
+function ereol_inspiration_update_7110() {
+  module_enable(array('reol_author_portrait_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_newsletter_paragraph.
+ */
+function ereol_inspiration_update_7111() {
+  module_enable(array('reol_newsletter_paragraph'), TRUE);
+}

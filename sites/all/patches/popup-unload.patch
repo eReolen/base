@@ -1,7 +1,7 @@
-diff --git b/modules/ding_popup/ding_popup.js a/modules/ding_popup/ding_popup.js
-index 75ee74d..333a31a 100644
---- b/modules/ding_popup/ding_popup.js
-+++ a/modules/ding_popup/ding_popup.js
+diff --git a/modules/ding_popup/ding_popup.js b/modules/ding_popup/ding_popup.js
+index 2f428fe0..476b9463 100644
+--- a/modules/ding_popup/ding_popup.js
++++ b/modules/ding_popup/ding_popup.js
 @@ -1,39 +1,40 @@
  
  (function ($) {
@@ -73,18 +73,32 @@ index 75ee74d..333a31a 100644
            autoOpen: false,
            width: 'auto',
            resizable: false,
-@@ -50,62 +51,73 @@ Drupal.ding_popup = {
+@@ -41,7 +42,7 @@ Drupal.ding_popup = {
+           modal: true,
+           draggable: false,
+           closeText : Drupal.t('close'),
+-          close: function(event, ui) {
++          close: function (event, ui) {
+             if (response['refresh'] || self.refresh === true) {
+               // Ensure that the page is not reload, when the log in dialog is
+               // closed.
+@@ -50,68 +51,72 @@ Drupal.ding_popup = {
                }
                window.location.reload(true);
              }
 +            else {
 +              // Unload content. Needed if the content was a video,
 +              // for instance.
-+              $(this).empty();
++              $(this).remove();
 +            }
-+
            }
 -      });
+-    }
+-    // Pass dialog options on the the actual dialog.
+-    // We could check the options for validity, but for now we just
+-    // pass everything on to the dialog.
+-    if (response.extra_data.dialog_options) {
+-      this.dialogs[response.name].dialog('option', response.extra_data.dialog_options);
 -    }
 -    this.dialogs[response.name].dialog('option', {'title': response.title});
 -    this.dialogs[response.name].html(response.data);
@@ -115,7 +129,7 @@ index 75ee74d..333a31a 100644
 -    }
 -    this.setState(response);
 -  },
-+    open: function(response) {
++    open: function (response) {
 +      if (this.states[response.name] == undefined) {
 +        this.states[response.name] = [];
 +      }
@@ -129,7 +143,7 @@ index 75ee74d..333a31a 100644
 -    while (this.states[response.name].length > 0) {
 -      var state = this.states[response.name].pop();
 -      Drupal.detachBehaviors(this.dialog);
-+    close: function(response) {
++    close: function (response) {
 +      while (this.states[response.name].length > 0) {
 +        var state = this.states[response.name].pop();
 +        Drupal.detachBehaviors(this.dialog);

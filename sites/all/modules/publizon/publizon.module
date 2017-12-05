@@ -12,40 +12,39 @@ require_once dirname(__FILE__) . '/includes/publizon.admin.inc';
  * Implements hook_ding_provider().
  *
  * Define the providers that are provided by publizon.
- *
- * @return array
- *   The array definition for ding_provider.
  */
 function publizon_ding_provider() {
-  $path = drupal_get_path('module', 'publizon') . '/includes';
-
   return array(
     'title' => 'Publizon provider',
     'settings' => 'publizon_settings_form',
     'provides' => array(
       'user' => array(
         'prefix' => 'user',
-        'file' => $path . '/publizon.user.inc',
+        'file' => 'includes/publizon.user.inc',
       ),
       'loan' => array(
         'prefix' => 'loan',
-        'file' => $path . '/publizon.loan.inc',
+        'file' => 'includes/publizon.loan.inc',
       ),
       'reservation' => array(
         'prefix' => 'reservation',
-        'file' => $path . '/publizon.reservation.inc',
+        'file' => 'includes/publizon.reservation.inc',
       ),
       'availability' => array(
         'prefix' => 'availability',
-        'file' => $path . '/publizon.availability.inc',
+        'file' => 'includes/publizon.availability.inc',
       ),
       'debt' => array(
         'prefix' => 'debt',
-        'file' => $path . '/publizon.debt.inc',
+        'file' => 'includes/publizon.debt.inc',
       ),
       'bookmark' => array(
         'prefix' => 'bookmark',
-        'file' => $path . '/publizon.bookmark.inc',
+        'file' => 'includes/publizon.bookmark.inc',
+      ),
+      'user_consent' => array(
+        'prefix' => 'user_consent',
+        'file' => 'includes/publizon.user_consent.inc',
       ),
     ),
   );
@@ -129,10 +128,10 @@ function publizon_get_libraries($reset = FALSE) {
   $libraries = drupal_static(__FUNCTION__, array());
   if (empty($libraries) || $reset) {
     $libraries = db_select('publizon_libraries', 'p')
-               ->fields('p', PublizonConfiguredLibrary::fields())
-               ->orderBy('p.library_name')
-               ->execute()
-               ->fetchAllAssoc('retailer_id', 'PublizonConfiguredLibrary');
+      ->fields('p', PublizonConfiguredLibrary::fields())
+      ->orderBy('p.library_name')
+      ->execute()
+      ->fetchAllAssoc('retailer_id', 'PublizonConfiguredLibrary');
 
     if (empty($libraries)) {
       // We are missing some library configuration here.
@@ -246,7 +245,7 @@ function publizon_ding_unilogin_login($user) {
 /**
  * Get the retailer id for a user.
  *
- * @param StdClass $account
+ * @param object $account
  *   The user object.
  *
  * @return string
@@ -287,12 +286,12 @@ function publizon_get_product_cover($local_id) {
  * As we are adding field widgets we cannot use the options form
  * from provider. Instead we have to use alter.
  *
- * @see publizon_reservation_options()
- *
  * @param array $form
  *   The form.
  * @param array $form_state
  *   The state of the form.
+ *
+ * @see publizon_reservation_options()
  */
 function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state) {
   if (!isset($form['#parents'])) {
@@ -306,7 +305,7 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
   $form['publizon']['#tree'] = TRUE;
 
   // Add phone field.
-  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone', $profile, $field_form, $form_state);
+  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone', $profile, $form, $form_state);
   $form['publizon']['phone_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('Send notification to my phone'),
@@ -322,7 +321,7 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
   $form['publizon']['field_phone']['#weight'] = 10;
 
   // Add email field.
-  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $field_form, $form_state);
+  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $form, $form_state);
   $form['publizon']['email_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('Send notification to my email'),
@@ -351,7 +350,7 @@ function publizon_form_ding_reservation_reserve_form_alter(&$form, &$form_state)
  * add the field validations.
  *
  * @param array $form
- *   The form to validate
+ *   The form to validate.
  * @param array $form_state
  *   The state of the form at submit.
  */
@@ -374,7 +373,6 @@ function publizon_form_ding_reservation_reserve_form_validate($form, &$form_stat
   }
   else {
     // Do not validate phone if it is not selected.
-    // unset($entity->field_phone);
     $wrapper->field_phone->set(NULL);
     $options['phone_notification'] = FALSE;
   }
@@ -388,7 +386,6 @@ function publizon_form_ding_reservation_reserve_form_validate($form, &$form_stat
   }
   else {
     // Do not validate email if it is not selected.
-    // unset($entity->field_email);
     $wrapper->field_email->set(NULL);
     $options['email_notification'] = FALSE;
   }
@@ -410,7 +407,7 @@ function publizon_form_ding_reservation_reserve_form_validate($form, &$form_stat
  * will return true in empty() call, and so will the default value NULL.
  *
  * @param array $form
- *   The form to validate
+ *   The form to validate.
  * @param array $form_state
  *   The state of the form at submit.
  */
@@ -454,8 +451,7 @@ function _publizon_error_messages() {
     // Return default messages.
     $messages = array(
       -1 => t('Unknown error.'),
-      // Doesn't make sense to include:
-      // 101 => 'OK',
+      // Doesn't make sense to include 101 which is 'OK'.
       105 => 'ebookid er ikke er gyldigt isbn nummer (#105).',
       114 => 'Ugyldigt kortnummer og/eller pinkode (#114).',
       118 => 'Biblioteket kunne ikke autoriseres (#118).',

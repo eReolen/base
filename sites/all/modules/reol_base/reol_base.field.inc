@@ -56,6 +56,12 @@ function reol_base_field_formatter_info() {
         'ting_details_publizon_genre',
       ),
     ),
+    'reol_base_author_plain' => array(
+      'label' => t('Plain author'),
+      'field types' => array(
+        'ting_author',
+      ),
+    ),
   );
 }
 
@@ -64,7 +70,7 @@ function reol_base_field_formatter_info() {
  */
 function reol_base_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
-  foreach ($items as $delta => $items) {
+  foreach ($items as $delta => $item) {
     switch ($display['type']) {
       case 'reol_base_ebook_format':
         // Only add on ebooks.
@@ -101,6 +107,12 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
         }
         $element[$delta] = array(
           '#markup' => $pub_prod->category,
+        );
+        break;
+
+      case 'reol_base_author_plain':
+        $element[$delta] = array(
+          '#markup' => check_plain(implode(', ', $entity->creators)),
         );
         break;
     }

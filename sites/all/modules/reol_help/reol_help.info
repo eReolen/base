@@ -1,7 +1,7 @@
 name = eReolen help module
 description = Module handling help for eReolen
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 dependencies[] = ctools
 dependencies[] = ding_page
 dependencies[] = faq
@@ -40,4 +40,3 @@ features[variable][] = faq_show_node_links
 features[variable][] = faq_show_term_page_children
 features[variable][] = faq_use_categories
 features[variable][] = faq_use_teaser
-mtime = 1418631995

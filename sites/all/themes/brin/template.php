@@ -364,19 +364,6 @@ function brin_preprocess_html(&$variables) {
 }
 
 /**
- * Preprocess single_review.
- *
- * Adds type icon.
- */
-function brin_preprocess_single_review(&$variables) {
-  $ting_entity = $variables['#object'];
-  if ($ting_entity && $ting_entity->reply) {
-    $classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
-    $variables['classes_array'] = array_merge($variables['classes_array'], $classes);
-  }
-}
-
-/**
  * Implements hook_ting_collection_view_alter().
  *
  * Suppress the type icon on the material in the ting_primary_object when the

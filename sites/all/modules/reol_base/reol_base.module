@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen base module feature.
@@ -29,7 +30,7 @@ define('REOL_BASE_LOCAL_ID_PREFIX', 'isbn_');
  * @return array
  *   The field form.
  */
-function reol_base_get_field_form($type, $bundle, $field_name, $entity, &$form, &$form_state) {
+function reol_base_get_field_form($type, $bundle, $field_name, $entity, array &$form, array &$form_state) {
   $field = field_info_field($field_name);
   $instance = field_info_instance($type, $field_name, $bundle);
   $lang_code = field_language($type, $entity, $field_name);
@@ -158,6 +159,45 @@ function reol_base_entity_load($entities, $type) {
 }
 
 /**
+ * Implements hook_wysiwyg_default_profiles_alter().
+ *
+ * Override WYSIWYG profile to be more limited.
+ */
+function reol_base_wysiwyg_default_profiles_alter(&$profiles) {
+  if (isset($profiles['ding_wysiwyg'])) {
+    // Remove Dings hardcoding of DDBasic theming.
+    unset($profiles['ding_wysiwyg']['settings']['css_path']);
+
+    // Limit block elements to the ones we style.
+    $profiles['ding_wysiwyg']['settings']['block_formats'] = 'p,h3,h4';
+
+    // Remove buttons to eliminate the amount of damage an editor can inflict.
+    $profiles['ding_wysiwyg']['settings']['buttons']['default'] = array(
+      'Format' => 1,
+      'Bold' => 1,
+      'Italic' => 1,
+      'BulletedList' => 1,
+      'Link' => 1,
+      'Unlink' => 1,
+      'PasteFromWord' => 1,
+      'ShowBlocks' => 1,
+      'RemoveFormat' => 1,
+    );
+  }
+}
+
+/**
+ * Implements hook_filter_default_formats().
+ *
+ * Limit the elements allowed in WYSIWYG format.
+ */
+function reol_base_filter_default_formats_alter(&$formats) {
+  if (isset($formats['ding_wysiwyg'])) {
+    $formats['ding_wysiwyg']['filters']['filter_html']['settings']['allowed_html'] = '<a> <p> <em> <strong> <ul> <li> <br> <img> <h2> <h3> <h4> <h5> <h6>';
+  }
+}
+
+/**
  * Convert an array of ISBN-numbers to a local id.
  *
  * @param mixed $isbns
@@ -167,7 +207,7 @@ function reol_base_entity_load($entities, $type) {
  *   The localId string.
  */
 function reol_base_get_local_id($isbns) {
-  // Make sure it is array,
+  // Make sure it is an array.
   if (!is_array($isbns)) {
     $isbns = array($isbns);
   }
@@ -312,7 +352,7 @@ function reol_base_get_type($type = FALSE) {
   }
 
   // Find type.
-  foreach ($types as $n => $t) {
+  foreach ($types as $t) {
     if ($t['ext_name'] == strtolower($type)) {
       return $t;
     }
@@ -344,6 +384,7 @@ function reol_base_date_format_types() {
     'reol_base_material_lists_date' => t('Reol material lists date'),
   );
 }
+
 /**
  * Implements hook_date_formats().
  */
@@ -419,7 +460,7 @@ function _reol_base_get_types() {
  *   Array of types to choose from.
  */
 function reol_base_get_entity_types() {
-  return array_reduce(_reol_base_get_types(), function($carry, $elem) {
+  return array_reduce(_reol_base_get_types(), function ($carry, $elem) {
     $carry[$elem['int_name']] = $elem['title'];
     return $carry;
   }, array());
@@ -490,7 +531,17 @@ function reol_base_ding_entity_get_ids($isbns) {
  *   The machine name of the type to remove.
  */
 function _reol_base_remove_node_type($type) {
-  db_query("UPDATE node_type SET module = 'node', custom = 1, modified = 1, locked = 0 WHERE type = '%type';", array('%type' => $type));
+  db_update('node_type')
+    ->fields(
+      array(
+        'module' => 'node',
+        'custom' => 1,
+        'modified' => 1,
+        'locked' => 0,
+      )
+    )
+    ->condition('type', $type)
+    ->execute();
   node_type_delete($type);
 }
 
@@ -544,13 +595,13 @@ function reol_base_login_ajax() {
  *   The id of the modal.
  * @param array $commands
  *   The commands that should be added to.
- * @param StdClass $entity
+ * @param object $entity
  *   The entity.
  *
  * @return bool
  *   Whether or not check did go through.
  */
-function reol_base_check_entity_ajax_form($modal_id, &$commands, $entity) {
+function reol_base_check_entity_ajax_form($modal_id, array &$commands, $entity) {
   global $user;
 
   // If user is not logged in, fail.
@@ -584,13 +635,13 @@ function reol_base_check_entity_ajax_form($modal_id, &$commands, $entity) {
  *   The ID of the ding popup.
  * @param callable $callback
  *   The callback containing the functionality.
- * @param StdClass $entity
+ * @param object $entity
  *   The entity.
  *
  * @return array
  *   ajax render array for ajax_deliver.
  */
-function reol_base_entity_ajax_form($popup_id, $callback, $entity) {
+function reol_base_entity_ajax_form($popup_id, callable $callback, $entity) {
   $args = func_get_args();
   array_shift($args);
   array_shift($args);
@@ -646,17 +697,16 @@ function reol_base_entity_ajax_form($popup_id, $callback, $entity) {
  * @return array
  *   Themable button array.
  */
-function reol_base_get_entity_button($text, $link, $id) {
+function reol_base_get_entity_button($text, $link, $id, $classes = array()) {
   return array(
     '#theme' => 'link',
     '#text' => $text,
     '#path' => $link,
     '#options' => array(
       'attributes' => array(
-        'class' => array(
+        'class' => array_merge(array(
           'action-button',
-          'use-ajax',
-        ),
+        ), $classes),
         'id' => $id,
       ),
       'html' => FALSE,
@@ -837,7 +887,7 @@ function reol_base_field_attach_view_alter(&$output, &$context) {
  * @param string $entity_id
  *   ID to test.
  *
- * @return string|FALSE
+ * @return string|false
  *   ISBN of id, or false if not matching a well fake id.
  */
 function reol_base_fake_id($entity_id) {
@@ -864,6 +914,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 1,
       ),
     ),
 
@@ -876,6 +927,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 2,
       ),
     ),
 
@@ -888,6 +940,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 3,
       ),
     ),
 
@@ -900,6 +953,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 4,
       ),
     ),
 
@@ -911,8 +965,10 @@ function reol_base_field_default_field_instances_alter(&$fields) {
         'weight' => 1,
       ),
       'review' => array(
-        'label' => 'above',
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'module' => 'reol_base',
+        'type' => 'reol_base_author_plain',
+        'weight' => 2,
       ),
     ),
 
@@ -929,6 +985,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
           'image_style' => 'reol_review',
         ),
         'type' => 'ting_cover_default',
+        'weight' => 6,
       ),
     ),
 
@@ -941,6 +998,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 7,
       ),
     ),
 
@@ -953,6 +1011,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 8,
       ),
     ),
 
@@ -965,6 +1024,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 9,
       ),
     ),
 
@@ -977,6 +1037,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 10,
       ),
     ),
 
@@ -989,10 +1050,17 @@ function reol_base_field_default_field_instances_alter(&$fields) {
           'prefix_type' => 'no',
         ),
         'type' => 'ting_title_default',
+        'weight' => 39,
       ),
       'review' => array(
-        'label' => 'above',
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'module' => 'ting',
+        'settings' => array(
+          'link_type' => 'none',
+          'prefix_type' => 'no',
+        ),
+        'type' => 'ting_title_default',
+        'weight' => 1,
       ),
     ),
 
@@ -1005,6 +1073,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
       'review' => array(
         'label' => 'above',
         'type' => 'hidden',
+        'weight' => 12,
       ),
     ),
 
@@ -1026,4 +1095,56 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_title']['display']['teaser']['settings']['link_type'] = 'object';
   }
 
+  // Add ting_subjects to search_result view_mode.
+  // @see reol_base_field_group_info_alter().
+  if (isset($fields['ting_object-ting_object-ting_subjects'])) {
+    $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['type'] = 'ting_subjects_default';
+    $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['module'] = 'ting';
+  }
+
+  // Remove subjects from material details.
+  if (isset($fields['ting_object-ting_object-ting_details_subjects'])) {
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['default']['type'] = 'hidden';
+  }
+
+  // Link publisher to a search.
+  if (isset($fields['ting_object-ting_object-ting_details_publisher'])) {
+    $fields['ting_object-ting_object-ting_details_publisher']['display']['default']['type'] = 'ting_details_generic_search';
+    $fields['ting_object-ting_object-ting_details_publisher']['display']['default']['settings'] = array('index' => 'term.publisher');
+  }
+
+  // Move audience above genre.
+  if (isset($fields['ting_object-ting_object-ting_details_audience'])) {
+    $fields['ting_object-ting_object-ting_details_audience']['display']['default']['weigth'] = 65;
+  }
+}
+
+/**
+ * Implements hook_field_group_info_alter().
+ */
+function reol_base_field_group_info_alter(&$groups) {
+  if (isset($groups['group_ting_right_col_search|ting_object|ting_object|search_result'])) {
+    // Put ting_subjects in the right column in search_result view_mode.
+    $groups['group_ting_right_col_search|ting_object|ting_object|search_result']->data['children'][] = 'ting_subjects';
+  }
+}
+
+/**
+ * Try to get a ding_entity from a ting object path.
+ *
+ * Should work for ting/object/<id>.
+ */
+function _reol_base_object_from_url($url) {
+  if (preg_match('{ting/(?:object|collection)/([^#?]*)([#?].*)?$}', $url, $matches)) {
+    // The colon could be urlencoded.
+    $ting_entity = ding_entity_load(urldecode($matches[1]));
+
+    // ding_entity_load might still return an object for some invalid IDs. Check
+    // for the OpenSearch reply to guard against this.
+    if (isset($ting_entity->reply)) {
+      return $ting_entity;
+    }
+  }
+
+  return NULL;
 }

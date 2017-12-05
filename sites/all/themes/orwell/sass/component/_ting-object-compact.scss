@@ -1,0 +1,52 @@
+@import 'bootstrap/bootstrap';
+
+.ting-object.view-mode-compact {
+  width: 130px;
+
+  // Hide author and title per default.
+  .group-overlay {
+    display: none;
+
+    @include grid-media($medium) {
+      display: block;
+    }
+  }
+  // Always hide rating widget.
+  .field-type-ding-entity-rating-action {
+    display: none;
+  }
+
+  .ting-cover img {
+    // Maintain aspect ratio on images.
+    height: auto;
+  }
+
+  .group-overlay {
+    .field-name-ting-title {
+      font-family: $font-regular;
+      font-size: 16px;
+      letter-spacing: .5px;
+      margin-top: 25px;
+      h2 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .field-name-ting-author {
+      font-family: $font-light;
+      font-size: 14px;
+      letter-spacing: .5px;
+      margin-top: 10px;
+    }
+  }
+
+  @include grid-media($medium) {
+    width: 186px;
+  }
+
+  @include grid-media($large) {
+    width: 225px;
+  }
+}

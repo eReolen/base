@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Installation of reol_base module.
@@ -35,7 +36,6 @@ function reol_base_install() {
     reol_base_update_7124();
   }
 }
-
 
 /**
  * Disable unused modules.
@@ -93,7 +93,6 @@ function reol_base_update_7105() {
 function reol_base_update_7106() {
   module_enable(array('reol_use_loan'), TRUE);
 }
-
 
 /**
  * Enable reol_category module.
@@ -360,4 +359,49 @@ function reol_base_update_7130() {
  */
 function reol_base_update_7131() {
   module_enable(['system_status']);
+}
+
+/**
+ * Revert ding_ting_frontend.
+ */
+function reol_base_update_7132() {
+  features_revert_module('ding_ting_frontend');
+}
+
+/**
+ * Enable ereol_base on eReolen.
+ */
+function reol_base_update_7133() {
+  // Only enable ereol_base if breol_base is not enabled.
+  if (!module_exists('breol_base')) {
+    module_enable(['ereol_base'], TRUE);
+  }
+}
+
+/**
+ * Enable xautoload for bpi.
+ */
+function reol_base_update_7134() {
+  module_enable(['xautoload']);
+}
+
+/**
+ * Revert wysiwyg profile.
+ */
+function reol_base_update_7135() {
+  features_revert(array('ding_content' => array('wysiwyg')));
+}
+
+/**
+ * Revert groups and fields instances of ding_ting_frontend.
+ */
+function reol_base_update_7136() {
+  features_revert(array('ding_ting_frontend' => array('field_group', 'field_instance')));
+}
+
+/**
+ * Revert groups and fields instances of ting_material_details.
+ */
+function reol_base_update_7137() {
+  features_revert(array('ting_material_details' => array('field_group', 'field_instance')));
 }

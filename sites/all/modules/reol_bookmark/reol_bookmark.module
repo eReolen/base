@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen bookmark module feature.
@@ -13,7 +14,7 @@ function reol_bookmark_menu() {
   $items['user/%user/bookmarks'] = array(
     'title' => 'Bookmarks',
     'title callback' => 'reol_bookmark_menu_item_title',
-    'title arguments' => array('Bookmarks', 1),
+    'title arguments' => array(1),
     'page callback' => 'reol_bookmark_user_bookmark_page',
     'page arguments' => array(1),
     'access callback' => 'reol_bookmark_view_access',
@@ -50,12 +51,36 @@ function reol_bookmark_permission() {
 }
 
 /**
+ * Implements hook_element_info_alter().
+ */
+function reol_bookmark_element_info_alter(&$info) {
+  if (isset($info['material_item'])) {
+    $info['material_item']['#process'][] = 'reol_bookmark_element_process_material_item';
+  }
+}
+
+/**
+ * Implements hook_element_process_material_item().
+ */
+function reol_bookmark_element_process_material_item($element) {
+  // Add a title to the material checkbox. Without a title, the label element
+  // isn't included, and overriding the checkbox appearance relies on theming
+  // the label (styling the input element itself is still flaky across
+  // browsers).
+  if (!isset($element[$element['#id']]['#title'])) {
+    $element[$element['#id']]['#title'] = t('Select');
+  }
+
+  return $element;
+}
+
+/**
  * Bookmark (or remove bookmark) a ting_object.
  *
  * @param string $id
  *   The id of the ting object.
  * @param bool $remove
- *   Whether or not to remove bookmark. Default FALSE
+ *   Whether or not to remove bookmark. Default FALSE.
  *
  * @return bool
  *   Whether or not action was successful.
@@ -79,7 +104,7 @@ function reol_bookmark_bookmark($id, $remove = FALSE) {
 /**
  * Get all bookmarks for a user.
  *
- * @param StdClass $account
+ * @param object $account
  *   The user to get bookmarks for.
  *
  * @return array
@@ -134,18 +159,15 @@ function reol_bookmark_views_default_views_alter(&$views) {
 /**
  * Alter title to add count items number.
  *
- * @param string $title
- *   Untranslated title.
- * @param StdClass $account
+ * @param object $account
  *   User account object, for counting bookmark items.
  *
  * @return string
  *   The bookmark item title.
  */
-function reol_bookmark_menu_item_title($title, $account = NULL) {
-  $account = isset($account->data) ? $account->data : $account;
+function reol_bookmark_menu_item_title($account = NULL) {
   $bookmarks = $account ? count(reol_bookmark_get_bookmarks($account)) : 0;
-  return t($title) . ' (' . $bookmarks . ')';
+  return t('Bookmarks') . ' (' . $bookmarks . ')';
 }
 
 /**
@@ -163,7 +185,7 @@ function reol_bookmark_menu_alter(&$items) {
   foreach ($items as $path => $item) {
     if ($path == 'user/%user/bookmarks' || $path == 'user/%pm_arg/bookmarks') {
       $items[$path]['title callback'] = 'reol_bookmark_menu_item_title';
-      $items[$path]['title arguments'] = array($items[$path]['title'], 1);
+      $items[$path]['title arguments'] = array(1);
     }
   }
 }
@@ -203,7 +225,7 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
             $text = t('Bookmark');
           }
 
-          $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id);
+          $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id, array('use-ajax'));
         }
       }
     }
@@ -220,11 +242,11 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
  * @return array
  *   Renderable array button.
  */
-function reol_bookmark_get_bookmark_button($entity) {
+function reol_bookmark_get_bookmark_button(TingEntity $entity) {
   list($availability) = array_values(ding_availability_items(array($entity->localId)));
 
   if (!@$availability['bookmarked']) {
-    return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id);
+    return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id, array('use-ajax'));
   }
 }
 
@@ -262,7 +284,7 @@ function reol_bookmark_secure_permissions($role) {
  * @return array
  *   Render array with Ajax commands.
  */
-function reol_bookmark_create_ajax($entity, $remove = FALSE) {
+function reol_bookmark_create_ajax(TingEntity $entity, $remove = FALSE) {
   $commands = array();
 
   // Try to add bookmark to the users list.

@@ -111,7 +111,8 @@ function wille_preprocess_node(&$variables, $hook) {
  * search results where the cover represents more than one material (likely of
  * different types).
  *
- * @todo merge with brin_ting_collection_view_alter().
+ * @deprecated by pratchett_ting_collection_view_alter() when using that as
+ * base theme.
  */
 function wille_ting_collection_view_alter(&$build) {
   if (isset($build['ting_primary_object'])) {
@@ -131,7 +132,8 @@ function wille_ting_collection_view_alter(&$build) {
  *
  * Adds type icon to ting object covers.
  *
- * @todo merge (partly) with brin_preprocess_ting_object_cover().
+ * @deprecated by pratchett_ting_object_cover() when using that as
+ * base theme.
  */
 function wille_preprocess_ting_object_cover(&$variables) {
   if (!isset($variables['elements']['#suppress_type_icon']) ||

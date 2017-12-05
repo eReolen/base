@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Code for the Link paragraph feature.
+ */
+
+include_once 'reol_link_paragraph.features.inc';
+
+/**
+ * Template preprocessor for entities.
+ */
+function reol_link_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'linkbox') {
+      $wrapper = $variables['paragraphs_item']->wrapper();
+      $variables['classes_array'][] = 'linkbox';
+
+      $color = $wrapper->field_link_color->value();
+      if (isset($color['rgb'])) {
+        $variables['attributes_array']['style'] = 'background-color: ' . $color['rgb'] . ';';
+        // Use dark text for light color.
+        if ($color['rgb'] == '#dcdcdc') {
+          $variables['classes_array'][] = 'linkbox--dark-text';
+        }
+      }
+      else {
+        // Use dark text for transparent color.
+        $variables['classes_array'][] = 'linkbox--dark-text';
+      }
+
+      $variables['icons'] = '';
+      $link = $wrapper->field_link->value();
+      if (isset($link['url'])) {
+        $variables['href'] = $link['url'];
+
+        if (!preg_match('{^' . preg_quote($GLOBALS['base_url']) . '}', $link['url'])) {
+          $variables['icons'] = theme('reol_overlay_icons', array('icons' => array('link')));
+        }
+      }
+      $image = $wrapper->field_link_gfx->value();
+      if ($image['uri']) {
+        $params = array(
+          'style_name' => 'medium',
+          'path' => $image['uri'],
+        );
+        $variables['image'] = theme('image_style', $params);
+        $variables['classes_array'][] = 'linkbox--with-image';
+      }
+      if (isset($link['title'])) {
+        $variables['title'] = check_plain($link['title']);
+      }
+    }
+  }
+}

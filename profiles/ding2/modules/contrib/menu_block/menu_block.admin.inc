@@ -5,40 +5,6 @@
  */
 
 /**
- * Implements hook_theme().
- */
-function _menu_block_theme(&$existing, $type, $theme, $path) {
-  // Add theme hook suggestion patterns for the core theme functions used in
-  // this module. We can't add them during hook_theme_registry_alter() because
-  // we will already have missed the opportunity for the theme engine's
-  // theme_hook() to process the pattern. And we can't run the pattern ourselves
-  // because we aren't given the type, theme and path in that hook.
-  $existing['menu_tree']['pattern'] = 'menu_tree__';
-  $existing['menu_link']['pattern'] = 'menu_link__';
-
-  return array(
-    'menu_block_wrapper' => array(
-      'template' => 'menu-block-wrapper',
-      'variables' => array('content' => array(), 'config' => array(), 'delta' => NULL),
-      'pattern' => 'menu_block_wrapper__',
-    ),
-    'menu_block_menu_order' => array(
-      'render element' => 'element',
-      'file' => 'menu_block.admin.inc',
-    ),
-  );
-}
-
-/**
- * Implements hook_ctools_plugin_directory().
- */
-function _menu_block_ctools_plugin_directory($module, $plugin) {
-  if ($module == 'ctools' && !empty($plugin)) {
-    return 'plugins/' . $plugin;
-  }
-}
-
-/**
  * Alters the block admin form to add delete links next to menu blocks.
  */
 function _menu_block_form_block_admin_display_form_alter(&$form, $form_state) {
@@ -55,12 +21,12 @@ function _menu_block_form_block_admin_display_form_alter(&$form, $form_state) {
     }
   }
   if (variable_get('menu_block_suppress_core')) {
-    foreach (array_keys(menu_get_menus(FALSE)) AS $delta) {
+    foreach (array_keys(menu_get_menus(FALSE)) as $delta) {
       if (empty($form['blocks']['menu_' . $delta]['region']['#default_value'])) {
         unset($form['blocks']['menu_' . $delta]);
       }
     }
-    foreach (array_keys(menu_list_system_menus()) AS $delta) {
+    foreach (array_keys(menu_list_system_menus()) as $delta) {
       if (empty($form['blocks']['system_' . $delta]['region']['#default_value'])) {
         unset($form['blocks']['system_' . $delta]);
       }
@@ -71,7 +37,7 @@ function _menu_block_form_block_admin_display_form_alter(&$form, $form_state) {
 /**
  * Menu callback: confirm deletion of menu blocks.
  */
-function menu_block_delete($form, &$form_state, $delta = 0) {
+function menu_block_delete_form($form, &$form_state, $delta = 0) {
   $title = _menu_block_format_title(menu_block_get_config($delta));
   $form['block_title'] = array('#type' => 'hidden', '#value' => $title);
   $form['delta'] = array('#type' => 'hidden', '#value' => $delta);
@@ -82,30 +48,10 @@ function menu_block_delete($form, &$form_state, $delta = 0) {
 /**
  * Deletion of menu blocks.
  */
-function menu_block_delete_submit($form, &$form_state) {
+function menu_block_delete_form_submit($form, &$form_state) {
   // Remove the menu block configuration variables.
   $delta = $form_state['values']['delta'];
-  $block_ids = variable_get('menu_block_ids', array());
-  unset($block_ids[array_search($delta, $block_ids)]);
-  sort($block_ids);
-  variable_set('menu_block_ids', $block_ids);
-  variable_del("menu_block_{$delta}_title_link");
-  variable_del("menu_block_{$delta}_admin_title");
-  variable_del("menu_block_{$delta}_parent");
-  variable_del("menu_block_{$delta}_level");
-  variable_del("menu_block_{$delta}_follow");
-  variable_del("menu_block_{$delta}_depth");
-  variable_del("menu_block_{$delta}_expanded");
-  variable_del("menu_block_{$delta}_sort");
-
-  db_delete('block')
-    ->condition('module', 'menu_block')
-    ->condition('delta', $delta)
-    ->execute();
-  db_delete('block_role')
-    ->condition('module', 'menu_block')
-    ->condition('delta', $delta)
-    ->execute();
+  menu_block_delete($delta);
   drupal_set_message(t('The block "%name" has been removed.', array('%name' => $form_state['values']['block_title'])));
   cache_clear_all();
   $form_state['redirect'] = 'admin/structure/block';
@@ -228,12 +174,9 @@ function menu_block_admin_settings_form($form, &$form_state) {
     '#markup' => '<p>' . t('The above list will <em>not</em> affect menu blocks that are configured to use a specific menu.') . '</p>',
   );
 
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Save configuration'),
-  );
+  $form['#submit'][] = 'menu_block_admin_settings_form_submit';
 
-  return $form;
+  return system_settings_form($form);
 }
 
 /**
@@ -241,26 +184,25 @@ function menu_block_admin_settings_form($form, &$form_state) {
  */
 function menu_block_admin_settings_form_submit($form, &$form_state) {
   $menu_order = array();
-  foreach ($form_state['values']['menu_order'] AS $menu_name => $row) {
+  foreach ($form_state['values']['menu_order'] as $menu_name => $row) {
     if ($row['available']) {
       // Add available menu and its weight to list.
       $menu_order[$menu_name] = (int) $row['weight'];
     }
   }
+
+  // Clear menu_order before it's written to the variable table by system_settings_form_submit().
+  unset($form_state['values']['menu_order']);
+
   // Sort the keys by the weight stored in the value.
   asort($menu_order);
-  foreach ($menu_order AS $menu_name => $weight) {
+  foreach ($menu_order as $menu_name => $weight) {
     // Now that the array is sorted, the weight is redundant data.
     $menu_order[$menu_name] = '';
   }
-  variable_set('menu_block_menu_order', $menu_order);
-  if ($form_state['values']['menu_block_suppress_core']) {
-    variable_set('menu_block_suppress_core', 1);
-  }
-  else {
-    variable_del('menu_block_suppress_core');
-  }
-  drupal_set_message(t('The configuration options have been saved.'));
+
+  // Add the menu_order to the values.
+  $form_state['values']['menu_block_menu_order'] = $menu_order;
 }
 
 /**

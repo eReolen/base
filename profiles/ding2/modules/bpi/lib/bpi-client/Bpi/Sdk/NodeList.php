@@ -1,13 +1,21 @@
 <?php
 namespace Bpi\Sdk;
 
-use Bpi\Sdk\Document;
+use Bpi\Sdk\Facets;
+use Bpi\Sdk\Item\FacetTerm;
+use Bpi\Sdk\Item\Node;
+use Bpi\Sdk\Item\Facet;
 
 /**
  * TODO please add a general description about the purpose of this class.
  */
 class NodeList implements \Iterator, \Countable
 {
+    /**
+     * @var \Bpi\Sdk\SimpleXMLElement|\SimpleXMLElement
+     */
+    private $element;
+
     /**
      * Total amount of items on server
      *
@@ -16,30 +24,34 @@ class NodeList implements \Iterator, \Countable
     public $total = 0;
 
     /**
+     * @var int
      *
-     * @var \Bpi\Sdk\Document
+     * Position in nodes array.
      */
-    protected $document;
+    private $position = 0;
+
+    /**
+     * @var array
+     */
+    protected $nodes = [];
+
+    protected $facets = [];
 
     /**
      *
-     * @param \Bpi\Sdk\Document $document
+     * @param SimpleXMLElement $element
      */
-    public function __construct(Document $document)
+    public function __construct(\SimpleXMLElement $element)
     {
-        try
-        {
-            $this->document = clone $document;
-            $this->document->reduceItemsByAttr('type', 'entity');
-            $self = $this;
-            $document->firstItem('type', 'collection')
-                ->walkProperties(function($property) use ($self) {
-                    $self->$property['name'] = $property['@value'];
-                });
-        }
-        catch (Exception\EmptyList $e)
-        {
-            $this->document->clear();
+        $this->element = $element;
+        try {
+            $collection = $this->element->xpath('/bpi/item[@type = "collection"]')[0];
+            $this->total = (int)($collection->xpath('properties/property[@name = "total"]')[0]);
+
+            foreach ($this->element->xpath('/bpi/item[@type = "entity"]') as $node) {
+                $this->nodes[] = new Node($node);
+            }
+        } catch (Exception\EmptyList $e) {
         }
     }
 
@@ -48,20 +60,19 @@ class NodeList implements \Iterator, \Countable
      *
      * @group Iterator
      */
-    function rewind()
+    public function rewind()
     {
-        $this->document->rewind();
+        $this->position = 0;
     }
 
     /**
      * Returns same instance but with internal pointer to current item in collection
      *
      * @group Iterator
-     * @return \Bpi\Sdk\Document will return same instance
      */
-    function current()
+    public function current()
     {
-        return new \Bpi\Sdk\Item\Node($this->document->current());
+        return $this->nodes[$this->position];
     }
 
     /**
@@ -69,9 +80,9 @@ class NodeList implements \Iterator, \Countable
      *
      * @group Iterator
      */
-    function key()
+    public function key()
     {
-        return $this->document->key();
+        return $this->position;
     }
 
     /**
@@ -79,9 +90,9 @@ class NodeList implements \Iterator, \Countable
      *
      * @group Iterator
      */
-    function next()
+    public function next()
     {
-        $this->document->next();
+        $this->position++;
     }
 
     /**
@@ -90,18 +101,18 @@ class NodeList implements \Iterator, \Countable
      * @group Iterator
      * @return boolean
      */
-    function valid()
+    public function valid()
     {
-        return $this->document->valid();
+        return isset($this->nodes[$this->position]);
     }
 
     /**
      *
      * @return integer
      */
-    function count()
+    public function count()
     {
-        return $this->document->count();
+        return count($this->nodes);
     }
 
     /**
@@ -111,6 +122,19 @@ class NodeList implements \Iterator, \Countable
      */
     public function getFacets()
     {
-        return $this->document->getFacets();
+        if (!$this->facets) {
+            $facets = new Facets();
+            foreach ($this->element->xpath('/bpi/item[@type = "facet"]') as $el) {
+                $facet = new Facet();
+                $facet->setFacetName((string)$el['name']);
+                foreach ($el->xpath('properties/property') as $property) {
+                    $facet->addFacetTerm((string)$property['name'], (string)$property['title'], (int)$property);
+                }
+                $facets->addFacet($facet);
+            }
+            $this->facets = $facets;
+        }
+
+        return $this->facets;
     }
 }

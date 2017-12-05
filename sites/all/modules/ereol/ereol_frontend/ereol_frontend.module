@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Code for the ereol frontend feature.
+ */
+
+include_once 'ereol_frontend.features.inc';
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function ereol_frontend_entity_info_alter(&$entity_info) {
+  $entity_info['ting_object']['view modes'] += array(
+    'ereol_material_teaser' => array(
+      'label' => t('eReol Material Teaser'),
+      'custom settings' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_display_ENTITY_TYPE_alter().
+ *
+ * Alter field display settings.
+ *
+ * @todo move this to field_default_field_instances_alter() instead.
+ */
+function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
+  switch ($context['view_mode']) {
+    case 'compact';
+      switch ($context['instance']['field_name']) {
+        case 'ting_cover':
+          // Fix up image style.
+          $display['settings']['image_style'] = 'ereol_cover_base';
+          $display['label'] = 'hidden';
+          break;
+
+        case 'ting_author':
+          // Use a formatter that doesn't make the author a link.
+          $display['module'] = 'reol_base';
+          $display['type'] = 'reol_base_author_plain';
+          $display['label'] = 'hidden';
+          break;
+
+        case 'ting_title':
+          // Remove type prefix.
+          $display['settings']['prefix_type'] = 'no';
+          $display['label'] = 'hidden';
+          break;
+      }
+      break;
+
+    default:
+      // Remove rating widget in all view modes.
+      $rating_fields = array(
+        'ding_entity_rating_action',
+        'ding_entity_rating_result',
+      );
+      if (in_array($context['instance']['field_name'], $rating_fields)) {
+        $display['type'] = 'hidden';
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Remove ding_list from the implementors of hook_ding_entity_buttons(). We
+ * don't want it to add a button.
+ */
+function ereol_frontend_module_implements_alter(&$hooks, $hook) {
+  if ($hook == 'ding_entity_buttons') {
+    unset($hooks['ding_list']);
+  }
+}
+
+/**
+ * Preprocess materials_item.
+ *
+ * Remove the rating widget added by ding_entity_rating.
+ */
+function ereol_frontend_preprocess_material_item(&$variables) {
+  unset($variables['information']['ding_entity_rating']);
+}

@@ -1,0 +1,16 @@
+name = Recomended material paragraph
+description = Recomended material paragraph
+core = 7.x
+package = eReolen paragraphs
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = paragraphs
+dependencies[] = text
+dependencies[] = ting_reference
+features[features_api][] = api:2
+features[field_base][] = field_rec_material
+features[field_base][] = field_rec_title
+features[field_instance][] = paragraphs_item-recommended_material-field_rec_material
+features[field_instance][] = paragraphs_item-recommended_material-field_rec_title
+features[paragraphs][] = recommended_material
+project path = sites/all/modules/paragraphs

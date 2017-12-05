@@ -10,7 +10,7 @@
 function reol_help_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-faq-field_category'
+  // Exported field_instance: 'node-faq-field_category'.
   $field_instances['node-faq-field_category'] = array(
     'bundle' => 'faq',
     'default_value' => NULL,
@@ -58,7 +58,7 @@ function reol_help_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-faq-field_ding_page_files'
+  // Exported field_instance: 'node-faq-field_ding_page_files'.
   $field_instances['node-faq-field_ding_page_files'] = array(
     'bundle' => 'faq',
     'deleted' => 0,

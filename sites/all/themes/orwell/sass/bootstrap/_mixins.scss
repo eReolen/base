@@ -1,0 +1,287 @@
+
+@mixin icon() {
+  font-family: $font-icon;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+}
+
+@mixin content-wrapper() {
+  max-width: 1080px + ($padding__default * 2);
+  width: 100%;
+  padding-left: $padding__default;
+  padding-right: $padding__default;
+
+  @include grid-media($medium) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1080px + ($padding__medium * 2);
+    padding-left: $padding__medium;
+    padding-right: $padding__medium;
+  }
+}
+
+@mixin content-wrapper-no-padding() {
+  max-width: 1080px;
+  width: 100%;
+
+  @include grid-media($medium) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1080px;
+  }
+}
+
+@mixin content-wrapper__large() {
+  max-width: 1208px + ($padding__default * 2);
+  position: relative;
+
+  @include grid-media($medium) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1208px + ($padding__medium * 2);
+  }
+}
+
+@mixin text-paragraph {
+  font-size: 1rem;
+  line-height: 1.8rem;
+  color: $color__font-gray;
+
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
+}
+
+// Common page header.
+@mixin page-header() {
+  font-family: $font-light;
+  font-size: 2rem;
+  color: $color__font-gray;
+  margin: 3rem;
+  text-align: center;
+
+  @include grid-media($medium) {
+    width: 100%;
+    order: 1;
+    margin: 0 0 3rem;
+    text-align: left;
+  }
+}
+
+// Common header. Displayed to the left on larger screens.
+@mixin header {
+  @include base-header;
+  border-top: 1px solid $color__border-gray;
+  padding-top: 1.5rem;
+}
+
+@mixin base-header {
+  font-family: $font-light;
+  font-size: 1.5rem;
+  color: $color__font-gray--dark;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+// Common sub-header.
+@mixin sub-header {
+  font-family: $font-semibold;
+  text-transform: uppercase;
+  color: $color__font-gray--dark;
+  margin-top: 1.5rem;
+}
+
+@mixin form-default {
+  select {
+    background: white;
+    border: 1px solid #d5d5d5;
+    width: 100%;
+    font-size: 13px;
+    padding: 10px 30px;
+    color: $color__font-gray;
+    font-family: $font-semibold;
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 1px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="submit"],
+  input[type="password"] {
+    text-decoration: none;
+    border-radius: 6px;
+    min-width: 250px;
+    display: inline-block;
+    position: relative;
+    border: 1px solid #d5d5d5;
+    color: black;
+    font-size: 15.4px;
+    font-family: $font-semibold;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 30px;
+    appearance: none;
+  }
+
+  input[type="submit"] {
+    font-family: $font-semibold;
+    line-height: 1em;
+    padding: 15px 22px;
+    margin-top: 1rem;
+    width: 100%;
+    background-color: $color__green;
+    color: $color__white;
+    border-radius: 2px;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: $color__green--dark;
+      cursor: pointer;
+    }
+  }
+
+  label {
+    font-size: 16px;
+    line-height: 22px;
+    font-family: $font-semibold;
+    color: $color__font-gray--dark;
+    margin: 0 0 5px;
+    display: block;
+  }
+
+  .description {
+    margin: .5rem 0;
+  }
+
+  .form-item {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  form {
+    .description {
+      color: $color__font--form-description;
+      font-family: $font-regular;
+      margin-top: 5px;
+    }
+  }
+}
+
+@mixin button() {
+  font-family: $font-semibold;
+  line-height: 1em;
+  padding: 10px 22px;
+  margin-top: 1rem;
+  background-color: $color__green;
+  color: $color__white;
+  border-radius: 2px;
+  text-transform: uppercase;
+  width: 100%;
+  font-size: .9rem;
+
+  &:hover {
+    background-color: $color__green--dark;
+    cursor: pointer;
+  }
+}
+
+@mixin outline-button($text-color: $color__white, $border-color: $color__white) {
+  position: relative;
+  appearance: none;
+  background: none;
+  border: 1px solid rgba($border-color, .5);
+  padding: .7rem 1.2rem;
+  font-family: $font-semibold;
+  color: $text-color;
+  text-transform: uppercase;
+  font-size: .75rem;
+  font-weight: bold;
+  border-radius: 2px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid rgba($border-color, 1);
+  }
+
+  a {
+    color: $text-color;
+    text-decoration: none;
+  }
+}
+
+@mixin title() {
+  font-size: 2.1rem;
+  text-decoration: none;
+  font-family: $font-light;
+  color: $color__font-gray;
+  overflow-wrap: break-word;
+}
+
+// Common sizes for covers in boxes (recommendation/audio-preview).
+@mixin box-cover() {
+  min-width: 95px;
+
+  img {
+    vertical-align: middle;
+    height: 135px;
+    width: auto;
+  }
+
+  @include grid-media($small) {
+    min-width: 130px;
+
+    img {
+      height: 190px;
+    }
+  }
+}
+
+@mixin fadeout-box($font-size, $lines, $sub-element, $color) {
+  font-size: $font-size;
+  overflow: hidden;
+  position: relative;
+
+  #{$sub-element} {
+    // Set the max number of lines shown.
+    max-height: $font-size * $lines;
+    // Shift everything up a bit to avoid clipping descenders.
+    padding-bottom: .1rem;
+
+    // Position a fading ::after at the top of the last line. As it's
+    // positioned absolute, it doesn't affect the size of it's parent.
+    // If there's not enough lines to warrant a fade, it wont cover any.
+    &::after {
+      content: '';
+      text-align: right;
+      position: absolute;
+      top: $font-size * ($lines - 1);
+      right: 0;
+      width: 100%;
+      height: $font-size;
+      background: linear-gradient(to bottom, rgba($color, 0), rgba($color, 1) 50%);
+    }
+  }
+}
+
+// Class for quoting an element with the proper quotes.
+@mixin quoted() {
+  &::before {
+    content: $quote__start;
+  }
+
+  &::after {
+    content: $quote__end;
+  }
+}

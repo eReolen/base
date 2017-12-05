@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Code for the eReol Video feature.
+ */
+
+include_once 'ereol_video.features.inc';
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function ereol_video_entity_info_alter(&$entity_info) {
+  $entity_info['file']['view modes'] += array(
+    'video_frontpage' => array(
+      'label' => t('Video on frontpage'),
+      'custom settings' => TRUE,
+    ),
+    'video_show' => array(
+      'label' => t('Video player'),
+      'custom settings' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function ereol_video_menu() {
+  $items = array();
+
+  $items['video/%node/view'] = array(
+    'page callback' => 'ereol_video_view_video',
+    'page arguments' => array(1),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function ereol_video_preprocess_node(&$variables) {
+  $node = $variables['node'];
+
+  if ($node->type == "video" && $variables['view_mode'] == 'teaser') {
+    drupal_add_library('system', 'drupal.ajax');
+    $variables['link'] = 'video/' . $node->nid . '/view';
+  }
+}
+
+/**
+ * View a video from modal.
+ *
+ * @param object $node
+ *   The video node.
+ *
+ * @return array
+ *   Ajax render array.
+ */
+function ereol_video_view_video($node) {
+  $commands = array();
+  $commands[] = ajax_command_ding_popup('ereol_video', t('View video'), drupal_render(node_view($node, 'full')), array('refresh' => TRUE, 'class' => array('video-modal')));
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+}

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * @file
- * Defines the sensible defaults for error messages
- * in publizon.
+ * Defines the sensible defaults for error messages in publizon.
  */
 
 $errors = array(

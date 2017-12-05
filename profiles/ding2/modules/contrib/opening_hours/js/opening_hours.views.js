@@ -106,7 +106,6 @@ Drupal.OpeningHours.AdminMainView = Backbone.View.extend({
       event.preventDefault();
     });
 
-
     // I can't find a way to put the columns in via the template, so we
     // add them to the DOM dynamically, even though that's a lot slower.
     columnsContainer = elem.find('tbody tr');
@@ -598,4 +597,3 @@ Drupal.OpeningHours.DialogView = Backbone.View.extend({
 });
 
 });
-

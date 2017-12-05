@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements of hook_schema().
+ * Implements hook_schema().
  */
 function opening_hours_schema() {
   $schema = array();
@@ -89,7 +89,7 @@ function opening_hours_schema() {
 }
 
 /**
- * Implements of hook_install().
+ * Implements hook_install().
  */
 function opening_hours_install() {
   // By default, we want to use the admin theme for our interface. This
@@ -98,7 +98,7 @@ function opening_hours_install() {
 }
 
 /**
- * Implements of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function opening_hours_uninstall() {
   // Delete any variables we have set.
@@ -107,7 +107,7 @@ function opening_hours_uninstall() {
 }
 
 /**
- * Implements of hook_update_N().
+ * Implements hook_update_N().
  */
 function opening_hours_update_7000(&$sandbox) {
   // Remove the old index, since we create a new one below.
@@ -126,6 +126,8 @@ function opening_hours_update_7000(&$sandbox) {
 }
 
 /**
+ * Implements hook_update_N().
+ *
  * Remove unique key, so that “duplicate” opening hours are allowed.
  *
  * Enforcing uniqueness doesn't make as much sense after we got 
@@ -133,4 +135,42 @@ function opening_hours_update_7000(&$sandbox) {
  */
 function opening_hours_update_7001(&$sandbox) {
   db_drop_unique_key('opening_hours', 'nid_date_time');
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Setup field settings for opening hours extra field.
+ *
+ * @see _opening_hours_openings_hours_field_setup()
+ */
+function opening_hours_update_7002() {
+  _opening_hours_openings_hours_field_setup();
+}
+
+/**
+ * Setup field settings for opening hours extra field.
+ *
+ * When we add the extra field we don't want it enabled on existing node types
+ * as it may conflict with existing implementations.
+ */
+function _opening_hours_openings_hours_field_setup() {
+  $field_machine_name = 'opening_hours_week';
+  $info = entity_get_info('node');
+  $view_modes = array_merge(array('default'), array_keys($info['view modes']));
+  $node_types = node_type_get_types();
+
+  foreach ($node_types as $node_type) {
+    if (variable_get('opening_hours_enabled_' . $node_type->type, FALSE)) {
+      $settings = field_bundle_settings('node', $node_type->type);
+      foreach ($view_modes as $view_mode) {
+        $settings['extra_fields']['display'][$field_machine_name][$view_mode] = array(
+          'visible' => FALSE,
+          'weight'  => 0,
+          'label' => 'above',
+        );
+      }
+      field_bundle_settings('node', $node_type->type, $settings);
+    }
+  }
 }

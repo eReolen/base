@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen loan module feature.
@@ -136,12 +137,14 @@ function reol_loan_ding_entity_buttons($type, $entity) {
 
       switch (_reol_loan_map_availability($availability)) {
         case REOL_LOAN_STATUS_LOANABLE:
-          $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id);
+          $classes = array('btn', 'btn--loan', 'use-ajax');
+          $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id, $classes);
           break;
 
         case REOL_LOAN_STATUS_RESERVED:
           global $user;
-          $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id);
+          $classes = array('use-ajax');
+          $buttons[] = reol_base_get_entity_button(t('Delete reservation'), 'user/' . $user->uid . '/status/reservations/delete/' . $entity->localId . '/ajax', 'delete-reservation-' . $entity->id, $classes);
           break;
 
         case REOL_LOAN_STATUS_NOT_LOANABLE:
@@ -197,7 +200,7 @@ function reol_loan_ding_entity_menu(&$items, $type, $path, $index) {
  * @return bool
  *   Whether or not type is correct.
  */
-function reol_loan_is_right_type($entity) {
+function reol_loan_is_right_type(TingEntity $entity) {
   // If the entity is removed from the data-well the type of it will be FALSE.
   // We have to support loaning titles that have been reserved before the entity
   // was removed. Because of this, when the type === FALSE, we should handle the
@@ -214,7 +217,7 @@ function reol_loan_is_right_type($entity) {
  * @return int
  *   The status ints from the top of this file.
  */
-function _reol_loan_map_availability($availability) {
+function _reol_loan_map_availability(array $availability) {
   // Titles might have the special notloanable-status. This happens when titles
   // are removed. This should trump everything.
   if (@$availability['notloanable']) {
@@ -240,13 +243,12 @@ function _reol_loan_map_availability($availability) {
 /**
  * Ajax version of the delete reservations form.
  *
- * @param StdClass $user
+ * @param object $user
  *   The user from request.
- * @param array $local_ids
- *   The local ids to delete reservations for.
+ * @param string $local_ids
+ *   The local ids to delete reservations for, comma separated.
  */
 function reol_loan_delete_reservations_ajax($user, $local_ids) {
-  global $user;
   $response = array(
     '#type' => 'ajax',
     '#commands' => array(),

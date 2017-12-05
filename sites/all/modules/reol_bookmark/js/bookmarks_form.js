@@ -1,8 +1,13 @@
-(function($) {
+/**
+ * @file
+ * JS behaviors for bookmarks page.
+ */
+
+(function ($) {
   "use strict";
 
   // Handle the material list select all behaviour and checkboxes.
-  $(document).ready(function($) {
+  $(document).ready(function ($) {
     // Variables used to make the buttons follow scroll.
     var actions = $(".action-buttons");
     var actions_offset = 0;
@@ -14,7 +19,7 @@
     $('.action-buttons input[type=submit]').prop('disabled', 'disabled');
 
     // Handle select all checkboxes.
-    $('.select-all input[type=checkbox]').click(function() {
+    $('.select-all input[type=checkbox]').click(function () {
       var checkboxes = $('input[type=checkbox]', $(this).closest('form'));
       if ($(this).prop('checked')) {
         checkboxes.prop('checked', true);
@@ -26,7 +31,7 @@
     });
 
     // Handle checkbox button count.
-    $('.material-item input[type=checkbox]').change(function() {
+    $('.material-item input[type=checkbox]').change(function () {
       var form = $(this).closest('form');
       var buttons = $('input[type=submit]', form);
       var count = $('.material-item input[type=checkbox]:checked', form).length;
@@ -46,7 +51,7 @@
      * Update count string on the buttons.
      */
     function update_buttons(buttons, count) {
-      buttons.each(function(index) {
+      buttons.each(function (index) {
         var btn = $(buttons[index]);
         btn.val(btn.val().replace(/\(\d+\)/, '(' + count + ')'));
 
@@ -70,13 +75,15 @@
 
     // Enable scroll and toggle of buttons. It uses class to this effect can be
     // cancelled by removing classes from the theme.
-    $(window).scroll(function(){
+    $(window).scroll(function () {
       toggle_scroll_buttons();
     });
 
     /**
-     * Helper function to toggle the "action-buttons-is-scrolling" class, which
-     * moves the out of flow to follow the top of the screen on scroll.
+     * Helper function to toggle the "action-buttons-is-scrolling" class.
+     *
+     * Which moves the out of flow to follow the top of the screen on
+     * scroll.
      */
     function toggle_scroll_buttons() {
       if (actions_offset < win.scrollTop() && actions.hasClass('action-buttons-is-visible')) {

@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ereol_base module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function ereol_base_install() {
+  // Trigger update hooks created before the module was enabled.
+  ereol_base_update_7103();
+  ereol_base_update_7104();
+}
+
+/**
+ * Enable ereol_inspiration.
+ */
+function ereol_base_update_7101() {
+  module_enable(array('ereol_inspiration'), TRUE);
+}
+
+/**
+ * Enable ereol_article, ereol_author_portrait, ereol_video.
+ */
+function ereol_base_update_7102() {
+  module_enable(array('ereol_article', 'ereol_author_portrait', 'ereol_video'), TRUE);
+}
+
+/**
+ * Set theme to orwell.
+ */
+function ereol_base_update_7103() {
+  theme_enable(array('orwell'));
+  variable_set('theme_default', 'orwell');
+}
+
+/**
+ * Enable ereol_frontend.
+ */
+function ereol_base_update_7104() {
+  module_enable(array('ereol_frontend'));
+}
+
+/**
+ * Enable ereol_page.
+ */
+function ereol_base_update_7105() {
+  module_enable(array('ereol_page'));
+}
+
+/**
+ * Skipping, this update was relocated to ereol_inspiration_update_7110.
+ */
+function ereol_base_update_7106() {
+}
+
+/**
+ * Enable reol_carousel.
+ */
+function ereol_base_update_7107() {
+  module_enable(array('reol_carousel'), TRUE);
+}

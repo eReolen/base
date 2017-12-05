@@ -1,0 +1,9 @@
+name = eReol Base
+description = Base module for eReolen.
+core = 7.x
+dependencies[] = ereol_article
+dependencies[] = ereol_author_portrait
+dependencies[] = ereol_frontend
+dependencies[] = ereol_inspiration
+dependencies[] = ereol_video
+dependencies[] = reol_base

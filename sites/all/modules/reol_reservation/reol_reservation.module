@@ -222,7 +222,7 @@ function reol_reservation_get_reserve_button($entity) {
   $availability = _reol_loan_map_availability($availability);
 
   if ($availability == REOL_LOAN_RESERVABLE) {
-    return reol_base_get_entity_button(t('Reserve'), 'ting/object/' . $entity->id . '/reserve', 'reserve-' . $entity->id);
+    return reol_base_get_entity_button(t('Reserve'), 'ting/object/' . $entity->id . '/reserve', 'reserve-' . $entity->id, array('use-ajax'));
   }
 }
 

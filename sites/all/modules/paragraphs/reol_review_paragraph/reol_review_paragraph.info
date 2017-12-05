@@ -1,0 +1,11 @@
+name = Litteratursiden paragraph
+description = Litteratursiden review paragraph
+core = 7.x
+package = eReolen paragraphs
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = paragraphs
+dependencies[] = reol_review
+features[features_api][] = api:2
+features[paragraphs][] = review
+project path = sites/all/modules/paragraphs

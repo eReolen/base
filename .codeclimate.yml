@@ -12,6 +12,17 @@ engines:
     enabled: true
   fixme:
     enabled: true
+    config:
+      strings:
+        # Standard configuration.
+        - TODO
+        - FIXME
+        - HACK
+        - XXX
+        - BUG
+        # Doxygen variants.
+        - '@todo'
+        - '@fixme'
   # phpmd:
   #   enabled: true
   phpcodesniffer:
@@ -40,6 +51,7 @@ exclude_paths:
   - profiles/
   - scripts/
   - sites/*.php
+  - sites/all/modules/contrib/
   - sites/all/drush/
   - sites/all/libraries/
   - sites/default/
@@ -50,6 +62,10 @@ exclude_paths:
   - "**/node_modules/"
   - "**/contrib/"
   - "**/vendor/"
+  - "**/gulpfile.js"
+  # Ignore generated CSS
+  - sites/all/themes/orwell/css/
+  - sites/all/themes/pratchett/css/
   # Generated Features code
   - '**.features.*'
   - '**.feeds_importer_default.inc'

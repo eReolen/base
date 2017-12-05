@@ -1,7 +1,7 @@
 name = eReolen category
 description = Handles eReolen category menu.
 core = 7.x
-package = ereolen.dk
+package = eReolen shared
 
 files[] = includes/reol_category.controller.inc
 files[] = includes/reol_category.entity.inc

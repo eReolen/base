@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Ding user provider for Publizon
+ * Ding user provider for Publizon.
  */
 
 /**
@@ -11,7 +11,7 @@
  * @param array $form
  *   The form array to alter.
  * @param array $form_state
- *   The state of the form
+ *   The state of the form.
  */
 function publizon_user_form_alter(&$form, &$form_state) {
   $default_value = NULL;

@@ -15,7 +15,8 @@ services:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
-
+      VIRTUAL_PROTO: https
+      VIRTUAL_HOST: ereol.docker
   ego:
     build: './private/docker/web'
     ports:
@@ -31,7 +32,8 @@ services:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
-
+      VIRTUAL_PROTO: https
+      VIRTUAL_HOST: ego.docker
   db-ereol:
     image: mariadb:5
     environment:
@@ -52,17 +54,25 @@ services:
     volumes:
       - './private/docker/db-init/ego:/docker-entrypoint-initdb.d'
 
+  # pratchett base theme
+  pratchett-gulp:
+    image: node:6-alpine
+    volumes:
+      - './sites/all/themes/pratchett:/src'
+    working_dir: /src
+    command: npm start
+
   # eReolen theme
   ereol-gulp:
-    image: node:alpine
+    image: node:6-alpine
     volumes:
-      - './sites/all/themes/brin:/src'
+      - './sites/all/themes/orwell:/src'
     working_dir: /src
     command: npm start
 
   # eReolen Go theme
   ego-gulp:
-    image: node:alpine
+    image: node:6-alpine
     volumes:
       - './sites/all/themes/wille:/src'
     working_dir: /src

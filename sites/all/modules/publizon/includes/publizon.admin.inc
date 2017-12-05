@@ -1,8 +1,8 @@
 <?php
+
 /**
  * @file
- * Defines the administration interface for configuring communication with the
- * Pulizon web-service.
+ * Settings for publizon.
  */
 
 /**

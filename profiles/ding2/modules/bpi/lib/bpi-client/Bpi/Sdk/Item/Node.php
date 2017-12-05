@@ -4,22 +4,30 @@ namespace Bpi\Sdk\Item;
 class Node extends BaseItem
 {
     /**
+     * @var array
+     */
+    protected $assets;
+
+    /**
      * Get node assets (images)
      *
      * @return array
      */
     public function getAssets()
     {
-        $result = array();
-        foreach ($this->getProperties() as $key => $val)
-        {
-            if (strpos($key, 'asset') !== FALSE)
+        if (!$this->assets) {
+            $assets = [];
+            foreach ($this->getProperties() as $key => $val)
             {
-                $result[$key] = $val;
+                if (strpos($key, 'asset') !== FALSE)
+                {
+                    $assets[$key] = $val;
+                }
             }
+            $this->assets = $assets;
         }
 
-        return $result;
+        return $this->assets;
     }
 
     public function syndicate()
