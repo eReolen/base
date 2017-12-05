@@ -63,6 +63,120 @@ function orwell_preprocess_html(&$vars) {
     // Hide the main login form unless the user just failed logging in.
     $vars['classes_array'][] = 'hide-login';
   }
+
+  $tags = array(
+    // Add tags for mobile devices.
+    // iOS.
+    'webapp' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'apple-mobile-web-app-capable',
+        'content' => 'yes',
+      ),
+    ),
+
+    // Microsoft.
+    'ms_name' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'application-name',
+        'content' => variable_get('site_name', ''),
+      ),
+    ),
+    'ms_tile_color' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'msapplication-TileColor',
+        'content' => '#FFFFFF',
+      ),
+    ),
+    'ms_tile_image' => array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'msapplication-TileImage',
+        'content' => '/' . path_to_theme() . '/images/favicon/mstile-square144x144.png',
+      ),
+    ),
+  );
+
+  // Apple iTunes app id.
+  if ($app_id = variable_get('reol_base_itunes_app_id', FALSE)) {
+    $tags['apple-itunes-app'] = array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'apple-itunes-app',
+        'content' => 'app-id=' . $app_id,
+      ),
+    );
+  }
+
+  // Apple icons.
+  $apple_icons = array(
+    '57x57',
+    '114x114',
+    '72x72',
+    '144x144',
+    '60x60',
+    '120x120',
+    '76x76',
+    '152x152',
+  );
+  foreach ($apple_icons as $size) {
+    $tags['apple_icon_' . $size] = array(
+      'type' => 'link',
+      'attributes' => array(
+        'rel' => 'apple-touch-icon-precomposed',
+        'href' => '/' . path_to_theme() . '/images/favicon/apple-touch-icon-' . $size . '.png',
+        'sizes' => $size,
+      ),
+    );
+  }
+
+  // Favicon.
+  $favicons = array(
+    '196x196',
+    '96x96',
+    '32x32',
+    '16x16',
+    '128x128',
+  );
+  foreach ($favicons as $size) {
+    $tags['favicon_' . $size] = array(
+      'type' => 'link',
+      'attributes' => array(
+        'rel' => 'icon',
+        'href' => '/' . path_to_theme() . '/images/favicon/favicon-' . $size . '.png',
+        'sizes' => $size,
+      ),
+
+    );
+  }
+
+  // Microsoft icons.
+  $favicons = array(
+    'square70x70',
+    'square150x150',
+    'wide310x150',
+    'square310x310',
+  );
+  foreach ($favicons as $size) {
+    $tags['msfavicon_' . $size] = array(
+      'type' => 'meta',
+      'attributes' => array(
+        'name' => 'msapplication-' . $size . 'logo',
+        'content' => '/' . path_to_theme() . '/images/favicon/mstile-' . $size . '.png',
+      ),
+    );
+  }
+
+  foreach ($tags as $name => $tag) {
+    $html_tag = array(
+      '#type' => 'html_tag',
+      '#tag' => $tag['type'],
+      '#attributes' => $tag['attributes'],
+    );
+    drupal_add_html_head($html_tag, $name);
+  }
 }
 
 /**
