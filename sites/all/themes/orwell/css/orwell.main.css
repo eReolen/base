@@ -241,7 +241,7 @@ img {
 
 .pane-user-login .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .pane-user-login form .description {
@@ -321,7 +321,7 @@ img {
 
 .ui-dialog form .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .ui-dialog form form .description {
@@ -1460,7 +1460,10 @@ div.messages ul {
 
 input[type=checkbox],
 .radio-custom {
+  width: 0;
+  height: 0;
   opacity: 0;
+  visibility: hidden;
   position: absolute;
 }
 
@@ -1489,6 +1492,50 @@ input[type=checkbox] + label::before,
   font-size: .7rem;
   border-radius: 50%;
   line-height: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: -.1rem;
+}
+
+.form-type-checkbox label.option {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 1.8rem;
+  min-height: 1.5rem;
+}
+
+.form-type-textfield .field-prefix {
+  position: absolute;
+  z-index: 2;
+  width: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.form-type-textfield .field-prefix + input[type="text"] {
+  padding-left: 3rem;
+}
+
+.form-checkboxes input[type=checkbox] + label::before,
+.form-checkboxes .radio-custom + .radio-custom-label::before {
+  left: auto;
+  right: 0;
+  top: 0;
+}
+
+.form-checkboxes label.option {
+  padding-left: 0;
 }
 
 input[type=checkbox]:checked + label::before {
@@ -1534,7 +1581,7 @@ input[type=checkbox]:focus + label,
 }
 
 .ding-facetbrowser-group-processed .form-item {
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .ding-facetbrowser-group-processed a {
@@ -3850,7 +3897,7 @@ html.js input.form-autocomplete {
 
 .pane-profile2-form .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .pane-profile2-form form .description {
@@ -3926,7 +3973,7 @@ html.js input.form-autocomplete {
 
 .page-user-bookmarks .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .page-user-bookmarks form .description {
@@ -4915,7 +4962,7 @@ html.js input.form-autocomplete {
 
 .node-webform .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .node-webform form .description {
@@ -5203,7 +5250,7 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] .description {
 body.page-nyhedsbrev-app form[class^="mailchimp-"] .form-item,
 body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 body.page-nyhedsbrev-app form[class^="mailchimp-"] form .description,
