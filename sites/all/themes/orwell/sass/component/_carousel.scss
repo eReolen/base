@@ -2,14 +2,10 @@
 
 .ding-carousel {
   @include content-wrapper;
+  position: relative;
 
-  padding: 10px 0;
-
-  @include grid-media($medium) {
-    padding: 20px 0;
-  }
-
-  .slick-arrow {
+  .button-prev,
+  .button-next {
     background: $page-bg;
     border: 1px solid $color__border-gray--light;
     border-radius: 1px;
@@ -36,21 +32,22 @@
       font-size: .75rem;
       text-indent: 0;
     }
+  }
 
-    &.slick-prev {
-      left: 30px;
 
-      &::before {
-        content: $icon__arrow-left;
-      }
+  .button-prev {
+    left: 30px;
+
+    &::before {
+      content: $icon__arrow-left;
     }
+  }
 
-    &.slick-next {
-      right: 30px;
+  .button-next {
+    right: 30px;
 
-      &::before {
-        content: $icon__arrow-right;
-      }
+    &::before {
+      content: $icon__arrow-right;
     }
   }
 
@@ -89,18 +86,11 @@
   }
 
   .carousel__header {
+    @include content-wrapper-no-padding;
     @include base-header;
-    margin-left: 20px;
 
-    @include grid-media($medium) {
-      margin-left: 40px;
-    }
-
-    @include grid-media($large) {
-      margin-left: 60px;
-    }
-
-    // Don't show header for the article carousel on the article page.
+    // Don't show header for the article carousel on the article page,
+    // on mobile.
     .article__other-articles & {
       display: none;
 
@@ -117,32 +107,48 @@
   }
 }
 
+// Spacing between carousel items.
 .ding-carousel-item {
-  padding-left: 20px;
+  padding-right: 20px;
 
   @include grid-media($medium) {
-    padding-left: 40px;
+    padding-right: 40px;
   }
 
   @include grid-media($large) {
-    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  // Remove it from the last.
+  &:last-child {
+    padding-right: 0;
   }
 }
 
 // Paragraph specific tweaks.
 .paragraphs-item-article-carousel,
+.paragraphs-item-picked-article-carousel,
 .article__other-articles {
+  .ding-carousel {
+    @include content-wrapper__large;
+    padding: 0;
+  }
+
   .ding-carousel-item {
     width: 100vw;
-    padding-left: 0;
+    padding-right: 0;
 
     @include grid-media($medium) {
       width: auto;
-      padding-left: 40px;
+      padding-right: 40px;
     }
 
     @include grid-media($large) {
-      padding-left: 60px;
+      padding-right: 60px;
+    }
+
+    &:last-child {
+      padding-right: 0;
     }
   }
 
@@ -175,17 +181,14 @@
 }
 
 .ding-carousel ul {
-  display: inline-block;
+  display: flex;
   vertical-align: top;
   margin: 0;
   padding: 0;
   list-style: none;
-  // Set the width to ensure (within reason) that all covers are
-  // rendered on one line, let the parent clip. It is restored to 100%
-  // by the JS before activating the carousel.
-  width: 8000px;
 }
 
 .ding-carousel li {
   display: inline-block;
+  flex: none;
 }

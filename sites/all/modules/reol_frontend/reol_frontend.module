@@ -58,6 +58,16 @@ function reol_frontend_theme() {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_frontend_form_user_login_block_alter(&$form, &$form_state) {
+  // Override Drupals default behavior of redirecting back to the page where the
+  // login form block was displayed after login. We want to end up on /user in
+  // all cases.
+  $form['#action'] = url(current_path());
+}
+
+/**
  * Returns HTML for overlay icons.
  */
 function theme_reol_overlay_icons($variables) {
