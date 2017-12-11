@@ -258,6 +258,11 @@
       // Apparently swiper needs to be updated for this to take effect.
       this.update();
     }
+
+    if ($(this.el).hasClass('add-wrapper')) {
+      $('.carousel', this.el).wrap('<div class="carousel-wrapper"></div>');
+    }
+
     // Call update_handler with the same 'this'.
     update_handler.apply(this);
   }

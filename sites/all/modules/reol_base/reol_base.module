@@ -1216,6 +1216,20 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   if (isset($fields['ting_object-ting_object-ting_details_audience'])) {
     $fields['ting_object-ting_object-ting_details_audience']['display']['default']['weigth'] = 65;
   }
+
+  // Compact display mode.
+  // Use a formatter that doesn't make the author a link.
+  if (isset($fields['ting_object-ting_object-ting_author'])) {
+    $fields['ting_object-ting_object-ting_author']['display']['default']['module'] = 'reol_base';
+    $fields['ting_object-ting_object-ting_author']['display']['default']['type'] = 'reol_base_author_plain';
+    $fields['ting_object-ting_object-ting_author']['display']['default']['label'] = 'hidden';
+  }
+
+  // Remove type prefix.
+  if (isset($fields['ting_object-ting_object-ting_title'])) {
+    $fields['ting_object-ting_object-ting_title']['display']['default']['settings']['prefix_type'] = 'no';
+    $fields['ting_object-ting_object-ting_title']['display']['default']['label'] = 'hidden';
+  }
 }
 
 /**
