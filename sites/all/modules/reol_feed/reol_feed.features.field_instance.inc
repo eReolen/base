@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * reol_frontend.features.field_instance.inc
+ * reol_feed.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function reol_frontend_field_default_field_instances() {
+function reol_feed_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance: 'node-article-field_show_in_app'.
