@@ -338,8 +338,6 @@ function reol_frontend_module_implements_alter(&$implementations, $hook) {
 
 /**
  * Implements hook_ting_pre_execute().
- *
- * @todo merge with breol_frontend_ting_pre_execute().
  */
 function reol_frontend_ting_pre_execute($request) {
   // Request both dkabm and marcxchange formats for all queries. DKABM data is
@@ -352,8 +350,6 @@ function reol_frontend_ting_pre_execute($request) {
  * Implements hook_ting_post_execute().
  *
  * Adds the quota status to the ting object response.
- *
- * @todo merge with breol_frontend_ting_post_execute().
  */
 function reol_frontend_ting_post_execute($request, $response, $raw_response) {
   if (!is_object($response)) {
@@ -396,8 +392,6 @@ function reol_frontend_ting_post_execute($request, $response, $raw_response) {
  * Return whether the material is on quota.
  *
  * According to the given marcxchange data.
- *
- * @todo merge with _breol_frontend_is_quotaed().
  */
 function _reol_frontend_is_quotaed($marc_records) {
   if (!is_array($marc_records)) {
