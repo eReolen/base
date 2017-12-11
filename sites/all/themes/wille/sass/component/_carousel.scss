@@ -144,6 +144,9 @@ $carousel-outer-padding: 0 30px;
   img {
     width: 100%;
     height: auto;
+    background-image: url('../images/placeholder.png');
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 }
 
