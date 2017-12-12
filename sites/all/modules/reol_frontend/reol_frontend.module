@@ -321,12 +321,18 @@ function reol_frontend_form_search_block_form_alter(&$form, &$form_state, $form_
 /**
  * Implements hook_module_implements_alter().
  *
+ * Remove ding_list buttons from materials.
+ *
  * Adjusts hooks so we get in after
  * ting_search_autocomplete_form_search_block_form_alter().
  *
  * @see reol_frontend_form_search_block_form_alter()
  */
 function reol_frontend_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'ding_entity_buttons') {
+    unset($implementations['ding_list']);
+  }
+
   // You'd think we should look for form_search_block_form_alter, but, no.
   if ($hook == 'form_alter' &&
     isset($implementations['reol_frontend'])) {
