@@ -214,3 +214,10 @@ function breol_base_update_7125() {
 function breol_base_update_7126() {
   module_enable(array('reol_frontend'), TRUE);
 }
+
+/**
+ * Enable reol_carousel.
+ */
+function breol_base_update_7127() {
+  module_enable(array('reol_carousel'), TRUE);
+}
