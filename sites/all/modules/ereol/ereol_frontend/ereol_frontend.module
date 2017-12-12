@@ -50,17 +50,6 @@ function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
           break;
       }
       break;
-
-    default:
-      // Remove rating widget in all view modes.
-      $rating_fields = array(
-        'ding_entity_rating_action',
-        'ding_entity_rating_result',
-      );
-      if (in_array($context['instance']['field_name'], $rating_fields)) {
-        $display['type'] = 'hidden';
-      }
-      break;
   }
 }
 

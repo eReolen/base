@@ -84,3 +84,13 @@ function breol_frontend_image_styles_alter(&$styles) {
     ),
   );
 }
+
+/**
+ * Implements hook_field_default_field_instances_alter().
+ */
+function breol_frontend_field_default_field_instances_alter(&$fields) {
+  // Remove subjects from search results.
+  if (isset($fields['ting_object-ting_object-ting_subjects'])) {
+    $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['type'] = 'hidden';
+  }
+}

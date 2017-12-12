@@ -405,3 +405,17 @@ function reol_base_update_7136() {
 function reol_base_update_7137() {
   features_revert(array('ting_material_details' => array('field_group', 'field_instance')));
 }
+
+/**
+ * Revert groups and fields instances of ding_entity_rating.
+ */
+function reol_base_update_7138() {
+  features_revert(array('ding_entity_rating' => array('field_group', 'field_instance')));
+}
+
+/**
+ * Revert reol_base.
+ */
+function reol_base_update_7139() {
+  features_revert_module('reol_base');
+}
