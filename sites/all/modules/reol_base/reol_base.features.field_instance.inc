@@ -226,7 +226,7 @@ function reol_base_field_default_field_instances() {
         'module' => 'reol_base',
         'settings' => array(),
         'type' => 'reol_base_genre',
-        'weight' => 66,
+        'weight' => 69,
       ),
       'ereol_material_teaser' => array(
         'label' => 'above',
