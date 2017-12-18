@@ -28,6 +28,8 @@ function reol_audio_preview_paragraph_preprocess_entity(&$variables) {
         drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/bowser/1.7.2/bowser.min.js', 'external');
         drupal_add_js(drupal_get_path('module', 'reol_audio_preview_paragraph') . '/js/audio_preview.js');
 
+        // No cover icons, please.
+        $ting_entity->reol_no_icons = TRUE;
         $build = ting_object_view($ting_entity, 'compact');
         // For some reason this is an array.
         list($isbn,) = $ting_entity->getIsbn();

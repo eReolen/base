@@ -56,7 +56,7 @@ services:
 
   # pratchett base theme
   pratchett-gulp:
-    image: node:alpine
+    image: node:6-alpine
     volumes:
       - './sites/all/themes/pratchett:/src'
     working_dir: /src
@@ -64,7 +64,7 @@ services:
 
   # eReolen theme
   ereol-gulp:
-    image: node:alpine
+    image: node:6-alpine
     volumes:
       - './sites/all/themes/orwell:/src'
     working_dir: /src
@@ -72,7 +72,7 @@ services:
 
   # eReolen Go theme
   ego-gulp:
-    image: node:alpine
+    image: node:6-alpine
     volumes:
       - './sites/all/themes/wille:/src'
     working_dir: /src

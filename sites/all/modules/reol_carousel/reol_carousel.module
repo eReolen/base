@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * New carousel for Ding.
+ */
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function reol_carousel_element_info_alter(&$type) {
+  $path = drupal_get_path('module', 'reol_carousel');
+  if (isset($type['ding_carousel'])) {
+    $type['ding_carousel']['#attached']['js'] = array(
+      $path . '/js/reol_carousel.js',
+      $path . '/js/swiper.min.js',
+    );
+
+    // Kill CSS.
+    $type['ding_carousel']['#attached']['css'] = array();
+  }
+}

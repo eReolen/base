@@ -77,26 +77,32 @@ body {
 }
 
 .page-wrapper, .page-search-ting .pane-page-content {
-  max-width: 1440px;
+  max-width: 1248px;
   position: relative;
 }
 
 @media all and (min-width: 49em) {
   .page-wrapper, .page-search-ting .pane-page-content {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1268px;
   }
 }
 
 .content-wrapper {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media all and (min-width: 49em) {
   .content-wrapper {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -235,7 +241,7 @@ img {
 
 .pane-user-login .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .pane-user-login form .description {
@@ -315,7 +321,7 @@ img {
 
 .ui-dialog form .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .ui-dialog form form .description {
@@ -362,8 +368,10 @@ img {
 }
 
 div.messages {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   padding: 2rem;
   background-color: #fff;
   background-image: none;
@@ -377,8 +385,11 @@ div.messages {
 
 @media all and (min-width: 49em) {
   div.messages {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -614,12 +625,6 @@ div.messages ul {
 
 .ui-dialog form .form-actions {
   text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
 }
 
 .ui-dialog .action-button {
@@ -1000,16 +1005,21 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .topbar__inner {
-    max-width: 1200px;
+    max-width: 1120px;
     width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
     height: 100%;
   }
 }
 
 @media all and (min-width: 49em) and (min-width: 49em) {
   .topbar__inner {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -1172,15 +1182,20 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .menu-name-main-menu.menu-level-2 > ul {
-    max-width: 1200px;
+    max-width: 1120px;
     width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
 @media all and (min-width: 49em) and (min-width: 49em) {
   .menu-name-main-menu.menu-level-2 > ul {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -1257,8 +1272,10 @@ div.messages ul {
 }
 
 .menu-name-main-menu.menu-level-2 li div {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   position: absolute;
   display: block;
   left: 0;
@@ -1268,8 +1285,11 @@ div.messages ul {
 
 @media all and (min-width: 49em) {
   .menu-name-main-menu.menu-level-2 li div {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -1337,6 +1357,36 @@ div.messages ul {
     display: flex;
     padding: 4rem 0;
   }
+}
+
+.footer__brand {
+  background-color: #fff;
+  color: #b81b40;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  padding: 1rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.footer__brand::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  font-size: 2rem;
 }
 
 .footer .menu a {
@@ -1409,7 +1459,10 @@ div.messages ul {
 
 input[type=checkbox],
 .radio-custom {
+  width: 0;
+  height: 0;
   opacity: 0;
+  visibility: hidden;
   position: absolute;
 }
 
@@ -1438,6 +1491,50 @@ input[type=checkbox] + label::before,
   font-size: .7rem;
   border-radius: 50%;
   line-height: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: -.1rem;
+}
+
+.form-type-checkbox label.option {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 1.8rem;
+  min-height: 1.5rem;
+}
+
+.form-type-textfield .field-prefix {
+  position: absolute;
+  z-index: 2;
+  width: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.form-type-textfield .field-prefix + input[type="text"] {
+  padding-left: 3rem;
+}
+
+.form-checkboxes input[type=checkbox] + label::before,
+.form-checkboxes .radio-custom + .radio-custom-label::before {
+  left: auto;
+  right: 0;
+  top: 0;
+}
+
+.form-checkboxes label.option {
+  padding-left: 0;
 }
 
 input[type=checkbox]:checked + label::before {
@@ -1483,7 +1580,7 @@ input[type=checkbox]:focus + label,
 }
 
 .ding-facetbrowser-group-processed .form-item {
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .ding-facetbrowser-group-processed a {
@@ -1751,15 +1848,16 @@ fieldset {
 
 @media all and (min-width: 49em) {
   .search-form__content {
-    max-width: 1440px;
+    max-width: 1248px;
     position: relative;
   }
 }
 
 @media all and (min-width: 49em) and (min-width: 49em) {
   .search-form__content {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1268px;
   }
 }
 
@@ -2536,25 +2634,25 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
-  padding: 10px 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
 }
 
 @media all and (min-width: 49em) {
   .ding-carousel {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
-@media all and (min-width: 49em) {
-  .ding-carousel {
-    padding: 20px 0;
-  }
-}
-
-.ding-carousel .slick-arrow {
+.ding-carousel .button-prev,
+.ding-carousel .button-next {
   background: #f0f0f0;
   border: 1px solid #dcdcdc;
   border-radius: 1px;
@@ -2567,13 +2665,15 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .ding-carousel .slick-arrow {
+  .ding-carousel .button-prev,
+  .ding-carousel .button-next {
     bottom: 90px;
     display: inline-block !important;
   }
 }
 
-.ding-carousel .slick-arrow::before {
+.ding-carousel .button-prev::before,
+.ding-carousel .button-next::before {
   font-family: "icomoon";
   speak: none;
   -webkit-font-smoothing: antialiased;
@@ -2588,19 +2688,19 @@ html.js input.form-autocomplete {
   text-indent: 0;
 }
 
-.ding-carousel .slick-arrow.slick-prev {
+.ding-carousel .button-prev {
   left: 30px;
 }
 
-.ding-carousel .slick-arrow.slick-prev::before {
+.ding-carousel .button-prev::before {
   content: "";
 }
 
-.ding-carousel .slick-arrow.slick-next {
+.ding-carousel .button-next {
   right: 30px;
 }
 
-.ding-carousel .slick-arrow.slick-next::before {
+.ding-carousel .button-next::before {
   content: "";
 }
 
@@ -2644,23 +2744,20 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel .carousel__header {
+  max-width: 1080px;
+  width: 100%;
   font-family: "SourceSansProLight", sans-serif;
   font-size: 1.5rem;
   color: #505050;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  margin-left: 20px;
 }
 
 @media all and (min-width: 49em) {
   .ding-carousel .carousel__header {
-    margin-left: 40px;
-  }
-}
-
-@media all and (min-width: 65em) {
-  .ding-carousel .carousel__header {
-    margin-left: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1080px;
   }
 }
 
@@ -2704,49 +2801,82 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel-item {
-  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media all and (min-width: 49em) {
   .ding-carousel-item {
-    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 
 @media all and (min-width: 65em) {
   .ding-carousel-item {
-    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+
+.ding-carousel-item:last-child {
+  padding-right: 0;
+}
+
+.paragraphs-item-article-carousel .ding-carousel,
+.paragraphs-item-picked-article-carousel .ding-carousel,
+.article__other-articles .ding-carousel {
+  max-width: 1248px;
+  position: relative;
+  padding: 0;
+}
+
+@media all and (min-width: 49em) {
+  .paragraphs-item-article-carousel .ding-carousel,
+  .paragraphs-item-picked-article-carousel .ding-carousel,
+  .article__other-articles .ding-carousel {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1268px;
   }
 }
 
 .paragraphs-item-article-carousel .ding-carousel-item,
+.paragraphs-item-picked-article-carousel .ding-carousel-item,
 .article__other-articles .ding-carousel-item {
   width: 100vw;
-  padding-left: 0;
+  padding-right: 0;
 }
 
 @media all and (min-width: 49em) {
   .paragraphs-item-article-carousel .ding-carousel-item,
+  .paragraphs-item-picked-article-carousel .ding-carousel-item,
   .article__other-articles .ding-carousel-item {
     width: auto;
-    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 
 @media all and (min-width: 65em) {
   .paragraphs-item-article-carousel .ding-carousel-item,
+  .paragraphs-item-picked-article-carousel .ding-carousel-item,
   .article__other-articles .ding-carousel-item {
-    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 
+.paragraphs-item-article-carousel .ding-carousel-item:last-child,
+.paragraphs-item-picked-article-carousel .ding-carousel-item:last-child,
+.article__other-articles .ding-carousel-item:last-child {
+  padding-right: 0;
+}
+
 .paragraphs-item-article-carousel .slick-dots,
+.paragraphs-item-picked-article-carousel .slick-dots,
 .article__other-articles .slick-dots {
   display: block !important;
 }
 
 @media all and (min-width: 49em) {
   .paragraphs-item-article-carousel .slick-dots,
+  .paragraphs-item-picked-article-carousel .slick-dots,
   .article__other-articles .slick-dots {
     display: none !important;
   }
@@ -2761,16 +2891,20 @@ html.js input.form-autocomplete {
 }
 
 .ding-carousel ul {
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   vertical-align: top;
   margin: 0;
   padding: 0;
   list-style: none;
-  width: 8000px;
 }
 
 .ding-carousel li {
   display: inline-block;
+  -webkit-box-flex: 0;
+  -ms-flex: none;
+  flex: none;
 }
 
 .material {
@@ -3326,31 +3460,31 @@ html.js input.form-autocomplete {
 }
 
 .spotlight-box {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
-  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media all and (min-width: 49em) {
   .spotlight-box {
-    margin: 0 auto;
-    padding: 0 3.75rem;
-  }
-}
-
-@media all and (min-width: 49em) {
-  .spotlight-box {
-    padding: 15px 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
 .spotlight-box__item {
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 @media all and (min-width: 49em) {
   .spotlight-box__item {
-    margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 
@@ -3408,12 +3542,14 @@ html.js input.form-autocomplete {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 66.66667%;
     flex: 0 0 66.66667%;
+    padding-right: 20px;
   }
   .spotlight-box__top__secondary {
     display: block;
     -webkit-box-flex: 0;
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
+    padding-left: 20px;
   }
 }
 
@@ -3442,10 +3578,15 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 26em) {
-  .spotlight-box__middle__item_1,
+  .spotlight-box__middle__item_1 {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    padding-right: 10px;
+  }
   .spotlight-box__middle__item_3 {
     -ms-flex-preferred-size: 50%;
     flex-basis: 50%;
+    padding-left: 10px;
   }
 }
 
@@ -3456,6 +3597,7 @@ html.js input.form-autocomplete {
     -webkit-box-ordinal-group: 2;
     -ms-flex-order: 1;
     order: 1;
+    padding-right: 20px;
   }
   .spotlight-box__middle__item_2 {
     -ms-flex-preferred-size: 33.33333%;
@@ -3463,6 +3605,8 @@ html.js input.form-autocomplete {
     -webkit-box-ordinal-group: 3;
     -ms-flex-order: 2;
     order: 2;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .spotlight-box__middle__item_3 {
     -ms-flex-preferred-size: 33.33333%;
@@ -3470,6 +3614,7 @@ html.js input.form-autocomplete {
     -webkit-box-ordinal-group: 4;
     -ms-flex-order: 3;
     order: 3;
+    padding-left: 20px;
   }
 }
 
@@ -3480,16 +3625,23 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .spotlight-box__bottom__item_1,
+  .spotlight-box__bottom__item_1 {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    padding-right: 20px;
+  }
   .spotlight-box__bottom__item_2 {
     -ms-flex-preferred-size: 50%;
     flex-basis: 50%;
+    padding-left: 20px;
   }
 }
 
 .page-user .layout-wrapper {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3499,8 +3651,11 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .page-user .layout-wrapper {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -3741,7 +3896,7 @@ html.js input.form-autocomplete {
 
 .pane-profile2-form .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .pane-profile2-form form .description {
@@ -3817,7 +3972,7 @@ html.js input.form-autocomplete {
 
 .page-user-bookmarks .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .page-user-bookmarks form .description {
@@ -4099,15 +4254,20 @@ html.js input.form-autocomplete {
 }
 
 .faq-content {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   padding: 2rem 2rem 0;
 }
 
 @media all and (min-width: 49em) {
   .faq-content {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -4716,16 +4876,21 @@ html.js input.form-autocomplete {
 }
 
 .node-webform {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
 
 @media all and (min-width: 49em) {
   .node-webform {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -4796,7 +4961,7 @@ html.js input.form-autocomplete {
 
 .node-webform .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 .node-webform form .description {
@@ -4865,8 +5030,10 @@ html.js input.form-autocomplete {
 }
 
 .announcement {
-  max-width: 1200px;
+  max-width: 1120px;
   width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   padding: 2rem;
   font-family: "SourceSansPro", sans-serif;
   font-size: 1.2rem;
@@ -4878,8 +5045,11 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .announcement {
-    margin: 0 auto;
-    padding: 0 3.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -4896,6 +5066,98 @@ html.js input.form-autocomplete {
 
 .announcement.warning {
   background: #e5dbb7;
+}
+
+form.mailchimp-signup-subscribe-form {
+  max-width: 1120px;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media all and (min-width: 49em) {
+  form.mailchimp-signup-subscribe-form {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media all and (min-width: 49em) {
+  form.mailchimp-signup-subscribe-form {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+form.mailchimp-signup-subscribe-form > div {
+  position: relative;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description {
+  margin-bottom: 2rem;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description p {
+  text-transform: uppercase;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+  color: #505050;
+  margin-bottom: .8rem;
+}
+
+form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description h2 {
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #505050;
+}
+
+form.mailchimp-signup-subscribe-form .form-item label[for] {
+  display: none;
+}
+
+form.mailchimp-signup-subscribe-form .form-item input[type="text"] {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: "SourceSansPro", sans-serif;
+  font-size: 2rem;
+  border-bottom: 2px solid #d8d8d8;
+  padding: 1rem 0;
+  color: #787878;
+  padding-right: 4rem;
+}
+
+form.mailchimp-signup-subscribe-form .form-item input[type="text"]:focus {
+  outline: none;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+}
+
+form.mailchimp-signup-subscribe-form .form-actions input[type="submit"] {
+  -webkit-appearance: none;
+  text-indent: -9999px;
+  overflow: hidden;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 1px solid #d8d8d8;
+  border-radius: 1.6rem;
+  background-color: #b4b4b4;
+  background-image: url("../svg/white-arrow-right.svg");
+  background-size: 1rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 body.page-nyhedsbrev-app .pane-page-content,
@@ -4987,7 +5249,7 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] .description {
 body.page-nyhedsbrev-app form[class^="mailchimp-"] .form-item,
 body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-item {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.375rem;
 }
 
 body.page-nyhedsbrev-app form[class^="mailchimp-"] form .description,
@@ -5008,87 +5270,21 @@ body.page-nyhedsbrev-web form[class^="mailchimp-"] .form-required {
   color: #b81b40;
 }
 
-form.mailchimp-signup-subscribe-form {
-  padding-bottom: 2rem;
-}
-
-form.mailchimp-signup-subscribe-form > div {
+body.page-nyhedsbrev-app form.mailchimp-signup-subscribe-form .form-actions,
+body.page-nyhedsbrev-web form.mailchimp-signup-subscribe-form .form-actions {
   position: relative;
+  bottom: auto;
+  right: auto;
 }
 
-form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description {
-  margin-bottom: 2rem;
-}
-
-form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description p {
-  text-transform: uppercase;
-  font-family: "SourceSansProSemiBold", sans-serif;
-  font-size: 1rem;
-  color: #505050;
-  margin-bottom: .8rem;
-}
-
-form.mailchimp-signup-subscribe-form .mailchimp-signup-subscribe-form-description h2 {
-  font-family: "SourceSansProSemiBold", sans-serif;
-  font-size: 1rem;
-  font-weight: normal;
-  color: #505050;
-}
-
-form.mailchimp-signup-subscribe-form .form-item label[for] {
+body.page-nyhedsbrev-app form.mailchimp-signup-subscribe-form .form-actions::after,
+body.page-nyhedsbrev-web form.mailchimp-signup-subscribe-form .form-actions::after {
   display: none;
 }
 
-form.mailchimp-signup-subscribe-form .form-item input[type="text"] {
-  width: 100%;
-  border: 0;
-  outline: none;
-  background: transparent;
-  font-family: "SourceSansPro", sans-serif;
-  font-size: 2rem;
-  border-bottom: 2px solid #d8d8d8;
-  padding: 1rem 0;
-  color: #787878;
-  padding-right: 4rem;
-}
-
-form.mailchimp-signup-subscribe-form .form-item input[type="text"]:focus {
-  outline: none;
-}
-
-form.mailchimp-signup-subscribe-form .form-actions {
-  position: absolute;
-  bottom: 1rem;
-  right: 0;
-}
-
-form.mailchimp-signup-subscribe-form .form-actions::after {
-  font-family: "icomoon";
-  speak: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: '';
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  display: block;
-  position: absolute;
-  content: "";
-  color: white;
-  right: 1.1rem;
-  bottom: 1rem;
-}
-
-form.mailchimp-signup-subscribe-form .form-actions input[type="submit"] {
-  -webkit-appearance: none;
-  text-indent: -9999px;
-  overflow: hidden;
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 1.6rem;
-  background-color: #b4b4b4;
-  cursor: pointer;
+body.page-nyhedsbrev-app form.mailchimp-signup-subscribe-form .form-actions input[type="submit"],
+body.page-nyhedsbrev-web form.mailchimp-signup-subscribe-form .form-actions input[type="submit"] {
+  text-indent: 0;
 }
 
 .author-portrait {

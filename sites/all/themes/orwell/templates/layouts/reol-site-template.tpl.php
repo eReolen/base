@@ -45,6 +45,9 @@
 
   <?php if (!empty($content['footer'])): ?>
     <footer class="footer">
+      <div class="footer__brand">
+        Bibliotekernes e-bøger og netlydbøger
+      </div>
       <div class="footer__inner">
         <?php print render($content['footer']); ?>
       </div>

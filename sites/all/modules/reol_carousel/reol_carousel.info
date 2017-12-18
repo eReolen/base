@@ -1,0 +1,6 @@
+name = Reol Flickity Carousel
+description = Replaces Slick with Flickity
+core = 7.x
+package = eReolen shared
+version = 7.x-1.3
+dependencies[] = ding_carousel
