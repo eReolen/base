@@ -620,12 +620,6 @@ div.messages ul {
 
 .ui-dialog form .form-actions {
   text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
 }
 
 .ui-dialog .action-button {
