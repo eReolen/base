@@ -17,7 +17,7 @@ $carousel-outer-padding: 0 30px;
     vertical-align: top;
     position: relative;
     height: auto;
-    margin-bottom: 25px;
+    margin: 0 0 25px 0;
     padding: $carousel-outer-padding;
 
     @include media($phone) {
@@ -39,14 +39,8 @@ $carousel-outer-padding: 0 30px;
     }
   }
 
-  .description {
-    @extend h2;
-    font-size: 26px;
-    color: $title-color;
-    text-align: left;
+  .carousel__header {
     padding: 0 30px 30px 33px;
-    font-weight: normal;
-    font-family: $font-light;
 
     @include media($phone) {
       padding: 0;
