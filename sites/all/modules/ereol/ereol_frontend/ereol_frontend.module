@@ -52,12 +52,3 @@ function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
       break;
   }
 }
-
-/**
- * Preprocess materials_item.
- *
- * Remove the rating widget added by ding_entity_rating.
- */
-function ereol_frontend_preprocess_material_item(&$variables) {
-  unset($variables['information']['ding_entity_rating']);
-}

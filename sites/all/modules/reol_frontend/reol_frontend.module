@@ -395,6 +395,15 @@ function reol_frontend_ting_post_execute($request, $response, $raw_response) {
 }
 
 /**
+ * Preprocess materials_item.
+ *
+ * Remove the rating widget added by ding_entity_rating.
+ */
+function reol_frontend_preprocess_material_item(&$variables) {
+  unset($variables['information']['ding_entity_rating']);
+}
+
+/**
  * Return whether the material is on quota.
  *
  * According to the given marcxchange data.
