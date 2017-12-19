@@ -330,12 +330,12 @@ nonGoogleIframes';
   $strongarm->api_version = 1;
   $strongarm->name = 'ting_online_types';
   $strongarm->value = array(
-    'ebog' => 'ebog',
-    'lydbog (net)' => 'lydbog (net)',
-    'billedbog (net)' => 'billedbog (net)',
-    'tegneserie (net)' => 'tegneserie (net)',
-    'e-node' => 'e-node',
-    'musik (net)' => 'musik (net)',
+    'ebog' => 0,
+    'lydbog (net)' => 0,
+    'billedbog (net)' => 0,
+    'tegneserie (net)' => 0,
+    'e-node' => 0,
+    'musik (net)' => 0,
   );
   $export['ting_online_types'] = $strongarm;
 
