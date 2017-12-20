@@ -13,15 +13,6 @@ projects[ding2][patch][] = "sites/all/patches/update-media.patch"
 ; Upgrade varnish.
 projects[ding2][patch][] = "sites/all/patches/update-varnish.patch"
 
-; Add width: auto, as width in standard theme is set elsewhere.
-projects[ding2][patch][] = "sites/all/patches/ding_popup-width.patch"
-
-; Set resizable false, as standard theme does not support it anyway.
-projects[ding2][patch][] = "sites/all/patches/ding_popup-resizable.patch"
-
-; Add option for adding class on modal.
-projects[ding2][patch][] = "sites/all/patches/ding_popup-add-class.patch"
-
 ; Add custom type labels.
 ; https://github.com/ding2/ding2/pull/141
 projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/141.patch"
@@ -43,8 +34,17 @@ projects[ding2][patch][] = "sites/all/patches/secure_permissions.patch"
 projects[ding2][patch][] = "sites/all/patches/i18n.patch"
 
 ; Unload popup content on close.
-; based on https://github.com/ding2/ding2/pull/274
-projects[ding2][patch][] = "sites/all/patches/popup-unload.patch"
+; https://github.com/ding2/ding2/pull/274
+projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/274.patch"
+
+; ; Add width: auto, as width in standard theme is set elsewhere.
+projects[ding2][patch][] = "sites/all/patches/ding_popup-width.patch"
+
+; Set resizable false, as standard theme does not support it anyway.
+projects[ding2][patch][] = "sites/all/patches/ding_popup-resizable.patch"
+
+; Add option for adding class on modal.
+projects[ding2][patch][] = "sites/all/patches/ding_popup-add-class.patch"
 
 ; Slick for search carousel.
 ; based on a squashed version of https://github.com/ding2/ding2/pull/614
