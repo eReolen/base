@@ -205,19 +205,19 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
         $avail_mapped = _reol_loan_map_availability($availability);
         $loaned = $avail_mapped == REOL_LOAN_STATUS_LOANED;
         $available = $avail_mapped == REOL_LOAN_STATUS_LOANABLE || $avail_mapped == REOL_LOAN_STATUS_RESERVABLE;
-        $entity_type = reol_base_get_type_name($entity->type);
+        $type_class = reol_base_get_type_class($entity->type);
       }
     }
     else {
       $loaned = TRUE;
       $available = FALSE;
-      $entity_type = reol_base_get_type_name($entity->publizon_type);
+      $type_class = reol_base_get_type_class($entity->publizon_type);
     }
 
     // Only do something if title is in publizon.
     if ($loaned || $available) {
       $classes = array('btn', 'btn--try');
-      switch ($entity_type) {
+      switch ($type_class) {
         case "ebook":
           if ($loaned) {
             $text = t('Read');
