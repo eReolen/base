@@ -8,7 +8,7 @@
   font-size: 22px;
 
   &::before {
-    font-family: 'FontAwesome';
+    font-family: $font-fontawesome;
     content: '\f060';
     position: relative;
   }

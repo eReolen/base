@@ -141,6 +141,13 @@ body {
   src: url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.woff") format("woff"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold.svg#SourceSansProSemiBold") format("svg");
 }
 
+@font-face {
+  font-family: "FontAwesome";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/sites/all/themes/orwell/fonts/fontawesome/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("/sites/all/themes/orwell/fonts/fontawesome/fontawesome-webfont.woff2") format("woff2"), url("/sites/all/themes/orwell/fonts/fontawesome/fontawesome-webfont.woff") format("woff"), url("/sites/all/themes/orwell/fonts/fontawesome/fontawesome-webfont.ttf") format("truetype"), url("/sites/all/themes/orwell/fonts/fontawesome/fontawesome-webfont.svg#FontAwesome") format("svg");
+}
+
 body {
   font-family: "SourceSansPro", sans-serif;
 }
@@ -940,7 +947,7 @@ div.messages ul {
 }
 
 .reader__back-button::before {
-  font-family: 'FontAwesome';
+  font-family: "FontAwesome";
   content: '\f060';
   position: relative;
 }
