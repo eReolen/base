@@ -419,3 +419,10 @@ function reol_base_update_7138() {
 function reol_base_update_7139() {
   features_revert_module('reol_base');
 }
+
+/**
+ * Revert groups and fields instances of ting_material_details.
+ */
+function reol_base_update_7140() {
+  features_revert(array('ting_material_details' => array('field_group', 'field_instance')));
+}
