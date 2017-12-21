@@ -29,7 +29,7 @@ function reol_review_paragraph_preprocess_entity(&$variables) {
           'ting_object' => $ting_object_view,
           'author' => implode($review->ting_entity->creators, ', '),
           'review_uri' => $review->link,
-          'type' => reol_base_get_type_name($review->ting_entity->type),
+          'type' => reol_base_get_type_icon($review->ting_entity->type),
           '#object' => $review->ting_entity,
           'icons' => theme('reol_overlay_icons', array('icons' => array('link'))),
         );

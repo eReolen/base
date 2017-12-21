@@ -39,8 +39,7 @@ function latest_content_type_render($subtype, $conf, $panel_args, $context) {
     $block->content = theme('latest', array(
       'ting_objects' => $ting_rendered,
     ));
-    $types = reol_base_get_type();
-    $type = $types[$type];
+    $type = reol_base_get_type_by('int_name', $type);
     $block->title = t('Latest @type_plural', array('@type_plural' => $type['title_plural']));
   }
 

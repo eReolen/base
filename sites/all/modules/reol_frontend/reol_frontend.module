@@ -207,7 +207,7 @@ function reol_frontend_ding_entity_icons(DingEntity $ding_entity) {
     }
 
     if (!isset($ding_entity->reol_no_type_icons)) {
-      $icons[] = reol_base_get_type_name($ding_entity->type);
+      $icons[] = reol_base_get_type_icon($ding_entity->type);
     }
     return theme('reol_overlay_icons', array('icons' => $icons, 'classes' => $classes));
   }

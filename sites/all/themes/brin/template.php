@@ -396,7 +396,7 @@ function brin_preprocess_material_item(&$variables) {
   $ding_entity_id = $element['#cover']['#object']->ding_entity_id;
   $ting_entity = ding_entity_load($ding_entity_id);
 
-  $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+  $add_classes = _brin_type_icon_classes(reol_base_get_type_icon($ting_entity->type), $ting_entity->reply->on_quota);
   $variables['classes_array'] = array_merge($variables['classes_array'], $add_classes);
 }
 
@@ -410,7 +410,7 @@ function brin_preprocess_ting_object_cover(&$variables) {
     !$variables['elements']['#suppress_type_icon']) {
     $ting_entity = $variables['object'];
     if ($ting_entity && $ting_entity->reply) {
-      $add_classes = _brin_type_icon_classes(reol_base_get_type_name($ting_entity->type), $ting_entity->reply->on_quota);
+      $add_classes = _brin_type_icon_classes(reol_base_get_type_icon($ting_entity->type), $ting_entity->reply->on_quota);
       $variables['classes'] = array_merge($variables['classes'], $add_classes);
     }
   }
