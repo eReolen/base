@@ -1,4 +1,6 @@
 
+SKIP_TABLES ?= watchdog,cache,cache_menu
+
 build-dependecies:
 	@dce git --version >/dev/null || dce 'sh -c "apt update && apt install -y git patch unzip"'
 
@@ -26,12 +28,12 @@ statistics:
 dump-ereol:
 	# Ensure that ssh doesn't mess with the dump because of host keys.
 	dce drush @prod status
-	dce drush @prod sql-dump --structure-tables-list=watchdog,cache,cache_menu | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ereol/100-database.sql.gz
+	dce drush @prod sql-dump --structure-tables-list=$(SKIP_TABLES) | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ereol/100-database.sql.gz
 
 dump-ego:
 	# Ensure that ssh doesn't mess with the dump because of host keys.
 	dce drush @ego-prod status
-	dce drush @ego-prod sql-dump --structure-tables-list=watchdog,cache,cache_menu | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ego/100-database.sql.gz
+	dce drush @ego-prod sql-dump --structure-tables-list=$(SKIP_TABLES) | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ego/100-database.sql.gz
 
 sync-dev:
 	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolen_dk && \
