@@ -35,6 +35,10 @@ dump-ego:
 	dce drush @ego-prod status
 	dce drush @ego-prod sql-dump --structure-tables-list=$(SKIP_TABLES) | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ego/100-database.sql.gz
 
+import-ego:
+	dce -c ego drush sql-drop -y
+	(zcat private/docker/db-init/ego/100-database.sql.gz ; cat private/docker/db-init/ego/900-sanitize.sql) | dce drush sqlc
+
 sync-dev:
 	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolen_dk && \
 	drush sql-dump --structure-tables-list=watchdog,cache,cache_menu >/tmp/dev-sync.sql && \
@@ -43,4 +47,14 @@ sync-dev:
 	drush sqlc < /tmp/dev-sync.sql && \
 	rm /tmp/dev-sync.sql && \
 	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolen_dk/sites/default/files/ /data/www/dev_ereolen_dk/sites/default/files/ && \
+	drush updb -y"
+
+sync-ego-stg:
+	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolengo_dk && \
+	drush sql-dump --structure-tables-list=watchdog,cache,cache_menu >/tmp/ego-stg-sync.sql && \
+	cd /data/www/stg_ereolengo_dk && \
+	drush sql-drop -y && \
+	drush sqlc < /tmp/ego-stg-sync.sql && \
+	rm /tmp/ego-stg-sync.sql && \
+	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolengo_dk/sites/default/files/ /data/www/stg_ereolengo_dk/sites/default/files/ && \
 	drush updb -y"
