@@ -4,3 +4,56 @@
  * @file
  * Base functionality for eReolen.
  */
+
+/**
+ * Implements hook_field_default_field_instances_alter().
+ */
+function ereol_base_field_default_field_instances_alter(&$fields) {
+  // Fields defined in ting_material_details.
+  $detail_fields = array(
+    'age',
+    'audience',
+    'classification',
+    'contributor',
+    'description',
+    'extent',
+    'format',
+    'genre',
+    'isbn',
+    'ispartof',
+    'language',
+    'musician',
+    'pegi',
+    'publisher',
+    'referenced',
+    'replaced_by',
+    'replaces',
+    'rights',
+    'source',
+    'spatial',
+    'spoken',
+    'subjects',
+    'subtitles',
+    'tracks',
+    'type',
+    'uri',
+    'version',
+  );
+
+  // Add our (and the 'compact' added by ting_carousel) display mode to
+  // ting_material_details fields, to avoid it being overridden.
+  foreach ($detail_fields as $field) {
+    if (isset($fields['ting_object-ting_object-ting_details_' . $field])) {
+      $fields['ting_object-ting_object-ting_details_' . $field]['display'] += array(
+        'ereol_material_teaser' => array(
+          'label' => 'above',
+          'type' => 'hidden',
+        ),
+        'latest' => array(
+          'label' => 'above',
+          'type' => 'hidden',
+        ),
+      );
+    }
+  }
+}
