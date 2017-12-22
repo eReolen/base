@@ -40,8 +40,8 @@ function ereol_base_field_default_field_instances_alter(&$fields) {
     'version',
   );
 
-  // Add our (and the 'compact' added by ting_carousel) display mode to
-  // ting_material_details fields, to avoid it being overridden.
+  // Add our display mode to ting_material_details fields, to avoid it being
+  // overridden.
   foreach ($detail_fields as $field) {
     if (isset($fields['ting_object-ting_object-ting_details_' . $field])) {
       $fields['ting_object-ting_object-ting_details_' . $field]['display'] += array(
