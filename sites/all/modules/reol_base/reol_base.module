@@ -1308,10 +1308,9 @@ function reol_base_field_group_info_alter(&$groups) {
     $groups['group_ting_right_col_search|ting_object|ting_object|search_result']->data['children'][] = 'ting_subjects';
   }
 
-  // Add ebook format, genre and reader name to material details.
+  // Add ebook format and reader name to material details.
   if (isset($groups['group_material_details|ting_object|ting_object|default'])) {
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_ebook_format';
-    $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_publizon_genre';
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_audiobook_reader';
   }
 }
