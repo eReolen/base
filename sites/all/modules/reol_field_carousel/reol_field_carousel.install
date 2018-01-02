@@ -27,3 +27,51 @@ function reol_field_carousel_field_schema($field) {
     ),
   );
 }
+
+/**
+ * Update field settings.
+ */
+function reol_field_carousel_update_7101() {
+  // Update any existing fields. First look them up.
+  $field_ids = db_select('field_config', 'f')
+    ->fields('f', array('id'))
+    ->condition('f.type', 'ting_search_carousel')
+    ->execute()
+    ->fetchCol();
+
+  if ($field_ids) {
+    // field_update_field won't allow us to change the
+    // type, so go behind it's back and fix it in its table.
+    db_update('field_config')
+      ->condition('id', $field_ids, 'IN')
+      ->fields(array('type' => 'reol_field_carousel'))
+      ->execute();
+
+    // Update widgets and formatters. Get field instances.
+    $instances = db_select('field_config_instance', 'i')
+      ->fields('i', array('id', 'data'))
+      ->condition('i.field_id', $field_ids, 'IN')
+      ->execute()
+      ->fetchAllKeyed();
+    foreach ($instances as $field_id => $data) {
+      $data = unserialize($data);
+
+      // Update widget.
+      if ($data['widget']['type'] == 'ting_search_carousel_widget') {
+        $data['widget']['type'] = 'reol_field_carousel_widget';
+      }
+
+      // Update formatters.
+      foreach ($data['display'] as $name => $settings) {
+        if ($settings['type'] == 'ting_search_carousel_notabs') {
+          $data['display'][$name]['type'] = 'reol_field_carousel_notabs';
+        }
+      }
+
+      db_update('field_config_instance')
+        ->condition('id', $field_id)
+        ->fields(array('data' => serialize($data)))
+        ->execute();
+    }
+  }
+}

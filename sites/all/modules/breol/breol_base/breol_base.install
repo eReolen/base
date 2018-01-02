@@ -207,3 +207,17 @@ function breol_base_update_7124() {
 function breol_base_update_7125() {
   features_revert_module('breol_search_frontend');
 }
+
+/**
+ * Enable reol_frontend.
+ */
+function breol_base_update_7126() {
+  module_enable(array('reol_frontend'), TRUE);
+}
+
+/**
+ * Enable reol_carousel.
+ */
+function breol_base_update_7127() {
+  module_enable(array('reol_carousel'), TRUE);
+}

@@ -110,8 +110,7 @@
     background-color: #ffb81e;
   }
 
-  &.not-reservable,
-  &.unavailable {
+  &.not-reservable &.unavailable {
     display: none;
   }
 

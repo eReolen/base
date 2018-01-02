@@ -1,6 +1,6 @@
 
 SKIP_TABLES ?= watchdog,cache,cache_menu
-
+FROM ?= prod
 build-dependecies:
 	@dce git --version >/dev/null || dce 'sh -c "apt update && apt install -y git patch unzip"'
 
@@ -27,13 +27,17 @@ statistics:
 
 dump-ereol:
 	# Ensure that ssh doesn't mess with the dump because of host keys.
-	dce drush @prod status
-	dce drush @prod sql-dump --structure-tables-list=$(SKIP_TABLES) | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ereol/100-database.sql.gz
+	dce drush @$(FROM) status
+	dce drush @$(FROM) sql-dump --structure-tables-list=$(SKIP_TABLES) | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ereol/100-database.sql.gz
 
 dump-ego:
 	# Ensure that ssh doesn't mess with the dump because of host keys.
-	dce drush @ego-prod status
-	dce drush @ego-prod sql-dump --structure-tables-list=$(SKIP_TABLES) | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ego/100-database.sql.gz
+	dce drush @ego-$(FROM) status
+	dce drush @ego-$(FROM) sql-dump --structure-tables-list=$(SKIP_TABLES) | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ego/100-database.sql.gz
+
+import-ego:
+	dce -c ego drush sql-drop -y
+	(zcat private/docker/db-init/ego/100-database.sql.gz ; cat private/docker/db-init/ego/900-sanitize.sql) | dce drush sqlc
 
 sync-dev:
 	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolen_dk && \
@@ -43,4 +47,14 @@ sync-dev:
 	drush sqlc < /tmp/dev-sync.sql && \
 	rm /tmp/dev-sync.sql && \
 	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolen_dk/sites/default/files/ /data/www/dev_ereolen_dk/sites/default/files/ && \
+	drush updb -y"
+
+sync-ego-stg:
+	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolengo_dk && \
+	drush sql-dump --structure-tables-list=watchdog,cache,cache_menu >/tmp/ego-stg-sync.sql && \
+	cd /data/www/stg_ereolengo_dk && \
+	drush sql-drop -y && \
+	drush sqlc < /tmp/ego-stg-sync.sql && \
+	rm /tmp/ego-stg-sync.sql && \
+	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolengo_dk/sites/default/files/ /data/www/stg_ereolengo_dk/sites/default/files/ && \
 	drush updb -y"

@@ -247,16 +247,6 @@ function wille_preprocess_panels_pane(&$variables) {
 }
 
 /**
- * Preprocess search carousel.
- */
-function wille_preprocess_ting_search_carousel(&$vars) {
-  if (isset($vars['settings']['responsive'][1]['settings']['slidesToShow'])) {
-    $vars['settings']['responsive'][1]['settings']['slidesToShow'] = 3;
-    $vars['settings']['responsive'][1]['settings']['slidesToScroll'] = 3;
-  }
-}
-
-/**
  * Preprocess ting_relations.
  */
 function wille_preprocess_ting_relation(&$vars) {
@@ -280,6 +270,23 @@ function wille_preprocess_ting_relation(&$vars) {
     // Title is ugly per default, fix it.
     $vars['title'] = t('Description from publisher');
   }
+}
+
+/**
+ * Preprocess ting_search_carousel_cover.
+ */
+function wille_preprocess_ting_search_carousel_cover(&$vars) {
+  $cover = $vars['cover']['#cover'];
+
+  $cover_classes = '';
+  if (!isset($cover->placeholder)) {
+    $entity = ding_entity_load($cover->id);
+    if (isset($entity->reply)) {
+      $cover_classes = implode(' ', _wille_type_icon_classes(reol_base_get_type_name($entity->type), $entity->reply->on_quota));
+    }
+  }
+
+  $vars['cover_classes'] = $cover_classes;
 }
 
 /**

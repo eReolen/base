@@ -329,7 +329,14 @@ nonGoogleIframes';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'ting_online_types';
-  $strongarm->value = array();
+  $strongarm->value = array(
+    'ebog' => 0,
+    'lydbog (net)' => 0,
+    'billedbog (net)' => 0,
+    'tegneserie (net)' => 0,
+    'e-node' => 0,
+    'musik (net)' => 0,
+  );
   $export['ting_online_types'] = $strongarm;
 
   $strongarm = new stdClass();

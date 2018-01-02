@@ -47,3 +47,10 @@ function breol_frontend_update_7102() {
 function breol_frontend_update_7103() {
   _breol_frontend_set_module_weight();
 }
+
+/**
+ * Enable reol_bookmark page.
+ */
+function breol_frontend_update_7104() {
+  variable_set('pm_existing_pages_disabled_reol_bookmarks', FALSE);
+}

@@ -52,7 +52,7 @@
       $('.search-snippet-info').each(function () {
         $(this).addClass('js-processed');
         var metaData = $(this).find('.ting-object-right', context);
-        var availability = $(this).find('.js-online, .js-pending');
+        var availability = $(this).find('.search-result--availability');
         metaData.append(availability);
       });
     }

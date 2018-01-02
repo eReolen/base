@@ -47,7 +47,7 @@ function breol_news_field_default_field_bases() {
       'profile2_private' => FALSE,
     ),
     'translatable' => 0,
-    'type' => 'ting_search_carousel',
+    'type' => 'reol_field_carousel',
   );
 
   return $field_bases;

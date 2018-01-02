@@ -357,7 +357,7 @@ input.password-confirm, input.password-field {
   }
 }
 
-.pane-bookmarks {
+.page-user-bookmarks {
 
   .form-item-title {
     border-top: 1px solid $white-dark;
@@ -369,6 +369,11 @@ input.password-confirm, input.password-field {
     .item-checkbox {
       float: left;
       width: 20%;
+
+      label {
+        // Remove label. We don't need it for theming.
+        display: none;
+      }
     }
 
     .form-type-checkbox {

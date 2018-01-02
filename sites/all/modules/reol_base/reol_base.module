@@ -1184,6 +1184,54 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     }
   }
 
+  // Fields defined in ting_material_details.
+  $detail_fields = array(
+    'age',
+    'audience',
+    'classification',
+    'contributor',
+    'description',
+    'extent',
+    'format',
+    'genre',
+    'isbn',
+    'ispartof',
+    'language',
+    'musician',
+    'pegi',
+    'publisher',
+    'referenced',
+    'replaced_by',
+    'replaces',
+    'rights',
+    'source',
+    'spatial',
+    'spoken',
+    'subjects',
+    'subtitles',
+    'tracks',
+    'type',
+    'uri',
+    'version',
+  );
+
+  // Add our (and the 'compact' added by ting_carousel) display mode to
+  // ting_material_details fields, to avoid it being overridden.
+  foreach ($detail_fields as $field) {
+    if (isset($fields['ting_object-ting_object-ting_details_' . $field])) {
+      $fields['ting_object-ting_object-ting_details_' . $field]['display'] += array(
+        'compact' => array(
+          'label' => 'above',
+          'type' => 'hidden',
+        ),
+        'review' => array(
+          'label' => 'above',
+          'type' => 'hidden',
+        ),
+      );
+    }
+  }
+
   // Pull relations a bit up in material view.
   if (isset($fields['ting_object-ting_object-ting_relations'])) {
     $fields['ting_object-ting_object-ting_relations']['display']['default']['weight'] = 5;
@@ -1206,6 +1254,11 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_details_subjects']['display']['default']['type'] = 'hidden';
   }
 
+  // Remove description from material details.
+  if (isset($fields['ting_object-ting_object-ting_details_description'])) {
+    $fields['ting_object-ting_object-ting_details_description']['display']['default']['type'] = 'hidden';
+  }
+
   // Link publisher to a search.
   if (isset($fields['ting_object-ting_object-ting_details_publisher'])) {
     $fields['ting_object-ting_object-ting_details_publisher']['display']['default']['type'] = 'ting_details_generic_search';
@@ -1216,6 +1269,34 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   if (isset($fields['ting_object-ting_object-ting_details_audience'])) {
     $fields['ting_object-ting_object-ting_details_audience']['display']['default']['weigth'] = 65;
   }
+
+  // Compact display mode.
+  // Use a formatter that doesn't make the author a link.
+  if (isset($fields['ting_object-ting_object-ting_author'])) {
+    $fields['ting_object-ting_object-ting_author']['display']['default']['module'] = 'reol_base';
+    $fields['ting_object-ting_object-ting_author']['display']['default']['type'] = 'reol_base_author_plain';
+    $fields['ting_object-ting_object-ting_author']['display']['default']['label'] = 'hidden';
+  }
+
+  // Remove type prefix.
+  if (isset($fields['ting_object-ting_object-ting_title'])) {
+    $fields['ting_object-ting_object-ting_title']['display']['default']['settings']['prefix_type'] = 'no';
+    $fields['ting_object-ting_object-ting_title']['display']['default']['label'] = 'hidden';
+  }
+
+  // Remove rating widget in all displays.
+  if (isset($fields['ting_object-ting_object-ding_entity_rating_action'])) {
+    foreach (array_keys($fields['ting_object-ting_object-ding_entity_rating_action']['display']) as $display) {
+      $fields['ting_object-ting_object-ding_entity_rating_action']['display'][$display]['type'] = 'hidden';
+    }
+  }
+
+  // Remove rating display in all displays.
+  if (isset($fields['ting_object-ting_object-ding_entity_rating_result'])) {
+    foreach (array_keys($fields['ting_object-ting_object-ding_entity_rating_result']['display']) as $display) {
+      $fields['ting_object-ting_object-ding_entity_rating_result']['display'][$display]['type'] = 'hidden';
+    }
+  }
 }
 
 /**
@@ -1225,6 +1306,12 @@ function reol_base_field_group_info_alter(&$groups) {
   if (isset($groups['group_ting_right_col_search|ting_object|ting_object|search_result'])) {
     // Put ting_subjects in the right column in search_result view_mode.
     $groups['group_ting_right_col_search|ting_object|ting_object|search_result']->data['children'][] = 'ting_subjects';
+  }
+
+  // Add ebook format and reader name to material details.
+  if (isset($groups['group_material_details|ting_object|ting_object|default'])) {
+    $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_ebook_format';
+    $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_audiobook_reader';
   }
 }
 

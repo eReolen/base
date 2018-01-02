@@ -171,7 +171,7 @@ function breol_news_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'reol_field_carousel',
         'settings' => array(),
-        'type' => 'ting_search_carousel_notabs',
+        'type' => 'reol_field_carousel_notabs',
         'weight' => 2,
       ),
       'teaser' => array(
@@ -204,7 +204,7 @@ function breol_news_field_default_field_instances() {
       'active' => 0,
       'module' => 'reol_field_carousel',
       'settings' => array(),
-      'type' => 'ting_search_carousel_widget',
+      'type' => 'reol_field_carousel_widget',
       'weight' => 5,
     ),
   );

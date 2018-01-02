@@ -11,12 +11,13 @@
 
 $carousel-outer-padding: 0 30px;
 
-.carousel-tab {
+.ding-carousel {
   ul {
-    display: block;
+    display: flex;
+    vertical-align: top;
     position: relative;
     height: auto;
-    margin-bottom: 25px;
+    margin: 0 0 25px 0;
     padding: $carousel-outer-padding;
 
     @include media($phone) {
@@ -26,24 +27,20 @@ $carousel-outer-padding: 0 30px;
   }
 
   li {
-    float: left;
+    display: inline-block;
+    flex: none;
     text-align: left;
     margin-bottom: 1em;
     margin-right: 0;
+    width: 200px;
 
     @include media($phone) {
       margin-right: 5px;
     }
   }
 
-  .description {
-    @extend h2;
-    font-size: 26px;
-    color: $title-color;
-    text-align: left;
+  .carousel__header {
     padding: 0 30px 30px 33px;
-    font-weight: normal;
-    font-family: $font-light;
 
     @include media($phone) {
       padding: 0;
@@ -52,8 +49,8 @@ $carousel-outer-padding: 0 30px;
   }
 }
 
+// Old slick carousel.
 .ting-search-carousel {
-
   .slick-arrow {
     background-repeat: no-repeat;
     display: block;
@@ -72,6 +69,44 @@ $carousel-outer-padding: 0 30px;
     left: 5px;
   }
   .slick-next.slick-arrow {
+    background-image: url('../svg/arrow_right.svg');
+    right: 5px;
+  }
+}
+
+// New Swiper carousel.
+.ding-carousel {
+  position: relative;
+
+  .carousel-wrapper {
+    margin: 0 30px;
+    overflow: hidden;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  .button-prev,
+  .button-next {
+    position: absolute;
+    background-repeat: no-repeat;
+    display: block;
+    height: 16px;
+    // IE renders the SVG at the right size, but centered, which makes the
+    // left/right positioning in the following classes not appear to work if
+    // the real size of the element is much larger.
+    width: 16px;
+    top: 40%;
+    margin: auto;
+    cursor: pointer;
+  }
+
+  .button-prev {
+    background-image: url('../svg/arrow_left.svg');
+    left: 5px;
+  }
+  .button-next {
     background-image: url('../svg/arrow_right.svg');
     right: 5px;
   }
@@ -103,6 +138,9 @@ $carousel-outer-padding: 0 30px;
   img {
     width: 100%;
     height: auto;
+    background-image: url('../images/placeholder.png');
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 }
 
