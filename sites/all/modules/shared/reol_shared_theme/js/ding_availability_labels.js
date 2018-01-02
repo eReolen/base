@@ -114,7 +114,6 @@
         var reservable = status['reservable'];
         var available = status['available'];
 
-        console.log(status);
         var group = null;
         if ($('.js-online', groups_wrapper).length !== 0) {
           group = $('.js-online', groups_wrapper);
