@@ -11,10 +11,17 @@
  * Make sure we have reviews fetched and cached.
  */
 function reol_review_cron() {
-  // Fetch the newest.
-  reol_review_fetch_and_queue(20, 0);
-  // Fetch legacy reviews, if we haven't already.
-  reol_review_fetch_old();
+  // Import files.
+  $index = variable_get('reol_review_file_index', 1);
+  if ($index > 0) {
+    $queue = DrupalQueue::get('reol_review_load_file');
+    $path = drupal_get_path('module', 'reol_review') . '/reviews';
+    while (file_exists($path . '/review_' . $index . '.json')) {
+      $queue->createItem($index);
+      $index++;
+    }
+    variable_set('reol_review_file_index', -1);
+  }
 
   // Reschedule old reviews we didn't find locally for periodic recheck.
   $days = variable_get('reol_review_reshedule_unknown_days', 7);
@@ -47,7 +54,7 @@ function reol_review_cron() {
  * Implements hook_cron_queue_info().
  */
 function reol_review_cron_queue_info() {
-  // We're running with two queues, to ensure that new entries are
+  // We're running with two processing queues, to ensure that new entries are
   // always processed, even when there's old in the queue.
   $queues['reol_review_new'] = array(
     'worker callback' => 'reol_review_process_queue',
@@ -56,6 +63,11 @@ function reol_review_cron_queue_info() {
 
   $queues['reol_review_old'] = array(
     'worker callback' => 'reol_review_process_queue',
+    'time' => 120,
+  );
+
+  $queues['reol_review_load_file'] = array(
+    'worker callback' => 'reol_review_load_file',
     'time' => 120,
   );
 
@@ -70,34 +82,15 @@ function reol_review_ctools_plugin_directory($owner, $plugin_type) {
 }
 
 /**
- * Fetch reviews from Litteratursiden.
- *
- * @param int $items
- *   Number of items to return.
- * @param int $start
- *   Offset to start list at.
- *
- * @return array
- *   The data returned from feed.
+ * Ctools block theme function.
  */
-function reol_review_fetch_reviews($items, $start) {
-  $feed_url = variable_get('reol_review_litteratursiden_feed', 'http://www.litteratursiden.dk/service/recommendations');
-  if ($feed_url) {
-    $feed_url = drupal_parse_url($feed_url);
-    $feed_url['query']['count'] = $items;
-    $feed_url['query']['offset'] = $start;
-
-    $curl = curl_init();
-
-    curl_setopt($curl, CURLOPT_HEADER, 0);
-    // Set curl to return the data instead of printing it to the browser.
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl, CURLOPT_URL, url($feed_url['path'], $feed_url));
-    $data = curl_exec($curl);
-    curl_close($curl);
-    return json_decode($data);
-  }
-  return array();
+function reol_review_theme(&$theme, $plugin) {
+  return array(
+    'single_review' => array(
+      'variables' => array('vars' => NULL),
+      'template' => 'templates/single_review',
+    ),
+  );
 }
 
 /**
@@ -132,7 +125,8 @@ function reol_review_get_random_reviews($type = NULL, $count = 1) {
     }
     else {
       // If we can't find the object anymore, remove the review from
-      // selection.
+      // selection. We're not resetting processed just letting it be reprocessed
+      // as already scheduled.
       db_update('reol_review_reviews')
         ->fields(array(
           'process' => $review->process,
@@ -152,61 +146,31 @@ function reol_review_get_random_reviews($type = NULL, $count = 1) {
 }
 
 /**
- * Fetch old reviews by going backwards in feed.
+ * Cron queue callback.
+ *
+ * Import a file and queue reviews for processing.
  */
-function reol_review_fetch_old() {
-  $offset = variable_get('reol_review_fetch_offset', -1);
-  // -1 means we're all done.
-  if ($offset < 0) {
+function reol_review_load_file($index) {
+  $queue = DrupalQueue::get('reol_review_new');
+  $file = drupal_get_path('module', 'reol_review') . '/reviews/review_' . $index . '.json';
+  $data = json_decode(file_get_contents($file));
+  if (!is_array($data)) {
     return;
   }
 
-  // Do 5 fetches, giving us 100 reviews.
-  $iterations = 5;
-  for ($i = 0; $i < $iterations; $i++) {
-    if (!reol_review_fetch_and_queue(20, $offset, 'reol_review_old')) {
-      // Reached the end. Make a note and return.
-      variable_set('reol_review_fetch_offset', -1);
-      return;
-    }
-    $offset += 20;
-    // Setting on each iteration, in case we get interrupted.
-    variable_set('reol_review_fetch_offset', $offset);
-  }
-}
-
-/**
- * Fetch and queue reviews for later processing.
- */
-function reol_review_fetch_and_queue($count, $offset, $queue_name = 'reol_review_new') {
-  $reviews = reol_review_fetch_reviews($count, $offset);
-
-  if (empty($reviews) || isset($reviews->error) && !$reviews->error) {
-    return FALSE;
-  }
-
-  $queue = DrupalQueue::get($queue_name);
-  // Create a lookup table of those we already have.
-  $review_links = array();
-  foreach ($reviews as $review) {
-    $review_links[] = $review->link;
-  }
-
-  $existing = db_select('reol_review_reviews', 'r')
-    ->fields('r', array('link', 'link'))
-    ->condition('link', $review_links)
-    ->execute()
-    ->fetchAllKeyed();
-
-  foreach ($reviews as $review) {
-    // Skip existing, and invalid reviews..
-    if ($existing[$review->link] ||
-        empty($review->isbn) ||
-        empty($review->link)) {
+  foreach ($data as $review) {
+    // Skip invalid reviews.
+    if (!is_object($review) ||
+      empty($review->isbn) ||
+      empty($review->url) ||
+      empty($review->created_at) ||
+      empty($review->description) ||
+      empty($review->book_author) ||
+      empty($review->book_title)) {
       continue;
     }
     $isbn = trim($review->isbn);
-    $link = trim($review->link);
+    $link = trim($review->url);
 
     // Skip if they're too long. Not using drupal_strlen() as we want
     // the ASCII length, not multibyte length.
@@ -214,20 +178,28 @@ function reol_review_fetch_and_queue($count, $offset, $queue_name = 'reol_review
       continue;
     }
 
-    $id = db_insert('reol_review_reviews')
-      ->fields(array(
-        'isbn' => $isbn,
-        'link' => $link,
-        'process' => 1,
-        'created' => $review->credate,
-        'description' => $review->description,
-      ))
-      ->execute();
+    try {
+      $id = db_insert('reol_review_reviews')
+        ->fields(
+          array(
+            'isbn' => $isbn,
+            'link' => $link,
+            'process' => 1,
+            // Should be an ISO8601 date.
+            'created' => strtotime($review->created_at),
+            'description' => $review->description,
+            'title' => trim($review->book_title),
+            'author' => trim($review->book_author),
+          )
+        )
+        ->execute();
 
-    $queue->createItem($id);
+      $queue->createItem($id);
+    }
+    catch (Exception $e) {
+      // Ignore errors, most likely duplicate keys.
+    }
   }
-
-  return TRUE;
 }
 
 /**
@@ -247,42 +219,33 @@ function reol_review_process_queue($rrid) {
     return;
   }
 
+  // Sanitize ISBN.
   $isbn = reol_base_convert_to_isbn($review->isbn);
 
   if ($isbn) {
-    // We have to explicitly search for each title, instead
-    // of searching for more at a time, as the ISBN-number they are
-    // found on is not necessarily their own, it could be the physical
-    // books ISBN. Therefore there is no way to map a result to the
-    // one fetched from Ding, if searches are not done on each result.
+    // Search on author/title, one at a time, so we can properly map them.
     module_load_include('client.inc', 'ting');
-    $ting_result = ting_do_search($isbn);
-    if ($ting_result) {
-      // If we have found exactly one.
-      // If more have been found we cannot count on the results.
-      if ($ting_result->numTotalObjects == 1) {
-        list($ding_entity_id) = array_keys($ting_result->collections);
-        $ting_entity = ding_entity_load($ding_entity_id);
+    $ting_result = ting_do_search(sprintf('phrase.title="%s" and phrase.creator="%s"', $review->title, $review->author));
+    if ($ting_result && ($ting_result->numTotalObjects > 0)) {
+      // Use the first one. We're counting on multiple hits just being the
+      // different ebook/audiobooks of the same work.
+      list($ding_entity_id) = array_keys($ting_result->collections);
+      $ting_entity = ding_entity_load($ding_entity_id);
 
-        // Make sure the title does exist in publizon
-        // and that the title has a cover.
-        $product = publizon_get_product_cover($ting_entity->localId);
+      // Make sure the title does exist in publizon
+      // and that the title has a cover.
+      $product = publizon_get_product_cover($ting_entity->localId);
 
-        // If it does, we add the info to our table.
-        if ($product) {
-          $type = reol_base_get_type_name($ting_entity->type);
-          if ($type) {
-            $review->type = $type;
-            $review->ding_entity_id = $ding_entity_id;
-          }
+      // If it does, we add the info to our table.
+      if ($product) {
+        $type = reol_base_get_type_name($ting_entity->type);
+
+        if ($type) {
+          $review->type = $type;
+          $review->ding_entity_id = $ding_entity_id;
         }
-
       }
     }
-    else {
-      watchdog('reol_review', 'Ting search failed.', array(), WATCHDOG_WARNING);
-    }
-
   }
 
   $review->process = 0;

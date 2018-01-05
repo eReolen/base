@@ -1,0 +1,16 @@
+name = Author portrait paragraph
+description = Author portrait paragraph
+core = 7.x
+package = eReolen paragraphs
+version = 7.x-1.0
+dependencies[] = color_field
+dependencies[] = entityreference
+dependencies[] = features
+dependencies[] = paragraphs
+features[features_api][] = api:2
+features[field_base][] = field_author_portrait
+features[field_base][] = field_portrait_color
+features[field_instance][] = paragraphs_item-author_portrait-field_author_portrait
+features[field_instance][] = paragraphs_item-author_portrait-field_portrait_color
+features[paragraphs][] = author_portrait
+project path = sites/all/modules/paragraphs

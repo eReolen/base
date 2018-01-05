@@ -42,7 +42,7 @@
           modal: true,
           draggable: false,
           closeText : Drupal.t('close'),
-          close: function (event, ui) {
+          close: function(event, ui) {
             if (response['refresh'] || self.refresh === true) {
               // Ensure that the page is not reload, when the log in dialog is
               // closed.
@@ -54,8 +54,9 @@
             else {
               // Unload content. Needed if the content was a video,
               // for instance.
-              $(this).remove();
+              $(this).empty();
             }
+
           }
         });
       }
@@ -72,7 +73,7 @@
       this.dialogs[response.name].dialog('open');
     },
 
-    open: function (response) {
+    open: function(response) {
       if (this.states[response.name] == undefined) {
         this.states[response.name] = [];
       }
@@ -82,7 +83,7 @@
       this.setState(response);
     },
 
-    close: function (response) {
+    close: function(response) {
       while (this.states[response.name].length > 0) {
         var state = this.states[response.name].pop();
         Drupal.detachBehaviors(this.dialog);

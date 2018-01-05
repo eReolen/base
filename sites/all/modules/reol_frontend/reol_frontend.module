@@ -58,6 +58,16 @@ function reol_frontend_theme() {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_frontend_form_user_login_block_alter(&$form, &$form_state) {
+  // Override Drupals default behavior of redirecting back to the page where the
+  // login form block was displayed after login. We want to end up on /user in
+  // all cases.
+  $form['#action'] = url(current_path());
+}
+
+/**
  * Returns HTML for overlay icons.
  */
 function theme_reol_overlay_icons($variables) {
@@ -136,33 +146,6 @@ function reol_frontend_ctools_plugin_directory($owner, $plugin_type) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
- */
-function reol_frontend_form_ding_page_node_form_alter(&$form, &$form_state) {
-  $value = variable_get('reol_frontend_quick_guide_nid', 0) == (isset($form['#node']->nid) ? $form['#node']->nid : -1);
-  $form['options']['quick_guide'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Use as quick guide'),
-    '#description' => t('Use this page as the quick guide page. If another one has been set earlier, this one takes over.'),
-    '#default_value' => $value,
-  );
-
-  $form['actions']['submit']['#submit'][] = 'reol_frontend_form_ding_page_node_form_submit';
-}
-
-/**
- * Custom submit handler for saving the quick guide nid.
- */
-function reol_frontend_form_ding_page_node_form_submit($form, &$form_state) {
-  if ($form_state['values']['quick_guide']) {
-    variable_set('reol_frontend_quick_guide_nid', $form_state['nid']);
-  }
-  elseif (variable_get('reol_frontend_quick_guide_nid', 0) == $form_state['nid']) {
-    variable_del('reol_frontend_quick_guide_nid');
-  }
-}
-
-/**
  * Implements hook_views_query_alter().
  *
  * When the field reol_entity_type is present in the where
@@ -224,7 +207,7 @@ function reol_frontend_ding_entity_icons(DingEntity $ding_entity) {
     }
 
     if (!isset($ding_entity->reol_no_type_icons)) {
-      $icons[] = reol_base_get_type_name($ding_entity->type);
+      $icons[] = reol_base_get_type_icon($ding_entity->type);
     }
     return theme('reol_overlay_icons', array('icons' => $icons, 'classes' => $classes));
   }
@@ -320,9 +303,47 @@ function reol_frontend_form_article_node_form_alter(&$form, &$form_state) {
 }
 
 /**
- * Implements hook_ting_pre_execute().
+ * Implements hook_form_FORM_ID_alter() for search_block_form().
  *
- * @todo merge with breol_frontend_ting_pre_execute().
+ * Disable ting_search_autocompletes autocomplete, we don't use it. Ideally we'd
+ * just disable the module, but ding_ting_frontend depends on it.
+ *
+ * @see reol_frontend_module_implements_alter()
+ */
+function reol_frontend_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'search_block_form') {
+    if (isset($form['search_block_form']['#autocomplete_path'])) {
+      unset($form['search_block_form']['#autocomplete_path']);
+    }
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Remove ding_list buttons from materials.
+ *
+ * Adjusts hooks so we get in after
+ * ting_search_autocomplete_form_search_block_form_alter().
+ *
+ * @see reol_frontend_form_search_block_form_alter()
+ */
+function reol_frontend_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'ding_entity_buttons') {
+    unset($implementations['ding_list']);
+  }
+
+  // You'd think we should look for form_search_block_form_alter, but, no.
+  if ($hook == 'form_alter' &&
+    isset($implementations['reol_frontend'])) {
+    $group = $implementations['reol_frontend'];
+    unset($implementations['reol_frontend']);
+    $implementations['reol_frontend'] = $group;
+  }
+}
+
+/**
+ * Implements hook_ting_pre_execute().
  */
 function reol_frontend_ting_pre_execute($request) {
   // Request both dkabm and marcxchange formats for all queries. DKABM data is
@@ -335,8 +356,6 @@ function reol_frontend_ting_pre_execute($request) {
  * Implements hook_ting_post_execute().
  *
  * Adds the quota status to the ting object response.
- *
- * @todo merge with breol_frontend_ting_post_execute().
  */
 function reol_frontend_ting_post_execute($request, $response, $raw_response) {
   if (!is_object($response)) {
@@ -376,11 +395,18 @@ function reol_frontend_ting_post_execute($request, $response, $raw_response) {
 }
 
 /**
+ * Preprocess materials_item.
+ *
+ * Remove the rating widget added by ding_entity_rating.
+ */
+function reol_frontend_preprocess_material_item(&$variables) {
+  unset($variables['information']['ding_entity_rating']);
+}
+
+/**
  * Return whether the material is on quota.
  *
  * According to the given marcxchange data.
- *
- * @todo merge with _breol_frontend_is_quotaed().
  */
 function _reol_frontend_is_quotaed($marc_records) {
   if (!is_array($marc_records)) {

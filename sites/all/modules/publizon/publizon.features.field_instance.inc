@@ -10,7 +10,7 @@
 function publizon_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'profile2-provider_publizon-field_email'
+  // Exported field_instance: 'profile2-provider_publizon-field_email'.
   $field_instances['profile2-provider_publizon-field_email'] = array(
     'bundle' => 'provider_publizon',
     'default_value' => NULL,
@@ -43,7 +43,7 @@ function publizon_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'profile2-provider_publizon-field_phone'
+  // Exported field_instance: 'profile2-provider_publizon-field_phone'.
   $field_instances['profile2-provider_publizon-field_phone'] = array(
     'bundle' => 'provider_publizon',
     'default_value' => NULL,
@@ -83,7 +83,8 @@ function publizon_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'profile2-provider_publizon-field_publizon_retailer_id'
+  // Exported field_instance:
+  // 'profile2-provider_publizon-field_publizon_retailer_id'.
   $field_instances['profile2-provider_publizon-field_publizon_retailer_id'] = array(
     'bundle' => 'provider_publizon',
     'default_value' => NULL,

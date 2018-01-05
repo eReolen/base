@@ -1,0 +1,13 @@
+version: "2"
+
+syncs:
+  ego-webroot-sync:
+    notify_terminal: true
+    src: './'
+    sync_excludes: ['.sass-cache/', 'sass-cache/', 'bower_components/', 'node_modules/', '.git/', '.idea', 'advagg_js/', 'advagg_css/']
+    watch_excludes: ['.*/.git', '.*/node_modules', '.*/bower_components', '.*/sass-cache', '.*/.sass-cache', '.*/.sass-cache', '.gitignore', '.idea']
+  ereol-webroot-sync:
+    notify_terminal: true
+    src: './'
+    sync_excludes: ['.sass-cache/', 'sass-cache/', 'bower_components/', 'node_modules/', '.git/', '.idea', 'advagg_js/', 'advagg_css/']
+    watch_excludes: ['.*/.git', '.*/node_modules', '.*/bower_components', '.*/sass-cache', '.*/.sass-cache', '.*/.sass-cache', '.gitignore', '.idea']

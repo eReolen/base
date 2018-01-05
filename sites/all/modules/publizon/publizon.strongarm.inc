@@ -18,6 +18,12 @@ function publizon_strongarm() {
     0 => 'ebog',
     1 => 'lydbog (net)',
     2 => 'billedbog (net)',
+    3 => 'tegneserie (net)',
+    4 => 'graphic novel (net)',
+    5 => 'musik (net)',
+    6 => 'årbog (net)',
+    7 => 'bog',
+    8 => 'e-node',
   );
   $export['ting_reservable_types'] = $strongarm;
 

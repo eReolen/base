@@ -316,67 +316,6 @@ function reol_base_preprocess_material_item(&$variables) {
 }
 
 /**
- * Get the name of a type from the type returned from Ting.
- *
- * @param string $type
- *   The string type from Ting.
- *
- * @return string
- *   Our own name for the type, or array of type names if no type is input,
- *   keyed by our internal name of the type.
- *   If type is not found, FALSE is returned.
- */
-function reol_base_get_type_name($type) {
-  $type = reol_base_get_type($type);
-  return isset($type['int_name']) ? $type['int_name'] : FALSE;
-}
-
-/**
- * Get the definition of a type from the type returned from Ting.
- *
- * If type is not input, it returns an array of names of
- * types we support.
- *
- * @param string $type
- *   The string type from Ting or FALSE/empty to return all.
- *
- * @return array
- *   Type definition.
- */
-function reol_base_get_type($type = FALSE) {
-  $types = _reol_base_get_types();
-
-  // If no argument received, return all types.
-  if (!$type) {
-    return $types;
-  }
-
-  // Find type.
-  foreach ($types as $t) {
-    if ($t['ext_name'] == strtolower($type)) {
-      return $t;
-    }
-  }
-
-  // If we end up here, type not found.
-  return FALSE;
-}
-
-/**
- * Get the ting type for a machine name.
- *
- * @param string $machine_name
- *   The machine name to get ting type for.
- *
- * @return string
- *   The ting type for the machine name or FALSE if not found.
- */
-function reol_base_get_ting_type($machine_name) {
-  $types = _reol_base_get_types();
-  return isset($types[$machine_name]) ? $types[$machine_name]['ext_name'] : FALSE;
-}
-
-/**
  * Implements hook_date_format_Types().
  */
 function reol_base_date_format_types() {
@@ -417,40 +356,186 @@ function reol_base_convert_to_isbn($isbn) {
  *
  * @return array
  *   Array of types keyed by our internal name. Containing the following info:
- *     External name (ext_name)
- *     Internal name (int_name)
- *     Title (title)
+ *   - ext_name: Datawell type.
+ *   - int_name: Our identifier for this type.
+ *   - title: Human readable title.
+ *   - title_plural: Human readable title, plural.
+ *   - path: Path of main page (possibly obsoleted).
+ *   - publizon_formats: The publizon formats used by this type.
  */
 function _reol_base_get_types() {
-  return array(
-    'audiobook' => array(
-      'ext_name' => 'lydbog (net)',
-      'int_name' => 'audiobook',
-      'title' => t('Audiobook'),
-      'title_plural' => t('Audiobooks'),
-      'path' => 'lydboeger',
-      // 0 format is a bug in publizon, we assume they must be audiobooks. Ref
-      // REOL-253.
-      'publizon_formats' => array(0, 71),
-    ),
-    'ebook' => array(
-      'ext_name' => 'ebog',
-      'int_name' => 'ebook',
-      'title' => t('E-book'),
-      'title_plural' => t('E-books'),
-      'path' => 'eboeger',
-      'publizon_formats' => array(50, 58),
-    ),
-    'epicturebook' => array(
-      'ext_name' => 'billedbog (net)',
-      // Hackery: Treat these as ebooks.
-      'int_name' => 'ebook',
-      'title' => t('Picture E-book'),
-      'title_plural' => t('Picture E-books'),
-      'path' => 'ebilledboeger',
-      'publizon_formats' => array(50, 58),
-    ),
-  );
+  $types = &drupal_static(__FUNCTION__, array());
+
+  if (empty($types)) {
+    $base_types = array(
+      'audiobook' => array(
+        'ext_name' => 'lydbog (net)',
+        'int_name' => 'audiobook',
+        'title' => t('Audiobook'),
+        'title_plural' => t('Audiobooks'),
+        'path' => 'lydboeger',
+        // 0 format is a bug in publizon, we assume they must be audiobooks. Ref
+        // REOL-253.
+        'publizon_formats' => array(0, 71),
+        'icon' => 'audiobook',
+      ),
+      'ebook' => array(
+        'ext_name' => 'ebog',
+        'int_name' => 'ebook',
+        'title' => t('E-book'),
+        'title_plural' => t('E-books'),
+        'path' => 'eboeger',
+        'publizon_formats' => array(50, 58),
+        'icon' => 'ebook',
+      ),
+    );
+
+    // Subtypes 'extends' the base classes.
+    $sub_types = array(
+      'epicturebook' => array(
+        'base' => 'ebook',
+        'ext_name' => 'billedbog (net)',
+      ),
+      'online comic' => array(
+        'base' => 'ebook',
+        'ext_name' => 'tegneserie (net)',
+      ),
+      'online graphic novel' => array(
+        'base' => 'ebook',
+        'ext_name' => 'graphic novel (net)',
+      ),
+      'online music' => array(
+        'base' => 'audiobook',
+        'ext_name' => 'musik (net)',
+      ),
+      'online yearbook' => array(
+        'base' => 'ebook',
+        'ext_name' => 'årbog (net)',
+      ),
+      'online book' => array(
+        'base' => 'ebook',
+        'ext_name' => 'bog',
+      ),
+      'online sheet music' => array(
+        'base' => 'ebook',
+        'ext_name' => 'e-node',
+      ),
+    );
+
+    $types = $base_types;
+    foreach ($sub_types as $sub_type => $type) {
+      // Clone base type.
+      $types[$sub_type] = $base_types[$type['base']];
+      unset($type['base']);
+
+      foreach ($type as $name => $value) {
+        $types[$sub_type][$name] = $value;
+      }
+    }
+  }
+
+  return $types;
+}
+
+/**
+ * Return types indexed by property.
+ */
+function reol_base_get_types_by($key) {
+  // Reverse array so the first types will overwrite the latter in case of
+  // shared key values.
+  $types = array_reverse(_reol_base_get_types());
+  $filtered = array_reduce($types, function ($carry, $elem) use ($key) {
+    $carry[$elem[$key]] = $elem;
+    return $carry;
+  }, array());
+
+  // Reverse again.
+  return array_reverse($filtered);
+}
+
+/**
+ * Return type by property.
+ */
+function reol_base_get_type_by($key, $value) {
+  $types = reol_base_get_types_by($key);
+  return isset($types['value']) ? $types['value'] : FALSE;
+}
+
+/**
+ * Get the name of a type from the type returned from Ting.
+ *
+ * @param string $type
+ *   The string type from Ting.
+ *
+ * @return string
+ *   Our own name for the type.
+ */
+function reol_base_get_type_name($type) {
+  $type = reol_base_get_type($type);
+  return isset($type['int_name']) ? $type['int_name'] : FALSE;
+}
+
+/**
+ * Get the definition of a type from the type returned from Ting.
+ *
+ * If type is not input, it returns an array of names of
+ * types we support.
+ *
+ * @param string $type
+ *   The string type from Ting or FALSE/empty to return all.
+ *
+ * @return array
+ *   Type definition.
+ */
+function reol_base_get_type($type = FALSE) {
+  $types = _reol_base_get_types();
+
+  // If no argument received, return all types.
+  if (!$type) {
+    return $types;
+  }
+
+  // Find type.
+  foreach ($types as $t) {
+    if ($t['ext_name'] == drupal_strtolower($type)) {
+      return $t;
+    }
+  }
+
+  // If we end up here, type not found.
+  return FALSE;
+}
+
+/**
+ * Get the icon name for a ting type.
+ *
+ * @param string $type
+ *   The string type from Ting.
+ *
+ * @return string
+ *   Our icon name.
+ */
+function reol_base_get_type_icon($type) {
+  $type = reol_base_get_type($type);
+  return isset($type['icon']) ? $type['icon'] : FALSE;
+}
+
+/**
+ * Get the type class for the type.
+ *
+ * 'audiobook' or 'ebook'.
+ *
+ * @param string $type
+ *   The string type from Ting.
+ *
+ * @return string
+ *   The type class.
+ */
+function reol_base_get_type_class($type) {
+  $type = reol_base_get_type($type);
+  // Currently the class maps to the int_name (all sub-types has a base type
+  // int_name).
+  return isset($type['int_name']) ? $type['int_name'] : FALSE;
 }
 
 /**
@@ -460,10 +545,24 @@ function _reol_base_get_types() {
  *   Array of types to choose from.
  */
 function reol_base_get_entity_types() {
-  return array_reduce(_reol_base_get_types(), function ($carry, $elem) {
+  return array_reduce(reol_base_get_types_by('int_name'), function ($carry, $elem) {
     $carry[$elem['int_name']] = $elem['title'];
     return $carry;
   }, array());
+}
+
+/**
+ * Get the ting type for a machine name.
+ *
+ * @param string $machine_name
+ *   The machine name to get ting type for.
+ *
+ * @return string
+ *   The ting type for the machine name or FALSE if not found.
+ */
+function reol_base_get_ting_type($machine_name) {
+  $types = _reol_base_get_types();
+  return isset($types[$machine_name]) ? $types[$machine_name]['ext_name'] : FALSE;
 }
 
 /**
@@ -1085,6 +1184,54 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     }
   }
 
+  // Fields defined in ting_material_details.
+  $detail_fields = array(
+    'age',
+    'audience',
+    'classification',
+    'contributor',
+    'description',
+    'extent',
+    'format',
+    'genre',
+    'isbn',
+    'ispartof',
+    'language',
+    'musician',
+    'pegi',
+    'publisher',
+    'referenced',
+    'replaced_by',
+    'replaces',
+    'rights',
+    'source',
+    'spatial',
+    'spoken',
+    'subjects',
+    'subtitles',
+    'tracks',
+    'type',
+    'uri',
+    'version',
+  );
+
+  // Add our (and the 'compact' added by ting_carousel) display mode to
+  // ting_material_details fields, to avoid it being overridden.
+  foreach ($detail_fields as $field) {
+    if (isset($fields['ting_object-ting_object-ting_details_' . $field])) {
+      $fields['ting_object-ting_object-ting_details_' . $field]['display'] += array(
+        'compact' => array(
+          'label' => 'above',
+          'type' => 'hidden',
+        ),
+        'review' => array(
+          'label' => 'above',
+          'type' => 'hidden',
+        ),
+      );
+    }
+  }
+
   // Pull relations a bit up in material view.
   if (isset($fields['ting_object-ting_object-ting_relations'])) {
     $fields['ting_object-ting_object-ting_relations']['display']['default']['weight'] = 5;
@@ -1107,6 +1254,11 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_details_subjects']['display']['default']['type'] = 'hidden';
   }
 
+  // Remove description from material details.
+  if (isset($fields['ting_object-ting_object-ting_details_description'])) {
+    $fields['ting_object-ting_object-ting_details_description']['display']['default']['type'] = 'hidden';
+  }
+
   // Link publisher to a search.
   if (isset($fields['ting_object-ting_object-ting_details_publisher'])) {
     $fields['ting_object-ting_object-ting_details_publisher']['display']['default']['type'] = 'ting_details_generic_search';
@@ -1117,6 +1269,34 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   if (isset($fields['ting_object-ting_object-ting_details_audience'])) {
     $fields['ting_object-ting_object-ting_details_audience']['display']['default']['weigth'] = 65;
   }
+
+  // Compact display mode.
+  // Use a formatter that doesn't make the author a link.
+  if (isset($fields['ting_object-ting_object-ting_author'])) {
+    $fields['ting_object-ting_object-ting_author']['display']['default']['module'] = 'reol_base';
+    $fields['ting_object-ting_object-ting_author']['display']['default']['type'] = 'reol_base_author_plain';
+    $fields['ting_object-ting_object-ting_author']['display']['default']['label'] = 'hidden';
+  }
+
+  // Remove type prefix.
+  if (isset($fields['ting_object-ting_object-ting_title'])) {
+    $fields['ting_object-ting_object-ting_title']['display']['default']['settings']['prefix_type'] = 'no';
+    $fields['ting_object-ting_object-ting_title']['display']['default']['label'] = 'hidden';
+  }
+
+  // Remove rating widget in all displays.
+  if (isset($fields['ting_object-ting_object-ding_entity_rating_action'])) {
+    foreach (array_keys($fields['ting_object-ting_object-ding_entity_rating_action']['display']) as $display) {
+      $fields['ting_object-ting_object-ding_entity_rating_action']['display'][$display]['type'] = 'hidden';
+    }
+  }
+
+  // Remove rating display in all displays.
+  if (isset($fields['ting_object-ting_object-ding_entity_rating_result'])) {
+    foreach (array_keys($fields['ting_object-ting_object-ding_entity_rating_result']['display']) as $display) {
+      $fields['ting_object-ting_object-ding_entity_rating_result']['display'][$display]['type'] = 'hidden';
+    }
+  }
 }
 
 /**
@@ -1126,6 +1306,12 @@ function reol_base_field_group_info_alter(&$groups) {
   if (isset($groups['group_ting_right_col_search|ting_object|ting_object|search_result'])) {
     // Put ting_subjects in the right column in search_result view_mode.
     $groups['group_ting_right_col_search|ting_object|ting_object|search_result']->data['children'][] = 'ting_subjects';
+  }
+
+  // Add ebook format and reader name to material details.
+  if (isset($groups['group_material_details|ting_object|ting_object|default'])) {
+    $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_ebook_format';
+    $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_audiobook_reader';
   }
 }
 

@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Code for the Author portrait paragraph feature.
+ */
+
+include_once 'reol_author_portrait_paragraph.features.inc';
+
+/**
+ * Template preprocessor for entities.
+ */
+function reol_author_portrait_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'author_portrait') {
+      $wrapper = $variables['paragraphs_item']->wrapper();
+      $variables['classes_array'][] = 'author-portrait';
+      $variables['overlay_attributes'] = '';
+
+      $author_portrait = $wrapper->field_author_portrait;
+
+      $variables['title'] = check_plain($author_portrait->title->value());
+
+      $link = $author_portrait->field_link->value();
+      if (isset($link['url'])) {
+        $variables['href'] = $link['url'];
+      }
+
+      $color = $wrapper->field_portrait_color->value();
+      if (isset($color['rgb'])) {
+        $variables['overlay_attributes'] = 'style="background-color: ' . $color['rgb'] . ';"';
+        // Use dark text for light color.
+        if ($color['rgb'] == '#dcdcdc') {
+          $variables['classes_array'][] = 'author-portrait--dark-text';
+        }
+      }
+      else {
+        // Use dark text for transparent color.
+        $variables['classes_array'][] = 'author-portrait--dark-text';
+      }
+
+      $image = $author_portrait->field_portrait->value();
+      if ($image['uri']) {
+        $params = array(
+          'style_name' => 'medium',
+          'path' => $image['uri'],
+        );
+        $variables['image'] = theme('image_style', $params);
+      }
+    }
+
+    $variables['icons'] = theme('reol_overlay_icons', array('icons' => array('link')));
+  }
+}

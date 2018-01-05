@@ -52,7 +52,7 @@
       $('.search-snippet-info').each(function () {
         $(this).addClass('js-processed');
         var metaData = $(this).find('.ting-object-right', context);
-        var availability = $(this).find('.js-online, .js-pending');
+        var availability = $(this).find('.search-result--availability');
         metaData.append(availability);
       });
     }
@@ -108,6 +108,9 @@
       $('.js-search-form-trigger', searchFormWrapper).click(function (event) {
         event.preventDefault();
         searchFormWrapper.toggleClass('open');
+        if (searchFormWrapper.is(':visible')) {
+          searchFormWrapper.find('input[name=search_block_form]').focus();
+        }
       });
     }
   };

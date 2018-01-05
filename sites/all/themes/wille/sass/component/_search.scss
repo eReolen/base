@@ -110,8 +110,7 @@
     background-color: #ffb81e;
   }
 
-  &.not-reservable,
-  &.unavailable {
+  &.not-reservable &.unavailable {
     display: none;
   }
 
@@ -566,7 +565,7 @@
 
     .field-name-ting-abstract,
     .field-name-ting-series,
-    .js-online,
+    .search-result--availability,
     .field-type-ting-collection-types {
       display: none;
     }

@@ -14,7 +14,6 @@ dependencies[] = reol_base
 dependencies[] = reol_field_carousel
 dependencies[] = strongarm
 dependencies[] = text
-dependencies[] = ting_search_carousel
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[field_base][] = field_breol_cover_image

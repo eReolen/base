@@ -37,7 +37,11 @@
       if ($('.main-login-form').length) {
         $('.js-login-link', context).click(function (e) {
           e.preventDefault();
-          $('.pane-user-login').toggle();
+          var login = $('.pane-user-login');
+          login.toggle();
+          if (login.is(':visible')) {
+            login.find('#edit-name').focus();
+          }
         });
       }
     }

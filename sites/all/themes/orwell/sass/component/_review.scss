@@ -23,12 +23,12 @@
     justify-content: space-between;
 
     // Hide the cover for desktop per default.
-    .field-name-ting-cover {
+    .ting-cover {
       display: none;
     }
   }
 
-  .field-name-ting-cover {
+  .ting-cover {
     height: 140px;
     margin-right: $gutter__default;
     flex: none;
@@ -111,7 +111,7 @@
     }
 
     // Show the desktop cover.
-    .review__content .field-name-ting-cover {
+    .review__content .ting-cover-wrapper {
       // Reset forced height on the cover.
       height: auto;
       display: block;

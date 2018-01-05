@@ -1,16 +1,16 @@
 The following patches have been applied to this project:
 - update-media.patch
 - update-varnish.patch
-- ding_popup-width.patch
-- ding_popup-resizable.patch
-- ding_popup-add-class.patch
 - https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/141.patch
 - bpi-change-node-type.patch
 - update-field_group.patch
 - module-updates.patch
 - secure_permissions.patch
 - i18n.patch
-- popup-unload.patch
+- https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/274.patch
+- ding_popup-width.patch
+- ding_popup-resizable.patch
+- ding_popup-add-class.patch
 - slick-carousel.patch
 - disable-message.patch
 - ding_user-redirect.patch

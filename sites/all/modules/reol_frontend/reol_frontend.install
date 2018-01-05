@@ -53,3 +53,10 @@ function reol_frontend_update_7104() {
 function reol_frontend_update_7105() {
   features_revert(array('page_manager_handlers' => array('site_template_panel_context_2')));
 }
+
+/**
+ * Delete obsoleted reol_frontend_quick_guide_nid variable.
+ */
+function reol_frontend_update_7106() {
+  variable_del('reol_frontend_quick_guide_nid');
+}

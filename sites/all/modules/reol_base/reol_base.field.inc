@@ -89,7 +89,7 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
 
       case 'reol_base_audiobook_reader':
         // Only add on audiobooks.
-        if (reol_base_get_type_name($entity->type) == 'audiobook' && $entity->reply->record['dc:contributor']['dkdcplus:dkind']) {
+        if (reol_base_get_type_name($entity->type) == 'audiobook' && !empty($entity->reply->record['dc:contributor']['dkdcplus:dkind'])) {
           $element[$delta] = array(
             '#markup' => $entity->reply->record['dc:contributor']['dkdcplus:dkind'][0],
           );

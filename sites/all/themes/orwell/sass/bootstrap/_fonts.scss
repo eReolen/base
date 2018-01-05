@@ -4,11 +4,13 @@
 @include font-face('SourceSansProLight', '/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-light');
 @include font-face('SourceSansPro', '/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-regular');
 @include font-face('SourceSansProSemiBold', '/sites/all/themes/orwell/fonts/SourceSansPro/sourcesanspro-semibold');
+@include font-face('FontAwesome', '/sites/all/themes/orwell/fonts/fontawesome/fontawesome-webfont');
 
 $font-light: 'SourceSansProLight', sans-serif;
 $font-regular: 'SourceSansPro', sans-serif;
 $font-semibold: 'SourceSansProSemiBold', sans-serif;
 $font-icon: 'icomoon';
+$font-fontawesome: 'FontAwesome';
 
 // Set a base font.
 body {

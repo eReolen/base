@@ -25,8 +25,8 @@ function reol_author_quote_paragraph_preprocess_entity(&$variables) {
       $ting_entity = _reol_base_object_from_url($link);
 
       if ($ting_entity) {
-        $ting_entity->reol_no_link = TRUE;
-        $variables['link'] = entity_uri('ting_entity', $ting_entity);
+        $uri = entity_uri('ting_object', $ting_entity);
+        $variables['link'] = url($uri['path'], $uri['options']);
         $variables['icons'] = reol_frontend_ding_entity_icons($ting_entity);
         // Just take the first author.
         list($author,) = $ting_entity->getCreators();

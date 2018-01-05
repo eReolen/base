@@ -17,7 +17,7 @@ function reol_shared_theme_js_alter(&$javascript) {
   if (isset($javascript[$avail_js])) {
     $javascript[$avail_js]['data'] = $new_aval_js;
     $types = array();
-    foreach (_reol_base_get_types() as $type) {
+    foreach (reol_base_get_types_by('ext_name') as $type) {
       $types[$type['ext_name']] = $type['title'];
     }
     $javascript['settings']['data'][] = array(

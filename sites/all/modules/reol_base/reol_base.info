@@ -3,6 +3,7 @@ description = Module containing base functionality
 core = 7.x
 package = eReolen shared
 dependencies[] = ctools
+dependencies[] = ding_ting_frontend
 dependencies[] = features
 dependencies[] = list
 dependencies[] = reol_bookmark

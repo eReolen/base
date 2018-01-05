@@ -18,6 +18,12 @@ function reol_news_paragraph_field_formatter_info() {
         'number_integer',
       ),
     ),
+    'reol_article_carousel' => array(
+      'label' => t('Article carousel'),
+      'field types' => array(
+        'entityreference',
+      ),
+    ),
   );
 }
 
@@ -27,7 +33,7 @@ function reol_news_paragraph_field_formatter_info() {
 function reol_news_paragraph_menu() {
   $items = array();
 
-  $items['reol_news_paragraph/ajax/%/%/%/%/%'] = array(
+  $items['reol_news_paragraph/ajax/%/%/%/%'] = array(
     'title' => 'Show search carousel results',
     'page callback' => 'reol_news_paragraph_ajax',
     'page arguments' => array(2, 3, 4, 5, 6, 7),
@@ -40,49 +46,61 @@ function reol_news_paragraph_menu() {
 }
 
 /**
- * Implements hook_theme().
- */
-function reol_news_paragraph_theme() {
-  return array(
-    'reol_news_paragraph_placeholder' => array(
-      'template' => 'templates/reol_news_paragraph_placeholder',
-      'variables' => array(),
-    ),
-  );
-}
-
-/**
  * Implements hook_field_formatter_view().
  */
 function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
   list($entity_id,) = entity_extract_ids($entity_type, $entity);
 
-  foreach ($items as $delta => $item) {
-    // Render a carousel that'll fetch it's content over AJAX.
-    $ajax_path = sprintf(
-      'reol_news_paragraph/ajax/%s/%s/%s/%s',
-      $entity_type,
-      $entity_id,
-      $field['field_name'],
-      $delta
-    );
+  switch ($display['type']) {
+    case 'reol_news_paragraph_carousel':
+      return;
 
-    $element[$delta] = array(
-      '#type' => 'ding_carousel',
-      '#title' => '',
-      '#path' => $ajax_path,
-      '#offset' => 0,
-      '#items' => array(),
-      '#placeholder' => array(
-        '#theme' => 'reol_news_paragraph_placeholder',
-      ),
-      '#placeholders' => 5,
-    );
+    case 'reol_article_carousel':
+      $ajax_path = sprintf(
+        'reol_news_paragraph/ajax/%s/%s/%s',
+        $entity_type,
+        $entity_id,
+        $field['field_name']
+      );
 
+      $element[0] = array(
+        '#type' => 'ding_carousel',
+        '#title' => '',
+        '#path' => $ajax_path,
+        '#offset' => 0,
+        '#items' => array(),
+        '#placeholder' => array(
+          '#theme' => 'ereol_article_placeholder',
+        ),
+        '#placeholders' => 5,
+      );
+
+      break;
   }
-
   return $element;
+}
+
+/**
+ * Implements hook_preprocess_entity().
+ */
+function reol_news_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'article_carousel') {
+      $variables['content'] = array(
+        '#type' => 'ding_carousel',
+        '#title' => '',
+        // Use the ajax callback in ereol_article.
+        '#path' => 'news/ajax/5',
+        '#offset' => 0,
+        '#items' => array(),
+        '#placeholder' => array(
+          '#theme' => 'ereol_article_placeholder',
+        ),
+        '#placeholders' => 5,
+      );
+    }
+  }
 }
 
 /**
@@ -114,12 +132,10 @@ function reol_news_paragraph_ajax_access($entity_type, $entity_id, $field_name) 
  *   The id of the entity the field is attached to.
  * @param string $field_name
  *   Name of the field.
- * @param string $delta
- *   Field delta.
  * @param int $offset
  *   Offset into result to fetch from.
  */
-function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta, $offset) {
+function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $offset) {
   // The access callback has already checked that these exists.
   $entity = entity_load($entity_type, array($entity_id));
   $entity = reset($entity);
@@ -131,14 +147,21 @@ function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta,
     'offset' => -1,
   );
 
-  if (isset($items[$delta])) {
-    $build = array();
-    $item = $items[$delta];
-    $articles = _reol_news_paragraph_get_articles($item['value']);
-    foreach ($articles as $article) {
+  $nids = array_map(function ($item) {
+    return $item['target_id'];
+  }, $items);
+
+  $return['offset'] = count($nids) > $offset + 5 ? $offset + 5 : -1;
+  $nids = array_slice($nids, $offset, 5);
+
+  $articles = entity_load('node', $nids);
+  if ($articles) {
+    $rendered = node_view_multiple($articles);
+    // Use element_children to weed out the #sorted key.
+    foreach (element_children($rendered['nodes']) as $key) {
       $build[] = array(
         '#type' => 'ding_carousel_item',
-        '#content' => $article,
+        '#content' => $rendered['nodes'][$key],
       );
     }
 
@@ -147,36 +170,4 @@ function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $delta,
 
   // Return JSON output.
   drupal_json_output($return);
-}
-
-/**
- * Returns list of newest articles.
- *
- * @param int $count
- *   Number of articles to fetch.
- *
- * @return array
- *   Build array of articles, indexed by nid.
- */
-function _reol_news_paragraph_get_articles($count) {
-  $articles = array();
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'article')
-    ->propertyCondition('status', NODE_PUBLISHED)
-    ->propertyOrderBy('created', 'DESC')
-    ->range(0, $count);
-
-  $result = $query->execute();
-  if (isset($result['node'])) {
-    $articles = entity_load('node', array_keys($result['node']));
-    if ($articles) {
-      $rendered_nodes = node_view_multiple($articles);
-      foreach (element_children($rendered_nodes['nodes']) as $key) {
-        $articles[$key] = $rendered_nodes['nodes'][$key];
-      }
-    }
-  }
-
-  return $articles;
 }
