@@ -16,3 +16,23 @@
     @include page-header;
   }
 }
+
+.page-node-done {
+  // We don't have anything better to grab onto.
+  .pane-page-content {
+    @include content-wrapper;
+
+    .webform-confirmation {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      p {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .links {
+      margin-bottom: 2rem;
+    }
+  }
+}
