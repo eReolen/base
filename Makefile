@@ -30,6 +30,10 @@ dump-ereol:
 	dce drush @$(FROM) status
 	dce drush @$(FROM) sql-dump --structure-tables-list=$(SKIP_TABLES) | sed '/Warning: Using a password on the command line interface can be insecure/d' | gzip >private/docker/db-init/ereol/100-database.sql.gz
 
+import-ereol: 
+	dce -c ereol drush sql-drop -y
+	(zcat private/docker/db-init/ereol/100-database.sql.gz ; cat private/docker/db-init/ereol/900-sanitize.sql) | dce drush sqlc
+
 dump-ego:
 	# Ensure that ssh doesn't mess with the dump because of host keys.
 	dce drush @ego-$(FROM) status
