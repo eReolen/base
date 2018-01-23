@@ -8,7 +8,7 @@
 /**
  * Get list of loans.
  *
- * @param StdClass $account
+ * @param object $account
  *   The account to get loan list for.
  * @param bool $reset
  *   Whether or not to force get.
@@ -64,7 +64,7 @@ function publizon_loan_list($account, $reset = FALSE) {
 /**
  * Create a loan.
  *
- * @param array $account
+ * @param object $account
  *   The account that tries to create a loan.
  * @param string $local_id
  *   The local id of the ting object the user is trying to loan.

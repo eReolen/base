@@ -8,7 +8,7 @@
 /**
  * Get list of reservations.
  *
- * @param StdClass $account
+ * @param object $account
  *   The user to get the list for.
  * @param string $get_type
  *   The type to get reservations for.
@@ -86,7 +86,7 @@ function publizon_reservation_list($account, $get_type = FALSE) {
 /**
  * Create reservation.
  *
- * @param StdClass $account
+ * @param object $account
  *   The account that is creating a reservation.
  * @param string $local_id
  *   The provider id of the title to reserve.
@@ -96,7 +96,7 @@ function publizon_reservation_list($account, $get_type = FALSE) {
  * @return array
  *   Result array possibly containing the number in queue.
  */
-function publizon_reservation_create($account, $local_id, $options) {
+function publizon_reservation_create($account, $local_id, array $options) {
   $isbn = reol_base_get_isbn($local_id);
   // If we do not have an ISBN number, we cannot reserve anything.
   if (!$isbn) {
@@ -138,7 +138,7 @@ function publizon_reservation_create($account, $local_id, $options) {
 /**
  * Delete reservation.
  *
- * @param StdClass $account
+ * @param object $account
  *   The account to delete reservation for.
  * @param string $local_id
  *   The local id of the title to delete reservation for.
@@ -178,18 +178,18 @@ function publizon_reservation_options($account) {
 /**
  * Submit options form.
  *
- * @param array $account
+ * @param object $account
  *   The account options have been submitted for.
  * @param array $values
  *   The values submitted.
  */
-function publizon_reservation_options_submit($account, $values) {
+function publizon_reservation_options_submit($account, array $values) {
 }
 
 /**
  * Default options for the user.
  *
- * @param array $account
+ * @param object $account
  *   The account to get default options for.
  *
  * @return array

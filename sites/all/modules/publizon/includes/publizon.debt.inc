@@ -8,7 +8,7 @@
 /**
  * Provide list of DingProviderDebt objects for a user.
  *
- * @param StdClass $account
+ * @param object $account
  *   User object to provide debts for.
  * @param bool $reset
  *   Reset static cache if TRUE else get debts from cache.
@@ -33,7 +33,7 @@ function publizon_debt_list($account, $reset = FALSE) {
  * @return array
  *   Array from publizon with the results.
  */
-function publizon_debt_payment_received($amount, $debt_ids = array(), $order_id = NULL) {
+function publizon_debt_payment_received($amount, array $debt_ids = array(), $order_id = NULL) {
   return array();
 }
 
