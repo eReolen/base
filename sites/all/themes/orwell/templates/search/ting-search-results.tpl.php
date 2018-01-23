@@ -11,6 +11,10 @@
 ?>
 <?php if ($search_results) : ?>
   <div class="search-results">
+    <div class="arrangement-toggles">
+      <div class="arrangement-toggle toggle-list"></div>
+      <div class="arrangement-toggle toggle-grid"></div>
+    </div>
     <ul class="list floated">
       <?php print $search_results; ?>
     </ul>

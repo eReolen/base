@@ -268,10 +268,138 @@ html.js input.form-autocomplete {
   }
 }
 
+.arrangement-toggles {
+  display: none; // (hidden on mobile)
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-bottom: 1.85rem;
+  border-bottom: 1px solid $color__geist--hr;
+
+  @include grid-media($medium) {
+    display: flex;
+  }
+
+  .arrangement-toggle {
+    // Reset
+    text-decoration: none;
+    // Align icon inside anchor tag
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    // Set button size
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 1.1rem;
+    cursor: pointer;
+    background-color: white;
+    // Transition
+    transition: background-color .12s $global__hover-easing;
+
+    &:hover {
+      background-color: $color__geist--grey6;
+    }
+
+    // distance between the two buttons
+    + .arrangement-toggle {
+      margin-left: .7rem;
+    }
+
+    &::before {
+      @include icon;
+      color: $color__geist--grey4;
+    }
+
+    &.toggle-active {
+      background-color: $color__geist--green;
+
+      &::before {
+        color: white;
+      }
+
+      &:hover {
+        background-color: $color__geist--green;
+      }
+    }
+
+    &.toggle-list {
+
+      &::before {
+        content: $icon__list-square;
+      }
+    }
+
+    &.toggle-grid {
+
+      &::before {
+        content: $icon__grid-dense;
+      }
+    }
+  }
+}
+
 .search-results {
   padding: 2rem 0 0;
 
   .pager {
     padding: 3.75rem 0;
+  }
+
+  &.grid-view {
+
+    .arrangement-toggles {
+      margin-bottom: 2rem;
+    }
+
+    .list { // ul
+      @include grid-media($medium) {
+        display: flex;
+        justify-content: flex-start;
+        align-items: end;
+        flex-flow: wrap;
+        margin-left: -.75rem;
+        margin-right: -.75rem;
+        margin-top: -.75rem;
+      }
+    }
+    .search-result { // li
+
+      @include grid-media($medium) {
+        width: 33.3333%;
+        padding: .75rem;
+      }
+
+      .material {
+
+        @include grid-media($medium) {
+          border-bottom: 0;
+          margin-top: 0;
+          padding: 0;
+        }
+      }
+
+      .material__cover--teaser {
+
+        @include grid-media($medium) {
+          width: 100%;
+        }
+      }
+
+      .material__content {
+
+        @include grid-media($medium) {
+          padding-left: 0;
+          width: 100%;
+        }
+      }
+
+      .material__abstract,
+      .material__subjects {
+
+        @include grid-media($medium) {
+          display: none;
+        }
+      }
+    }
   }
 }

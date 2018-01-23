@@ -2047,12 +2047,154 @@ html.js input.form-autocomplete {
   }
 }
 
+.arrangement-toggles {
+  display: none;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  padding-bottom: 1.85rem;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+@media all and (min-width: 49em) {
+  .arrangement-toggles {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+.arrangement-toggles .arrangement-toggle {
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 1.1rem;
+  cursor: pointer;
+  background-color: white;
+  -webkit-transition: background-color 0.12s cubic-bezier(0.52, 1.03, 0.63, 0.97);
+  -o-transition: background-color 0.12s cubic-bezier(0.52, 1.03, 0.63, 0.97);
+  transition: background-color 0.12s cubic-bezier(0.52, 1.03, 0.63, 0.97);
+}
+
+.arrangement-toggles .arrangement-toggle:hover {
+  background-color: #dcdcdc;
+}
+
+.arrangement-toggles .arrangement-toggle + .arrangement-toggle {
+  margin-left: .7rem;
+}
+
+.arrangement-toggles .arrangement-toggle::before {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  color: #787878;
+}
+
+.arrangement-toggles .arrangement-toggle.toggle-active {
+  background-color: #95b978;
+}
+
+.arrangement-toggles .arrangement-toggle.toggle-active::before {
+  color: white;
+}
+
+.arrangement-toggles .arrangement-toggle.toggle-active:hover {
+  background-color: #95b978;
+}
+
+.arrangement-toggles .arrangement-toggle.toggle-list::before {
+  content: "";
+}
+
+.arrangement-toggles .arrangement-toggle.toggle-grid::before {
+  content: "";
+}
+
 .search-results {
   padding: 2rem 0 0;
 }
 
 .search-results .pager {
   padding: 3.75rem 0;
+}
+
+.search-results.grid-view .arrangement-toggles {
+  margin-bottom: 2rem;
+}
+
+@media all and (min-width: 49em) {
+  .search-results.grid-view .list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: end;
+    -ms-flex-flow: wrap;
+    flex-flow: wrap;
+    margin-left: -.75rem;
+    margin-right: -.75rem;
+    margin-top: -.75rem;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .search-results.grid-view .search-result {
+    width: 33.3333%;
+    padding: .75rem;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .search-results.grid-view .search-result .material {
+    border-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .search-results.grid-view .search-result .material__cover--teaser {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .search-results.grid-view .search-result .material__content {
+    padding-left: 0;
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .search-results.grid-view .search-result .material__abstract,
+  .search-results.grid-view .search-result .material__subjects {
+    display: none;
+  }
 }
 
 .user-login {
