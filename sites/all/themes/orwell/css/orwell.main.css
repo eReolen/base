@@ -424,21 +424,21 @@ div.messages ul {
   margin: 0;
 }
 
-.logged-in .pane-page-tabs {
+.pane-page-tabs {
   width: 100%;
   display: block;
   background-color: #5f7f9f;
   text-align: center;
 }
 
-.logged-in .pane-page-tabs a {
+.pane-page-tabs a {
   color: #fff;
   text-decoration: none;
   font-family: "SourceSansProSemiBold", sans-serif;
   font-size: 1.1rem;
 }
 
-.logged-in .pane-page-tabs .tabs {
+.pane-page-tabs .tabs {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -447,7 +447,7 @@ div.messages ul {
   justify-content: center;
 }
 
-.logged-in .pane-page-tabs .tabs a {
+.pane-page-tabs .tabs a {
   display: inline-block;
   padding: .5rem 1rem;
 }
@@ -1987,10 +1987,6 @@ fieldset {
 
 html.js input.form-autocomplete {
   background-image: none;
-}
-
-.page-search-ting.not-logged-in .pane-page-tabs {
-  display: none;
 }
 
 .page-search-ting .pane-page-content {

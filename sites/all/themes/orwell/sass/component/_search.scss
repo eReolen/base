@@ -216,12 +216,6 @@ html.js input.form-autocomplete {
 
 // Search page.
 .page-search-ting {
-
-  // TODO(ts) - resolve.
-  &.not-logged-in .pane-page-tabs {
-    display: none;
-  }
-
   .pane-page-content {
     @extend .page-wrapper;
     padding: 0 2rem;

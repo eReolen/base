@@ -60,3 +60,13 @@ function reol_frontend_update_7105() {
 function reol_frontend_update_7106() {
   variable_del('reol_frontend_quick_guide_nid');
 }
+
+/**
+ * Disable unwanted search modules.
+ */
+function reol_frontend_update_7107() {
+  $active = variable_get('search_active_modules', array('node' => 'node', 'ting_search' => 'ting_search'));
+  $active['ding_ekurser'] = 0;
+  $active['mkdru'] = 0;
+  variable_set('search_active_modules', $active);
+}
