@@ -1349,6 +1349,7 @@ div.messages ul {
   width: 100%;
   float: left;
   display: inline-block;
+  margin-top: 2rem;
 }
 
 .footer__inner {
