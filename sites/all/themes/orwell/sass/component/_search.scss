@@ -394,11 +394,41 @@ html.js input.form-autocomplete {
       }
 
       .material__abstract,
-      .material__subjects {
+      .material__subjects,
+      .material__series {
 
         @include grid-media($medium) {
           display: none;
         }
+      }
+
+      // Keep in sync with .field-name-ting-title in _ting-object-compact.scss.
+      .material__title {
+        margin: 0;
+
+        h2 {
+          font-family: $font-regular;
+          font-size: 16px;
+          letter-spacing: .5px;
+          margin-top: 25px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 0;
+
+          a {
+            color: black;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .material__author {
+        font-family: $font-light;
+        font-size: 14px;
+        letter-spacing: .5px;
+        margin: 0;
+        margin-top: 10px;
       }
     }
   }

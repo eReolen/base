@@ -2192,9 +2192,39 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .search-results.grid-view .search-result .material__abstract,
-  .search-results.grid-view .search-result .material__subjects {
+  .search-results.grid-view .search-result .material__subjects,
+  .search-results.grid-view .search-result .material__series {
     display: none;
   }
+}
+
+.search-results.grid-view .search-result .material__title {
+  margin: 0;
+}
+
+.search-results.grid-view .search-result .material__title h2 {
+  font-family: "SourceSansPro", sans-serif;
+  font-size: 16px;
+  letter-spacing: .5px;
+  margin-top: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}
+
+.search-results.grid-view .search-result .material__title h2 a {
+  color: black;
+  font-weight: bold;
+}
+
+.search-results.grid-view .search-result .material__author {
+  font-family: "SourceSansProLight", sans-serif;
+  font-size: 14px;
+  letter-spacing: .5px;
+  margin: 0;
+  margin-top: 10px;
 }
 
 .user-login {
