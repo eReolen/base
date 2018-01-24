@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ereol_frontend module.
+ */
+
+/**
+ * Revert search index.
+ */
+function ereol_frontend_update_7101() {
+  features_revert(array('ding_frontend' => array('search_api_index')));
+}
