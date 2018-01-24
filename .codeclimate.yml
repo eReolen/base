@@ -39,7 +39,7 @@ ratings:
   - "**.module"
   - "**.install"
   - "**.php"
-exclude_paths:
+exclude_patterns:
   - authorize.php
   - cron.php
   - includes/
