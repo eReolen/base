@@ -3541,6 +3541,10 @@ html.js input.form-autocomplete {
   height: auto;
 }
 
+.ting-object.view-mode-compact .group-overlay {
+  margin-bottom: 25px;
+}
+
 .ting-object.view-mode-compact .group-overlay .field-name-ting-title {
   font-family: "SourceSansPro", sans-serif;
   font-size: 16px;
