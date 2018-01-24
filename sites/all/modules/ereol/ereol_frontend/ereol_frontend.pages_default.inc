@@ -77,7 +77,7 @@ search/node',
     $pane->panel = 'middle';
     $pane->type = 'search_backends';
     $pane->subtype = 'search_backends';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array();
     $pane->cache = array();

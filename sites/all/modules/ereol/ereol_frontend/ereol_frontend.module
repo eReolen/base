@@ -52,17 +52,3 @@ function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
       break;
   }
 }
-
-/**
- * Implements hook_default_search_api_index_alter().
- *
- * Add article node type (specific to eReolen) to indexed node types.
- */
-function ereol_frontend_default_search_api_index_alter(&$defaults) {
-  if (isset($defaults['default_multiple_index'])) {
-    $index = $defaults['default_multiple_index'];
-    if (isset($index->options['data_alter_callbacks']['ding_frontend_bundle_filter']['settings']['bundles'])) {
-      $index->options['data_alter_callbacks']['ding_frontend_bundle_filter']['settings']['bundles']['node:article'] = 'node:article';
-    }
-  }
-}
