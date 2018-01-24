@@ -1995,6 +1995,10 @@ html.js input.form-autocomplete {
   padding: 0 2rem;
 }
 
+.page-search-ting .pane-page-content .pane-search-result .pane-content > ul {
+  margin: 2rem 0;
+}
+
 @media all and (max-width: 49em) {
   .page-search-ting .panel-col-first {
     width: 100%;

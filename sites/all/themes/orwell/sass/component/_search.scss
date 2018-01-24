@@ -225,6 +225,12 @@ html.js input.form-autocomplete {
   .pane-page-content {
     @extend .page-wrapper;
     padding: 0 2rem;
+
+    // Add some margin to the empty result page. Yes, this is really
+    // the best selector I could come up with.
+    .pane-search-result .pane-content > ul {
+      margin: 2rem 0;
+    }
   }
 
   .panel-col-first {
