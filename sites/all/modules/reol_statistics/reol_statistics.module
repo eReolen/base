@@ -164,8 +164,10 @@ function reol_statistics_cron() {
 
   foreach ($statistics as $statistic) {
     $varname = 'reol_statistics_last_queued_' . get_class($statistic);
+    if (reol_statistics_ensure_schema($statistic)) {
+      variable_del($varname);
+    }
     $month = ReolStatisticsMonth::fromInt(variable_get($varname, 201609));
-    reol_statistics_ensure_schema($statistic);
 
     while (!$month->isCurrent()) {
       $month = $month->next();
@@ -238,6 +240,8 @@ function reol_statistics_get() {
 
 /**
  * Ensure that statistics schema is up to date.
+ *
+ * @return Whether the schema wos re-built.
  */
 function reol_statistics_ensure_schema(ReolStatisticsInterface $statistic) {
   $reset = FALSE;
@@ -256,6 +260,8 @@ function reol_statistics_ensure_schema(ReolStatisticsInterface $statistic) {
   if ($reset && method_exists($statistic, 'reset')) {
     $statistic->reset();
   }
+
+  return $reset;
 }
 
 /**
