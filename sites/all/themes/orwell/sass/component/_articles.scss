@@ -1,6 +1,7 @@
 @import 'bootstrap/bootstrap';
 
-.view-articles {
+.view-articles,
+.view-ereol-search {
   .view-header {
     @include page-header;
   }

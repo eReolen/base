@@ -337,7 +337,8 @@ img {
   margin-top: 5px;
 }
 
-.view-articles {
+.view-articles,
+.view-ereol-search {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -5215,7 +5216,8 @@ html.js input.form-autocomplete {
   margin-bottom: 2rem;
 }
 
-.view-articles .view-header {
+.view-articles .view-header,
+.view-ereol-search .view-header {
   font-family: "SourceSansProLight", sans-serif;
   font-size: 2rem;
   color: #787878;
@@ -5224,7 +5226,8 @@ html.js input.form-autocomplete {
 }
 
 @media all and (min-width: 49em) {
-  .view-articles .view-header {
+  .view-articles .view-header,
+  .view-ereol-search .view-header {
     width: 100%;
     -webkit-box-ordinal-group: 2;
     -ms-flex-order: 1;
@@ -5234,17 +5237,20 @@ html.js input.form-autocomplete {
   }
 }
 
-.view-articles .view-content {
+.view-articles .view-content,
+.view-ereol-search .view-content {
   border-top: 1px solid #d8d8d8;
   border-bottom: 1px solid #d8d8d8;
 }
 
-.view-articles .view-content .views-row {
+.view-articles .view-content .views-row,
+.view-ereol-search .view-content .views-row {
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-.view-articles .pager {
+.view-articles .pager,
+.view-ereol-search .pager {
   padding: 3.75rem 0;
 }
 
