@@ -297,6 +297,7 @@ function reol_statistics_reset(ReolStatisticsInterface $statistic) {
  *   Name of user to get data for.
  * @param bool $partial
  *   Whether to return partial result in case of failuer.
+ *
  * @return array
  *   Array of collected data or an empty array.
  */
@@ -392,8 +393,6 @@ interface ReolStatisticsGeneralInterface {
   /**
    * Build statistic display.
    *
-   * @param array library
-   *   The library as returned from publizon_get_library().
    * @param ReolStatisticsMonth $from
    *   From date, integer in yyyymm format.
    * @param ReolStatisticsMonth $to
@@ -410,7 +409,7 @@ interface ReolStatisticsMunicipalityInterface {
   /**
    * Build statistic display.
    *
-   * @param PublizonConfiguredLibrary library
+   * @param PublizonConfiguredLibrary $library
    *   The library as returned from publizon_get_library().
    * @param ReolStatisticsMonth $from
    *   From date, integer in yyyymm format.
