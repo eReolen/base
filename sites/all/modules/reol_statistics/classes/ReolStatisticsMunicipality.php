@@ -24,8 +24,8 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
             'not null' => TRUE,
             'default' => 0,
           ),
-          'municipality_id' => array(
-            'description' => 'Municipality id of school.',
+          'retailer_id' => array(
+            'description' => 'Retailer id of library.',
             'type' => 'varchar',
             'length' => 255,
           ),
@@ -43,7 +43,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
           ),
         ),
         'indexes' => array(
-          'month_municipality' => array('month', 'municipality_id'),
+          'month_retailer' => array('month', 'retailer_id'),
         ),
       ),
     );
@@ -63,36 +63,34 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
     );
     // Collect loans.
     $query = db_select('reol_statistics_loans', 'l');
-    $query->join('reol_statistics_unilogin', 'u', 'l.sid = u.sid');
-    $query->fields('u', array('municipality_id'));
-    $query->addExpression('COUNT(l.sid)', 'loans');
-    $query->condition('l.timestamp', array($month->getStartTimestamp(), $month->getEndTimestamp()), 'BETWEEN');
-    $query->groupBy('municipality_id');
+    $query->fields('l', array('retailer_id'));
+    $query->addExpression('COUNT(sid)', 'loans');
+    $query->condition('timestamp', array($month->getStartTimestamp(), $month->getEndTimestamp()), 'BETWEEN');
+    $query->groupBy('retailer_id');
 
     foreach ($query->execute() as $row) {
-      if (!isset($data[$row->municipality_id])) {
-        $data[$row->municipality_id] = $empty + array(
-          'municipality_id' => $row->municipality_id,
+      if (!isset($data[$row->retailer_id])) {
+        $data[$row->retailer_id] = $empty + array(
+          'retailer_id' => $row->retailer_id,
         );
       }
-      $data[$row->municipality_id]['loans'] += $row->loans;
+      $data[$row->retailer_id]['loans'] += $row->loans;
     }
 
     // Collect unique users.
     $query = db_select('reol_statistics_loans', 'l');
-    $query->join('reol_statistics_unilogin', 'u', 'l.sid = u.sid');
-    $query->fields('u', array('municipality_id'));
+    $query->fields('l', array('retailer_id'));
     $query->addExpression('COUNT(DISTINCT user_hash)', 'users');
-    $query->condition('l.timestamp', array($month->getStartTimestamp(), $month->getEndTimestamp()), 'BETWEEN');
-    $query->groupBy('municipality_id');
+    $query->condition('timestamp', array($month->getStartTimestamp(), $month->getEndTimestamp()), 'BETWEEN');
+    $query->groupBy('retailer_id');
 
     foreach ($query->execute() as $row) {
-      if (!isset($data[$row->municipality_id])) {
-        $data[$row->municipality_id] = $empty + array(
-          'municipality_id' => $row->municipality_id,
+      if (!isset($data[$row->retailer_id])) {
+        $data[$row->retailer_id] = $empty + array(
+          'retailer_id' => $row->retailer_id,
         );
       }
-      $data[$row->municipality_id]['users'] = $row->users;
+      $data[$row->retailer_id]['users'] = $row->users;
     }
 
     if ($data) {
@@ -101,7 +99,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
           ->key(
             array(
               'month' => $row['month'],
-              'municipality_id' => $row['municipality_id'],
+              'retailer_id' => $row['retailer_id'],
             )
           )
           ->fields(
@@ -120,6 +118,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
    */
   public function buildMunicipality(PublizonConfiguredLibrary $library, ReolStatisticsMonth $from, ReolStatisticsMonth $to) {
     if (!isset($library->unilogin_id)) {
+
       return '';
     }
 
@@ -166,17 +165,16 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
         // Total will have to be recalculated for unique users, as we can't
         // pre-calculate it for arbitrary ranges.
         $query = db_select('reol_statistics_loans', 'l');
-        $query->join('reol_statistics_unilogin', 'u', 'l.sid = u.sid');
         $query->addExpression('COUNT(l.sid)', 'loans');
         $query->addExpression('COUNT(DISTINCT user_hash)', 'users');
         $query->condition('l.timestamp', array($from->getStartTimestamp(), $to->getEndTimestamp()), 'BETWEEN');
-        $query->condition('u.municipality_id', $library->unilogin_id);
+        $query->condition('l.retailer_id', $library->retailer_id);
 
       }
       else {
         $query = db_select('reol_statistics_municipality', 'm')
           ->condition('m.month', array($col['from'], $col['to']), 'BETWEEN')
-          ->condition('m.municipality_id', $library->unilogin_id);
+          ->condition('m.retailer_id', $library->retailer_id);
         $query->addExpression('SUM(m.loans)', 'loans');
         $query->addExpression('SUM(m.users)', 'users');
       }

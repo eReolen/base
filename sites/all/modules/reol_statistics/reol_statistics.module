@@ -164,8 +164,10 @@ function reol_statistics_cron() {
 
   foreach ($statistics as $statistic) {
     $varname = 'reol_statistics_last_queued_' . get_class($statistic);
+    if (reol_statistics_ensure_schema($statistic)) {
+      variable_del($varname);
+    }
     $month = ReolStatisticsMonth::fromInt(variable_get($varname, 201609));
-    reol_statistics_ensure_schema($statistic);
 
     while (!$month->isCurrent()) {
       $month = $month->next();
@@ -238,6 +240,9 @@ function reol_statistics_get() {
 
 /**
  * Ensure that statistics schema is up to date.
+ *
+ * @return bool
+ *   Whether the schema was re-built.
  */
 function reol_statistics_ensure_schema(ReolStatisticsInterface $statistic) {
   $reset = FALSE;
@@ -256,6 +261,8 @@ function reol_statistics_ensure_schema(ReolStatisticsInterface $statistic) {
   if ($reset && method_exists($statistic, 'reset')) {
     $statistic->reset();
   }
+
+  return $reset;
 }
 
 /**
@@ -290,6 +297,7 @@ function reol_statistics_reset(ReolStatisticsInterface $statistic) {
  *   Name of user to get data for.
  * @param bool $partial
  *   Whether to return partial result in case of failuer.
+ *
  * @return array
  *   Array of collected data or an empty array.
  */
@@ -385,8 +393,6 @@ interface ReolStatisticsGeneralInterface {
   /**
    * Build statistic display.
    *
-   * @param array library
-   *   The library as returned from publizon_get_library().
    * @param ReolStatisticsMonth $from
    *   From date, integer in yyyymm format.
    * @param ReolStatisticsMonth $to
@@ -403,7 +409,7 @@ interface ReolStatisticsMunicipalityInterface {
   /**
    * Build statistic display.
    *
-   * @param PublizonConfiguredLibrary library
+   * @param PublizonConfiguredLibrary $library
    *   The library as returned from publizon_get_library().
    * @param ReolStatisticsMonth $from
    *   From date, integer in yyyymm format.
