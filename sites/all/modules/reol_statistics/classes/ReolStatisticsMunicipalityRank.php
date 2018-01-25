@@ -35,10 +35,11 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     // but they insisted.
     $libraries = array();
     foreach (publizon_get_libraries() as $def) {
+      // We're only listing libraries that's configured for unilogin.
       if (!empty($def->unilogin_id) &&
           !empty($def->subscribed_users) &&
           $def->subscribed_users > 0) {
-        $libraries[$def->unilogin_id] = array(
+        $libraries[$def->retailer_id] = array(
           'subscribed_users' => $def->subscribed_users,
           'name' => $def->library_name,
         );
@@ -63,7 +64,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     $rows = array();
 
     $query = db_select('reol_statistics_municipality', 'm')
-      ->fields('m', array('month', 'municipality_id', 'loans', 'users'))
+      ->fields('m', array('month', 'retailer_id', 'loans', 'users'))
       ->condition('m.month', array($month_str, (string) $prev_month), 'IN');
 
     // Sort municipalities in order of most loans per subscribed users for
@@ -71,8 +72,8 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     $munis = array();
     $prev_munis = array();
     foreach ($query->execute() as $row) {
-      if (isset($libraries[$row->municipality_id])) {
-        $ratio = $row->loans / $libraries[$row->municipality_id]['subscribed_users'];
+      if (isset($libraries[$row->retailer_id])) {
+        $ratio = $row->loans / $libraries[$row->retailer_id]['subscribed_users'];
         $row->ratio = $ratio;
         if ($row->month == $month_str) {
           $munis[(string) $ratio][] = $row;
@@ -102,7 +103,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     foreach ($prev_munis as $items) {
       foreach ($items as $row) {
         $row->placement = $placement;
-        $prev_munis_lookup[$row->municipality_id] = $row;
+        $prev_munis_lookup[$row->retailer_id] = $row;
       }
       $placement++;
     }
@@ -118,7 +119,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
             break;
 
           case 'subscribed_users':
-            $subscribed_users = $libraries[$row->municipality_id]['subscribed_users'];
+            $subscribed_users = $libraries[$row->retailer_id]['subscribed_users'];
             $sorted_munis[$subscribed_users] = $row;
             break;
 
@@ -138,22 +139,22 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     );
 
     foreach ($sorted_munis as $row) {
-      $subscribed_users = $libraries[$row->municipality_id]['subscribed_users'];
+      $subscribed_users = $libraries[$row->retailer_id]['subscribed_users'];
       $prev_placement = '';
-      if (isset($prev_munis_lookup[$row->municipality_id])) {
-        $prev_placement = $prev_munis_lookup[$row->municipality_id]->placement;
+      if (isset($prev_munis_lookup[$row->retailer_id])) {
+        $prev_placement = $prev_munis_lookup[$row->retailer_id]->placement;
       }
       $ratio = round($row->ratio, 3);
       $ratio = sprintf('%.3f', $row->ratio);
       $rows[] = array(
         $row->placement,
         array(
-          'data' => $libraries[$row->municipality_id]['name'],
+          'data' => $libraries[$row->retailer_id]['name'],
           'class' => 'municipality-column',
         ),
         $ratio,
         $prev_placement,
-        $libraries[$row->municipality_id]['subscribed_users'],
+        $libraries[$row->retailer_id]['subscribed_users'],
         sprintf("%.0f%%", ($row->users / $subscribed_users) * 100),
         $row->loans,
       );
