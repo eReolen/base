@@ -569,22 +569,6 @@ search/ting
           'context' => 'empty',
           'not' => TRUE,
         ),
-        3 => array(
-          'name' => 'role',
-          'settings' => array(
-            'rids' => array(
-              0 => 3,
-              1 => 4,
-              2 => 5,
-              3 => 6,
-              4 => 7,
-              5 => 9,
-              6 => 10,
-            ),
-          ),
-          'context' => 'logged-in-user',
-          'not' => FALSE,
-        ),
       ),
       'logic' => 'and',
     );
