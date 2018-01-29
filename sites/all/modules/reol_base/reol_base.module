@@ -1348,7 +1348,7 @@ function reol_base_ting_pre_execute($request) {
 /**
  * Implements hook_ting_post_execute().
  *
- * Adds the quota status to the ting object response.
+ * Adds in extra information, not available in DKABM, extracted from MARC data.
  */
 function reol_base_ting_post_execute($request, $response, $raw_response) {
   if (!is_object($response)) {
@@ -1398,7 +1398,7 @@ function reol_base_ting_post_execute($request, $response, $raw_response) {
 function _reol_base_odd_marc_data($object, $marc_records) {
   $object->on_quota = TRUE;
   $values = _reol_base_get_marc_value($marc_records, '032', 'x');
-  if (is_array($values)) {
+  if ($values) {
     foreach ($values as $value) {
       // If MARC field 032, subfield x contains an value that starts with "ERA",
       // then the material is not on quota.
@@ -1409,6 +1409,12 @@ function _reol_base_odd_marc_data($object, $marc_records) {
         break;
       }
     }
+  }
+
+  $object->lix = NULL;
+  $values = _reol_base_get_marc_value($marc_records, '042', 'a');
+  if ($values) {
+    $object->lix = reset($values);
   }
 }
 
@@ -1440,7 +1446,9 @@ function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
         if (isset($datafield->{'@tag'}->{'$'}) &&
           $datafield->{'@tag'}->{'$'} == $field &&
           isset($datafield->subfield)) {
-          foreach ($datafield->subfield as $subfield) {
+          // Subfields is only an array if there's more than one item.
+          $subfields = is_array($datafield->subfield) ? $datafield->subfield : array($datafield->subfield);
+          foreach ($subfields as $subfield) {
             if (isset($subfield->{'@code'}->{'$'}) &&
               $subfield->{'@code'}->{'$'} == $subfield_name &&
               isset($subfield->{'$'})) {
