@@ -989,9 +989,6 @@ div.messages ul {
   text-decoration: none;
 }
 
-/**
- * Autocomplete styles.
- */
 body #autocomplete li {
   color: #505050;
 }
