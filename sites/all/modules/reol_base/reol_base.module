@@ -1360,7 +1360,7 @@ function reol_base_ting_post_execute($request, $response, $raw_response) {
     case 'TingClientObject':
       $response->on_quota = TRUE;
       if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record)) {
-        $response->on_quota = _reol_base_is_quotaed($raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record);
+        _reol_base_odd_marc_data($response, $raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record);
       }
 
       break;
@@ -1369,7 +1369,7 @@ function reol_base_ting_post_execute($request, $response, $raw_response) {
       foreach ($response->objects as $key => $object) {
         $object->on_quota = TRUE;
         if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
-          $object->on_quota = _reol_base_is_quotaed($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
+          _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
         }
       }
       break;
@@ -1379,7 +1379,7 @@ function reol_base_ting_post_execute($request, $response, $raw_response) {
         foreach ($object_collection->objects as $key => $object) {
           $object->on_quota = TRUE;
           if (isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
-            $object->on_quota = _reol_base_is_quotaed($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
+            _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
           }
         }
       }
@@ -1388,11 +1388,15 @@ function reol_base_ting_post_execute($request, $response, $raw_response) {
 }
 
 /**
- * Return whether the material is on quota.
+ * Add extra data from MARC data to the object.
  *
- * According to the given marcxchange data.
+ * @param object $object
+ *   Object to add data to, usually a TingClientObject.
+ * @param mixed $marc_records
+ *   MARC data.
  */
-function _reol_base_is_quotaed($marc_records) {
+function _reol_base_odd_marc_data($object, $marc_records) {
+  $object->on_quota = TRUE;
   $values = _reol_base_get_marc_value($marc_records, '032', 'x');
   if (is_array($values)) {
     foreach ($values as $value) {
@@ -1401,12 +1405,11 @@ function _reol_base_is_quotaed($marc_records) {
       // @see http://www.kat-format.dk/danMARC2/Danmarc2.1e.htm#pgfId=1574593
       // @see http://www.kat-format.dk/danMARC2/Danmarc2.ad.htm#pgfId=1248973
       if (strpos($value, 'ERA') === 0) {
-        return FALSE;
+        $object->on_quota = FALSE;
+        break;
       }
     }
   }
-
-  return TRUE;
 }
 
 /**
