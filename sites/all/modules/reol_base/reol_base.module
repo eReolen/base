@@ -1393,31 +1393,64 @@ function reol_base_ting_post_execute($request, $response, $raw_response) {
  * According to the given marcxchange data.
  */
 function _reol_base_is_quotaed($marc_records) {
+  $values = _reol_base_get_marc_value($marc_records, '032', 'x');
+  if (is_array($values)) {
+    foreach ($values as $value) {
+      // If MARC field 032, subfield x contains an value that starts with "ERA",
+      // then the material is not on quota.
+      // @see http://www.kat-format.dk/danMARC2/Danmarc2.1e.htm#pgfId=1574593
+      // @see http://www.kat-format.dk/danMARC2/Danmarc2.ad.htm#pgfId=1248973
+      if (strpos($value, 'ERA') === 0) {
+        return FALSE;
+      }
+    }
+  }
+
+  return TRUE;
+}
+
+/**
+ * Extract a field from MARC data.
+ *
+ * @param mixed $marc_records
+ *   MARC record(s) to extract from.
+ * @param string $field
+ *   Field to extract (3 digit number).
+ * @param string $subfield_name
+ *   Subfield to extract, usually one char.
+ *
+ * @return null|array
+ *   Array of values, or null if not found.
+ */
+function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
   if (!is_array($marc_records)) {
     $marc_records = array($marc_records);
   }
 
+  $return = array();
   foreach ($marc_records as $marc_record) {
-    // Records with the MARC code "032*xERAxxxxxx" is not on quota.
     // Very defensive coding here...
     if (isset($marc_record->{'@type'}->{'$'}) &&
       $marc_record->{'@type'}->{'$'} == 'Bibliographic' &&
       isset($marc_record->datafield)) {
       foreach ($marc_record->datafield as $datafield) {
         if (isset($datafield->{'@tag'}->{'$'}) &&
-          $datafield->{'@tag'}->{'$'} == '032' &&
+          $datafield->{'@tag'}->{'$'} == $field &&
           isset($datafield->subfield)) {
           foreach ($datafield->subfield as $subfield) {
             if (isset($subfield->{'@code'}->{'$'}) &&
-              $subfield->{'@code'}->{'$'} == 'x' &&
-              isset($subfield->{'$'}) &&
-              strpos($subfield->{'$'}, 'ERA') === 0) {
-              return FALSE;
+              $subfield->{'@code'}->{'$'} == $subfield_name &&
+              isset($subfield->{'$'})) {
+              $return[] = $subfield->{'$'};
             }
           }
         }
       }
     }
   }
-  return TRUE;
+
+  if (empty($return)) {
+    return NULL;
+  }
+  return $return;
 }
