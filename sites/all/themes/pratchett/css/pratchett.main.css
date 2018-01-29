@@ -1,3 +1,18 @@
+/**
+ * General autocomplete styles.
+ */
+body #autocomplete li {
+  padding: 15px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  background: white;
+  text-align: left;
+}
+
+body #autocomplete li.selected {
+  background: white;
+}
+
 .search-overlay--wrapper {
   background-color: rgba(255, 255, 255, 0.8);
   width: 100%;

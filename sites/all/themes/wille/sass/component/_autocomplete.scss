@@ -1,0 +1,19 @@
+/**
+ * Autocomplete styles.
+ */
+
+#search-block-form {
+  overflow: visible !important;
+}
+
+body #autocomplete {
+  background: white;
+  
+  li {
+    color: #646464;
+
+    &.selected {
+      color: $red;
+    }
+  }
+}
