@@ -77,7 +77,7 @@ search/node',
     $pane->panel = 'middle';
     $pane->type = 'search_backends';
     $pane->subtype = 'search_backends';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array();
     $pane->cache = array();
@@ -92,10 +92,10 @@ search/node',
     $display->content['new-06e03f81-aacd-462e-be56-7cd9bcd2e5dc'] = $pane;
     $display->panels['middle'][0] = 'new-06e03f81-aacd-462e-be56-7cd9bcd2e5dc';
     $pane = new stdClass();
-    $pane->pid = 'new-57242c9c-9573-4185-b003-c28603523e1f';
+    $pane->pid = 'new-241962fe-b059-4363-92cf-42080da67029';
     $pane->panel = 'middle';
     $pane->type = 'views';
-    $pane->subtype = 'ding_multiple_search';
+    $pane->subtype = 'ereol_search';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -114,7 +114,7 @@ search/node',
       'context' => array(
         0 => 'argument_string_1.raw',
       ),
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
       'override_title_heading' => 'h2',
     );
@@ -122,16 +122,13 @@ search/node',
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array(
-      'css_id' => '',
-      'css_class' => 'pane-search-result',
-    );
+    $pane->css = array();
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $pane->uuid = '57242c9c-9573-4185-b003-c28603523e1f';
-    $display->content['new-57242c9c-9573-4185-b003-c28603523e1f'] = $pane;
-    $display->panels['middle'][1] = 'new-57242c9c-9573-4185-b003-c28603523e1f';
+    $pane->uuid = '241962fe-b059-4363-92cf-42080da67029';
+    $display->content['new-241962fe-b059-4363-92cf-42080da67029'] = $pane;
+    $display->panels['middle'][1] = 'new-241962fe-b059-4363-92cf-42080da67029';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -571,22 +568,6 @@ search/ting
           ),
           'context' => 'empty',
           'not' => TRUE,
-        ),
-        3 => array(
-          'name' => 'role',
-          'settings' => array(
-            'rids' => array(
-              0 => 3,
-              1 => 4,
-              2 => 5,
-              3 => 6,
-              4 => 7,
-              5 => 9,
-              6 => 10,
-            ),
-          ),
-          'context' => 'logged-in-user',
-          'not' => FALSE,
         ),
       ),
       'logic' => 'and',

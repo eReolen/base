@@ -19,7 +19,7 @@
  * @return array
  *   The finished form.
  */
-function publizon_settings_form($form, &$form_state) {
+function publizon_settings_form(array $form, array &$form_state) {
   $form['#tree'] = TRUE;
   drupal_add_css(drupal_get_path('module', 'publizon') . '/css/settings.css');
 
@@ -342,7 +342,7 @@ function theme_publizon_settings_form($variables) {
  * @param array $form_state
  *   The form state at submit.
  */
-function publizon_settings_form_add_error_message($form, &$form_state) {
+function publizon_settings_form_add_error_message(array $form, array &$form_state) {
   $form_state['values']['publizon']['num_error_messages'] = $form_state['values']['publizon']['num_error_messages'] + $form_state['values']['publizon']['error_messages']['add_count'];
   $form_state['rebuild'] = TRUE;
 }
@@ -355,7 +355,7 @@ function publizon_settings_form_add_error_message($form, &$form_state) {
  * @param array $form_state
  *   The form state at submit.
  */
-function publizon_settings_form_remove_error_message($form, &$form_state) {
+function publizon_settings_form_remove_error_message(array $form, array &$form_state) {
   if ($form_state['values']['publizon']['num_error_messages'] > 1) {
     $form_state['values']['publizon']['num_error_messages']--;
   }
@@ -370,7 +370,7 @@ function publizon_settings_form_remove_error_message($form, &$form_state) {
  * @param array $form_state
  *   The form state at submit.
  */
-function publizon_settings_form_error_messages_callback($form, $form_state) {
+function publizon_settings_form_error_messages_callback(array $form, array $form_state) {
   return $form['publizon']['error_messages'];
 }
 
@@ -385,7 +385,7 @@ function publizon_settings_form_error_messages_callback($form, $form_state) {
  * @param array $form_state
  *   The form state at submit.
  */
-function publizon_settings_form_validate($form, &$form_state) {
+function publizon_settings_form_validate(array $form, array &$form_state) {
   // Do not validate when we are trying to remove an element.
   if ($form_state['triggering_element']['#name'] == 'remove-library' || $form_state['triggering_element']['#name'] == 'remove-error-message') {
     return;
@@ -425,7 +425,7 @@ function publizon_settings_form_validate($form, &$form_state) {
  * @param array $form_state
  *   The form state at submit.
  */
-function publizon_settings_form_submit($form, &$form_state) {
+function publizon_settings_form_submit(array $form, array &$form_state) {
   // Go through the libraries submitted.
   foreach ($form_state['values']['publizon']['libraries']['l'] as $library) {
     // Because of the validation function above, if one of

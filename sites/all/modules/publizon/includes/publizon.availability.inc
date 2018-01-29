@@ -8,8 +8,6 @@
 /**
  * Available items.
  *
- * @TODO
- *
  * @param array $local_ids
  *   Array of local ids to check.
  *
@@ -17,7 +15,7 @@
  *   Result array containing the keys; available, reservable,
  *   loaned, reserved. Array is keyed by local id.
  */
-function publizon_availability_items($local_ids) {
+function publizon_availability_items(array $local_ids) {
   global $user;
 
   $to_check = array();

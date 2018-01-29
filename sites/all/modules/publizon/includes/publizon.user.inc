@@ -13,7 +13,7 @@
  * @param array $form_state
  *   The state of the form.
  */
-function publizon_user_form_alter(&$form, &$form_state) {
+function publizon_user_form_alter(array &$form, array &$form_state) {
   $default_value = NULL;
 
   // Pre-select library if we have the cookie.
@@ -43,7 +43,7 @@ function publizon_user_form_alter(&$form, &$form_state) {
  * @return array
  *   Result array.
  */
-function publizon_user_authenticate($name, $pass, $values) {
+function publizon_user_authenticate($name, $pass, array $values) {
   $res = array();
 
   $client = PublizonUserClient::getClient();

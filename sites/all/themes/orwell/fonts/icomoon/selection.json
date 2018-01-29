@@ -4,6 +4,189 @@
     {
       "icon": {
         "paths": [
+          "M0 0h256v256h-256zM384 64h640v128h-640zM0 384h256v256h-256zM384 448h640v128h-640zM0 768h256v256h-256zM384 832h640v128h-640z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "list",
+          "todo",
+          "bullet",
+          "menu",
+          "options"
+        ],
+        "defaultCode": 60505,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "order": 118,
+        "prevSize": 16,
+        "ligatures": "list, todo",
+        "name": "list-square",
+        "id": 857,
+        "code": 60505
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 857
+    },
+    {
+      "icon": {
+        "paths": [
+          "M384 64h640v128h-640v-128zM384 448h640v128h-640v-128zM384 832h640v128h-640v-128zM0 128c0-70.692 57.308-128 128-128s128 57.308 128 128c0 70.692-57.308 128-128 128s-128-57.308-128-128zM0 512c0-70.692 57.308-128 128-128s128 57.308 128 128c0 70.692-57.308 128-128 128s-128-57.308-128-128zM0 896c0-70.692 57.308-128 128-128s128 57.308 128 128c0 70.692-57.308 128-128 128s-128-57.308-128-128z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "list",
+          "todo",
+          "bullet",
+          "menu",
+          "options"
+        ],
+        "defaultCode": 60506,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "order": 117,
+        "prevSize": 16,
+        "ligatures": "list2, todo2",
+        "name": "list-rounded",
+        "id": 858,
+        "code": 60506
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 858
+    },
+    {
+      "icon": {
+        "paths": [
+          "M0 0h256v256h-256zM384 0h256v256h-256zM768 0h256v256h-256zM0 384h256v256h-256zM384 384h256v256h-256zM768 384h256v256h-256zM0 768h256v256h-256zM384 768h256v256h-256zM768 768h256v256h-256z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "grid",
+          "icons",
+          "apps",
+          "squares"
+        ],
+        "defaultCode": 60509,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "order": 119,
+        "prevSize": 16,
+        "ligatures": "grid2, icons",
+        "name": "grid-spaced",
+        "id": 861,
+        "code": 60509
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 861
+    },
+    {
+      "icon": {
+        "paths": [
+          "M64 64h256v256h-256zM384 64h256v256h-256zM704 64h256v256h-256zM64 384h256v256h-256zM384 384h256v256h-256zM704 384h256v256h-256zM64 704h256v256h-256zM384 704h256v256h-256zM704 704h256v256h-256z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "grid",
+          "icons",
+          "apps",
+          "squares"
+        ],
+        "defaultCode": 60511,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "order": 120,
+        "prevSize": 16,
+        "ligatures": "grid4, icons3",
+        "name": "grid-dense",
+        "id": 863,
+        "code": 60511
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 863
+    },
+    {
+      "icon": {
+        "paths": [
+          "M0 0h448v448h-448zM576 0h448v448h-448zM0 576h448v448h-448zM576 576h448v448h-448z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "grid",
+          "icons",
+          "apps",
+          "squares"
+        ],
+        "defaultCode": 60514,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "order": 113,
+        "prevSize": 16,
+        "ligatures": "grid7, icons6",
+        "name": "grid-simple",
+        "id": 866,
+        "code": 60514
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 866
+    },
+    {
+      "icon": {
+        "paths": [
+          "M64 192h896v192h-896zM64 448h896v192h-896zM64 704h896v192h-896z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "menu",
+          "list",
+          "options",
+          "lines",
+          "hamburger"
+        ],
+        "defaultCode": 60525,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "order": 116,
+        "prevSize": 16,
+        "ligatures": "menu3, list4",
+        "name": "list-menu",
+        "id": 877,
+        "code": 60525
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 877
+    },
+    {
+      "icon": {
+        "paths": [
           "M783.988 752.012c-64.104 0-124.372-24.96-169.7-70.288l-102.288-102.282-102.276 102.27c-45.332 45.336-105.6 70.3-169.706 70.3-64.118 0-124.39-24.964-169.722-70.3-45.332-45.334-70.296-105.604-70.296-169.712s24.964-124.38 70.296-169.714c45.334-45.332 105.608-70.296 169.714-70.296 64.108 0 124.38 24.964 169.712 70.296l102.278 102.276 102.276-102.276c45.332-45.332 105.604-70.298 169.712-70.298 64.112 0 124.384 24.966 169.71 70.298 45.338 45.334 70.302 105.606 70.302 169.714 0 64.112-24.964 124.382-70.3 169.71-45.326 45.336-105.598 70.302-169.712 70.302zM681.72 614.288c27.322 27.31 63.64 42.354 102.268 42.352 38.634 0 74.958-15.044 102.276-42.362 27.316-27.322 42.364-63.644 42.364-102.278s-15.046-74.956-42.364-102.274c-27.32-27.318-63.64-42.364-102.276-42.364-38.632 0-74.956 15.044-102.278 42.364l-102.268 102.274 102.278 102.288zM240.012 367.362c-38.634 0-74.956 15.044-102.274 42.364-27.32 27.318-42.364 63.64-42.364 102.274 0 38.632 15.044 74.954 42.364 102.276 27.32 27.316 63.642 42.364 102.274 42.364 38.634 0 74.956-15.044 102.272-42.362l102.276-102.278-102.276-102.274c-27.318-27.32-63.64-42.366-102.272-42.364v0z"
         ],
         "attrs": [],
@@ -21,10 +204,10 @@
         "name": "infinite",
         "id": 34,
         "order": 77,
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59951
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 0
     },
@@ -49,10 +232,10 @@
         "name": "play",
         "id": 36,
         "order": 78,
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59932
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 1
     },
@@ -77,10 +260,10 @@
         "name": "pause",
         "id": 37,
         "order": 79,
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59933
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 2
     },
@@ -106,10 +289,10 @@
         "name": "stop",
         "id": 38,
         "order": 80,
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59934
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 3
     },
@@ -135,10 +318,10 @@
         "order": 81,
         "id": 39,
         "name": "check",
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59649
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 4
     },
@@ -164,10 +347,10 @@
         "order": 82,
         "id": 40,
         "name": "right-chevron",
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59682
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 5
     },
@@ -193,10 +376,10 @@
         "order": 83,
         "id": 41,
         "name": "left-chevron",
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59683
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 6
     },
@@ -222,10 +405,10 @@
         "order": 84,
         "id": 42,
         "name": "up-chevron",
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59684
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 7
     },
@@ -251,10 +434,10 @@
         "order": 85,
         "id": 43,
         "name": "down-chevron",
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59685
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 8
     },
@@ -277,11 +460,11 @@
         "id": 44,
         "order": 86,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "star",
         "code": 59648
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 9
     },
@@ -304,11 +487,11 @@
         "id": 45,
         "order": 87,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "untitled",
         "code": 59650
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 10
     },
@@ -331,11 +514,11 @@
         "id": 46,
         "order": 88,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "untitled3",
         "code": 59652
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 11
     },
@@ -358,11 +541,11 @@
         "id": 47,
         "order": 89,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "eReolen_Symbol",
         "code": 59654
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 12
     },
@@ -385,11 +568,11 @@
         "id": 48,
         "order": 90,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "ArrowDown",
         "code": 59655
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 13
     },
@@ -412,11 +595,11 @@
         "id": 49,
         "order": 91,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "eReolen_Logo",
         "code": 59656
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 14
     },
@@ -439,11 +622,11 @@
         "id": 50,
         "order": 92,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "btn_play",
         "code": 59657
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 15
     },
@@ -466,11 +649,11 @@
         "id": 51,
         "order": 93,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "facebook",
         "code": 59658
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 16
     },
@@ -493,11 +676,11 @@
         "id": 52,
         "order": 94,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "Forfatterweb",
         "code": 59659
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 17
     },
@@ -519,11 +702,11 @@
       "properties": {
         "id": 53,
         "order": 95,
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "badge_book2",
         "code": 59660
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 18
     },
@@ -547,11 +730,11 @@
         "id": 54,
         "order": 96,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "lydbogsafspiller_sound",
         "code": 59661
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 19
     },
@@ -574,11 +757,11 @@
         "id": 55,
         "order": 97,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "user",
         "code": 59663
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 20
     },
@@ -602,11 +785,11 @@
         "id": 56,
         "order": 98,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "search",
         "code": 59665
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 21
     },
@@ -630,11 +813,11 @@
         "id": 57,
         "order": 99,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "eye",
         "code": 59667
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 22
     },
@@ -658,11 +841,11 @@
         "id": 58,
         "order": 100,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "books",
         "code": 59669
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 23
     },
@@ -685,11 +868,11 @@
         "id": 59,
         "order": 111,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "link",
         "code": 59670
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 24
     },
@@ -713,11 +896,11 @@
         "id": 60,
         "order": 102,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "eReolen-symbol",
         "code": 59671
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 25
     },
@@ -741,11 +924,11 @@
         "id": 61,
         "order": 103,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "eReolen-fuld",
         "code": 59672
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 26
     },
@@ -768,11 +951,11 @@
         "id": 62,
         "order": 104,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "arrow-left",
         "code": 59673
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 27
     },
@@ -795,10 +978,10 @@
         "order": 105,
         "id": 63,
         "name": "arrow-right",
-        "prevSize": 32,
+        "prevSize": 16,
         "code": 59676
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 28
     },
@@ -821,11 +1004,11 @@
         "id": 64,
         "order": 106,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "badge_book22",
         "code": 59674
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 29
     },
@@ -848,11 +1031,11 @@
         "id": 65,
         "order": 107,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "bagde_sound2",
         "code": 59675
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 30
     },
@@ -875,11 +1058,11 @@
         "id": 66,
         "order": 108,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "help2",
         "code": 59677
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 31
     },
@@ -902,11 +1085,11 @@
         "id": 67,
         "order": 109,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "lock",
         "code": 59791
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 32
     },
@@ -929,11 +1112,11 @@
         "id": 68,
         "order": 110,
         "ligatures": "",
-        "prevSize": 32,
+        "prevSize": 16,
         "name": "cross",
         "code": 59919
       },
-      "setIdx": 0,
+      "setIdx": 1,
       "setId": 1,
       "iconIdx": 33
     }
