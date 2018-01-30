@@ -269,14 +269,20 @@ html.js input.form-autocomplete {
 }
 
 .arrangement-toggles {
-  display: none; // (hidden on mobile)
+  // Move up over .facets-trigger-wrapper on mobile.
+  position: absolute;
+  top: 1rem;
   flex-direction: row;
   justify-content: flex-start;
-  padding-bottom: 1.85rem;
-  border-bottom: 1px solid $color__geist--hr;
+  display: flex;
+  background-color: transparent;
+
 
   @include grid-media($medium) {
-    display: flex;
+    // Simply display inline on desktop.
+    position: relative;
+    top: 0;
+    margin: 0 2rem 1rem;
   }
 
   .arrangement-toggle {
@@ -351,55 +357,47 @@ html.js input.form-autocomplete {
       margin-bottom: 2rem;
     }
 
-    .list { // ul
-      @include grid-media($medium) {
-        display: flex;
-        justify-content: flex-start;
-        align-items: end;
-        flex-flow: wrap;
-        margin-left: -.75rem;
-        margin-right: -.75rem;
-        margin-top: -.75rem;
-      }
+    .list {
+      display: flex;
+      justify-content: flex-start;
+      align-items: end;
+      flex-flow: wrap;
+      margin-left: -.75rem;
+      margin-right: -.75rem;
+      margin-top: -.75rem;
     }
-    .search-result { // li
 
-      @include grid-media($medium) {
+    .search-result {
+
+      @include grid-media($xsmall) {
+        width: 50%;
+        padding: .75rem;
+      }
+
+      @include grid-media($small) {
         width: 33.3333%;
         padding: .75rem;
       }
 
       .material {
-
-        @include grid-media($medium) {
-          border-bottom: 0;
-          margin-top: 0;
-          padding: 0;
-        }
+        border-bottom: 0;
+        margin-top: 0;
+        padding: 0;
       }
 
       .material__cover--teaser {
-
-        @include grid-media($medium) {
-          width: 100%;
-        }
+        width: 100%;
       }
 
       .material__content {
-
-        @include grid-media($medium) {
-          padding-left: 0;
-          width: 100%;
-        }
+        padding-left: 0;
+        width: 100%;
       }
 
       .material__abstract,
       .material__subjects,
       .material__series {
-
-        @include grid-media($medium) {
-          display: none;
-        }
+        display: none;
       }
 
       // Keep in sync with .field-name-ting-title in _ting-object-compact.scss.

@@ -55,7 +55,10 @@
       var cookieName = 'eReol_2__searchResultArrangement';
       var expires = 1;
       // Determine if we're on results page.
-      if ($('.search-results').length) {
+      if ($('.search-results').length && $('.panel-col-first').length) {
+        var list_toggle = $('<div class="arrangement-toggles"><div class="arrangement-toggle toggle-list"></div><div class="arrangement-toggle toggle-grid"></div></div>');
+        $('.panel-col-first').prepend(list_toggle);
+
         var $toggle = $('.arrangement-toggle');
         // Set initial view to what's stored in the cookie, otherwise
         // set to list-view.
@@ -91,7 +94,7 @@
    * Slide toggle facets on search page on mobile.
    */
   Drupal.behaviors.searchPageFacets = {
-    attach: function (context) {
+    attach: function (context, settings) {
       if ($('body.page-search').length) {
         var trigger = $('<div class="facets-trigger-wrapper"><div class="js-facets-trigger"></div><div>');
         $('.panel-col-first').prepend(trigger);
