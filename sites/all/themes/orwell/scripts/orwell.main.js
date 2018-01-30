@@ -6,7 +6,7 @@
 (function ($) {
   'use strict';
 
-  // Cookie set/get functions
+  // Cookie set/get functions.
   function setCookie(c_name, value, exdays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
@@ -48,16 +48,17 @@
   };
 
   /**
-   * Toggle between grid and list view on results page
+   * Toggle between grid and list view on results page.
    */
   Drupal.behaviors.searchResultsGridToggle = {
     attach: function (context) {
       var cookieName = 'eReol_2__searchResultArrangement';
       var expires = 1;
-      // determine if we're on results page
+      // Determine if we're on results page.
       if ($('.search-results').length) {
         var $toggle = $('.arrangement-toggle');
-        // Set initial view to what's stored in the cookie, otherwise set to list-view
+        // Set initial view to what's stored in the cookie, otherwise
+        // set to list-view.
         if (getCookie(cookieName) === 'list-view') {
           $('.search-results').addClass('list-view');
           $('.arrangement-toggle.toggle-list').addClass('toggle-active');
@@ -66,13 +67,13 @@
           $('.search-results').addClass('grid-view');
           $('.arrangement-toggle.toggle-grid').addClass('toggle-active');
         }
-        // When either toggle is clicked
+        // When either toggle is clicked.
         $toggle.on('click', function () {
           var $this = $(this);
-          // Visually toggle button states
+          // Visually toggle button states.
           $('.arrangement-toggle').removeClass('toggle-active');
           $this.addClass('toggle-active');
-          // Set/update cookie to arrangement/view type
+          // Set/update cookie to arrangement/view type.
           if ($this.hasClass('toggle-list')) {
             setCookie(cookieName, 'list-view', expires);
             $('.search-results').addClass('list-view').removeClass('grid-view');
