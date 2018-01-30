@@ -989,6 +989,14 @@ div.messages ul {
   text-decoration: none;
 }
 
+body #autocomplete li {
+  color: #505050;
+}
+
+body #autocomplete li.selected {
+  color: #b81b40;
+}
+
 .site-header {
   background: white;
 }

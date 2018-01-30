@@ -1,0 +1,14 @@
+//
+// Autocomplete styles.
+//
+
+// scss-lint:disable IdSelector
+body #autocomplete {
+  li {
+    color: $color__geist--grey3;
+
+    &.selected {
+      color: $color__geist--red;
+    }
+  }
+}

@@ -36,9 +36,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     $libraries = array();
     foreach (publizon_get_libraries() as $def) {
       // We're only listing libraries that's configured for unilogin.
-      if (!empty($def->unilogin_id) &&
-          !empty($def->subscribed_users) &&
-          $def->subscribed_users > 0) {
+      if (!empty($def->unilogin_id)) {
         $libraries[$def->retailer_id] = array(
           'subscribed_users' => $def->subscribed_users,
           'name' => $def->library_name,
@@ -73,7 +71,9 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     $prev_munis = array();
     foreach ($query->execute() as $row) {
       if (isset($libraries[$row->retailer_id])) {
-        $ratio = $row->loans / $libraries[$row->retailer_id]['subscribed_users'];
+        $ratio = $libraries[$row->retailer_id]['subscribed_users'] > 0 ?
+          $row->loans / $libraries[$row->retailer_id]['subscribed_users'] :
+          0;
         $row->ratio = $ratio;
         if ($row->month == $month_str) {
           $munis[(string) $ratio][] = $row;
@@ -144,8 +144,13 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
       if (isset($prev_munis_lookup[$row->retailer_id])) {
         $prev_placement = $prev_munis_lookup[$row->retailer_id]->placement;
       }
-      $ratio = round($row->ratio, 3);
-      $ratio = sprintf('%.3f', $row->ratio);
+      if ($libraries[$row->retailer_id]['subscribed_users'] > 0) {
+        $ratio = round($row->ratio, 3);
+        $ratio = sprintf('%.3f', $row->ratio);
+      }
+      else {
+        $ratio = '';
+      }
       $rows[] = array(
         $row->placement,
         array(
@@ -155,7 +160,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
         $ratio,
         $prev_placement,
         $libraries[$row->retailer_id]['subscribed_users'],
-        sprintf("%.0f%%", ($row->users / $subscribed_users) * 100),
+        $libraries[$row->retailer_id]['subscribed_users'] > 0 ? sprintf("%.0f%%", ($row->users / $subscribed_users) * 100) : '',
         $row->loans,
       );
       $totals['subscribed_users'] += $subscribed_users;
