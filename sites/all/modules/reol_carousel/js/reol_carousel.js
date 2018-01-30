@@ -223,7 +223,9 @@
       // If its the first batch or we're near the end.
       if (tab.data('offset') === 0 ||
           (tab.data('offset') > -1 &&
-           this.progress > .8)) {
+          // Use .75 to make it trigger when scrolling to the end when the
+          // coursel only has 5 elements as it will have when initially loaded.
+          this.progress > .75)) {
         // Disable updates while updating.
         tab.data('updating', true);
         // Add to queue.
