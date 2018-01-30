@@ -51,6 +51,50 @@ function reol_rec_material_paragraph_field_default_field_instances() {
   );
 
   // Exported field_instance:
+  // 'paragraphs_item-recommended_material-field_rec_node'.
+  $field_instances['paragraphs_item-recommended_material-field_rec_node'] = array(
+    'bundle' => 'recommended_material',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 3,
+      ),
+      'paragraphs_editor_preview' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'paragraphs_item',
+    'field_name' => 'field_rec_node',
+    'label' => 'Intern side',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance:
   // 'paragraphs_item-recommended_material-field_rec_title'.
   $field_instances['paragraphs_item-recommended_material-field_rec_title'] = array(
     'bundle' => 'recommended_material',
@@ -97,6 +141,7 @@ function reol_rec_material_paragraph_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Intern side');
   t('Kopier URLen på det materiale du vil referere til.');
   t('Materiale');
   t('Titel');
