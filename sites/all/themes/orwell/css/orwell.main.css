@@ -1949,6 +1949,9 @@ fieldset {
   .page-search .search-form__input--text:-ms-input-placeholder {
     color: #fff;
   }
+  .page-search .search-form__input--text::-ms-input-placeholder {
+    color: #fff;
+  }
   .page-search .search-form__input--text::placeholder {
     color: #fff;
   }
