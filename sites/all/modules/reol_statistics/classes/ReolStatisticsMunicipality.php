@@ -167,6 +167,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
         // Total will have to be recalculated for unique users, as we can't
         // pre-calculate it for arbitrary ranges.
         $query = db_select('reol_statistics_loans', 'l');
+        $query->join('reol_statistics_unilogin', 'u', 'l.sid = u.sid');
         $query->addExpression('COUNT(l.sid)', 'loans');
         $query->addExpression('COUNT(DISTINCT user_hash)', 'users');
         $query->condition('l.timestamp', array($from->getStartTimestamp(), $to->getEndTimestamp()), 'BETWEEN');
