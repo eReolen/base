@@ -284,7 +284,7 @@
         }
 
         // Add prev/next buttons.
-        carousel.find('ul').after('<div class="button-prev"></div><div class="button-next"></div>');
+        carousel.prepend('<div class="button-next"></div><div class="button-prev"></div>');
         var swiper = new Swiper(this, {
           speed: 400,
           slidesPerView: 'auto',
