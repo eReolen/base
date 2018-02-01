@@ -3030,6 +3030,12 @@ html.js input.form-autocomplete {
   }
 }
 
+.paragraphs-item-article-carousel .ding-carousel .button-next,
+.paragraphs-item-picked-article-carousel .ding-carousel .button-next,
+.article__other-articles .ding-carousel .button-next {
+  margin-right: 94px;
+}
+
 .paragraphs-item-article-carousel .ding-carousel-item,
 .paragraphs-item-picked-article-carousel .ding-carousel-item,
 .article__other-articles .ding-carousel-item {

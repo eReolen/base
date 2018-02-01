@@ -121,6 +121,12 @@
   .ding-carousel {
     @include content-wrapper__large;
     padding: 0;
+
+    // Account for the larger width of these carousels and move the
+    // buttons in so they align with the regular ones.
+    .button-next {
+      margin-right: 94px;
+    }
   }
 
   .ding-carousel-item {
