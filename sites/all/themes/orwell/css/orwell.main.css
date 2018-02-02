@@ -2045,7 +2045,19 @@ html.js input.form-autocomplete {
 }
 
 .page-search-ting .pane-page-content .pane-search-result .pane-content > ul {
-  margin: 2rem 0;
+  font-size: 1rem;
+  line-height: 1.8rem;
+  color: #787878;
+  line-height: 1rem;
+  margin: 3.5rem 0;
+}
+
+.page-search-ting .pane-page-content .pane-search-result .pane-content > ul strong {
+  font-weight: bold;
+}
+
+.page-search-ting .pane-page-content .pane-search-result .pane-content > ul em {
+  font-style: italic;
 }
 
 @media all and (max-width: 49em) {

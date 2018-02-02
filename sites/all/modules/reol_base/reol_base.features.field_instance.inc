@@ -10,6 +10,85 @@
 function reol_base_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'ting_object-ting_object-field_lix'.
+  $field_instances['ting_object-ting_object-field_lix'] = array(
+    'bundle' => 'ting_object',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'collection_list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'collection_primary' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'compact' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'reol_base',
+        'settings' => array(),
+        'type' => 'reol_base_lix',
+        'weight' => 80,
+      ),
+      'review' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'ting_reference_preview' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'user_list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'ting_object',
+    'field_name' => 'field_lix',
+    'label' => 'Lixtal',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'virtual_field',
+      'settings' => array(),
+      'type' => 'hidden',
+      'weight' => 43,
+    ),
+  );
+
   // Exported field_instance:
   // 'ting_object-ting_object-ting_details_audiobook_reader'.
   $field_instances['ting_object-ting_object-ting_details_audiobook_reader'] = array(
@@ -289,6 +368,7 @@ function reol_base_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('E-book format');
   t('Genre');
+  t('Lixtal');
   t('Reader');
 
   return $field_instances;

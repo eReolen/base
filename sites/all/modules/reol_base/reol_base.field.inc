@@ -30,6 +30,16 @@ function reol_base_field_info() {
       'default_formatter' => 'reol_base_genre',
       'no_ui' => TRUE,
     ),
+    'reol_base_lix' => array(
+      'label' => t('Material Lix number'),
+      'description' => t('The Lix number of the material'),
+      'default_widget' => 'hidden',
+      'default_formatter' => 'reol_base_lix',
+      'virtual_field' => array(
+        'entity_types' => array('ting_object'),
+        'add_widget' => TRUE,
+      ),
+    ),
   );
 }
 
@@ -60,6 +70,12 @@ function reol_base_field_formatter_info() {
       'label' => t('Plain author'),
       'field types' => array(
         'ting_author',
+      ),
+    ),
+    'reol_base_lix' => array(
+      'label' => t('Default'),
+      'field types' => array(
+        'reol_base_lix',
       ),
     ),
   );
@@ -114,6 +130,14 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#markup' => check_plain(implode(', ', $entity->creators)),
         );
+        break;
+
+      case 'reol_base_lix':
+        if ($entity->reply->lix) {
+          $element[$delta] = array(
+            '#markup' => check_plain($entity->reply->lix),
+          );
+        }
         break;
     }
   }
