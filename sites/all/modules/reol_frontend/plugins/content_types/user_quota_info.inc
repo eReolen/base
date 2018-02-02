@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * CTools Content Type for showing user quota info info.

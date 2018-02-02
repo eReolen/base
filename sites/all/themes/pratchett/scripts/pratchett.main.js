@@ -5,6 +5,8 @@
 
 (function ($) {
 
+  'use strict';
+
   // ting_search and ting_search_autocomplete is pretty insistent on
   // wanting to modify the autocomplete behaviour, even when the
   // autocomplete is disabled. Rather than adding another Ding patch,
@@ -20,8 +22,8 @@
   // sight. This forces the browser to scroll to the top of the page
   // when a popup is opened.
   Drupal.behaviors.modalScroll = {
-    attach : function() {
-      $('body').bind('dialogopen', function() {
+    attach : function () {
+      $('body').bind('dialogopen', function () {
         window.scrollTo(0, 0);
       });
     }
@@ -41,7 +43,7 @@
       }
 
       if (viewType === 'grid') {
-        wrapper.addClass(gridClass)
+        wrapper.addClass(gridClass);
       }
 
       // If the mini panel exist we will continue.
@@ -51,7 +53,7 @@
         $(viewPickerWrapper).after(viewPicker);
 
         // Listen for user input.
-        $('.view-picker__item').click(function() {
+        $('.view-picker__item').click(function () {
           viewType = $(this).attr('data-view-type');
 
           // Apply classes depending on user choice.
@@ -60,10 +62,10 @@
             $('.view-picker__item').toggleClass('active');
 
             if (viewType === 'grid') {
-              wrapper.addClass(gridClass)
+              wrapper.addClass(gridClass);
             }
             else {
-              wrapper.removeClass(gridClass)
+              wrapper.removeClass(gridClass);
             }
 
             // Store the last chosen view type in localstorage.
@@ -93,7 +95,7 @@
    * Add grid view option.
    */
   Drupal.behaviors.gridView = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
       $('.page-search-ting').viewPicker('.pane-ting-search-sort-form');
     }
   };
@@ -107,8 +109,8 @@
    * when using the back button.
    */
   Drupal.behaviors.overlay = {
-    attach : function(context, settings) {
-      $(window).bind('pageshow', function() {
+    attach : function (context, settings) {
+      $(window).bind('pageshow', function () {
         var overlay = $('.search-overlay--wrapper');
         if (overlay.length !== 0) {
           overlay.remove();

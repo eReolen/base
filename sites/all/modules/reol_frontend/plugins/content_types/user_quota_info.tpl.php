@@ -1,11 +1,11 @@
 <?php
+
 /**
  * @file
  * Template for user quota info.
  *
  * @todo library-info is a legacy class.
  */
-
 ?>
 <div class="library-info user-quota-info">
   <h2 class="pane-title"><?php echo t('Restrictions'); ?></h2>
