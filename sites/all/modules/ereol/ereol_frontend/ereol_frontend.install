@@ -11,3 +11,10 @@
 function ereol_frontend_update_7101() {
   features_revert(array('ding_frontend' => array('search_api_index')));
 }
+
+/**
+ * Revert reol_carousel_paragraph.
+ */
+function ereol_frontend_update_7102() {
+  features_revert_module('reol_carousel_paragraph');
+}
