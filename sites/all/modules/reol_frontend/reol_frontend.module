@@ -291,14 +291,16 @@ function reol_frontend_form_ting_search_backend_engines_form_alter(&$form, &$for
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_drupal_goto_alter().
  *
- * Moves "show in app" into publishing tab.
+ * Remove the fragment from the redirect to <front> by ding_user. We don't have
+ * the #login form and JS of DDBasic, so it's a no-op and looks weird.
  */
-function reol_frontend_form_article_node_form_alter(&$form, &$form_state) {
-  if (isset($form['field_show_in_app']) && isset($form['options'])) {
-    $form['options']['field_show_in_app'] = $form['field_show_in_app'];
-    unset($form['field_show_in_app']);
+function reol_frontend_drupal_goto_alter(&$path, &$options) {
+  if ($path == '' &&
+    isset($options['fragment']) &&
+    $options['fragment'] == 'login') {
+    unset($options['fragment']);
   }
 }
 
@@ -309,8 +311,6 @@ function reol_frontend_form_article_node_form_alter(&$form, &$form_state) {
  *
  * Adjusts hooks so we get in after
  * ting_search_autocomplete_form_search_block_form_alter().
- *
- * @see reol_frontend_form_search_block_form_alter()
  */
 function reol_frontend_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'ding_entity_buttons') {
@@ -323,6 +323,18 @@ function reol_frontend_module_implements_alter(&$implementations, $hook) {
     $group = $implementations['reol_frontend'];
     unset($implementations['reol_frontend']);
     $implementations['reol_frontend'] = $group;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Moves "show in app" into publishing tab.
+ */
+function reol_frontend_form_article_node_form_alter(&$form, &$form_state) {
+  if (isset($form['field_show_in_app']) && isset($form['options'])) {
+    $form['options']['field_show_in_app'] = $form['field_show_in_app'];
+    unset($form['field_show_in_app']);
   }
 }
 
