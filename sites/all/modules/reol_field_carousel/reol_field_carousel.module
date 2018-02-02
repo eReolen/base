@@ -58,7 +58,7 @@ function reol_field_carousel_field_formatter_info() {
       'label' => t('Multiple carousels'),
       'description' => t('Displays the search strings as multiple carousels.'),
       'field types' => array('reol_field_carousel'),
-      'settings' => array('render_method' => 'cover'),
+      'settings' => array('render_method' => 'cover', 'search_link' => FALSE),
     ),
   );
 }
@@ -84,6 +84,13 @@ function reol_field_carousel_field_formatter_settings_form($field, $instance, $v
       '#description' => t('How to render covers.'),
       '#required' => TRUE,
     );
+
+    $element['search_link'] = array(
+      '#title' => t('Add link to search'),
+      '#type' => 'checkbox',
+      '#default_value' => isset($settings['search_link']) ? $settings['search_link'] : FALSE,
+      '#description' => t('Whether to add a link to the search to the header.'),
+    );
   }
 
   return $element;
@@ -106,6 +113,8 @@ function reol_field_carousel_field_formatter_settings_summary($field, $instance,
     $render_method = !empty($settings['render_method']) ? $settings['render_method'] : 'cover';
 
     $summary = t('Render method: @render_method', array('@render_method' => $options[$render_method]));
+    $summary .= "<br>";
+    $summary .= t('Link to search: @searh_link', array('@searh_link' => $settings['search_link'] ? t('yes') : t('no')));
   }
 
   return $summary;
@@ -119,6 +128,7 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
   $element = array();
   list($entity_id,) = entity_extract_ids($entity_type, $entity);
   $render_method = !empty($display['settings']['render_method']) ? $display['settings']['render_method'] : 'cover';
+  $search_link = !empty($display['settings']['search_link']) ? $display['settings']['search_link'] : FALSE;
 
   switch ($display['type']) {
     case 'reol_field_carousel_notabs':
@@ -136,7 +146,7 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
 
         $covers = reol_field_carousel_build_covers($render_method, $chunk['collections']);
 
-        $element[] = array(
+        $carousel = array(
           '#type' => 'ding_carousel',
           '#title' => $item['title'],
           '#path' => $ajax_path,
@@ -146,8 +156,13 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
           // TODO: should be field configurable.
           '#placeholders' => $chunk['next_offset'] > -1 ? TING_SEARCH_CAROUSEL_CHUNK_SIZE + 1 : TING_SEARCH_CAROUSEL_CHUNK_SIZE,
           '#placeholder' => reol_field_carousel_build_placeholder($render_method),
-
         );
+
+        if ($search_link) {
+          $carousel['#more_link'] = l(t('See all'), 'search/ting/' . $item['search']);
+        }
+
+        $element[] = $carousel;
       }
       break;
   }
