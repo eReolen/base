@@ -4,7 +4,8 @@
  */
 
 (function ($) {
-  "use strict";
+
+  'use strict';
 
   // Cache of fetched availability information.
   Drupal.DADB = {};
@@ -32,7 +33,7 @@
         var mode = settings.ding_availability_mode ? settings.ding_availability_mode : 'items';
         var path = settings.basePath + 'ding_availability/' + mode + '/' + ids.join(',');
         $.ajax({
-          dataType: "json",
+          dataType: 'json',
           url: path,
           success: function (data) {
             $.each(data, function (id, item) {
@@ -69,11 +70,8 @@
        * The array of entity_ids is an array as we only show one availability
        * label per material type. So if one of these have an available status
        * the label have to reflect this.
-       *
-       * @param id
-       *   The element id that this should target.
-       * @param entity_ids
-       *   Array of entities.
+       * @param id {number} The element id that this should target.
+       * @param entity_ids {number[]} Array of entities.
        */
       function update_availability(id, entity_ids) {
         // Default the status to not available and not reservable.
@@ -103,11 +101,8 @@
 
       /**
        * Helper function to move the materials based on availability.
-       *
-       * @param element
-       *   The target element (material that should be moved).
-       * @param status
-       *   Structure with available and reservable state.
+       * @param element {Object} The target element (material that should be moved).
+       * @param status {string} Structure with available and reservable state.
        */
       function update_availability_type(element, status) {
         var groups_wrapper = element.closest('.search-result--availability');

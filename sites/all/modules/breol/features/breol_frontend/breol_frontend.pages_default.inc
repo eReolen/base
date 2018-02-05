@@ -1070,10 +1070,10 @@ user/*',
     $display->content['new-931a91cb-060f-420e-9e30-0c6730464a2e'] = $pane;
     $display->panels['header'][0] = 'new-931a91cb-060f-420e-9e30-0c6730464a2e';
     $pane = new stdClass();
-    $pane->pid = 'new-53c50360-5507-48bf-8d15-ce8c90692c83';
+    $pane->pid = 'new-ee8a75fd-9acc-4442-becf-5bf0466fffcb';
     $pane->panel = 'main_content';
-    $pane->type = 'user_quota_info';
-    $pane->subtype = 'user_quota_info';
+    $pane->type = 'library_info';
+    $pane->subtype = 'library_info';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -1092,9 +1092,9 @@ user/*',
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '53c50360-5507-48bf-8d15-ce8c90692c83';
-    $display->content['new-53c50360-5507-48bf-8d15-ce8c90692c83'] = $pane;
-    $display->panels['main_content'][0] = 'new-53c50360-5507-48bf-8d15-ce8c90692c83';
+    $pane->uuid = 'ee8a75fd-9acc-4442-becf-5bf0466fffcb';
+    $display->content['new-ee8a75fd-9acc-4442-becf-5bf0466fffcb'] = $pane;
+    $display->panels['main_content'][0] = 'new-ee8a75fd-9acc-4442-becf-5bf0466fffcb';
     $pane = new stdClass();
     $pane->pid = 'new-df2e8031-847f-4a40-80c6-1ed5ab31403b';
     $pane->panel = 'main_content';

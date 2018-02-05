@@ -30,26 +30,27 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
   $library_id = publizon_get_retailer_id($user);
   $library = publizon_client_library_load($library_id);
 
+  $query = array(
+    'facets' => array(
+      'facet.extraTitles:ekstra titler',
+    ),
+  );
+  $extra_link = url('search/ting/*', array('query' => $query));
+
   $variables = array(
     // Quotas.
     'max_ebook_loans' => $library->maxEbookLoans,
     'max_audiobook_loans' => $library->maxAudiobookLoans,
     'max_ebook_reservations' => $library->maxEbookReservations,
     'max_audiobook_reservations' => $library->maxAudiobookReservations,
+    'extra_link' => $extra_link,
     // Legacy texts.
     'max_ebook_loans_text' => t('You are allowed to loan @loans e-books simultaneously.', array('@loans' => $library->maxEbookLoans)),
     'max_audiobook_loans_text' => t('You are allowed to loan @loans audiobooks simultaneously.', array('@loans' => $library->maxAudiobookLoans)),
     'max_reservations_text' => t('You are allowed to reserve @reservations titles simultaneously.', array('@reservations' => $library->maxEbookReservations)),
-    'extra_info_text' => t('<a href="@url">Titles exempt from quotas.</a>', array(
-      '@url' => url('search/ting/*', array(
-        'query' => array(
-          'facets' => array(
-            'facet.extraTitles:ekstra titler',
-          ),
-        ),
-      )),
-    )),
+    'extra_info_text' => t('<a href="@url">Titles exempt from quotas.</a>', array('@url' => $extra_link)),
   );
+
   $block->title = t('Restrictions');
   $block->content = theme('library_info', $variables);
 
