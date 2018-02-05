@@ -33,6 +33,11 @@ function reol_rec_material_paragraph_preprocess_entity(&$variables) {
         $variables['author'] = $build['ting_author'];
         $variables['title'] = $build['ting_title'];
       }
+
+      // Overwrite local link if defined.
+      if ($wrapper->field_rec_node->value()) {
+        $variables['link'] = url('node/' . $wrapper->field_rec_node->nid->value());
+      }
     }
   }
 }

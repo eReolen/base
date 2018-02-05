@@ -11,17 +11,14 @@
     border-radius: 1px;
     font-size: 0;
     padding: .75rem;
-    position: absolute;
-    bottom: 30px;
-    // Ensure that buttons is above the carousel.
-    z-index: 1;
-    // But don't display per default (mobile first). And we have to use
+    float: right;
+    margin-top: 1.1rem;
+    margin-left: 1rem;
+    // Don't display per default (mobile first). And we have to use
     // important because Slick sets the display on the element.
     display: none !important;
 
     @include grid-media($medium) {
-      // Move up on non-mobile to account for the author and title.
-      bottom: 90px;
       // Show arrows on larger sizes.
       display: inline-block !important;
     }
@@ -35,20 +32,12 @@
   }
 
 
-  .button-prev {
-    left: 30px;
-
-    &::before {
-      content: $icon__arrow-left;
-    }
+  .button-prev::before {
+    content: $icon__arrow-left;
   }
 
-  .button-next {
-    right: 30px;
-
-    &::before {
-      content: $icon__arrow-right;
-    }
+  .button-next::before {
+    content: $icon__arrow-right;
   }
 
   .slick-dots {
@@ -132,6 +121,12 @@
   .ding-carousel {
     @include content-wrapper__large;
     padding: 0;
+
+    // Account for the larger width of these carousels and move the
+    // buttons in so they align with the regular ones.
+    .button-next {
+      margin-right: 94px;
+    }
   }
 
   .ding-carousel-item {

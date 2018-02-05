@@ -23,6 +23,7 @@ function reol_carousel_paragraph_field_default_field_instances() {
         'module' => 'reol_field_carousel',
         'settings' => array(
           'render_method' => 'material',
+          'search_link' => 1,
         ),
         'type' => 'reol_field_carousel_notabs',
         'weight' => 0,
@@ -32,6 +33,7 @@ function reol_carousel_paragraph_field_default_field_instances() {
         'module' => 'reol_field_carousel',
         'settings' => array(
           'render_method' => 'cover',
+          'search_link' => FALSE,
         ),
         'type' => 'reol_field_carousel_notabs',
         'weight' => 0,

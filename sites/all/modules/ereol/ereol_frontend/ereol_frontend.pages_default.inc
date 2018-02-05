@@ -1179,8 +1179,10 @@ search/ting
     $pane->access = array();
     $pane->configuration = array(
       'context' => 'argument_user_edit_1',
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
+      'path' => '',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -1312,8 +1314,9 @@ search/ting
     $pane->configuration = array(
       'path' => '',
       'context' => 'argument_entity_id:user_1',
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
+      'override_title_heading' => 'h2',
     );
     $pane->cache = array();
     $pane->style = array(
