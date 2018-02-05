@@ -41,6 +41,18 @@ function reol_feed_node_delete($node) {
 /**
  * Implements hook_form_FORM_ID_alter().
  *
+ * Moves "show in app" into publishing tab.
+ */
+function reol_feed_form_article_node_form_alter(&$form, &$form_state) {
+  if (isset($form['field_show_in_app']) && isset($form['options'])) {
+    $form['options']['field_show_in_app'] = $form['field_show_in_app'];
+    unset($form['field_show_in_app']);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
  * Add submit handler to carousel admin page trigger feed rebuild on save.
  */
 function reol_feed_form_ting_search_carousel_admin_form_alter(&$form, $form_id) {

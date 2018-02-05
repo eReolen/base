@@ -327,18 +327,6 @@ function reol_frontend_module_implements_alter(&$implementations, $hook) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
- *
- * Moves "show in app" into publishing tab.
- */
-function reol_frontend_form_article_node_form_alter(&$form, &$form_state) {
-  if (isset($form['field_show_in_app']) && isset($form['options'])) {
-    $form['options']['field_show_in_app'] = $form['field_show_in_app'];
-    unset($form['field_show_in_app']);
-  }
-}
-
-/**
  * Preprocess materials_item.
  *
  * Remove the rating widget added by ding_entity_rating.
