@@ -33,3 +33,28 @@ function reol_search_conditions_callback(&$keys) {
 
   return $conditions;
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reol_search_form_search_block_form_alter(&$form, &$form_state) {
+  // We only want to alter the search form, when we are on the search page.
+  if (arg(0) == 'search' && count(search_get_info()) > 1) {
+    $options = array();
+    foreach (search_get_info() as $info) {
+      // Since modules alter the default tab title, get the info from menu.
+      $menu_info = menu_get_item('search/' . $info['path']);
+      $options[url('search/' . $info['path'])] = $menu_info['title'];
+    }
+    $form['search_type'] = array(
+      '#type' => 'radios',
+      '#options' => $options,
+      '#default_value' => url('search/' . arg(1)),
+      '#attached' => array(
+        'js' => array(
+          drupal_get_path('module', 'reol_search') . '/js/reol_search.search_form.js',
+        ),
+      ),
+    );
+  }
+}

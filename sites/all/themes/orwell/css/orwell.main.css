@@ -1749,8 +1749,48 @@ fieldset {
   }
 }
 
+.page-search .pane-page-tabs {
+  display: none;
+}
+
 .search-form {
   font-family: "SourceSansPro", sans-serif;
+  position: relative;
+}
+
+.search-form #edit-search-type input {
+  display: none;
+}
+
+.search-form #edit-search-type .form-item {
+  display: inline-block;
+  margin: 0 20px;
+  font-family: "SourceSansPro", sans-serif;
+}
+
+.search-form #edit-search-type .form-item label {
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: .5;
+  line-height: 3rem;
+  font-size: 1.3rem;
+}
+
+.search-form #edit-search-type .form-item.selected label {
+  opacity: 1;
+}
+
+@media all and (min-width: 49em) {
+  .search-form #edit-search-type {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .search-form #edit-search-type .form-item label {
+    color: white;
+    line-height: 4rem;
+    font-size: 1rem;
+  }
 }
 
 @media all and (min-width: 49em) {
@@ -1855,7 +1895,7 @@ fieldset {
 .search-form__content {
   background: #fff;
   display: none;
-  height: 5rem;
+  height: 8rem;
   left: 0;
   max-width: 100%;
   position: fixed;

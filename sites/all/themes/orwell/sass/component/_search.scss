@@ -22,8 +22,52 @@ $icon-color: #9c9c9c;
   }
 }
 
+.page-search .pane-page-tabs {
+  display: none;
+}
+
 .search-form {
   font-family: $font-regular;
+  position: relative;
+
+  // scss-lint:disable IdSelector
+  #edit-search-type {
+    input {
+      display: none;
+    }
+
+    .form-item {
+      display: inline-block;
+      margin: 0 20px;
+      font-family: $font-regular;
+
+      label {
+        text-transform: uppercase;
+        cursor: pointer;
+        opacity: .5;
+        line-height: 3rem;
+        font-size: 1.3rem;
+      }
+
+      &.selected label {
+        opacity: 1;
+      }
+    }
+
+    @include grid-media($medium) {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      .form-item {
+        label {
+          color: white;
+          line-height: 4rem;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
 
   .page-search & {
     @include grid-media($medium) {
@@ -106,7 +150,7 @@ $icon-color: #9c9c9c;
   &__content {
     background: $color__white;
     display: none;
-    height: $item-height;
+    height: 8rem;
     left: 0;
     max-width: 100%;
     position: fixed;
