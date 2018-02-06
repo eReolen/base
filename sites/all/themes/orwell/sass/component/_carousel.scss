@@ -12,7 +12,7 @@
     font-size: 0;
     padding: .75rem;
     float: right;
-    margin-top: 1.1rem;
+    margin-top: -.4rem;
     margin-left: 1rem;
     // Don't display per default (mobile first). And we have to use
     // important because Slick sets the display on the element.
@@ -122,10 +122,8 @@
     @include content-wrapper__large;
     padding: 0;
 
-    // Account for the larger width of these carousels and move the
-    // buttons in so they align with the regular ones.
-    .button-next {
-      margin-right: 94px;
+    .carousel__header {
+      @include content-wrapper;
     }
   }
 

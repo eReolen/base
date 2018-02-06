@@ -283,8 +283,18 @@
           settings = $(this).data('settings');
         }
 
-        // Add prev/next buttons.
-        carousel.prepend('<div class="button-next"></div><div class="button-prev"></div>');
+        // Add prev/next buttons to header, if one is present, or
+        // simply the container..
+        var header = carousel.find('.carousel__header');
+        var buttons = '<div class="button-next"></div><div class="button-prev"></div>';
+
+        if (header.length) {
+          header.prepend(buttons);
+        }
+        else {
+          carousel.prepend(buttons);
+        }
+
         var swiper = new Swiper(this, {
           speed: 400,
           slidesPerView: 'auto',

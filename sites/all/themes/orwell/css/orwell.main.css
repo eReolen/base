@@ -2901,7 +2901,7 @@ html.js input.form-autocomplete {
   font-size: 0;
   padding: .75rem;
   float: right;
-  margin-top: 1.1rem;
+  margin-top: -.4rem;
   margin-left: 1rem;
   display: none !important;
 }
@@ -3071,10 +3071,25 @@ html.js input.form-autocomplete {
   }
 }
 
-.paragraphs-item-article-carousel .ding-carousel .button-next,
-.paragraphs-item-picked-article-carousel .ding-carousel .button-next,
-.article__other-articles .ding-carousel .button-next {
-  margin-right: 94px;
+.paragraphs-item-article-carousel .ding-carousel .carousel__header,
+.paragraphs-item-picked-article-carousel .ding-carousel .carousel__header,
+.article__other-articles .ding-carousel .carousel__header {
+  max-width: 1120px;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media all and (min-width: 49em) {
+  .paragraphs-item-article-carousel .ding-carousel .carousel__header,
+  .paragraphs-item-picked-article-carousel .ding-carousel .carousel__header,
+  .article__other-articles .ding-carousel .carousel__header {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1140px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
 
 .paragraphs-item-article-carousel .ding-carousel-item,
