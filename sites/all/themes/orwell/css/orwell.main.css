@@ -1404,6 +1404,7 @@ body #autocomplete li.selected {
   text-transform: none;
   content: "";
   font-size: 2rem;
+  margin-right: .5rem;
 }
 
 .footer .menu a {
