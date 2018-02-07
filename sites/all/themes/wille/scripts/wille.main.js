@@ -257,14 +257,14 @@
     }
   };
 
-  var resizeTimer; // Set resizeTimer to empty so it resets on page load.
+  var resizeTimer;
 
   function resizeFunction() {
-      var windowWidth = window.innerWidth;
+    var windowWidth = window.innerWidth;
 
-      if (windowWidth > 1024) {
-        $('.pane-breol-facetbrowser, .before-content').show();
-      }
+    if (windowWidth > 1024) {
+      $('.pane-breol-facetbrowser, .before-content').show();
+    }
   };
 
   // On resize, run the function and reset the timeout
