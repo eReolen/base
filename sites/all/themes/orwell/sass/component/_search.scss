@@ -150,12 +150,18 @@ $icon-color: #9c9c9c;
   &__content {
     background: $color__white;
     display: none;
-    height: 8rem;
     left: 0;
     max-width: 100%;
     position: fixed;
     top: 0;
     width: 100%;
+    // Default height.
+    height: $item-height;
+
+    // On the search page, we display tabs too.
+    .page-search & {
+      height: $item-height + 3rem;
+    }
 
     @include grid-media($medium) {
       @include content-wrapper__large;
