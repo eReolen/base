@@ -64,9 +64,19 @@ function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field,
         $field['field_name']
       );
 
+      $title = NULL;
+      $wrapper = $entity->wrapper();
+      if (isset($wrapper->field_picked_title)) {
+        $title = $wrapper->field_picked_title->value();
+      }
+
+      if (empty($title)) {
+        $title = t('Selected articles');
+      }
+
       $element[0] = array(
         '#type' => 'ding_carousel',
-        '#title' => t('Articles'),
+        '#title' => $title,
         '#path' => $ajax_path,
         '#offset' => 0,
         '#items' => array(),
