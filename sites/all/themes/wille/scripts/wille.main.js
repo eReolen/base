@@ -181,7 +181,13 @@
         $('.menu-name-main-menu ul li.last a', context)
           .click(function(event) {
             event.preventDefault();
-            searchFormWrapper.slideToggle();
+            // The slide animation sets overflow: hidden, but the
+            // autocomplete on the search field requires overflow to
+            // be visible, so we reset it when the animation
+            // completes.
+            searchFormWrapper.slideToggle(400, function () {
+              $(this).css({overflow: 'visible'});
+            });
           });
       }
     }
