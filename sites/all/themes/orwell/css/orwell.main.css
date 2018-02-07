@@ -3027,6 +3027,7 @@ html.js input.form-autocomplete {
   cursor: pointer;
   float: right;
   margin-top: -.4rem;
+  margin-left: 1rem;
 }
 
 .ding-carousel .carousel__more-link:hover {
