@@ -6,6 +6,10 @@ $teaser-height--medium: 400px;
 .article {
   font-family: $font-regular;
 
+  // Establish a stacking context, so our covers doesn't overlap other
+  // things.
+  z-index: 0;
+
   &__content {
     padding: 2rem 2rem 0;
 

@@ -2381,6 +2381,7 @@ html.js input.form-autocomplete {
 
 .article {
   font-family: "SourceSansPro", sans-serif;
+  z-index: 0;
 }
 
 .article__content {
