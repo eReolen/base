@@ -8,7 +8,8 @@
 
   Drupal.behaviors.autoSubmitOnMobile = {
     attach: function (context, settings) {
-      $('.search-form input[name="search_block_form"]').on('autocompleteSelect', function (e) {
+      // First selector is eReolen, second is eReolenGo.
+      $('.search-form input[name="search_block_form"], #search-block-form input[name="search_block_form"]').on('autocompleteSelect', function (e) {
         e.target.form.submit();
       });
     }
