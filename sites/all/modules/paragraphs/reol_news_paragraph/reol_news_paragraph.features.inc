@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * reol_news_paragraph.features.inc

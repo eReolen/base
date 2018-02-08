@@ -1,0 +1,35 @@
+@import 'bootstrap/bootstrap';
+
+.ting-relations {
+  .abstract {
+    margin: 1rem 0;
+  }
+}
+
+.pane-fulltext {
+  @extend .content-wrapper;
+  @include text-paragraph;
+
+  padding: 2rem 2rem 0;
+
+  @include grid-media($medium) {
+    padding: 0 0 3.5rem;
+  }
+
+  .page-title {
+    @include page-header;
+  }
+
+  .author {
+    color: $color__gray;
+    font-family: $font-semibold;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: $line-height__small;
+    margin-bottom: $material--teaser__margin-bottom;
+  }
+
+  .description {
+    margin: 1rem 0;
+  }
+}

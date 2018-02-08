@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen feed feature.
@@ -36,6 +37,18 @@ function reol_feed_node_update($node) {
  */
 function reol_feed_node_delete($node) {
   cache_clear_all('reol_feed_do_not_force', 'cache');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Moves "show in app" into publishing tab.
+ */
+function reol_feed_form_article_node_form_alter(&$form, &$form_state) {
+  if (isset($form['field_show_in_app']) && isset($form['options'])) {
+    $form['options']['field_show_in_app'] = $form['field_show_in_app'];
+    unset($form['field_show_in_app']);
+  }
 }
 
 /**
@@ -179,7 +192,7 @@ function reol_feed_get_feeds() {
  * @return string
  *   Path for the file.
  */
-function reol_feed_get_filename($file) {
+function reol_feed_get_filename(array $file) {
   $feed_directory = reol_feed_get_feeds_directory() . '/' . $file['type'];
 
   // Make sure dir exists.
@@ -212,7 +225,7 @@ function reol_feed_get_feeds_directory() {
  * @return bool
  *   Whether or not write was successfull.
  */
-function reol_feed_write_feed($file, $contents) {
+function reol_feed_write_feed(array $file, $contents) {
   return file_put_contents(reol_feed_get_filename($file), $contents) !== FALSE;
 }
 
@@ -224,6 +237,7 @@ function reol_feed_menu() {
 
   $items['feeds'] = array(
     'page callback' => 'reol_feed_deliver',
+    // This callback should be public.
     'access callback' => TRUE,
   );
 
@@ -304,11 +318,12 @@ function reol_feed_get_latest($type, $ting_type, $count = 2) {
 
   return $latest;
 }
+
 /**
  * Convert BR tags to newlines and carriage returns.
  *
  * @param string $string
- *   The string to convert
+ *   The string to convert.
  *
  * @return string
  *   The converted string

@@ -223,7 +223,9 @@
       // If its the first batch or we're near the end.
       if (tab.data('offset') === 0 ||
           (tab.data('offset') > -1 &&
-           this.progress > .8)) {
+          // Use .75 to make it trigger when scrolling to the end when the
+          // coursel only has 5 elements as it will have when initially loaded.
+          this.progress > .75)) {
         // Disable updates while updating.
         tab.data('updating', true);
         // Add to queue.
@@ -281,8 +283,18 @@
           settings = $(this).data('settings');
         }
 
-        // Add prev/next buttons.
-        carousel.find('ul').after('<div class="button-prev"></div><div class="button-next"></div>');
+        // Add prev/next buttons to header, if one is present, or
+        // simply the container..
+        var header = carousel.find('.carousel__header');
+        var buttons = '<div class="button-next"></div><div class="button-prev"></div>';
+
+        if (header.length) {
+          header.prepend(buttons);
+        }
+        else {
+          carousel.prepend(buttons);
+        }
+
         var swiper = new Swiper(this, {
           speed: 400,
           slidesPerView: 'auto',

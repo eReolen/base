@@ -14,7 +14,7 @@ define('REOL_ANNOUNCEMENT_WARNING', 2);
 function reol_announcement_menu() {
   $items = array();
 
-  $items['admin/structure/reol_announcement'] = array(
+  $items['admin/config/ereolen/reol_announcement'] = array(
     'title' => 'Announcement settings',
     'description' => 'Administer site announcement',
     'page callback' => 'drupal_get_form',

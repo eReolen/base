@@ -64,9 +64,19 @@ function reol_news_paragraph_field_formatter_view($entity_type, $entity, $field,
         $field['field_name']
       );
 
+      $title = NULL;
+      $wrapper = $entity->wrapper();
+      if (isset($wrapper->field_picked_title)) {
+        $title = $wrapper->field_picked_title->value();
+      }
+
+      if (empty($title)) {
+        $title = t('Selected articles');
+      }
+
       $element[0] = array(
         '#type' => 'ding_carousel',
-        '#title' => '',
+        '#title' => $title,
         '#path' => $ajax_path,
         '#offset' => 0,
         '#items' => array(),
@@ -89,7 +99,8 @@ function reol_news_paragraph_preprocess_entity(&$variables) {
     if ($variables['paragraphs_item']->bundle() == 'article_carousel') {
       $variables['content'] = array(
         '#type' => 'ding_carousel',
-        '#title' => '',
+        '#title' => t('Articles'),
+        '#more_link' => l(t('All articles'), 'articles'),
         // Use the ajax callback in ereol_article.
         '#path' => 'news/ajax/5',
         '#offset' => 0,

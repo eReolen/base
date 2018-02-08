@@ -36,6 +36,31 @@ function reol_base_field_default_field_bases() {
     'type' => 'text_with_summary',
   );
 
+  // Exported field_base: 'field_lix'.
+  $field_bases['field_lix'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(
+      0 => 'ting_object',
+    ),
+    'field_name' => 'field_lix',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'reol_base',
+    'settings' => array(
+      'profile2_private' => FALSE,
+    ),
+    'storage' => array(
+      'active' => 1,
+      'module' => 'virtual_field',
+      'settings' => array(),
+      'type' => 'virtual_field',
+    ),
+    'translatable' => 0,
+    'type' => 'reol_base_lix',
+  );
+
   // Exported field_base: 'field_reol_entity_type'.
   $field_bases['field_reol_entity_type'] = array(
     'active' => 1,

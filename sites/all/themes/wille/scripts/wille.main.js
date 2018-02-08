@@ -3,13 +3,13 @@
  * Main javascript file for Wille theme.
  */
 
-(function($) {
+(function ($) {
 
   /**
    * Detect tablets and mobile devices.
    */
   Drupal.behaviors.isDesktop = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
 
       // Add class if we are on desktop.
       if (!isMobile()) {
@@ -22,9 +22,9 @@
    * Toggle the footer menus.
    */
   Drupal.behaviors.footerToggle = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
 
-      $('.footer .pane-title', context).click(function() {
+      $('.footer .pane-title', context).click(function () {
 
         var element = $(this).next().find('ul');
 
@@ -48,15 +48,15 @@
    * Toggle burger menu.
    */
   Drupal.behaviors.burgerMenu = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
 
       var phoneBreakPoint = 667;
 
-      $('.icon-menu', context).click(function() {
+      $('.icon-menu', context).click(function () {
         $('.topbar .menu').slideToggle(200);
       });
 
-      $('.menu-name-main-menu .menu a', context).click(function() {
+      $('.menu-name-main-menu .menu a', context).click(function () {
         if ($(window).width() < phoneBreakPoint) {
           $('.topbar .menu').slideUp(500);
 
@@ -73,8 +73,8 @@
    * Initialize slick.js for the subject menu.
    */
   Drupal.behaviors.subjectMenu = {
-    attach : function(context, settings) {
-      $(document).ready(function() {
+    attach : function (context, settings) {
+      $(document).ready(function () {
 
         // If slick is not loaded, we will abort.
         if (!jQuery().slick) {
@@ -120,14 +120,14 @@
    * Facets.
    */
   Drupal.behaviors.facets = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
 
-      $('#ding-facetbrowser-form', context).each(function() {
-        $('fieldset', this).each(function() {
+      $('#ding-facetbrowser-form', context).each(function () {
+        $('fieldset', this).each(function () {
 
           var dropdown = $(this).find('.fieldset-wrapper').addClass('js-processed');
 
-          $(this).click(function() {
+          $(this).click(function () {
             dropdown.slideToggle(200).toggleClass('open');
           });
         });
@@ -139,7 +139,7 @@
 
         $('.pane-panels-mini.pane-search').prepend(html);
 
-        $('.js-toggle-facets').click(function() {
+        $('.js-toggle-facets').click(function () {
 
           $(this).toggleClass('open');
 
@@ -154,7 +154,7 @@
    * Search drop down.
    */
   Drupal.behaviors.searchDropDown = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
       // If the block is not present in the DOM abort.
       if ($('.pane-search-form').length === 0) {
         return;
@@ -168,7 +168,7 @@
         $('.pane-search-form').show();
 
         $('.menu-name-main-menu ul li.last a', context)
-          .click(function(event) {
+          .click(function (event) {
             event.preventDefault();
           });
       }
@@ -179,9 +179,15 @@
         // We assume that search is the fifth element. This would be preferable
         // if it was more dynamic.
         $('.menu-name-main-menu ul li.last a', context)
-          .click(function(event) {
+          .click(function (event) {
             event.preventDefault();
-            searchFormWrapper.slideToggle();
+            // The slide animation sets overflow: hidden, but the
+            // autocomplete on the search field requires overflow to
+            // be visible, so we reset it when the animation
+            // completes.
+            searchFormWrapper.slideToggle(400, function () {
+              $(this).css({overflow: 'visible'});
+            });
           });
       }
     }
@@ -191,7 +197,7 @@
    * Make ting object details collapsible.
    */
   Drupal.behaviors.tingObject = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
 
       var contentWrapper = $('<div class="collapsible-content-wrapper" />')
 
@@ -201,7 +207,7 @@
         '.pane-ting-ting-object-types'
       ];
 
-      $(elements).each(function(id, element) {
+      $(elements).each(function (id, element) {
         $(element)
           .addClass('ting-object-collapsible-enabled')
           .addClass('open')
@@ -211,7 +217,7 @@
 
         $('.collapsible-content-wrapper').hide();
 
-        $(element).find('h2').click(function() {
+        $(element).find('h2').click(function () {
           $(element)
             .toggleClass('open')
             .find('.collapsible-content-wrapper')
@@ -225,16 +231,17 @@
    * Detect if jquery ui-dialog is open.
    */
   Drupal.behaviors.uiDialog = {
-    attach : function(context, settings) {
-      if($('.ui-dialog', context).css('display') == 'none' || $('.ui-dialog').length === 0) {
+    attach : function (context, settings) {
+      if ($('.ui-dialog', context).css('display') == 'none' || $('.ui-dialog').length === 0) {
         // Fallback.
         $('body').removeClass('ui-dialog-is-open');
-      } else {
+      }
+      else {
         // Add Class that indicates the dialog is open.
         $('body').addClass('ui-dialog-is-open');
 
         // Make sure we remove the class when users close the dialog.
-        $('.ui-button-icon-primary').click(function() {
+        $('.ui-button-icon-primary').click(function () {
           $('body').removeClass('ui-dialog-is-open');
         });
       }
@@ -245,26 +252,26 @@
    * Add grid view option.
    */
   Drupal.behaviors.gridView = {
-    attach : function(context, settings) {
+    attach : function (context, settings) {
       $('.pane-panels-mini.pane-search').viewPicker('.pane-ting-search-sort-form');
     }
   };
 
-  var resizeTimer; // Set resizeTimer to empty so it resets on page load
+  var resizeTimer;
 
   function resizeFunction() {
-      var windowWidth = window.innerWidth;
+    var windowWidth = window.innerWidth;
 
-      if (windowWidth > 1024) {
-        $('.pane-breol-facetbrowser, .before-content').show();
-      }
+    if (windowWidth > 1024) {
+      $('.pane-breol-facetbrowser, .before-content').show();
+    }
   };
 
   // On resize, run the function and reset the timeout
   // 250 is the delay in milliseconds. Change as you see fit.
-  $(window).resize(function() {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(resizeFunction, 250);
+  $(window).resize(function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resizeFunction, 250);
   });
 
   resizeFunction();

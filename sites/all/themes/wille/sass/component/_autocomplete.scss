@@ -1,0 +1,23 @@
+//
+// Autocomplete styles.
+//
+
+
+// scss-lint:disable IdSelector
+#search-block-form {
+  // scss-lint:disable ImportantRule
+  overflow: visible !important;
+}
+
+// scss-lint:disable IdSelector
+body #autocomplete {
+  background: white;
+
+  li {
+    color: #646464;
+
+    &.selected {
+      color: $red;
+    }
+  }
+}

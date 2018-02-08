@@ -1308,10 +1308,11 @@ function reol_base_field_group_info_alter(&$groups) {
     $groups['group_ting_right_col_search|ting_object|ting_object|search_result']->data['children'][] = 'ting_subjects';
   }
 
-  // Add ebook format and reader name to material details.
+  // Add ebook format, reader name and lix number to material details.
   if (isset($groups['group_material_details|ting_object|ting_object|default'])) {
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_ebook_format';
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_audiobook_reader';
+    $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'field_lix';
   }
 }
 
@@ -1333,4 +1334,135 @@ function _reol_base_object_from_url($url) {
   }
 
   return NULL;
+}
+
+/**
+ * Implements hook_ting_pre_execute().
+ */
+function reol_base_ting_pre_execute($request) {
+  // Request both dkabm and marcxchange formats for all queries. DKABM data is
+  // needed for regular ting object display, and we need to look into MARC data
+  // to figure out if this is a quota or free material.
+  return array('objectFormat' => array('dkabm', 'marcxchange'));
+}
+
+/**
+ * Implements hook_ting_post_execute().
+ *
+ * Adds in extra information, not available in DKABM, extracted from MARC data.
+ */
+function reol_base_ting_post_execute($request, $response, $raw_response) {
+  if (!is_object($response)) {
+    // Sometimes we get a non-object response, for some types of requests. We'll
+    // just ignore them as we're not interested in those requests anyway.
+    return;
+  }
+  switch (get_class($response)) {
+    case 'TingClientObject':
+      $response->on_quota = TRUE;
+      if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record)) {
+        _reol_base_odd_marc_data($response, $raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record);
+      }
+
+      break;
+
+    case 'TingClientObjectCollection':
+      foreach ($response->objects as $key => $object) {
+        $object->on_quota = TRUE;
+        if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
+          _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
+        }
+      }
+      break;
+
+    case 'TingClientSearchResult':
+      foreach ($response->collections as $col_key => $object_collection) {
+        foreach ($object_collection->objects as $key => $object) {
+          $object->on_quota = TRUE;
+          if (isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
+            _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
+          }
+        }
+      }
+      break;
+  }
+}
+
+/**
+ * Add extra data from MARC data to the object.
+ *
+ * @param object $object
+ *   Object to add data to, usually a TingClientObject.
+ * @param mixed $marc_records
+ *   MARC data.
+ */
+function _reol_base_odd_marc_data($object, $marc_records) {
+  $object->on_quota = TRUE;
+  $values = _reol_base_get_marc_value($marc_records, '032', 'x');
+  if ($values) {
+    foreach ($values as $value) {
+      // If MARC field 032, subfield x contains an value that starts with "ERA",
+      // then the material is not on quota.
+      // @see http://www.kat-format.dk/danMARC2/Danmarc2.1e.htm#pgfId=1574593
+      // @see http://www.kat-format.dk/danMARC2/Danmarc2.ad.htm#pgfId=1248973
+      if (strpos($value, 'ERA') === 0) {
+        $object->on_quota = FALSE;
+        break;
+      }
+    }
+  }
+
+  $object->lix = NULL;
+  $values = _reol_base_get_marc_value($marc_records, '042', 'a');
+  if ($values) {
+    $object->lix = reset($values);
+  }
+}
+
+/**
+ * Extract a field from MARC data.
+ *
+ * @param mixed $marc_records
+ *   MARC record(s) to extract from.
+ * @param string $field
+ *   Field to extract (3 digit number).
+ * @param string $subfield_name
+ *   Subfield to extract, usually one char.
+ *
+ * @return null|array
+ *   Array of values, or null if not found.
+ */
+function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
+  if (!is_array($marc_records)) {
+    $marc_records = array($marc_records);
+  }
+
+  $return = array();
+  foreach ($marc_records as $marc_record) {
+    // Very defensive coding here...
+    if (isset($marc_record->{'@type'}->{'$'}) &&
+      $marc_record->{'@type'}->{'$'} == 'Bibliographic' &&
+      isset($marc_record->datafield)) {
+      foreach ($marc_record->datafield as $datafield) {
+        if (isset($datafield->{'@tag'}->{'$'}) &&
+          $datafield->{'@tag'}->{'$'} == $field &&
+          isset($datafield->subfield)) {
+          // Subfields is only an array if there's more than one item.
+          $subfields = is_array($datafield->subfield) ? $datafield->subfield : array($datafield->subfield);
+          foreach ($subfields as $subfield) {
+            if (isset($subfield->{'@code'}->{'$'}) &&
+              $subfield->{'@code'}->{'$'} == $subfield_name &&
+              isset($subfield->{'$'})) {
+              $return[] = $subfield->{'$'};
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if (empty($return)) {
+    return NULL;
+  }
+  return $return;
 }

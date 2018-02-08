@@ -6,6 +6,35 @@
  */
 
 /**
+ * Implements hook_js_alter().
+ */
+function pratchett_js_alter(&$javascript) {
+  // Override script from ding_availability.
+  $avail_js = drupal_get_path('module', 'ding_availability') .
+            '/js/ding_availability_labels.js';
+  $new_aval_js = drupal_get_path('theme', 'pratchett') .
+               '/scripts/ding_availability_labels.js';
+  if (isset($javascript[$avail_js])) {
+    $javascript[$avail_js]['data'] = $new_aval_js;
+    $types = array();
+    foreach (reol_base_get_types_by('ext_name') as $type) {
+      $types[$type['ext_name']] = $type['title'];
+    }
+    $javascript['settings']['data'][] = array(
+      'ding_availability_type_mapping' => $types,
+      'ding_availability_type_strings' => array(
+        // For some reason the Drupal.t() doesn't get picked up from
+        // ding_availability_labels.js. The reason might be that we're loading
+        // it dynamically. So pass the strings from here and use formatString in
+        // the JS.
+        'available' => t('@type can be borrowed'),
+        'reservable' => t('@type can be reserved'),
+      ),
+    );
+  }
+}
+
+/**
  * Implements hook_preprocess_html().
  */
 function pratchett_preprocess_html(&$variables) {

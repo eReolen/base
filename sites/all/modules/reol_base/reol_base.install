@@ -433,3 +433,27 @@ function reol_base_update_7140() {
 function reol_base_update_7141() {
   features_revert(array('ting_material_details' => array('field_base', 'field_instance')));
 }
+
+/**
+ * Revert fields to display Lix.
+ */
+function reol_base_update_7142() {
+  features_revert(
+    array(
+      'reol_base' => array('field_base', 'field_instance'),
+      'ting_material_details' => array('field_group'),
+    ));
+}
+
+/**
+ * Disable old shared modules.
+ */
+function reol_base_update_7143() {
+  $modules = array(
+    'reol_shared_frontend',
+    'reol_shared_theme',
+  );
+
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
