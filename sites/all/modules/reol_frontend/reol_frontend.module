@@ -68,6 +68,20 @@ function reol_frontend_form_user_login_block_alter(&$form, &$form_state) {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for search_block_form().
+ *
+ * Add JS to implement auto-submitting on select in the ting_search_autocomplete
+ * dropdown.
+ */
+function reol_frontend_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'search_block_form') {
+    if (isset($form['search_block_form']['#autocomplete_path'])) {
+      $form['search_block_form']['#attached']['js'][] = array('data' => drupal_get_path('module', 'reol_frontend') . '/js/reol_frontend.js');
+    }
+  }
+}
+
+/**
  * Returns HTML for overlay icons.
  */
 function theme_reol_overlay_icons($variables) {
