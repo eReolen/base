@@ -89,7 +89,7 @@ body {
   }
 }
 
-.content-wrapper {
+.content-wrapper, .pane-fulltext {
   max-width: 1120px;
   width: 100%;
   padding-left: 20px;
@@ -97,7 +97,7 @@ body {
 }
 
 @media all and (min-width: 49em) {
-  .content-wrapper {
+  .content-wrapper, .pane-fulltext {
     margin-left: auto;
     margin-right: auto;
     max-width: 1140px;
@@ -5660,6 +5660,63 @@ body.page-nyhedsbrev-web form.mailchimp-signup-subscribe-form .form-actions inpu
   .author-portrait__content {
     font-size: 1rem;
   }
+}
+
+.ting-relations .abstract {
+  margin: 1rem 0;
+}
+
+.pane-fulltext {
+  font-size: 1rem;
+  line-height: 1.8rem;
+  color: #787878;
+  padding: 2rem 2rem 0;
+}
+
+.pane-fulltext strong {
+  font-weight: bold;
+}
+
+.pane-fulltext em {
+  font-style: italic;
+}
+
+@media all and (min-width: 49em) {
+  .pane-fulltext {
+    padding: 0 0 3.5rem;
+  }
+}
+
+.pane-fulltext .page-title {
+  font-family: "SourceSansProLight", sans-serif;
+  font-size: 2rem;
+  color: #787878;
+  margin: 3rem;
+  text-align: center;
+}
+
+@media all and (min-width: 49em) {
+  .pane-fulltext .page-title {
+    width: 100%;
+    -webkit-box-ordinal-group: 2;
+    -ms-flex-order: 1;
+    order: 1;
+    margin: 0 0 3rem;
+    text-align: left;
+  }
+}
+
+.pane-fulltext .author {
+  color: #505050;
+  font-family: "SourceSansProSemiBold", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  margin-bottom: 1.2rem;
+}
+
+.pane-fulltext .description {
+  margin: 1rem 0;
 }
 
 /*# sourceMappingURL=sourcemaps/orwell.main.css.map */
