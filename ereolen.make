@@ -105,3 +105,7 @@ projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/d
 
 ; Add ding_webtrekk module.
 projects[ding2][patch][] = "sites/all/patches/ding_webtrekk.patch"
+
+; Fix p2 JS errors.
+projects[ding2][patch][] = "https://github.com/ding2/ding2/commit/00e8a6d7cff318e758bf402cdbc8491a73c50ebd.patch"
+projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/1035.patch"
