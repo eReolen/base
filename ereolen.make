@@ -98,3 +98,7 @@ projects[ding2][patch][] = "sites/all/patches/remove-random.patch"
 ; Fixup menu_block so the content_type works.
 ; https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/
 projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/880.patch"
+
+; Fix cover loading on iPhone.
+; https://github.com/ding2/ding2/pull/904
+projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/904.patch"
