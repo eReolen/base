@@ -102,3 +102,6 @@ projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/d
 ; Fix cover loading on iPhone.
 ; https://github.com/ding2/ding2/pull/904
 projects[ding2][patch][] = "https://patch-diff.githubusercontent.com/raw/ding2/ding2/pull/904.patch"
+
+; Add ding_webtrekk module.
+projects[ding2][patch][] = "sites/all/patches/ding_webtrekk.patch"
