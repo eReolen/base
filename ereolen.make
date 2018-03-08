@@ -1,6 +1,22 @@
 core = 7.x
 api = 2
 
+; Core definition copied from profiles/ding2/drupal.make.
+; This is taken from the master branch of ding2 to get the latest security updates.
+projects[drupal][type] = core
+projects[drupal][version] = 7.57
+projects[drupal][patch][] = "http://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch"
+projects[drupal][patch][] = "http://drupal.org/files/ssl-socket-transports-1879970-13.patch"
+projects[drupal][patch][] = "http://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch"
+projects[drupal][patch][] = "http://drupal.org/files/issues/translate_role_names-2205581-1.patch"
+; Our own patches
+; Fix shortcut_set_save when set does not exist.
+; https://www.drupal.org/node/1175700
+projects[drupal][patch][] = "https://www.drupal.org/files/fix-shortcut-set-save-1175700-10.patch"
+; search_get_info() in search.module should include an _alter hook.
+; https://www.drupal.org/node/1911276
+projects[drupal][patch][] = "https://www.drupal.org/files/search-info-alter-1911276--D7-16.patch"
+
 ; Get the profile, which will contain the next makefile.
 projects[ding2][type] = "profile"
 projects[ding2][download][type] = "git"

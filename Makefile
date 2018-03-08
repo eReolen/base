@@ -1,6 +1,10 @@
 
 SKIP_TABLES ?= watchdog,cache,cache_menu
 FROM ?= prod
+
+.PHONY: default
+default: all
+
 build-dependecies:
 	@dce git --version >/dev/null || dce 'sh -c "apt update && apt install -y git patch unzip"'
 
@@ -9,6 +13,21 @@ ding: build-dependecies
 	dce drush make ereolen.make . --shallow-clone --no-core --contrib-destination=profiles/ding2
 	# Remove local patches and problematic .gitignores.
 	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore
+
+all: build-dependecies
+	dce drush make ereolen.make new-core
+	# Update the standard files in sites/.
+	dce rsync -r new-core/sites/ ./sites/
+	# Don't touch sites folder when deleting old files.
+	dce rm -rf new-core/sites/
+	# Now delete all top-level stuff.
+	dce ls new-core | xargs rm -rf
+	# Copy in new files.
+	dce rsync -r new-core/ ./
+	# Remove local patches and problematic .gitignores.
+	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore profiles/ding2/modules/bpi/.gitignore
+	# And remave build directory.
+	dce rm -rf new-core
 
 patches-dev: build-dependecies
 	dce rm -rf profiles/ding2
