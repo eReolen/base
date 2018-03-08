@@ -1,6 +1,10 @@
 
 SKIP_TABLES ?= watchdog,cache,cache_menu
 FROM ?= prod
+
+.PHONY: default
+default: all
+
 build-dependecies:
 	@dce git --version >/dev/null || dce 'sh -c "apt update && apt install -y git patch unzip"'
 
@@ -8,7 +12,22 @@ ding: build-dependecies
 	dce rm -rf profiles/ding2
 	dce drush make ereolen.make . --shallow-clone --no-core --contrib-destination=profiles/ding2
 	# Remove local patches and problematic .gitignores.
-	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore
+	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore profiles/ding2/modules/bpi/.gitignore
+
+all: build-dependecies
+	dce drush make ereolen.make new-core
+	# Update the standard files in sites/.
+	dce rsync -r new-core/sites/ ./sites/
+	# Don't touch sites folder when deleting old files.
+	dce rm -rf new-core/sites/
+	# Now delete all top-level stuff.
+	dce ls new-core | xargs rm -rf
+	# Copy in new files.
+	dce rsync -r new-core/ ./
+	# Remove local patches and problematic .gitignores.
+	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore profiles/ding2/modules/bpi/.gitignore
+	# And remave build directory.
+	dce rm -rf new-core
 
 patches-dev: build-dependecies
 	dce rm -rf profiles/ding2
@@ -51,6 +70,16 @@ sync-dev:
 	drush sqlc < /tmp/dev-sync.sql && \
 	rm /tmp/dev-sync.sql && \
 	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolen_dk/sites/default/files/ /data/www/dev_ereolen_dk/sites/default/files/ && \
+	drush updb -y"
+
+sync-ego-dev:
+	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolengo_dk && \
+	drush sql-dump --structure-tables-list=watchdog,cache,cache_menu >/tmp/ego-dev-sync.sql && \
+	cd /data/www/dev_ereolengo_dk && \
+	drush sql-drop -y && \
+	drush sqlc < /tmp/ego-dev-sync.sql && \
+	rm /tmp/ego-dev-sync.sql && \
+	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolengo_dk/sites/default/files/ /data/www/dev_ereolengo_dk/sites/default/files/ && \
 	drush updb -y"
 
 sync-ego-stg:
