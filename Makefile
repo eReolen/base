@@ -12,7 +12,7 @@ ding: build-dependecies
 	dce rm -rf profiles/ding2
 	dce drush make ereolen.make . --shallow-clone --no-core --contrib-destination=profiles/ding2
 	# Remove local patches and problematic .gitignores.
-	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore
+	dce rm profiles/ding2/*.patch profiles/ding2/.gitignore profiles/ding2/modules/ting/.gitignore profiles/ding2/modules/bpi/.gitignore
 
 all: build-dependecies
 	dce drush make ereolen.make new-core
