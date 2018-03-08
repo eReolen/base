@@ -72,6 +72,16 @@ sync-dev:
 	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolen_dk/sites/default/files/ /data/www/dev_ereolen_dk/sites/default/files/ && \
 	drush updb -y"
 
+sync-ego-dev:
+	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolengo_dk && \
+	drush sql-dump --structure-tables-list=watchdog,cache,cache_menu >/tmp/ego-dev-sync.sql && \
+	cd /data/www/dev_ereolengo_dk && \
+	drush sql-drop -y && \
+	drush sqlc < /tmp/ego-dev-sync.sql && \
+	rm /tmp/ego-dev-sync.sql && \
+	sudo -u www-data rsync -ar --del --progress --exclude=styles --exclude=ting/covers /data/www/prod_ereolengo_dk/sites/default/files/ /data/www/dev_ereolengo_dk/sites/default/files/ && \
+	drush updb -y"
+
 sync-ego-stg:
 	ssh deploy@p01.ereolen.dk "cd /data/www/prod_ereolengo_dk && \
 	drush sql-dump --structure-tables-list=watchdog,cache,cache_menu >/tmp/ego-stg-sync.sql && \
