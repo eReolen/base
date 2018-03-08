@@ -30,20 +30,41 @@
  *
  * @return
  *   Array with optional keys:
- *   - title: Title for the tab on the search page for this module. Defaults
- *     to the module name if not given.
+ *   - title: Title for the tab on the search page for this module. Title must
+ *     be untranslated. Outside of this return array, pass the title through the
+ *     t() function to register it as a translatable string.
  *   - path: Path component after 'search/' for searching with this module.
  *     Defaults to the module name if not given.
  *   - conditions_callback: An implementation of callback_search_conditions().
  *
+ * @see hook_search_info_alter()
+ *
  * @ingroup search
  */
 function hook_search_info() {
+  // Make the title translatable.
+  t('Content');
+
   return array(
     'title' => 'Content',
     'path' => 'node',
     'conditions_callback' => 'callback_search_conditions',
   );
+}
+
+/**
+ * Alter the info about custom search types.
+ *
+ * @param array $search_hooks
+ *   An array of search module information.
+ *
+ * @see hook_search_info()
+ *
+ * @ingroup search
+ */
+function hook_search_info_alter(&$search_hooks) {
+  // Add a conditions callback for node search.
+  $search_hooks['node']['conditions_callback'] = 'sample_search_conditions_callback';
 }
 
 /**
