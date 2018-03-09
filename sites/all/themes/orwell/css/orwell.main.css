@@ -1987,6 +1987,10 @@ fieldset {
   width: 100%;
 }
 
+.search-form__input--text:focus {
+  outline: none;
+}
+
 @media all and (min-width: 49em) {
   .search-form__input--text {
     padding: 0 1.875rem;
