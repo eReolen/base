@@ -45,7 +45,6 @@ $icon-color: #9c9c9c;
         text-transform: uppercase;
         cursor: pointer;
         opacity: .5;
-        line-height: 3rem;
         font-size: 1.3rem;
       }
 
@@ -55,14 +54,11 @@ $icon-color: #9c9c9c;
     }
 
     @include grid-media($medium) {
-      position: absolute;
-      right: 0;
-      top: 0;
-
       .form-item {
+        margin: 0 .4rem;
+
         label {
           color: white;
-          line-height: 4rem;
           font-size: 1rem;
         }
       }
@@ -157,6 +153,7 @@ $icon-color: #9c9c9c;
     width: 100%;
     // Default height.
     height: $item-height;
+    align-items: center;
 
     // On the search page, we display tabs too.
     .page-search & {
@@ -169,6 +166,10 @@ $icon-color: #9c9c9c;
 
     .open & {
       display: block;
+
+      @include grid-media($medium) {
+        display: flex;
+      }
     }
 
     // For some reason the search form should look different on the
@@ -184,6 +185,8 @@ $icon-color: #9c9c9c;
   }
 
   .form-item-search-block-form {
+    flex: 1;
+
     &::before {
       @include icon;
       content: $icon__search;
@@ -211,6 +214,10 @@ $icon-color: #9c9c9c;
     height: $item-height;
     padding: 0 3.5rem 0 3rem;
     width: 100%;
+
+    &:focus {
+      outline: none;
+    }
 
     @include grid-media($medium) {
       padding: 0 1.875rem;
