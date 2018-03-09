@@ -166,6 +166,7 @@ $icon-color: #9c9c9c;
 
     .open & {
       display: block;
+
       @include grid-media($medium) {
         display: flex;
       }
