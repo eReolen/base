@@ -457,3 +457,12 @@ function reol_base_update_7143() {
   module_disable($modules, TRUE);
   drupal_uninstall_modules($modules, TRUE);
 }
+
+/**
+ * Disable ding_webtrends.
+ */
+function reol_base_update_7144() {
+  $modules = array('ding_webtrends');
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
