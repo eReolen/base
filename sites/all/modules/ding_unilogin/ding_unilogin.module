@@ -340,7 +340,7 @@ function ding_unilogin_authenticated($account = NULL) {
 }
 
 /**
- * Attemp to log in UNI•Login user.
+ * Attempt to log in UNI•Login user.
  *
  * @param string $username
  *   The UNI•Login user name.
@@ -432,7 +432,7 @@ function _ding_unilogin_login($username) {
  * Get a UNI•Login service.
  *
  * @param string $service
- *   The service to get, either 'auth' or 'info'.
+ *   The service to get, either 'auth', 'user' or 'inst'.
  */
 function ding_unilogin_wservice($service) {
   switch ($service) {
@@ -442,8 +442,14 @@ function ding_unilogin_wservice($service) {
         variable_get('ding_unilogin_ws_pass', '')
       );
 
-    case 'info':
-      return new DingUniloginWS02(
+    case 'user':
+      return new DingUniloginWSIbruger(
+        variable_get('ding_unilogin_ws_user', ''),
+        variable_get('ding_unilogin_ws_pass', '')
+      );
+
+    case 'inst':
+      return new DingUniloginWSIinst(
         variable_get('ding_unilogin_ws_user', ''),
         variable_get('ding_unilogin_ws_pass', '')
       );
