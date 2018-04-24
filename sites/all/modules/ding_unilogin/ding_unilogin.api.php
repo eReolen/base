@@ -32,11 +32,11 @@
  *   True to proceed with login, false to deny.
  */
 function hook_ding_unilogin_login(DingUniloginUser $user) {
-  $municipality = $user->getInstitutionMunicipality();
+  $municipalities = $user->getInstitutionMunicipalities();
   $libraries = publizon_get_libraries();
   foreach ($libraries as $retailer_id => $library) {
     if (!empty($library->unilogin_id) &&
-        $library->unilogin_id == $municipality) {
+      in_array($library->unilogin_id, $municipalities)) {
       $user->setProfileData('field_publizon_retailer_id', $retailer_id);
       return TRUE;
     }

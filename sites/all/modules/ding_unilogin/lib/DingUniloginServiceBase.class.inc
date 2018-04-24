@@ -16,7 +16,7 @@ abstract class DingUniloginServiceBase {
    *
    * Not all services uses the same Soap version.
    */
-  protected $soapVersion = SOAP_1_1;
+  protected $soapVersion = SOAP_1_2;
 
   /**
    * Base constructor.
@@ -58,6 +58,19 @@ abstract class DingUniloginServiceBase {
       'wsBrugerid' => $this->user,
       'wsPassword' => $this->pass,
     ) + $parameters, $returnProperty);
+  }
+
+  /**
+   * Ensure that $thing is an array.
+   */
+  protected function ensureArray($thing) {
+    if (is_null($thing)) {
+      return array();
+    }
+    if (is_array($thing)) {
+      return $thing;
+    }
+    return array($thing);
   }
 
 }

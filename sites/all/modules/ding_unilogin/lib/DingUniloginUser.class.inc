@@ -11,8 +11,9 @@
 class DingUniloginUser {
   protected $name;
   protected $authname;
-  protected $infoService;
   protected $authService;
+  protected $userService;
+  protected $institutionService;
   protected $profileData = array();
   protected $wsuser;
   protected $wspass;
@@ -36,20 +37,6 @@ class DingUniloginUser {
   }
 
   /**
-   * Get information service.
-   *
-   * @return DingUniloginWS02
-   *   The information service.
-   */
-  protected function getInfoService() {
-    if (!$this->infoService) {
-      $this->infoService = new DingUniloginWS02($this->wsuser, $this->wspass);
-    }
-
-    return $this->infoService;
-  }
-
-  /**
    * Get authorization service.
    *
    * @return DingUniloginWSIautor
@@ -61,6 +48,34 @@ class DingUniloginUser {
     }
 
     return $this->authService;
+  }
+
+  /**
+   * Get user service.
+   *
+   * @return DingUniloginWSIbruger
+   *   The user service.
+   */
+  protected function getUserService() {
+    if (!$this->userService) {
+      $this->userService = new DingUniloginWSIbruger($this->wsuser, $this->wspass);
+    }
+
+    return $this->userService;
+  }
+
+  /**
+   * Get instution service.
+   *
+   * @return DingUniloginWSIinst
+   *   The instution service.
+   */
+  protected function getInstitutionService() {
+    if (!$this->institutionService) {
+      $this->institutionService = new DingUniloginWSIinst($this->wsuser, $this->wspass);
+    }
+
+    return $this->institutionService;
   }
 
   /**
@@ -107,26 +122,23 @@ class DingUniloginUser {
   }
 
   /**
-   * Get the municipality of the users institution.
+   * Get the municipality IDs of the users institutions.
+   *
+   * @return array
+   *   Municipality ids.
    */
-  public function getInstitutionMunicipality() {
-    $person = $this->getInfoService()->getPerson($this->name);
-    if ($person && !empty($person->Instnr)) {
-      try {
-        $institution = $this->getInfoService()->getInstitution($person->Instnr);
-        if ($institution) {
-          return $institution->Kommunenr;
-        }
-      }
-      catch (Exception $e) {
-        watchdog('ding_unilogin', 'Error getting institution @inst for user @user', array(
-          '@inst' => $person->Instnr,
-          '@user' => $this->name,
-        ));
+  public function getInstitutionMunicipalities() {
+    $municipality_ids = array();
+
+    $institutions = $this->getUserService()->getUserInstitutions($this->name);
+    foreach ($institutions as $institution_id) {
+      $institution = $this->getInstitutionService()->getInstitution($institution_id);
+      if (isset($institution->kommunenr)) {
+        $municipality_ids[] = $institution->kommunenr;
       }
     }
 
-    return FALSE;
+    return $municipality_ids;
   }
 
   /**
