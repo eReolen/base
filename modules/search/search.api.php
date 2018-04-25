@@ -37,8 +37,6 @@
  *     Defaults to the module name if not given.
  *   - conditions_callback: An implementation of callback_search_conditions().
  *
- * @see hook_search_info_alter()
- *
  * @ingroup search
  */
 function hook_search_info() {
@@ -50,21 +48,6 @@ function hook_search_info() {
     'path' => 'node',
     'conditions_callback' => 'callback_search_conditions',
   );
-}
-
-/**
- * Alter the info about custom search types.
- *
- * @param array $search_hooks
- *   An array of search module information.
- *
- * @see hook_search_info()
- *
- * @ingroup search
- */
-function hook_search_info_alter(&$search_hooks) {
-  // Add a conditions callback for node search.
-  $search_hooks['node']['conditions_callback'] = 'sample_search_conditions_callback';
 }
 
 /**
