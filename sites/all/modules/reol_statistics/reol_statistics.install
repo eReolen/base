@@ -61,7 +61,7 @@ function reol_statistics_schema() {
         'default' => 0,
       ),
       'class' => array(
-        'description' => 'Class of user.',
+        'description' => 'Class of user. Not used anymore but kept for historical purposes.',
         'type' => 'varchar',
         'length' => 255,
       ),
