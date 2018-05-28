@@ -466,3 +466,12 @@ function reol_base_update_7144() {
   module_disable($modules, TRUE);
   drupal_uninstall_modules($modules, TRUE);
 }
+
+/**
+ * Uninstall google modules.
+ */
+function reol_base_update_7145() {
+  $modules = array('goggle_analytics', 'google_tag');
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
