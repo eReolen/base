@@ -1,0 +1,5 @@
+patches:
+  -
+    patch: 'https://cgit.drupalcode.org/media/patch/?id=1cd77ffa9c2cf96d80b76d47318179a8a82f0d46'
+    home: 'https://www.drupal.org/sa-contrib-2018-020'
+    reason: 'Patch against https://www.drupal.org/sa-contrib-2018-020'

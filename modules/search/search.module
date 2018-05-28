@@ -262,7 +262,6 @@ function search_get_info($all = FALSE) {
       // Include the module name itself in the array.
       $search_hooks[$module]['module'] = $module;
     }
-    drupal_alter('search_info', $search_hooks);
   }
 
   if ($all) {
