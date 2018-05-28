@@ -486,3 +486,12 @@ function reol_base_update_7146() {
     ->condition('name', 'cookiecontrol')
     ->execute();
 }
+
+/**
+ * Uninstall google_analytics for real.
+ */
+function reol_base_update_7147() {
+  $modules = array('google_analytics');
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
