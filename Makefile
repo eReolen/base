@@ -44,6 +44,8 @@ statistics:
 	dce drush queue-run statistics_backlog_processing
 	dce drush queue-list
 
+dump: dump-ego dump-ereol
+
 dump-ereol:
 	# Ensure that ssh doesn't mess with the dump because of host keys.
 	dce drush @$(FROM) status
