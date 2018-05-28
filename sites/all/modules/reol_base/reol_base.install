@@ -466,3 +466,23 @@ function reol_base_update_7144() {
   module_disable($modules, TRUE);
   drupal_uninstall_modules($modules, TRUE);
 }
+
+/**
+ * Uninstall google modules.
+ */
+function reol_base_update_7145() {
+  $modules = array('goggle_analytics', 'google_tag');
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
+
+/**
+ * Remove traces of cookiecontrol module.
+ */
+function reol_base_update_7146() {
+  // Ding replaced cookiecontrol module, but didn't remove it from the system
+  // table.
+  db_delete('system')
+    ->condition('name', 'cookiecontrol')
+    ->execute();
+}
