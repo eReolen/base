@@ -488,9 +488,18 @@ function reol_base_update_7146() {
 }
 
 /**
- * Remove traces of google modules.
+ * Uninstall google_analytics for real.
  */
 function reol_base_update_7147() {
+  $modules = array('google_analytics');
+  module_disable($modules, TRUE);
+  drupal_uninstall_modules($modules, TRUE);
+}
+
+/**
+ * Remove traces of google modules.
+ */
+function reol_base_update_7148() {
   // The google_analytics module isn't completely removed, there's another
   // version in ding, but deleting it here and letting Drupal rediscover the
   // other version suppresses a warning about it being moved.
