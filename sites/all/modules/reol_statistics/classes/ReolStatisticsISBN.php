@@ -24,11 +24,6 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
             'not null' => TRUE,
             'default' => 0,
           ),
-          'class' => array(
-            'description' => 'Class of user.',
-            'type' => 'varchar',
-            'length' => 255,
-          ),
           'school_id' => array(
             'description' => 'School id.',
             'type' => 'varchar',
@@ -102,7 +97,6 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
         'municipality_id',
         'school_id',
         'school',
-        'class',
       ));
     $query->condition('l.timestamp', array($month->getStartTimestamp(), $month->getEndTimestamp()), 'BETWEEN');
     $query->orderBy('timestamp');
@@ -111,10 +105,9 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
     foreach ($query->execute() as $row) {
       $day = date('Ymd', $row->timestamp);
       $index = $row->municipality_id . ':' . $row->school_id . ':' .
-             $row->class . ":" . $row->isbn . ':' . $day;
+             $row->isbn . ':' . $day;
       if (!isset($data[$index])) {
         $data[$index] = $empty + array(
-          'class' => $row->class,
           'municipality_id' => $row->municipality_id,
           'school_id' => $row->school_id,
           'isbn' => $row->isbn,
@@ -130,48 +123,45 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
       foreach ($data as $row) {
 
         $query = db_merge('reol_statistics_isbn')
-               ->key(
-                 array(
-                   'day' => $row['day'],
-                   'class' => $row['class'],
-                   'municipality_id' => $row['municipality_id'],
-                   'school_id' => $row['school_id'],
-                   'isbn' => $row['isbn'],
-                 )
-               )
-               ->fields(
-                 array(
-                   'loans' => $row['loans'],
-                   'period_total' => 0,
-                   'school' => $row['school'],
-                 )
-               );
+          ->key(
+            array(
+              'day' => $row['day'],
+              'municipality_id' => $row['municipality_id'],
+              'school_id' => $row['school_id'],
+              'isbn' => $row['isbn'],
+            )
+          )
+          ->fields(
+            array(
+              'loans' => $row['loans'],
+              'period_total' => 0,
+              'school' => $row['school'],
+            )
+          );
         $query->execute();
 
         // Update the row with the total of the period.
         // Start day of period where current is end day.
         $start_time = (new DateTime($row['day']))->sub($period)->format('Ymd');
         $total = db_select('reol_statistics_isbn')
-               ->condition('class', $row['class'])
-               ->condition('municipality_id', $row['municipality_id'])
-               ->condition('school_id', $row['school_id'])
-               ->condition('isbn', $row['isbn'])
-               ->condition('day', array($start_time, $row['day']), 'BETWEEN');
+          ->condition('municipality_id', $row['municipality_id'])
+          ->condition('school_id', $row['school_id'])
+          ->condition('isbn', $row['isbn'])
+          ->condition('day', array($start_time, $row['day']), 'BETWEEN');
 
         $total->addExpression('SUM(loans)', 'total');
         $total = $total->execute()->fetchField();
 
         $query = db_update('reol_statistics_isbn')
-               ->condition('class', $row['class'])
-               ->condition('municipality_id', $row['municipality_id'])
-               ->condition('school_id', $row['school_id'])
-               ->condition('isbn', $row['isbn'])
-               ->condition('day', $row['day'])
-               ->fields(
-                 array(
-                   'period_total' => $total,
-                 )
-               );
+          ->condition('municipality_id', $row['municipality_id'])
+          ->condition('school_id', $row['school_id'])
+          ->condition('isbn', $row['isbn'])
+          ->condition('day', $row['day'])
+          ->fields(
+            array(
+              'period_total' => $total,
+            )
+          );
         $query->execute();
       }
     }
@@ -195,10 +185,10 @@ class ReolStatisticsISBN implements ReolStatisticsInterface, ReolStatisticsMunic
     $end = $to->getEndDateTime()->format('Ymd');
 
     $query = db_select('reol_statistics_isbn', 'i')
-           ->fields('i', array('day', 'isbn', 'school', 'period_total'))
-           ->condition('day', array($start, $end), 'BETWEEN')
-           ->condition('municipality_id', $library->unilogin_id)
-           ->condition('i.period_total', $max_count, '>');
+      ->fields('i', array('day', 'isbn', 'school', 'period_total'))
+      ->condition('day', array($start, $end), 'BETWEEN')
+      ->condition('municipality_id', $library->unilogin_id)
+      ->condition('i.period_total', $max_count, '>');
 
     $isbns = array();
     foreach ($query->execute() as $row) {
