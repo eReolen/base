@@ -476,9 +476,7 @@ Drupal.ajax.prototype.getEffect = function (response) {
  * Handler for the form redirection error.
  */
 Drupal.ajax.prototype.error = function (xmlhttprequest, uri, customMessage) {
-  if (response.status != 0) {
-    Drupal.displayAjaxError(Drupal.ajaxError(xmlhttprequest, uri, customMessage));
-  }
+  Drupal.displayAjaxError(Drupal.ajaxError(xmlhttprequest, uri, customMessage));
   // Remove the progress element.
   if (this.progress.element) {
     $(this.progress.element).remove();
