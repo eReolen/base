@@ -234,7 +234,7 @@ function ding_unilogin_drupal_goto_alter(&$path, &$options, &$http_response_code
  */
 function ding_unilogin_publizon_client_id_alter(&$client_id) {
   if (_ding_unilogin_in_progress() || ding_unilogin_authenticated()) {
-    $client_id = variable_get('publizon_unilogin_client_id', '');
+    $client_id = variable_get('ding_unilogin_publizon_client_id', '');
   }
 }
 

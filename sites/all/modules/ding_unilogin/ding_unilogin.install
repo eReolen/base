@@ -13,6 +13,19 @@ function ding_unilogin_install() {
 }
 
 /**
+ * Implements hook_update_dependencies().
+ */
+function ding_unilogin_update_dependencies() {
+  // Ensure that we copy the publizon_unilogin_client_id variable before
+  // publizon.module deletes it.
+  $dependencies['publizon'][7103] = array(
+    'ding_unilogin' => 7102,
+  );
+
+  return $dependencies;
+}
+
+/**
  * Set our module weight to 100.
  *
  * Needed by ding_unilogin_form_profile2_form_alter() to ensure it's called
@@ -32,4 +45,14 @@ function _ding_unilogin_set_module_weight() {
  */
 function ding_unilogin_update_7101() {
   _ding_unilogin_set_module_weight();
+}
+
+/**
+ * Migrate UNI•Login Publizon client_id.
+ */
+function ding_unilogin_update_7102() {
+  $client_id = variable_get('publizon_unilogin_client_id', '');
+  if ($client_id) {
+    variable_set('ding_unilogin_publizon_client_id', $client_id);
+  }
 }
