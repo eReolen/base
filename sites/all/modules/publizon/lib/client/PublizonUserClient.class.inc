@@ -12,20 +12,24 @@ class PublizonUserClient extends PublizonClient {
    * web-service.
    *
    * @param string $card_number
-   *   User card_number/CPR also known as login id.
+   *   User card_number/CPR/UNI•Login id also known as login id.
    * @param string $pincode
-   *   The users pin code.
+   *   The users pin code. Null for UNI•Login users.
    *
    * @return bool
    *   If the user is valid TRUE is return else FALSE.
    */
   public function validateLibraryUser($card_number, $pincode, $retailer_id) {
+    $arguments = array(
+      'pub:cardnumber' => $card_number,
+    );
+
+    if (!is_null($pincode)) {
+      $arguments['pub:pincode'] = $pincode;
+    }
     // Call the webservice, throwing exception on failure.
     try {
-      $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, array(
-        'pub:cardnumber' => $card_number,
-        'pub:pincode' => $pincode,
-      ), array('pub' => 'http://pubhub.dk/'));
+      $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, $arguments, array('pub' => 'http://pubhub.dk/'));
     }
     // On exception we are not logged in.
     catch (PublizonException $e) {

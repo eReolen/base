@@ -80,6 +80,18 @@ function publizon_user_authenticate($name, $pass, array $values) {
 }
 
 /**
+ * Do "authenticate" an externally authenticated user.
+ *
+ * Not an official provider function yet, but hopefully it will be:
+ * https://platform.dandigbib.org/issues/3582
+ */
+function publizon_user_external_authenticate($name, $pass = NULL, array $values = array()) {
+  // Just pass it on to publizon_user_authenticate(), Publizon should handle
+  // missing pincode when the client id matches eReolenGo.
+  return publizon_user_authenticate($name, $pass, $values);
+}
+
+/**
  * Finalize the account after login.
  *
  * TODO This should not be used, we get data from session instead
