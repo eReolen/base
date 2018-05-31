@@ -16,8 +16,9 @@ class PublizonUserClient extends PublizonClient {
    * @param string $pincode
    *   The users pin code. Null for UNI•Login users.
    *
-   * @return bool
-   *   If the user is valid TRUE is return else FALSE.
+   * @return bool|string
+   *   FALSE if the user is invalid, TRUE or their friendly card number
+   *   otherwise.
    */
   public function validateLibraryUser($card_number, $pincode, $retailer_id) {
     $arguments = array(
@@ -27,9 +28,17 @@ class PublizonUserClient extends PublizonClient {
     if (!is_null($pincode)) {
       $arguments['pub:pincode'] = $pincode;
     }
+
+    $friendly_id = NULL;
     // Call the webservice, throwing exception on failure.
     try {
       $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, $arguments, array('pub' => 'http://pubhub.dk/'));
+
+      // Extract friendlycardnumber.
+      $friendly_elements = $response->xpath('//data/friendlycardnumber');
+      if (isset($friendly_elements[0])) {
+        $friendly_id = (string) $friendly_elements[0];
+      }
     }
     // On exception we are not logged in.
     catch (PublizonException $e) {
@@ -37,7 +46,7 @@ class PublizonUserClient extends PublizonClient {
       return FALSE;
     }
 
-    // If we end up here, we are logged in.
-    return TRUE;
+    // If we end up here, we are logged in. Return friendly_id if it's not empty.
+    return empty($friendly_id) ? TRUE : $friendly_id;
   }
 }
