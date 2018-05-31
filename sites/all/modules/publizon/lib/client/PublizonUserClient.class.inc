@@ -1,10 +1,15 @@
 <?php
+
 /**
  * @file
  * Implementation of communicating with the Publizon API for users.
  */
 
+/**
+ * User client class.
+ */
 class PublizonUserClient extends PublizonClient {
+
   /**
    * Validata a library user.
    *
@@ -46,7 +51,9 @@ class PublizonUserClient extends PublizonClient {
       return FALSE;
     }
 
-    // If we end up here, we are logged in. Return friendly_id if it's not empty.
+    // If we end up here, we are logged in. Return friendly_id if it's not
+    // empty.
     return empty($friendly_id) ? TRUE : $friendly_id;
   }
+
 }
