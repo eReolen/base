@@ -1,10 +1,15 @@
 <?php
+
 /**
  * @file
  * Implementation of communicating with the Publizon API for users.
  */
 
+/**
+ * User client class.
+ */
 class PublizonUserClient extends PublizonClient {
+
   /**
    * Validata a library user.
    *
@@ -12,20 +17,33 @@ class PublizonUserClient extends PublizonClient {
    * web-service.
    *
    * @param string $card_number
-   *   User card_number/CPR also known as login id.
+   *   User card_number/CPR/UNI•Login id also known as login id.
    * @param string $pincode
-   *   The users pin code.
+   *   The users pin code. Null for UNI•Login users.
    *
-   * @return bool
-   *   If the user is valid TRUE is return else FALSE.
+   * @return bool|string
+   *   FALSE if the user is invalid, TRUE or their friendly card number
+   *   otherwise.
    */
   public function validateLibraryUser($card_number, $pincode, $retailer_id) {
+    $arguments = array(
+      'pub:cardnumber' => $card_number,
+    );
+
+    if (!is_null($pincode)) {
+      $arguments['pub:pincode'] = $pincode;
+    }
+
+    $friendly_id = NULL;
     // Call the webservice, throwing exception on failure.
     try {
-      $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, array(
-        'pub:cardnumber' => $card_number,
-        'pub:pincode' => $pincode,
-      ), array('pub' => 'http://pubhub.dk/'));
+      $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, $arguments, array('pub' => 'http://pubhub.dk/'));
+
+      // Extract friendlycardnumber.
+      $friendly_elements = $response->xpath('//data/friendlycardnumber');
+      if (isset($friendly_elements[0])) {
+        $friendly_id = (string) $friendly_elements[0];
+      }
     }
     // On exception we are not logged in.
     catch (PublizonException $e) {
@@ -33,7 +51,9 @@ class PublizonUserClient extends PublizonClient {
       return FALSE;
     }
 
-    // If we end up here, we are logged in.
-    return TRUE;
+    // If we end up here, we are logged in. Return friendly_id if it's not
+    // empty.
+    return empty($friendly_id) ? TRUE : $friendly_id;
   }
+
 }

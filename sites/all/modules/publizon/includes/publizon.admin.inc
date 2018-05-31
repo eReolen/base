@@ -47,16 +47,6 @@ function publizon_settings_form(array $form, array &$form_state) {
     '#required' => TRUE,
   );
 
-  if (module_exists('ding_unilogin')) {
-    $form['publizon']['settings']['publizon_unilogin_client_id'] = array(
-      '#type' => 'textfield',
-      '#title' => t('UNI•Login Client ID'),
-      '#description' => t('The client ID to send to publizon, for UNI•Login users.'),
-      '#default_value' => variable_get('publizon_unilogin_client_id', ''),
-      '#required' => TRUE,
-    );
-  }
-
   $form['publizon']['settings']['publizon_default_retailer'] = array(
     '#type' => 'textfield',
     '#title' => t('Default library id'),

@@ -182,14 +182,9 @@ function publizon_library_save(PublizonConfiguredLibrary $library) {
  *   The client id.
  */
 function publizon_get_client_id() {
-  if (module_exists('ding_unilogin')) {
-    // If the user is a UNI•Login user, return the special UNI•Login
-    // client_id.
-    if (ding_unilogin_authenticated()) {
-      return variable_get('publizon_unilogin_client_id', '');
-    }
-  }
-  return variable_get('publizon_client_id', '');
+  $client_id = variable_get('publizon_client_id', '');
+  drupal_alter('publizon_client_id', $client_id);
+  return $client_id;
 }
 
 /**
@@ -225,26 +220,7 @@ function publizon_ting_covers($entities) {
 }
 
 /**
- * Implements hook_ding_unilogin_login().
- *
- * Look up the retailer id we should use for the user.
- */
-function publizon_ding_unilogin_login($user) {
-  $municipalities = $user->getInstitutionMunicipalities();
-  $libraries = publizon_filter_known_municipalities($municipalities);
-
-  if (!empty($libraries)) {
-    // Take the first one.
-    $library = reset($libraries);
-    $user->setProfileData('field_publizon_retailer_id', $library->retailer_id);
-    return TRUE;
-  }
-  watchdog('publizon', 'UNI•Login municipalities @municipalities not configured on any library', array('@municipalities' => implode(', ', $municipalities)), WATCHDOG_NOTICE);
-  return FALSE;
-}
-
-/**
- * Filter list of municipalities down to configured ones.
+ * Filter list of municipalities down to list of UNI•Login ones.
  */
 function publizon_filter_known_municipalities($municipalities) {
   $filtered = array();

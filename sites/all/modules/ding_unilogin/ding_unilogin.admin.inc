@@ -16,6 +16,14 @@ function ding_unilogin_admin_settings_form($form, &$form_state) {
     '#description' => t('Settings for the base login service.'),
   );
 
+  $form['login']['ding_unilogin_publizon_client_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Publizon Client ID'),
+    '#description' => t('The client ID to send to publizon, for UNI•Login users.'),
+    '#default_value' => variable_get('ding_unilogin_publizon_client_id', ''),
+    '#required' => TRUE,
+  );
+
   $form['login']['ding_unilogin_id'] = array(
     '#type' => 'textfield',
     '#title' => t('UNI•Login ID'),
