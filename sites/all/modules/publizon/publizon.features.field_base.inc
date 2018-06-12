@@ -27,6 +27,28 @@ function publizon_field_default_field_bases() {
     'type' => 'email',
   );
 
+  // Exported field_base: 'field_friendly_id'.
+  $field_bases['field_friendly_id'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_friendly_id',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+      'profile2_private' => 0,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
   // Exported field_base: 'field_phone'.
   $field_bases['field_phone'] = array(
     'active' => 1,

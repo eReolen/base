@@ -251,6 +251,9 @@ function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &
   // Hide retailer id.
   $form['profile_provider_publizon']['field_publizon_retailer_id']['#access'] = FALSE;
 
+  // Make friendly id read only.
+  $form['profile_provider_publizon']['field_friendly_id']['#disabled'] = TRUE;
+
   // Hide pass change fieldset.
   $form['pass']['#access'] = FALSE;
 

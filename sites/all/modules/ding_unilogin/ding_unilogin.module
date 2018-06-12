@@ -228,6 +228,17 @@ function ding_unilogin_drupal_goto_alter(&$path, &$options, &$http_response_code
 }
 
 /**
+ * Implements hook_publizon_client_id_alter().
+ *
+ * Change Publizon client id for UNI•Login users.
+ */
+function ding_unilogin_publizon_client_id_alter(&$client_id) {
+  if (_ding_unilogin_in_progress() || ding_unilogin_authenticated()) {
+    $client_id = variable_get('ding_unilogin_publizon_client_id', '');
+  }
+}
+
+/**
  * Whether to globally log out.
  */
 function _ding_unilogin_global_logout($state = NULL) {
@@ -349,6 +360,7 @@ function ding_unilogin_authenticated($account = NULL) {
  *   Whether the user was logged in.
  */
 function _ding_unilogin_login($username) {
+  _ding_unilogin_in_progress(TRUE);
   $access = FALSE;
 
   try {
@@ -366,35 +378,48 @@ function _ding_unilogin_login($username) {
         break;
       }
     }
+
+    if ($access) {
+      $municipalities = $user->getInstitutionMunicipalities();
+      $libraries = publizon_filter_known_municipalities($municipalities);
+
+      if (!empty($libraries)) {
+        // Take the first one.
+        $library = reset($libraries);
+        $retailer_id = $library->retailer_id;
+      }
+      else {
+        watchdog('publizon', 'UNI•Login municipalities @municipalities not configured on any library', array('@municipalities' => implode(', ', $municipalities)), WATCHDOG_NOTICE);
+        $access = FALSE;
+      }
+    }
   }
   catch (Exception $e) {
     drupal_set_message(t('Sorry, but there was problems while communicating with UNI•Login. Please try again later.'));
     watchdog_exception('ding_unilogin', $e, NULL, array(), WATCHDOG_ERROR);
+    _ding_unilogin_in_progress(FALSE);
     return FALSE;
   }
 
   if (!$access) {
     drupal_set_message(t('Sorry, but that UNI•Login account has not been granted access. Please contact the administrator if you think this is wrong.'), 'error');
     watchdog('ding_unilogin', 'Access denied for UNI•Login user %user', array('%user' => $username), WATCHDOG_NOTICE);
+    _ding_unilogin_in_progress(FALSE);
     return FALSE;
   }
 
-  $auth_res = array(
-    'success' => TRUE,
-    'creds' => array(
-      'name' => $user->getName(),
-      // Random password. Shouldn't be used, but we'll make it un-guessable
-      // for good measure, in case someone messes up.
-      'pass' => md5(drupal_random_bytes(32) . 'no_password_for_the_wicked'),
-    ),
-    'user' => array(
-      'mail' => '',
-      'blocked' => FALSE,
-      'data' => array(
-        'display_name' => '',
-      ),
-    ),
-  );
+  $auth_res = ding_provider_invoke('user', 'external_authenticate', $user->getName(), NULL, array('retailer_id' => $retailer_id));
+
+  if (!is_array($auth_res) || !isset($auth_res['success'])) {
+    watchdog('ding_unilogin', 'Provider returned invalid result: @res', array('@res' => print_r($auth_res, TRUE)), WATCHDOG_DEBUG);
+    _ding_unilogin_in_progress(FALSE);
+    return FALSE;
+  }
+
+  if (!$auth_res['success']) {
+    _ding_unilogin_in_progress(FALSE);
+    return FALSE;
+  }
 
   /*
    * We call two private ding_user functions to do the heavy lifting. Sadly,
@@ -423,7 +448,10 @@ function _ding_unilogin_login($username) {
     $profile->save();
   }
 
+  _ding_unilogin_in_progress(FALSE);
+
   $form_state['uid'] = $account->uid;
+  ding_provider_invoke('user', 'authenticate_finalize', $account);
   user_login_submit(array(), $form_state);
   return TRUE;
 }
@@ -457,4 +485,27 @@ function ding_unilogin_wservice($service) {
     default:
       throw new RuntimeException('Bad service type ' . $service);
   }
+}
+
+/**
+ * Whether we're in the process of logging in a UNI•Login user.
+ *
+ * We need to be able to determine whether we're in the process of logging in an
+ * UNI•Login user, in order to change the Publizon client id for the
+ * authentication request.
+ *
+ * @param bool|null $new_state
+ *   New progress state, if not null.
+ *
+ * @return bool
+ *   Whether we're in progress or not.
+ */
+function _ding_unilogin_in_progress($new_state = NULL) {
+  $state = &drupal_static('__FUNCTION__', FALSE);
+
+  if (!is_null($new_state)) {
+    $state = $new_state;
+  }
+
+  return $state;
 }
