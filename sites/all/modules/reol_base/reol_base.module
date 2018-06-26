@@ -1279,7 +1279,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   }
 
   // Remove label from cover (the correct image style is set in
-  // ereol_base/breol_frontend).
+  // ereol_frontend/breol_frontend).
   if (isset($fields['ting_object-ting_object-ting_cover'])) {
     $fields['ting_object-ting_object-ting_cover']['display']['compact']['label'] = 'hidden';
   }
