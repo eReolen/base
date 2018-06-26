@@ -249,3 +249,10 @@ function breol_base_update_7130() {
 function breol_base_update_7131() {
   module_enable(array('reol_two_element_paragraph'), TRUE);
 }
+
+/**
+ * Enable breol_carousel_paragraph.
+ */
+function breol_base_update_7132() {
+  module_enable(array('breol_carousel_paragraph'), TRUE);
+}

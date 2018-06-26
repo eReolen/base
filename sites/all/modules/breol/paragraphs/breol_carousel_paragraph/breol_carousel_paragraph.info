@@ -1,0 +1,12 @@
+name = bReol Carousel paragraph
+description = bReol extensions fro Material carousel paragraph
+core = 7.x
+package = eReolen paragraphs
+version = 7.x-1.0
+dependencies[] = color_field
+dependencies[] = features
+dependencies[] = reol_carousel_paragraph
+features[features_api][] = api:2
+features[field_base][] = field_material_carousel_color
+features[field_instance][] = paragraphs_item-material_carousel-field_material_carousel_color
+project path = sites/all/modules/breol/paragraphs
