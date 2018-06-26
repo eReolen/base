@@ -51,8 +51,16 @@ function breol_inspiration_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'add_mode' => 'select',
-      'allowed_bundles' => array(),
-      'bundle_weights' => array(),
+      'allowed_bundles' => array(
+        'audio_preview' => -1,
+        'material_carousel' => 'material_carousel',
+        'two_elements' => 'two_elements',
+      ),
+      'bundle_weights' => array(
+        'audio_preview' => 2,
+        'material_carousel' => 3,
+        'two_elements' => 4,
+      ),
       'default_edit_mode' => 'open',
       'title' => 'Element',
       'title_multiple' => 'Elementer',
