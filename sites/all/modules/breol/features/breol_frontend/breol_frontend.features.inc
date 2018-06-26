@@ -52,5 +52,20 @@ function breol_frontend_image_default_styles() {
     ),
   );
 
+  // Exported image style: breol_cover_base.
+  $styles['breol_cover_base'] = array(
+    'label' => 'bReol cover base',
+    'effects' => array(
+      1 => array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 200,
+          'height' => 290,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
   return $styles;
 }

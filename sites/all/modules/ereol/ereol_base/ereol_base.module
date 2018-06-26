@@ -56,4 +56,9 @@ function ereol_base_field_default_field_instances_alter(&$fields) {
       );
     }
   }
+
+  // Set image style on compact covers.
+  if (isset($fields['ting_object-ting_object-ting_cover'])) {
+    $fields['ting_object-ting_object-ting_cover']['display']['compact']['settings']['image_style'] = 'ereol_cover_base';
+  }
 }

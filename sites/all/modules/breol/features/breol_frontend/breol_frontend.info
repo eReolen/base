@@ -20,6 +20,7 @@ features[file_display][] = video__teaser_small__media_youtube_image
 features[file_display][] = video__teaser_small__media_youtube_video
 features[image][] = breol_295_295
 features[image][] = breol_590_295
+features[image][] = breol_cover_base
 features[page_manager_handlers][] = node_view__breol-default-pages
 features[page_manager_handlers][] = pm_existing_pages_reol_bookmarks__breol
 features[page_manager_handlers][] = site_template__breol-site-template

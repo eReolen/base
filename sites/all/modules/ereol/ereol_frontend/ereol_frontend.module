@@ -18,37 +18,3 @@ function ereol_frontend_entity_info_alter(&$entity_info) {
     ),
   );
 }
-
-/**
- * Implements hook_field_display_ENTITY_TYPE_alter().
- *
- * Alter field display settings.
- *
- * @todo move this to field_default_field_instances_alter() instead.
- */
-function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
-  switch ($context['view_mode']) {
-    case 'compact';
-      switch ($context['instance']['field_name']) {
-        case 'ting_cover':
-          // Fix up image style.
-          $display['settings']['image_style'] = 'ereol_cover_base';
-          $display['label'] = 'hidden';
-          break;
-
-        case 'ting_author':
-          // Use a formatter that doesn't make the author a link.
-          $display['module'] = 'reol_base';
-          $display['type'] = 'reol_base_author_plain';
-          $display['label'] = 'hidden';
-          break;
-
-        case 'ting_title':
-          // Remove type prefix.
-          $display['settings']['prefix_type'] = 'no';
-          $display['label'] = 'hidden';
-          break;
-      }
-      break;
-  }
-}
