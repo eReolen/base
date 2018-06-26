@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the BReol inspiration feature.
+ */
+
+include_once 'breol_inspiration.features.inc';
