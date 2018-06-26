@@ -228,3 +228,10 @@ function breol_base_update_7127() {
 function breol_base_update_7128() {
   module_enable(array('breol_inspiration'), TRUE);
 }
+
+/**
+ * Enable reol_carousel_paragraph.
+ */
+function breol_base_update_7129() {
+  module_enable(array('reol_carousel_paragraph'), TRUE);
+}
