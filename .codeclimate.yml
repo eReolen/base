@@ -2,6 +2,9 @@ version: 2
 checks:
   method-lines:
     enabled: false
+  # We have a lot of boilerplate code that gets duplicated.
+  identical-code:
+    enabled: false
 plugins:
   eslint:
     enabled: true
