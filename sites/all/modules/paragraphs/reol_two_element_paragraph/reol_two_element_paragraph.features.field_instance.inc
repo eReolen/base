@@ -85,11 +85,13 @@ function reol_two_element_paragraph_field_default_field_instances() {
         'audio_preview' => -1,
         'material_carousel' => -1,
         'two_elements' => -1,
+        'video' => 'video',
       ),
       'bundle_weights' => array(
         'audio_preview' => 2,
         'material_carousel' => 3,
         'two_elements' => 4,
+        'video' => -8,
       ),
       'default_edit_mode' => 'open',
       'title' => 'Element',

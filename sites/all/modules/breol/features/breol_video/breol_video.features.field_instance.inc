@@ -10,7 +10,7 @@
 function breol_video_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-breol_video-field_breol_video'
+  // Exported field_instance: 'node-breol_video-field_breol_video'.
   $field_instances['node-breol_video-field_breol_video'] = array(
     'bundle' => 'breol_video',
     'deleted' => 0,
@@ -20,15 +20,18 @@ function breol_video_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'file_entity',
         'settings' => array(
-          'file_view_mode' => 'default',
+          'file_view_mode' => 'video_show',
         ),
         'type' => 'file_rendered',
         'weight' => 0,
       ),
       'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'module' => 'file_entity',
+        'settings' => array(
+          'file_view_mode' => 'video_show',
+        ),
+        'type' => 'file_rendered',
         'weight' => 0,
       ),
       'teaser_medium' => array(
@@ -88,6 +91,18 @@ function breol_video_field_default_field_instances() {
           'media_internet' => 'media_internet',
           'upload' => 0,
         ),
+        'manualcrop_crop_info' => TRUE,
+        'manualcrop_default_crop_area' => TRUE,
+        'manualcrop_enable' => FALSE,
+        'manualcrop_inline_crop' => FALSE,
+        'manualcrop_instant_crop' => FALSE,
+        'manualcrop_instant_preview' => TRUE,
+        'manualcrop_keyboard' => TRUE,
+        'manualcrop_maximize_default_crop_area' => FALSE,
+        'manualcrop_require_cropping' => array(),
+        'manualcrop_styles_list' => array(),
+        'manualcrop_styles_mode' => 'include',
+        'manualcrop_thumblist' => FALSE,
       ),
       'type' => 'media_generic',
       'weight' => 1,

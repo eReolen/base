@@ -106,3 +106,15 @@ function breol_frontend_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_cover']['display']['compact']['settings']['image_style'] = 'breol_cover_base';
   }
 }
+
+/**
+ * Implements hook_field_default_field_bases_alter().
+ */
+function breol_frontend_field_default_field_bases_alter(&$fields) {
+  // Adjust video paragraphs field to use our video content type.
+  if (isset($fields['field_video_node'])) {
+    $fields['field_video_node']['settings']['handler_settings']['target_bundles'] = array(
+      'breol_video' => 'breol_video',
+    );
+  }
+}
