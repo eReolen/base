@@ -60,7 +60,7 @@ function reol_two_element_paragraph_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'paragraphs',
         'settings' => array(
           'view_mode' => 'full',
@@ -114,7 +114,7 @@ function reol_two_element_paragraph_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'paragraphs',
         'settings' => array(
           'view_mode' => 'full',
