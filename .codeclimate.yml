@@ -73,6 +73,7 @@ exclude_patterns:
   - '**/*.features.*'
   - '**/*.feeds_importer_default.inc'
   - '**/*.field_group.inc'
+  - '**/*.file_default_displays.inc'
   - '**/*.layouts.inc'
   - '**/*.pages_default.inc'
   - '**/*.panels_default.inc'
