@@ -1,13 +1,8 @@
----
-engines:
-  # csslint:
-  #   enabled: true
-  # duplication:
-  #   enabled: true
-  #   config:
-  #     languages:
-  #     - javascript
-  #     - php
+version: 2
+checks:
+  method-lines:
+    enabled: false
+plugins:
   eslint:
     enabled: true
   fixme:
@@ -23,25 +18,12 @@ engines:
         # Doxygen variants.
         - '@todo'
         - '@fixme'
-  # phpmd:
-  #   enabled: true
   phpcodesniffer:
     enabled: true
     config:
       standard: Drupal,DrupalPractice
   scss-lint:
     enabled: true
-checks:
-  method-lines:
-    enabled: false
-ratings:
-  paths:
-  - "**/*.css"
-  - "**/*.inc"
-  - "**/*.js"
-  - "**/*.module"
-  - "**/*.install"
-  - "**/*.php"
 exclude_patterns:
   - authorize.php
   - cron.php
