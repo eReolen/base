@@ -263,3 +263,10 @@ function breol_base_update_7132() {
 function breol_base_update_7133() {
   module_enable(array('reol_video_paragraph'), TRUE);
 }
+
+/**
+ * Enable breol_link_paragraph.
+ */
+function breol_base_update_7134() {
+  module_enable(array('breol_link_paragraph'), TRUE);
+}
