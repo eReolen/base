@@ -101,7 +101,7 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     &:before {
       @include icon('.icon-arrow-right');
       float: right;
-      transform: rotate(0.25turn);
+      transform: rotate(.25turn);
       @include transition(all 300ms ease-out);
 
       @include media($tablet-l) {
@@ -119,7 +119,7 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     &.open {
 
       &:before {
-        transform: rotate(0.25turn);
+        transform: rotate(.25turn);
       }
     }
   }
