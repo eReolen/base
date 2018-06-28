@@ -256,3 +256,10 @@ function breol_base_update_7131() {
 function breol_base_update_7132() {
   module_enable(array('breol_carousel_paragraph'), TRUE);
 }
+
+/**
+ * Enable reol_video_paragraph.
+ */
+function breol_base_update_7133() {
+  module_enable(array('reol_video_paragraph'), TRUE);
+}

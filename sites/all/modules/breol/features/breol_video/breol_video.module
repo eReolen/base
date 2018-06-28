@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the BReol Video feature.
@@ -20,6 +21,18 @@ function breol_frontend_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function breol_video_entity_info_alter(&$entity_info) {
+  $entity_info['file']['view modes'] += array(
+    'video_show' => array(
+      'label' => t('Video player'),
+      'custom settings' => TRUE,
+    ),
+  );
 }
 
 /**
