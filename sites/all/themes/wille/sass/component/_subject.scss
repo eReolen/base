@@ -4,8 +4,8 @@
 
   .ding-carousel-item {
     width: 16.66%;
-
     margin: 0;
+
     @include media($tablet-p) {
       width: 25%;
     }
