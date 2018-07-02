@@ -75,3 +75,11 @@
     content: " ";
   }
 }
+
+@mixin rounded-box() {
+  border-radius: 20px;
+
+  @include media($phone) {
+    border-radius: 10px;
+  }
+}
