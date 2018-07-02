@@ -3,7 +3,7 @@
 /**
  * @file
  * Template for the news page.
- *<div><?php print $image; ?></div>
+ *
  */
 ?>
 <div class="news-page">
@@ -19,6 +19,6 @@
   <div class="organic-element organic-element--page-news">
     <?php print $organic_svg ?>
   </div>
-  <div><?php print $fancy_box; ?></div>
-  <div><?php print $pager; ?></div>
+  <div class="news-page__content"><?php print render($content); ?></div>
+  <div class="news-page__pager"><?php print render($pager); ?></div>
 </div>
