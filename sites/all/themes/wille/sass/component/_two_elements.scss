@@ -1,4 +1,6 @@
 .two-elements {
+  // Inspiration pages are full width, limit our size.
+  @include outer-container;
   display: flex;
 
   padding-top: 25px;

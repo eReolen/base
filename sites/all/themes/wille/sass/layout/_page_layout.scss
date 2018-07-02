@@ -8,11 +8,11 @@
 }
 
 // Main content.
-body:not(.front):not(.page-nyheder) .main-content-wrapper__inner {
+body:not(.front):not(.page-nyheder):not(.node-type-inspiration) .main-content-wrapper__inner {
   @include outer-container;
 }
 
-.main-content-wrapper__inner {
+body:not(.node-type-inspiration) .main-content-wrapper__inner {
   width: 100%;
   @include media($tablet-l) {
     padding: 0 15px;

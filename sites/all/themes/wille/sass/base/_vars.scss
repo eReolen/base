@@ -94,3 +94,8 @@ $bigscreen: new-breakpoint(min-width 1200px);
 
 // z-index's
 $z-index-menu: 2;
+
+// Let's introduce some base sizes.
+
+// Side margins on content on mobile.
+$mobile-margin: 20px;

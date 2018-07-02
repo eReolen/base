@@ -32,6 +32,8 @@ $carousel-outer-padding: 0 30px;
     margin-bottom: 1em;
     margin-right: 0;
     width: 200px;
+    max-width: 30vw;
+
 
     @include media($phone) {
       margin-right: 5px;
@@ -39,11 +41,11 @@ $carousel-outer-padding: 0 30px;
   }
 
   .carousel__header {
-    padding: 0 30px 30px 33px;
+    padding: 40px 0;
 
     @include media($phone) {
-      padding: 0;
-      margin-bottom: 20px;
+      padding: 20px 0;
+      margin: 0 $mobile-margin;
     }
   }
 }
@@ -78,8 +80,14 @@ $carousel-outer-padding: 0 30px;
   position: relative;
 
   .carousel-wrapper {
+    // Leave room for the buttons.
     margin: 0 30px;
     overflow: hidden;
+
+    // When the buttons aren't shown, use the full width.
+    @include media($tablet-l) {
+      margin: 0;
+    }
   }
 
   ul {
@@ -99,6 +107,10 @@ $carousel-outer-padding: 0 30px;
     top: 40%;
     margin: auto;
     cursor: pointer;
+
+    @include media($tablet-l) {
+      display: none;
+    }
   }
 
   .button-prev {
@@ -111,6 +123,7 @@ $carousel-outer-padding: 0 30px;
   }
 }
 
+// Carousel item rendered as carousel_item
 .carousel-item-title {
   color: $title-color;
   text-decoration: none;
@@ -145,4 +158,66 @@ $carousel-outer-padding: 0 30px;
 
 .carousel-item-link {
   text-decoration: none;
+}
+
+// Carousel items rendered as entity. Excessive selector in order to
+// override .article h2.
+.ding-carousel {
+  h2.carousel__header {
+    font-family: $font-bold;
+    font-size: 20px;
+
+    @include media($tablet-l) {
+      font-size: 16px;
+    }
+  }
+}
+
+.ding-carousel-item {
+  .field-name-ting-title h2 {
+    color: $title-color;
+    text-decoration: none;
+    font-family: $font-regular;
+    line-height: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
+    // Reset h2 size.
+    font-size: 12px;
+
+    // One line - word wrap with ellipsis.
+    @include word-wrap();
+  }
+
+  .field-name-ting-author {
+    // Override _search.scss.
+    font-family: $font-light;
+    font-size: 10px;
+  }
+}
+
+// Change color of text and arrows on colored carousels.
+.material-carousel-colored {
+  .carousel__header {
+    color: #fff;
+  }
+
+  .field-name-ting-title h2,
+  .field-name-ting-author {
+    color: #fff;
+  }
+
+  .button-prev {
+    background-image: url('../svg/arrow_left_white.svg');
+  }
+  .button-next {
+    background-image: url('../svg/arrow_right_white.svg');
+  }
+
+}
+
+// Inspiration pages are full width, limit the content.
+.paragraphs-item-material-carousel .content {
+  @include outer-container;
 }
