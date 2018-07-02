@@ -41,11 +41,11 @@ $carousel-outer-padding: 0 30px;
   }
 
   .carousel__header {
-    padding: 40px 0 40px 0;
+    padding: 40px 0;
 
     @include media($phone) {
-      padding: 20px 0 20px 0;
-      margin: 0 $mobile-margin 0;
+      padding: 20px 0;
+      margin: 0 $mobile-margin;
     }
   }
 }
@@ -203,11 +203,9 @@ $carousel-outer-padding: 0 30px;
     color: #fff;
   }
 
-  .ding-carousel-item {
-    .field-name-ting-title h2,
-    .field-name-ting-author {
-      color: #fff;
-    }
+  .field-name-ting-title h2,
+  .field-name-ting-author {
+    color: #fff;
   }
 
   .button-prev {
