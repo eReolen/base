@@ -2,12 +2,11 @@
   padding: 0;
 
   &--teaser {
+    @include rounded-box();
     position: relative;
     height: 380px;
     overflow: hidden;
     margin-bottom: 40px;
-
-    @include rounded-box();
 
     @include media($phone) {
       height: 190px;
@@ -29,6 +28,7 @@
         text-decoration: none;
       }
     }
+
     .content {
       position: absolute;
       top: 0;

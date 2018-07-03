@@ -3,7 +3,6 @@
 /**
  * @file
  * Template for the news page.
- *
  */
 ?>
 <div class="news-page">
