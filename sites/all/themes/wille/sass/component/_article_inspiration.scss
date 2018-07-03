@@ -1,0 +1,17 @@
+.article--inspiration {
+
+  .see-all-news {
+    @include outer-container();
+  }
+
+  .more-link {
+    text-align: center;
+    background: $red;
+    float: left;
+    margin-top: 50px;
+
+    @include media($phone) {
+      float: right;
+    }
+  }
+}
