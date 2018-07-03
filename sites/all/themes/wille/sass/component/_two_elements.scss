@@ -1,0 +1,49 @@
+.two-elements {
+  // Inspiration pages are full width, limit our size.
+  @include outer-container;
+  display: flex;
+
+  padding-top: 25px;
+  padding-bottom: 25px;
+
+  @include media($tablet-p) {
+    display: block;
+    padding: 0;
+  }
+}
+
+.two-elements--direction-right {
+  flex-direction: row-reverse;
+
+  .two-elements--primary {
+    padding-right: 0;
+    padding-left: 25px;
+  }
+
+  .two-elements--secondary {
+    padding-right: 25px;
+    padding-left: 0;
+  }
+}
+
+.two-elements--primary {
+  width: 66.7%;
+
+  padding-right: 25px;
+}
+
+.two-elements--secondary {
+  width: 33.3%;
+
+  padding-left: 25px;
+}
+
+.two-elements--primary,
+.two-elements--secondary,
+.two-elements--direction-right .two-elements--primary,
+.two-elements--direction-right .two-elements--secondary {
+  @include media($tablet-p) {
+    width: 100%;
+    padding: 10px 0;
+  }
+}

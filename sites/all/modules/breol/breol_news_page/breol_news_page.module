@@ -42,7 +42,7 @@ function breol_news_page_theme() {
       'variables' => array(
         'image' => NULL,
         'image_file' => NULL,
-        'fancy_box' => NULL,
+        'content' => NULL,
         'pager' => NULL,
       ),
       'file' => 'breol_news_page.theme.inc',

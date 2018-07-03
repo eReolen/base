@@ -26,12 +26,9 @@ function breol_news_field_default_field_instances() {
       ),
       'teaser' => array(
         'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_summary_or_trimmed',
-        'weight' => 0,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 1,
       ),
       'teaser_medium' => array(
         'label' => 'hidden',
@@ -90,9 +87,13 @@ function breol_news_field_default_field_instances() {
         'weight' => 1,
       ),
       'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => 'ding_campaign_p_100',
+        ),
+        'type' => 'image',
         'weight' => 0,
       ),
       'teaser_medium' => array(
@@ -154,6 +155,18 @@ function breol_news_field_default_field_instances() {
           'media_internet' => 0,
           'upload' => 0,
         ),
+        'manualcrop_crop_info' => TRUE,
+        'manualcrop_default_crop_area' => TRUE,
+        'manualcrop_enable' => FALSE,
+        'manualcrop_inline_crop' => FALSE,
+        'manualcrop_instant_crop' => FALSE,
+        'manualcrop_instant_preview' => TRUE,
+        'manualcrop_keyboard' => TRUE,
+        'manualcrop_maximize_default_crop_area' => FALSE,
+        'manualcrop_require_cropping' => array(),
+        'manualcrop_styles_list' => array(),
+        'manualcrop_styles_mode' => 'include',
+        'manualcrop_thumblist' => FALSE,
       ),
       'type' => 'media_generic',
       'weight' => 4,
@@ -170,7 +183,10 @@ function breol_news_field_default_field_instances() {
       'default' => array(
         'label' => 'hidden',
         'module' => 'reol_field_carousel',
-        'settings' => array(),
+        'settings' => array(
+          'render_method' => 'cover',
+          'search_link' => FALSE,
+        ),
         'type' => 'reol_field_carousel_notabs',
         'weight' => 2,
       ),
@@ -178,7 +194,7 @@ function breol_news_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 3,
       ),
       'teaser_medium' => array(
         'label' => 'above',

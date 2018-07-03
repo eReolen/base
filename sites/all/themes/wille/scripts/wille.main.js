@@ -68,55 +68,6 @@
   };
 
   /**
-   * Subject menu.
-   *
-   * Initialize slick.js for the subject menu.
-   */
-  Drupal.behaviors.subjectMenu = {
-    attach : function (context, settings) {
-      $(document).ready(function () {
-
-        // If slick is not loaded, we will abort.
-        if (!jQuery().slick) {
-          return;
-        }
-
-        $('.subject-menu', context).slick({
-          infinite: false,
-          slidesToShow: 6,
-          slidesToScroll: 6,
-          speed: 500,
-          touchThreshold: 24,
-          lazyLoad: 'progressive',
-          responsive: [
-            {
-              breakpoint: 1026,
-              settings: {
-                slidesToShow: 8,
-                slidesToScroll: 5,
-              }
-            },
-            {
-              breakpoint: 769,
-              settings: {
-                slidesToShow: 4,
-                slidesToScroll: 4
-              }
-            },
-            {
-              breakpoint: 500,
-              settings: {
-                slidesToShow: 4,
-                slidesToScroll: 2
-              }
-            }
-          ]
-        });
-      });
-    }
-  };
-
-  /**
    * Facets.
    */
   Drupal.behaviors.facets = {

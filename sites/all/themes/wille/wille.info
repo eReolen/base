@@ -1,6 +1,6 @@
 base theme = pratchett
 name = Wille
-description = Theme for eReolen.dk for kids.
+description = Theme for eReolen.dk for kids (eGO).
 core = 7.x
 release = 7.x-1.x
 stylesheets[all][] = css/wille.main.css

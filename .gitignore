@@ -27,3 +27,7 @@ private/docker/sites/ego/private
 
 # Ignore phpstorm project files.
 .idea/*
+
+# Ignore dev files.
+.docker-sync
+.dce_container

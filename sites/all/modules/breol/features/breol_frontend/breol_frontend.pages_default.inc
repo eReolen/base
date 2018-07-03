@@ -622,6 +622,7 @@ function breol_frontend_default_page_manager_handlers() {
           'name' => 'node_type',
           'settings' => array(
             'type' => array(
+              'inspiration' => 'inspiration',
               'breol_section' => 'breol_section',
               'breol_subject' => 'breol_subject',
             ),

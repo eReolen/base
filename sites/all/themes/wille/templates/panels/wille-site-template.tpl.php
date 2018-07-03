@@ -53,10 +53,6 @@
 
   <?php if (!empty($content['footer'])): ?>
 
-    <div class="organic-element organic-element--footer">
-      <?php print $organic_svg ?>
-    </div>
-
     <footer class="footer">
       <div class="footer__inner">
         <?php print render($content['footer']); ?>
