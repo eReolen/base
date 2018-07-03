@@ -1,15 +1,20 @@
 .two-elements {
   // Inspiration pages are full width, limit our size.
   @include outer-container;
-  display: flex;
-
-  padding-top: 25px;
-  padding-bottom: 25px;
 
   @include media($tablet-p) {
     display: block;
-    padding: 0;
   }
+
+  @include media($bigscreen) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  display: flex;
+
+  padding: $mobile-margin;
+  box-sizing: border-box;
 }
 
 .two-elements--direction-right {

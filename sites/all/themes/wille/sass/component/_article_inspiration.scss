@@ -2,6 +2,13 @@
 
   .see-all-news {
     @include outer-container();
+
+    @include media($bigscreen) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    padding-right: $mobile-margin;
+    padding-left: $mobile-margin;
   }
 
   .more-link {

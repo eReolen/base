@@ -1,4 +1,8 @@
 .linkbox {
+  @include media($phone) {
+    height: 300px;
+  }
+
   position: relative;
   display: flex;
   height: 350px;
@@ -16,6 +20,10 @@
 
   // The arrow should only show up on primary boxes.
   .two-elements--primary & {
+    @include media($phone) {
+      height: 250px;
+    }
+
     &::before {
       @include icon('.icon-arrow-right-funny');
 
@@ -33,6 +41,7 @@
 
   font-size: 90%;
   font-weight: bold;
+  line-height: 120%;
   text-transform: uppercase;
 
   &::after {
