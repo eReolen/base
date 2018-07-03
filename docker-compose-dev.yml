@@ -3,14 +3,14 @@ version: "2"
 services:
   ereol:
     volumes:
-      - 'ereol-webroot-sync:/var/www/html:nocopy'
-      - './private/docker/sites/ereol:/var/www/html/sites/default:nocopy'
-      - './private/docker/init/prepare-environment.sh:/etc/my_init.d/prepare-environment.sh:nocopy'
+      - ereol-webroot-sync:/var/www/html
+      - ./private/docker/sites/ereol:/var/www/html/sites/default
+      - ./private/docker/init/prepare-environment.sh:/etc/my_init.d/prepare-environment.sh
   ego:
     volumes:
-      - 'ego-webroot-sync:/var/www/html:nocopy'
-      - './private/docker/sites/ego:/var/www/html/sites/default:nocopy'
-      - './private/docker/init/prepare-environment.sh:/etc/my_init.d/prepare-environment.sh:nocopy'
+      - ego-webroot-sync:/var/www/html
+      - ./private/docker/sites/ego:/var/www/html/sites/default
+      - ./private/docker/init/prepare-environment.sh:/etc/my_init.d/prepare-environment.sh
 volumes:
   ereol-webroot-sync:
     external: true
