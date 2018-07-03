@@ -27,7 +27,7 @@ gulp.task('sass', function () {
 
 // Sass watch.
 gulp.task('sass:watch', function () {
-  gulp.watch('./sass/**/*.scss', ['sass']);
+  gulp.watch('./sass/**/*.scss', { interval: 1000 }, ['sass']);
 });
 
 // JsHint.
@@ -45,7 +45,7 @@ gulp.task('jshint', function () {
 
 // JsHint watch.
 gulp.task('jshint:watch', function () {
-  gulp.watch(['gulpfile.js', './js/*.js'], ['jshint']);
+  gulp.watch(['gulpfile.js', './js/*.js'], { interval: 1000 }, ['jshint']);
 });
 
 // Register workers.
