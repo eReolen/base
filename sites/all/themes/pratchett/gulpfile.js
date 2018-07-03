@@ -23,7 +23,7 @@ gulp.task('sass', function () {
 
 // Sass watch.
 gulp.task('sass:watch', function () {
-  gulp.watch('./sass/**/*.scss', ['sass']);
+  gulp.watch('./sass/**/*.scss', { interval: 1000 }, ['sass']);
 });
 
 // Register workers.
