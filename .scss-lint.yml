@@ -1,5 +1,5 @@
 linters:
-  # We're using the hphenated_BEM convention.
+  # We're using the hyphenated_BEM convention.
   SelectorFormat:
     convention: hyphenated_BEM
   # Allow more nesting.
@@ -20,3 +20,7 @@ linters:
   # Allow qualifying selectors like input[type="text"]
   QualifyingElement:
     enabled: false
+  # Allow for more depth in selectors, we're working with existing
+  # markup here.
+  SelectorDepth:
+    max_depth: 5
