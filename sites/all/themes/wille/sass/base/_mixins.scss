@@ -10,7 +10,7 @@
 @mixin button($color, $useIcon: true){
   text-decoration: none;
   background: $color;
-  border-radius: 40px;
+  border-radius: 10px;
   color: white;
   min-width: 250px;
   display: inline-block;
@@ -31,7 +31,7 @@
     &:before {
       @include icon('.icon-arrow-right-funny');
       float: right;
-      right: 17px;
+      right: 25px;
       position: absolute;
     }
   }

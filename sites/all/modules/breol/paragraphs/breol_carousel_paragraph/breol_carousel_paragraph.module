@@ -16,7 +16,11 @@ function breol_carousel_paragraph_preprocess_entity(&$variables) {
       $color = $wrapper->field_material_carousel_color->value();
       if (isset($color['rgb'])) {
         $variables['classes_array'][] = 'material-carousel-colored';
+        $variables['classes_array'][] = 'ding-carousel__wrapper';
         $variables['attributes_array']['style'] = 'background-color: ' . $color['rgb'] . ';';
+
+        // We're only interested in rendering the carousel.
+        $variables['content'] = $variables['content']['field_carousel'];
       }
     }
   }

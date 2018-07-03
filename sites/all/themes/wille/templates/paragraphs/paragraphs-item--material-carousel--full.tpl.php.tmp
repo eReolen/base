@@ -25,15 +25,10 @@
  * @see template_preprocess_entity()
  * @see template_process()
  */
-
-  $bg_color = !empty($content['field_material_carousel_color'][0]['#markup']) ? $content['field_material_carousel_color'][0]['#markup'] : NULL;
 ?>
 
 <div class="ding-carousel__wrapper <?php print $classes; ?>"<?php print $attributes; ?>>
   <div class="content"<?php print $content_attributes; ?>>
     <?php print render($content['field_carousel']); ?>
   </div>
-  <?php if (!empty($bg_color)): ?>
-    <div class="ding-carousel__background" style="background-color: <?php print $bg_color; ?>"></div>
-  <?php endif; ?>
 </div>

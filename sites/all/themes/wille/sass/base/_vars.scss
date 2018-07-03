@@ -83,7 +83,6 @@ $base-font-size: 14px;
  * Breakpoints.
  */
 
-
 $phone-p: new-breakpoint(max-width 480px);
 $phone-l: new-breakpoint(max-height 375px);
 $phone: new-breakpoint(max-width 667px);
@@ -99,3 +98,4 @@ $z-index-menu: 2;
 
 // Side margins on content on mobile.
 $mobile-margin: 20px;
+$border-radius: 20px;

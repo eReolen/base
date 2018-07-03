@@ -43,7 +43,8 @@ services:
       MYSQL_PASSWORD: drupal
     volumes:
       - './private/docker/db-init/ereol:/docker-entrypoint-initdb.d'
-
+    ports:
+      - 3306
   db-ego:
     image: mariadb:5
     environment:
@@ -53,7 +54,8 @@ services:
       MYSQL_PASSWORD: drupal
     volumes:
       - './private/docker/db-init/ego:/docker-entrypoint-initdb.d'
-
+    ports:
+      - 3306
   # pratchett base theme
   pratchett-gulp:
     image: node:6-alpine

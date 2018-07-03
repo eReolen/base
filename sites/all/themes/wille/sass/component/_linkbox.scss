@@ -1,0 +1,72 @@
+.linkbox {
+  position: relative;
+  display: flex;
+  height: 350px;
+  padding: $mobile-margin ($mobile-margin * 2);
+  overflow: hidden;
+
+  box-sizing: border-box;
+  border-radius: $border-radius;
+  text-decoration: none;
+  color: #fff;
+
+  // Making sure the content shows up at the bottom.
+  justify-content: flex-end;
+  flex-direction: column;
+
+  // The arrow should only show up on primary boxes.
+  .two-elements--primary & {
+    &::before {
+      @include icon('.icon-arrow-right-funny');
+
+      position: absolute;
+      right: $mobile-margin;
+
+      font-size: 20px;
+      z-index: 3;
+    }
+  }
+}
+
+.linkbox__header {
+  margin-bottom: 10px;
+
+  font-size: 90%;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  &::after {
+    content: ':';
+  }
+}
+
+.linkbox__content {
+  position: relative;
+  z-index: 2;
+
+  .two-elements--secondary & {
+    text-align: center;
+  }
+}
+
+.linkbox__image {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  .two-elements--secondary & {
+    top: $mobile-margin / 1.5;
+    left: $mobile-margin / 1.5;
+    right: $mobile-margin / 1.5;
+    bottom: 90px;
+
+    border-radius: $border-radius;
+  }
+}

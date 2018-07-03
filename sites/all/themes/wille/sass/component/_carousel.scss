@@ -33,7 +33,7 @@ $carousel-outer-padding: 0 30px;
     vertical-align: top;
     position: relative;
     height: auto;
-    margin: 0 -20px 25px 0;
+    margin: 0 -$mobile-margin $mobile-margin 0;
     padding: $carousel-outer-padding;
 
     @include media($phone) {
@@ -49,14 +49,14 @@ $carousel-outer-padding: 0 30px;
     width: 20%;
     min-width: 200px;
     box-sizing: border-box;
-    padding-right: 20px;
+    padding-right: $mobile-margin;
   }
 
   .carousel__header {
-    padding: 40px 0;
+    padding: ($mobile-margin * 2) 0;
 
     @include media($phone) {
-      padding: 20px 0;
+      padding: $mobile-margin 0;
       margin: 0 $mobile-margin;
     }
   }
@@ -217,8 +217,8 @@ $carousel-outer-padding: 0 30px;
 
 // Change color of text and arrows on colored carousels.
 .material-carousel-colored {
-  padding-top: 20px;
-  padding-bottom: 40px;
+  padding-top: $mobile-margin;
+  padding-bottom: $mobile-margin * 2;
 
   .carousel__header {
     color: #fff;
