@@ -1,7 +1,14 @@
 .article--inspiration {
-
   .see-all-news {
     @include outer-container();
+
+    padding-right: $mobile-margin;
+    padding-left: $mobile-margin;
+
+    @include media($bigscreen) {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 
   .more-link {

@@ -11,13 +11,29 @@
 
 $carousel-outer-padding: 0 30px;
 
+.ding-carousel__wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.ding-carousel__background {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: -9999px;
+  right: -9999px;
+}
+
 .ding-carousel {
+  color: #fff;
+
   ul {
     display: flex;
     vertical-align: top;
     position: relative;
     height: auto;
-    margin: 0 0 25px 0;
+    margin: 0 (-$mobile-margin) $mobile-margin 0;
     padding: $carousel-outer-padding;
 
     @include media($phone) {
@@ -29,22 +45,18 @@ $carousel-outer-padding: 0 30px;
   li {
     display: inline-block;
     flex: none;
-    margin-bottom: 1em;
-    margin-right: 0;
-    width: 200px;
-    max-width: 30vw;
-
-
-    @include media($phone) {
-      margin-right: 5px;
-    }
+    margin: 0;
+    width: 20%;
+    min-width: 200px;
+    box-sizing: border-box;
+    padding-right: $mobile-margin;
   }
 
   .carousel__header {
-    padding: 40px 0;
+    padding: ($mobile-margin * 2) 0;
 
     @include media($phone) {
-      padding: 20px 0;
+      padding: $mobile-margin 0;
       margin: 0 $mobile-margin;
     }
   }
@@ -77,11 +89,17 @@ $carousel-outer-padding: 0 30px;
 
 // New Swiper carousel.
 .ding-carousel {
+  @include media($tablet-l) {
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
   position: relative;
 
+  .carousel__header,
   .carousel-wrapper {
     // Leave room for the buttons.
-    margin: 0 30px;
+    margin: 0 100px;
     overflow: hidden;
 
     // When the buttons aren't shown, use the full width.
@@ -199,6 +217,9 @@ $carousel-outer-padding: 0 30px;
 
 // Change color of text and arrows on colored carousels.
 .material-carousel-colored {
+  padding-top: $mobile-margin;
+  padding-bottom: $mobile-margin * 2;
+
   .carousel__header {
     color: #fff;
   }
@@ -208,11 +229,22 @@ $carousel-outer-padding: 0 30px;
     color: #fff;
   }
 
-  .button-prev {
-    background-image: url('../svg/arrow_left_white.svg');
-  }
+  .button-prev,
   .button-next {
-    background-image: url('../svg/arrow_right_white.svg');
+    width: 90px;
+    height: 70px;
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+
+  .button-prev {
+    background-image: url('../svg/round_arrow_left.svg');
+  }
+
+  .button-next {
+    background-image: url('../svg/round_arrow_right.svg');
   }
 
 }
