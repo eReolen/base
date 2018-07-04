@@ -277,3 +277,11 @@ function breol_base_update_7134() {
 function breol_base_update_7135() {
   module_enable(array('breol_see_all_news_button_paragraph'), TRUE);
 }
+
+/**
+ * Revert inspiration feature.
+ */
+function breol_base_update_7136() {
+  features_revert_module('breol_inspiration');
+}
+
