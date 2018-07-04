@@ -34,7 +34,7 @@
     // Leave room for the play button.
     margin-left: 65px;
     // Add a bit of spacing to the top.
-    padding-top: 0.2rem;
+    padding-top: .2rem;
     line-height: 1.2rem;
   }
 
@@ -63,7 +63,6 @@
     height: 43px;
     width: 48px;
     outline: 0;
-    border: 0;
 
     &.playing {
       background-image: url('../svg/round_pause_button.svg');
