@@ -284,3 +284,11 @@ function breol_base_update_7135() {
 function breol_base_update_7136() {
   features_revert_module('breol_link_paragraph');
 }
+
+/**
+ * Revert inspiration feature.
+ */
+function breol_base_update_7137() {
+  features_revert_module('breol_link_paragraph');
+}
+

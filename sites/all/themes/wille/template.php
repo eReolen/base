@@ -50,13 +50,6 @@ function wille_preprocess_html(&$variables) {
 
 /**
  * Implements THEME_preprocess_TEMPLATE().
- */
-function wille_preprocess_wille_site_template(&$variables, $hook) {
-  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
-}
-
-/**
- * Implements THEME_preprocess_TEMPLATE().
  *
  * We preprocess and override the ctools content type here in the theme, because
  * there are theming specific files and styles that shoudl be included.
