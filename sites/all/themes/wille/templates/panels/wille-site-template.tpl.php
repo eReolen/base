@@ -41,9 +41,7 @@
     </div>
   </div>
 
-  <div class="organic-element organic-element--content">
-    <?php print $organic_svg ?>
-  </div>
+  <div class="organic-element organic-element--content"></div>
 
   <div class="main-content-wrapper">
     <div class="main-content-wrapper__inner">

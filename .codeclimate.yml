@@ -3,6 +3,8 @@ checks:
   method-lines:
     enabled: false
   # We have a lot of boilerplate code that gets duplicated.
+  similar-code:
+    enabled: false
   identical-code:
     enabled: false
 plugins:
