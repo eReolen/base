@@ -300,7 +300,7 @@ function breol_base_update_7138() {
 }
 
 /**
- * Implements hook_update_N().
+ * Revert features.
  */
 function breol_base_update_7139() {
   features_revert_module('breol_news');
