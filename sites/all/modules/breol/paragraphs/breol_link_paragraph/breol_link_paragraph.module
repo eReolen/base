@@ -34,7 +34,11 @@ function breol_link_paragraph_preprocess_entity(&$variables) {
 
       $image = $wrapper->field_breol_linkbox_image->value();
       if ($image['uri']) {
-        $variables['image_url'] = image_style_url('ding_primary_medium', $image['uri']);
+        $params = array(
+          'style_name' => 'medium',
+          'path' => $image['uri'],
+        );
+        $variables['image'] = theme('image_style', $params);
         $variables['classes_array'][] = 'linkbox--with-image';
       }
       if (isset($link['title'])) {

@@ -20,9 +20,8 @@ function breol_link_paragraph_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'color_field',
         'settings' => array(),
-        'type' => 'color_field_default_formatter',
+        'type' => 'hidden',
         'weight' => 3,
       ),
       'paragraphs_editor_preview' => array(
@@ -60,7 +59,7 @@ function breol_link_paragraph_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'text_plain',
         'weight' => 1,
       ),
       'paragraphs_editor_preview' => array(
@@ -101,7 +100,7 @@ function breol_link_paragraph_field_default_field_instances() {
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => '',
+          'image_style' => 'ding_primary_large',
         ),
         'type' => 'image',
         'weight' => 0,
@@ -183,7 +182,7 @@ function breol_link_paragraph_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'link_separate',
         'weight' => 2,
       ),
       'paragraphs_editor_preview' => array(
