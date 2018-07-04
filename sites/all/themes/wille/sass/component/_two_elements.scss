@@ -2,6 +2,10 @@
   // Inspiration pages are full width, limit our size.
   @include outer-container;
 
+  display: flex;
+  padding: $mobile-margin;
+  box-sizing: border-box;
+
   @include media($tablet-p) {
     display: block;
   }
@@ -10,11 +14,6 @@
     padding-right: 0;
     padding-left: 0;
   }
-
-  display: flex;
-
-  padding: $mobile-margin;
-  box-sizing: border-box;
 }
 
 .two-elements--direction-right {

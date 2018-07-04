@@ -1,7 +1,5 @@
 .linkbox {
-  @include media($phone) {
-    height: 300px;
-  }
+  @include rounded-box();
 
   position: relative;
   display: flex;
@@ -10,13 +8,16 @@
   overflow: hidden;
 
   box-sizing: border-box;
-  border-radius: $border-radius;
   text-decoration: none;
   color: #fff;
 
   // Making sure the content shows up at the bottom.
   justify-content: flex-end;
   flex-direction: column;
+
+  @include media($phone) {
+    height: 300px;
+  }
 
   // The arrow should only show up on primary boxes.
   .two-elements--primary & {
@@ -71,11 +72,11 @@
   background-repeat: no-repeat;
 
   .two-elements--secondary & {
+    @include rounded-box();
+
     top: $mobile-margin / 1.5;
     left: $mobile-margin / 1.5;
     right: $mobile-margin / 1.5;
     bottom: 90px;
-
-    border-radius: $border-radius;
   }
 }

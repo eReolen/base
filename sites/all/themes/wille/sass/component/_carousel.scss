@@ -33,7 +33,7 @@ $carousel-outer-padding: 0 30px;
     vertical-align: top;
     position: relative;
     height: auto;
-    margin: 0 -$mobile-margin $mobile-margin 0;
+    margin: 0 (-$mobile-margin) $mobile-margin 0;
     padding: $carousel-outer-padding;
 
     @include media($phone) {
