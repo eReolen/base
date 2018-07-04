@@ -1397,6 +1397,33 @@ function reol_base_ting_post_execute($request, $response, $raw_response) {
 }
 
 /**
+ * Helper to manually add a single translation string.
+ *
+ * After adding strings use reol_base_locale_clear_cache() for clearing caches.
+ */
+function reol_base_locale_add_translation($source, $translation, $langcode = 'da', $context = '', $textgroup = 'default') {
+  require_once DRUPAL_ROOT . '/includes/locale.inc';
+
+  $report = &drupal_static(__FUNCTION__, array(
+    'additions' => 0,
+    'updates' => 0,
+    'deletes' => 0,
+    'skips' => 0,
+  ));
+  _locale_import_one_string_db($report, $langcode, $context, $source, $translation, $textgroup, 'Manual import via helper ' . __FUNCTION__ . '().', LOCALE_IMPORT_OVERWRITE);
+}
+
+/**
+ * Helper to clear the locale cache.
+ */
+function reol_base_locale_clear_cache() {
+  require_once DRUPAL_ROOT . '/includes/locale.inc';
+  // Clear locale cache.
+  _locale_invalidate_js();
+  cache_clear_all('locale:', 'cache', TRUE);
+}
+
+/**
  * Add extra data from MARC data to the object.
  *
  * @param object $object

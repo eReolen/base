@@ -11,8 +11,8 @@
   <?php print render($cover); ?>
   <div class="audio-preview__details">
     <div class="audio-preview__meta">
-      <div class="audio-preview__title"><div><?php print t('Audio preview') ?>: <?php print $title; ?></div></div>
-      <div class="audio-preview__author"><?php print $author; ?></div>
+      <div class="audio-preview__header"><?php print t('Audio preview') ?>:</div>
+      <div class="audio-preview__title"><?php print $title; ?></div>
     </div>
     <div class="audio-preview__player" data-isbn="<?php print $isbn; ?>">
       <span class="audio-preview__time">

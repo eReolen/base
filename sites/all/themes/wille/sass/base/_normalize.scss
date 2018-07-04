@@ -47,3 +47,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+// Firefox still adds an ugly dotted outline on focus.
+button::-moz-focus-inner {
+  padding: 0;
+  outline: 0;
+  border: 0;
+}
