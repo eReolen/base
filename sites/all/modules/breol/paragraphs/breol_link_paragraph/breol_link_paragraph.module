@@ -35,7 +35,7 @@ function breol_link_paragraph_preprocess_entity(&$variables) {
       $image = $wrapper->field_breol_linkbox_image->value();
       if ($image['uri']) {
         $params = array(
-          'style_name' => 'medium',
+          'style_name' => 'ding_campaign_p_75',
           'path' => $image['uri'],
         );
         $variables['image'] = theme('image_style', $params);
@@ -45,7 +45,7 @@ function breol_link_paragraph_preprocess_entity(&$variables) {
         $variables['title'] = check_plain($link['title']);
       }
 
-      $header = $color = $wrapper->field_breol_linkbox_header->value();
+      $header = $wrapper->field_breol_linkbox_header->value();
 
       $variables['header'] = !empty($header) ? check_plain($header) : '';
     }
