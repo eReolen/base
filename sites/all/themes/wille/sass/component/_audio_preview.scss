@@ -6,9 +6,9 @@
   margin-bottom: 40px;
   background-color: $color-cerulean;
 
-  @include media($phone) {
+  @include media($tablet-p) {
     height: 300px;
-    margin: 0 10px 20px;
+    margin-bottom: 20px;
   }
 
   .ting-cover {
@@ -16,7 +16,7 @@
     width: 160px;
     margin: 40px auto 20px;
 
-    @include media($phone) {
+    @include media($tablet-p) {
       height: 180px;
       width: 125px;
       margin: 20px auto 10px;
@@ -46,6 +46,9 @@
   .audio-preview__title {
     font-weight: bold;
     font-size: .8rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .audio-preview__button {
