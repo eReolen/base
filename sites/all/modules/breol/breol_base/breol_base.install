@@ -292,3 +292,26 @@ function breol_base_update_7137() {
   features_revert_module('breol_link_paragraph');
 }
 
+/**
+ * Translate "Audio preview".
+ */
+function breol_base_update_7138() {
+  reol_base_locale_add_translation('Audio preview', 'Uddrag');
+}
+
+/**
+ * Revert features.
+ */
+function breol_base_update_7139() {
+  features_revert_module('breol_news');
+  features_revert_module('breol_section');
+  features_revert_module('breol_video');
+}
+
+/**
+ * Revert features.
+ */
+function breol_base_update_7140() {
+  features_revert_module('breol_carousel_paragraph');
+  features_revert_module('breol_link_paragraph');
+}
