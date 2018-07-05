@@ -6,7 +6,7 @@
   margin-bottom: 40px;
   background-color: $color-cerulean;
 
-  @include media($phone) {
+  @include media($tablet-p) {
     height: 300px;
     margin-bottom: 20px;
   }
@@ -16,7 +16,7 @@
     width: 160px;
     margin: 40px auto 20px;
 
-    @include media($phone) {
+    @include media($tablet-p) {
       height: 180px;
       width: 125px;
       margin: 20px auto 10px;

@@ -15,13 +15,13 @@
   justify-content: flex-end;
   flex-direction: column;
 
-  @include media($phone) {
+  @include media($tablet-p) {
     height: 300px;
   }
 
   // The arrow should only show up on primary boxes.
   .two-elements--primary & {
-    @include media($phone) {
+    @include media($tablet-p) {
       height: 250px;
     }
 
