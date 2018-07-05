@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Bookmark pane for ctools.
@@ -27,14 +28,14 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
   // Get the node from the context.
   $node = $context->data;
 
-  // Check if we still want to be here,
-  if (!in_array($node->type, array(
-      'breol_subject',
-      'breol_section',
-      'breol_news',
-      'breol_page',
-      )
-    )) {
+  // Check if we still want to be here.
+  $types = array(
+    'breol_subject',
+    'breol_section',
+    'breol_news',
+    'breol_page',
+  );
+  if (!in_array($node->type, $types)) {
     return;
   }
 
@@ -48,9 +49,10 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
   }
 
   $variables['cover_background_color'] = 'transparant';
-  if ($node->type ==='breol_subject' && !empty($node->field_color[LANGUAGE_NONE][0]['rgb'])) {
+  if ($node->type === 'breol_subject' && !empty($node->field_color[LANGUAGE_NONE][0]['rgb'])) {
     $variables['cover_background_color'] = $node->field_color[LANGUAGE_NONE][0]['rgb'];
-  } elseif ($node->type ==='breol_section') {
+  }
+  elseif ($node->type === 'breol_section') {
     $variables['cover_background_color'] = 'rgba(235, 235, 235, 0.9)';
   }
 
@@ -62,19 +64,22 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
   // Add wrapper classes.
   $variables['wrapper_class'] = 'cover__regular';
 
-   if ($node->type === 'breol_subject' || $node->type === 'breol_section') {
+  if ($node->type === 'breol_subject' || $node->type === 'breol_section') {
 
-    // TODO(ts) - This was made last minute before launch. Should be refactored later.
+    // TODO(ts) - This was made last minute before launch. Should be refactored
+    // later.
     $variables['wrapper_class'] = 'cover__' . strtolower($node->title);
     if (strtolower($node->title) === 'ebøger' || strtolower($node->title) === 'netlydbøger') {
       $variables['image_uri'] = NULL;
       if (strtolower($node->title) === 'ebøger') {
         $variables['wrapper_class'] = 'cover__ebooks';
-      } elseif (strtolower($node->title) === 'netlydbøger') {
+      }
+      elseif (strtolower($node->title) === 'netlydbøger') {
         $variables['wrapper_class'] = 'cover__audiobooks';
       }
     }
-  } elseif ($node->type === 'breol_page') {
+  }
+  elseif ($node->type === 'breol_page') {
     $variables['wrapper_class'] = 'cover__fallback';
   }
 
