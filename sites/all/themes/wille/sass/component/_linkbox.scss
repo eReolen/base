@@ -67,9 +67,11 @@
   left: 0;
   right: 0;
 
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   .two-elements--secondary & {
     @include rounded-box();
