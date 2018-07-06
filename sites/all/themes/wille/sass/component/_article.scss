@@ -72,11 +72,6 @@ $z-index-cover-base: 1;
     content: '';
   }
 
-  &--breol_subject,
-  &--breol_section,
-  &--breol_page {
-  }
-
   &--breol_page {
     @include media($tablet-l) {
       max-height: 35vh;
