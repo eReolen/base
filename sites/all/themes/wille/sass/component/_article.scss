@@ -104,6 +104,9 @@ $z-index-cover-base: 1;
   -ms-flex-pack: center;
 
   &--breol_news {
+    justify-content: space-around;
+    padding: 100px 0;
+
     @include media($phone) {
       position: relative;
     }
@@ -120,6 +123,10 @@ $z-index-cover-base: 1;
         width: 100%;
         object-fit: cover;
       }
+    }
+
+    .article__cover__content {
+      max-width: 550px;
     }
   }
 
