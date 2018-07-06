@@ -46,6 +46,15 @@ function breol_frontend_cover_image_content_type_render($subtype, $conf, $panel_
     $image_entity = !empty($node->field_breol_cover_image) ? $node->field_breol_cover_image[LANGUAGE_NONE][0] : NULL;
     $file_uri = file_create_url($image_entity['uri']);
     $variables['image_uri'] = $file_uri;
+
+    if ($image_entity['uri']) {
+      $params = array(
+        'path' => $image_entity['uri'],
+      );
+      // This works width both svg and png.
+      $variables['image'] = theme('image', $params);
+    }
+
   }
 
   $variables['cover_background_color'] = 'transparant';

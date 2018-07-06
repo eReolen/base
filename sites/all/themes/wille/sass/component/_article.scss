@@ -64,7 +64,6 @@ $z-index-cover-base: 1;
   position: relative;
   float: left;
   width: 100%;
-  max-height: 323px;
   margin-bottom: -20px;
   z-index: 1;
 
@@ -76,7 +75,6 @@ $z-index-cover-base: 1;
   &--breol_subject,
   &--breol_section,
   &--breol_page {
-    max-height: 323px;
   }
 
   &--breol_page {
@@ -103,22 +101,12 @@ $z-index-cover-base: 1;
   z-index: $z-index-menu;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   overflow: hidden;
   height: 100%;
   display: -ms-flexbox;
   -ms-flex-pack: center;
-
-  padding: 100px 0;
-
-  @include media($tablet-l) {
-    padding: 6vh 0;
-  }
-
-  @include media($phone) {
-    padding: 0;
-  }
 
   &--breol_news {
     @include media($phone) {
@@ -142,11 +130,14 @@ $z-index-cover-base: 1;
     }
   }
 
+  img {
+    display: block;
+  }
+
   &--breol_subject {
     @include outer-container;
     background-size: 80%;
     background-position: bottom right;
-    height: 326px;
 
     @include media($tablet-l) {
       height: auto;
@@ -163,63 +154,9 @@ $z-index-cover-base: 1;
   }
 }
 
-.cover {
-
-  &__venskab,
-  &__sjov {
-    .article__cover--breol_subject {
-      background-size: cover;
-    }
-  }
-
-  &__sport {
-    .article__cover--breol_subject {
-      // background-size: 93%;
-      background-size: 75%;
-    }
-  }
-
-  &__gys {
-    .article__cover--breol_subject {
-      background-size: 100%;
-    }
-  }
-
-  &__kærlighed {
-    .article__cover--breol_subject {
-      background-size: cover;
-      background-position: 41%;
-    }
-  }
-
-  &__dyr {
-    .article__cover--breol_subject {
-      background-size: 93%;
-      background-position: center right;
-    }
-  }
-
-  &__historie {
-    .article__cover--breol_subject {
-      background-size: 90%;
-      background-position: center right;
-    }
-  }
-
-  &__eventyr {
-    .article__cover--breol_subject {
-      background-size: 90%;
-      background-position: center right;
-    }
-  }
-}
-
 .article__cover__content {
-  max-width: 1180px;
   z-index: 10;
   position: relative;
-  max-width: 550px;
-  max-height: 100%;
   padding: 40px 15px;
   color: $title-color;
   // Font.
@@ -232,7 +169,6 @@ $z-index-cover-base: 1;
   &--breol_section,
   &--breol_subject {
     text-align: left;
-    width: 100%;
     max-width: 1180px;
     font-family: $font-mikado;
 

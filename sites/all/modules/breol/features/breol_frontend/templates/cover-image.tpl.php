@@ -11,11 +11,8 @@
     <div class="user-banner__overlay"></div>
   </div>
 <?php else : ?>
-  <div class="article__cover-wrapper article__cover-wrapper--<?php print $node->type?> cover <?php print $wrapper_class?>" style="background-color: <?php print $cover_background_color; ?>">
-    <div class="article__cover article__cover--<?php print $node->type?>"
-      <?php if (!empty($image_uri)) : ?>
-        style="background-image: url(<?php print $image_uri; ?>);"
-      <?php endif; ?>>
+  <div class="article__cover-wrapper article__cover-wrapper--<?php print $node->type; ?> cover <?php print $wrapper_class; ?>" style="background-color: <?php print $cover_background_color; ?>">
+    <div class="article__cover article__cover--<?php print $node->type?>">
       <?php if (in_array($node->type, array('breol_news', 'breol_section', 'breol_page'))) : ?>
           <div class="article__cover__overlay"></div>
       <?php endif; ?>
@@ -30,6 +27,11 @@
         <?php endif; ?>
         <?php if(!empty($body)) : ?>
           <?php print($body); ?>
+        <?php endif; ?>
+      </div>
+      <div>
+        <?php if (!empty($image)) : ?>
+          <?php print $image; ?>
         <?php endif; ?>
       </div>
     </div>

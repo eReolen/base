@@ -30,7 +30,7 @@ function wille_preprocess_html(&$variables) {
   // Get the field_color and convert i t RGBA foropacity and add it
   // to the body background.
   if (!empty($node) && $node->type === 'breol_subject') {
-    $color = _wille_alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 50);
+    $color = _wille_alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 220);
 
     $css = 'body {background-color: ' . $color . '} .organic-element--content .organic-svg  {fill: ' . $color . ' !important}';
     drupal_add_css($css, 'inline');
