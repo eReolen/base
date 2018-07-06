@@ -116,6 +116,16 @@ $z-index-cover-base: 1;
     @include media($tablet-l) {
       padding: 20px 0;
     }
+
+    .article__cover__image {
+      position: absolute;
+      width: 100%;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
   }
 
   &--breol_section {
@@ -128,6 +138,7 @@ $z-index-cover-base: 1;
       background: none;
       height: auto;
     }
+
   }
 
   img {

@@ -29,7 +29,7 @@
           <?php print($body); ?>
         <?php endif; ?>
       </div>
-      <div>
+      <div class="article__cover__image">
         <?php if (!empty($image)) : ?>
           <?php print $image; ?>
         <?php endif; ?>
