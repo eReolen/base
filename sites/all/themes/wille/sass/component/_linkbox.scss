@@ -24,17 +24,35 @@
     @include media($tablet-p) {
       height: 250px;
     }
-
-    &::before {
-      @include icon('.icon-arrow-right-funny');
-
-      position: absolute;
-      right: $mobile-margin;
-
-      font-size: 20px;
-      z-index: 3;
-    }
   }
+}
+
+.linkbox__external-icon {
+  &::before {
+    @include icon('.icon-link');
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    z-index: 3;
+  }
+
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  top: $mobile-margin;
+  right: $mobile-margin;
+
+  // This is just a fallback color, incase the inline
+  // styling is not set.
+  background-color: $color-red;
+  border-radius: 50%;
+  z-index: 4;
 }
 
 .linkbox__header {
@@ -56,6 +74,18 @@
 
   .two-elements--secondary & {
     text-align: center;
+  }
+
+  .two-elements--primary & {
+    &::before {
+      @include icon('.icon-arrow-right-funny');
+
+      position: absolute;
+      right: 0;
+
+      font-size: 20px;
+      z-index: 3;
+    }
   }
 }
 

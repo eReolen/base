@@ -76,7 +76,10 @@
 }
 
 .reader__back-button {
-  @include icon('.icon-arrow-left-funny');
+  &::before {
+    @include icon('.icon-arrow-left-funny');
+  }
+
   position: absolute;
   text-decoration: none;
   color: $black;
