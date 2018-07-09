@@ -213,6 +213,7 @@ $carousel-outer-padding: 0 30px;
 .ding-carousel {
   h2.carousel__header {
     color: $black;
+    font-family: $font-regular;
 
     @include media($tablet-l) {
       font-size: em(20, $base-font-size);
