@@ -3,7 +3,7 @@
  */
 @each $key, $value in $ego_icons {
   .icon-#{$key} {
-    &:before {
+    &::before {
       $value: unquote($value);
 
       content: #{$value};
