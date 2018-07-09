@@ -315,3 +315,10 @@ function breol_base_update_7140() {
   features_revert_module('breol_carousel_paragraph');
   features_revert_module('breol_link_paragraph');
 }
+
+/**
+ * Translate "see all".
+ */
+function breol_base_update_7141() {
+  reol_base_locale_add_translation('See all', 'Se alle');
+}

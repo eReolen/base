@@ -15,9 +15,7 @@
     </div>
     </div>
   </div>
-  <div class="organic-element organic-element--page-news">
-    <?php print $organic_svg ?>
-  </div>
+  <div class="organic-element organic-element--page-news"></div>
   <div class="news-page__content"><?php print render($content); ?></div>
   <div class="news-page__pager"><?php print render($pager); ?></div>
 </div>

@@ -59,6 +59,36 @@ $carousel-outer-padding: 0 30px;
       padding: $mobile-margin 0;
       margin: 0 $mobile-margin;
     }
+
+    .carousel__more-link {
+      display: block;
+      float: right;
+
+      a {
+        color: $black;
+        font-family: $font-bold;
+        font-size: 14px;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      &::after {
+        @include icon('.icon-arrow-right-funny');
+        position: relative;
+        // Try to make the stem of the arrow line up with the text.
+        top: 4px;
+      }
+
+      @include media($tablet-l) {
+        a {
+          font-size: 10px;
+        }
+
+        &::after {
+          font-size: 14px;
+        }
+      }
+    }
   }
 }
 
@@ -182,11 +212,10 @@ $carousel-outer-padding: 0 30px;
 // override .article h2.
 .ding-carousel {
   h2.carousel__header {
-    font-family: $font-bold;
-    font-size: 20px;
+    color: $black;
 
     @include media($tablet-l) {
-      font-size: 16px;
+      font-size: em(20, $base-font-size);
     }
   }
 }
@@ -220,8 +249,12 @@ $carousel-outer-padding: 0 30px;
   padding-top: $mobile-margin;
   padding-bottom: $mobile-margin * 2;
 
-  .carousel__header {
+  h2.carousel__header {
     color: #fff;
+
+    .carousel__more-link a {
+      color: #fff;
+    }
   }
 
   .field-name-ting-title h2,

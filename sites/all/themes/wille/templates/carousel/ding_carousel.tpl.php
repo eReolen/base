@@ -19,6 +19,11 @@
   >
   <?php if (!empty($title)): ?>
   <h2 class="carousel__header">
+      <?php if (!empty($carousel['#more_link'])): ?>
+        <span class="carousel__more-link">
+          <?php print($carousel['#more_link']); ?>
+        </span>
+      <?php endif; ?>
     <?php print($title); ?>
   </h2>
   <?php endif; ?>
