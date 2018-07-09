@@ -87,7 +87,7 @@
 
       .throbber {
         &::before {
-          @include icon('.icon-spinner');
+          @include icon('spinner');
         }
 
         position: absolute;
@@ -133,35 +133,35 @@
     // Menu-item: "E-bøger".
     &:nth-child(1) {
       &:before {
-        @include icon('.icon-e-books');
+        @include icon('e-books');
       }
     }
 
     // Menu-item: "Netlydbøger".
     &:nth-child(2) {
       &:before {
-        @include icon('.icon-audio-books');
+        @include icon('audio-books');
       }
     }
 
     // Menu-item: "Login".
     &:nth-child(3) {
       &:before {
-        @include icon('.icon-profile');
+        @include icon('profile');
       }
     }
 
     // Menu-item: "Hjælp".
     &:nth-child(4) {
       &:before {
-        @include icon('.icon-help');
+        @include icon('help');
       }
     }
 
     // Menu-item: "Søgning".
     &:nth-child(5) {
       &:before {
-        @include icon('.icon-search');
+        @include icon('search');
       }
     }
   }

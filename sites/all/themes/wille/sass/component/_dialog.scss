@@ -180,7 +180,7 @@
 
   .ui-icon-closethick {
     &::before {
-      @include icon('.icon-close-b');
+      @include icon('close-b');
     }
 
     // Resetting.

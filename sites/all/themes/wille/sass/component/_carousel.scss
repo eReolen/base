@@ -73,7 +73,7 @@ $carousel-outer-padding: 0 30px;
       }
 
       &::after {
-        @include icon('.icon-arrow-right-funny');
+        @include icon('arrow-right-funny');
         position: relative;
         // Try to make the stem of the arrow line up with the text.
         top: 4px;

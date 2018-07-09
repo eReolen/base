@@ -77,7 +77,7 @@
 
 .reader__back-button {
   &::before {
-    @include icon('.icon-arrow-left-funny');
+    @include icon('arrow-left-funny');
   }
 
   position: absolute;
