@@ -194,6 +194,10 @@ $z-index-cover-base: 1;
     }
   }
 
+  &--breol_subject {
+    color: #fff;
+  }
+
   &--breol_section {
     @include media($phone) {
       padding: 15px;
