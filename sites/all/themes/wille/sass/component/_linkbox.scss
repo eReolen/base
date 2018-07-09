@@ -3,8 +3,9 @@
 
   position: relative;
   display: flex;
-  height: 380px;
-  padding: $mobile-margin ($mobile-margin * 2);
+  height: 100%;
+  min-height: 380px;
+  padding: $mobile-margin ($mobile-margin / 2);
   overflow: hidden;
 
   box-sizing: border-box;
@@ -16,13 +17,13 @@
   flex-direction: column;
 
   @include media($tablet-p) {
-    height: 300px;
+    min-height: 300px;
   }
 
   // The arrow should only show up on primary boxes.
   .two-elements--primary & {
     @include media($tablet-p) {
-      height: 250px;
+      min-height: 250px;
     }
   }
 }
@@ -70,9 +71,12 @@
 
 .linkbox__content {
   position: relative;
+  width: 100%;
   z-index: 2;
 
   .two-elements--secondary & {
+    padding-top: $mobile-margin;
+
     text-align: center;
   }
 
@@ -85,6 +89,13 @@
 
       font-size: 20px;
       z-index: 3;
+    }
+
+    // We're only interested in the inline background color
+    // if the element is secondary, so we'll have to disable
+    // it using [style] and !important.
+    &[style] {
+      background-color: transparent !important;
     }
   }
 }
