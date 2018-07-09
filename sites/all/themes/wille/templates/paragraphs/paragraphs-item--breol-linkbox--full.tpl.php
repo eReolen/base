@@ -10,7 +10,7 @@
   <?php if ($external): ?>
     <i class="linkbox__external-icon" <?php print $attributes; ?>></i>
   <?php endif; ?>
-  <div class="linkbox__content"<?php print $content_attributes; ?>>
+  <div class="linkbox__content"<?php print $content_attributes; ?> <?php print $attributes; ?>>
     <?php if (!empty($header)): ?>
       <h3 class="linkbox__header"><?php print $header; ?></h3>
     <?php endif; ?>
