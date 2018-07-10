@@ -44,7 +44,7 @@
       }
 
       &:before {
-        @include icon('.icon-lock');
+        @include icon('lock');
         margin-right: 5px;
         font-size: 28px;
         top: 5px;

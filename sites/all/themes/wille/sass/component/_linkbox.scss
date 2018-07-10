@@ -54,7 +54,7 @@
 
   .two-elements--primary & {
     &::before {
-      @include icon('.icon-arrow-right-funny');
+      @include icon('arrow-right-funny');
 
       position: absolute;
       right: 0;

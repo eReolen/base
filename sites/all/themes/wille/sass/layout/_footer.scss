@@ -99,7 +99,7 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     margin-bottom: em(30, $base-font-size);
 
     &:before {
-      @include icon('.icon-arrow-right');
+      @include icon('arrow-right');
       float: right;
       transform: rotate(.25turn);
       @include transition(all 300ms ease-out);

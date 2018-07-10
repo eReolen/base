@@ -1,125 +1,16 @@
 /**
  * Custom icomoon font.
  */
+@each $key, $value in $ego_icons {
+  .icon-#{$key} {
+    &::before {
+      $value: unquote($value);
+
+      content: #{$value};
+    }
+  }
+}
 
 [class^="icon-"], [class*=" icon-"] {
-    @extend %icon;
-}
-
-.icon-logo {
-    content: '\e924';
-}
-.icon-e-books {
-    content: '\e900';
-}
-.icon-help {
-    content: '\e901';
-}
-.icon-close {
-    content: '\e902';
-}
-.icon-menu {
-    content: '\e903';
-}
-.icon-audio-books {
-    content: '\e904';
-}
-.icon-news {
-    content: '\e905';
-}
-.icon-profile {
-    content: '\e906';
-}
-.icon-search {
-    content: '\e907';
-}
-.icon-attention {
-    content: '\e908';
-}
-.icon-check {
-    content: '\e909';
-}
-.icon-e-book {
-    content: '\e90a';
-}
-.icon-previous {
-    content: '\e90b';
-}
-.icon-grid-view {
-    content: '\e90c';
-}
-.icon-heart {
-    content: '\e90d';
-}
-.icon-reading-aloud {
-    content: '\e90e';
-}
-.icon-camera {
-    content: '\e90f';
-}
-.icon-close-b {
-    content: '\e910';
-}
-.icon-easy-reader {
-    content: '\e911';
-}
-.icon-list-view {
-    content: '\e912';
-}
-.icon-lock {
-    content: '\e913';
-}
-.icon-audio-sound {
-    content: '\e914';
-}
-.icon-audio-no-sound {
-    content: '\e915';
-}
-.icon-audio-book {
-    content: '\e916';
-}
-.icon-audio-next {
-    content: '\e917';
-}
-.icon-pause {
-    content: '\e918';
-}
-.icon-arrow-right {
-    content: '\e919';
-}
-.icon-arrow-left {
-    content: '\e91a';
-}
-.icon-arrow-right-funny {
-    content: '\e91b';
-}
-.icon-arrow-left-funny {
-    content: '\e91c';
-}
-.icon-play {
-    content: '\e91d';
-}
-.icon-search-b {
-    content: '\e91e';
-}
-.icon-fast-forward-right-b {
-    content: '\e91f';
-}
-.icon-fast-forward-left-b {
-    content: '\e920';
-}
-.icon-fast-forward-right {
-    content: '\e921';
-}
-.icon-fast-forward-left {
-    content: '\e922';
-}
-.icon-Star {
-    content: '\e923';
-}
-.icon-spinner {
-    content: '\e97a';
-}
-.icon-link {
-    content: '\e926';
+  @extend %icon;
 }
