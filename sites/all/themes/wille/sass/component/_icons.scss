@@ -4,9 +4,7 @@
 @each $key, $value in $ego_icons {
   .icon-#{$key} {
     &::before {
-      $value: unquote($value);
-
-      content: #{$value};
+      content: icon-encode($value);
     }
   }
 }

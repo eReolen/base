@@ -47,15 +47,20 @@
   height: 0;
 }
 
+// A new SCSS update caused an issue with our icons being
+// wrongly encoded when we just wanted the strings.
+// This hack function helps with that.
+// More info here: https://github.com/sass/sass/issues/659
+@function icon-encode($character){
+  @return unquote('\'') + unquote(str-insert($character, '\\', 1)) + unquote('\'');
+}
+
 // Mixin for including icons.
 @mixin icon($icon){
   @extend %icon;
 
-  $value: unquote(map-get($ego_icons, $icon));
-
-  $value: unquote($value);
-
-  $value: #{$value};
+  //content: unquote(map-get($ego_icons, $icon));
+  content: icon-encode(map-get($ego_icons, $icon));
 }
 
 @mixin word-wrap() {

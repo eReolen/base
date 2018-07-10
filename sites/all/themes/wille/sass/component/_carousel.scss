@@ -74,9 +74,11 @@ $carousel-outer-padding: 0 30px;
 
       &::after {
         @include icon('arrow-right-funny');
+
         position: relative;
         // Try to make the stem of the arrow line up with the text.
-        top: 4px;
+        top: 1px;
+        font-size: 15px;
       }
 
       @include media($tablet-l) {

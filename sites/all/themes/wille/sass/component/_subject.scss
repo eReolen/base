@@ -8,13 +8,9 @@
 
   .ding-carousel-item {
     margin: 0;
-    width: 16.66%;
+    width: 20%;
     height: auto;
     min-width: auto;
-
-    @include media($tablet-p) {
-      width: 20%;
-    }
 
     @include media($phone) {
       width: 33.33%;
