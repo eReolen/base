@@ -204,7 +204,7 @@
 
   h2 {
     &:before {
-      @include icon('.icon-arrow-right');
+      @include icon('arrow-right');
       position: absolute;
       right: 30px;
       font-size: 16px;

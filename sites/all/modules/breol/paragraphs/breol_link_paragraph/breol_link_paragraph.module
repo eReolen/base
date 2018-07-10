@@ -23,13 +23,8 @@ function breol_link_paragraph_preprocess_entity(&$variables) {
 
       $variables['icons'] = '';
       $link = $wrapper->field_breol_linkbox_link->value();
-      $variables['external'] = FALSE;
       if (isset($link['url'])) {
         $variables['href'] = $link['url'];
-
-        if (!preg_match('{^' . preg_quote($GLOBALS['base_url']) . '}', $link['url'])) {
-          $variables['external'] = TRUE;
-        }
       }
 
       $image = $wrapper->field_breol_linkbox_image->value();

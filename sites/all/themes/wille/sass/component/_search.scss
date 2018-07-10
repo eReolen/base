@@ -332,7 +332,7 @@
       }
 
       &:before {
-        @include icon('.icon-arrow-right');
+        @include icon('arrow-right');
         float: right;
         -webkit-transform: rotate(0);
         transform: rotate(0);
@@ -456,7 +456,7 @@
     position: relative;
 
     &:before {
-      @include icon('.icon-search');
+      @include icon('search');
       position: absolute;
       right: 0;
       font-size: 180px;
@@ -677,7 +677,7 @@
   float: right;
 
   &:before {
-    @include icon('.icon-arrow-right');
+    @include icon('arrow-right');
     @include transition(all 300ms ease-out);
     transform: rotate(.25turn);
     float: right;
