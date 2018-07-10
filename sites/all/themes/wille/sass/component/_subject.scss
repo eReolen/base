@@ -2,18 +2,28 @@
   max-width: 1180px;
   margin: 0 auto;
 
+  .ding-carousel {
+    padding: 0;
+
+    // We need to size the icons by height (the width varies too
+    // widely), so override the carousel default width setting.
+    li {
+      width: auto;
+      min-width: auto;
+    }
+  }
+
   .ding-carousel-item {
-    width: 16.66%;
     margin: 0;
+    height: 280px;
 
     @include media($tablet-p) {
-      width: 25%;
+      height: 190px;
     }
 
     @include media($phone-p) {
-      width: 33.33%;
+      height: 120px;
     }
-
   }
 
   .carousel {
@@ -27,10 +37,19 @@
     margin: 0;
 
     img {
-      width: 100%;
-      max-width: 180px;
+      height: 200px;
+      width: auto;
       margin: 0 auto;
       transition: all .3s ease-out;
+
+      @include media($tablet-p) {
+        height: 140px;
+      }
+
+      @include media($phone-p) {
+        height: 80px;
+      }
+
     }
 
     .is-desktop &:nth-child(odd):hover {
@@ -59,7 +78,7 @@
 
   .subject-menu__link {
     position: absolute;
-    width: 100%;
+    width: auto;
     height: 100%;
     top: 0;
     right: 0;
@@ -78,10 +97,6 @@
 // To keep element from blinking while loading.
 .pane-subject-menu {
   min-height: 228px;
-
-  @include media($tablet-l) {
-    min-height: 1px;
-  }
 
   @include media($phone) {
     min-height: 1px;
