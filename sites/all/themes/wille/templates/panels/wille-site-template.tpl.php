@@ -41,8 +41,6 @@
     </div>
   </div>
 
-  <div class="organic-element organic-element--content"></div>
-
   <div class="main-content-wrapper">
     <div class="main-content-wrapper__inner">
       <?php print render($content['content']); ?>
