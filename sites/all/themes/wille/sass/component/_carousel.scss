@@ -52,6 +52,10 @@ $carousel-outer-padding: 0 30px;
     padding: 0 ($mobile-margin / 2);
   }
 
+  .carousel-wrapper {
+    overflow: hidden;
+  }
+
   .carousel__header {
     padding: ($mobile-margin * 2) 0;
 
@@ -121,24 +125,16 @@ $carousel-outer-padding: 0 30px;
 
 // New Swiper carousel.
 .ding-carousel {
+  // Leave room for the buttons.
+  padding: 0 100px;
+  overflow: hidden;
+
+  // When the buttons aren't shown, use the full width.
   @include media($tablet-l) {
-    padding: 0 40px;
-    box-sizing: border-box;
+    padding: 0;
   }
 
   position: relative;
-
-  .carousel__header,
-  .carousel-wrapper {
-    // Leave room for the buttons.
-    margin: 0 100px;
-    overflow: hidden;
-
-    // When the buttons aren't shown, use the full width.
-    @include media($tablet-l) {
-      margin: 0;
-    }
-  }
 
   ul {
     padding: 0;

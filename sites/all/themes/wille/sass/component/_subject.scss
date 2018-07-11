@@ -3,9 +3,12 @@
   margin: 0 auto;
 
   .ding-carousel {
-    padding: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 
     @include media($tablet-l) {
+      padding: 0 50px;
+
       .button-prev,
       .button-next {
         display: block;
@@ -17,10 +20,6 @@
 
       .button-next {
         right: $mobile-margin;
-      }
-
-      .carousel-wrapper {
-        margin: 0 50px;
       }
     }
   }
