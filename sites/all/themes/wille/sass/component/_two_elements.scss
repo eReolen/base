@@ -8,6 +8,8 @@
 
   @include media($tablet-p) {
     display: block;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   @include media($bigscreen) {

@@ -3,3 +3,14 @@
 
   z-index: 2;
 }
+
+
+.two-elements {
+  .paragraphs-item-video {
+    height: 100%;
+
+    div {
+      height: 100%;
+    }
+  }
+}

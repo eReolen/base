@@ -5,7 +5,7 @@
   display: flex;
   height: 100%;
   min-height: 380px;
-  padding: $mobile-margin ($mobile-margin / 2);
+  padding: $mobile-margin;
   overflow: hidden;
 
   box-sizing: border-box;
@@ -31,10 +31,11 @@
 .linkbox__header {
   margin-bottom: 10px;
 
-  font-size: 90%;
+  font-size: 14px;
   font-weight: bold;
-  line-height: 120%;
+  font-family: $font-mikado;
   text-transform: uppercase;
+  line-height: 120%;
 
   &::after {
     content: ':';
@@ -43,13 +44,15 @@
 
 .linkbox__content {
   position: relative;
-  width: 100%;
   z-index: 2;
 
   .two-elements--secondary & {
     padding-top: $mobile-margin;
+    padding-left: $mobile-margin;
+    padding-right: $mobile-margin;
 
-    text-align: center;
+    margin-left: -$mobile-margin;
+    margin-right: -$mobile-margin;
   }
 
   .two-elements--primary & {
