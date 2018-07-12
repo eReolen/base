@@ -2,9 +2,7 @@
 .site-header__inner {
   @include outer-container;
 
-  @include media($tablet-l) {
-    padding: 0 15px;
-  }
+  padding: 0 $mobile-margin;
 }
 
 // Main content.
