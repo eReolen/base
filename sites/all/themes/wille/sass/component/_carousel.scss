@@ -296,11 +296,11 @@ $carousel-outer-padding: 0 30px;
 // Inspiration pages are full width, limit the content.
 .paragraphs-item-material-carousel {
   @include media($tablet-p) {
-    margin-bottom: $mobile-margin / 2;
+    margin-bottom: $mobile-margin;
   }
 
   margin: 0;
-  margin-bottom: $mobile-margin * 5;
+  margin-bottom: $mobile-margin * 2;
 
   .content {
     @include outer-container;
