@@ -242,4 +242,26 @@
     }
   }
 
+  /**
+   * Override default auto-complete submit behavior.
+   *
+   * Override ting_search overriding default auto-complete behavior
+   * that prevents form submit.
+   *
+   * Fix ajax error on mobile Safari.
+   */
+  Drupal.autocompleteSubmit = function () {
+    // On mobile Safari the autocomplete AJAX request gets torn down
+    // before Drupals event handler on beforeunload and pagehide is
+    // triggered, so the logic to suppress an error popup is non
+    // triggered. So, when we submit the form, set the variable it
+    // checks for.
+    Drupal.beforeUnloadCalled = true;
+    $('#autocomplete').each(function () {
+      this.owner.hidePopup();
+    });
+
+    return true;
+  };
+
 })(jQuery);
