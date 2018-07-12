@@ -3,7 +3,7 @@
   @include outer-container;
 
   display: flex;
-  padding: $mobile-margin;
+  padding: 0 $mobile-margin ($mobile-margin * 2);
   box-sizing: border-box;
 
   @include media($tablet-p) {

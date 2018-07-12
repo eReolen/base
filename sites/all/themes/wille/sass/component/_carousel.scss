@@ -33,7 +33,7 @@ $carousel-outer-padding: 0 30px;
     vertical-align: top;
     position: relative;
     height: auto;
-    margin: 0 (-$mobile-margin / 2) $mobile-margin;
+    margin-bottom: $mobile-margin;
     padding: $carousel-outer-padding;
 
     @include media($phone) {
@@ -49,7 +49,13 @@ $carousel-outer-padding: 0 30px;
     width: 20%;
     min-width: 200px;
     box-sizing: border-box;
-    padding: 0 ($mobile-margin / 2);
+    padding-left: $mobile-margin;
+  }
+
+  .carousel {
+    @include media($screen) {
+      margin-left: -$mobile-margin;
+    }
   }
 
   .carousel-wrapper {
@@ -57,11 +63,16 @@ $carousel-outer-padding: 0 30px;
   }
 
   .carousel__header {
-    padding: ($mobile-margin * 2) 0;
+    padding: ($mobile-margin * 2) 0 $mobile-margin;
 
     @include media($phone) {
       padding: $mobile-margin 0;
       margin: 0 $mobile-margin;
+    }
+
+    @include media($tablet-l) {
+      padding-left: $mobile-margin;
+      padding-right: $mobile-margin;
     }
 
     .carousel__more-link {
@@ -129,7 +140,6 @@ $carousel-outer-padding: 0 30px;
   padding: 0 100px;
   overflow: hidden;
 
-  // When the buttons aren't shown, use the full width.
   @include media($tablet-l) {
     padding: 0;
   }
@@ -161,11 +171,11 @@ $carousel-outer-padding: 0 30px;
 
   .button-prev {
     background-image: url('../svg/arrow_left.svg');
-    left: 5px;
+    left: $mobile-margin * 2;
   }
   .button-next {
     background-image: url('../svg/arrow_right.svg');
-    right: 5px;
+    right: $mobile-margin * 2;
   }
 }
 
@@ -273,10 +283,12 @@ $carousel-outer-padding: 0 30px;
 
   .button-prev {
     background-image: url('../svg/round_arrow_left.svg');
+    left: 5px;
   }
 
   .button-next {
     background-image: url('../svg/round_arrow_right.svg');
+    right: 5px;
   }
 
 }
@@ -284,10 +296,11 @@ $carousel-outer-padding: 0 30px;
 // Inspiration pages are full width, limit the content.
 .paragraphs-item-material-carousel {
   @include media($tablet-p) {
-    margin: ($mobile-margin / 2) 0;
+    margin-bottom: $mobile-margin / 2;
   }
 
-  margin: $mobile-margin 0;
+  margin: 0;
+  margin-bottom: $mobile-margin * 5;
 
   .content {
     @include outer-container;
