@@ -56,6 +56,10 @@ body:not(.node-type-inspiration) .main-content-wrapper__inner {
   padding: 0px;
   line-height: 0;
 
+  .node-type-inspiration & {
+    display: none;
+  }
+
   &--user {
     .organic-svg {
       fill: white;
