@@ -171,11 +171,11 @@ $carousel-outer-padding: 0 30px;
 
   .button-prev {
     background-image: url('../svg/arrow_left.svg');
-    left: $mobile-margin * 2;
+    left: $mobile-margin;
   }
   .button-next {
     background-image: url('../svg/arrow_right.svg');
-    right: $mobile-margin * 2;
+    right: $mobile-margin;
   }
 }
 
