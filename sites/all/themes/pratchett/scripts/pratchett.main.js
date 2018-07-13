@@ -7,6 +7,16 @@
 
   'use strict';
 
+  // Disable AJAX request error popup. On mobile Safari the
+  // autocomplete AJAX request gets torn down before Drupals event
+  // handler on beforeunload and pagehide is triggered, so the logic
+  // to suppress an error popup is non triggered. Even the form submit
+  // handler can be called after the AJAX request is killed, so
+  // setting this there doesn't help. As end users don't understand
+  // the popup anyway, we completely disable it.
+  // See misc/drupal.js to how this works.
+  Drupal.beforeUnloadCalled = true;
+
   // Scroll to top when opening a dialog. Dialogs on this site can get
   // pretty big - e.g. when viewing a reading sample. This is
   // furthermore problematic as scrolling is disabled. In _popup.scss
@@ -241,27 +251,5 @@
       return false;
     }
   }
-
-  /**
-   * Override default auto-complete submit behavior.
-   *
-   * Override ting_search overriding default auto-complete behavior
-   * that prevents form submit.
-   *
-   * Fix ajax error on mobile Safari.
-   */
-  Drupal.autocompleteSubmit = function () {
-    // On mobile Safari the autocomplete AJAX request gets torn down
-    // before Drupals event handler on beforeunload and pagehide is
-    // triggered, so the logic to suppress an error popup is non
-    // triggered. So, when we submit the form, set the variable it
-    // checks for.
-    Drupal.beforeUnloadCalled = true;
-    $('#autocomplete').each(function () {
-      this.owner.hidePopup();
-    });
-
-    return true;
-  };
 
 })(jQuery);
