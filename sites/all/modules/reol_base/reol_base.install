@@ -507,3 +507,10 @@ function reol_base_update_7148() {
     ->condition('name', array('google_analytics', 'google_tag'))
     ->execute();
 }
+
+/**
+ * Revert ding_ting_frontend.
+ */
+function reol_base_update_7149() {
+  features_revert_module('ding_ting_frontend');
+}

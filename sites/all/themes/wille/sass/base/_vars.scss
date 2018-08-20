@@ -83,7 +83,6 @@ $base-font-size: 14px;
  * Breakpoints.
  */
 
-
 $phone-p: new-breakpoint(max-width 480px);
 $phone-l: new-breakpoint(max-height 375px);
 $phone: new-breakpoint(max-width 667px);
@@ -94,3 +93,59 @@ $bigscreen: new-breakpoint(min-width 1200px);
 
 // z-index's
 $z-index-menu: 2;
+
+// Let's introduce some base sizes.
+
+// Side margins on content on mobile.
+$mobile-margin: 20px;
+
+// New colors. Names for non-obvious colors from
+// http://chir.ag/projects/name-that-color
+$color-green: #7bb93a;
+$color-blue: #3174cf;
+$color-cerulean: #0aa9c1;
+$color-purple: #a729dc;
+$color-orange: #ff7800;
+$color-red: #d50049;
+
+$ego_icons: (
+  logo: 'e924',
+  e-books: 'e900',
+  help: 'e901',
+  close: 'e902',
+  menu: 'e903',
+  audio-books: 'e904',
+  news: 'e905',
+  profile: 'e906',
+  search: 'e907',
+  attention: 'e908',
+  check: 'e909',
+  e-book: 'e90a',
+  previous: 'e90b',
+  grid-view: 'e90c',
+  heart: 'e90d',
+  reading-aloud: 'e90e',
+  camera: 'e90f',
+  close-b: 'e910',
+  easy-reader: 'e911',
+  list-view: 'e912',
+  lock: 'e913',
+  audio-sound: 'e914',
+  audio-no-sound: 'e915',
+  audio-book: 'e916',
+  audio-next: 'e917',
+  pause: 'e918',
+  arrow-right: 'e919',
+  arrow-left: 'e91a',
+  arrow-right-funny: 'e91b',
+  arrow-left-funny: 'e91c',
+  play: 'e91d',
+  search-b: 'e91e',
+  fast-forward-right-b: 'e91f',
+  fast-forward-left-b: 'e920',
+  fast-forward-right: 'e921',
+  fast-forward-left: 'e922',
+  Star: 'e923',
+  spinner: 'e925',
+  link: 'e926',
+);

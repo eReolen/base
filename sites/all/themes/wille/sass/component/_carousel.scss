@@ -11,13 +11,29 @@
 
 $carousel-outer-padding: 0 30px;
 
+.ding-carousel__wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.ding-carousel__background {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: -9999px;
+  right: -9999px;
+}
+
 .ding-carousel {
+  color: #fff;
+
   ul {
     display: flex;
     vertical-align: top;
     position: relative;
     height: auto;
-    margin: 0 0 25px 0;
+    margin-bottom: $mobile-margin;
     padding: $carousel-outer-padding;
 
     @include media($phone) {
@@ -29,22 +45,66 @@ $carousel-outer-padding: 0 30px;
   li {
     display: inline-block;
     flex: none;
-    text-align: left;
-    margin-bottom: 1em;
-    margin-right: 0;
-    width: 200px;
+    margin: 0;
+    width: 20%;
+    min-width: 200px;
+    box-sizing: border-box;
+    padding-left: $mobile-margin;
+  }
 
-    @include media($phone) {
-      margin-right: 5px;
+  .carousel {
+    @include media($screen) {
+      margin-left: -$mobile-margin;
     }
   }
 
+  .carousel-wrapper {
+    overflow: hidden;
+  }
+
   .carousel__header {
-    padding: 0 30px 30px 33px;
+    padding: ($mobile-margin * 2) 0 $mobile-margin;
 
     @include media($phone) {
-      padding: 0;
-      margin-bottom: 20px;
+      padding: $mobile-margin 0;
+      margin: 0 $mobile-margin;
+    }
+
+    @include media($tablet-l) {
+      padding-left: $mobile-margin;
+      padding-right: $mobile-margin;
+    }
+
+    .carousel__more-link {
+      display: block;
+      float: right;
+
+      a {
+        color: $black;
+        font-family: $font-bold;
+        font-size: 14px;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      &::after {
+        @include icon('arrow-right-funny');
+
+        position: relative;
+        // Try to make the stem of the arrow line up with the text.
+        top: 1px;
+        font-size: 15px;
+      }
+
+      @include media($tablet-l) {
+        a {
+          font-size: 10px;
+        }
+
+        &::after {
+          font-size: 14px;
+        }
+      }
     }
   }
 }
@@ -76,12 +136,15 @@ $carousel-outer-padding: 0 30px;
 
 // New Swiper carousel.
 .ding-carousel {
-  position: relative;
+  // Leave room for the buttons.
+  padding: 0 100px;
+  overflow: hidden;
 
-  .carousel-wrapper {
-    margin: 0 30px;
-    overflow: hidden;
+  @include media($tablet-l) {
+    padding: 0;
   }
+
+  position: relative;
 
   ul {
     padding: 0;
@@ -100,18 +163,24 @@ $carousel-outer-padding: 0 30px;
     top: 40%;
     margin: auto;
     cursor: pointer;
+
+    @include media($tablet-l) {
+      display: none;
+    }
   }
 
   .button-prev {
     background-image: url('../svg/arrow_left.svg');
-    left: 5px;
+    left: 0;
   }
   .button-next {
     background-image: url('../svg/arrow_right.svg');
-    right: 5px;
+    background-position-x: right;
+    right: 0;
   }
 }
 
+// Carousel item rendered as carousel_item
 .carousel-item-title {
   color: $title-color;
   text-decoration: none;
@@ -146,4 +215,96 @@ $carousel-outer-padding: 0 30px;
 
 .carousel-item-link {
   text-decoration: none;
+}
+
+// Carousel items rendered as entity. Excessive selector in order to
+// override .article h2.
+.ding-carousel {
+  h2.carousel__header {
+    color: $black;
+    font-family: $font-regular;
+
+    @include media($tablet-l) {
+      font-size: em(20, $base-font-size);
+    }
+  }
+}
+
+.ding-carousel-item {
+  .field-name-ting-title h2 {
+    color: $title-color;
+    text-decoration: none;
+    font-family: $font-regular;
+    line-height: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
+    // Reset h2 size.
+    font-size: 12px;
+
+    // One line - word wrap with ellipsis.
+    @include word-wrap();
+  }
+
+  .field-name-ting-author {
+    // Override _search.scss.
+    font-family: $font-light;
+    font-size: 10px;
+  }
+}
+
+// Change color of text and arrows on colored carousels.
+.material-carousel-colored {
+  padding-top: 0;
+  padding-bottom: $mobile-margin;
+
+  h2.carousel__header {
+    color: #fff;
+
+    .carousel__more-link a {
+      color: #fff;
+    }
+  }
+
+  .field-name-ting-title h2,
+  .field-name-ting-author {
+    color: #fff;
+  }
+
+  .button-prev,
+  .button-next {
+    width: 70px;
+    height: 70px;
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+
+  .button-prev {
+    background-image: url('../svg/round_arrow_left.svg');
+    left: 0;
+  }
+
+  .button-next {
+    background-image: url('../svg/round_arrow_right.svg');
+    background-position-x: right;
+    right: 0;
+  }
+
+}
+
+// Inspiration pages are full width, limit the content.
+.paragraphs-item-material-carousel {
+  @include media($tablet-p) {
+    margin-bottom: $mobile-margin;
+  }
+
+  margin: 0;
+  margin-bottom: $mobile-margin * 2;
+
+  .content {
+    @include outer-container;
+  }
 }

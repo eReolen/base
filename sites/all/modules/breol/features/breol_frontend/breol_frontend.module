@@ -93,4 +93,28 @@ function breol_frontend_field_default_field_instances_alter(&$fields) {
   if (isset($fields['ting_object-ting_object-ting_subjects'])) {
     $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['type'] = 'hidden';
   }
+
+  // Use a formatter that doesn't make the author a link.
+  if (isset($fields['ting_object-ting_object-ting_author'])) {
+    $fields['ting_object-ting_object-ting_author']['display']['default']['module'] = 'reol_base';
+    $fields['ting_object-ting_object-ting_author']['display']['default']['type'] = 'reol_base_author_plain';
+    $fields['ting_object-ting_object-ting_author']['display']['default']['label'] = 'hidden';
+  }
+
+  // Set image style on compact covers.
+  if (isset($fields['ting_object-ting_object-ting_cover'])) {
+    $fields['ting_object-ting_object-ting_cover']['display']['compact']['settings']['image_style'] = 'breol_cover_base';
+  }
+}
+
+/**
+ * Implements hook_field_default_field_bases_alter().
+ */
+function breol_frontend_field_default_field_bases_alter(&$fields) {
+  // Adjust video paragraphs field to use our video content type.
+  if (isset($fields['field_video_node'])) {
+    $fields['field_video_node']['settings']['handler_settings']['target_bundles'] = array(
+      'breol_video' => 'breol_video',
+    );
+  }
 }

@@ -10,7 +10,7 @@
 @mixin button($color, $useIcon: true){
   text-decoration: none;
   background: $color;
-  border-radius: 40px;
+  border-radius: 10px;
   color: white;
   min-width: 250px;
   display: inline-block;
@@ -29,9 +29,9 @@
     padding: 15px 42px 15px 22px;
 
     &:before {
-      @include icon('.icon-arrow-right-funny');
+      @include icon('arrow-right-funny');
       float: right;
-      right: 17px;
+      right: 25px;
       position: absolute;
     }
   }
@@ -47,10 +47,20 @@
   height: 0;
 }
 
+// A new SCSS update caused an issue with our icons being
+// wrongly encoded when we just wanted the strings.
+// This hack function helps with that.
+// More info here: https://github.com/sass/sass/issues/659
+@function icon-encode($character){
+  @return unquote('\'') + unquote(str-insert($character, '\\', 1)) + unquote('\'');
+}
+
 // Mixin for including icons.
-@mixin icon($class){
+@mixin icon($icon){
   @extend %icon;
-  @extend #{$class}
+
+  //content: unquote(map-get($ego_icons, $icon));
+  content: icon-encode(map-get($ego_icons, $icon));
 }
 
 @mixin word-wrap() {
@@ -73,5 +83,13 @@
 
   &:before {
     content: " ";
+  }
+}
+
+@mixin rounded-box() {
+  border-radius: 20px;
+
+  @include media($phone) {
+    border-radius: 10px;
   }
 }

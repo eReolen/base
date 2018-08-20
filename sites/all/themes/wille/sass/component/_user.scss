@@ -21,8 +21,10 @@
 
   &__content {
     z-index: 4;
-    @extend .article__cover__content;
     position: relative;
+    margin: auto;
+
+    @extend .article__cover__content;
   }
 
   &__logout {
@@ -44,7 +46,7 @@
       }
 
       &:before {
-        @include icon('.icon-lock');
+        @include icon('lock');
         margin-right: 5px;
         font-size: 28px;
         top: 5px;

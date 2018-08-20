@@ -1273,15 +1273,23 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   // Compact display mode.
   // Use a formatter that doesn't make the author a link.
   if (isset($fields['ting_object-ting_object-ting_author'])) {
-    $fields['ting_object-ting_object-ting_author']['display']['default']['module'] = 'reol_base';
-    $fields['ting_object-ting_object-ting_author']['display']['default']['type'] = 'reol_base_author_plain';
-    $fields['ting_object-ting_object-ting_author']['display']['default']['label'] = 'hidden';
+    $fields['ting_object-ting_object-ting_author']['display']['compact']['module'] = 'reol_base';
+    $fields['ting_object-ting_object-ting_author']['display']['compact']['type'] = 'reol_base_author_plain';
+    $fields['ting_object-ting_object-ting_author']['display']['compact']['label'] = 'hidden';
+  }
+
+  // Remove label from cover (the correct image style is set in
+  // ereol_frontend/breol_frontend).
+  if (isset($fields['ting_object-ting_object-ting_cover'])) {
+    $fields['ting_object-ting_object-ting_cover']['display']['compact']['label'] = 'hidden';
   }
 
   // Remove type prefix.
   if (isset($fields['ting_object-ting_object-ting_title'])) {
     $fields['ting_object-ting_object-ting_title']['display']['default']['settings']['prefix_type'] = 'no';
     $fields['ting_object-ting_object-ting_title']['display']['default']['label'] = 'hidden';
+    $fields['ting_object-ting_object-ting_title']['display']['compact']['settings']['prefix_type'] = 'no';
+    $fields['ting_object-ting_object-ting_title']['display']['compact']['label'] = 'hidden';
   }
 
   // Remove rating widget in all displays.
@@ -1386,6 +1394,33 @@ function reol_base_ting_post_execute($request, $response, $raw_response) {
       }
       break;
   }
+}
+
+/**
+ * Helper to manually add a single translation string.
+ *
+ * After adding strings use reol_base_locale_clear_cache() for clearing caches.
+ */
+function reol_base_locale_add_translation($source, $translation, $langcode = 'da', $context = '', $textgroup = 'default') {
+  require_once DRUPAL_ROOT . '/includes/locale.inc';
+
+  $report = &drupal_static(__FUNCTION__, array(
+    'additions' => 0,
+    'updates' => 0,
+    'deletes' => 0,
+    'skips' => 0,
+  ));
+  _locale_import_one_string_db($report, $langcode, $context, $source, $translation, $textgroup, 'Manual import via helper ' . __FUNCTION__ . '().', LOCALE_IMPORT_OVERWRITE);
+}
+
+/**
+ * Helper to clear the locale cache.
+ */
+function reol_base_locale_clear_cache() {
+  require_once DRUPAL_ROOT . '/includes/locale.inc';
+  // Clear locale cache.
+  _locale_invalidate_js();
+  cache_clear_all('locale:', 'cache', TRUE);
 }
 
 /**

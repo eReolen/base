@@ -1,0 +1,10 @@
+name = bReol "See all news" button paragraph
+description = Paragraph for "See all news" button
+core = 7.x
+package = eReolen paragraphs
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = paragraphs
+features[features_api][] = api:2
+features[paragraphs][] = see_all_news_button
+project path = sites/all/modules/breol/paragraphs

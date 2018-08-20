@@ -20,35 +20,59 @@ function ereol_frontend_entity_info_alter(&$entity_info) {
 }
 
 /**
- * Implements hook_field_display_ENTITY_TYPE_alter().
- *
- * Alter field display settings.
- *
- * @todo move this to field_default_field_instances_alter() instead.
+ * Implements hook_field_default_field_instances_alter().
  */
-function ereol_frontend_field_display_ting_object_alter(&$display, $context) {
-  switch ($context['view_mode']) {
-    case 'compact';
-      switch ($context['instance']['field_name']) {
-        case 'ting_cover':
-          // Fix up image style.
-          $display['settings']['image_style'] = 'ereol_cover_base';
-          $display['label'] = 'hidden';
-          break;
+function ereol_frontend_field_default_field_instances_alter(&$fields) {
+  // Fields defined in ting_material_details.
+  $detail_fields = array(
+    'age',
+    'audience',
+    'classification',
+    'contributor',
+    'description',
+    'extent',
+    'format',
+    'genre',
+    'isbn',
+    'ispartof',
+    'language',
+    'musician',
+    'pegi',
+    'publisher',
+    'referenced',
+    'replaced_by',
+    'replaces',
+    'rights',
+    'source',
+    'spatial',
+    'spoken',
+    'subjects',
+    'subtitles',
+    'tracks',
+    'type',
+    'uri',
+    'version',
+  );
 
-        case 'ting_author':
-          // Use a formatter that doesn't make the author a link.
-          $display['module'] = 'reol_base';
-          $display['type'] = 'reol_base_author_plain';
-          $display['label'] = 'hidden';
-          break;
+  // Add our display mode to ting_material_details fields, to avoid it being
+  // overridden.
+  foreach ($detail_fields as $field) {
+    if (isset($fields['ting_object-ting_object-ting_details_' . $field])) {
+      $fields['ting_object-ting_object-ting_details_' . $field]['display'] += array(
+        'ereol_material_teaser' => array(
+          'label' => 'above',
+          'type' => 'hidden',
+        ),
+        'latest' => array(
+          'label' => 'above',
+          'type' => 'hidden',
+        ),
+      );
+    }
+  }
 
-        case 'ting_title':
-          // Remove type prefix.
-          $display['settings']['prefix_type'] = 'no';
-          $display['label'] = 'hidden';
-          break;
-      }
-      break;
+  // Set image style on compact covers.
+  if (isset($fields['ting_object-ting_object-ting_cover'])) {
+    $fields['ting_object-ting_object-ting_cover']['display']['compact']['settings']['image_style'] = 'ereol_cover_base';
   }
 }

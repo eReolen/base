@@ -86,6 +86,10 @@
       text-align: center;
 
       .throbber {
+        &::before {
+          @include icon('spinner');
+        }
+
         position: absolute;
         margin: 0;
         height: 22px;
@@ -93,8 +97,8 @@
         left: 39px;
         top: 35px;
         background-image: none;
-        @include icon('.icon-spinner');
         font-size: 22px;
+        line-height: 1;
         animation: rotating 2s linear infinite;
       }
     }
@@ -130,35 +134,35 @@
     // Menu-item: "E-bøger".
     &:nth-child(1) {
       &:before {
-        @include icon('.icon-e-books');
+        @include icon('e-books');
       }
     }
 
     // Menu-item: "Netlydbøger".
     &:nth-child(2) {
       &:before {
-        @include icon('.icon-audio-books');
+        @include icon('audio-books');
       }
     }
 
     // Menu-item: "Login".
     &:nth-child(3) {
       &:before {
-        @include icon('.icon-profile');
+        @include icon('profile');
       }
     }
 
     // Menu-item: "Hjælp".
     &:nth-child(4) {
       &:before {
-        @include icon('.icon-help');
+        @include icon('help');
       }
     }
 
     // Menu-item: "Søgning".
     &:nth-child(5) {
       &:before {
-        @include icon('.icon-search');
+        @include icon('search');
       }
     }
   }

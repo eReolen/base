@@ -332,7 +332,7 @@
       }
 
       &:before {
-        @include icon('.icon-arrow-right');
+        @include icon('arrow-right');
         float: right;
         -webkit-transform: rotate(0);
         transform: rotate(0);
@@ -456,7 +456,7 @@
     position: relative;
 
     &:before {
-      @include icon('.icon-search');
+      @include icon('search');
       position: absolute;
       right: 0;
       font-size: 180px;
@@ -477,8 +477,6 @@
 .pane-search-form {
   background: $white-medium;
   width: 100%;
-  float: left;
-  display: inline-block;
   display: none;
 }
 
@@ -677,16 +675,16 @@
   float: right;
 
   &:before {
-    @include icon('.icon-arrow-right');
-    @include transform(rotate(90deg));
+    @include icon('arrow-right');
     @include transition(all 300ms ease-out);
+    transform: rotate(.25turn);
     float: right;
     right: 17px;
     position: absolute;
   }
 
   &.open:before {
-    @include transform(rotate(0deg));
+    transform: rotate(0turn);
   }
 
   &:hover {

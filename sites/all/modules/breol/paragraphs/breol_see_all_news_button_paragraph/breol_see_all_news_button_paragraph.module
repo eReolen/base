@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Code for the bReol "See all news" button paragraph feature.
+ */
+
+include_once 'breol_see_all_news_button_paragraph.features.inc';

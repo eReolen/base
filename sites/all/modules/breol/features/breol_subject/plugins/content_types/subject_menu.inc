@@ -35,11 +35,13 @@ function subject_menu_content_type_render($subtype, $conf, $panel_args, $context
   if (!empty($res['node'])) {
     $nodes = node_load_multiple(array_keys($res['node']));
     $content = node_view_multiple($nodes, $view_mode);
-    $variables = array(
-      'nodes' => $nodes,
-      'content' => $content['nodes'],
+
+    $block->content = array(
+      '#type' => 'ding_carousel',
+      '#title' => '',
+      '#items' => array_intersect_key($content['nodes'], array_flip(element_children($content['nodes']))),
     );
-    $block->content = theme('breol_subject_menu', $variables);
+
   }
 
   return $block;

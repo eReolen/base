@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Code for the Two element paragraph feature.
+ */
+
+include_once 'reol_two_element_paragraph.features.inc';
+
+/**
+ * Implements hook_preprocess_entity().
+ */
+function reol_two_element_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'two_elements') {
+
+      $wrapper = $variables['paragraphs_item']->wrapper();
+      $direction = $wrapper->field_two_elements_layout->value() ? 'right' : 'left';
+      $variables['classes_array'][] = 'two-elements--direction-' . $direction;
+    }
+  }
+}

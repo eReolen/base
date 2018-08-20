@@ -221,3 +221,104 @@ function breol_base_update_7126() {
 function breol_base_update_7127() {
   module_enable(array('reol_carousel'), TRUE);
 }
+
+/**
+ * Enable breol_inspiration.
+ */
+function breol_base_update_7128() {
+  module_enable(array('breol_inspiration'), TRUE);
+}
+
+/**
+ * Enable reol_carousel_paragraph.
+ */
+function breol_base_update_7129() {
+  module_enable(array('reol_carousel_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_audio_preview_paragraph.
+ */
+function breol_base_update_7130() {
+  module_enable(array('reol_audio_preview_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_two_element_paragraph.
+ */
+function breol_base_update_7131() {
+  module_enable(array('reol_two_element_paragraph'), TRUE);
+}
+
+/**
+ * Enable breol_carousel_paragraph.
+ */
+function breol_base_update_7132() {
+  module_enable(array('breol_carousel_paragraph'), TRUE);
+}
+
+/**
+ * Enable reol_video_paragraph.
+ */
+function breol_base_update_7133() {
+  module_enable(array('reol_video_paragraph'), TRUE);
+}
+
+/**
+ * Enable breol_link_paragraph.
+ */
+function breol_base_update_7134() {
+  module_enable(array('breol_link_paragraph'), TRUE);
+}
+
+/**
+ * Enable breol_see_all_news_button_paragraph.
+ */
+function breol_base_update_7135() {
+  module_enable(array('breol_see_all_news_button_paragraph'), TRUE);
+}
+
+/**
+ * Revert breol_link_paragraph feature.
+ */
+function breol_base_update_7136() {
+  features_revert_module('breol_link_paragraph');
+}
+
+/**
+ * Revert inspiration feature.
+ */
+function breol_base_update_7137() {
+  features_revert_module('breol_link_paragraph');
+}
+
+/**
+ * Translate "Audio preview".
+ */
+function breol_base_update_7138() {
+  reol_base_locale_add_translation('Audio preview', 'Uddrag');
+}
+
+/**
+ * Revert features.
+ */
+function breol_base_update_7139() {
+  features_revert_module('breol_news');
+  features_revert_module('breol_section');
+  features_revert_module('breol_video');
+}
+
+/**
+ * Revert features.
+ */
+function breol_base_update_7140() {
+  features_revert_module('breol_carousel_paragraph');
+  features_revert_module('breol_link_paragraph');
+}
+
+/**
+ * Translate "see all".
+ */
+function breol_base_update_7141() {
+  reol_base_locale_add_translation('See all', 'Se alle');
+}

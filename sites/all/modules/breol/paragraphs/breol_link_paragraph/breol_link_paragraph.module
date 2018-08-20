@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Code for the bReol Link paragraph feature.
+ */
+
+include_once 'breol_link_paragraph.features.inc';
+
+/**
+ * Template preprocessor for entities.
+ */
+function breol_link_paragraph_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'paragraphs_item') {
+    if ($variables['paragraphs_item']->bundle() == 'breol_linkbox') {
+      $wrapper = $variables['paragraphs_item']->wrapper();
+      $variables['classes_array'][] = 'linkbox';
+
+      $color = $wrapper->field_breol_linkbox_color->value();
+      if (isset($color['rgb'])) {
+        $variables['attributes_array']['style'] = 'background-color: ' . $color['rgb'] . ';';
+      }
+
+      $variables['icons'] = '';
+      $link = $wrapper->field_breol_linkbox_link->value();
+      if (isset($link['url'])) {
+        $variables['href'] = $link['url'];
+      }
+
+      $image = $wrapper->field_breol_linkbox_image->value();
+      if ($image['uri']) {
+        $params = array(
+          'style_name' => 'ding_campaign_p_75',
+          'path' => $image['uri'],
+        );
+        $variables['image'] = theme('image_style', $params);
+        $variables['classes_array'][] = 'linkbox--with-image';
+      }
+      if (isset($link['title'])) {
+        $variables['title'] = check_plain($link['title']);
+      }
+
+      $header = $wrapper->field_breol_linkbox_header->value();
+
+      $variables['header'] = !empty($header) ? check_plain($header) : '';
+    }
+  }
+}

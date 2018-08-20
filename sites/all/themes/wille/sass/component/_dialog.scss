@@ -179,13 +179,16 @@
  }
 
   .ui-icon-closethick {
+    &::before {
+      @include icon('close-b');
+    }
+
     // Resetting.
     width: auto;
     height: auto;
     text-indent: inherit;
 
     background-image: none;
-    @include icon('.icon-close-b');
     font-size: 22px;
   }
 }

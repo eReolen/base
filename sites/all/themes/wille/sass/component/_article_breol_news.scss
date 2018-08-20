@@ -1,3 +1,52 @@
 .article--breol-news {
   padding: 0;
+
+  &--teaser {
+    @include rounded-box();
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+    margin-bottom: 40px;
+
+    @include media($phone) {
+      height: 190px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      // Besides making it easy to position, changing the positioning
+      // from the default static also allows us to z-index this
+      // element above the following .content.
+      position: absolute;
+      z-index: 1;
+      left: 40px;
+      right: 40px;
+      bottom: 20px;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      // Put behind title.
+      z-index: 0;
+
+      .field-name-field-breol-cover-image,
+      .field-name-field-breol-cover-image * {
+        height: 100%;
+        width: 100%;
+      }
+
+      img {
+        object-fit: cover;
+      }
+    }
+  }
 }

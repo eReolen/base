@@ -7,6 +7,16 @@
 
   'use strict';
 
+  // Disable AJAX request error popup. On mobile Safari the
+  // autocomplete AJAX request gets torn down before Drupals event
+  // handler on beforeunload and pagehide is triggered, so the logic
+  // to suppress an error popup is non triggered. Even the form submit
+  // handler can be called after the AJAX request is killed, so
+  // setting this there doesn't help. As end users don't understand
+  // the popup anyway, we completely disable it.
+  // See misc/drupal.js to how this works.
+  Drupal.beforeUnloadCalled = true;
+
   // Scroll to top when opening a dialog. Dialogs on this site can get
   // pretty big - e.g. when viewing a reading sample. This is
   // furthermore problematic as scrolling is disabled. In _popup.scss

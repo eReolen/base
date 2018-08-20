@@ -3,6 +3,8 @@
 /**
  * @file
  * Render a audio preview paragraph.
+ *
+ * @see sites/all/themes/wille/templates/paragraphs/paragraphs-item--audio-preview.tpl.php
  */
 ?>
 <div class="audio-preview <?php print $classes; ?>"<?php print $attributes; ?>>

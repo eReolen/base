@@ -14,7 +14,7 @@ function wille_theme() {
   return array(
     'user_login' => array(
       'function' => 'wille_user_login',
-      'render element' => 'element'
+      'render element' => 'element',
     ),
   );
 }
@@ -30,10 +30,7 @@ function wille_preprocess_html(&$variables) {
   // Get the field_color and convert i t RGBA foropacity and add it
   // to the body background.
   if (!empty($node) && $node->type === 'breol_subject') {
-    $rgb = breol_fancy_box_hex2rgb($node->field_color[LANGUAGE_NONE][0]['rgb']);
-    $rgba = 'rgba(' . implode(",", $rgb) . ', 0.4)';
-
-    $color = _wille_alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 50);
+    $color = _wille_alter_brightness($node->field_color[LANGUAGE_NONE][0]['rgb'], 220);
 
     $css = 'body {background-color: ' . $color . '} .organic-element--content .organic-svg  {fill: ' . $color . ' !important}';
     drupal_add_css($css, 'inline');
@@ -41,8 +38,8 @@ function wille_preprocess_html(&$variables) {
 
   // Adding Viewport to HTML Header.
   $viewport = array(
-      '#tag' => 'meta',
-      '#attributes' => array(
+    '#tag' => 'meta',
+    '#attributes' => array(
       'name' => 'viewport',
       'content' => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
     ),
@@ -52,14 +49,7 @@ function wille_preprocess_html(&$variables) {
 }
 
 /**
- * Implements THEME_preprocess_TEMPLATE();
- */
-function wille_preprocess_wille_site_template(&$variables, $hook) {
-  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
-}
-
-/**
- * Implements THEME_preprocess_TEMPLATE();
+ * Implements THEME_preprocess_TEMPLATE().
  *
  * We preprocess and override the ctools content type here in the theme, because
  * there are theming specific files and styles that shoudl be included.
@@ -76,7 +66,7 @@ function wille_preprocess_breol_news_page(&$variables, $hook) {
  * Implements hook_preprocess_node().
  */
 function wille_preprocess_node(&$variables, $hook) {
- // Add tpl suggestions for node view modes on node type.
+  // Add tpl suggestions for node view modes on node type.
   if (isset($variables['view_mode'])) {
     $variables['theme_hook_suggestions'][] = 'node__' . 'view_mode__' . $variables['view_mode'];
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__view_mode__' . $variables['view_mode'];
@@ -85,20 +75,10 @@ function wille_preprocess_node(&$variables, $hook) {
   $node = $variables['node'];
   if ($node->type === 'breol_news' || $node->type === 'breol_section' || $node->type === 'breol_subject') {
     // Get file url for cover image.
-    $variables['file_uri'] = null;
+    $variables['file_uri'] = NULL;
     if (!empty($node->field_breol_cover_image[LANGUAGE_NONE][0])) {
       $file_uri = file_create_url($node->field_breol_cover_image[LANGUAGE_NONE][0]['uri']);
       $variables['file_uri'] = $file_uri;
-    }
-  }
-
-  // We know we always gonna use the slick library when the node type is
-  // breol_subject.
-  if ($node->type === 'breol_subject') {
-    libraries_load('slick');
-    $variables['cover_background_color'] = 'transparant';
-    if (!empty($variables['field_color'][0]['rgb'])) {
-      $variables['cover_background_color'] = $variables['field_color'][0]['rgb'];
     }
   }
 }
@@ -176,6 +156,7 @@ function wille_ting_object_cover($variables) {
  *
  * @return array
  *   Classes as array.
+ *
  * @todo merge with _brin_type_icon_classes().
  */
 function _wille_type_icon_classes($type, $quota = NULL) {
@@ -205,10 +186,10 @@ function wille_ting_view_alter(&$build) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter();
+ * Implements hook_form_FORM_ID_alter().
  */
 function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
-  // HTML5 placeholder attribute
+  // HTML5 placeholder attribute.
   $form['search_block_form']['#attributes']['placeholder'] = t('Search among thousands of titles');
 
   // Hide submit button.
@@ -355,18 +336,18 @@ function wille_user_login(&$vars) {
  * Brighten color.
  */
 function _wille_alter_brightness($colourstr, $steps) {
-  $colourstr = str_replace('#','',$colourstr);
-  $rhex = substr($colourstr,0,2);
-  $ghex = substr($colourstr,2,2);
-  $bhex = substr($colourstr,4,2);
+  $colourstr = str_replace('#', '', $colourstr);
+  $rhex = substr($colourstr, 0, 2);
+  $ghex = substr($colourstr, 2, 2);
+  $bhex = substr($colourstr, 4, 2);
 
   $r = hexdec($rhex);
   $g = hexdec($ghex);
   $b = hexdec($bhex);
 
-  $r = max(0,min(255,$r + $steps));
-  $g = max(0,min(255,$g + $steps));
-  $b = max(0,min(255,$b + $steps));
+  $r = max(0, min(255, $r + $steps));
+  $g = max(0, min(255, $g + $steps));
+  $b = max(0, min(255, $b + $steps));
 
-  return '#'.dechex($r).dechex($g).dechex($b);
+  return '#' . dechex($r) . dechex($g) . dechex($b);
 }
