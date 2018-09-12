@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+/**
+ * Implements hook_ting_covers().
+ *
+ * Get covers for overdrive titles form the data-well relations.
+ */
+function overdrive_ting_covers($entities) {
+  $covers = array();
+  foreach ($entities as $id => $entity) {
+    // Check that the entity is an overdrive entity based on it's PID. We make this extra check at getting relations
+    // for a entity may trigger extra requests to the data-well which is expensive. So lets limit that.
+    if (strpos($id, ':ODN') !== false) {
+      $uri = '';
+      $relations = $entity->getRelations();
+      foreach ($relations as $relation) {
+        if ($relation->getType() === 'dbcaddi:hasCover') {
+          $uri = $relation->getURI();
+          break;
+        }
+      }
+
+      if (!empty($uri)) {
+        $covers[$id] = $uri;
+      }
+    }
+  }
+
+  return $covers;
+}
