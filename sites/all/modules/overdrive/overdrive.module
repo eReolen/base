@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *
+ * Extend the site with information about titles hosted at overdrive.
  */
 
 /**
