@@ -1,0 +1,12 @@
+<?php
+/**
+ * @file
+ * Handles module install and uninstall
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function overdrive_uninstall() {
+  variable_del('overdrive_information_text');
+}

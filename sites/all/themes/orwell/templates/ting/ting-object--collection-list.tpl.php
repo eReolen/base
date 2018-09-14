@@ -33,5 +33,14 @@
     <div class="material__series">
       <?php echo render($content['group_ting_object_right_column']['ting_series']); ?>
     </div>
+    <div class="material__language">
+      <div class="field field-name-ting-details-language field-type-ting-details-language field-label-inline">
+        <div class="field-items">
+          <div class="field-item even">
+            <spann class="field-label"><?php echo t('Language'); ?>:</spann> <?php echo $object->getLanguage() ?>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

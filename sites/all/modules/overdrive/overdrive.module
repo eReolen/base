@@ -5,6 +5,48 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function overdrive_menu() {
+  $items = array();
+
+  $items['ting/object/%ting_object/overdrive'] = array(
+    'page callback' => 'overdrive_loan_redirect_ajax',
+    'page arguments' => array(2),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments' => array('perform loan'),
+  );
+
+  $items['admin/config/ereolen/overdrive'] = array(
+    'title' => 'Overdrive settings',
+    'description' => 'Administer overdrive (eReolen Global)',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('overdrive_settings_form'),
+    'access arguments' => array('administer site'),
+    'file' => 'includes/overdrive.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function overdrive_theme($existing, $type, $theme, $path) {
+  return array(
+    'overdrive_message' => array(
+      'variables' => array(
+        'message' => '',
+        'uri' => '',
+        'modal_id' => 'overdrive-message',
+      ),
+      'template' => 'overdrive-message',
+      'path' => $path . '/templates/',
+    ),
+  );
+}
+
+/**
  * Implements hook_ting_covers().
  *
  * Get covers for overdrive titles form the data-well relations.
@@ -31,4 +73,86 @@ function overdrive_ting_covers($entities) {
   }
 
   return $covers;
+}
+
+/**
+ * Implements hook_ding_entity_buttons().
+ *
+ * Add read/listen buttons on entity view page for audiobook or ebook.
+ */
+function overdrive_ding_entity_buttons($type, $entity) {
+  $buttons = array();
+
+  if (strpos($entity->getId(), ':ODN') !== false) {
+    drupal_add_library('system', 'drupal.ajax');
+
+    $classes = array('btn');
+    $type_class = reol_base_get_type_class($entity->type);
+    switch ($type_class) {
+      case "ebook":
+        $text = t('Read');
+        $html_id = 'read-' . $entity->id;
+        break;
+
+      case "audiobook":
+        $text = t('Listen');
+        $html_id = 'listen-' . $entity->id;
+        break;
+    }
+
+    $classes[] = 'use-ajax';
+    $link = 'ting/object/' . $entity->id . '/overdrive';
+
+    // Create the button.
+    $buttons[] = reol_base_get_entity_button($text, $link, $html_id . $entity->id, $classes);
+  }
+
+  return $buttons;
+}
+
+/**
+ * Ajax entry callback.
+ *
+ * Bookmark ting object/entity with ajax callback.
+ *
+ * @param TingEntity $entity
+ *   Ting entity object.
+ *
+ * @return array
+ *   Render array with Ajax commands.
+ */
+function overdrive_loan_redirect_ajax(TingEntity $entity) {
+  $commands = array();
+  $modal_id = 'overdrive-message';
+
+  // Try to find the URI for overdrive.
+  $uri = '';
+  foreach ($entity->getRelations() as $relation) {
+    if ($relation->type == 'dbcaddi:hasOnlineAccess') {
+      $uri = $relation->getURI();
+      break;
+    }
+  }
+
+  if (!(is_object($entity) && $entity instanceof TingEntity) || empty($uri) ) {
+    $close = reol_base_get_modal_close_button(t('OK'), $modal_id);
+    $commands[] = ajax_command_ding_popup($modal_id, t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>' . $close);
+  }
+  else {
+    $default = variable_get('overdrive_information_text', array(
+      'value' => 'Please goto /admin/config/ereolen/overdrive and configure this text.',
+    ));
+
+    $vars = array(
+      'message' => $default['value'],
+      'uri' => $uri,
+      'modal_id' => 'overdrive-message',
+    );
+
+    // Display pop-up.
+    $commands[] = ajax_command_ding_popup($modal_id, t('Loan'), theme('overdrive_message', $vars));
+
+  }
+
+  return array('#type' => 'ajax', '#commands' => $commands);
 }
