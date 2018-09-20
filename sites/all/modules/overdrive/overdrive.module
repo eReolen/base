@@ -208,6 +208,17 @@ function overdrive_triggers_load() {
 }
 
 /**
+ * Implements hook_ting_covers().
+ */
+function overdrive_trigger_find($search_string) {
+  return db_select('overdrive_triggers', 'ot')
+    ->fields('ot')
+    ->condition('search_trigger', $search_string)
+    ->execute()
+    ->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
  * Add search mapping between danish and english.
  *
  * @param string $search_string
@@ -218,7 +229,10 @@ function overdrive_triggers_load() {
 function overdrive_search_mapping($search_string) {
   $str = '';
 
-
+  $triggers = overdrive_trigger_find($search_string);
+  foreach ($triggers as $trigger) {
+    $str .= ' or (' . $trigger['search_query'] . ')';
+  }
 
   return $str;
 }
