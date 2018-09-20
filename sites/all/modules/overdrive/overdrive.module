@@ -156,3 +156,19 @@ function overdrive_loan_redirect_ajax(TingEntity $entity) {
 
   return array('#type' => 'ajax', '#commands' => $commands);
 }
+
+/**
+ * Add search mapping between danish and english.
+ *
+ * @param string $search_string
+ *   Search string from the user.
+ *
+ * @return string
+ */
+function overdrive_search_mapping($search_string) {
+  $str = '';
+
+
+
+  return $str;
+}
