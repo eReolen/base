@@ -18,12 +18,27 @@ function overdrive_menu() {
   );
 
   $items['admin/config/ereolen/overdrive'] = array(
-    'title' => 'Overdrive settings',
+    'title' => 'Overdrive',
     'description' => 'Administer overdrive (eReolen Global)',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('overdrive_settings_form'),
     'access arguments' => array('administer site'),
     'file' => 'includes/overdrive.admin.inc',
+  );
+
+  $items['admin/config/ereolen/overdrive/settings'] = array(
+    'title' => 'Overdrive settings',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+
+  $items['admin/config/ereolen/overdrive/mapping'] = array(
+    'title' => 'Overdrive mapping',
+    'description' => 'Administer mapping (eReolen Global)',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('overdrive_mappings_form'),
+    'access arguments' => array('administer site'),
+    'file' => 'includes/overdrive.admin.inc',
+    'type' => MENU_LOCAL_TASK,
   );
 
   return $items;
@@ -155,6 +170,41 @@ function overdrive_loan_redirect_ajax(TingEntity $entity) {
   }
 
   return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Save or update the triggers in the database.
+ *
+ * If the tid is -1 this will be insert else an update operation.
+ *
+ * @param array $triggers
+ *   The triggers.
+ */
+function overdrive_triggers_save(array $triggers) {
+  foreach ($triggers as $trigger) {
+    if ($trigger['tid'] == -1) {
+      unset($trigger['tid']);
+      drupal_write_record('overdrive_triggers', $trigger);
+    }
+    else {
+      drupal_write_record('overdrive_triggers', $trigger, 'tid');
+    }
+  }
+}
+
+/**
+ * Load all triggers from the database.
+ *
+ * @return array
+ *   The triggers.
+ */
+function overdrive_triggers_load() {
+  $triggers = db_select('overdrive_triggers', 'ot')
+    ->fields('ot')
+    ->execute()
+    ->fetchAll(PDO::FETCH_ASSOC);
+
+  return $triggers;
 }
 
 /**
