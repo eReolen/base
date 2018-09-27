@@ -4,7 +4,7 @@ api = 2
 ; Core definition copied from profiles/ding2/drupal.make.
 ; This is taken from the master branch of ding2 to get the latest security updates.
 projects[drupal][type] = core
-projects[drupal][version] = 7.58
+projects[drupal][version] = 7.59
 projects[drupal][patch][] = "http://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch"
 projects[drupal][patch][] = "http://drupal.org/files/ssl-socket-transports-1879970-13.patch"
 projects[drupal][patch][] = "http://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch"
