@@ -768,6 +768,11 @@ function drupal_access_denied() {
  *   - timeout: A float representing the maximum number of seconds the function
  *     call may take. The default is 30 seconds. If a timeout occurs, the error
  *     code is set to the HTTP_REQUEST_TIMEOUT constant.
+ *   - secure_socket_transport: The transport to use when making secure
+ *     requests over HTTPS; see http://php.net/manual/en/transports.inet.php
+ *     for more information. The value should be 'ssl', 'sslv2', 'sslv3' or
+ *     'tls'. Defaults to 'ssl', which will work for HTTPS requests to most
+ *     remote servers.
  *   - context: A context resource created with stream_context_create().
  *
  * @return object
@@ -824,6 +829,7 @@ function drupal_http_request($url, array $options = array()) {
     'data' => NULL,
     'max_redirects' => 3,
     'timeout' => 30.0,
+    'secure_socket_transport' => 'ssl',
     'context' => NULL,
   );
 
@@ -884,7 +890,7 @@ function drupal_http_request($url, array $options = array()) {
     case 'https':
       // Note: Only works when PHP is compiled with OpenSSL support.
       $port = isset($uri['port']) ? $uri['port'] : 443;
-      $socket = 'ssl://' . $uri['host'] . ':' . $port;
+      $socket = $options['secure_socket_transport'] . '://' . $uri['host'] . ':' . $port;
       $options['headers']['Host'] = $uri['host'] . ($port != 443 ? ':' . $port : '');
       break;
 
