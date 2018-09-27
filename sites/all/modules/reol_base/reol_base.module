@@ -388,6 +388,15 @@ function _reol_base_get_types() {
         'publizon_formats' => array(50, 58),
         'icon' => 'ebook',
       ),
+      'podcast' => array(
+        'ext_name' => 'lyd (podcast)',
+        'int_name' => 'podcast',
+        'title' => t('Podcast'),
+        'title_plural' => t('Podcasts'),
+        'path' => 'podcasts',
+        'publizon_formats' => array(0, 71),
+        'icon' => 'podcast',
+      ),
     );
 
     // Subtypes 'extends' the base classes.
@@ -484,7 +493,7 @@ function reol_base_get_type_name($type) {
  * @param string $type
  *   The string type from Ting or FALSE/empty to return all.
  *
- * @return array
+ * @return mixed
  *   Type definition.
  */
 function reol_base_get_type($type = FALSE) {
