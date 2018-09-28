@@ -71,6 +71,49 @@ function ereol_article_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-article-field_article_type'.
+  $field_instances['node-article-field_article_type'] = array(
+    'bundle' => 'article',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 10,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_article_type',
+    'label' => 'Type',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 1,
+    ),
+  );
+
   // Exported field_instance: 'node-article-field_ding_news_list_image'.
   $field_instances['node-article-field_ding_news_list_image'] = array(
     'bundle' => 'article',
@@ -221,7 +264,7 @@ function ereol_article_field_default_field_instances() {
       'module' => 'ting_reference',
       'settings' => array(),
       'type' => 'ting_reference_advanced',
-      'weight' => 8,
+      'weight' => 10,
     ),
   );
 
@@ -275,7 +318,7 @@ function ereol_article_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -334,6 +377,7 @@ function ereol_article_field_default_field_instances() {
   t('List image');
   t('Materials');
   t('Show as image teaser');
+  t('Type');
 
   return $field_instances;
 }
