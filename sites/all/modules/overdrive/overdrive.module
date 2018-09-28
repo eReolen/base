@@ -132,12 +132,12 @@ function overdrive_ding_entity_buttons($type, $entity) {
     $type_class = reol_base_get_type_class($entity->type);
     switch ($type_class) {
       case "ebook":
-        $text = t('Read');
+        $text = t('Read', array(), array('context' => 'overdrive'));
         $html_id = 'read-' . $entity->id;
         break;
 
       case "audiobook":
-        $text = t('Listen');
+        $text = t('Listen', array(), array('context' => 'overdrive'));
         $html_id = 'listen-' . $entity->id;
         break;
     }
