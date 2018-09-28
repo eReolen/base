@@ -22,7 +22,7 @@ function overdrive_menu() {
     'description' => 'Administer overdrive (eReolen Global)',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('overdrive_settings_form'),
-    'access arguments' => array('administer site'),
+    'access arguments' => array('administer overdrive'),
     'file' => 'includes/overdrive.admin.inc',
   );
 
@@ -36,7 +36,7 @@ function overdrive_menu() {
     'description' => 'Administer mapping (eReolen Global)',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('overdrive_mappings_form'),
-    'access arguments' => array('administer site'),
+    'access arguments' => array('administer overdrive'),
     'file' => 'includes/overdrive.admin.inc',
     'type' => MENU_LOCAL_TASK,
   );
