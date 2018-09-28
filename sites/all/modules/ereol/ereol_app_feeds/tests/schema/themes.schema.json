@@ -1,0 +1,82 @@
+  {
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "array",
+  "title": "The Root Schema",
+  "items": {
+    "$id": "#/items",
+    "type": "object",
+    "title": "The Items Schema",
+    "required": [
+      "guid",
+      "type",
+      "title",
+      "view",
+      "image",
+      "body",
+      "identifiers"
+    ],
+    "properties": {
+      "guid": {
+        "$id": "#/items/properties/guid",
+        "type": "string",
+        "title": "The Guid Schema",
+        "default": "",
+        "pattern": "^(.*)$"
+      },
+      "type": {
+        "$id": "#/items/properties/type",
+        "type": "string",
+        "title": "The Type Schema",
+        "default": "",
+        "examples": [
+          "theme"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "title": {
+        "$id": "#/items/properties/title",
+        "type": "string",
+        "title": "The Title Schema",
+        "default": "",
+        "pattern": "^(.*)$"
+      },
+      "view": {
+        "$id": "#/items/properties/view",
+        "type": "string",
+        "title": "The View Schema",
+        "default": "",
+        "examples": [
+          "image"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "image": {
+        "$id": "#/items/properties/image",
+        "type": "string",
+        "title": "The Image Schema",
+        "default": "",
+        "pattern": "^(.*)$"
+      },
+      "body": {
+        "$id": "#/items/properties/body",
+        "type": "string",
+        "title": "The Body Schema",
+        "default": ""
+      },
+      "identifiers": {
+        "$id": "#/items/properties/identifiers",
+        "type": "array",
+        "title": "The Identifiers Schema",
+        "items": {
+          "$id": "#/items/properties/identifiers/items",
+          "type": "string",
+          "title": "The Items Schema",
+          "default": "",
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}

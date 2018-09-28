@@ -1,0 +1,147 @@
+<?php
+
+/**
+ * @file
+ * Module file for ereol_app_feeds.
+ */
+
+use Drupal\ereol_app_feeds\Controller\DefaultController;
+use Drupal\ereol_app_feeds\Feed\FrontPageFeed;
+use Drupal\ereol_app_feeds\Helper\ParagraphHelper;
+
+/**
+ * Implements hook_menu().
+ */
+function ereol_app_feeds_menu() {
+  $items['admin/config/ereolen/ereol_app_feeds'] = [
+    'title' => 'App feed settings',
+    'description' => 'Settings for the app feed',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['ereol_app_feeds_admin'],
+    'access arguments' => ['administer site configuration'],
+    'type' => MENU_NORMAL_ITEM,
+  ];
+
+  $items['app/feed/frontpage'] = [
+    'page callback' => 'ereol_app_feeds_frontpage',
+    'access arguments' => ['access content'],
+  ];
+
+  $items['app/feed/themes'] = [
+    'page callback' => 'ereol_app_feeds_paragraphs',
+    'page arguments' => [ParagraphHelper::PARAGRAPH_ALIAS_THEME_LIST],
+    'access arguments' => ['access content'],
+  ];
+
+  $items['app/feed/categories'] = [
+    'page callback' => 'ereol_app_feeds_categories',
+    'access arguments' => ['access content'],
+  ];
+
+  $items['app/feed/paragraphs/%'] = [
+    'page callback' => 'ereol_app_feeds_paragraphs',
+    'page arguments' => [3],
+    'access arguments' => ['access content'],
+  ];
+
+  return $items;
+}
+
+/**
+ * Admin page.
+ */
+function ereol_app_feeds_admin() {
+  $form = [];
+
+  $options = [];
+
+  $query = new EntityFieldQuery();
+  $query
+    ->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'inspiration')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->propertyOrderBy('title');
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nodes = node_load_multiple(array_keys($result['node']));
+    $options = array_combine(array_keys($nodes), array_map(function ($node) {
+       return $node->title;
+    }, $nodes));
+  }
+
+  $form['ereol_app_feeds_frontpage_ids'] = [
+    '#type' => 'checkboxes',
+    '#title' => t('Front pages'),
+    '#default_value' => FrontPageFeed::getFrontPageIds(),
+    '#options' => $options,
+    '#multiple' => TRUE,
+    '#description' => t('Frontpages used in feeds'),
+    '#required' => TRUE,
+  ];
+
+  $form['ereol_app_feeds_link_button_text'] = [
+    '#type' => 'textfield',
+    '#title' => t('Link button text'),
+    '#default_value' => variable_get('ereol_app_feeds_link_button_text'),
+    '#description' => t('Link button text'),
+    '#required' => TRUE,
+  ];
+
+  $form['ereol_app_feeds_theme_list_max_length'] = [
+    '#type' => 'textfield',
+    '#title' => t('Max number of themes in lists'),
+    '#default_value' => variable_get('ereol_app_feeds_theme_list_max_length', 6),
+    '#element_validate' => ['element_validate_integer_positive'],
+    '#description' => t('The maximum number of themes in theme lists'),
+    '#required' => TRUE,
+  ];
+
+  $form['ereol_app_feeds_identifiers_max_length'] = [
+    '#type' => 'textfield',
+    '#title' => t('Max number of identifiers in lists'),
+    '#default_value' => variable_get('ereol_app_feeds_identifiers_max_length', 6),
+    '#element_validate' => ['element_validate_integer_positive'],
+    '#description' => t('The maximum number of identifiers in identifier lists'),
+    '#required' => TRUE,
+  ];
+
+  $form['ereol_app_feeds_feeds'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Feeds'),
+
+    'content' => [
+      '#markup' => implode('', [
+        '<ul>',
+        '<li>' . l(t('Frontpage'), '/app/feed/frontpage') . '</li>',
+        '<li>' . l(t('Themes'), '/app/feed/themes') . '</li>',
+        '</ul>',
+      ]),
+    ],
+  ];
+
+  return system_settings_form($form);
+}
+
+/**
+ * Frontpage.
+ */
+function ereol_app_feeds_frontpage() {
+  $controller = new DefaultController();
+  $controller->frontpage();
+}
+
+/**
+ * Categories.
+ */
+function ereol_app_feeds_categories() {
+  $controller = new DefaultController();
+  $controller->categories();
+}
+
+/**
+ * Paragraphs.
+ */
+function ereol_app_feeds_paragraphs($type) {
+  $controller = new DefaultController();
+  $controller->paragraphs($type);
+}
