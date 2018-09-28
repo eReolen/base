@@ -96,11 +96,26 @@ $material--teaser__margin-bottom: 1.2rem;
     font-weight: 600;
     font-size: 1rem;
     line-height: $line-height__small;
-    margin-bottom: $material--teaser__margin-bottom;
+    margin-bottom: $material--teaser__margin-bottom / 2;
 
     a {
       text-decoration: none;
       color: $color__gray;
+    }
+  }
+
+  &__language {
+    color: $color__gray;
+    line-height: $line-height__small;
+    font-size: 14px;
+    margin-bottom: $material--teaser__margin-bottom / 2;
+
+    &::before {
+      @include icon;
+      color: $color__font-gray;
+      font-size: 14px;
+      margin-right: 0.2rem;
+      content: $icon__language;
     }
   }
 

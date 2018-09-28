@@ -14,15 +14,14 @@
     <?php echo render($content['group_ting_left_col_collection']['ting_cover']); ?>
   </div>
   <div class="material__content text">
-    <div class="material__rating">
-      <?php echo render($content['group_ting_right_col_collection']['ding_entity_rating_action']); ?>
-      <?php echo render($content['group_ting_right_col_collection']['ding_entity_rating_result']); ?>
-    </div>
     <div class="material__title">
       <?php echo render($content['group_ting_right_col_collection']['ting_title']); ?>
     </div>
     <div class="material__author">
       <?php echo render($content['group_ting_right_col_collection']['ting_author']); ?>
+    </div>
+    <div class="material__language">
+      <?php echo $object->getLanguage() ?>
     </div>
     <div class="material__abstract">
       <?php echo render($content['group_ting_right_col_collection']['ting_abstract']); ?>
@@ -32,15 +31,6 @@
     </div>
     <div class="material__series">
       <?php echo render($content['group_ting_object_right_column']['ting_series']); ?>
-    </div>
-    <div class="material__language">
-      <div class="field field-name-ting-details-language field-type-ting-details-language field-label-inline">
-        <div class="field-items">
-          <div class="field-item even">
-            <spann class="field-label"><?php echo t('Language'); ?>:</spann> <?php echo $object->getLanguage() ?>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
