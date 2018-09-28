@@ -45,6 +45,33 @@ function overdrive_menu() {
 }
 
 /**
+ * Implements hook_permission().
+ */
+function overdrive_permission() {
+  return array(
+    'administer overdrive' => array(
+      'title' => t('Administer overdrive'),
+      'description' => t('Administer overdrive - eReolen Global'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_secure_permissions().
+ */
+function overdrive_secure_permissions($role) {
+  $permissions = array(
+    'administrators' => array(
+      'administer overdrive',
+    ),
+  );
+
+  if (isset($permissions[$role])) {
+    return $permissions[$role];
+  }
+}
+
+/**
  * Implements hook_theme().
  */
 function overdrive_theme($existing, $type, $theme, $path) {
