@@ -125,7 +125,7 @@ class FrontPageFeed extends AbstractFeed {
     // Wrap all videos audio samples in a fake list element.
     $list = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ALIAS_AUDIO, $paragraphIds);
 
-    return [
+    return empty($list) ? [] : [
       [
         'guid' => ParagraphHelper::VALUE_NONE,
         'type' => 'audio_sample_list',
