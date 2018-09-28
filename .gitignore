@@ -1,33 +1,6 @@
 # Ignore configuration files that may contain sensitive information.
-sites/*/settings*.php
-!sites/default/settings.php
-!sites/default/settings.platformsh.php
+sites/*/settings.local.php
 
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
-.DS_Store
-compass_app_log.txt
-
-# Ignore local docker settings.
-docker-compose.override.yml
-
-# Dont commit databases.
-private/docker/db-init/ereol/*
-# But do commit sanitize.
-!private/docker/db-init/ereol/900-sanitize.sql
-private/docker/db-init/ego/*
-!private/docker/db-init/ego/900-sanitize.sql
-
-# Ignore files.
-private/docker/sites/ereol/files
-private/docker/sites/ereol/private
-private/docker/sites/ego/files
-private/docker/sites/ego/private
-
-# Ignore phpstorm project files.
-.idea/*
-
-# Ignore dev files.
-.docker-sync
-.dce_container

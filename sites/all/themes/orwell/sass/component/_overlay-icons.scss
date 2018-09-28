@@ -36,6 +36,10 @@
     content: $icon__badge-sound;
   }
 
+  .podcast::before {
+    content: $icon__badge-podcast;
+  }
+
   .link::before {
     content: $icon__link;
     color: $color__link__default;

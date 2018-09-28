@@ -227,6 +227,7 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
           break;
 
         case "audiobook":
+        case "podcast":
           $link = 'ting/object/' . $entity->id . '/listen';
           if ($loaned) {
             $text = t('Listen');

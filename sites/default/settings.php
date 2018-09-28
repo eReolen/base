@@ -26,13 +26,6 @@ $drupal_hash_salt = '';
 // Set Drupal not to check for HTTP connectivity.
 $conf['drupal_http_request_fails'] = FALSE;
 
-// Include automatic Platform.sh settings.
-if (file_exists(__DIR__ . '/settings.platformsh.php')) {
-  require_once __DIR__ . '/settings.platformsh.php';
-}
-
-// Include local settings. These come last so that they can override anything.
-$on_platformsh = !empty($_ENV['PLATFORM_PROJECT']);
-if (file_exists(__DIR__ . '/settings.local.php') && !$on_platformsh) {
+if (file_exists(__DIR__ . '/settings.local.php')) {
   require_once __DIR__ . '/settings.local.php';
 }
