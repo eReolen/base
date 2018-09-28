@@ -46,6 +46,7 @@
     .field-name-ting-details-language {
       font-family: $font-light;
       font-size: 14px;
+      margin-top: 4px;
 
       .field-item::before {
         @include icon;
