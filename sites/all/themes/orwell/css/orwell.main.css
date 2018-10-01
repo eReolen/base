@@ -932,6 +932,10 @@ div.messages ul {
   content: "";
 }
 
+.overlay-icons .podcast::before {
+  content: "";
+}
+
 .overlay-icons .link::before {
   content: "";
   color: #b81b40;
