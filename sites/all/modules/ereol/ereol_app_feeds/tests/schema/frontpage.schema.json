@@ -1,0 +1,694 @@
+{
+    "definitions": {
+        "guid": {
+            "type": "string",
+            "title": "The Guid Schema",
+            "default": "",
+            "pattern": "^(.*)$"
+        }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://ereolen.dk/app/feed/frontpage#",
+    "type": "object",
+    "title": "E-reolen app frontpage feed",
+    "required": [
+        "carousels",
+        "themes",
+        "links",
+        "reviews",
+        "editor",
+        "videos",
+        "audio"
+    ],
+    "properties": {
+        "carousels": {
+            "$id": "#/properties/carousels",
+            "type": "array",
+            "title": "The Carousels Schema",
+            "items": {
+                "$id": "#/properties/carousels/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                    "guid",
+                    "type",
+                    "title",
+                    "view",
+                    "query"
+                ],
+                "properties": {
+                    "guid": { "$ref": "#/definitions/guid" },
+                    "type": {
+                        "$id": "#/properties/carousels/items/properties/type",
+                        "type": "string",
+                        "const": "carousel"
+                    },
+                    "title": {
+                        "$id": "#/properties/carousels/items/properties/title",
+                        "type": "string",
+                        "title": "The Title Schema",
+                        "default": "",
+                        "pattern": "^(.*)$"
+                    },
+                    "view": {
+                        "$id": "#/properties/carousels/items/properties/view",
+                        "type": "string",
+                        "title": "The View Schema",
+                        "default": "",
+                        "examples": [
+                            "scroll"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "query": {
+                        "$id": "#/properties/carousels/items/properties/query",
+                        "type": "string",
+                        "title": "The Query Schema",
+                        "default": "",
+                        "pattern": "^(.*)$"
+                    }
+                }
+            }
+        },
+        "themes": {
+            "$id": "#/properties/themes",
+            "type": "array",
+            "title": "The Themes Schema",
+            "items": {
+                "$id": "#/properties/themes/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                    "guid",
+                    "type",
+                    "list"
+                ],
+                "properties": {
+                    "guid": { "$ref": "#/definitions/guid" },
+                    "type": {
+                        "$id": "#/properties/themes/items/properties/type",
+                        "type": "string",
+                        "title": "The Type Schema",
+                        "default": "",
+                        "examples": [
+                            "theme_list"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "list": {
+                        "$id": "#/properties/themes/items/properties/list",
+                        "type": "array",
+                        "title": "The List Schema",
+                        "items": {
+                            "$id": "#/properties/themes/items/properties/list/items",
+                            "type": "object",
+                            "title": "The Items Schema",
+                            "required": [
+                                "guid",
+                                "type",
+                                "title",
+                                "view",
+                                "image",
+                                "body",
+                                "identifiers"
+                            ],
+                            "properties": {
+                                "guid": { "$ref": "#/definitions/guid" },
+                                "type": {
+                                    "$id": "#/properties/themes/items/properties/list/items/properties/type",
+                                    "type": "string",
+                                    "title": "The Type Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "theme"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "title": {
+                                    "$id": "#/properties/themes/items/properties/list/items/properties/title",
+                                    "type": "string",
+                                    "title": "The Title Schema",
+                                    "default": "",
+                                    "pattern": "^(.*)$"
+                                },
+                                "view": {
+                                    "$id": "#/properties/themes/items/properties/list/items/properties/view",
+                                    "type": "string",
+                                    "title": "The View Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "image"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "image": {
+                                    "$id": "#/properties/themes/items/properties/list/items/properties/image",
+                                    "type": "string",
+                                    "title": "The Image Schema",
+                                    "default": "",
+                                    "pattern": "^(.*)$"
+                                },
+                                "body": {
+                                    "$id": "#/properties/themes/items/properties/list/items/properties/body",
+                                    "type": "string",
+                                    "title": "The Body Schema",
+                                    "default": ""
+                                },
+                                "identifiers": {
+                                    "$id": "#/properties/themes/items/properties/list/items/properties/identifiers",
+                                    "type": ["array", "null"],
+                                    "title": "The Identifiers Schema",
+                                    "items": {
+                                        "$id": "#/properties/themes/items/properties/list/items/properties/identifiers/items",
+                                        "type": "string",
+                                        "title": "The Items Schema",
+                                        "default": "",
+                                        "pattern": "^(.*)$"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "links": {
+            "$id": "#/properties/links",
+            "type": "array",
+            "title": "The Links Schema",
+            "items": {
+                "$id": "#/properties/links/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                    "guid",
+                    "type",
+                    "title",
+                    "subtitle",
+                    "button_text",
+                    "color",
+                    "url"
+                ],
+                "properties": {
+                    "guid": { "$ref": "#/definitions/guid" },
+                    "type": {
+                        "$id": "#/properties/links/items/properties/type",
+                        "type": "string",
+                        "title": "The Type Schema",
+                        "default": "",
+                        "examples": [
+                            "link"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "title": {
+                        "$id": "#/properties/links/items/properties/title",
+                        "type": "string",
+                        "title": "The Title Schema",
+                        "default": "",
+                        "pattern": "^(.*)$"
+                    },
+                    "subtitle": {
+                        "$id": "#/properties/links/items/properties/subtitle",
+                        "type": "string",
+                        "title": "The Subtitle Schema",
+                        "default": "",
+                        "pattern": "^(.*)$"
+                    },
+                    "button_text": {
+                        "$id": "#/properties/links/items/properties/button_text",
+                        "type": "string",
+                        "title": "The Button_text Schema",
+                        "default": "",
+                        "examples": [
+                            ""
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "color": {
+                        "$id": "#/properties/links/items/properties/color",
+                        "type": "string",
+                        "title": "The Color Schema",
+                        "default": "",
+                        "pattern": "^(.*)$"
+                    },
+                    "url": {
+                        "$id": "#/properties/links/items/properties/url",
+                        "type": "string",
+                        "title": "The Url Schema",
+                        "default": "",
+                        "pattern": "^(.*)$"
+                    }
+                }
+            }
+        },
+        "reviews": {
+            "$id": "#/properties/reviews",
+            "type": "array",
+            "title": "The Reviews Schema",
+            "items": {
+                "$id": "#/properties/reviews/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                    "guid",
+                    "type",
+                    "view",
+                    "list"
+                ],
+                "properties": {
+                    "guid": { "$ref": "#/definitions/guid" },
+                    "type": {
+                        "$id": "#/properties/reviews/items/properties/type",
+                        "type": "string",
+                        "title": "The Type Schema",
+                        "default": "",
+                        "examples": [
+                            "review_list"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "view": {
+                        "$id": "#/properties/reviews/items/properties/view",
+                        "type": "string",
+                        "title": "The View Schema",
+                        "default": "",
+                        "examples": [
+                            "scroll"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "list": {
+                        "$id": "#/properties/reviews/items/properties/list",
+                        "type": "array",
+                        "title": "The List Schema",
+                        "items": {
+                            "$id": "#/properties/reviews/items/properties/list/items",
+                            "type": "object",
+                            "title": "The Items Schema",
+                            "required": [
+                                "guid",
+                                "type",
+                                "identifier",
+                                "title",
+                                "creator",
+                                "description",
+                                "source",
+                                "url"
+                            ],
+                            "properties": {
+                                "guid": { "$ref": "#/definitions/guid" },
+                                "type": {
+                                    "$id": "#/properties/reviews/items/properties/list/items/properties/type",
+                                    "type": "string",
+                                    "title": "The Type Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "review"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "identifier": {
+                                    "$id": "#/properties/reviews/items/properties/list/items/properties/identifier",
+                                    "type": "string",
+                                    "title": "The Identifier Schema",
+                                    "default": "",
+                                    "pattern": "^(.*)$"
+                                },
+                                "title": {
+                                    "$id": "#/properties/reviews/items/properties/list/items/properties/title",
+                                    "type": "string",
+                                    "title": "The Title Schema",
+                                    "default": "",
+                                    "pattern": "^(.*)$"
+                                },
+                                "creator": {
+                                    "$id": "#/properties/reviews/items/properties/list/items/properties/creator",
+                                    "type": "string",
+                                    "title": "The Creator Schema",
+                                    "default": "",
+                                    "pattern": "^(.*)$"
+                                },
+                                "description": {
+                                    "$id": "#/properties/reviews/items/properties/list/items/properties/description",
+                                    "type": "string",
+                                    "title": "The Description Schema",
+                                    "default": "",
+                                    "pattern": "(.*)"
+                                },
+                                "source": {
+                                    "$id": "#/properties/reviews/items/properties/list/items/properties/source",
+                                    "type": "string",
+                                    "title": "The Source Schema",
+                                    "default": "",
+                                    "pattern": "^(.*)$"
+                                },
+                                "url": {
+                                    "$id": "#/properties/reviews/items/properties/list/items/properties/url",
+                                    "type": "string",
+                                    "title": "The Url Schema",
+                                    "default": "",
+                                    "pattern": "^(.*)$"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "editor": {
+            "$id": "#/properties/editor",
+            "type": "array",
+            "title": "The Editor Schema",
+            "items": {
+                "$id": "#/properties/editor/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                    "guid",
+                    "type",
+                    "view",
+                    "list"
+                ],
+                "properties": {
+                    "guid": { "$ref": "#/definitions/guid" },
+                    "type": {
+                        "$id": "#/properties/editor/items/properties/type",
+                        "type": "string",
+                        "title": "The Type Schema",
+                        "default": "",
+                        "pattern": "^(.*)$"
+                    },
+                    "view": {
+                        "$id": "#/properties/editor/items/properties/view",
+                        "type": "string",
+                        "title": "The View Schema",
+                        "default": "",
+                        "examples": [
+                            "dotted"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "list": {
+                        "$id": "#/properties/editor/items/properties/list",
+                        "type": "array",
+                        "title": "The List Schema",
+                        "items": {
+                            "$id": "#/properties/editor/items/properties/list/items",
+                            "type": "object",
+                            "title": "The Items Schema",
+                            "required": [
+                                "guid",
+                                "type",
+                                "title",
+                                "identifier"
+                            ],
+                            "properties": {
+                                "guid": { "$ref": "#/definitions/guid" },
+                                "type": {
+                                    "$id": "#/properties/editor/items/properties/list/items/properties/type",
+                                    "type": "string",
+                                    "title": "The Type Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "editor_recommends"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "title": {
+                                    "$id": "#/properties/editor/items/properties/list/items/properties/title",
+                                    "type": "string",
+                                    "title": "The Title Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "Stilfuld inspiration til modeugen"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "identifier": {
+                                    "$id": "#/properties/editor/items/properties/list/items/properties/identifier",
+                                    "type": "string",
+                                    "title": "The Identifier Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "870970-basis:53023177"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "videos": {
+            "$id": "#/properties/videos",
+            "type": "array",
+            "title": "The Videos Schema",
+            "items": {
+                "$id": "#/properties/videos/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                    "guid",
+                    "type",
+                    "view",
+                    "list"
+                ],
+                "properties": {
+                    "guid": { "$ref": "#/definitions/guid" },
+                    "type": {
+                        "$id": "#/properties/videos/items/properties/type",
+                        "type": "string",
+                        "title": "The Type Schema",
+                        "default": "",
+                        "examples": [
+                            "video_list"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "view": {
+                        "$id": "#/properties/videos/items/properties/view",
+                        "type": "string",
+                        "title": "The View Schema",
+                        "default": "",
+                        "examples": [
+                            "dotted"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "list": {
+                        "$id": "#/properties/videos/items/properties/list",
+                        "type": "array",
+                        "title": "The List Schema",
+                        "items": {
+                            "$id": "#/properties/videos/items/properties/list/items",
+                            "type": "object",
+                            "title": "The Items Schema",
+                            "required": [
+                                "guid",
+                                "type",
+                                "title",
+                                "Image",
+                                "source",
+                                "url"
+                            ],
+                            "properties": {
+                                "guid": { "$ref": "#/definitions/guid" },
+                                "type": {
+                                    "$id": "#/properties/videos/items/properties/list/items/properties/type",
+                                    "type": "string",
+                                    "title": "The Type Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "video"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "title": {
+                                    "$id": "#/properties/videos/items/properties/list/items/properties/title",
+                                    "type": "string",
+                                    "title": "The Title Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "Vigga Bro om at indlæse Herman Bangs \"Håbløse slægter\""
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "Image": {
+                                    "$id": "#/properties/videos/items/properties/list/items/properties/Image",
+                                    "type": "string",
+                                    "title": "The Image Schema",
+                                    "default": "",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "source": {
+                                    "$id": "#/properties/videos/items/properties/list/items/properties/source",
+                                    "type": "string",
+                                    "title": "The Source Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "Youtube"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "url": {
+                                    "$id": "#/properties/videos/items/properties/list/items/properties/url",
+                                    "type": "string",
+                                    "title": "The Url Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "https://youtu.be/8JRLEiq4Rxk"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "audio": {
+            "$id": "#/properties/audio",
+            "type": "array",
+            "title": "The Audio Schema",
+            "items": {
+                "$id": "#/properties/audio/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                    "guid",
+                    "type",
+                    "view",
+                    "list"
+                ],
+                "properties": {
+                    "guid": { "$ref": "#/definitions/guid" },
+                    "type": {
+                        "$id": "#/properties/audio/items/properties/type",
+                        "type": "string",
+                        "title": "The Type Schema",
+                        "default": "",
+                        "examples": [
+                            "audio_sample_list"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "view": {
+                        "$id": "#/properties/audio/items/properties/view",
+                        "type": "string",
+                        "title": "The View Schema",
+                        "default": "",
+                        "examples": [
+                            "dotted"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "list": {
+                        "$id": "#/properties/audio/items/properties/list",
+                        "type": "array",
+                        "title": "The List Schema",
+                        "items": {
+                            "$id": "#/properties/audio/items/properties/list/items",
+                            "type": "object",
+                            "title": "The Items Schema",
+                            "required": [
+                                "guid",
+                                "type",
+                                "identifier",
+                                "title",
+                                "url",
+                                "metadata"
+                            ],
+                            "properties": {
+                                "guid": { "$ref": "#/definitions/guid" },
+                                "type": {
+                                    "$id": "#/properties/audio/items/properties/list/items/properties/type",
+                                    "type": "string",
+                                    "title": "The Type Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "audio_sample"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "identifier": {
+                                    "$id": "#/properties/audio/items/properties/list/items/properties/identifier",
+                                    "type": "string",
+                                    "title": "The Identifier Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "870970-basis:28242980"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "title": {
+                                    "$id": "#/properties/audio/items/properties/list/items/properties/title",
+                                    "type": "string",
+                                    "title": "The Title Schema",
+                                    "default": "",
+                                    "examples": [
+                                        "Djævlen går i Prada"
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "url": {
+                                    "$id": "#/properties/audio/items/properties/list/items/properties/url",
+                                    "type": "string",
+                                    "title": "The Url Schema",
+                                    "default": "",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "pattern": "^(.*)$"
+                                },
+                                "metadata": {
+                                    "$id": "#/properties/audio/items/properties/list/items/properties/metadata",
+                                    "type": "object",
+                                    "title": "The Metadata Schema",
+                                    "required": [
+                                        "length",
+                                        "filesize",
+                                        "format"
+                                    ],
+                                    "properties": {
+                                        "length": {
+                                            "$id": "#/properties/audio/items/properties/list/items/properties/metadata/properties/length",
+                                            "type": "null",
+                                            "title": "The Length Schema",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        },
+                                        "filesize": {
+                                            "$id": "#/properties/audio/items/properties/list/items/properties/metadata/properties/filesize",
+                                            "type": "null",
+                                            "title": "The Filesize Schema",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        },
+                                        "format": {
+                                            "$id": "#/properties/audio/items/properties/list/items/properties/metadata/properties/format",
+                                            "type": "null",
+                                            "title": "The Format Schema",
+                                            "default": null,
+                                            "examples": [
+                                                null
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
