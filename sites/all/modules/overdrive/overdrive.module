@@ -191,7 +191,8 @@ function overdrive_loan_redirect_ajax(TingEntity $entity) {
       'modal_id' => 'overdrive-message',
     );
 
-    // Display pop-up.
+    // Display pop-up and add JS to handle cancel button.
+    drupal_add_js(drupal_get_path('module', 'reol_base') . '/js/reol_base.js');
     $commands[] = ajax_command_ding_popup($modal_id, t('Loan'), theme('overdrive_message', $vars));
 
   }
