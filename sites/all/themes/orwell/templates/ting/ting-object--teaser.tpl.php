@@ -18,14 +18,14 @@
       <?php echo render($content['group_ting_object_teaser_left']['ting_cover']); ?>
     </div>
     <div class="material__content text">
-      <div class="material__language">
-        <?php echo $object->getLanguage() ?>
-      </div>
       <div class="material__title">
         <?php echo render($content['group_ting_object_teaser_right']['ting_title']); ?>
       </div>
       <div class="material__author">
         <?php echo render($content['group_ting_object_teaser_right']['ting_author']); ?>
+      </div>
+      <div class="material__language">
+        <?php echo $object->getLanguage() ?>
       </div>
       <div class="material__abstract">
         <?php echo render($content['group_ting_object_teaser_right']['ting_abstract']); ?>
