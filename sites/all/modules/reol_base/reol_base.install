@@ -514,3 +514,13 @@ function reol_base_update_7148() {
 function reol_base_update_7149() {
   features_revert_module('ding_ting_frontend');
 }
+
+/**
+ * Disable autologout module.
+ */
+function reol_base_update_7150() {
+  // It don't makes sens to auto logout users will listening or reading an online book.
+  if (module_exists('autologout')) {
+    module_disable(array('autologout'), FALSE);
+  }
+}
