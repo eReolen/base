@@ -2012,9 +2012,6 @@ fieldset {
   .page-search .search-form__input--text::-webkit-input-placeholder {
     color: #fff;
   }
-  .page-search .search-form__input--text:-ms-input-placeholder {
-    color: #fff;
-  }
   .page-search .search-form__input--text::-ms-input-placeholder {
     color: #fff;
   }
@@ -3203,6 +3200,23 @@ html.js input.form-autocomplete {
   }
 }
 
+.material__aside {
+  float: left;
+  width: 100%;
+}
+
+@media all and (min-width: 26em) {
+  .material__aside {
+    width: 33.333336%;
+  }
+}
+
+@media all and (min-width: 49em) {
+  .material__aside {
+    width: 33.333336%;
+  }
+}
+
 .material__cover {
   width: 100%;
   float: left;
@@ -3218,7 +3232,6 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 26em) {
   .material__cover {
-    width: 50%;
     margin-bottom: 0;
   }
   .material__cover img {
@@ -3228,7 +3241,6 @@ html.js input.form-autocomplete {
 
 @media all and (min-width: 49em) {
   .material__cover {
-    width: 33.33333%;
     padding-right: 2.5rem;
   }
 }
@@ -3245,7 +3257,7 @@ html.js input.form-autocomplete {
 }
 
 .material__content {
-  width: 100%;
+  width: 66.666663%;
   float: left;
   margin-bottom: 1.2rem;
 }
@@ -3253,7 +3265,7 @@ html.js input.form-autocomplete {
 @media all and (min-width: 26em) {
   .material__content {
     padding-left: 2rem;
-    width: 50%;
+    width: 100%;
     margin-bottom: 0;
   }
 }
@@ -3306,6 +3318,12 @@ html.js input.form-autocomplete {
   line-height: 1.8rem;
   color: #787878;
   margin-bottom: 1.2rem;
+  position: relative;
+  max-height: 140px;
+  overflow: hidden;
+  -webkit-transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+  -o-transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+  transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
 }
 
 .material__abstract strong {
@@ -3320,6 +3338,65 @@ html.js input.form-autocomplete {
   .material__abstract {
     display: block;
   }
+}
+
+.page-ting-object .material__abstract {
+  max-height: 100%;
+  overflow: visible;
+}
+
+.material__abstract.showmore-btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 30px;
+  width: 100%;
+}
+
+.material__abstract.showmore:before {
+  content: "";
+  height: 30px;
+  width: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(230, 230, 230, 0)), to(#e6e6e6));
+  background: -webkit-linear-gradient(top, rgba(230, 230, 230, 0) 0%, #e6e6e6 100%);
+  background: -o-linear-gradient(top, rgba(230, 230, 230, 0) 0%, #e6e6e6 100%);
+  background: linear-gradient(to bottom, rgba(230, 230, 230, 0) 0%, #e6e6e6 100%);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.material__abstract.showmore:after {
+  font-family: "icomoon";
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  content: "";
+  position: absolute;
+  right: calc(50% - 12px);
+  bottom: 0;
+  font-size: 1.5rem;
+  width: 24px;
+  cursor: pointer;
+}
+
+.material__abstract.showmore.visible {
+  max-height: 100%;
+  overflow: visible;
+  padding-bottom: 30px;
+  -webkit-transition: max-height .5s ease-out;
+  -o-transition: max-height .5s ease-out;
+  transition: max-height .5s ease-out;
+}
+
+.material__abstract.showmore.visible:after {
+  content: "";
 }
 
 .material__subjects {
@@ -3385,6 +3462,7 @@ html.js input.form-autocomplete {
 
 .material__also_available {
   font-family: "SourceSansPro", sans-serif;
+  margin-bottom: 1.2rem;
 }
 
 .material__also_available .item-list,
@@ -3400,7 +3478,7 @@ html.js input.form-autocomplete {
 @media all and (min-width: 49em) {
   .material__buttons {
     float: left;
-    width: 33.33333%;
+    width: 100%;
     clear: left;
     padding-right: 2.5rem;
     margin-bottom: 3.5rem;
