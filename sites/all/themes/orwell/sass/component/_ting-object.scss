@@ -128,23 +128,17 @@ $material--teaser__margin-bottom: 1.2rem;
 
   &__abstract {
     @include text-paragraph;
-    margin-bottom: $material--teaser__margin-bottom;
+    padding-bottom: 40px;
     @include grid-media($medium) {
       display: block;
     }
     position: relative;
-    max-height: 147px;
-    overflow: hidden;
-    transition: max-height .3s cubic-bezier(0, 1, 0, 1);
+    .field {
+      max-height: 147px;
+      overflow: hidden;
+      transition: max-height .3s cubic-bezier(0, 1, 0, 1);
+    }
     &.showmore {
-      padding-bottom: 30px;
-      &-btn {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        height: 30px;
-        width: 100%;
-      }
       &:before {
         content: "";
         height: 30px;
@@ -166,9 +160,11 @@ $material--teaser__margin-bottom: 1.2rem;
         cursor: pointer;
       }
       &.visible {
-        max-height: 100%;
-        overflow: visible;
-        transition: max-height .5s ease-out;
+        .field {
+          max-height: 100%;
+          overflow: visible;
+          transition: max-height .5s ease-out;
+        }
         &:after {
           content: $icon__chevron-up;
         }
