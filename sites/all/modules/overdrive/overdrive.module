@@ -143,6 +143,7 @@ function overdrive_ding_entity_buttons($type, $entity) {
     }
 
     $classes[] = 'use-ajax';
+    $classes[] = 'btn-block';
     $link = 'ting/object/' . $entity->id . '/overdrive';
 
     // Create the button.
