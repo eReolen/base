@@ -185,11 +185,53 @@ function reol_link_paragraph_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'paragraphs_item-linkbox-field_link_text'.
+  $field_instances['paragraphs_item-linkbox-field_link_text'] = array(
+    'bundle' => 'linkbox',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Vises kun i app\'en.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+      'paragraphs_editor_preview' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'paragraphs_item',
+    'field_name' => 'field_link_text',
+    'label' => 'Tekst til app',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 80,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 5,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Farve');
   t('Grafik');
   t('Link');
+  t('Tekst til app');
+  t('Vises kun i app\'en.');
 
   return $field_instances;
 }
