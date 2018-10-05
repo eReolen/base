@@ -129,9 +129,14 @@ function reol_base_entity_load($entities, $type) {
       continue;
     }
     // Provide a 'isbn_' local id if the ding_entity_id matches our own fake ID.
-    if (isset($entity->ding_entity_id) &&
-        $isbn = reol_base_fake_id($entity->ding_entity_id)) {
+    if (isset($entity->ding_entity_id) && $isbn = reol_base_fake_id($entity->ding_entity_id)) {
       $local_id = 'isbn_' . $isbn;
+
+      // As this is a fake entity, will try to get the title from publizon.
+      $product = publizon_load($local_id);
+      if ($product) {
+        $entity->reply->record['dc:title'][""][0] = $product->title;
+      }
     }
     // When have to check all the way down, as chain might be broken
     // somwhere. Only touch localId if we have the right value for it.
@@ -292,7 +297,7 @@ function reol_base_preprocess_material_item(&$variables) {
   $ding_entity_id = $entity->ding_entity_id;
   $ting_entity = ding_entity_load($ding_entity_id);
 
-  if (!$ting_entity) {
+  if (reol_base_fake_id($ting_entity->ding_entity_id)) {
     // Material not found in the well, fake it, we need it to call
     // ding_entity_buttons. In retrospect, ding_entity_buttons isn't such a
     // good fit as we've discovered we need to handle loans/reservations
