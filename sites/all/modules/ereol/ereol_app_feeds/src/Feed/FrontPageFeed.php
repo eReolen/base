@@ -51,6 +51,10 @@ class FrontPageFeed extends AbstractFeed {
   private function getThemes(array $paragraphIds) {
     $themes = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ALIAS_THEME_LIST, $paragraphIds);
 
+    // Preprend "Latest news".
+    $latestNews = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL, $paragraphIds);
+    $themes = array_merge($latestNews, $themes);
+
     return array_values(array_filter($themes, function ($theme) {
       return isset($theme['list']) && $theme['list'];
     }));
