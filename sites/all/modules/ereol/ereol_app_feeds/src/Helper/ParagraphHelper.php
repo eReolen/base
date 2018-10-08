@@ -39,7 +39,6 @@ class ParagraphHelper {
   const PARAGRAPH_ALIAS_CAROUSEL = self::PARAGRAPH_MATERIAL_CAROUSEL;
   const PARAGRAPH_ALIAS_EDITOR = self::PARAGRAPH_RECOMMENDED_MATERIAL;
   const PARAGRAPH_ALIAS_LINK = self::PARAGRAPH_LINKBOX;
-  const PARAGRAPH_ALIAS_THEME = self::PARAGRAPH_ARTICLE_CAROUSEL;
   const PARAGRAPH_ALIAS_THEME_LIST = self::PARAGRAPH_PICKED_ARTICLE_CAROUSEL;
 
   const VIEW_DOTTED = 'dotted';
@@ -246,8 +245,8 @@ class ParagraphHelper {
       case self::PARAGRAPH_SPOTLIGHT_BOX:
         return $this->getSpotlightBox();
 
-      case self::PARAGRAPH_ALIAS_THEME:
-        return $this->getTheme($paragraph);
+      case self::PARAGRAPH_ARTICLE_CAROUSEL:
+        return $this->getArticleCarousel($paragraph);
 
       case self::PARAGRAPH_ALIAS_THEME_LIST:
         return $this->getThemeList($paragraph);
@@ -280,14 +279,31 @@ class ParagraphHelper {
   }
 
   /**
-   * Get theme data.
+   * Get article carousel (aka "Latest news").
    */
-  private function getTheme(\ParagraphsItemEntity $paragraph) {
+  private function getArticleCarousel(\ParagraphsItemEntity $paragraph) {
+    $list = [];
+    // Cf. ereol_article_get_articles().
+    $query = new EntityFieldQuery();
+    $count = variable_get('ereol_app_feeds_max_news_count', 6);
+
+    $entityType = NodeHelper::ENTITY_TYPE_NODE;
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'article')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->propertyOrderBy('created', 'DESC')
+      ->range(0, $count);
+    $result = $query->execute();
+    if (isset($result[$entityType])) {
+      $nodes = entity_load($entityType, array_keys($result[$entityType]));
+      $list = array_values(array_map([$this, 'getThemeData'], $nodes));
+    }
+
     return [
       'guid' => $this->getGuid($paragraph),
       'type' => $this->getType($paragraph),
       'view' => $this->getView($paragraph),
-      'list' => $this->getThemeList($paragraph),
+      'list' => $list,
     ];
   }
 
@@ -609,9 +625,7 @@ class ParagraphHelper {
       case self::PARAGRAPH_SPOTLIGHT_BOX:
         return 'spotlight_box';
 
-      case self::PARAGRAPH_ALIAS_THEME:
-        return 'theme';
-
+      case self::PARAGRAPH_ARTICLE_CAROUSEL:
       case self::PARAGRAPH_ALIAS_THEME_LIST:
         return 'theme_list';
 
@@ -639,7 +653,7 @@ class ParagraphHelper {
       case self::PARAGRAPH_ALIAS_LINK:
       case self::PARAGRAPH_REVIEW:
       case self::PARAGRAPH_SPOTLIGHT_BOX:
-      case self::PARAGRAPH_ALIAS_THEME:
+      case self::PARAGRAPH_ARTICLE_CAROUSEL:
       case self::PARAGRAPH_VIDEO:
         return self::VIEW_DOTTED;
     }
@@ -680,7 +694,7 @@ class ParagraphHelper {
         return self::PARAGRAPH_SPOTLIGHT_BOX;
 
       case 'theme':
-        return self::PARAGRAPH_ALIAS_THEME;
+        return self::PARAGRAPH_ARTICLE_CAROUSEL;
 
       case 'theme_list':
         return self::PARAGRAPH_ALIAS_THEME_LIST;
