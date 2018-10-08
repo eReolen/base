@@ -29,7 +29,6 @@ class FrontPageFeed extends AbstractFeed {
     $data = [
       'carousels' => $this->getCarousels($paragraphIds),
       'themes' => $this->getThemes($paragraphIds),
-      'links' => $this->getLinks($paragraphIds),
       'reviews' => $this->getReviews($paragraphIds),
       'editor' => $this->getEditors($paragraphIds),
       'videos' => $this->getVideos($paragraphIds),
