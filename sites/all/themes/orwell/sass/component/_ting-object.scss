@@ -103,7 +103,7 @@ $material--teaser__margin-bottom: 1.2rem;
     font-weight: 600;
     font-size: 1rem;
     line-height: $line-height__small;
-    margin-bottom: $material--teaser__margin-bottom;
+    margin-bottom: $material--teaser__margin-bottom / 2;
 
     a {
       text-decoration: none;
@@ -111,33 +111,39 @@ $material--teaser__margin-bottom: 1.2rem;
     }
   }
 
+  &__language {
+    color: $color__gray;
+    line-height: $line-height__small;
+    font-size: 14px;
+    margin-bottom: $material--teaser__margin-bottom / 2;
+
+    &::before {
+      @include icon;
+      color: $color__font-gray;
+      font-size: 14px;
+      margin-right: 0.2rem;
+      content: $icon__language;
+    }
+  }
+
   &__abstract {
     @include text-paragraph;
-    margin-bottom: $material--teaser__margin-bottom;
+    padding-bottom: 40px;
     @include grid-media($medium) {
       display: block;
     }
     position: relative;
-    max-height: 140px;
-    overflow: hidden;
-    transition: max-height .3s cubic-bezier(0, 1, 0, 1);
-    .page-ting-object & {
-      max-height: 100%;
-      overflow: visible;
+    .field {
+      max-height: 147px;
+      overflow: hidden;
+      transition: max-height .3s cubic-bezier(0, 1, 0, 1);
     }
     &.showmore {
-      &-btn {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        height: 30px;
-        width: 100%;
-      }
       &:before {
         content: "";
         height: 30px;
         width: 100%;
-        background: linear-gradient(to bottom, rgba(230,230,230,0) 0%,rgba(230,230,230,1) 100%);
+        border-top: 1px solid #dcdcdc;
         position: absolute;
         right: 0;
         bottom: 0;
@@ -154,10 +160,11 @@ $material--teaser__margin-bottom: 1.2rem;
         cursor: pointer;
       }
       &.visible {
-        max-height: 100%;
-        overflow: visible;
-        padding-bottom: 30px;
-        transition: max-height .5s ease-out;
+        .field {
+          max-height: 100%;
+          overflow: visible;
+          transition: max-height .5s ease-out;
+        }
         &:after {
           content: $icon__chevron-up;
         }

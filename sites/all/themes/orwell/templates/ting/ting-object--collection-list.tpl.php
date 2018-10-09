@@ -14,15 +14,14 @@
     <?php echo render($content['group_ting_left_col_collection']['ting_cover']); ?>
   </div>
   <div class="material__content text">
-    <div class="material__rating">
-      <?php echo render($content['group_ting_right_col_collection']['ding_entity_rating_action']); ?>
-      <?php echo render($content['group_ting_right_col_collection']['ding_entity_rating_result']); ?>
-    </div>
     <div class="material__title">
       <?php echo render($content['group_ting_right_col_collection']['ting_title']); ?>
     </div>
     <div class="material__author">
       <?php echo render($content['group_ting_right_col_collection']['ting_author']); ?>
+    </div>
+    <div class="material__language">
+      <?php echo $object->getLanguage() ?>
     </div>
     <div class="material__abstract">
       <?php echo render($content['group_ting_right_col_collection']['ting_abstract']); ?>

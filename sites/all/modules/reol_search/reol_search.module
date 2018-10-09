@@ -32,6 +32,11 @@ function reol_search_conditions_callback(&$keys) {
   $search_keys = 'term.publisher="' . str_replace('"', '', $keys) . '"';
   $keys = '(' . $search_string . ') or ' . $search_keys;
 
+  // Allow mappings for english and danish searches.
+  if (module_exists('overdrive')) {
+    $keys .= overdrive_search_mapping($search_string);
+  }
+
   return $conditions;
 }
 
