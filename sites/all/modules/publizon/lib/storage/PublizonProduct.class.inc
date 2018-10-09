@@ -9,6 +9,7 @@ class PublizonProduct extends Publizon {
     'coverImage' => NULL,
     'format' => NULL,
     'category' => NULL,
+    'title' => NULL,
   );
 
   /**
@@ -30,6 +31,7 @@ class PublizonProduct extends Publizon {
    *   Publizon XML representation of a loan.
    */
   private function parse(SimpleXMLElement $item) {
+    $this->title = (string) $item->title;
     $this->coverImage = (string) $item->coverimage;
     $this->format = new StdClass();
     $this->format->id = (int) $item->formats->format_id;

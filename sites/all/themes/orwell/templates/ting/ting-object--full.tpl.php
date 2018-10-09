@@ -16,8 +16,16 @@
 <?php else : ?>
   <div class="content-wrapper content-wrapper--material">
     <div class="material material--full<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
-      <div class="material__cover">
-        <?php echo render($content['group_ting_object_left_column']['ting_cover']); ?>
+      <div class="material__aside">
+        <div class="material__cover">
+          <?php echo render($content['group_ting_object_left_column']['ting_cover']); ?>
+        </div>
+        <div class="material__buttons material__buttons--desktop mobile-only">
+          <?php echo render($content['group_ting_object_left_column']['ding_entity_buttons']); ?>
+        </div>
+        <div class="material__buttons desktop-only">
+          <?php echo render($content['group_ting_object_right_column']['ding_entity_buttons']); ?>
+        </div>
       </div>
       <div class="material__content">
         <div class="material__rating">
@@ -45,15 +53,9 @@
             <?php echo render($also_available); ?>
           </div>
         <?php endif; ?>
-        <div class="material__buttons material__buttons--desktop mobile-only">
-          <?php echo render($content['group_ting_object_right_column']['ding_entity_buttons']); ?>
-        </div>
       </div>
       <div class="material__series mobile-only">
         <?php echo render($content['group_ting_object_right_column']['ting_series']); ?>
-      </div>
-      <div class="material__buttons desktop-only">
-        <?php echo render($content['group_ting_object_right_column']['ding_entity_buttons']); ?>
       </div>
       <div class="detail mobile-only">
         <div class="material__abstract text">

@@ -15,7 +15,7 @@ gulp.task('sass', function () {
     .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths: [].concat(neatRequire, bourbonRequire),
-      outputStyle: 'expanded'
+      outputStyle: 'compressed'
     }).on('error', notify.onError(function (error) {
       return 'SASS error: ' + error.message;
     })))

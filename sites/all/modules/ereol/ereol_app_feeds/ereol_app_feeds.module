@@ -105,6 +105,15 @@ function ereol_app_feeds_admin() {
     '#required' => TRUE,
   ];
 
+  $form['ereol_app_feeds_max_news_count'] = [
+    '#type' => 'textfield',
+    '#title' => t('Max number items in latest news'),
+    '#default_value' => variable_get('ereol_app_feeds_max_news_count', 6),
+    '#element_validate' => ['element_validate_integer_positive'],
+    '#description' => t('The maximum number of items in the latest news list'),
+    '#required' => TRUE,
+  ];
+
   $form['ereol_app_feeds_feeds'] = [
     '#type' => 'fieldset',
     '#title' => t('Feeds'),

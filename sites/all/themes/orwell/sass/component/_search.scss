@@ -453,12 +453,6 @@ html.js input.form-autocomplete {
         width: 100%;
       }
 
-      .material__abstract,
-      .material__subjects,
-      .material__series {
-        display: none;
-      }
-
       // Keep in sync with .field-name-ting-title in _ting-object-compact.scss.
       .material__title {
         margin: 0;
@@ -467,7 +461,7 @@ html.js input.form-autocomplete {
           font-family: $font-regular;
           font-size: 16px;
           letter-spacing: .5px;
-          margin-top: 25px;
+          margin-top: 6px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -486,6 +480,18 @@ html.js input.form-autocomplete {
         letter-spacing: .5px;
         margin: 0;
         margin-top: 10px;
+      }
+
+      .material__language {
+        font-family: $font-light;
+        font-size: 14px;
+
+        &::before {
+          @include icon;
+          color: $color__font-gray;
+          font-size: 12px;
+          content: $icon__language;
+        }
       }
     }
   }

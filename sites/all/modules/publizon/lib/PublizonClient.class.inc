@@ -18,7 +18,6 @@ abstract class PublizonClient {
     'libraray_list' => 'getlibrarylist.asmx',
     'library_user_order_list' => 'getlibraryuserorderlist.asmx',
     'removed_product_list' => 'getremovedproductlist.asmx',
-    'library_profile' => 'getlibraryinfo.asmx',
     'loan_status' => 'getproductloanstatus.asmx',
     'checklist' => 'Checklists.asmx',
     'library_profile' => 'getlibraryinfo.asmx',
