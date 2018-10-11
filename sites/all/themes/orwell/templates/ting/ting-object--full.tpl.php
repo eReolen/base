@@ -20,8 +20,9 @@
         <div class="material__cover">
           <?php echo render($content['group_ting_object_left_column']['ting_cover']); ?>
         </div>
+
         <div class="material__buttons material__buttons--desktop mobile-only">
-          <?php echo render($content['group_ting_object_left_column']['ding_entity_buttons']); ?>
+          <?php echo render($content['group_ting_object_right_column']['ding_entity_buttons']); ?>
         </div>
         <div class="material__buttons desktop-only">
           <?php echo render($content['group_ting_object_right_column']['ding_entity_buttons']); ?>
