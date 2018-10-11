@@ -335,9 +335,9 @@ class ParagraphHelper {
    * @var array
    */
   private static $themeTypes = [
-    'article' => 'article_theme',
+    'article' => 'theme',
     'author_portrait' => 'author_theme',
-    'news' => 'news_theme',
+    'news' => 'theme',
   ];
 
   /**
