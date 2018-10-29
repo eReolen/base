@@ -1305,20 +1305,6 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_title']['display']['compact']['settings']['prefix_type'] = 'no';
     $fields['ting_object-ting_object-ting_title']['display']['compact']['label'] = 'hidden';
   }
-
-  // Remove rating widget in all displays.
-  if (isset($fields['ting_object-ting_object-ding_entity_rating_action'])) {
-    foreach (array_keys($fields['ting_object-ting_object-ding_entity_rating_action']['display']) as $display) {
-      $fields['ting_object-ting_object-ding_entity_rating_action']['display'][$display]['type'] = 'hidden';
-    }
-  }
-
-  // Remove rating display in all displays.
-  if (isset($fields['ting_object-ting_object-ding_entity_rating_result'])) {
-    foreach (array_keys($fields['ting_object-ting_object-ding_entity_rating_result']['display']) as $display) {
-      $fields['ting_object-ting_object-ding_entity_rating_result']['display'][$display]['type'] = 'hidden';
-    }
-  }
 }
 
 /**

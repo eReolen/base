@@ -322,34 +322,3 @@ function reol_frontend_drupal_goto_alter(&$path, &$options) {
     unset($options['fragment']);
   }
 }
-
-/**
- * Implements hook_module_implements_alter().
- *
- * Remove ding_list buttons from materials.
- *
- * Adjusts hooks so we get in after
- * ting_search_autocomplete_form_search_block_form_alter().
- */
-function reol_frontend_module_implements_alter(&$implementations, $hook) {
-  if ($hook == 'ding_entity_buttons') {
-    unset($implementations['ding_list']);
-  }
-
-  // You'd think we should look for form_search_block_form_alter, but, no.
-  if ($hook == 'form_alter' &&
-    isset($implementations['reol_frontend'])) {
-    $group = $implementations['reol_frontend'];
-    unset($implementations['reol_frontend']);
-    $implementations['reol_frontend'] = $group;
-  }
-}
-
-/**
- * Preprocess materials_item.
- *
- * Remove the rating widget added by ding_entity_rating.
- */
-function reol_frontend_preprocess_material_item(&$variables) {
-  unset($variables['information']['ding_entity_rating']);
-}
