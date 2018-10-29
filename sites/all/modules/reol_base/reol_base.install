@@ -38,6 +38,25 @@ function reol_base_install() {
 }
 
 /**
+ * Delete {system} records for a module.
+ *
+ * This function is to be used when removing a module from the code-base. It's
+ * needed because uninstalling a module that don't exists in code is not
+ * possible.
+ *
+ * Remember to run the clean-up that the module had in it's hook_uninstall
+ * before calling this function.
+ *
+ * @see https://www.drupal.org/node/2487215
+ */
+function reol_base_remove_module($module) {
+  db_delete('system')
+    ->condition('name', $module)
+    ->condition('type', 'module')
+    ->execute();
+}
+
+/**
  * Disable unused modules.
  */
 function reol_base_update_7101() {
@@ -523,4 +542,206 @@ function reol_base_update_7150() {
   if (module_exists('autologout')) {
     module_disable(array('autologout'), FALSE);
   }
+}
+
+/**
+ * Clean up: admin menu module.
+ */
+function reol_base_update_7151() {
+  reol_base_remove_module('admin_menu');
+  reol_base_remove_module('admin_menu_toolbar');
+
+  // Delete variables.
+  variable_del('admin_menu_components');
+  variable_del('admin_menu_margin_top');
+  variable_del('admin_menu_position_fixed');
+  variable_del('admin_menu_tweak_modules');
+  variable_del('admin_menu_tweak_tabs');
+  variable_del('admin_menu_show_all');
+  variable_del('admin_menu_display');
+  variable_del('admin_menu_cache_server');
+  variable_del('admin_menu_cache_client');
+  // Unused variables still should be deleted.
+  variable_del('admin_menu_devel_modules');
+  variable_del('admin_menu_devel_modules_enabled');
+  variable_del('admin_menu_devel_modules_skip');
+}
+
+/**
+ * Clean up: ding campaign.
+ */
+function reol_base_update_7152() {
+  reol_base_remove_module('ding_campaign');
+
+  variable_del('ding_campaign_node_types');
+
+  db_drop_table('ding_campaign');
+  db_drop_table('ding_campaign_rules');
+
+  // First, delete nodes
+  $type =  'ding_campaign';
+  $results = db_select('node', 'n')
+    ->fields('n', array('nid'))
+    ->condition('type', $type)
+    ->execute();
+
+  $nids = array();
+  foreach ($results as $result) {
+    $nids[] = $result->nid;
+  }
+  if (!empty($nids)) {
+    node_delete_multiple($nids);
+  }
+  // Then, delete content type
+  if (node_type_load($type)) {
+    node_type_delete($type);
+    variable_del('node_preview_' . $type);
+  }
+
+  node_types_rebuild();
+  menu_rebuild();
+}
+
+/**
+ * Clean up: ding ekurser.
+ */
+function reol_base_update_7153() {
+  reol_base_remove_module('ding_ekurser');
+
+  // Clear cache.
+  cache_clear_all('ding_ekurser_subject_facets', 'cache');
+
+  // Disable ding_ekurser search module.
+  $search_modules = variable_get('search_active_modules');
+  if (isset($search_modules['ding_ekurser'])) {
+    unset($search_modules['ding_ekurser']);
+    variable_set('search_active_modules', $search_modules);
+  }
+}
+
+/**
+ * Clean up: geo data.
+ */
+function reol_base_update_7154() {
+  reol_base_remove_module('geofield');
+  reol_base_remove_module('geocoder');
+  reol_base_remove_module('geophp');
+  reol_base_remove_module('leaflet');
+  reol_base_remove_module('leaflet_views');
+  reol_base_remove_module('proj4js');
+}
+
+/**
+ * Clean up: Opening hours
+ */
+function reol_base_update_7155() {
+  reol_base_remove_module('opening_hours');
+
+  variable_del('admin_theme_opening_hours_opening_hours');
+  db_query("DELETE FROM {variable} WHERE name LIKE 'opening_hours_%'");
+
+  db_drop_table('opening_hours');
+}
+
+/**
+ * Clean up: ECK
+ */
+function reol_base_update_7156() {
+  reol_base_remove_module('eck');
+
+  db_drop_table('cache_eck');
+  db_drop_table('eck_entity_type');
+  db_drop_table('eck_bundle');
+
+  variable_del('eck_clear_caches');
+}
+
+/**
+ * Clean up: modules
+ */
+function reol_base_update_7157() {
+  reol_base_remove_module('autologout');
+  reol_base_remove_module('reol_shared_frontend');
+  reol_base_remove_module('ting_proxy');
+  reol_base_remove_module('addressfield');
+  reol_base_remove_module('tipsy');
+  variable_del('tipsy');
+}
+
+/**
+ * Clean up: P2 - open list.
+ */
+function reol_base_update_7158() {
+
+
+  reol_base_remove_module('ding_interaction');
+  reol_base_remove_module('ding_interaction_manual');
+
+  reol_base_remove_module('ding_list_installer');
+  reol_base_remove_module('ding_list');
+  db_drop_field('users', 'openlist_modified');
+
+  reol_base_remove_module('ding_messagding_entity_rating_loan_historye');
+  db_drop_table('ding_message_check');
+
+  reol_base_remove_module('ding_notifications');
+  reol_base_remove_module('ding_serendipity');
+  variable_del('ding_serendipity_enable_cache');
+  variable_del('ding_serendipity_cache_lifetime');
+  variable_del('ding_serendipity_isslow_timeout');
+  variable_del('ding_serendipity_search_string_final');
+  variable_del('ding_serendipity_weights');
+  variable_del('ding_frontpage_serendipity');
+
+  reol_base_remove_module('ding_serendipity_fallback');
+  reol_base_remove_module('ding_serendipity_lists');
+  reol_base_remove_module('ding_serendipity_site');
+  reol_base_remove_module('ding_serendipity_taxonomy_term');
+  reol_base_remove_module('ding_serendipity_ting_entity');
+  reol_base_remove_module('ding_sharer');
+  reol_base_remove_module('ding_user_consent');
+  variable_del('ding_user_consent_loan_history_store_description_link');
+
+  reol_base_remove_module('ding_p2_installer');
+  reol_base_remove_module('ting_openlist');
+  variable_del('ting_openlist_developer');
+  variable_del('ting_openlist_log');
+  variable_del('ting_openlist_wsdl');
+  variable_del('ting_library_code');
+  variable_del('ting_openlist_prefix');
+  variable_del('ting_openlist_wsdl_cache');
+  variable_del('ting_openlist_log_details');
+  variable_del('ting_openlist_developer');
+  db_drop_field('users', 'openlist_uid');
+
+  reol_base_remove_module('message');
+  variable_del('message_delete_cron_limit');
+  variable_del('message_purge_enable');
+  variable_del('message_purge_quota');
+  variable_del('message_purge_days');
+  variable_del('message_delete_on_entity_delete');
+
+  reol_base_remove_module('simplevar');
+  db_drop_table('simplevar');
+
+  reol_base_remove_module('ding_message_p2_installer');
+  reol_base_remove_module('ding_entity_rating_loan_history');
+
+  reol_base_remove_module('ding_entity_rating');
+  variable_del('ding_entity_rating_popular_on_frontpage');
+}
+
+/**
+ * Clean up: Dynamic background.
+ */
+function reol_base_update_7159() {
+  reol_base_remove_module('dynamic_background');
+
+  db_drop_table('dynamic_background_usage');
+  db_drop_table('dynamic_background_images');
+
+  variable_del('dynamic_background_setting');
+  variable_del('dynamic_background_images');
+  variable_del('dynamic_background_image_style');
+  variable_del('dynamic_background_weight');
 }
