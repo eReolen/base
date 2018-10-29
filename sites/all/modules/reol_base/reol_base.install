@@ -672,8 +672,6 @@ function reol_base_update_7157() {
  * Clean up: P2 - open list.
  */
 function reol_base_update_7158() {
-
-
   reol_base_remove_module('ding_interaction');
   reol_base_remove_module('ding_interaction_manual');
 
