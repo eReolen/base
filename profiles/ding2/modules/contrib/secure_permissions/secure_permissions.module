@@ -177,31 +177,12 @@ function secure_permissions_get_roles() {
 }
 
 /**
- * Get all roles stored by Drupal.
- */
-function secure_permissions_get_existing_roles() {
-  // Function user_roles fetches translated names
-  // for anonymous and authenticated roles.
-  // which leads to inconsistencies in rebuilding.
-  // Query it thus adapted from core user_roles.
-  $query = db_select('role', 'r');
-  $query->fields('r', array('rid', 'name'));
-  $query->orderBy('name');
-  $result = $query->execute();
-  $roles = array();
-  foreach ($result as $role) {
-    $roles[$role->rid] = $role->name;
-  }
-  return $roles;
-}
-
-/**
  * Build the roles table correctly.
  */
 function secure_permissions_build_roles() {
   // Get the currently defined roles for the site, and sort() them so
   // we can diff the arrays properly.
-  $roles = secure_permissions_get_existing_roles();
+  $roles = user_roles();
   sort($roles);
   // Get the roles defined by this module's hook.
   $secure_roles = secure_permissions_get_roles();
@@ -213,9 +194,12 @@ function secure_permissions_build_roles() {
   $remove_roles = array_diff($roles, $secure_roles);
   // Add new roles.
   foreach ($new_roles as $rid => $name) {
-    $role = new stdClass();
-    $role->name = $name;
-    user_role_save($role);
+    $role = user_role_load_by_name($name);
+    if (empty($role)) {
+      $role = new stdClass();
+      $role->name = $name;
+      user_role_save($role);
+    }
   }
   // Delete old roles.
   $omit = array(DRUPAL_ANONYMOUS_RID, DRUPAL_AUTHENTICATED_RID);
@@ -242,7 +226,7 @@ function secure_permissions_build_permissions() {
     return;
   }
   // Get the active roles on the site.
-  $roles = secure_permissions_get_existing_roles();
+  $roles = user_roles();
   $admin_rid = variable_get('user_admin_role', 0);
   // Do not touch the administrative role.
   if (!empty($admin_rid) && isset($roles[$admin_rid])) {
@@ -486,7 +470,7 @@ EOT;
 
   $output .= 'function secure_permissions_data_secure_permissions_roles() {';
   // Get roles.
-  $roles = secure_permissions_get_existing_roles();
+  $roles = user_roles();
   $admin_rid = variable_get('user_admin_role', 0);
   // Do not export the administrative role.
   if (!empty($admin_rid) && isset($roles[$admin_rid])) {

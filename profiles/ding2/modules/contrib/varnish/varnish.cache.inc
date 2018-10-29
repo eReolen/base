@@ -16,23 +16,23 @@
 class VarnishCache implements DrupalCacheInterface {
   protected $bin;
 
-  public function __construct($bin) {
+  function __construct($bin) {
     $this->bin = $bin;
   }
 
-  public function get($cid) {
+  function get($cid) {
     return FALSE;
   }
 
-  public function getMultiple(&$cids) {
+  function getMultiple(&$cids) {
     return array();
   }
 
-  public function set($cid, $data, $expire = CACHE_PERMANENT) {
+  function set($cid, $data, $expire = CACHE_PERMANENT) {
     // We won't do anything here.
   }
 
-  public function clear($cid = NULL, $wildcard = FALSE) {
+  function clear($cid = NULL, $wildcard = FALSE) {
     global $user;
     // Check that we really want to do a cache flush.
     if (!module_exists('varnish') ||
@@ -43,9 +43,9 @@ class VarnishCache implements DrupalCacheInterface {
     if (empty($cid) && variable_get('varnish_cache_clear', 1)) {
       if (variable_get('cache_lifetime', 0)) {
         // We store the time in the current user's $user->cache variable which
-        // will be saved into the sessions bin by _drupal_session_write(). We
-        // then simulate that the cache was flushed for this user by not
-        // returning cached data that was cached before the timestamp.
+        // will be saved into the sessions bin by _drupal_session_write(). We then
+        // simulate that the cache was flushed for this user by not returning
+        // cached data that was cached before the timestamp.
         $user->cache = REQUEST_TIME;
 
         $cache_flush = variable_get('cache_flush_' . $this->bin, 0);
@@ -86,8 +86,7 @@ class VarnishCache implements DrupalCacheInterface {
     }
   }
 
-  public function isEmpty() {
+  function isEmpty() {
     return FALSE;
   }
-
 }
