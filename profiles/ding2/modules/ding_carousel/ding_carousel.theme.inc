@@ -9,7 +9,9 @@
  * Preprocess variables for ding_carousel.tpl.php.
  */
 function template_preprocess_ding_carousel(&$vars) {
+  // We need to load the non-minified version as with patch the library.
   libraries_load('slick', 'non-minified');
+
   $carousel = $vars['carousel'];
 
   $vars['items'] = array();
@@ -18,6 +20,17 @@ function template_preprocess_ding_carousel(&$vars) {
     $vars['items'][] = array(
       '#type' => 'ding_carousel_item',
       '#content' => $item,
+    );
+  }
+
+  // This is an empty carousel, which slick don't handle well (as in it will
+  // make a infinite loop and kill the browser). So e.g. 0 hits search
+  // carousel's are fixed here be simply placing a single placeholder slide.
+  if (empty($vars['items'])) {
+    $vars['items'][] = array(
+      '#type' => 'ding_carousel_item',
+      '#content' => $carousel['#placeholder'],
+      '#placeholder' => TRUE,
     );
   }
 
@@ -38,10 +51,16 @@ function template_preprocess_ding_carousel(&$vars) {
     'infinite' => FALSE,
     // Use variableWidth to allow the theme to control cover sizes.
     'variableWidth' => TRUE,
+    'outerEdgeLimit' => TRUE,
   );
 
-  if ($carousel['#hidden']) {
+  if (isset($carousel['#hidden']) && $carousel['#hidden']) {
     $vars['classes_array'][] = 'hidden';
+  }
+
+  // Set class if ting_objects are displayed without overlay.
+  if (theme_get_setting('ting_object_disable_overlay')) {
+    $vars['classes_array'][] = 'ting-object-no-overlay';
   }
 
   $vars['title'] = $carousel['#title'];
@@ -56,13 +75,11 @@ function template_preprocess_ding_tabbed_carousel(&$vars) {
   $tabbed_carousel = $vars['tabbed_carousel'];
 
   $vars['tabs'] = array();
-  $first = TRUE;
-  foreach ($tabbed_carousel['#tabs'] as $tab) {
-    if (!$first) {
+  foreach ($tabbed_carousel['#tabs'] as $index => $tab) {
+    if ($index !== 0) {
       $tab['#hidden'] = TRUE;
     }
     $vars['tabs'][] = $tab;
-    $first = FALSE;
   }
 
   $vars['transition'] = $tabbed_carousel['#transition'];
@@ -78,5 +95,10 @@ function template_preprocess_ding_carousel_item(&$vars) {
     $vars['classes_array'][] = 'placeholder';
   }
 
-  $vars['content'] = !empty($item['#content']) ? $item['#content'] : '';
+  $content = array(
+    '#type' => 'markup',
+    '#markup' => '<span class="icon-spinner"></span>',
+  );
+
+  $vars['content'] = !empty($item['#content']) ? $item['#content'] : $content;
 }
