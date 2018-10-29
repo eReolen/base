@@ -25,7 +25,7 @@ function reol_zero_search_result($index, $offset) {
   // that it's loading.
   if ($chunk['next_offset'] > -1) {
     $content .= theme('ting_search_carousel_collection',
-                array('collection' => ting_search_carousel_collection_placeholder()));
+                array('collection' => array()));
   }
 
   // Return JSON output.

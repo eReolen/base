@@ -24,7 +24,7 @@ function reol_feed_feeds_carousel() {
     $a_books = NULL;
     $offset = 0;
     do {
-      $results = ting_search_carousel_get_covers($search['query'], $offset, 50);
+      $results = ting_search_carousel_get_entities($search['query'], $offset, 50);
       foreach ($results['collections'] as $result) {
         $ting_object = ding_entity_load($result->id);
 
