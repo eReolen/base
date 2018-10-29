@@ -36,8 +36,6 @@ dependencies[] = ding_ting_frontend
 dependencies[] = ding_frontpage
 dependencies[] = ding_session_cache
 dependencies[] = bpi
-dependencies[] = ding_p2_installer
-dependencies[] = ding_campaign
 
 ; Cache/performance modules
 dependencies[] = entitycache

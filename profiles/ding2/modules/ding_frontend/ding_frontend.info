@@ -10,7 +10,6 @@ dependencies[] = conditional_styles
 dependencies[] = ctools
 dependencies[] = ding_page
 dependencies[] = ding_permissions
-dependencies[] = dynamic_background
 dependencies[] = entity
 dependencies[] = features
 dependencies[] = field_group
