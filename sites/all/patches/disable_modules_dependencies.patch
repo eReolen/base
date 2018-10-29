@@ -1,0 +1,45 @@
+diff --git a/profiles/ding2/ding2.info b/profiles/ding2/ding2.info
+index 80dd40d9..44d1d919 100644
+--- a/profiles/ding2/ding2.info
++++ b/profiles/ding2/ding2.info
+@@ -36,8 +36,6 @@ dependencies[] = ding_ting_frontend
+ dependencies[] = ding_frontpage
+ dependencies[] = ding_session_cache
+ dependencies[] = bpi
+-dependencies[] = ding_p2_installer
+-dependencies[] = ding_campaign
+ 
+ ; Cache/performance modules
+ dependencies[] = entitycache
+diff --git a/profiles/ding2/modules/ding_frontend/ding_frontend.info b/profiles/ding2/modules/ding_frontend/ding_frontend.info
+index de255767..772361bd 100644
+--- a/profiles/ding2/modules/ding_frontend/ding_frontend.info
++++ b/profiles/ding2/modules/ding_frontend/ding_frontend.info
+@@ -10,7 +10,6 @@ dependencies[] = conditional_styles
+ dependencies[] = ctools
+ dependencies[] = ding_page
+ dependencies[] = ding_permissions
+-dependencies[] = dynamic_background
+ dependencies[] = entity
+ dependencies[] = features
+ dependencies[] = field_group
+diff --git a/profiles/ding2/modules/ding_ting_frontend/ding_ting_frontend.info b/profiles/ding2/modules/ding_ting_frontend/ding_ting_frontend.info
+index 2494dad6..59a54423 100644
+--- a/profiles/ding2/modules/ding_ting_frontend/ding_ting_frontend.info
++++ b/profiles/ding2/modules/ding_ting_frontend/ding_ting_frontend.info
+@@ -5,7 +5,6 @@ package = Ding!
+ project = ding_ting_frontend
+ dependencies[] = ctools
+ dependencies[] = ding_availability
+-dependencies[] = ding_ekurser
+ dependencies[] = ding_entity
+ dependencies[] = ding_facetbrowser
+ dependencies[] = ding_frontend
+@@ -23,7 +22,6 @@ dependencies[] = ting
+ dependencies[] = ting_covers
+ dependencies[] = ting_fulltext
+ dependencies[] = ting_oembed_features
+-dependencies[] = ting_proxy
+ dependencies[] = ting_reference
+ dependencies[] = ting_relation
+ dependencies[] = ting_search
