@@ -1,0 +1,71 @@
+diff --git a/profiles/ding2/modules/ding_ting_frontend/ding_ting_frontend.features.field_instance.inc b/profiles/ding2/modules/ding_ting_frontend/ding_ting_frontend.features.field_instance.inc
+index b9128c61..a77a4a1e 100644
+--- a/profiles/ding2/modules/ding_ting_frontend/ding_ting_frontend.features.field_instance.inc
++++ b/profiles/ding2/modules/ding_ting_frontend/ding_ting_frontend.features.field_instance.inc
+@@ -501,7 +501,7 @@ function ding_ting_frontend_field_default_field_instances() {
+         'module' => 'ting',
+         'settings' => array(),
+         'type' => 'ting_author_default',
+-        'weight' => 2,
++        'weight' => 10,
+       ),
+       'default' => array(
+         'label' => 'hidden',
+@@ -596,10 +596,14 @@ function ding_ting_frontend_field_default_field_instances() {
+         'weight' => 1,
+       ),
+       'compact' => array(
+-        'label' => 'above',
+-        'settings' => array(),
+-        'type' => 'hidden',
+-        'weight' => 14,
++        'label' => 'hidden',
++        'module' => 'ting_covers',
++        'settings' => array(
++          'image_style' => 'ding_primary_large',
++          'link_type' => 'none',
++        ),
++        'type' => 'ting_cover_default',
++        'weight' => 1,
+       ),
+       'default' => array(
+         'label' => 'hidden',
+@@ -1071,7 +1075,7 @@ function ding_ting_frontend_field_default_field_instances() {
+           'prefix_type' => 'no',
+         ),
+         'type' => 'ting_title_default',
+-        'weight' => 1,
++        'weight' => 5,
+       ),
+       'default' => array(
+         'label' => 'hidden',
+diff --git a/profiles/ding2/modules/ting_material_details/ting_material_details.features.field_instance.inc b/profiles/ding2/modules/ting_material_details/ting_material_details.features.field_instance.inc
+index 07471aae..64ee26c6 100644
+--- a/profiles/ding2/modules/ting_material_details/ting_material_details.features.field_instance.inc
++++ b/profiles/ding2/modules/ting_material_details/ting_material_details.features.field_instance.inc
+@@ -884,10 +884,11 @@ function ting_material_details_field_default_field_instances() {
+         'weight' => 32,
+       ),
+       'compact' => array(
+-        'label' => 'above',
++        'label' => 'hidden',
++        'module' => 'ting_material_details',
+         'settings' => array(),
+-        'type' => 'hidden',
+-        'weight' => 30,
++        'type' => 'ting_details_single',
++        'weight' => 2,
+       ),
+       'default' => array(
+         'label' => 'inline',
+@@ -2077,9 +2078,8 @@ function ting_material_details_field_default_field_instances() {
+       ),
+       'compact' => array(
+         'label' => 'hidden',
+-        'module' => 'ting_material_details',
+         'settings' => array(),
+-        'type' => 'ting_details_single',
++        'type' => 'hidden',
+         'weight' => 0,
+       ),
+       'default' => array(
