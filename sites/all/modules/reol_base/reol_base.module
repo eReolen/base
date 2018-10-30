@@ -104,6 +104,19 @@ function reol_base_menu_alter(&$items) {
 
   // Remove menu callback from user menu.
   $items['user/%user/status']['access callback'] = FALSE;
+  $items['user/%user/status-debts']['access callback'] = FALSE;
+  $items['user/%user/status-loans']['access callback'] = FALSE;
+  $items['user/%user/status-loans-overdue']['access callback'] = FALSE;
+  $items['user/%user/my-library']['access callback'] = FALSE;
+  $items['user/%user/status-reservations']['access callback'] = FALSE;
+  $items['user/%user/status']['access callback'] = FALSE;
+  $items['user/%user/status-reservations-ready']['access callback'] = FALSE;
+
+
+  // Disable informedia and full text
+  $items['ting/infomedia/%infomedia']['access callback'] = FALSE;
+  $items['ting/object/infomedia/%']['access callback'] = FALSE;
+  $items['ting/object/%ting_fulltext_object/fulltext']['access callback'] = FALSE;
 
   // Change title of user menu.
   $items['user/%user/view']['title'] = "Loans and reservations";
