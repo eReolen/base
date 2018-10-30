@@ -1529,7 +1529,7 @@ function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
 /**
  * Implements hook_form_alter().
  *
- * Change/remove DDB things from the login form.
+ * Change/remove DDB things from forms.
  */
 function reol_base_form_alter(&$form, $form_state, $form_id) {
   switch ($form_id) {
@@ -1549,5 +1549,11 @@ function reol_base_form_alter(&$form, $form_state, $form_id) {
       // Remove the Ajax part of the form to prevent 2x pop-ups.
       unset($form['user_login_container']['actions']['submit']['#ajax']);
     break;
+
+    case 'ding_loan_loans_form':
+      // Remove "Renew" actions from the loans form.
+      unset($form['actions_container']);
+      unset($form['#submit']);
+      break;
   }
 }
