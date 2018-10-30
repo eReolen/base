@@ -151,10 +151,7 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
           '#path' => $ajax_path,
           '#items' => $covers,
           '#offset' => $chunk['next_offset'],
-          // Add a placeholder if there's more.
-          // TODO: should be field configurable.
           '#placeholders' => $chunk['next_offset'] > -1 ? TING_SEARCH_CAROUSEL_CHUNK_SIZE + 1 : TING_SEARCH_CAROUSEL_CHUNK_SIZE,
-          '#placeholder' => TRUE
         );
 
         if ($search_link) {
@@ -284,7 +281,7 @@ function reol_field_carousel_ajax($entity_type, $entity_id, $field_name, $delta,
   if (isset($items[$delta])) {
     $item = $items[$delta];
     $chunk = ting_search_carousel_get_entities($item['search'], $offset, TING_SEARCH_CAROUSEL_CHUNK_SIZE);
-    $covers = reol_field_carousel_build_covers($render_method, $chunk['collections']);
+    $covers = reol_field_carousel_build_covers($render_method, $chunk['entities']);
     foreach ($covers as $cover) {
       $build[] = array(
         '#type' => 'ding_carousel_item',

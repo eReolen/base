@@ -86,6 +86,17 @@ function reol_base_menu() {
 }
 
 /**
+ * Implements hook_entity_info_alter().
+ */
+function reol_base_entity_info_alter(&$entity_info) {
+  // The compact view mode fits into the carousel.
+  $entity_info['ting_object']['view modes']['compact'] = array(
+    'label' => t('Compact'),
+    'custom settings' => TRUE,
+  );
+}
+
+/**
  * Implements hook_menu_alter().
  */
 function reol_base_menu_alter(&$items) {
