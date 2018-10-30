@@ -1525,3 +1525,25 @@ function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
   }
   return $return;
 }
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Change/remove DDB things from the login form.
+ */
+function reol_base_form_alter(&$form, $form_state, $form_id) {
+  switch ($form_id) {
+    case 'user_login':
+    case 'user_login_block':
+      if (!empty($form['intro_text'])) {
+        unset($form['intro_text']);
+      }
+
+      unset($form['user_login_container']['name']['#attributes']['placeholder']);
+      $form['user_login_container']['name']['#title_display'] = 'before';
+
+      unset($form['user_login_container']['pass']['#attributes']['placeholder']);
+      $form['user_login_container']['pass']['#title_display'] = 'before';
+    break;
+  }
+}
