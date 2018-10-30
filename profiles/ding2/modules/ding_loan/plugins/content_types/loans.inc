@@ -44,11 +44,6 @@ function ding_loan_loans_content_type_render($subtype, $conf, $panel_args, $cont
     // Pre-load all entities to speed up the page.
     $ids = array();
     foreach ($loans as $key => $item) {
-      if (!$conf['overdue'] && $item->expiry < $today || !$conf['regular'] && $item->expiry >= $today) {
-        unset($loans[$key]);
-        continue;
-      }
-
       $ids[] = $item->ding_entity_id;
     }
     ding_entity_load_multiple($ids);
