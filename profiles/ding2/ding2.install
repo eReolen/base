@@ -125,7 +125,7 @@ function ding2_install() {
 function ding2_theme_settings() {
   return array(
     'toggle_logo' => 1,
-    'toggle_name' => 0,
+    'toggle_name' => 1,
     'toggle_slogan' => 0,
     'toggle_node_user_picture' => 0,
     'toggle_comment_user_picture' => 0,
@@ -168,6 +168,39 @@ function ding2_translation_update() {
   $file->uri = DRUPAL_ROOT . '/profiles/ding2/translations/metatags_da.po';
   $file->filename = basename($file->uri);
   _locale_import_po($file, 'da', LOCALE_IMPORT_KEEP, 'metatag');
+}
+
+/**
+ * Delete {system} records for a module.
+ *
+ * This function is to be used when removing a module from the code-base. It's
+ * needed because uninstalling a module that don't exists in code is not
+ * possible.
+ *
+ * Remember to run the clean-up that the module had in it's hook_uninstall
+ * before calling this function.
+ *
+ * @see https://www.drupal.org/node/2487215
+ */
+function ding2_remove_module($module) {
+  db_delete('system')
+    ->condition('name', $module)
+    ->condition('type', 'module')
+    ->execute();
+}
+
+/**
+ * Implements hook_update_dependencies().
+ */
+function ding2_update_dependencies() {
+  // Update hook which enables a module if opensearch is present.
+  $dependencies['ding2'][7048] = array(
+    // The update hook that enables the opensearch module if no other search
+    // provider is present.
+    'ting' => 7014,
+  );
+
+  return $dependencies;
 }
 
 /**
@@ -379,8 +412,6 @@ function ding2_update_7022() {
  */
 function ding2_update_7023() {
   module_enable(array('admin_menu', 'admin_menu_toolbar'));
-
-  ding2_admin_menu_shortcuts();
 }
 
 /**
@@ -446,4 +477,169 @@ function ding2_update_7031() {
  */
 function ding2_update_7032() {
   module_enable(array('ding_campaign'));
+}
+
+/**
+ * Enable Mobilesearch module.
+ */
+function ding2_update_7034() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Set default variables for MobileSearch.
+ */
+function ding2_update_7035() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7036() {
+  ding2_translation_update();
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7037() {
+  ding2_translation_update();
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7038() {
+  ding2_translation_update();
+}
+
+/**
+ * Enable E-resource module.
+ */
+function ding2_update_7039() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7040() {
+  ding2_translation_update();
+}
+
+/**
+ * Delete {system} records for ting_carousel modules.
+ */
+function ding2_update_7041() {
+  ding2_remove_module('ting_carousel');
+}
+
+/**
+ * Enable the ding_ddbasic module.
+ */
+function ding2_update_7042() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7043() {
+  ding2_translation_update();
+}
+
+/**
+ * Activate toggle_name theme setting
+ */
+function ding2_update_7044() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Disable toolbar module.
+ */
+function ding2_update_7045() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7046() {
+  ding2_translation_update();
+}
+
+/**
+ * Enable ding_app_content_rss module.
+ */
+function ding2_update_7047() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Enable ding_app_variables module.
+ */
+function ding2_update_7048() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7049() {
+  ding2_translation_update();
+}
+
+/**
+ * Disable and uninstall ding_mobilesearch module.
+ */
+function ding2_update_7050() {
+  // This function previously disabled, uninstalled and removed any
+  // traces of the module called ding_mobilesearch.
+  //
+  // The contents of this function has been removed due to the decision
+  // about removing the module has been reverted. Read more about this
+  // issue in https://platform.dandigbib.org/issues/3661.
+  //
+  // The function has been left empty, since some distrubitons have
+  // already had this update_hook() ran - but older sites has not.
+}
+
+/**
+ * Enable ding_app_variables module.
+ */
+function ding2_update_7051() {
+  // Rerun the update hook. Some sites may already have run 7048 but without
+  // ding2_update_dependencies and thus without ting_update_7014 and
+  // Opensearch.
+  ding2_update_7048();
+}
+
+/**
+ * Enable CustomError modules.
+ */
+function ding2_update_7052() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Expand all menu items in the main menu.
+ */
+function ding2_update_7053() {
+  // Re-move not need actions for ereolen.
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7054() {
+  ding2_translation_update();
+}
+
+/**
+ * Update our own translations.
+ */
+function ding2_update_7055() {
+  ding2_translation_update();
 }

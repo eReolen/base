@@ -4,7 +4,7 @@ index 4a7f76d7..001f816c 100644
 +++ b/ding2.make
 @@ -372,12 +372,7 @@ projects[variable][subdir] = "contrib"
  projects[variable][version] = "2.5"
- 
+
  projects[varnish][subdir] = "contrib"
 -projects[varnish][version] = "1.0-beta3"
 -projects[varnish][patch][0] = "http://drupal.org/files/issues/notification_level_settings-2169271-3.patch"
@@ -12,7 +12,7 @@ index 4a7f76d7..001f816c 100644
 -projects[varnish][patch][] = "https://www.drupal.org/files/issues/varnish_purge_limit-1481136-11_1.patch"
 -; Fixes missing leading slash from ban URLs, https://www.drupal.org/node/2340829
 -projects[varnish][patch][] = "https://www.drupal.org/files/issues/varnish-leave_base_path_in_urls-2340829-26.patch"
-+projects[varnish][version] = "1.4"
- 
++projects[varnish][version] = "1.9"
+
  projects[virtual_field][subdir] = "contrib"
  projects[virtual_field][version] = "1.2"

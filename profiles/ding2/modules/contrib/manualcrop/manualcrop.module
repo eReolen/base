@@ -104,7 +104,7 @@ function manualcrop_libraries_info() {
 
   $libraries['jquery.imagesloaded'] = array(
     'name' => 'imagesLoaded',
-    'vendor url' => 'http://desandro.github.io/imagesloaded',
+    'vendor url' => 'https://github.com/desandro/imagesloaded/tree/v2.1.1',
     'version arguments' => array(
       'file' => 'jquery.imagesloaded.js',
       'pattern' => '# v([0-9\.]+)#',
@@ -129,41 +129,19 @@ function manualcrop_libraries_info() {
 
   $libraries['jquery.imgareaselect'] = array(
     'name' => 'imgAreaSelect',
-    'vendor url' => 'http://odyniec.net/projects/imgareaselect',
+    'vendor url' => 'https://github.com/odyniec/imgareaselect/tree/v0.9.11-rc.1',
     'version arguments' => array(
-      'file' => 'scripts/jquery.imgareaselect.js',
-      'pattern' => '#version ([0-9\.]+)#',
-      'lines' => 10,
-      'cols' => 20,
+      'file' => 'imgareaselect.jquery.json',
+      'pattern' => '#"version"[\t ]*:[\t ]*"([^"]+)"#',
+      'lines' => 6,
+      'cols' => 40,
     ),
     'files' => array(
       'js' => array(
-        'scripts/jquery.imgareaselect.min.js',
+        'jquery.imgareaselect.dev.js',
       ),
       'css' => array(
-        'css/imgareaselect-animated.css',
-      ),
-    ),
-    'variants' => array(
-      'source' => array(
-        'files' => array(
-          'js' => array(
-            'scripts/jquery.imgareaselect.js',
-          ),
-          'css' => array(
-            'css/imgareaselect-animated.css',
-          ),
-        ),
-      ),
-      'packed' => array(
-        'files' => array(
-          'js' => array(
-            'scripts/jquery.imgareaselect.pack.js',
-          ),
-          'css' => array(
-            'css/imgareaselect-animated.css',
-          ),
-        ),
+        'distfiles/css/imgareaselect-animated.css',
       ),
     ),
   );
@@ -294,12 +272,18 @@ function manualcrop_field_widget_form_alter(&$element, &$form_state, $context) {
  * Implements hook_field_attach_submit().
  */
 function manualcrop_field_attach_submit($entity_type, $entity, $form, &$form_state) {
-  // We don't do this to file_entity_edit because that form can use revisions
-  // if file_entity_revisions is enabled, and we want to save our crop data
-  // AFTER we know the revision id.
-  if (user_access('use manualcrop') && (!isset($form['#form_id']) || $form['#form_id'] != 'file_entity_edit')) {
-    manualcrop_croptool_submit($form, $form_state);
+  if (!user_access('use manualcrop')) {
+    // The user is not allowed to crop images.
+    return;
   }
+
+  if (isset($form['#form_id']) && $form['#form_id'] == 'file_entity_edit') {
+    // Skip the file_entity_edit form because it may use revisions and
+    // we want to save our crop data when the revision id is known.
+    return;
+  }
+
+  manualcrop_croptool_submit($form, $form_state);
 }
 
 /**
@@ -311,6 +295,7 @@ function manualcrop_manualcrop_supported_widgets() {
     'image_miw' => array('thumblist', 'inline_crop', 'instant_crop'),
     'media_generic' => array('thumblist', 'inline_crop'),
     'linkimagefield_widget' => array('thumblist', 'inline_crop', 'instant_crop'),
+    'dragndrop_upload_image' => array('thumblist', 'inline_crop', 'instant_crop'),
   );
 }
 
@@ -340,8 +325,6 @@ function manualcrop_widget_process($element, &$form_state, $form) {
 /**
  * Additional after build callback to modify form elements added by the Insert module.
  *
- * @param $element
- *   The element to process.
  */
 function manualcrop_insert_element_process($element) {
   foreach (element_children($element) as $key) {
@@ -382,11 +365,8 @@ function manualcrop_insert_content($item, $style, $widget) {
 
 /**
  * Additional after build callback to modify the Media widget.
- *
- * @param $element
- *   The element to process.
  */
-function manualcrop_media_element_process($element) {
+function manualcrop_media_element_after_build($element) {
   $data = array(
     'manualcrop' => array(
       'entity_type' => $element['#entity_type'],
@@ -399,13 +379,16 @@ function manualcrop_media_element_process($element) {
   $element['#media_options']['global'] += $data;
 
   // Attach the options as javascript settings.
-  foreach ($element['#attached']['js'] as &$js) {
-    if (isset($js['data']['media'])) {
-      if (!isset($js['data']['media']['elements'][$element['#id']]['global'])) {
-        $js['data']['media']['elements'][$element['#id']]['global'] = array();
+  if (!empty($element['#attached']['js'])) {
+    foreach ($element['#attached']['js'] as &$js) {
+      if (isset($js['data']['media'])) {
+        if (!isset($js['data']['media']['elements']['#' . $element['#id']]['global'])) {
+          $js['data']['media']['elements']['#' . $element['#id']]['global'] = array();
+        }
+
+        $js['data']['media']['elements']['#' . $element['#id']]['global'] += $data;
+        break;
       }
-      $js['data']['media']['elements'][$element['#id']]['global'] += $data;
-      break;
     }
   }
 
@@ -421,73 +404,91 @@ function manualcrop_media_element_process($element) {
  * Element validation handler; Validates each crop selection.
  */
 function manualcrop_croptool_validate($element, &$form_state) {
-  if (!empty($form_state['manualcrop_data']['images']) && (!isset($form_state['triggering_element']) || !in_array($form_state['triggering_element']['#value'], array(t('Upload'), t('Remove'))))) {
+  if (!empty($form_state['manualcrop_data']['images'])) {
+    if (isset($form_state['triggering_element'])) {
+      // Skip validation when needed.
+      $te = $form_state['triggering_element'];
+      if (!empty($te['#manualcrop_skip']) || in_array($te['#value'], array(t('Upload'), t('Remove'), t('Browse')))) {
+        return;
+      }
+    }
+
     // Create a new key, to store processed selections, in the data array.
     $form_state['manualcrop_data']['selections'] = array();
     $selections = &$form_state['manualcrop_data']['selections'];
 
     // Loop trough the positions to get the Manual Crop data.
     foreach ($form_state['manualcrop_data']['images'] as $fid => $image) {
-      $value = drupal_array_get_nested_value($form_state['values'], $image['element_parents']);
+      foreach($image['element_parents'] as $parent)
+      {
+        $value = drupal_array_get_nested_value($form_state['values'], $parent);
 
-      if (!empty($value['manualcrop_selections'])) {
-        // Create a selections array for the current image, the first element is
-        // the path to the original image, needed for flushing the cache.
-        $selections[$fid] = array(
-          'path' => $image['uri'],
-          'styles' => array_fill_keys(array_keys($value['manualcrop_selections']), FALSE),
-        );
-
-        // Indicates if an error on the form element has been set.
-        $error_set = FALSE;
-
-        // Loop over the selections.
-        foreach ($value['manualcrop_selections'] as $style_name => $crop) {
-          // Get the clean style name.
-          $clean_style_name = _manualcrop_image_style_label($style_name);
-
-          // Get the element key.
-          if (!$error_set) {
-            $element_key = implode('][', $image['element_parents']) . '][manualcrop_style';
+        if (!empty($value['manualcrop_selections'])) {
+          // Create a selections array for the current image, the first element is
+          // the path to the original image, needed for flushing the cache.
+          if(!isset($selections[$fid]))
+          {
+            $selections[$fid] = array(
+              'path' => $image['uri'],
+              'styles' => array_fill_keys(array_keys($value['manualcrop_selections']), FALSE),
+            );
           }
-          else {
-            $element_key = implode('][', $image['element_parents']) . '][manualcrop_selections][' . $style_name;
+          else
+          {
+            $selections[$fid]['styles'] = array_merge($selections[$fid]['styles'],array_fill_keys(array_keys($value['manualcrop_selections']), FALSE));
           }
 
-          if (!empty($crop)) {
-            // Validate the crop selection format.
-            if (preg_match('/^([0-9]+\|){3}[0-9]+$/', $crop)) {
-              $crop = array_map('intval', explode('|', $crop));
+          // Indicates if an error on the form element has been set.
+          $error_set = FALSE;
 
-              // Check position and minimum dimensions.
-              if ($crop[0] >= 0 && $crop[1] >= 0 && $crop[2] > 0 && $crop[3] > 0) {
-                // Check if the selections fits on the image.
-                if (($crop[0] + $crop[2]) <= $image['width'] && ($crop[1] + $crop[3]) <= $image['height']) {
-                  $selections[$fid]['styles'][$style_name] = array(
-                    'x' => $crop[0],
-                    'y' => $crop[1],
-                    'width' => $crop[2],
-                    'height' => $crop[3],
-                  );
-                  continue;
-                }
-              }
+          // Loop over the selections.
+          foreach ($value['manualcrop_selections'] as $style_name => $crop) {
+            // Get the clean style name.
+            $clean_style_name = _manualcrop_image_style_label($style_name);
+
+            // Get the element key.
+            if (!$error_set) {
+              $element_key = implode('][', $parent) . '][manualcrop_style';
+            }
+            else {
+              $element_key = implode('][', $parent) . '][manualcrop_selections][' . $style_name;
             }
 
-            // Invalid crop selection.
-            $error_set = TRUE;
-            form_set_error($element_key, t('The crop selection for %filename (@style image style) is invalid, please clear it or reselect.', array(
-              '@style' => $clean_style_name,
-              '%filename' => $image['filename']
-            )));
-          }
-          elseif (in_array($style_name, $image['required_styles'], TRUE)) {
-            // Uncropped required style.
-            $error_set = TRUE;
-            form_set_error($element_key, t('%filename must have a cropping selection for the @style image style.', array(
-              '@style' => $clean_style_name,
-              '%filename' => $image['filename']
-            )));
+            if (!empty($crop)) {
+              // Validate the crop selection format.
+              if (preg_match('/^([0-9]+\|){3}[0-9]+$/', $crop)) {
+                $crop = array_map('intval', explode('|', $crop));
+
+                // Check position and minimum dimensions.
+                if ($crop[0] >= 0 && $crop[1] >= 0 && $crop[2] > 0 && $crop[3] > 0) {
+                  // Check if the selections fits on the image.
+                  if (($crop[0] + $crop[2]) <= $image['width'] && ($crop[1] + $crop[3]) <= $image['height']) {
+                    $selections[$fid]['styles'][$style_name] = array(
+                      'x' => $crop[0],
+                      'y' => $crop[1],
+                      'width' => $crop[2],
+                      'height' => $crop[3],
+                    );
+                    continue;
+                  }
+                }
+              }
+
+              // Invalid crop selection.
+              $error_set = TRUE;
+              form_set_error($element_key, t('The crop selection for %filename (@style image style) is invalid, please clear it or reselect.', array(
+                '@style' => $clean_style_name,
+                '%filename' => $image['filename']
+              )));
+            }
+            elseif (in_array($style_name, $image['required_styles'], TRUE)) {
+              // Uncropped required style.
+              $error_set = TRUE;
+              form_set_error($element_key, t('%filename must have a cropping selection for the @style image style.', array(
+                '@style' => $clean_style_name,
+                '%filename' => $image['filename']
+              )));
+            }
           }
         }
       }
@@ -499,7 +500,9 @@ function manualcrop_croptool_validate($element, &$form_state) {
  * Form submit handler; Saves each crop selection.
  */
 function manualcrop_croptool_submit($form, &$form_state) {
-  if (!empty($form_state['manualcrop_data']['selections'])) {
+  static $submitted = FALSE;
+
+  if (!$submitted && !empty($form_state['manualcrop_data']['selections'])) {
     // Loop trough the selections to save them.
     foreach ($form_state['manualcrop_data']['selections'] as $fid => $data) {
       // In general this file entity should be loaded from a cache, so this
@@ -520,8 +523,9 @@ function manualcrop_croptool_submit($form, &$form_state) {
       drupal_set_message(t('The crop selections have been saved.'));
     }
 
-    // Unset the form state data to prevent submitting twice.
-    unset($form_state['manualcrop_data']);
+    // Prevent additional submits.
+    unset($form_state['manualcrop_data']['selections']);
+    $submitted = TRUE;
   }
 }
 
@@ -835,10 +839,10 @@ function manualcrop_crop_and_scale_effect(&$image, $data) {
     return TRUE;
   }
   else {
-    // Automated crop, don't use image_scale_and_crop_effect() unless both
-    // imagedimensions are bigger than the desired dimensions. This way
-    // unwanted upscaling is prevented.
-    if ($image->info['width'] > $scale_data['width'] && $image->info['height'] > $scale_data['height']) {
+    // Automated crop, don't use image_scale_and_crop_effect() unless
+    // upscaling is allowed or both image dimensions are bigger than
+    // the desired dimensions.
+    if ($scale_data['upscale'] || ($image->info['width'] > $scale_data['width'] && $image->info['height'] > $scale_data['height'])) {
       if (!image_scale_and_crop_effect($image, $scale_data)) {
         return FALSE;
       }

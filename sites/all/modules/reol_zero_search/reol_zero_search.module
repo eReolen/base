@@ -97,5 +97,5 @@ function _reol_zero_search_get_frontpage_covers($index, $start, $count, $query_o
     return FALSE;
   }
 
-  return ting_search_carousel_get_covers($query['query'], $start, $count, $query_only);
+  return ting_search_carousel_get_entities($query['query'], $start, $count, $query_only);
 }

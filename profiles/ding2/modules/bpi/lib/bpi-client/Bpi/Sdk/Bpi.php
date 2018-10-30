@@ -137,7 +137,7 @@ class Bpi
         $result = $this->request('GET', '/statistics', ['query' => ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]]);
         $element = new \SimpleXMLElement((string)$result->getBody());
 
-        return new BaseItem($element);
+        return new BaseItem($element->item[0]);
     }
 
     /**

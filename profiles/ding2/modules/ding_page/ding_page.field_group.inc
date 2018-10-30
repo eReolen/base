@@ -31,7 +31,7 @@ function ding_page_field_group_info() {
       'label' => 'Attachments',
       'instance_settings' => array(
         'required_fields' => 1,
-        'classes' => ' group-ding-page-attachments field-group-fieldset',
+        'classes' => '',
         'description' => '',
       ),
       'formatter' => 'collapsed',
@@ -60,7 +60,7 @@ function ding_page_field_group_info() {
       'label' => 'Content',
       'instance_settings' => array(
         'required_fields' => 1,
-        'classes' => ' group-ding-page-content field-group-fieldset',
+        'classes' => '',
         'description' => '',
       ),
       'formatter' => 'collapsible',
@@ -89,7 +89,7 @@ function ding_page_field_group_info() {
       'label' => 'Images',
       'instance_settings' => array(
         'required_fields' => 1,
-        'classes' => ' group-ding-page-images field-group-fieldset',
+        'classes' => '',
         'description' => '',
       ),
       'formatter' => 'collapsed',
@@ -117,7 +117,7 @@ function ding_page_field_group_info() {
       'label' => 'Tagging',
       'instance_settings' => array(
         'required_fields' => 1,
-        'classes' => ' group-ding-page-tagging field-group-fieldset',
+        'classes' => '',
         'description' => '',
       ),
       'formatter' => 'collapsed',
@@ -144,13 +144,12 @@ function ding_page_field_group_info() {
     'format_settings' => array(
       'label' => 'Left column',
       'instance_settings' => array(
-        'classes' => ' group-left-col-search field-group-div',
+        'classes' => '',
         'description' => '',
         'show_label' => '0',
         'label_element' => 'h3',
         'effect' => 'none',
         'speed' => 'fast',
-        'id' => 'node_ding_page_full_group_left_col_search',
       ),
       'formatter' => 'open',
     ),
@@ -176,13 +175,12 @@ function ding_page_field_group_info() {
     'format_settings' => array(
       'label' => 'Left column',
       'instance_settings' => array(
-        'classes' => 'search-left group-left-col-search field-group-div',
+        'classes' => 'search-left',
         'description' => '',
         'show_label' => '0',
         'label_element' => 'h3',
         'effect' => 'none',
         'speed' => 'none',
-        'id' => 'node_ding_page_search_result_group_left_col_search',
       ),
       'formatter' => 'open',
     ),
@@ -209,13 +207,12 @@ function ding_page_field_group_info() {
     'format_settings' => array(
       'label' => 'Right column',
       'instance_settings' => array(
-        'classes' => 'search-right group-right-col-search field-group-div',
+        'classes' => 'search-right',
         'description' => '',
         'show_label' => '0',
         'label_element' => 'h3',
         'effect' => 'none',
         'speed' => 'none',
-        'id' => 'node_ding_page_search_result_group_right_col_search',
       ),
       'formatter' => 'open',
     ),

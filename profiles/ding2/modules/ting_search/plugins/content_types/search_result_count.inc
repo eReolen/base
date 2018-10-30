@@ -20,17 +20,19 @@ $plugin = array(
 function ting_search_result_count_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
 
-  $search_result = drupal_static('ting_search_results');
+  $search_result = ting_search_current_results();
   if (isset($search_result)) {
-    $results = isset($search_result->numTotalObjects) ? (int) $search_result->numTotalObjects : 0;
-    $string = format_plural($results > 1 ? $results : 1, 'Result', 'Results');
+    $results = $search_result->getNumTotalObjects();
     $block->content = array(
-      '#prefix' => '<h1 class="page-title">',
-      '#suffix' => '</h1>',
-      '#markup' => t('Search result <span class="js-count" data-js-count="!count" class="search-field-in-content--amount">(!count !string)</span>', array(
-        '!count' => $results,
-        '!string' => $string,
-      )),
+      'title' => array(
+        '#theme' => 'html_tag',
+        '#tag' => 'h1',
+        '#attributes' => array('class' => array('page-title')),
+        '#value' =>  t('Search result <span class="js-count" data-js-count="!count" class="search-field-in-content--amount">(!count !string)</span>', array(
+          '!count' => $results,
+          '!string' => format_plural($results > 1 ? $results : 1, 'Result', 'Results'),
+        ))
+      ),
     );
   }
 

@@ -42,13 +42,12 @@ function ding_carousel_element_info() {
     '#path' => '',
     '#placeholders' => 0,
     '#placeholder' => array(
-      '#type' => '#markup',
-      '#markup' => 'Loading...',
+      '#type' => 'markup',
+      '#markup' => '<span class="icon-spinner"></span>',
     ),
     '#hidden' => FALSE,
     '#attached' => array(
       'js' => array($path . '/js/ding_carousel.js'),
-      'css' => array($path . '/css/ding_carousel.css'),
     ),
   );
 
@@ -58,7 +57,6 @@ function ding_carousel_element_info() {
     '#transition' => 'fade',
     '#attached' => array(
       'js' => array($path . '/js/ding_carousel.js'),
-      'css' => array($path . '/css/ding_carousel.css'),
     ),
   );
 
@@ -81,10 +79,11 @@ function ding_carousel_libraries_info() {
     'name' => 'Slick.js carousel library',
     'path' => 'slick',
     'vendor url' => 'https://github.com/kenwheeler/slick',
-    'download url' => 'https://github.com/kenwheeler/slick/archive/1.6.0.zip',
+    'download url' => 'https://github.com/kenwheeler/slick/archive/1.8.0.zip',
     'version arguments' => array(
       'file' => 'slick/slick.js',
-      'pattern' => '@Version:\s+([0-9a-zA-Z\.-]+)@',
+      'pattern' => '/Version:\s+([0-9a-zA-Z\.-]+)/',
+      'lines' => 15,
     ),
     'files' => array(
       'js' => array('slick.min.js'),
