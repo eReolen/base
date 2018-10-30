@@ -14,8 +14,9 @@ function ajax_command_ding_popup($name, $title, $html, $options = array()) {
     'resubmit' => FALSE,
     'extra_data' => array(),
     'refresh' => FALSE,
+    'class' => array(),
   );
-  drupal_add_js(drupal_get_path('module', 'ding_popup') . '/ding_popup-popupbar.js');
+  drupal_add_library('system', 'ui.dialog');
   drupal_add_js(drupal_get_path('module', 'ding_popup') . '/ding_popup.js');
 
   return array(
@@ -26,19 +27,16 @@ function ajax_command_ding_popup($name, $title, $html, $options = array()) {
     'resubmit' => (bool) $options['resubmit'],
     'extra_data' => $options['extra_data'],
     'refresh' => (bool) $options['refresh'],
+    'class' => $options['class'],
   );
 }
 
 /**
  * Ajax command to close a popup.
  */
-function ajax_command_ding_popup_close($name, $refresh = FALSE) {
-  drupal_add_js(drupal_get_path('module', 'ding_popup') . '/ding_popup-popupbar.js');
-  drupal_add_js(drupal_get_path('module', 'ding_popup') . '/ding_popup.js');
-
+function ajax_command_ding_popup_close($name) {
   return array(
     'command' => 'ding_popup_close',
     'name' => $name,
-    'refresh' => $refresh,
   );
 }

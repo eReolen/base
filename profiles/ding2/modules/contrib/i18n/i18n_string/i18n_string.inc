@@ -166,7 +166,7 @@ class i18n_string_object {
    * Get translation to language from string object
    */
   public function get_translation($langcode) {
-    if (empty($this->translations[$langcode])) {
+    if (!isset($this->translations[$langcode])) {
       $translation = $this->textgroup()->load_translation($this, $langcode);
       if ($translation && isset($translation->translation)) {
         $this->set_translation($translation, $langcode);
@@ -703,9 +703,19 @@ class i18n_string_textgroup_default {
       // Create source string so we get an lid
       $this->save_source($string);
     }
+
+    // Convert objectid to objectkey if it's numeric.
     if (!isset($string->objectkey)) {
-      $string->objectkey = (int)$string->objectid;
+      if (is_numeric($string->objectid)) {
+        $string->objectkey = (int)$string->objectid;
+      }
     }
+
+    // Make sure objectkey is numeric.
+    if (!is_numeric($string->objectkey)) {
+      $string->objectkey = 0;
+    }
+
     if (!isset($string->format)) {
       $string->format = '';
     }
@@ -1166,10 +1176,17 @@ class i18n_string_object_wrapper extends i18n_object_wrapper {
       $info = is_array($info) ? $info : array('title' => $info);
       $field_name = isset($info['field']) ? $info['field'] : $field;
       $value = $this->get_field($field_name);
+      if (is_array($value) && isset($value['value'])) {
+        $format = isset($value['format']) ? $value['format'] : NULL;
+        $value = $value['value'];
+      }
+      else {
+        $format = isset($info['format']) ? $this->get_field($info['format']) : NULL;
+      }
       $strings[$this->get_textgroup()][$string_type][$object_id][$field] = array(
         'string' => is_array($value) || isset($info['empty']) && $value === $info['empty'] ? NULL : $value,
         'title' => $info['title'],
-        'format' => isset($info['format']) ? $this->get_field($info['format']) : NULL,
+        'format' => $format,
         'name' => array_merge($object_keys, array($field)),
       );
     }
@@ -1234,7 +1251,7 @@ class i18n_string_object_wrapper extends i18n_object_wrapper {
    */
   public function translate($langcode, $options = array()) {
     // We may have it already translated. As objects are statically cached, translations are too.
-    if (empty($this->translations[$langcode])) {
+    if (!isset($this->translations[$langcode])) {
       $this->translations[$langcode] = $this->translate_object($langcode, $options);
     }
     return $this->translations[$langcode];
@@ -1481,7 +1498,12 @@ class i18n_string_textgroup_cached extends i18n_string_textgroup_default {
       foreach ($context as $key => $value) {
         if ($value != '*') {
           $try = array_merge($context, array($key => '*'));
-          return $this->multiple_cache_get($try);
+          $cached_results = $this->multiple_cache_get($try);
+          // Now filter the ones that actually match.
+          if (!empty($cached_results)) {
+            $cached_results = $this->string_filter($cached_results, $context);
+          }
+          return $cached_results;
         }
       }
     }
