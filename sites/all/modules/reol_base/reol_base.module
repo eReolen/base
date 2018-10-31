@@ -415,7 +415,7 @@ function reol_base_entity_load($entities, $type) {
       }
     }
     // When have to check all the way down, as chain might be broken
-    // somwhere. Only touch localId if we have the right value for it.
+    // somewhere. Only touch localId if we have the right value for it.
     elseif (isset($entity->reply) &&
       isset($entity->reply->record) &&
       isset($entity->reply->record['dc:identifier'])) {
@@ -881,7 +881,7 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
  * Searches the well 50 isbn numbers at a time. Limited to 50 to not break the
  * well.
  *
- * @param string $isbns
+ * @param array $isbns
  *   The ISBN numbers to search for.
  *
  * @return array
@@ -1579,7 +1579,15 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_title']['display']['compact']['settings']['prefix_type'] = 'no';
     $fields['ting_object-ting_object-ting_title']['display']['compact']['label'] = 'hidden';
   }
+
+  // Add subjects to teaser view mode.
+  if (isset($fields['ting_object-ting_object-ting_details_subjects'])) {
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['type'] = 'ting_details_subject_search';
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['module'] = 'ting_material_details';
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['label'] = 'inline';
+  }
 }
+
 
 /**
  * Implements hook_field_group_info_alter().
@@ -1595,6 +1603,26 @@ function reol_base_field_group_info_alter(&$groups) {
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_ebook_format';
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_audiobook_reader';
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'field_lix';
+  }
+
+  // Add subjects to teaser view mode - inner group.
+  if (isset($groups['group_inner|ting_object|ting_object|teaser'])) {
+    $groups['group_inner|ting_object|ting_object|teaser']->data['children'][] = 'ting_details_subjects';
+  }
+
+  // Remove rating.
+  if (isset($groups['group_rating|ting_object|ting_object|default'])) {
+    $groups['group_rating|ting_object|ting_object|default']->data['children'] = array();
+  }
+
+  // Remove rating.
+  if (isset($groups['group_rating|ting_object|ting_object|search_result'])) {
+    $groups['group_rating|ting_object|ting_object|search_result']->data['children'] = array();
+  }
+
+  // Remove rating.
+  if (isset($groups['group_rating|ting_object|ting_object|teaser'])) {
+    $groups['group_rating|ting_object|ting_object|teaser']->data['children'] = array();
   }
 }
 
