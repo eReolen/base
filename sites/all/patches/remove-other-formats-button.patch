@@ -1,0 +1,33 @@
+diff --git a/profiles/ding2/modules/ting/ting.module b/profiles/ding2/modules/ting/ting.module
+index 2679537d..34a7c48e 100644
+--- a/profiles/ding2/modules/ting/ting.module
++++ b/profiles/ding2/modules/ting/ting.module
+@@ -399,28 +399,6 @@ function ting_ding_entity_buttons($type, $entity, $view_mode, $widget = 'default
+       );
+     }
+ 
+-    // Loading collection (specially on empty cache is expensive). So only load
+-    // the collection when it's need and here only when this button is required
+-    // in the design. Before using context it was load but not used in the
+-    // design.
+-    if (strpos($view_mode, 'teaser') === FALSE) {
+-      $collection = ting_collection_load($entity->id);
+-      if (is_a($collection, 'TingCollection') && count($collection->types) > 1) {
+-        $buttons[] = [
+-          '#theme' => 'link',
+-          '#text' => t('Other formats'),
+-          '#path' => '#',
+-          '#options' => [
+-            'attributes' => [
+-              'class' => ['action-button', 'other-formats'],
+-            ],
+-            'html' => FALSE,
+-            'external' => TRUE,
+-          ],
+-        ];
+-      }
+-    }
+-
+     return $buttons;
+   }
+ }
