@@ -743,3 +743,13 @@ function reol_base_update_7159() {
   variable_del('dynamic_background_image_style');
   variable_del('dynamic_background_weight');
 }
+
+/**
+ * Clean up: Remove used fields.
+ */
+function reol_base_update_7160() {
+  field_delete_field('ding_entity_rating_action');
+  field_delete_field('ding_entity_rating_result');
+
+  field_purge_batch(1000);
+}

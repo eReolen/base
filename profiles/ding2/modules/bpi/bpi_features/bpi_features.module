@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the BPI Features feature.
- */
-
-include_once 'bpi_features.features.inc';
