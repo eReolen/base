@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ting ting_material_details module.
+ */
+
+/**
+ * Convert blackhole field storage to virtual field.
+ */
+function ting_material_details_update_7000() {
+  return db_update('field_config')
+    ->fields(array(
+      'storage_type' => 'virtual_field',
+      'storage_module' => 'virtual_field'
+    ))
+    ->condition('module', 'ting_material_details')
+    ->execute();
+}
+
+/**
+ * Unlock fields.
+ *
+ * @see ding_entity_unlock_fields()
+ */
+function ting_material_details_update_7001() {
+  ding_entity_unlock_fields('ting_material_details', array(
+    'ting_details_type',
+    'ting_details_format',
+    'ting_details_ispartof',
+    'ting_details_language',
+    'ting_details_spoken',
+    'ting_details_subtitles',
+    'ting_details_genre',
+    'ting_details_subjects',
+    'ting_details_classification',
+    'ting_details_spatial',
+    'ting_details_contributor',
+    'ting_details_musician',
+    'ting_details_tracks',
+    'ting_details_referenced',
+    'ting_details_description',
+    'ting_details_seriesdescription',
+    'ting_details_source',
+    'ting_details_replaces',
+    'ting_details_replaced_by',
+    'ting_details_isbn',
+    'ting_details_uri',
+    'ting_details_version',
+    'ting_details_extent',
+    'ting_details_publisher',
+    'ting_details_rights',
+    'ting_details_audience',
+    'ting_details_age',
+    'ting_details_pegi',
+  ));
+}

@@ -1,0 +1,81 @@
+<?php
+/**
+ * @file
+ * Code for the ding ting frontend feature.
+ */
+
+include_once('ding_ting_frontend.features.inc');
+
+/**
+ * Implements hook_menu().
+ */
+function ding_ting_frontend_menu() {
+
+  $items['admin/config/ting/settings/local_config'] = array(
+    'title' => t('Local settings'),
+    'description' => 'Configure local stuff that normally aren\'t available for local configuration',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ding_ting_frontend_local_config_admin_settings'),
+    'access arguments' => array('administer ting settings'),
+    'file' => 'ding_ting_frontend.local_config.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;
+
+}
+
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function ding_ting_frontend_entity_info_alter(&$entity_info) {
+  if (isset($entity_info['ting_object'])) {
+    if (isset($entity_info['ting_object']['view modes'])) {
+      $entity_info['ting_object']['view modes'] = [];
+    }
+    $entity_info['ting_object']['view modes'] += array(
+      'collection_primary' => array(
+        'label' => t('Primary collection object'),
+        'custom settings' => TRUE,
+      ),
+      'collection_list' => array(
+        'label' => t('Collection listing'),
+        'custom settings' => TRUE,
+      ),
+      'search_result' => array(
+        'label' => t('Search result'),
+        'custom settings' => TRUE,
+      ),
+      'reference_teaser' => array(
+        'label' => t('Reference teaser'),
+        'custom settings' => TRUE,
+      ),
+      'teaser' => array(
+        'label' => t('Teaser'),
+        'custom settings' => TRUE,
+      ),
+      'teaser_no_overlay' => array(
+        'label' => t('Teaser no overlay'),
+        'custom settings' => TRUE,
+      ),
+    );
+  }
+}
+
+
+/**
+ * Implements hook_ding_entity_view().
+ *
+ * Change formatter for group_holdings_available of a Ting Object.
+ */
+function ding_ting_frontend_ding_entity_view($entity, $view_mode) {
+
+  $modified_view_mode = variable_get('ding_ting_frontend_group_holdings_available', 'default');
+  if ($modified_view_mode == 'default') {
+    return;
+  }
+
+  $entity->content['#groups']['group_holdings_available']->format_settings['formatter'] = $modified_view_mode;
+
+}

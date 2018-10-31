@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ting module.
+ */
+
+/**
+ * Convert blackhole field storage to virtual field.
+ */
+function ding_availability_update_7000() {
+  return db_update('field_config')
+    ->fields(array(
+      'storage_type' => 'virtual_field',
+      'storage_module' => 'virtual_field',
+    ))
+    ->condition('module', 'ding_availability')
+    ->execute();
+}
+
+/**
+ * Unlock fields.
+ *
+ * @see ding_entity_unlock_fields()
+ */
+function ding_availability_update_7001() {
+  ding_entity_unlock_fields('ding_availability', array(
+    'ding_availability_holdings',
+  ));
+}

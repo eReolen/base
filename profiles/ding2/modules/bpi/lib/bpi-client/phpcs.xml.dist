@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+ <description>The coding standard.</description>
+
+ <file>Bpi/Sdk/</file>
+ <file>Tests/</file>
+
+ <arg value="np"/>
+
+ <rule ref="PSR2"/>
+</ruleset>

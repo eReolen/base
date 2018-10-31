@@ -1,0 +1,270 @@
+<?php
+/**
+ * @file
+ * Code for the ding frontend feature.
+ */
+
+include_once 'ding_frontend.features.inc';
+
+/**
+ * Implements hook_permission().
+ */
+function ding_frontend_permission() {
+  return array(
+    'administer fe promote' => array(
+      'title' => t('Administer promoting to frontpage'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_search_api_alter_callback_info().
+ */
+function ding_frontend_search_api_alter_callback_info() {
+  return array(
+    'ding_frontend_published_filter' => array(
+      'name' => t('Exclude unpublished users and content'),
+      'description' => t('Exclude unpublished user or content from the index. <strong>Caution:</strong> This only affects the indexed nodes themselves. If an enabled node has references to disabled nodes, those will still be indexed (or displayed) normally.'),
+      'class' => 'DingFrontendPublishedStateFilter',
+      // Filters should be executed first.
+      'weight' => -10,
+    ),
+    'ding_frontend_role_filter' => array(
+      'name' => t('Role filter'),
+      'description' => t('Exclude users from indexing based on their role.'),
+      'class' => 'DingFrontendUserRoleFilter',
+      // Filters should be executed first.
+      'weight' => -10,
+    ),
+    'ding_frontend_bundle_filter' => array(
+      'name' => t('Bundle filter (not users)'),
+      'description' => t('Exclude items from indexing based on their bundle (content type, vocabulary, …).'),
+      'class' => 'DingFrontendBundleFilter',
+      // Filters should be executed first.
+      'weight' => -10,
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function ding_frontend_menu() {
+  $items = array();
+
+  $items['admin/config/ding/fe-promote'] = array(
+    'title' => 'Promote content types to frontpage',
+    'description' => 'Administer promotion of content types to the frontpage.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ding_frontend_settings'),
+    'access arguments' => array('administer fe promote'),
+    'file' => 'ding_frontend.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * Field formatter theme function mainly used in event views to create the nice
+ * calendar header in event lists.
+ */
+function ding_frontend_theme() {
+  return array(
+    'calendar_header' => array(
+      'variables' => array(
+        'date' => array(
+          'day' => NULL,
+          'month' => NULL,
+          'weekday' => NULL,
+          'year' => NULL,
+        ),
+        'timestamp' => NULL,
+        'timezone' => NULL,
+        'today' => FALSE,
+      ),
+      'template' => 'templates/calendar-header',
+    ),
+    'ding_frontend_panel_wrapper' => array(
+      'render element'  => 'element',
+      'template' => 'templates/ding-frontend-panel-wrapper'
+    ),
+  );
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ *
+ * It simply tells panels where to find the .inc files that define various
+ * args, contexts, content_types. In this case the subdirectories of
+ * ctools_plugin_example/panels are used.
+ */
+function ding_frontend_ctools_plugin_directory($owner, $plugin_type) {
+  return 'plugins/' . $plugin_type;
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function ding_frontend_field_formatter_info() {
+  return array(
+    'calendar_header' => array(
+      'label' => t('Calendar header'),
+      'field types' => array(
+        'datetime',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function ding_frontend_field_formatter_view($entity_type, $entity, $field, $instances, $langcode, $items, $display) {
+  $element = array();
+
+  // Get current timezone from configuration.
+  $timezone = date_default_timezone_get();
+
+  foreach ($items as $delta => $item) {
+    if ($display['type'] == 'calendar_header') {
+      // Display today date if event continues (current date is between start
+      // and end date of an event).
+      if ($entity_type == 'node' && $entity->type == 'ding_event') {
+        if (strtotime($item['value']) <= REQUEST_TIME && strtotime($item['value2']) >= REQUEST_TIME) {
+          $item['value'] = format_date(REQUEST_TIME, 'custom', 'Y-m-d H:i:s');
+        }
+      }
+      // Create timestamp base on current timezone.
+      $date = new DateObject(
+        $item['value'],
+        $item['timezone_db'],
+        date_type_format($item['date_type'])
+      );
+      $timestamp = $date->format(DATE_FORMAT_UNIX);
+
+      // Added render array to output element.
+      $element[$delta] = array(
+        '#theme' => 'calendar_header',
+        '#date' => array(
+          'day' => format_date($timestamp, 'custom', 'j', $timezone),
+          'month' => format_date($timestamp, 'custom', 'F', $timezone),
+          'weekday' => format_date($timestamp, 'custom', 'l', $timezone),
+          'year' => format_date($timestamp, 'custom', 'Y', $timezone),
+        ),
+        '#timestamp' => $timestamp,
+        '#timezone' => $timezone,
+        '#today' => date('j.F.l') == date('j.F.l', $timestamp) ? TRUE : FALSE,
+      );
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_query_alter().
+ *
+ * Remove duplicates from the node search result view by grouping by nid and
+ * removing the score field.
+ */
+function ding_frontend_query_alter($query) {
+  if (isset($query->alterMetaData)) {
+    if (isset($query->alterMetaData['view'])) {
+      if ($query->alterMetaData['view']->name == 'ding_node_search') {
+        $fields = &$query->getGroupBy();
+        // Remove the score field and add group by nid.
+        unset($fields['score']);
+        $query->groupBy('nid');
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_change_maintenance_mode().
+ *
+ * @param Boolean $maintenance_mode
+ * TRUE if the site is being set into maintenance mode.
+ * FALSE if maintenance mode is being deactivated.
+ *
+ * Clear page cache if maintainance status has changed.
+ */
+function ding_frontend_change_maintenance_mode($maintenance_mode) {
+  cache_clear_all();
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function ding_frontend_views_pre_render(&$view) {
+  if ($view->name == 'ding_multiple_search') {
+    foreach ($view->result as $result) {
+      $res = explode('/', $result->entity);
+      if ($res[0] == 'user') {
+        $current_user = user_load($res[1]);
+        if (!in_array('staff', $current_user->roles)) {
+          unset($view->result);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_views_query_build().
+ */
+function ding_frontend_views_query_alter(&$view, &$query) {
+  switch ($view->name . ' ' . $view->current_display) {
+    case 'ding_related_content news_events':
+
+      // Move the 2 contextual tags conditions to an OR group.
+      $or_conditions = array();
+      foreach ($query->where[0]['conditions'] as $key => $condition) {
+        if (
+          strpos($condition['field'], 'field_data_field_ding_news_tags.field_ding_news_tags_tid') === 0
+          || strpos($condition['field'], 'field_data_field_ding_event_tags.field_ding_event_tags_tid') === 0
+        ) {
+          $or_conditions[] = $condition;
+          unset($query->where[0]['conditions'][$key]);
+        }
+      }
+
+      // Add the conditions to a newly created OR group.
+      if (!empty($or_conditions)) {
+        $group_id = $query->set_where_group('OR');
+        $query->where[$group_id]['conditions'] = $or_conditions;
+      }
+
+      // Order by the distance to either the created date if it's news or the
+      // start time if it's an event.
+      $query->add_orderby(
+        NULL,
+        "ABS(DATEDIFF(IF(node.type = 'ding_news', FROM_UNIXTIME(node.created), field_data_field_ding_event_date.field_ding_event_date_value), NOW()))",
+        'ASC',
+        'date_distance');
+      break;
+  }
+}
+
+/**
+ *Implements hook_search_api_views_query_alter().
+ */
+function ding_frontend_search_api_views_query_alter(view &$view, SearchApiViewsQuery &$query) {
+  // Ensure that we use correct view.
+  if ($view->name == 'ding_multiple_search') {
+    // Look that args are not empty.
+    if (!empty($view->args[0])) {
+      // Loading original args.
+      $args = $view->args[0];
+      // Cleanup original args (search query), so the $query variable
+      // will not have to construct monstrous query to get needed records
+      // from search index.
+      $new_args = preg_replace('/(!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\"|\&|\#|\[|\]|~|$|_| or | and |-)/i', ' ', $args);
+      // Return cleared search query string into view's query.
+      $query->keys($new_args);
+    }
+  }
+}

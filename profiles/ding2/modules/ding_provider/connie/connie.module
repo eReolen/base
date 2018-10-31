@@ -1,0 +1,200 @@
+<?php
+/**
+ * @file
+ * Helper module for the Ding provider tests.
+ */
+
+include_once 'connie.features.inc';
+
+/**
+ * Allowed values callback for field.
+ */
+function connie_allowed_branches() {
+  module_load_include('inc', 'connie', 'connie.branch');
+  return connie_branch_list();
+}
+
+/**
+ * Implements hook_ding_provider().
+ */
+function connie_ding_provider() {
+  return array(
+    'title' => 'Connie: Ding provider example',
+    'provides' => array(
+      'availability' => array(
+        'prefix' => 'availability',
+      ),
+      'user' => array(
+        'prefix' => 'user',
+        'file' => 'connie.user.inc',
+      ),
+      'user_consent' => array(
+        'prefix' => 'user_consent',
+        'file' => 'connie.user_consent.inc',
+      ),
+      'reservation' => array(
+        'prefix' => 'reservation',
+        'file' => 'connie.reservation.inc',
+      ),
+      'loan' => array(
+        'prefix' => 'loan',
+        'file' => 'connie.loan.inc',
+      ),
+      'branch' => array(
+        'prefix' => 'branch',
+        'file' => 'connie.branch.inc',
+      ),
+      'debt' => array(
+        'prefix' => 'debt',
+        'file' => 'connie.debt.inc',
+      ),
+      'wayf' => array(
+        'prefix' => 'wayf',
+        'file' => 'connie.wayf.inc',
+      ),
+      'user_consent' => array(
+        'prefix' => 'user_consent',
+        'file' => 'connie.user_consent.inc',
+      ),
+    ),
+  );
+}
+
+/*
+ * User helper functions.
+ */
+
+/**
+ * Update profile2 with values from login.
+ */
+function connie_profile_update($profile, $data) {
+  $langs = field_language('profile2', $profile);
+  $profile->connie_preferred_branch[$langs['connie_preferred_branch']][0]['value'] = $data['branch'];
+}
+
+/**
+ * Implements hook_profile2_presave().
+ *
+ * Sends changes to Connie and updates profile with real values.
+ */
+function connie_profile2_presave($profile) {
+  // Check if the profile is just being created and is an connie_provider
+  // profile. If it's being created the fields are not yet loaded and can't be
+  // saved back to the provider.
+  $try_to_save = ($profile->created == $profile->changed) ? FALSE : TRUE;
+  if ($profile->type == 'provider_connie' && $try_to_save) {
+    /*
+     * Here would be the code to update the backend.
+     *
+     * We'd use a metadata wrapper to access the data.
+     *
+     * @code
+     * $wrapper_original = entity_metadata_wrapper('profile2',
+     *   $profile->original);
+     * $wrapper = entity_metadata_wrapper('profile2', $profile);
+     * @endcode
+     */
+  }
+}
+
+/**
+ * Availability functions.
+ */
+function connie_availability_items($provider_ids) {
+  $res = array();
+  foreach ($provider_ids as $id) {
+    $res[$id] = array(
+      'available' => (bool) (($id % 2) == 0),
+      'reservable' => (bool) (((int) ($id / 10) % 2) == 0),
+    );
+    // This is a periodical.
+    if ($id == '06078362') {
+      $res[$id]['issues'] = array(
+        '2011' => array(
+          '1' => array(
+            'available' => FALSE,
+            'reservable' => FALSE,
+          ),
+          '2' => array(
+            'available' => TRUE,
+            'reservable' => TRUE,
+          ),
+        ),
+        '2010' => array(
+          '2' => array(
+            'available' => TRUE,
+            'reservable' => FALSE,
+          ),
+          '1' => array(
+            'available' => TRUE,
+            'reservable' => FALSE,
+          ),
+        ),
+      );
+    }
+  }
+  return $res;
+}
+
+/**
+ * Provider function, return holdings.
+ */
+function connie_availability_holdings($provider_ids) {
+  // Holdings is a superset of items.
+  $res = connie_availability_items($provider_ids);
+  foreach ($res as $id => &$availability) {
+    if (((int) ($id / 100) % 2) === 0) {
+      $availability['holdings'] = [
+        'Andeby bibliotek' => [
+          'reservable' => TRUE,
+          'total_count' => 10,
+          'available' => TRUE,
+          'ordered_count' => 2,
+        ],
+        'Gåserød bibliotek' => [
+          'reservable' => FALSE,
+          'total_count' => 4,
+          'available' => FALSE,
+          'ordered_count' => 1,
+        ],
+      ];
+    }
+    else {
+      $availability['holdings'] = array();
+    }
+  }
+
+  return $res;
+}
+
+/**
+ * Provider function, return holdings for periodical.
+ */
+function connie_availability_periodical($provider_ids) {
+  $res = array();
+  foreach ($provider_ids as $id) {
+    $res[$id] = array(
+      '2011' => array(
+        '1' => array(
+          'available' => FALSE,
+          'reservable' => FALSE,
+        ),
+        '2' => array(
+          'available' => TRUE,
+          'reservable' => TRUE,
+        ),
+      ),
+      '2010' => array(
+        '1' => array(
+          'available' => TRUE,
+          'reservable' => FALSE,
+        ),
+        '2' => array(
+          'available' => TRUE,
+          'reservable' => FALSE,
+        ),
+      ),
+    );
+  }
+  return $res;
+}

@@ -1,0 +1,8 @@
+name = Ting covers
+description = Displays covers for Ting objects and collections
+package = Ding!
+core = 7.x
+version = "7.x-0.22"
+files[] = ting_covers.test
+dependencies[] = image
+dependencies[] = ting
