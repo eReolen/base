@@ -116,7 +116,6 @@ function reol_base_menu_alter(&$items) {
   // Disable informedia and full text
   $items['ting/infomedia/%infomedia']['access callback'] = FALSE;
   $items['ting/object/infomedia/%']['access callback'] = FALSE;
-  $items['ting/object/%ting_fulltext_object/fulltext']['access callback'] = FALSE;
 
   // Change title of user menu.
   $items['user/%user/view']['title'] = "Loans and reservations";
@@ -170,13 +169,11 @@ function reol_base_entity_load($entities, $type) {
       $local_id = FALSE;
 
       // Try to find the id we need in oss:PROVIDER-ID.
-      if (isset($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) &&
-        count($entity->reply->record['dc:identifier']['oss:PROVIDER-ID'] == 1)) {
+      if (isset($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) && count($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) == 1) {
         $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']);
       }
       // If not found there, look in dkdcplus:ISBN.
-      elseif (isset($entity->reply->record['dc:identifier']['dkdcplus:ISBN']) &&
-        count($entity->reply->record['dc:identifier']['dkdcplus:ISBN'])) {
+      elseif (isset($entity->reply->record['dc:identifier']['dkdcplus:ISBN']) && count($entity->reply->record['dc:identifier']['dkdcplus:ISBN'])) {
         $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['dkdcplus:ISBN']);
       }
 
@@ -1369,9 +1366,9 @@ function _reol_base_object_from_url($url) {
 }
 
 /**
- * Implements hook_ting_pre_execute().
+ * Implements hook_opensearch_pre_execute().
  */
-function reol_base_ting_pre_execute($request) {
+function reol_base_opensearch_pre_execute($request) {
   // Request both dkabm and marcxchange formats for all queries. DKABM data is
   // needed for regular ting object display, and we need to look into MARC data
   // to figure out if this is a quota or free material.
@@ -1379,11 +1376,11 @@ function reol_base_ting_pre_execute($request) {
 }
 
 /**
- * Implements hook_ting_post_execute().
+ * Implements hook_opensearch_post_execute().
  *
  * Adds in extra information, not available in DKABM, extracted from MARC data.
  */
-function reol_base_ting_post_execute($request, $response, $raw_response) {
+function reol_base_opensearch_post_execute($request, $response, $raw_response) {
   if (!is_object($response)) {
     // Sometimes we get a non-object response, for some types of requests. We'll
     // just ignore them as we're not interested in those requests anyway.

@@ -277,7 +277,7 @@ function orwell_preprocess_ting_object(&$variables) {
           $uri['options']['attributes'] = array('class' => array('js-search-overlay'));
         }
 
-        $items[] = l(ting_type_label($type), $uri['path'], $uri['options']);
+        $items[] = l($type, $uri['path'], $uri['options']);
       }
 
       // Only display if there are more than on item.

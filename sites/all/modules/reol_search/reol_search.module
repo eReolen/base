@@ -22,7 +22,6 @@ function reol_search_search_info_alter(&$search_hooks) {
 function reol_search_conditions_callback(&$keys) {
   $conditions = ting_search_conditions_callback($keys);
 
-
   $cqlDoctor = new TingSearchCqlDoctor($keys);
   $search_string = $cqlDoctor->string_to_cql();
   $search_keys = 'term.publisher="' . str_replace('"', '', $keys) . '"';
