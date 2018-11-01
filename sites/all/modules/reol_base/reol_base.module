@@ -1670,39 +1670,46 @@ function reol_base_opensearch_pre_execute($request) {
  * Adds in extra information, not available in DKABM, extracted from MARC data.
  */
 function reol_base_opensearch_post_execute($request, $response, $raw_response) {
-  if (!is_object($response)) {
-    // Sometimes we get a non-object response, for some types of requests. We'll
-    // just ignore them as we're not interested in those requests anyway.
-    return;
+  if (!is_array($response)) {
+    $responses = array($response);
   }
-  switch (get_class($response)) {
-    case 'TingClientObject':
-      $response->on_quota = TRUE;
-      if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record)) {
-        _reol_base_odd_marc_data($response, $raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record);
-      }
+  else {
+    $responses = $response;
+  }
 
-      break;
-
-    case 'TingClientObjectCollection':
-      foreach ($response->objects as $key => $object) {
-        $object->on_quota = TRUE;
-        if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
-          _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
-        }
-      }
-      break;
-
-    case 'TingClientSearchResult':
-      foreach ($response->collections as $col_key => $object_collection) {
-        foreach ($object_collection->objects as $key => $object) {
-          $object->on_quota = TRUE;
-          if (isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
-            _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
+  $raw_index = -1;
+  foreach ($responses as $res) {
+    $raw_index++;
+    if (is_object($res)) {
+      switch (get_class($res)) {
+        case 'TingClientObject':
+          $res->on_quota = TRUE;
+          if (isset($raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record)) {
+            _reol_base_odd_marc_data($res, $raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record);
           }
-        }
+          break;
+
+        case 'TingClientObjectCollection':
+          foreach ($res->objects as $key => $object) {
+            $object->on_quota = TRUE;
+            if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
+              _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
+            }
+          }
+          break;
+
+        case 'TingClientSearchResult':
+          foreach ($res->collections as $col_key => $object_collection) {
+            foreach ($object_collection->objects as $key => $object) {
+              $object->on_quota = TRUE;
+              if (isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
+                _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
+              }
+            }
+          }
+          break;
       }
-      break;
+    }
   }
 }
 
