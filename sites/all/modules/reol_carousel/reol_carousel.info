@@ -1,4 +1,4 @@
-name = Reol Flickity Carousel
+name = Reol Swiper (Carousel)
 description = Replaces Slick with swiper
 core = 7.x
 package = eReolen shared

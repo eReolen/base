@@ -122,6 +122,14 @@ function reol_base_menu_alter(&$items) {
 }
 
 /**
+ * Implements hook_ding_user_frontend_build_menu_alter().
+ */
+function reol_base_ding_user_frontend_build_menu_alter(&$menu) {
+  $menu['user/%user/bookmarks']['#weight'] = -5;
+  $menu['user/%user/edit']['#weight'] = 0;
+}
+
+/**
  * Implements hook_init().
  *
  * Add drupal.ajax to every page for login popup. As the login is a menu item,
