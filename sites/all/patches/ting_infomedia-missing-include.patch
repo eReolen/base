@@ -1,0 +1,12 @@
+diff --git a/profiles/ding2/modules/ting_infomedia/ting_infomedia.module b/profiles/ding2/modules/ting_infomedia/ting_infomedia.module
+index 8c31dc02..58a3ae6c 100644
+--- a/profiles/ding2/modules/ting_infomedia/ting_infomedia.module
++++ b/profiles/ding2/modules/ting_infomedia/ting_infomedia.module
+@@ -6,6 +6,7 @@
+  */
+ 
+ // Load field hooks.
++module_load_include('inc', 'ting_infomedia', 'includes/ting_infomedia.field');
+ module_load_include('inc', 'ting_infomedia', 'includes/ting_infomedia.wrapper');
+ 
+ /**
