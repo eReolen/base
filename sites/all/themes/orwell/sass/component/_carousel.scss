@@ -121,7 +121,7 @@
       margin: 0 auto 20px;
 
       &::after {
-        @include animation(spin 4s linear infinite);
+        animation: spin 4s linear infinite;
         content: '';
         position: absolute;
         top: 100%;
