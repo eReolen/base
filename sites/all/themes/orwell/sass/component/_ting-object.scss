@@ -260,9 +260,7 @@ $material--teaser__margin-bottom: 1.2rem;
     }
   }
 
-  &__details,
-  .group-material-details,
-  #ting-object-ting-object-full-group-on-this-site {
+  &__details {
     > h2,
     .ting-relations__title h2,
     .field-group-format-title {
@@ -346,7 +344,7 @@ $material--teaser__margin-bottom: 1.2rem;
     }
   }
 
-  .group-material-details .field-group-format-wrapper {
+  .field-group-format-wrapper {
     font-family: $font-regular;
     font-weight: normal;
 
