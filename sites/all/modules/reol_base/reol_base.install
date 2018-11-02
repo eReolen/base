@@ -686,6 +686,7 @@ function reol_base_update_7158() {
   reol_base_remove_module('ding_serendipity');
   variable_del('ding_serendipity_enable_cache');
   variable_del('ding_serendipity_cache_lifetime');
+  variable_del('ding_serendipity_callbacks');
   variable_del('ding_serendipity_isslow_timeout');
   variable_del('ding_serendipity_search_string_final');
   variable_del('ding_serendipity_weights');
@@ -712,12 +713,17 @@ function reol_base_update_7158() {
   variable_del('ting_openlist_developer');
   db_drop_field('users', 'openlist_uid');
 
+  reol_base_remove_module('ding_message');
   reol_base_remove_module('message');
   variable_del('message_delete_cron_limit');
   variable_del('message_purge_enable');
   variable_del('message_purge_quota');
   variable_del('message_purge_days');
   variable_del('message_delete_on_entity_delete');
+
+  $value = variable_get('features_codecache');
+  unset($value['ding_message']);
+  variable_set('features_codecache', $value);
 
   reol_base_remove_module('simplevar');
   db_drop_table('simplevar');
@@ -748,8 +754,37 @@ function reol_base_update_7159() {
  * Clean up: Remove used fields.
  */
 function reol_base_update_7160() {
-  field_delete_field('ding_entity_rating_action');
-  field_delete_field('ding_entity_rating_result');
+  // Apparently, we cannot use field_delete_field because the ding_entity
+  // module does not exist.
+  db_delete('field_config_instance')
+    ->condition('field_name', 'ding_entity_rating_action')
+    ->execute();
+  db_delete('field_config_instance')
+    ->condition('field_name', 'ding_entity_rating_result')
+    ->execute();
+  db_delete('field_config')
+    ->condition('module', 'ding_entity_rating')
+    ->execute();
+}
 
-  field_purge_batch(1000);
+/**
+ * Clean up: Remove references to ding_entity_rating module.
+ */
+function reol_base_update_7161() {
+  $value = variable_get('ding_interaction_callbacks');
+  unset($value['ding_entity_rating']);
+  unset($value['ding_entity_rating_loan_history']);
+  variable_set('ding_interaction_callbacks', $value);
+
+  $value = variable_get('features_codecache');
+  unset($value['ding_entity_rating']);
+  variable_set('features_codecache', $value);
+}
+
+/**
+ * Clean up: Remove orphaned actions.
+ */
+function reol_base_update_7162() {
+  // https://www.drupal.org/forum/support/post-installation/2011-12-19/how-can-i-remove-orphaned-actions-in-drupal-7
+  actions_synchronize(actions_list(), TRUE);
 }
