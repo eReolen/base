@@ -1595,6 +1595,7 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['type'] = 'ting_details_subject_search';
     $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['module'] = 'ting_material_details';
     $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['label'] = 'inline';
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['label'] = 'hidden';
   }
 }
 
