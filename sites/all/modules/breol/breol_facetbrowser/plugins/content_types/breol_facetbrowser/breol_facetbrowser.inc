@@ -28,21 +28,11 @@ function breol_facetbrowser_content_type_render($subtype, $conf, $panel_args, $c
   $block->module = 'ding_facetbrowser';
   $block->delta  = 'ding_facetbrowser';
 
-  $path = drupal_get_path('module', 'ding_facetbrowser');
-  drupal_add_js($path . '/js/jquery.cookie.min.js');
-  drupal_add_js($path . '/js/ding_facetbrowser.js');
-  drupal_add_js(array(
-    'ding_facetbrowser' => array(
-      'selector' => '.js-facet-browser-toggle',
-      'number_of_terms' => variable_get('ding_facetbrowser_number_of_terms', 5),
-    ),
-  ), 'setting');
-
-  // Invoke ding_facetbrowser() in ting_search.module.
-  $results = module_invoke('ting_search', 'ding_facetbrowser');
+  $executed_search_module = 'ting_search';
+  $results = module_invoke($executed_search_module, 'ding_facetbrowser');
   if (is_object($results)) {
-    foreach ($results->facets as $result) {
-      if (count($result->terms) == TRUE) {
+    foreach ($results->facets as $facet) {
+      if (count($facet->getTerms()) > 0) {
         $content_in_facet = TRUE;
         break;
       }
@@ -51,9 +41,32 @@ function breol_facetbrowser_content_type_render($subtype, $conf, $panel_args, $c
       $block_content = theme('facetbrowser', array($results->facets, (!empty($results->searchkey) ? $results->searchkey : NULL)));
     }
   }
+
+  $path = drupal_get_path('module', 'ding_facetbrowser');
   $block->title = t('BReol Facetbrowser');
-  $block->content = '<div class="js-facet-browser-toggle">' . $block_content . '</div>';
+  $block->content['#markup'] = '<div class="js-facet-browser-toggle">' . $block_content . '</div>';
+  $block->content['#attached'] = array(
+    'js' => array(
+      array(
+        'data' => $path . '/js/ding_facetbrowser.js',
+      ),
+      array(
+        'data' => array(
+          'ding_facetbrowser' => array(
+            'selector' => '.js-facet-browser-toggle',
+            'number_of_terms' => variable_get('ding_facetbrowser_number_of_terms', 5),
+          ),
+        ),
+        'type' => 'setting',
+      ),
+    ),
+    'libraries_load' => array(
+      array('js.cookie'),
+    ),
+  );
+
   return $block;
+
 }
 
 /**
