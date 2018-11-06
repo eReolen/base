@@ -23,7 +23,6 @@ function wille_theme() {
  * Implements hook_preprocess_html().
  */
 function wille_preprocess_html(&$variables) {
-
   // Get the object loaded by the current router item.
   $node = menu_get_object();
 
@@ -116,8 +115,7 @@ function wille_ting_collection_view_alter(&$build) {
  * base theme.
  */
 function wille_preprocess_ting_object_cover(&$variables) {
-  if (!isset($variables['elements']['#suppress_type_icon']) ||
-    !$variables['elements']['#suppress_type_icon']) {
+  if (!isset($variables['elements']['#suppress_type_icon']) || !$variables['elements']['#suppress_type_icon']) {
     $ting_entity = $variables['object'];
     if ($ting_entity && $ting_entity->reply && isset($ting_entity->reply->on_quota)) {
       $add_classes = _wille_type_icon_classes(reol_base_get_type_icon($ting_entity->type), $ting_entity->reply->on_quota);
@@ -173,7 +171,7 @@ function _wille_type_icon_classes($type, $quota = NULL) {
 /**
  * Implements hook_ting_view_alter().
  *
- * Fix all fieldgroups to be open.
+ * Fix all field groups to be open.
  *
  * @todo merge with brin_ting_view_alter().
  */
@@ -214,12 +212,12 @@ function wille_preprocess_panels_pane(&$variables) {
       }
     }
 
-    // Load the global user and vreate welcome banner text.
+    // Load the global user and create welcome banner text.
     global $user;
 
     $user = user_load($user->uid);
 
-    // Todo(ts) - right now there doesn't to appear to be anything here.
+    // @Todo - right now there doesn't to appear to be anything here.
     $real_name = trim($user->realname);
 
     $variables['welcome_text_part_1'] = t('Hello @real_name', array('@real_name' => $real_name));
