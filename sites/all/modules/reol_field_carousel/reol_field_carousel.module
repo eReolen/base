@@ -208,10 +208,7 @@ function reol_field_carousel_build_covers($render_method, $collections) {
   switch ($render_method) {
     case 'cover':
       foreach ($collections as $collection) {
-        $build[] = array(
-          '#type' => 'ting_search_carousel_cover',
-          '#cover' => $collection,
-        );
+        $build[] =ting_object_view($collection, 'compact');
       }
       break;
 

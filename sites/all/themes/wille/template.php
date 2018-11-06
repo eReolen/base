@@ -107,24 +107,6 @@ function wille_ting_collection_view_alter(&$build) {
 }
 
 /**
- * Implements hook_preprocess_ting_object_cover().
- *
- * Adds type icon to ting object covers.
- *
- * @deprecated by pratchett_ting_object_cover() when using that as
- * base theme.
- */
-function wille_preprocess_ting_object_cover(&$variables) {
-  if (!isset($variables['elements']['#suppress_type_icon']) || !$variables['elements']['#suppress_type_icon']) {
-    $ting_entity = $variables['object'];
-    if ($ting_entity && $ting_entity->reply && isset($ting_entity->reply->on_quota)) {
-      $add_classes = _wille_type_icon_classes(reol_base_get_type_icon($ting_entity->type), $ting_entity->reply->on_quota);
-      $variables['classes'] = array_merge($variables['classes'], $add_classes);
-    }
-  }
-}
-
-/**
  * Theme ting_object_cover.
  *
  * Wraps the cover in a link to the material.
