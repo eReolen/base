@@ -132,6 +132,23 @@ function wille_ting_object_cover($variables) {
 }
 
 /**
+ * Preprocess variables for ding_carousel_item.tpl.php.
+ */
+function wille_preprocess_ting_object_cover(&$vars) {
+  // Add icons to the covers based on the material type and quota.
+  $cover_classes = '';
+  if (isset($vars['object'])) {
+    $entity = $vars['object'];
+    if (isset($entity->reply)) {
+      $cover_classes = implode(' ', _wille_type_icon_classes(reol_base_get_type_icon($entity->type), $entity->reply->on_quota));
+    }
+
+    $vars['classes'][] = $cover_classes;
+  }
+}
+
+
+/**
  * Return classes for type icon.
  *
  * @return array
@@ -231,23 +248,6 @@ function wille_preprocess_ting_relation(&$vars) {
     // Title is ugly per default, fix it.
     $vars['title'] = t('Description from publisher');
   }
-}
-
-/**
- * Preprocess ting_search_carousel_cover.
- */
-function wille_preprocess_ting_search_carousel_cover(&$vars) {
-  $cover = $vars['cover']['#cover'];
-
-  $cover_classes = '';
-  if (!isset($cover->placeholder)) {
-    $entity = ding_entity_load($cover->id);
-    if (isset($entity->reply)) {
-      $cover_classes = implode(' ', _wille_type_icon_classes(reol_base_get_type_name($entity->type), $entity->reply->on_quota));
-    }
-  }
-
-  $vars['cover_classes'] = $cover_classes;
 }
 
 /**
