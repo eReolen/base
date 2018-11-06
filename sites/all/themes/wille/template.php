@@ -304,6 +304,7 @@ function wille_field($variables) {
  * Theme user login form.
  */
 function wille_user_login(&$vars) {
+  // Add uni-login to the form.
   $vars['element']['unilogin_wrapper'] = array(
     '#type' => 'fieldset',
     '#description' => $vars['element']['unilogin']['#title'],
@@ -314,18 +315,19 @@ function wille_user_login(&$vars) {
   $vars['element']['unilogin_wrapper']['unilogin']['#prefix'] = '<div class="unilogin-wrapper">';
   $vars['element']['unilogin_wrapper']['unilogin']['#suffix'] = '</div>';
 
+  // Move login information into new wrapper.
   $vars['element']['login_wrapper'] = array(
     '#type' => 'fieldset',
     '#description' => t('Log in with CPR or borrower number'),
   );
-  $vars['element']['login_wrapper']['name'] = $vars['element']['name'];
-  $vars['element']['login_wrapper']['pass'] = $vars['element']['pass'];
-  $vars['element']['login_wrapper']['retailer_id'] = $vars['element']['retailer_id'];
-  $vars['element']['login_wrapper']['actions'] = $vars['element']['actions'];
-  unset($vars['element']['name']);
-  unset($vars['element']['pass']);
-  unset($vars['element']['retailer_id']);
-  unset($vars['element']['actions']);
+  $vars['element']['login_wrapper']['name'] = $vars['element']['user_login_container']['name'];
+  $vars['element']['login_wrapper']['pass'] = $vars['element']['user_login_container']['pass'];
+  $vars['element']['login_wrapper']['retailer_id'] = $vars['element']['user_login_container']['retailer_id'];
+  $vars['element']['login_wrapper']['actions'] = $vars['element']['user_login_container']['actions'];
+  unset($vars['element']['user_login_container']['name']);
+  unset($vars['element']['user_login_container']['pass']);
+  unset($vars['element']['user_login_container']['retailer_id']);
+  unset($vars['element']['user_login_container']['actions']);
 
   return drupal_render_children($vars['element']);
 }
