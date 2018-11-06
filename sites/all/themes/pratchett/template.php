@@ -10,10 +10,8 @@
  */
 function pratchett_js_alter(&$javascript) {
   // Override script from ding_availability.
-  $avail_js = drupal_get_path('module', 'ding_availability') .
-            '/js/ding_availability_labels.js';
-  $new_aval_js = drupal_get_path('theme', 'pratchett') .
-               '/scripts/ding_availability_labels.js';
+  $avail_js = drupal_get_path('module', 'ding_availability') . '/js/ding_availability_labels.js';
+  $new_aval_js = drupal_get_path('theme', 'pratchett') . '/scripts/ding_availability_labels.js';
   if (isset($javascript[$avail_js])) {
     $javascript[$avail_js]['data'] = $new_aval_js;
     $types = array();
@@ -38,7 +36,6 @@ function pratchett_js_alter(&$javascript) {
  * Implements hook_preprocess_html().
  */
 function pratchett_preprocess_html(&$variables) {
-
   // Adding Viewport to HTML Header.
   $viewport = array(
     '#tag' => 'meta',
