@@ -419,7 +419,7 @@ function reol_base_entity_load($entities, $type) {
       // As this is a fake entity, will try to get the title from publizon.
       $product = publizon_load($local_id);
       if ($product) {
-        $entity->reply->record['dc:title'][""][0] = $product->title;
+        $entity->reply->openSearchObject->record['dc:title'][""][0] = $product->title;
       }
     }
     // When have to check all the way down, as chain might be broken
