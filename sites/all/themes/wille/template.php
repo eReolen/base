@@ -197,7 +197,6 @@ function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
  * Implements hook_preprocess_panels_pane().
  */
 function wille_preprocess_panels_pane(&$variables) {
-
   $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
 
   if ($variables['pane']->type === 'user_menu') {
@@ -293,7 +292,7 @@ function wille_user_login(&$vars) {
   );
   $vars['element']['unilogin_wrapper']['unilogin'] = $vars['element']['unilogin'];
   unset($vars['element']['unilogin']);
-  $vars['element']['unilogin_wrapper']['unilogin']['#title'] = $vars['element']['actions']['submit']['#value'];
+  $vars['element']['unilogin_wrapper']['unilogin']['#title'] = $vars['element']['user_login_container']['actions']['submit']['#value'];
   $vars['element']['unilogin_wrapper']['unilogin']['#prefix'] = '<div class="unilogin-wrapper">';
   $vars['element']['unilogin_wrapper']['unilogin']['#suffix'] = '</div>';
 
