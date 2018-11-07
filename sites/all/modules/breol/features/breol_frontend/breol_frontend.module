@@ -116,6 +116,38 @@ function breol_frontend_field_default_field_instances_alter(&$fields) {
       'weight' => 1,
     );
   }
+
+  if (isset($fields['ting_object-ting_object-ting_abstract'])) {
+    $fields['ting_object-ting_object-ting_abstract']['display']['default']['weight'] = 76;
+    $fields['ting_object-ting_object-ting_series']['display']['default']['weight'] = 77;
+    $fields['ting_object-ting_object-ting_series']['display']['default']['label'] = 'inline';
+  }
+}
+
+/**
+ * Implements hook_field_group_info_alter().
+ */
+function breol_frontend_field_group_info_alter(&$groups) {
+  // Move fields around the default ting object view.
+  if (isset($groups['group_ting_object_right_c|ting_object|ting_object|default'])) {
+    // Fields to move around.
+    $fields = array('ting_abstract', 'ting_series', 'ting_subjects');
+
+    // Remove the fields from current placement.
+    $old_values = $groups['group_ting_object_right_c|ting_object|ting_object|default']->data['children'];
+    $values = array();
+    foreach ($old_values as $value) {
+      if (!in_array($value, $fields)) {
+        $values[] = $value;
+      }
+    }
+    $groups['group_ting_object_right_c|ting_object|ting_object|default']->data['children'] = $values;
+
+    // Add fields to new placement.
+    foreach ($fields as $field) {
+      $groups['group_ting_object_meta|ting_object|ting_object|default']->data['children'][] = $field;
+    }
+  }
 }
 
 /**
