@@ -322,3 +322,11 @@ function breol_base_update_7140() {
 function breol_base_update_7141() {
   reol_base_locale_add_translation('See all', 'Se alle');
 }
+
+/**
+ * Set module weight.
+ */
+function breol_base_update_7142() {
+  // Ensure that form alter is executed last.
+  db_query("UPDATE {system} SET weight = 300 WHERE type = 'module' AND name = 'breol_base'");
+}
