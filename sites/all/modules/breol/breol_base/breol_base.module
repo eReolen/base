@@ -25,5 +25,10 @@ function breol_base_form_alter(&$form, &$form_state, $form_id) {
       unset($form['user_login_container']['pass']['#attributes']['placeholder']);
       $form['user_login_container']['pass']['#title_display'] = 'before';
       break;
+
+    case 'ding_loan_loans_form':
+    case 'ding_reservation_reservations_notready_form':
+      $form['actions_container']['#access'] = FALSE;
+      break;
   }
 }
