@@ -1821,35 +1821,3 @@ function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
   }
   return $return;
 }
-
-/**
- * Implements hook_form_alter().
- *
- * Change/remove DDB things from forms.
- */
-function reol_base_form_alter(&$form, $form_state, $form_id) {
-  switch ($form_id) {
-    case 'user_login':
-    case 'user_login_block':
-      // Remove into text from DDB core.
-      if (!empty($form['intro_text'])) {
-        unset($form['intro_text']);
-      }
-
-      // Change the login fields.
-      unset($form['user_login_container']['name']['#attributes']['placeholder']);
-      $form['user_login_container']['name']['#title_display'] = 'before';
-      unset($form['user_login_container']['pass']['#attributes']['placeholder']);
-      $form['user_login_container']['pass']['#title_display'] = 'before';
-
-      // Remove the Ajax part of the form to prevent 2x pop-ups.
-      unset($form['user_login_container']['actions']['submit']['#ajax']);
-    break;
-
-    case 'ding_loan_loans_form':
-      // Remove "Renew" actions from the loans form.
-      unset($form['actions_container']);
-      unset($form['#submit']);
-      break;
-  }
-}
