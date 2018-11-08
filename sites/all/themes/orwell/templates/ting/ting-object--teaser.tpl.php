@@ -34,7 +34,7 @@
         <?php echo render($content['group_text']['group_inner']['ting_details_subjects']); ?>
       </div>
       <div class="material__series material__series--desktop">
-        <?php echo render($content['ting_series']); ?>
+        <?php echo render($content['group_text']['group_inner']['ting_series']); ?>
       </div>
     </div>
   </div>
