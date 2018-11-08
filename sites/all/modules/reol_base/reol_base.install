@@ -62,7 +62,6 @@ function reol_base_remove_module($module) {
 function reol_base_update_7101() {
   $modules = array(
     'ding_bookmark',
-    'ding_frontpage',
     'ding_groups',
     'ding_news',
     'ding_tabroll',

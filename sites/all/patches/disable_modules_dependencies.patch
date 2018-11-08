@@ -1,16 +1,46 @@
 diff --git a/profiles/ding2/ding2.info b/profiles/ding2/ding2.info
-index 80dd40d9..44d1d919 100644
+index 10e5bd4d..03684fab 100644
 --- a/profiles/ding2/ding2.info
 +++ b/profiles/ding2/ding2.info
-@@ -36,8 +36,6 @@ dependencies[] = ding_ting_frontend
- dependencies[] = ding_frontpage
+@@ -33,12 +33,9 @@ dependencies[] = toolbar
+ dependencies[] = ding_base
+ dependencies[] = ding_user_frontend
+ dependencies[] = ding_ting_frontend
+-dependencies[] = ding_frontpage
  dependencies[] = ding_session_cache
+ dependencies[] = ding_staff
  dependencies[] = bpi
 -dependencies[] = ding_p2_installer
 -dependencies[] = ding_campaign
  
  ; Cache/performance modules
  dependencies[] = entitycache
+diff --git a/profiles/ding2/ding2.install b/profiles/ding2/ding2.install
+index b7f95916..81ae5f37 100644
+--- a/profiles/ding2/ding2.install
++++ b/profiles/ding2/ding2.install
+@@ -66,9 +66,6 @@ function ding2_install() {
+   // Disable configurable timezones for users.
+   variable_set('configurable_timezones', 0);
+ 
+-  // Select the ding_frontpage as front page.
+-  variable_set('site_frontpage', 'ding_frontpage');
+-
+   //
+   // Enable ting search as default.
+   //
+diff --git a/profiles/ding2/ding2.profile b/profiles/ding2/ding2.profile
+index 4f8e2d67..f8a9e529 100644
+--- a/profiles/ding2/ding2.profile
++++ b/profiles/ding2/ding2.profile
+@@ -230,7 +230,6 @@ function ding2_add_settings(&$install_state) {
+     'ding_library',
+     'ding_news',
+     'ding_groups',
+-    'ding_frontpage',
+   );
+ 
+   // Revert features.
 diff --git a/profiles/ding2/modules/ding_frontend/ding_frontend.info b/profiles/ding2/modules/ding_frontend/ding_frontend.info
 index de255767..772361bd 100644
 --- a/profiles/ding2/modules/ding_frontend/ding_frontend.info
@@ -43,3 +73,27 @@ index 2494dad6..59a54423 100644
  dependencies[] = ting_reference
  dependencies[] = ting_relation
  dependencies[] = ting_search
+diff --git a/sites/all/modules/breol/breol_base/breol_base.install b/sites/all/modules/breol/breol_base/breol_base.install
+index 10f1437a..7f3deb56 100644
+--- a/sites/all/modules/breol/breol_base/breol_base.install
++++ b/sites/all/modules/breol/breol_base/breol_base.install
+@@ -11,7 +11,6 @@
+ function breol_base_update_7101() {
+   $modules = array(
+     'ding_bookmark',
+-    'ding_frontpage',
+     'ding_groups',
+     'ding_news',
+     'ding_tabroll',
+diff --git a/sites/all/modules/reol_base/reol_base.install b/sites/all/modules/reol_base/reol_base.install
+index 0497524b..4ab0b463 100644
+--- a/sites/all/modules/reol_base/reol_base.install
++++ b/sites/all/modules/reol_base/reol_base.install
+@@ -43,7 +43,6 @@ function reol_base_install() {
+ function reol_base_update_7101() {
+   $modules = array(
+     'ding_bookmark',
+-    'ding_frontpage',
+     'ding_groups',
+     'ding_news',
+     'ding_tabroll',
