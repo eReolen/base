@@ -11,7 +11,6 @@
 function breol_base_update_7101() {
   $modules = array(
     'ding_bookmark',
-    'ding_frontpage',
     'ding_groups',
     'ding_news',
     'ding_tabroll',

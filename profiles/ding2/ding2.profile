@@ -219,7 +219,6 @@ function ding2_add_settings(&$install_state) {
     'ding_library',
     'ding_news',
     'ding_groups',
-    'ding_frontpage',
   );
 
   // Revert features.
