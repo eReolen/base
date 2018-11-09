@@ -176,29 +176,29 @@ function ereol_frontend_default_search_api_server() {
         "ereol_index" : {
           "nid" : {
             "table" : "search_api_db_ereol_index",
-            "column" : "nid_2",
+            "column" : "nid",
             "type" : "integer",
             "boost" : "1.0"
           },
           "type" : {
             "table" : "search_api_db_ereol_index",
-            "column" : "type_2",
+            "column" : "type",
             "type" : "string",
             "boost" : "1.0"
           },
           "title" : {
-            "table" : "search_api_db_ereol_index_text_6",
+            "table" : "search_api_db_ereol_index_text",
             "type" : "text",
             "boost" : "2.0"
           },
           "search_api_language" : {
             "table" : "search_api_db_ereol_index",
-            "column" : "search_api_language_2",
+            "column" : "search_api_language",
             "type" : "string",
             "boost" : "1.0"
           },
           "body:value" : {
-            "table" : "search_api_db_ereol_index_text_6",
+            "table" : "search_api_db_ereol_index_text",
             "type" : "text",
             "boost" : "1.0"
           }
