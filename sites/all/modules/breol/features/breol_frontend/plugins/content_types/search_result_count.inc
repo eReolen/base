@@ -19,15 +19,19 @@ $plugin = array(
 function breol_frontend_search_result_count_content_type_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
 
-  $search_result = drupal_static('ting_search_results');
+  $search_result = ting_search_current_results();
   if (isset($search_result)) {
-    $results = isset($search_result->numTotalObjects) ?
-             (int) $search_result->numTotalObjects : 0;
+    $results = $search_result->getNumTotalObjects();
     $string = format_plural($results,
-                            'Search result: 1 result',
-                            'Search result: @count results');
+      'Search result: 1 result',
+      'Search result: @count results');
     $block->content = array(
-      '#markup' => $string,
+      'title' => array(
+        '#theme' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => array('class' => array('page-title')),
+        '#value' => $string,
+      ),
     );
   }
 

@@ -4,3 +4,31 @@
  * @file
  * Base module for ereolen for kids.
  */
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Change/remove DDB things from forms.
+ */
+function breol_base_form_alter(&$form, &$form_state, $form_id) {
+  switch ($form_id) {
+    case 'user_login':
+    case 'user_login_block':
+      // Remove into text from DDB core.
+      if (!empty($form['intro_text'])) {
+        unset($form['intro_text']);
+      }
+
+      // Change the login fields.
+      unset($form['user_login_container']['name']['#attributes']['placeholder']);
+      $form['user_login_container']['name']['#title_display'] = 'before';
+      unset($form['user_login_container']['pass']['#attributes']['placeholder']);
+      $form['user_login_container']['pass']['#title_display'] = 'before';
+      break;
+
+    case 'ding_loan_loans_form':
+    case 'ding_reservation_reservations_notready_form':
+      $form['actions_container']['#access'] = FALSE;
+      break;
+  }
+}

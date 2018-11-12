@@ -213,9 +213,12 @@ function secure_permissions_build_roles() {
   $remove_roles = array_diff($roles, $secure_roles);
   // Add new roles.
   foreach ($new_roles as $rid => $name) {
-    $role = new stdClass();
-    $role->name = $name;
-    user_role_save($role);
+    $role = user_role_load_by_name($name);
+    if (empty($role)) {
+      $role = new stdClass();
+      $role->name = $name;
+      user_role_save($role);
+    }
   }
   // Delete old roles.
   $omit = array(DRUPAL_ANONYMOUS_RID, DRUPAL_AUTHENTICATED_RID);

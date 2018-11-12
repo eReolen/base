@@ -1,5 +1,0 @@
-name = Reol Shared Theme
-description = "Shared theming code"
-core = 7.x
-package = eReolen shared (old)
-dependencies[] = reol_base

@@ -1,16 +1,8 @@
 diff --git a/profiles/ding2/modules/ding_base/ding_base.info b/profiles/ding2/modules/ding_base/ding_base.info
-index 30f0fbb2..ffa5a140 100644
+index 488c74f..d6d039a 100644
 --- a/profiles/ding2/modules/ding_base/ding_base.info
 +++ b/profiles/ding2/modules/ding_base/ding_base.info
-@@ -2,7 +2,6 @@ name = Ding base
- core = 7.x
- package = Ding!
- project = ding_base
--dependencies[] = autologout
- dependencies[] = ctools
- dependencies[] = ding_permissions
- dependencies[] = jquery_update
-@@ -20,34 +19,6 @@ configure = admin/config/ding
+@@ -19,34 +19,6 @@ configure = admin/config/ding
  features[ctools][] = page_manager:pages_default:1
  features[ctools][] = strongarm:strongarm:1
  features[features_api][] = api:2
@@ -46,16 +38,13 @@ index 30f0fbb2..ffa5a140 100644
  features[variable][] = bpi_field_body
  features[variable][] = bpi_field_materials
 diff --git a/profiles/ding2/modules/ding_base/ding_base.strongarm.inc b/profiles/ding2/modules/ding_base/ding_base.strongarm.inc
-index 197629d4..ba91d767 100644
+index b29f93f..01a4c86 100644
 --- a/profiles/ding2/modules/ding_base/ding_base.strongarm.inc
 +++ b/profiles/ding2/modules/ding_base/ding_base.strongarm.inc
-@@ -24,206 +24,6 @@ function ding_base_strongarm() {
-   );
-   $export['admin_menu_components'] = $strongarm;
- 
--  $strongarm = new stdClass();
--  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
--  $strongarm->api_version = 1;
+@@ -13,206 +13,6 @@ function ding_base_strongarm() {
+   $strongarm = new stdClass();
+   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+   $strongarm->api_version = 1;
 -  $strongarm->name = 'autologout_enforce_admin';
 -  $strongarm->value = 1;
 -  $export['autologout_enforce_admin'] = $strongarm;
@@ -253,24 +242,9 @@ index 197629d4..ba91d767 100644
 -  $strongarm->value = 0;
 -  $export['autologout_use_watchdog'] = $strongarm;
 -
-   $strongarm = new stdClass();
-   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-   $strongarm->api_version = 1;
-diff --git a/sites/all/modules/reol_base/reol_base.install b/sites/all/modules/reol_base/reol_base.install
-index d7c04d47..0497524b 100644
---- a/sites/all/modules/reol_base/reol_base.install
-+++ b/sites/all/modules/reol_base/reol_base.install
-@@ -514,3 +514,13 @@ function reol_base_update_7148() {
- function reol_base_update_7149() {
-   features_revert_module('ding_ting_frontend');
- }
-+
-+/**
-+ * Disable autologout module.
-+ */
-+function reol_base_update_7150() {
-+  // It don't makes sens to auto logout users will listening or reading an online book.
-+  if (module_exists('autologout')) {
-+    module_disable(array('autologout'), FALSE);
-+  }
-+}
+-  $strongarm = new stdClass();
+-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+-  $strongarm->api_version = 1;
+   $strongarm->name = 'bpi_content_type';
+   $strongarm->value = 'ding_news';
+   $export['bpi_content_type'] = $strongarm;

@@ -18,7 +18,7 @@ function ting_oembed_features_field_group_info() {
   $field_group->entity_type = 'ting_object';
   $field_group->bundle = 'ting_object';
   $field_group->mode = 'default';
-  $field_group->parent_name = '';
+  $field_group->parent_name = 'group_ting_object_right_column';
   $field_group->data = array(
     'label' => 'Material content',
     'weight' => '6',
@@ -29,13 +29,12 @@ function ting_oembed_features_field_group_info() {
     'format_settings' => array(
       'label' => 'Material content',
       'instance_settings' => array(
-        'classes' => ' group-oembed field-group-div',
+        'classes' => '',
         'description' => '',
         'show_label' => '1',
         'label_element' => 'h2',
         'effect' => 'none',
         'speed' => 'fast',
-        'id' => 'ting_object_ting_object_full_group_oembed',
       ),
       'formatter' => 'collapsible',
     ),
@@ -62,7 +61,7 @@ function ting_oembed_features_field_group_info() {
       'formatter' => 'collapsible',
       'instance_settings' => array(
         'description' => '',
-        'classes' => ' group-oembed field-group-fieldset',
+        'classes' => '',
         'required_fields' => 1,
       ),
     ),

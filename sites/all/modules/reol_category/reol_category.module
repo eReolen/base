@@ -32,13 +32,15 @@ function reol_category_menu() {
 
   // Create a suggested menu item for each category.
   foreach (entity_load('reol_category') as $category) {
-    $items[$category->categoryPath()] = array(
-      'title' => $category->title,
-      'page callback' => 'reol_category_page',
-      'access callback' => TRUE,
-      'type' => MENU_SUGGESTED_ITEM,
-      'menu_name' => 'main-menu',
-    );
+    if (!empty($category->categoryPath())) {
+      $items[$category->categoryPath()] = array(
+        'title' => $category->title,
+        'page callback' => 'reol_category_page',
+        'access callback' => TRUE,
+        'type' => MENU_SUGGESTED_ITEM,
+        'menu_name' => 'main-menu',
+      );
+    }
   }
 
   return $items;

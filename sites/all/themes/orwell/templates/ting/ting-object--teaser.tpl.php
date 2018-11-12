@@ -15,26 +15,26 @@
 <?php else : ?>
   <div class="material material--teaser <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
     <div class="material__cover material__cover--teaser">
-      <?php echo render($content['group_ting_object_teaser_left']['ting_cover']); ?>
+      <?php echo render($content['ting_cover']); ?>
     </div>
     <div class="material__content text">
       <div class="material__title">
-        <?php echo render($content['group_ting_object_teaser_right']['ting_title']); ?>
+        <?php echo render($content['group_text']['group_inner']['ting_title']); ?>
       </div>
       <div class="material__author">
-        <?php echo render($content['group_ting_object_teaser_right']['ting_author']); ?>
+        <?php echo render($content['group_text']['group_inner']['ting_author']); ?>
       </div>
       <div class="material__language">
         <?php echo $object->getLanguage() ?>
       </div>
       <div class="material__abstract">
-        <?php echo render($content['group_ting_object_teaser_right']['ting_abstract']); ?>
+        <?php echo render($content['group_text']['ting_abstract']); ?>
       </div>
       <div class="material__subjects">
-        <?php echo render($content['group_ting_object_teaser_right']['ting_subjects']); ?>
+        <?php echo render($content['group_text']['group_inner']['ting_details_subjects']); ?>
       </div>
       <div class="material__series material__series--desktop">
-        <?php echo render($content['group_ting_object_teaser_right']['ting_series']); ?>
+        <?php echo render($content['group_text']['group_inner']['ting_series']); ?>
       </div>
     </div>
   </div>
