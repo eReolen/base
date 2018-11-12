@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Internationalization (i18n) hooks.
@@ -28,15 +27,10 @@ function metatag_panels_i18n_object_info() {
 
     // Build a suitable structure for this meta tag.
     $tag_name = $tag_info['name'];
-    $title = $tag_info['label'];
-    if (!empty($tag_info['group'])) {
-      $tag_group = $tag_info['group'];
-      $group_label = !empty($groups[$tag_group]['label']) ? $groups[$tag_group]['label'] : $tag_group;
-      $title = $group_label . ': ' . $title;
-    }
-
+    $tag_group = $tag_info['group'];
+    $group_label = isset($groups[$tag_group]['label']) ? $groups[$tag_group]['label'] : $tag_group;
     $properties[$tag_name] = array(
-      'title' => $title,
+      'title' => $group_label . ': ' . $tag_info['label'],
       'field' => "conf.metatag_panels.metatags.{$tag_name}.value",
     );
   }
@@ -51,6 +45,7 @@ function metatag_panels_i18n_object_info() {
     // 'class' => 'metatag_panels_i18n_metatag',
     // @todo Is this needed? What does it do?
     // 'translation set' => TRUE,
+
     // The object's "key" field, this tells i18n_string to use the $panel->name
     // attribute.
     'key' => 'name',
@@ -63,6 +58,7 @@ function metatag_panels_i18n_object_info() {
     // 'edit path' => 'admin/config/search/metatags/config/%instance',
     // Auto-generate a 'translate' tab.
     // 'translate tab' => 'admin/config/search/metatags/config/%instance/translate',
+
     // Properties for string translation.
     'string translation' => array(
       // The textgroup, type and (below) name will be concatenated into a single

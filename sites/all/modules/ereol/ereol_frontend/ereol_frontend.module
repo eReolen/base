@@ -75,4 +75,19 @@ function ereol_frontend_field_default_field_instances_alter(&$fields) {
   if (isset($fields['ting_object-ting_object-ting_cover'])) {
     $fields['ting_object-ting_object-ting_cover']['display']['compact']['settings']['image_style'] = 'ereol_cover_base';
   }
+
+  if (isset($fields['ting_object-ting_object-ting_series'])) {
+    $fields['ting_object-ting_object-ting_series']['display']['teaser']['module'] = 'ting';
+    $fields['ting_object-ting_object-ting_series']['display']['teaser']['type'] = 'ting_series_default';
+  }
+}
+
+/**
+ * Implements hook_field_group_info_alter().
+ */
+function ereol_frontend_field_group_info_alter(&$groups) {
+  ksort($groups);
+  if (isset($groups['group_inner|ting_object|ting_object|teaser'])) {
+    $groups['group_inner|ting_object|ting_object|teaser']->data['children'][] = 'ting_series';
+  }
 }

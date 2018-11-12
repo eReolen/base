@@ -9,12 +9,7 @@ Drupal.ogMenu = Drupal.ogMenu || {};
 Drupal.behaviors.ogMenuGroupswitch = {
   attach: function(context) {
     // Initialize variables and form.
-    if (Drupal.settings.ogMenu.mlid !== 0) {
-      Drupal.ogMenu.originalParent = $('.menu-parent-select').val(); // Get original parent.
-    }
-    else {
-      Drupal.ogMenu.originalParent = null;
-    }
+    Drupal.ogMenu.originalParent = $('.menu-parent-select').val(); // Get original parent. We'll use this shortly.
     Drupal.ogMenu.selected = []; // Create Variable to hold selected groups
     Drupal.ogMenu.bindEvents(); // Bind events to group audience fields.
     Drupal.ogMenu.setSelected(); // Get all currently selected.
@@ -49,9 +44,17 @@ Drupal.ogMenu.bindEvents = function() {
 Drupal.ogMenu.bindEvent = function(type, selector) {
   // Autocomplete events can be tricky and need specific logic.
   if (type == 'entityreference_autocomplete') {
-    $(selector).bind('autocompleteSelect', function() {
+    // Selecting with the mouse will trigger blur.
+    $(selector).blur( function() {
       Drupal.ogMenu.setSelected();
       Drupal.ogMenu.populateParentSelect();
+    });
+    // Selecting with arrows needs more advanced logic.
+    $(selector).keyup( function() {
+      if (event.keyCode == 13) { // Enter key.
+        Drupal.ogMenu.setSelected();
+        Drupal.ogMenu.populateParentSelect();
+      }
     });
   }
   // Other fields are simpler.
@@ -215,13 +218,11 @@ Drupal.ogMenu.populateParentSelect = function() {
         var parts = key.split(':');
 
         if (parts[0] === menu_name) {
-          // Current gid matches with menu parent to activate, no link was set previously.
-          if (gid == parentToSetActive && activeIsSet === null) {
+          if (gid == parentToSetActive && activeIsSet === 0) {
             // Add option to Select and set as selected.
             $('.menu-parent-select').append($("<option>", {value: key, text: val, selected: 'selected'}));
             activeIsSet = 1;
           }
-          //
           else if (Drupal.settings.ogMenu.mlid !== 0 && Drupal.settings.ogMenu.mlid == parts[1]) {
             $('.menu-parent-select').append($("<option>", {value: key, text: val + ' [Current Menu Position]', disabled: 'disabled'}));
             // Don't add this item to parent list...

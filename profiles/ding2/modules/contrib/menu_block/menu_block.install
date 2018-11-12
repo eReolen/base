@@ -267,18 +267,10 @@ function menu_block_update_7202() {
 }
 
 /**
- * Trigger a menu rebuild.
- */
-function menu_block_update_7203() {
-  // Nothing needed here.
-}
-
-
-/**
  * Add database table, migrate variables into database and enable CTools if
  * availble.
  */
-function menu_block_update_7204() {
+function menu_block_update_7203() {
   // Add database table.
   $schema['menu_blocks'] = array(
     'fields' => array(

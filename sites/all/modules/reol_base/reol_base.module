@@ -86,6 +86,17 @@ function reol_base_menu() {
 }
 
 /**
+ * Implements hook_entity_info_alter().
+ */
+function reol_base_entity_info_alter(&$entity_info) {
+  // The compact view mode fits into the carousel.
+  $entity_info['ting_object']['view modes']['compact'] = array(
+    'label' => t('Compact'),
+    'custom settings' => TRUE,
+  );
+}
+
+/**
  * Implements hook_menu_alter().
  */
 function reol_base_menu_alter(&$items) {
@@ -93,9 +104,29 @@ function reol_base_menu_alter(&$items) {
 
   // Remove menu callback from user menu.
   $items['user/%user/status']['access callback'] = FALSE;
+  $items['user/%user/status-debts']['access callback'] = FALSE;
+  $items['user/%user/status-loans']['access callback'] = FALSE;
+  $items['user/%user/status-loans-overdue']['access callback'] = FALSE;
+  $items['user/%user/my-library']['access callback'] = FALSE;
+  $items['user/%user/status-reservations']['access callback'] = FALSE;
+  $items['user/%user/status']['access callback'] = FALSE;
+  $items['user/%user/status-reservations-ready']['access callback'] = FALSE;
+
+
+  // Disable informedia and full text
+  $items['ting/infomedia/%infomedia']['access callback'] = FALSE;
+  $items['ting/object/infomedia/%']['access callback'] = FALSE;
 
   // Change title of user menu.
   $items['user/%user/view']['title'] = "Loans and reservations";
+}
+
+/**
+ * Implements hook_ding_user_frontend_build_menu_alter().
+ */
+function reol_base_ding_user_frontend_build_menu_alter(&$menu) {
+  $menu['user/%user/bookmarks']['#weight'] = -5;
+  $menu['user/%user/edit']['#weight'] = 0;
 }
 
 /**
@@ -108,6 +139,259 @@ function reol_base_menu_alter(&$items) {
 function reol_base_init() {
   drupal_add_library('system', 'drupal.ajax', TRUE);
 }
+
+/**
+ * Implements hook_image_default_styles().
+ *
+ * Re-adds image styles used by old campaign module and now used by the front
+ * page carousel.
+ */
+function reol_base_image_default_styles() {
+  $styles = array();
+
+  // Exported image style: ding_campaign_p_100.
+  $styles['ding_campaign_p_100'] = array(
+    'name' => 'ding_campaign_p_100',
+    'label' => 'Campaign (100% - 1200px)',
+    'effects' => array(
+      7 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 1200,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: ding_campaign_p_25.
+  $styles['ding_campaign_p_25'] = array(
+    'name' => 'ding_campaign_p_25',
+    'label' => 'Campaign (25% - 280px)',
+    'effects' => array(
+      1 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 280,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: ding_campaign_p_33.
+  $styles['ding_campaign_p_33'] = array(
+    'name' => 'ding_campaign_p_33',
+    'label' => 'Campaign (33% - 380px)',
+    'effects' => array(
+      3 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 380,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: ding_campaign_p_50.
+  $styles['ding_campaign_p_50'] = array(
+    'name' => 'ding_campaign_p_50',
+    'label' => 'Campaign (50% - 580px)',
+    'effects' => array(
+      4 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 580,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: ding_campaign_p_66.
+  $styles['ding_campaign_p_66'] = array(
+    'name' => 'ding_campaign_p_66',
+    'label' => 'Campaign (66% - 780px)',
+    'effects' => array(
+      5 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 780,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: ding_campaign_p_75.
+  $styles['ding_campaign_p_75'] = array(
+    'name' => 'ding_campaign_p_75',
+    'label' => 'Campaign (75% - 880px)',
+    'effects' => array(
+      6 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 880,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: ding_campaign_w_180.
+  $styles['ding_campaign_w_180'] = array(
+    'name' => 'ding_campaign_w_180',
+    'effects' => array(
+      3 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 180,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+    'label' => 'ding_campaign_w_180',
+  );
+
+  // Exported image style: ding_campaign_w_280.
+  $styles['ding_campaign_w_280'] = array(
+    'name' => 'ding_campaign_w_280',
+    'effects' => array(
+      4 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 280,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+    'label' => 'ding_campaign_w_280',
+  );
+
+  // Exported image style: ding_campaign_w_380.
+  $styles['ding_campaign_w_380'] = array(
+    'name' => 'ding_campaign_w_380',
+    'effects' => array(
+      5 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 380,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+    'label' => 'ding_campaign_w_380',
+  );
+
+  // Exported image style: ding_campaign_w_480.
+  $styles['ding_campaign_w_480'] = array(
+    'name' => 'ding_campaign_w_480',
+    'effects' => array(
+      6 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 480,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => 1,
+      ),
+    ),
+    'label' => 'ding_campaign_w_480',
+  );
+
+  return $styles;
+}
+
 
 /**
  * Implements hook_entity_load().
@@ -135,24 +419,22 @@ function reol_base_entity_load($entities, $type) {
       // As this is a fake entity, will try to get the title from publizon.
       $product = publizon_load($local_id);
       if ($product) {
-        $entity->reply->record['dc:title'][""][0] = $product->title;
+        $entity->reply->openSearchObject->record['dc:title'][""][0] = $product->title;
       }
     }
     // When have to check all the way down, as chain might be broken
-    // somwhere. Only touch localId if we have the right value for it.
+    // somewhere. Only touch localId if we have the right value for it.
     elseif (isset($entity->reply) &&
       isset($entity->reply->record) &&
       isset($entity->reply->record['dc:identifier'])) {
       $local_id = FALSE;
 
       // Try to find the id we need in oss:PROVIDER-ID.
-      if (isset($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) &&
-        count($entity->reply->record['dc:identifier']['oss:PROVIDER-ID'] == 1)) {
+      if (isset($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) && count($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']) == 1) {
         $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['oss:PROVIDER-ID']);
       }
       // If not found there, look in dkdcplus:ISBN.
-      elseif (isset($entity->reply->record['dc:identifier']['dkdcplus:ISBN']) &&
-        count($entity->reply->record['dc:identifier']['dkdcplus:ISBN'])) {
+      elseif (isset($entity->reply->record['dc:identifier']['dkdcplus:ISBN']) && count($entity->reply->record['dc:identifier']['dkdcplus:ISBN'])) {
         $local_id = reol_base_get_local_id($entity->reply->record['dc:identifier']['dkdcplus:ISBN']);
       }
 
@@ -607,7 +889,7 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
  * Searches the well 50 isbn numbers at a time. Limited to 50 to not break the
  * well.
  *
- * @param string $isbns
+ * @param array $isbns
  *   The ISBN numbers to search for.
  *
  * @return array
@@ -1261,6 +1543,8 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   if (isset($fields['ting_object-ting_object-ting_subjects'])) {
     $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['type'] = 'ting_subjects_default';
     $fields['ting_object-ting_object-ting_subjects']['display']['search_result']['module'] = 'ting';
+    $fields['ting_object-ting_object-ting_subjects']['display']['collection_list']['label'] = 'hidden';
+    $fields['ting_object-ting_object-ting_subjects']['display']['default']['label'] = 'hidden';
   }
 
   // Remove subjects from material details.
@@ -1306,20 +1590,15 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_title']['display']['compact']['label'] = 'hidden';
   }
 
-  // Remove rating widget in all displays.
-  if (isset($fields['ting_object-ting_object-ding_entity_rating_action'])) {
-    foreach (array_keys($fields['ting_object-ting_object-ding_entity_rating_action']['display']) as $display) {
-      $fields['ting_object-ting_object-ding_entity_rating_action']['display'][$display]['type'] = 'hidden';
-    }
-  }
-
-  // Remove rating display in all displays.
-  if (isset($fields['ting_object-ting_object-ding_entity_rating_result'])) {
-    foreach (array_keys($fields['ting_object-ting_object-ding_entity_rating_result']['display']) as $display) {
-      $fields['ting_object-ting_object-ding_entity_rating_result']['display'][$display]['type'] = 'hidden';
-    }
+  // Add subjects to teaser view mode.
+  if (isset($fields['ting_object-ting_object-ting_details_subjects'])) {
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['type'] = 'ting_details_subject_search';
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['module'] = 'ting_material_details';
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['label'] = 'inline';
+    $fields['ting_object-ting_object-ting_details_subjects']['display']['teaser']['label'] = 'hidden';
   }
 }
+
 
 /**
  * Implements hook_field_group_info_alter().
@@ -1335,6 +1614,26 @@ function reol_base_field_group_info_alter(&$groups) {
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_ebook_format';
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'ting_details_audiobook_reader';
     $groups['group_material_details|ting_object|ting_object|default']->data['children'][] = 'field_lix';
+  }
+
+  // Add subjects to teaser view mode - inner group.
+  if (isset($groups['group_inner|ting_object|ting_object|teaser'])) {
+    $groups['group_inner|ting_object|ting_object|teaser']->data['children'][] = 'ting_details_subjects';
+  }
+
+  // Remove rating.
+  if (isset($groups['group_rating|ting_object|ting_object|default'])) {
+    $groups['group_rating|ting_object|ting_object|default']->data['children'] = array();
+  }
+
+  // Remove rating.
+  if (isset($groups['group_rating|ting_object|ting_object|search_result'])) {
+    $groups['group_rating|ting_object|ting_object|search_result']->data['children'] = array();
+  }
+
+  // Remove rating.
+  if (isset($groups['group_rating|ting_object|ting_object|teaser'])) {
+    $groups['group_rating|ting_object|ting_object|teaser']->data['children'] = array();
   }
 }
 
@@ -1359,9 +1658,9 @@ function _reol_base_object_from_url($url) {
 }
 
 /**
- * Implements hook_ting_pre_execute().
+ * Implements hook_opensearch_pre_execute().
  */
-function reol_base_ting_pre_execute($request) {
+function reol_base_opensearch_pre_execute($request) {
   // Request both dkabm and marcxchange formats for all queries. DKABM data is
   // needed for regular ting object display, and we need to look into MARC data
   // to figure out if this is a quota or free material.
@@ -1369,44 +1668,51 @@ function reol_base_ting_pre_execute($request) {
 }
 
 /**
- * Implements hook_ting_post_execute().
+ * Implements hook_opensearch_post_execute().
  *
  * Adds in extra information, not available in DKABM, extracted from MARC data.
  */
-function reol_base_ting_post_execute($request, $response, $raw_response) {
-  if (!is_object($response)) {
-    // Sometimes we get a non-object response, for some types of requests. We'll
-    // just ignore them as we're not interested in those requests anyway.
-    return;
+function reol_base_opensearch_post_execute($request, $response, $raw_response) {
+  if (!is_array($response)) {
+    $responses = array($response);
   }
-  switch (get_class($response)) {
-    case 'TingClientObject':
-      $response->on_quota = TRUE;
-      if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record)) {
-        _reol_base_odd_marc_data($response, $raw_response->searchResponse->result->searchResult[0]->collection->object[0]->collection->record);
-      }
+  else {
+    $responses = $response;
+  }
 
-      break;
-
-    case 'TingClientObjectCollection':
-      foreach ($response->objects as $key => $object) {
-        $object->on_quota = TRUE;
-        if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
-          _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
-        }
-      }
-      break;
-
-    case 'TingClientSearchResult':
-      foreach ($response->collections as $col_key => $object_collection) {
-        foreach ($object_collection->objects as $key => $object) {
-          $object->on_quota = TRUE;
-          if (isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
-            _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
+  $raw_index = -1;
+  foreach ($responses as $res) {
+    $raw_index++;
+    if (is_object($res)) {
+      switch (get_class($res)) {
+        case 'TingClientObject':
+          $res->on_quota = TRUE;
+          if (isset($raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record)) {
+            _reol_base_odd_marc_data($res, $raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record);
           }
-        }
+          break;
+
+        case 'TingClientObjectCollection':
+          foreach ($res->objects as $key => $object) {
+            $object->on_quota = TRUE;
+            if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
+              _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
+            }
+          }
+          break;
+
+        case 'TingClientSearchResult':
+          foreach ($res->collections as $col_key => $object_collection) {
+            foreach ($object_collection->objects as $key => $object) {
+              $object->on_quota = TRUE;
+              if (isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
+                _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
+              }
+            }
+          }
+          break;
       }
-      break;
+    }
   }
 }
 

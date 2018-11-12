@@ -3,9 +3,7 @@
  * Behaviors for reol_search.
  */
 
-
 (function ($) {
-
   'use strict';
 
   /**

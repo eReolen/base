@@ -1,4 +1,0 @@
-name = Reol Shared Frontend
-description = "Shared frontend code"
-core = 7.x
-package = eReolen shared (old)

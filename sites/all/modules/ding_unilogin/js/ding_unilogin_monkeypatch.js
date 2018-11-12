@@ -3,8 +3,9 @@
  * Monkeypatch AJAX to note which popup was triggered.
  */
 
-(function($) {
-  "use strict";
+(function ($) {
+  'use strict';
+
   Drupal.ding_unilogin = Drupal.ding_unilogin || {};
 
   /**
@@ -30,12 +31,12 @@
             Drupal.ajax[id].options.beforeSend = function() {
               Drupal.ding_unilogin.last_clicked = id;
               oldBeforeSend();
-            }
+            };
           }
         }
       });
     }
-  }
+  };
 
   /**
    * Re-triggers a popup.
@@ -58,5 +59,5 @@
         }
       }
     }
-  }
+  };
 })(jQuery);

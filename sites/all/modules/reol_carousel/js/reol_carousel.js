@@ -154,8 +154,8 @@
         var childWidthLast = parentWidth - (childWidth * (childCount - 1));
 
         // Set the tabs css widths.
-        this.tabs.children().css({'width' : childWidth + 'px'});
-        this.tabs.children(':last-child').css({'width' : childWidthLast + 'px'});
+        this.tabs.children().css({width: childWidth + 'px'});
+        this.tabs.children(':last-child').css({width: childWidthLast + 'px'});
       }
     };
 
@@ -197,9 +197,9 @@
 
     $.ajax({
       type: 'get',
-      url : Drupal.settings.basePath + $(swiper.el).data('path') + '/' + $(swiper.el).data('offset'),
-      dataType : 'json',
-      success : function (data) {
+      url: Drupal.settings.basePath + $(swiper.el).data('path') + '/' + $(swiper.el).data('offset'),
+      dataType: 'json',
+      success: function (data) {
         // Remove placeholders.
         $(swiper.el).find('.ding-carousel-item.placeholder').remove();
         Drupal.attachBehaviors(data.content);
@@ -225,7 +225,7 @@
           (tab.data('offset') > -1 &&
           // Use .75 to make it trigger when scrolling to the end when the
           // coursel only has 5 elements as it will have when initially loaded.
-          this.progress > .75)) {
+          this.progress > 0.75)) {
         // Disable updates while updating.
         tab.data('updating', true);
         // Add to queue.
@@ -248,15 +248,15 @@
 
     // If the first slide is more than 80% of the carousel width, enable sticky
     // mode.
-    if (slideWidth > (carouselWidth * .8)) {
-      this.params['freeModeSticky'] = true;
+    if (slideWidth > (carouselWidth * 0.8)) {
+      this.params.freeModeSticky = true;
     }
     else {
       // Else we calculate how many slides to scroll with the arrows.
       // This will set it to low if the page was loaded at a small
       // mobile width, and resized afterwards, but it's an edge case
       // we're living with.
-      this.params['slidesPerGroup'] = Math.floor(carouselWidth / slideWidth)
+      this.params.slidesPerGroup = Math.floor(carouselWidth / slideWidth);
       // Apparently swiper needs to be updated for this to take effect.
       this.update();
     }
@@ -267,7 +267,7 @@
 
     // Call update_handler with the same 'this'.
     update_handler.apply(this);
-  }
+  };
 
   /**
    * Start the carousel when the document is ready.
@@ -305,11 +305,11 @@
           freeModeMomentumRatio: 0.5,
           navigation: {
             nextEl: '.button-next',
-            prevEl: '.button-prev',
+            prevEl: '.button-prev'
           },
           init: false
         });
-        swiper.on('init', init_handler)
+        swiper.on('init', init_handler);
         swiper.on('slideChange', update_handler);
         swiper.init();
       });

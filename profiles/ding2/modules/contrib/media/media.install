@@ -29,7 +29,7 @@ function media_install() {
  */
 function _media_install_copy_icons() {
   $destination = variable_get('media_icon_base_directory', 'public://media-icons') . '/' . variable_get('media_icon_set', 'default');
-  if (!file_prepare_directory($destination, FILE_CREATE_DIRECTORY)) {
+  if (!file_prepare_directory($destination, FILE_MODIFY_PERMISSIONS || FILE_CREATE_DIRECTORY)) {
     throw new Exception("Unable to create directory $destination.");
   }
   // @todo If we ever add another default icon set, this should copy all images from one directory up.
@@ -65,6 +65,8 @@ function media_uninstall() {
   variable_del('media_zindex');
   variable_del('media_backgroundcolor');
   variable_del('media_opacity');
+  // bulk edit option
+  variable_del('media_bulk_upload_edit');
 }
 
 /**
@@ -104,7 +106,7 @@ function media_update_dependencies() {
 function media_requirements($phase) {
   $t = get_t();
   // Make sure that file_entity module is 2.x version.
-  // We can't add this check in .info file because drupal.org testbot cant
+  // We can't add this check in .info file because drupal.org testbot can't
   // handle it. See #1734648.
   $requirements = array();
 
@@ -120,6 +122,26 @@ function media_requirements($phase) {
     }
   }
 
+  if (module_exists('entity_translation')) {
+    if ($phase == 'update' || $phase == 'install' || $phase == 'runtime' ) {
+      $entity_translation_info = system_get_info('module', 'entity_translation');
+      $et_installed_version = $entity_translation_info['version'];
+      $et_installed_datestamp = $entity_translation_info['datestamp'];
+      $march3rd_entity_translation_timestamp = 1488530885;
+      if (!isset($entity_translation_info['version']) || !isset($entity_translation_info['datestamp'])) {
+        $et_installed_datestamp = 1488530884;
+      }
+
+      if ($et_installed_datestamp < $march3rd_entity_translation_timestamp) {
+        $description = $t('Your entity_translation installation version: %version is too old. media requires entity_translation at least beta6 from march 3 2017 or newer.  Your choice is to either upgrade entity_translation or to disable it.', array('%version' => $et_installed_version));
+        $requirements['entity_translation']['description'] = $description;
+        $requirements['entity_translation']['severity'] = REQUIREMENT_ERROR;
+        $requirements['entity_translation']['value'] = $et_installed_version;
+        $requirements['entity_translation']['title'] = $t('Entity translation (when installed) with Media');
+	drupal_set_message($description, 'error', TRUE);
+      }
+    }
+  }
   return $requirements;
 }
 
@@ -139,6 +161,10 @@ function media_update_7001() {
  * Create the media_type table from the media_types variable.
  */
 function media_update_7002() {
+  if (db_table_exists('media_type')) {
+    return;
+  }
+
   $schema['media_type'] = array(
     'description' => 'Stores the settings for media types.',
     'fields' => array(
@@ -190,7 +216,7 @@ function media_update_7002() {
   db_create_table('media_type', $schema['media_type']);
 
   drupal_load('module', 'media');
-  $old_types = variable_get('media_types');
+  $old_types = variable_get('media_types', array());
   foreach ($old_types as $type) {
     // Was an error in the original creation.
     if (isset($type->callbacks)) {
@@ -494,6 +520,13 @@ function media_update_7020() {
   if (variable_get('media__wysiwyg_allowed_types') == array('image', 'video')) {
     variable_del('media__wysiwyg_allowed_types');
   }
+}
+
+/**
+ * Rerun media_update_7002() due to a typo that would prevent table creation.
+ */
+function media_update_7021() {
+  media_update_7002();
 }
 
 /**
@@ -856,7 +889,12 @@ function media_update_7208() {
       // Merge existing type with new ones.
       if ($new_type = file_type_load($type->name)) {
         $new_type->mimetypes = array_merge($type->mimetypes, $new_type->mimetypes);
-        $new_type->streams = array_merge($type->streams, $new_type->streams);
+        if (!empty($new_type->streams)) {
+          $new_type->streams = array_merge($type->streams, $new_type->streams);
+        }
+        else{
+          $new_type->streams = $type->streams;
+        }
       }
       else {
         $new_type = $type;
@@ -1160,9 +1198,7 @@ function media_update_7225() {
 }
 
 /**
- * Accommodate the introduction of a new permission which restricts access to
- * the media browser by granting it to existing users who were able to access
- * it.
+ * Grant existing user access to new media browser permission.
  */
 function media_update_7226() {
   $roles = user_roles(FALSE, 'create files');

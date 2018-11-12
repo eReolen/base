@@ -23,7 +23,6 @@ function wille_theme() {
  * Implements hook_preprocess_html().
  */
 function wille_preprocess_html(&$variables) {
-
   // Get the object loaded by the current router item.
   $node = menu_get_object();
 
@@ -108,25 +107,6 @@ function wille_ting_collection_view_alter(&$build) {
 }
 
 /**
- * Implements hook_preprocess_ting_object_cover().
- *
- * Adds type icon to ting object covers.
- *
- * @deprecated by pratchett_ting_object_cover() when using that as
- * base theme.
- */
-function wille_preprocess_ting_object_cover(&$variables) {
-  if (!isset($variables['elements']['#suppress_type_icon']) ||
-    !$variables['elements']['#suppress_type_icon']) {
-    $ting_entity = $variables['object'];
-    if ($ting_entity && $ting_entity->reply && isset($ting_entity->reply->on_quota)) {
-      $add_classes = _wille_type_icon_classes(reol_base_get_type_icon($ting_entity->type), $ting_entity->reply->on_quota);
-      $variables['classes'] = array_merge($variables['classes'], $add_classes);
-    }
-  }
-}
-
-/**
  * Theme ting_object_cover.
  *
  * Wraps the cover in a link to the material.
@@ -152,6 +132,23 @@ function wille_ting_object_cover($variables) {
 }
 
 /**
+ * Preprocess variables for ding_carousel_item.tpl.php.
+ */
+function wille_preprocess_ting_object_cover(&$vars) {
+  // Add icons to the covers based on the material type and quota.
+  $cover_classes = '';
+  if (isset($vars['object'])) {
+    $entity = $vars['object'];
+    if (isset($entity->reply)) {
+      $cover_classes = implode(' ', _wille_type_icon_classes(reol_base_get_type_icon($entity->type), $entity->reply->on_quota));
+    }
+
+    $vars['classes'][] = $cover_classes;
+  }
+}
+
+
+/**
  * Return classes for type icon.
  *
  * @return array
@@ -173,7 +170,7 @@ function _wille_type_icon_classes($type, $quota = NULL) {
 /**
  * Implements hook_ting_view_alter().
  *
- * Fix all fieldgroups to be open.
+ * Fix all field groups to be open.
  *
  * @todo merge with brin_ting_view_alter().
  */
@@ -200,7 +197,6 @@ function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
  * Implements hook_preprocess_panels_pane().
  */
 function wille_preprocess_panels_pane(&$variables) {
-
   $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
 
   if ($variables['pane']->type === 'user_menu') {
@@ -214,12 +210,12 @@ function wille_preprocess_panels_pane(&$variables) {
       }
     }
 
-    // Load the global user and vreate welcome banner text.
+    // Load the global user and create welcome banner text.
     global $user;
 
     $user = user_load($user->uid);
 
-    // Todo(ts) - right now there doesn't to appear to be anything here.
+    // @Todo - right now there doesn't to appear to be anything here.
     $real_name = trim($user->realname);
 
     $variables['welcome_text_part_1'] = t('Hello @real_name', array('@real_name' => $real_name));
@@ -251,23 +247,6 @@ function wille_preprocess_ting_relation(&$vars) {
     // Title is ugly per default, fix it.
     $vars['title'] = t('Description from publisher');
   }
-}
-
-/**
- * Preprocess ting_search_carousel_cover.
- */
-function wille_preprocess_ting_search_carousel_cover(&$vars) {
-  $cover = $vars['cover']['#cover'];
-
-  $cover_classes = '';
-  if (!isset($cover->placeholder)) {
-    $entity = ding_entity_load($cover->id);
-    if (isset($entity->reply)) {
-      $cover_classes = implode(' ', _wille_type_icon_classes(reol_base_get_type_name($entity->type), $entity->reply->on_quota));
-    }
-  }
-
-  $vars['cover_classes'] = $cover_classes;
 }
 
 /**
@@ -306,28 +285,30 @@ function wille_field($variables) {
  * Theme user login form.
  */
 function wille_user_login(&$vars) {
+  // Add uni-login to the form.
   $vars['element']['unilogin_wrapper'] = array(
     '#type' => 'fieldset',
     '#description' => $vars['element']['unilogin']['#title'],
   );
   $vars['element']['unilogin_wrapper']['unilogin'] = $vars['element']['unilogin'];
   unset($vars['element']['unilogin']);
-  $vars['element']['unilogin_wrapper']['unilogin']['#title'] = $vars['element']['actions']['submit']['#value'];
+  $vars['element']['unilogin_wrapper']['unilogin']['#title'] = $vars['element']['user_login_container']['actions']['submit']['#value'];
   $vars['element']['unilogin_wrapper']['unilogin']['#prefix'] = '<div class="unilogin-wrapper">';
   $vars['element']['unilogin_wrapper']['unilogin']['#suffix'] = '</div>';
 
+  // Move login information into new wrapper.
   $vars['element']['login_wrapper'] = array(
     '#type' => 'fieldset',
     '#description' => t('Log in with CPR or borrower number'),
   );
-  $vars['element']['login_wrapper']['name'] = $vars['element']['name'];
-  $vars['element']['login_wrapper']['pass'] = $vars['element']['pass'];
-  $vars['element']['login_wrapper']['retailer_id'] = $vars['element']['retailer_id'];
-  $vars['element']['login_wrapper']['actions'] = $vars['element']['actions'];
-  unset($vars['element']['name']);
-  unset($vars['element']['pass']);
-  unset($vars['element']['retailer_id']);
-  unset($vars['element']['actions']);
+  $vars['element']['login_wrapper']['name'] = $vars['element']['user_login_container']['name'];
+  $vars['element']['login_wrapper']['pass'] = $vars['element']['user_login_container']['pass'];
+  $vars['element']['login_wrapper']['retailer_id'] = $vars['element']['user_login_container']['retailer_id'];
+  $vars['element']['login_wrapper']['actions'] = $vars['element']['user_login_container']['actions'];
+  unset($vars['element']['user_login_container']['name']);
+  unset($vars['element']['user_login_container']['pass']);
+  unset($vars['element']['user_login_container']['retailer_id']);
+  unset($vars['element']['user_login_container']['actions']);
 
   return drupal_render_children($vars['element']);
 }
