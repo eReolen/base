@@ -147,7 +147,6 @@ function wille_preprocess_ting_object_cover(&$vars) {
   }
 }
 
-
 /**
  * Return classes for type icon.
  *

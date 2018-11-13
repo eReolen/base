@@ -787,3 +787,10 @@ function reol_base_update_7162() {
   // https://www.drupal.org/forum/support/post-installation/2011-12-19/how-can-i-remove-orphaned-actions-in-drupal-7
   actions_synchronize(actions_list(), TRUE);
 }
+
+/**
+ * Change media rendering method.
+ */
+function reol_base_update_7163() {
+  variable_set('media_wysiwyg_default_render', 'field_attach');
+}
