@@ -136,14 +136,14 @@ function wille_ting_object_cover($variables) {
  */
 function wille_preprocess_ting_object_cover(&$vars) {
   // Add icons to the covers based on the material type and quota.
-  $cover_classes = '';
   if (isset($vars['object'])) {
     $entity = $vars['object'];
     if (isset($entity->reply)) {
-      $cover_classes = implode(' ', _wille_type_icon_classes(reol_base_get_type_icon($entity->type), $entity->reply->on_quota));
+      $type = reol_base_get_type_icon($entity->type);
+      if ($type) {
+        $vars['classes'] = array_merge($vars['classes'], _wille_type_icon_classes($type, $entity->reply->on_quota));
+      }
     }
-
-    $vars['classes'][] = $cover_classes;
   }
 }
 
