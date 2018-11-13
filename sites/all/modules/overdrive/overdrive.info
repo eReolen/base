@@ -1,6 +1,0 @@
-name = Overdrive
-description = Stuff related to overdrive API/data.
-core = 7.x
-package = eReolen shared
-dependencies[] = reol_base
-
