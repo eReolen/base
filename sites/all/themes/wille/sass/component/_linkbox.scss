@@ -1,0 +1,101 @@
+.linkbox {
+  @include rounded-box();
+
+  position: relative;
+  display: flex;
+  height: 100%;
+  min-height: 380px;
+  padding: $mobile-margin;
+  overflow: hidden;
+
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #fff;
+
+  // Making sure the content shows up at the bottom.
+  justify-content: flex-end;
+  flex-direction: column;
+
+  @include media($tablet-p) {
+    min-height: 300px;
+  }
+
+  // The arrow should only show up on primary boxes.
+  .two-elements--primary & {
+    @include media($tablet-p) {
+      min-height: 250px;
+    }
+  }
+}
+
+.linkbox__header {
+  margin-bottom: 10px;
+
+  font-size: 14px;
+  font-weight: bold;
+  font-family: $font-mikado;
+  text-transform: uppercase;
+  line-height: 120%;
+
+  &::after {
+    content: ':';
+  }
+}
+
+.linkbox__content {
+  position: relative;
+  z-index: 2;
+
+  .two-elements--secondary & {
+    padding-top: $mobile-margin;
+    padding-left: $mobile-margin;
+    padding-right: $mobile-margin;
+
+    margin-left: -$mobile-margin;
+    margin-right: -$mobile-margin;
+  }
+
+  .two-elements--primary & {
+    &::before {
+      @include icon('arrow-right-funny');
+
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      font-size: 20px;
+      z-index: 3;
+    }
+
+    // We're only interested in the inline background color
+    // if the element is secondary, so we'll have to disable
+    // it using [style] and !important.
+    &[style] {
+      background-color: transparent !important;
+    }
+  }
+}
+
+.linkbox__image {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .two-elements--secondary & {
+    @include rounded-box();
+
+    top: $mobile-margin / 1.5;
+    left: $mobile-margin / 1.5;
+    right: $mobile-margin / 1.5;
+    bottom: 90px;
+  }
+}

@@ -1,0 +1,57 @@
+.try-ebook,
+.try-audiobook {
+  max-width: 1180px;
+}
+
+.ui-dialog .back-button {
+  display: none;
+}
+
+#reader-settings .reader-settings-slidericon-wrapper .reader-settings-slider {
+  position: absolute;
+  left: 0;
+  right: 27px;
+  width: auto;
+  display: block;
+}
+
+#reader-settings #settings-reset-zoom {
+  position: absolute;
+  width: 30px;
+  top: -12px;
+  padding: 13px 6px;
+  line-height: 1;
+  text-align: center;
+  right: -6px;
+}
+
+#reader-settings .settings-header {
+  height: 7px;
+}
+
+.reader__back-button {
+  position: absolute;
+  // text-decoration: none;
+  color: black;
+  font-size: 20px;
+  top: 10px;
+  left: 28%;
+  z-index: 9999;
+
+  @include small-medium() {
+    left: 1rem;
+  }
+}
+
+.reader__back-button {
+  color: black !important;
+  text-decoration: none;
+  font-size: 16px;
+
+  &:before {
+    font-family: "FontAwesome";
+    content: "\f060";
+    left: -6px;
+    position: relative;
+  }
+}

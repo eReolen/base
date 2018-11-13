@@ -1,0 +1,88 @@
+
+
+// Kick ddbasic in the nads...
+.field-name-ding-entity-buttons .reserve-button.unavailable.reservable:link,
+.field-name-ding-entity-buttons .field-items .reserve-button:link,
+.form-submit,
+.ui-widget .form-submit,
+#edit-cancel,
+.ui-widget #edit-cancel,
+.action-button,
+#edit-delete {
+  @extend %button-default;
+}
+
+.button,
+a.button,
+%button-default {
+  position: static;
+  display: inline-block;
+  border-radius: 2px;
+  color: #ffffff;
+  background-color: #c7003d;
+  background-image: none;
+  text-decoration: none;
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  line-height: 24px;
+  letter-spacing: .2px;
+  padding: 12px 20px;
+  margin-left: 0;
+  margin-right: 16px;
+  border: none;
+  vertical-align: baseline;
+
+  &:link,
+  &:visited,
+  &:focus,
+  &:active {
+    color: #ffffff;
+    text-decoration: none;
+    background-image: none;
+    background-color: #c7003d;
+  }
+
+  &:hover {
+    background-color: #ba0038;
+    background-image: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @include small() {
+    display: block;
+    width: 80%;
+    margin: 10px 10%;
+    text-align: center;
+  }
+}
+
+.availability .search-result--availability-link,
+.availability .search-result--availability-link {
+  &,
+  &:link,
+  &:visited,
+  &:focus,
+  &:active {
+    @extend %button-default;
+    // Should be invisible, but let's set it to a sane default.
+    background-color: #cfcfcf;
+
+    &.available {
+      background-color: #01b552;
+    }
+
+    &.reservable {
+      background-color: #ffb81e;
+    }
+
+    &.not-reservable,
+    &.unavailable {
+      display: none;
+    }
+  }
+}

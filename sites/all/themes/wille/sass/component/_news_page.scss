@@ -1,0 +1,34 @@
+.news-page {
+
+  &__overlay {
+    @extend .article__cover__overlay;
+    background: rgba(235, 235, 235, 0.5);
+  }
+
+  &__content {
+    @include outer-container;
+  }
+}
+
+.news-page__cover {
+
+  @extend .article__cover;
+
+  justify-content: space-around;
+  padding: 100px 0;
+
+  &--wrapper {
+    @extend .article__cover-wrapper;
+  }
+
+  &__content {
+    @extend .article__cover__content;
+    @extend .article__cover__content--breol_section;
+
+    width: 100%;
+
+    .title {
+      text-transform: uppercase;
+    }
+  }
+}

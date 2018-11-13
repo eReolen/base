@@ -1,0 +1,399 @@
+@import 'bootstrap/bootstrap';
+
+$teaser-height--default: 370px;
+$teaser-height--medium: 400px;
+
+.article {
+  font-family: $font-regular;
+
+  // Establish a stacking context, so our covers doesn't overlap other
+  // things.
+  z-index: 0;
+
+  &__content {
+    padding: 2rem 2rem 0;
+
+    @include grid-media($medium) {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 0 3.5rem;
+    }
+  }
+
+  &__title {
+    @include page-header;
+  }
+
+  &__byline {
+    width: 100%;
+    overflow: hidden;
+    font-family: $font-regular;
+    color: $color__font-gray;
+    line-height: $line-height__default;
+
+    &__date {
+      float: left;
+      font-family: $font-semibold;
+      color: $color__font-gray--dark;
+
+      @include grid-media($medium) {
+        display: block;
+        float: none;
+      }
+    }
+
+    &__author {
+      float: right;
+
+      @include grid-media($medium) {
+        display: block;
+        float: none;
+      }
+    }
+
+    @include grid-media($medium) {
+      padding-right: 3.5rem;
+      order: 2;
+      width: 17%;
+    }
+  }
+
+  &__body {
+    padding-bottom: 3.5rem;
+
+    @include grid-media($medium) {
+      order: 3;
+      width: 83%;
+      padding-bottom: 0;
+    }
+  }
+
+  &__image {
+    padding: 2rem 2rem 0;
+    margin-bottom: 1.5rem;
+
+    * {
+      height: 100%;
+      width: 100%;
+    }
+
+    img {
+      object-fit: cover;
+      object-position: top;
+    }
+
+    @include grid-media($medium) {
+      padding: 0;
+      margin-bottom: 5rem;
+      height: 400px;
+    }
+  }
+
+  &__materials {
+    background-color: $color__material-list-bg;
+    width: 100%;
+    display: block;
+    clear: both;
+    overflow: hidden;
+    padding: 2rem;
+
+    .field-item:last-child {
+      .material--teaser {
+        border: 0;
+      }
+    }
+
+    .view-mode-teaser {
+      @include grid-media($large) {
+        width: 83%;
+        float: right;
+      }
+    }
+
+    @include grid-media($medium) {
+      padding: 2rem 0;
+    }
+  }
+}
+
+.article--teaser {
+  display: block;
+  height: $teaser-height--default;
+  // Bottom padding to leave room for carousel dots. Also, doesn't
+  // look too bad on /articles.
+  padding: 2rem 2rem 56px;
+  color: $color__white;
+  background-color: $color__gray--dark;
+  // Establish bounding box for image.
+  position: relative;
+
+  @include grid-media($medium) {
+    padding: 2rem 4rem;
+    max-width: 100vw;
+    width: 1049px;
+  }
+
+  > a {
+    color: $color__white;
+    text-decoration: none;
+
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column nowrap;
+
+    @include grid-media($medium) {
+      display: block;
+    }
+  }
+
+  &__title {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    text-align: center;
+    font-family: $font-light;
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
+    flex: 0 0;
+
+    .article--teaser--image & {
+      float: left;
+      text-align: left;
+    }
+
+    @include grid-media($medium) {
+      max-width: 100%;
+      margin: 0 0 1.2rem;
+      text-align: left;
+      font-size: 2rem;
+      line-height: 2.6rem;
+    }
+  }
+
+  &__teaser_right {
+    // Anchor covers.
+    position: relative;
+  }
+
+  &__body {
+    position: relative;
+    // Not displayed on mobile.
+    display: none;
+    margin: 0 0 2rem;
+    opacity: 0.5;
+    font-family: $font-regular;
+    line-height: 1.4rem;
+
+    @include grid-media($medium) {
+      display: block;
+    }
+  }
+
+  &__covers {
+    position: relative;
+    height: 100vw;
+    max-height: 220px;
+    max-width: 300px;
+    margin: auto;
+
+    @include grid-media($medium) {
+      max-height: 340px;
+      max-width: 400px;
+    }
+
+    // Style covers in different sizes and make them overlap a bit.
+    img {
+      position: absolute;
+      width: auto;
+      object-fit: cover;
+      max-height: 100%;
+
+      &:nth-child(1) {
+        max-width: 60%;
+        right: 38%;
+        bottom: 0;
+        z-index: 2;
+        box-shadow: 11px -1px 28px -13px rgba(0,0,0,0.75);
+
+        @include grid-media($medium) {
+          // Switch to scaling by height rather than width.
+          max-width: none;
+          max-height: 100%;
+          right: auto;
+          left: 38%;
+          box-shadow: -11px -1px 28px -13px rgba(0,0,0,0.75);
+        }
+      }
+
+      &:nth-child(2) {
+        max-width: 40%;
+        left: 58%;
+        bottom: 6%;
+        z-index: 1;
+
+        @include grid-media($medium) {
+          max-width: none;
+          max-height: 70%;
+          left: auto;
+          right: 58%;
+        }
+      }
+    }
+  }
+
+  &__label {
+    position: relative;
+    margin-bottom: 1rem;
+    color: $color__white;
+    font-size: 1rem;
+    font-family: $font-semibold;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
+  }
+
+  &__read-more {
+    @include outline-button;
+    position: relative;
+    // Not displayed on mobile.
+    display: none;
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
+
+    .article--teaser--image & {
+      float: right;
+    }
+
+    @include grid-media($medium) {
+      display: block;
+    }
+  }
+
+  @include grid-media($xxsmall) {
+    height: $teaser-height--default;
+  }
+
+  @include grid-media($medium) {
+    height: $teaser-height--medium;
+  }
+
+  &__left,
+  &__right {
+    @include grid-media($medium) {
+      float: left;
+      width: 50%;
+      margin: 0;
+    }
+  }
+
+  &__info {
+
+    .article--teaser--image & {
+      padding: 0 2rem;
+    }
+
+    @include grid-media($medium) {
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      &__inner {
+        width: 100%;
+        padding: 2rem;
+      }
+    }
+
+    .article--teaser--image & {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+
+  &--image {
+    padding: 0;
+  }
+
+  &__cover {
+    position: absolute;
+    height: $teaser-height--default;
+    width: 1200px;
+    max-width: 100%;
+
+    * {
+      height: 100%;
+      width: 100%;
+    }
+
+    img {
+      object-fit: cover;
+      object-position: top;
+    }
+
+    @include grid-media($medium) {
+      height: $teaser-height--medium;
+    }
+  }
+}
+
+.field-name-field-article-image {
+  img {
+    object-fit: cover;
+    height: 475px;
+    display: block;
+  }
+}
+
+.article--search-result {
+  font-family: $font-regular;
+
+  a {
+    text-decoration: none;
+  }
+
+  &__left,
+  &__right {
+    width: 50%;
+    float: left;
+  }
+
+  &__title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: $color__font-gray--dark;
+    font-family: $font-semibold;
+    margin-bottom: 1.5rem;
+    line-height: $line-height__small;
+    margin-top: calc(50% - 3rem);
+
+    @include grid-media($medium) {
+      margin: 0;
+    }
+  }
+
+  &__cover {
+    img {
+      height: auto;
+      max-height: 194px;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    @include grid-media($medium) {
+      padding-right: 3.5rem;
+    }
+  }
+
+  p {
+    @include text-paragraph;
+  }
+
+  &__info__inner {
+    padding: 0 0 0 2rem;
+
+    @include grid-media($medium) {
+      padding: 1.5rem 0 0;
+    }
+  }
+}

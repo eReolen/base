@@ -1,0 +1,110 @@
+// Header.
+.site-header__inner {
+  @include outer-container;
+
+  padding: 0 $mobile-margin;
+}
+
+// Main content.
+body:not(.front):not(.page-nyheder):not(.node-type-inspiration) .main-content-wrapper__inner {
+  @include outer-container;
+}
+
+body:not(.node-type-inspiration) .main-content-wrapper__inner {
+  width: 100%;
+  @include media($tablet-l) {
+    padding: 0 15px;
+  }
+}
+
+.main-content-wrapper {
+  clear: both;
+}
+
+// Footer.
+.footer__inner {
+  @include outer-container;
+}
+
+.container {
+  @include outer-container;
+}
+
+// Frontpage theming.
+.front {
+  .main-content {
+    background: $gray;
+    padding: 75px 0;
+    margin-bottom: 100px;
+
+    @include media($tablet-l) {
+      padding: 15px;
+    }
+  }
+}
+
+// Organic elements.
+.organic-element {
+  height: 35px;
+  overflow: hidden;
+  z-index: 2;
+  position: relative;
+  width: 100%;
+  height: 40px;
+  padding: 0px;
+  line-height: 0;
+
+  .node-type-inspiration & {
+    display: none;
+  }
+
+  &--user {
+    .organic-svg {
+      fill: white;
+    }
+  }
+
+  &--content {
+    .organic-svg {
+      fill: white;
+    }
+
+    .page-search & {
+      top: -20px;
+    }
+
+    .front &,
+    .page-nyheder & {
+      display: none;
+    }
+
+  }
+
+  &--page-news {
+
+    top: -20px;
+
+    .organic-svg {
+      fill: white;
+    }
+  }
+
+  &--footer {
+    margin: 50px 0 0;
+
+    .organic-svg {
+      fill: $red;
+    }
+  }
+
+  svg {
+    height: 100%;
+    width: 100%;
+
+     @include media($tablet-l) {
+      width: 1600px;
+      position: absolute;
+      left: -500px;
+    }
+  }
+}

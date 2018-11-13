@@ -1,0 +1,113 @@
+@import 'bootstrap/bootstrap';
+
+.pager {
+  display: flex;
+  width: 100%;
+  font-family: $font-semibold;
+  font-size: 1rem;
+
+  a,
+  .pager-ellipsis {
+    display: inline-block;
+    padding: 1rem;
+    color: $color__font-gray;
+    text-decoration: none;
+
+    &:hover {
+      color: $color__red;
+    }
+  }
+}
+
+.pager-first,
+.pager-last {
+  display: none;
+}
+
+.pager-current {
+  color: $color__red;
+  padding: 1rem;
+}
+
+.pager-previous,
+.pager-next {
+  font-size: 0;
+
+  a {
+    padding: 1rem 0;
+
+    &::before {
+      @include icon;
+      font-size: .9rem;
+      color: $color__gray;
+      border: 1px solid $color__border-gray--light;
+      padding: 1rem;
+      border-radius: 2px;
+    }
+
+    &:hover {
+      &::before {
+        color: $color__red;
+        border: 1px solid $color__red;
+      }
+    }
+  }
+}
+
+.pager-next {
+  a {
+    &::before {
+      content: $icon__arrow-right;
+    }
+  }
+}
+
+.pager-previous {
+  flex-grow: 1;
+
+  a {
+    &::before {
+      content: $icon__arrow-left;
+    }
+  }
+}
+
+.pager-item-prev-1,
+.pager-item-prev-2,
+.pager-item-prev-3,
+.pager-item-prev-4,
+.pager-item-prev-5,
+.pager-item-prev-6,
+.pager-item-prev-7,
+.pager-item-next-1 {
+  display: none;
+}
+
+@include grid-media($xxsmall) {
+  .pager-item-prev-1 {
+    display: list-item;
+  }
+}
+
+@include grid-media($xsmall) {
+  .pager-item-prev-2,
+  .pager-item-next-1 {
+    display: list-item;
+  }
+}
+
+@include grid-media($small) {
+  .pager-item-prev-3,
+  .pager-item-next-1 {
+    display: list-item;
+  }
+}
+
+@include grid-media($large) {
+  .pager-item-prev-4,
+  .pager-item-prev-5,
+  .pager-item-prev-6,
+  .pager-item-prev-7 {
+    display: list-item;
+  }
+}

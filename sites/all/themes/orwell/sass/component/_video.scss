@@ -1,0 +1,25 @@
+
+// Flex the spotlight-box so the paragraph is stretched out.
+.spotlight-box__top__primary {
+  display: flex;
+
+  @include grid-media($medium) {
+    // Reset height and let our parent set it (flexbox).
+    height: auto;
+  }
+
+  .spotlight-box__item {
+    display: flex;
+    flex: auto;
+  }
+}
+
+.paragraphs-item-video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.media-youtube-video {
+  position: initial;
+}

@@ -1,0 +1,146 @@
+/*  Search Grid View.
+    ------------------------------------------------------- */
+.js-search-results-grid-view {
+
+  .search-results {
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+  }
+
+  // Reset clearfix, because we don't
+  // need it.
+  .clearfix:after {
+    clear: none;
+  }
+
+  .search-result {
+    width: 25%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    @extend .fade-in;
+
+    @include medium() {
+      width: 33.3333%;
+    }
+
+    @include small() {
+      width: 33.3333%;
+    }
+
+    @include x-small() {
+      width: 50%;
+    }
+
+    .field-name-ting-abstract,
+    .field-name-ting-series,
+    .js-online,
+    .field-type-ting-collection-types,
+    .availability,
+    .search-result--heading-type {
+      display: none;
+    }
+
+    .ting-object-left {
+      width: 100%;
+      padding-right: 20px;
+    }
+
+    .ting-cover {
+      width: 100%;
+    }
+
+    // Make heigth 100% of all items.
+    .ting-object,
+    .search-snippet-info  {
+      height: 100%;
+    }
+
+    .field-name-ting-title,
+    .heading {
+
+      h2 {
+        margin: 0;
+      }
+
+      a {
+        display: block;
+        max-width: 95%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+      }
+    }
+
+    .view-mode-search-result .ting-object-right {
+      padding-left: 0;
+      padding-top: 10px;
+      float: left;
+      display: block;
+      width: 83.33333%;
+      margin-left: 0%;
+      margin-right: 0;
+
+      .content:not(.ting-author) {
+        display: none;
+      }
+    }
+  }
+
+  .search-snippet {
+    display: none;
+  }
+
+  .pane-search-result .search-results .list .heading h2 {
+    margin-bottom: 0 !important;
+  }
+
+  .pane-search-result .search-results .list .view-mode-teaser {
+    padding-top: 0;
+  }
+}
+
+.view-picker {
+  float: right;
+  display: block;
+  margin-top: 48px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+
+  .view-picker__item {
+    font-size: 40px;
+    display: inline-block;
+    color: gray;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+
+    background-position: top;
+    background-size: contain;
+    height: 30px;
+    width: 30px;
+
+    &.list-view {
+      background-image: url("../images/list.png");
+
+      &.active,
+      &:hover {
+        background-image: url("../images/list-inv.png");
+      }
+    }
+
+    &.grid-view {
+      background-image: url("../images/grid.png");
+
+      &.active,
+      &:hover {
+        background-image: url("../images/grid-inv.png");
+      }
+    }
+  }
+}

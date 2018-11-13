@@ -1,0 +1,33 @@
+
+.ui-dialog {
+  border-radius: 0;
+  background-color: $background-light;
+
+  // Fix the positioning of the close button.
+  .ui-dialog-titlebar .ui-dialog-titlebar-close {
+    top: 0;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .messages {
+    margin: 16px 0;
+  }
+
+  // Try to make it responsive.
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto;
+  top: 100px !important;
+  position: absolute !important;
+}
+
+.ui-widget {
+  font-family: 'Oxygen', sans-serif;
+
+  input.form-submit,
+  #edit-cancel {
+    margin-top: 2em;
+  }
+}

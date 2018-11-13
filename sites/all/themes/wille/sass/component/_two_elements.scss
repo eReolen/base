@@ -1,0 +1,64 @@
+.two-elements {
+  // Inspiration pages are full width, limit our size.
+  @include outer-container;
+
+  display: flex;
+  padding: 0 $mobile-margin ($mobile-margin * 2);
+  box-sizing: border-box;
+
+  @include media($tablet-p) {
+    display: block;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  @include media($bigscreen) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  // Drupal adds a bunch of classes/elements, but we'll only want to
+  // target these, to make them expand the full width of the sibling.
+  .paragraphs-items,
+  .paragraphs-items > .field,
+  .paragraphs-items > .field > .field-items,
+  .paragraphs-items > .field > .field-items > .field-item {
+    height: 100%;
+  }
+}
+
+.two-elements--direction-right {
+  flex-direction: row-reverse;
+
+  .two-elements--primary {
+    padding-right: 0;
+    padding-left: 25px;
+  }
+
+  .two-elements--secondary {
+    padding-right: 25px;
+    padding-left: 0;
+  }
+}
+
+.two-elements--primary {
+  width: 66.7%;
+
+  padding-right: 25px;
+}
+
+.two-elements--secondary {
+  width: 33.3%;
+
+  padding-left: 25px;
+}
+
+.two-elements--primary,
+.two-elements--secondary,
+.two-elements--direction-right .two-elements--primary,
+.two-elements--direction-right .two-elements--secondary {
+  @include media($tablet-p) {
+    width: 100%;
+    padding: 0 0 $mobile-margin;
+  }
+}

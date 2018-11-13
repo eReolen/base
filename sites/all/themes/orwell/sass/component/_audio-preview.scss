@@ -1,0 +1,139 @@
+@import 'bootstrap/bootstrap';
+
+.audio-preview {
+  padding: $padding__default;
+  background-color: $color__gray--dark;
+  color: $color__white;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  @include grid-media($medium) {
+    padding: $padding__medium;
+  }
+
+  .ting-cover-wrapper {
+    @include box-cover;
+    order: 0;
+
+    @include grid-media($medium) {
+      order: 1;
+    }
+  }
+
+  .audio-preview__details {
+    flex-grow: 2;
+  }
+}
+
+.audio-preview__details {
+  padding-left: $gutter__default;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+
+  @include grid-media($medium) {
+    padding-left: 0;
+    padding-right: $gutter__medium;
+  }
+
+  .audio-preview__title {
+    @include fadeout-box(.8rem, 3, div, $color__gray--dark);
+    text-transform: uppercase;
+    font-family: $font-semibold;
+
+    @include grid-media($medium) {
+      @include fadeout-box(1rem, 3, div, $color__gray--dark);
+    }
+  }
+
+  .audio-preview__author {
+    font-family: $font-regular;
+    font-size: .8rem;
+    margin-top: 1rem;
+  }
+}
+
+.audio-preview__player {
+  font-family: $font-semibold;
+  // To contain the button.
+  // position: relative;
+  font-size: .8rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  .audio-preview__time {
+    color: $color__gray;
+    flex: auto;
+
+    @include grid-media($medium) {
+      order: 2;
+      text-align: right;
+    }
+  }
+
+  .audio-preview__played {
+    color: $color__white;
+  }
+
+  .audio-preview__button {
+    font-size: 0;
+    color: $color__white;
+    border: 1px solid $color__font-gray;
+    border-radius: 50%;
+    background: none;
+    padding: .5rem;
+    vertical-align: middle;
+    // float: right;
+    //flex-basis: 30%;
+    flex: none;
+
+    @include grid-media($medium) {
+      order: 1;
+      // rem seems too loose the centering.
+      padding: 6px;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: .85rem;
+    }
+
+    &::before {
+      @include icon;
+      // To make the play icon *appear* centered.
+      position: relative;
+      left: 1px;
+      font-size: 1rem;
+      content: $icon__play;
+
+      @include grid-media($medium) {
+        font-size: .8rem;
+      }
+    }
+
+    &.playing::before {
+      // Undo the play icon "centering".
+      content: $icon__pause;
+      left: 0;
+    }
+  }
+}
+
+.audio-preview__progress {
+  height: 2px;
+  width: 100%;
+  background-color: $color__white;
+  margin-top: $gutter__default / 2;
+  flex-basis: 100%;
+  flex: none;
+  order: 3;
+
+  .audio-preview__progress__complete {
+    height: 100%;
+    width: 0;
+
+    background-color: $color__red;
+  }
+
+}

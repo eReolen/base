@@ -1,0 +1,23 @@
+base theme = ddbasic
+name = Brin
+description = Theme for eReolen.dk.
+core = 7.x
+release = 7.x-1.x
+stylesheets[all][] = css/brin.styles.css
+
+; Add our own override.
+scripts[] = scripts/ddbasic.topbar.menu.js
+
+;----------// Regions
+regions[header] = Header
+regions[navigation] = Navigation
+regions[content_top] = Content top
+regions[content] = Primary content
+regions[secondary_content] = Secondary content
+regions[tertiary_content] = Tertiary content
+regions[attachment_first] = Attachment first
+regions[attachment_second] = Attachment second
+regions[attachment_third] = Attachment third
+regions[attachment_fourth] = Attachment fourth
+regions[footer] = Footer
+regions[bottom] = Bottom

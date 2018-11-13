@@ -1,0 +1,14 @@
+/**
+ * Custom icomoon font.
+ */
+@each $key, $value in $ego_icons {
+  .icon-#{$key} {
+    &::before {
+      content: icon-encode($value);
+    }
+  }
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  @extend %icon;
+}

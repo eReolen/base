@@ -1,0 +1,58 @@
+@import 'bootstrap/bootstrap';
+
+.ting-object.view-mode-compact {
+  width: 130px;
+  margin-bottom: 25px;
+
+  // See also grid view in _search.scss.
+  .field-name-ting-title {
+    font-family: $font-regular;
+    font-size: 16px;
+    letter-spacing: .5px;
+    margin-top: 6px;
+    h2 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  // Always hide rating widget.
+  .field-type-ding-entity-rating-action {
+    display: none;
+  }
+
+  .ting-cover img {
+    // Maintain aspect ratio on images.
+    height: auto;
+  }
+
+  .field-name-ting-author {
+    font-family: $font-light;
+    font-size: 14px;
+    letter-spacing: .5px;
+    margin-top: 10px;
+  }
+
+  .field-name-ting-details-language {
+    font-family: $font-light;
+    font-size: 14px;
+    margin-top: 4px;
+
+    .field-item::before {
+      @include icon;
+      color: $color__font-gray;
+      font-size: 12px;
+      margin-right: 0.2rem;
+      content: $icon__language;
+    }
+  }
+
+  @include grid-media($medium) {
+    width: 186px;
+  }
+
+  @include grid-media($large) {
+    width: 225px;
+  }
+}
