@@ -1,0 +1,8 @@
+name = eReolen widget
+description = Widget stuff
+core = 7.x
+package = eReolen
+version = 7.x-1.0
+dependencies[] = xautoload
+dependencies[] = reol_search
+dependencies[] = ting_covers

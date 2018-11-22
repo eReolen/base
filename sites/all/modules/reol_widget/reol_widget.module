@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Module file for reol_widget.
+ */
+
+use Drupal\reol_widget\Controller\SearchController;
+
+/**
+ * Implements hook_menu().
+ */
+function reol_widget_menu() {
+  $items['widget/search'] = [
+    'page callback' => 'reol_widget_search',
+    'access arguments' => ['access content'],
+  ];
+
+  return $items;
+}
+
+/**
+ * Search.
+ */
+function reol_widget_search() {
+  $controller = new SearchController();
+  $controller->search();
+}
