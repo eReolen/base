@@ -54,7 +54,7 @@
 }
 
 .field-name-ting-title {
-  font-size: em(29, $base-font-size);
+  font-size: 2.071em;
 
   h2 {
 
@@ -89,7 +89,8 @@
 }
 
 .action-button,
-.search-result--availability-link {
+.search-result--availability-link,
+.search-result--availability a.availability {
   text-decoration: none;
   @include button($green);
   color: white;
