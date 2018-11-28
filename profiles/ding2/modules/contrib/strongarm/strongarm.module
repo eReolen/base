@@ -116,6 +116,7 @@ if (!function_exists('variable_features_revert')) {
     $vars = strongarm_vars_load(TRUE, TRUE);
     foreach ($defaults as $name => $default) {
       if (!empty($vars[$name]->in_code_only) || ($default->value !== $vars[$name]->value)) {
+        drupal_alter('strongarm_import_value', $default->value, $name);
         variable_set($name, $default->value);
       }
     }
@@ -135,6 +136,7 @@ function variable_features_rebuild($module) {
   $vars = strongarm_vars_load(TRUE, TRUE);
   foreach ($defaults as $name => $default) {
     if (!empty($vars[$name]->in_code_only) || (drupal_installation_attempted() && $vars[$name]->export_type & EXPORT_IN_CODE)) {
+      drupal_alter('strongarm_import_value', $default->value, $name);
       variable_set($name, $default->value);
     }
   }
@@ -157,6 +159,7 @@ function variable_features_export($data, &$export, $module_name) {
   foreach ($data as $object_name) {
     if (!isset($vars[$object_name]) || !empty($vars[$object_name]->in_code_only)) {
       unset($export['features']['variable'][$object_name]);
+      continue;
     }
   }
   return $pipe;
@@ -179,6 +182,7 @@ function variable_features_export_render($module, $data) {
     ->execute();
   foreach ($result as $object) {
     $object = _ctools_export_unpack_object($schema, $object);
+    drupal_alter('strongarm_export_value', $object->value, $object->name);
     $code .= _ctools_features_export_crud_export('variable', $object, '  ');
     $code .= "  \$export[" . ctools_var_export($object->name) . "] = \${$identifier};\n\n";
   }

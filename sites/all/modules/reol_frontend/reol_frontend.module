@@ -266,9 +266,12 @@ function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &
  *
  * Remove the online URL so ding_availability doesn't skip the availability
  * check, but not from relation objects.
+ *
+ * This will remove the "See online" entity button.
  */
 function reol_frontend_ting_online_url_alter(&$url, $entity) {
-  if (!isset($entity->reply->relationUri)) {
+  $type = reol_base_get_type($entity->getType());
+  if ($type) {
     $url = "";
   }
 }

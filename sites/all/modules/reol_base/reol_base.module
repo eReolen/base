@@ -141,6 +141,15 @@ function reol_base_init() {
 }
 
 /**
+ * Implements hook_strongarm_import_value_alter()
+ */
+function reol_base_strongarm_import_value_alter(&$value, $name) {
+  if ('media_wysiwyg_default_render' == $name) {
+    $value = 'field_attach';
+  }
+}
+
+/**
  * Implements hook_image_default_styles().
  *
  * Re-adds image styles used by old campaign module and now used by the front
