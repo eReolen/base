@@ -1,0 +1,37 @@
+diff --git a/profiles/ding2/modules/ting_search_carousel/ting_search_carousel.module b/profiles/ding2/modules/ting_search_carousel/ting_search_carousel.module
+index 29631430..18361c46 100644
+--- a/profiles/ding2/modules/ting_search_carousel/ting_search_carousel.module
++++ b/profiles/ding2/modules/ting_search_carousel/ting_search_carousel.module
+@@ -286,7 +286,7 @@ function _ting_search_carousel_find_entities_with_covers($query, $start, $size,
+   // Search offset must be divisible by chunk size.
+   // We cannot map a situation where offset is not divisible by chunk size to
+   // the search abstraction layer paging model.
+-  if (!$start % $size === 0) {
++  if ($start % $size !== 0) {
+     throw new InvalidArgumentException('Offset to start from % search chunk size should not have remainders left.');
+   }
+ 
+@@ -323,7 +323,7 @@ function _ting_search_carousel_find_entities_with_covers($query, $start, $size,
+     $entities_found_with_covers[$id] = $entities[$id];
+   }
+ 
+-  return array($entities_found_with_covers, $start, $finished);
++  return array($entities_found_with_covers, $start + $size, $finished);
+ }
+ 
+ /**
+diff --git a/sites/all/modules/reol_feed/includes/reol_feed.carousel.inc b/sites/all/modules/reol_feed/includes/reol_feed.carousel.inc
+index f541b5fc..1bb413dc 100644
+--- a/sites/all/modules/reol_feed/includes/reol_feed.carousel.inc
++++ b/sites/all/modules/reol_feed/includes/reol_feed.carousel.inc
+@@ -25,9 +25,7 @@ function reol_feed_feeds_carousel() {
+     $offset = 0;
+     do {
+       $results = ting_search_carousel_get_entities($search['query'], $offset, 50);
+-      foreach ($results['collections'] as $result) {
+-        $ting_object = ding_entity_load($result->id);
+-
++      foreach ($results['entities'] as $ting_object) {
+         // Determine where to put this book.
+         $books = NULL;
+         if (reol_base_get_type_name($ting_object->type) == "audiobook") {
