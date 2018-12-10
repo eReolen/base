@@ -39,7 +39,6 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Override material details - should be move into alters in base (feature_material_overrride.patch)
 * Update i18n module (i18n.patch)
 * Roll-back auto complete to open-suggestions (pensearch-autocomplete.patch)
-* OpenSearch cache id correction (opensearch-cache-cid.patch)
 * Removed the "Other formats" entity button (remove-other-formats-button.patch)
 * Remove auto-logout config (remove_autologout_configuration.patch)
 * Ensure infomedia field file is loaded (ting_infomedia-missing-include.patch)
