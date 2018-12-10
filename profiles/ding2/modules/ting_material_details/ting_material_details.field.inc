@@ -513,7 +513,7 @@ function ting_material_details_get_object_property($field_name, TingEntity $enti
       return $entity->getTingObject()->getSubTitles();
 
     case 'ting_details_genre':
-      return $entity->getTingObject()->getGenere();
+      return $entity->getTingObject()->getGenre();
 
     case 'ting_details_spatial':
       return $entity->getTingObject()->getSpatial();
@@ -617,10 +617,10 @@ function ting_material_details_field_formatter_view($entity_type, $entity, $fiel
           }
           $links = array();
           foreach ($val as $value) {
-            $links[] = l($value, 'search/ting/phrase.subject=' . $value, array('attributes' => array('class' => array('subject'))));
+            $links[] = l($value, 'search/ting/phrase.subject=' . $value);
           }
           $element[$delta] = array(
-            '#markup' => implode(' ', $links),
+            '#markup' => implode(', ', $links),
           );
           break;
 
