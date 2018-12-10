@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Enables integration with Ting.
@@ -94,7 +95,7 @@ function ting_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
   $items['admin/config/ting/settings/general'] = array(
-    'title' => t('General settings'),
+    'title' => 'General settings',
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'weight' => -10,
   );
@@ -250,7 +251,6 @@ function ting_block_view($delta = '') {
   return $block;
 }
 
-
 /**
  * Implements hook_theme().
  */
@@ -397,6 +397,28 @@ function ting_ding_entity_buttons($type, $entity, $view_mode, $widget = 'default
           '#markup' => '<a class="button-see-online action-button" target="_new" href="' . $entity->getOnline_url() . '">' . $label . '</a>',
         ),
       );
+    }
+
+    // Loading collection (specially on empty cache is expensive). So only load
+    // the collection when it's need and here only when this button is required
+    // in the design. Before using context it was load but not used in the
+    // design.
+    if (strpos($view_mode, 'teaser') === FALSE) {
+      $collection = ting_collection_load($entity->id);
+      if (is_a($collection, 'TingCollection') && count($collection->types) > 1) {
+        $buttons[] = [
+          '#theme' => 'link',
+          '#text' => t('Other formats'),
+          '#path' => '#',
+          '#options' => [
+            'attributes' => [
+              'class' => ['action-button', 'other-formats'],
+            ],
+            'html' => FALSE,
+            'external' => TRUE,
+          ],
+        ];
+      }
     }
 
     return $buttons;

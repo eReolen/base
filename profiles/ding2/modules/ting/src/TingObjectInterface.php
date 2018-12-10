@@ -144,7 +144,7 @@ interface TingObjectInterface {
    * Eg. "fantasy"
    *
    * @return string|FALSE
-   *   The genere, or FALSE if it could not be determined.
+   *   The genre, or FALSE if it could not be determined.
    */
   public function getGenre();
 
