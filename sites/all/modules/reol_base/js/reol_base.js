@@ -3,10 +3,12 @@
  * Behaviors for reol_base.
  */
 
-(function($) {
+(function ($) {
+  'use strict';
+
   Drupal.behaviors.modalClose = {
-    attach : function() {
-      $('.modal-close').click(function(e) {
+    attach: function (context, setting) {
+      $('.modal-close').click(function (e) {
         Drupal.ding_popup.close({name: $(this).data('modal-name')});
         e.preventDefault();
       });
