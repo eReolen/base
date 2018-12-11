@@ -144,14 +144,14 @@ class SearchController {
    * @return array
    *   The covers.
    */
-  private function getCovers(\TingClientSearchResult $result, $imageStyle = 'medium') {
+  private function getCovers(\TingClientSearchResult $result, $imageStyle = 'ding_list_medium') {
     $ids = [];
     foreach ($result->collections as $collection) {
       $ids[] = $collection->getId();
     }
 
     return array_map(function ($uri) use ($imageStyle) {
-      $uri = str_replace('ting/covers', 'styles/' . $imageStyle . '/public/ting/covers', $uri);
+      $uri = image_style_url($imageStyle, $uri);
 
       return file_create_url($uri);
     }, ting_covers_get($ids));

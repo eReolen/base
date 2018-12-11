@@ -11,12 +11,13 @@ class TingClientObjectRequest extends TingClientRequest {
   protected $allRelations;
   protected $format;
   protected $id;
-  protected $localId;
+  protected $localIds;
   protected $relationData;
   protected $identifiers;
   protected $profile;
   protected $outputType;
   protected $objectFormat;
+  protected $fausts;
 
   public function setObjectFormat($objectFormat) {
     $this->objectFormat = $objectFormat;
@@ -64,12 +65,16 @@ class TingClientObjectRequest extends TingClientRequest {
     $this->format = $format;
   }
 
-  public function getLocalId() {
-    return $this->localId;
+  public function getLocalIds() {
+    return $this->localIds;
   }
 
   public function setLocalId($localId) {
-    $this->localId = $localId;
+    $this->localIds = array($localId);
+  }
+
+  public function setLocalIds($localIds) {
+    $this->localIds = $localIds;
   }
 
   public function getObjectIds() {
@@ -104,17 +109,12 @@ class TingClientObjectRequest extends TingClientRequest {
       $this->setParameter('format', 'dkabm');
     }
 
-    // Determine which id to use and the corresponding index
+    // Determine which id to use.
     if ($this->identifiers) {
       $this->setParameter('identifier', $this->identifiers);
     }
-
-    // If we have both localId and ownerId, combine them to get
-    elseif ($this->getAgency() && $this->localId) {
-      $this->setParameter('identifier', implode('|', array(
-        $this->localId,
-        $this->getAgency(),
-      )));
+    elseif ($this->localIds) {
+      $this->setParameter('localIdentifier', $this->localIds);
     }
 
     $methodParameterMap = array(

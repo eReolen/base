@@ -1,0 +1,15 @@
+diff --git a/profiles/ding2/modules/ding_carousel/js/ding_carousel.js b/profiles/ding2/modules/ding_carousel/js/ding_carousel.js
+index 6f795924..852725f2 100644
+--- a/profiles/ding2/modules/ding_carousel/js/ding_carousel.js
++++ b/profiles/ding2/modules/ding_carousel/js/ding_carousel.js
+@@ -211,6 +211,10 @@
+         item.target.slick('slickAdd', data.content);
+         item.tab.data('offset', data.offset);
+         item.tab.data('updating', false);
++
++        // Ensure that behaviors are attached to the new content.
++        Drupal.attachBehaviors($('.ding-carousel-item'));
++
+         // Carry on processing the queue.
+         running = false;
+         update();

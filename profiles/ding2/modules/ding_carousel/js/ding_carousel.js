@@ -168,14 +168,17 @@
 
     $.ajax({
       type: 'get',
-      url : Drupal.settings.basePath + item.tab.data('path') + '/' + item.tab.data('offset'),
-      dataType : 'json',
-      success : function (data) {
+      url: Drupal.settings.basePath + item.tab.data('path') + '/' + item.tab.data('offset'),
+      dataType: 'json',
+      success: function (data) {
         // Remove placeholders.
         item.target.find('.ding-carousel-item.placeholder').remove();
         item.target.slick('slickAdd', data.content);
         item.tab.data('offset', data.offset);
         item.tab.data('updating', false);
+
+        // Ensure that behaviors are attached to the new content.
+        Drupal.attachBehaviors($('.ding-carousel-item'));
 
         // This ensures that ting objects loaded via ajax in the carousel's gets
         // reservations buttons displayed if available. So basically it finds
