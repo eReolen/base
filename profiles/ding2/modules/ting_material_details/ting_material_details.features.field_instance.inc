@@ -884,11 +884,10 @@ function ting_material_details_field_default_field_instances() {
         'weight' => 32,
       ),
       'compact' => array(
-        'label' => 'hidden',
-        'module' => 'ting_material_details',
+        'label' => 'above',
         'settings' => array(),
-        'type' => 'ting_details_single',
-        'weight' => 2,
+        'type' => 'hidden',
+        'weight' => 30,
       ),
       'default' => array(
         'label' => 'inline',
@@ -2078,8 +2077,9 @@ function ting_material_details_field_default_field_instances() {
       ),
       'compact' => array(
         'label' => 'hidden',
+        'module' => 'ting_material_details',
         'settings' => array(),
-        'type' => 'hidden',
+        'type' => 'ting_details_single',
         'weight' => 0,
       ),
       'default' => array(

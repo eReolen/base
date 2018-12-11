@@ -1,11 +1,16 @@
 diff --git a/profiles/ding2/modules/ting_search/plugins/content_types/search_result.inc b/profiles/ding2/modules/ting_search/plugins/content_types/search_result.inc
-index d08eb1c..5c48ea4 100644
+index 5f134504..faa579f7 100644
 --- a/profiles/ding2/modules/ting_search/plugins/content_types/search_result.inc
 +++ b/profiles/ding2/modules/ting_search/plugins/content_types/search_result.inc
-@@ -91,25 +91,25 @@ function ting_search_search_result_content_type_render($subtype, $conf, $panel_a
- 
-     // If it does not seem like the user picked a sort but our query has one,
-     // tell the user that we have sorted the result.
+@@ -83,26 +83,6 @@ function ting_search_search_result_content_type_render($subtype, $conf, $panel_a
+   }
+
+   if (!empty($results['#results'])) {
+-    // Set message.
+-    $message = '';
+-
+-    // If it does not seem like the user picked a sort but our query has one,
+-    // tell the user that we have sorted the result.
 -    if (isset($search_result) && empty($conditions['sort']) && !empty($search_result->getSearchRequest()->getSorts())) {
 -      $provider_sort_options = ting_search_sort_options();
 -
@@ -19,36 +24,13 @@ index d08eb1c..5c48ea4 100644
 -      $message .= '<div class="messages status">' . $msg . '</div>';
 -    }
 -
+-    $prefix .= $message;
 -
--    if (isset($search_result) && $limit < $search_result->getNumTotalObjects()) {
--      $msg = t('Your search gave more than %s results. Try to search more specific or use the facets to filter the result.');
--      $msg = sprintf($msg, $limit);
--      $message .= '<div class="messages search-field-in-content--message">' . $msg . '</div>';
--    }
-+//    if (isset($search_result) && empty($conditions['sort']) && !empty($search_result->getSearchRequest()->getSorts())) {
-+//      $provider_sort_options = ting_search_sort_options();
-+//
-+//      $mapper = function(TingSearchSort $sort) use ($provider_sort_options) {
-+//        return isset($provider_sort_options[$sort->getField()]['label_short']) ? $provider_sort_options[$sort->getField()]['label_short'] : NULL;
-+//      };
-+//      $labels = array_filter(array_map($mapper, $search_result->getSearchRequest()->getSorts()));
-+//
-+//      $labels = implode(', ', $labels);
-+//      $msg = t('Records are sorted by %sortUsed . Select another sort if it is not suited', array('%sortUsed' => $labels));
-+//      $message .= '<div class="messages status">' . $msg . '</div>';
-+//    }
-+//
-+//
-+//    if (isset($search_result) && $limit < $search_result->getNumTotalObjects()) {
-+//      $msg = t('Your search gave more than %s results. Try to search more specific or use the facets to filter the result.');
-+//      $msg = sprintf($msg, $limit);
-+//      $message .= '<div class="messages search-field-in-content--message">' . $msg . '</div>';
-+//    }
- 
-     $prefix .= $message;
- 
+     $block->title = t('Search results');
+     $block->content = $prefix . theme('ting_search_results', array('results' => $results['#results'], 'module' => $conf['type'])) . $suffix;
+   }
 diff --git a/profiles/ding2/modules/ting_search/plugins/content_types/search_result_count.inc b/profiles/ding2/modules/ting_search/plugins/content_types/search_result_count.inc
-index d7299b0..29e3086 100644
+index d7299b04..29e30860 100644
 --- a/profiles/ding2/modules/ting_search/plugins/content_types/search_result_count.inc
 +++ b/profiles/ding2/modules/ting_search/plugins/content_types/search_result_count.inc
 @@ -28,19 +28,10 @@ function ting_search_result_count_content_type_render($subtype, $conf, $panel_ar
@@ -75,3 +57,85 @@ index d7299b0..29e3086 100644
        ),
      );
    }
+diff --git a/sites/all/patches/ting_search_result.patch b/sites/all/patches/ting_search_result.patch
+index 3a38788d..e69de29b 100644
+--- a/sites/all/patches/ting_search_result.patch
++++ b/sites/all/patches/ting_search_result.patch
+@@ -1,77 +0,0 @@
+-diff --git a/profiles/ding2/modules/ting_search/plugins/content_types/search_result.inc b/profiles/ding2/modules/ting_search/plugins/content_types/search_result.inc
+-index d08eb1c..5c48ea4 100644
+---- a/profiles/ding2/modules/ting_search/plugins/content_types/search_result.inc
+-+++ b/profiles/ding2/modules/ting_search/plugins/content_types/search_result.inc
+-@@ -91,25 +91,25 @@ function ting_search_search_result_content_type_render($subtype, $conf, $panel_a
+-
+-     // If it does not seem like the user picked a sort but our query has one,
+-     // tell the user that we have sorted the result.
+--    if (isset($search_result) && empty($conditions['sort']) && !empty($search_result->getSearchRequest()->getSorts())) {
+--      $provider_sort_options = ting_search_sort_options();
+--
+--      $mapper = function(TingSearchSort $sort) use ($provider_sort_options) {
+--        return isset($provider_sort_options[$sort->getField()]['label_short']) ? $provider_sort_options[$sort->getField()]['label_short'] : NULL;
+--      };
+--      $labels = array_filter(array_map($mapper, $search_result->getSearchRequest()->getSorts()));
+--
+--      $labels = implode(', ', $labels);
+--      $msg = t('Records are sorted by %sortUsed . Select another sort if it is not suited', array('%sortUsed' => $labels));
+--      $message .= '<div class="messages status">' . $msg . '</div>';
+--    }
+--
+--
+--    if (isset($search_result) && $limit < $search_result->getNumTotalObjects()) {
+--      $msg = t('Your search gave more than %s results. Try to search more specific or use the facets to filter the result.');
+--      $msg = sprintf($msg, $limit);
+--      $message .= '<div class="messages search-field-in-content--message">' . $msg . '</div>';
+--    }
+-+//    if (isset($search_result) && empty($conditions['sort']) && !empty($search_result->getSearchRequest()->getSorts())) {
+-+//      $provider_sort_options = ting_search_sort_options();
+-+//
+-+//      $mapper = function(TingSearchSort $sort) use ($provider_sort_options) {
+-+//        return isset($provider_sort_options[$sort->getField()]['label_short']) ? $provider_sort_options[$sort->getField()]['label_short'] : NULL;
+-+//      };
+-+//      $labels = array_filter(array_map($mapper, $search_result->getSearchRequest()->getSorts()));
+-+//
+-+//      $labels = implode(', ', $labels);
+-+//      $msg = t('Records are sorted by %sortUsed . Select another sort if it is not suited', array('%sortUsed' => $labels));
+-+//      $message .= '<div class="messages status">' . $msg . '</div>';
+-+//    }
+-+//
+-+//
+-+//    if (isset($search_result) && $limit < $search_result->getNumTotalObjects()) {
+-+//      $msg = t('Your search gave more than %s results. Try to search more specific or use the facets to filter the result.');
+-+//      $msg = sprintf($msg, $limit);
+-+//      $message .= '<div class="messages search-field-in-content--message">' . $msg . '</div>';
+-+//    }
+-
+-     $prefix .= $message;
+-
+-diff --git a/profiles/ding2/modules/ting_search/plugins/content_types/search_result_count.inc b/profiles/ding2/modules/ting_search/plugins/content_types/search_result_count.inc
+-index d7299b0..29e3086 100644
+---- a/profiles/ding2/modules/ting_search/plugins/content_types/search_result_count.inc
+-+++ b/profiles/ding2/modules/ting_search/plugins/content_types/search_result_count.inc
+-@@ -28,19 +28,10 @@ function ting_search_result_count_content_type_render($subtype, $conf, $panel_ar
+-         '#theme' => 'html_tag',
+-         '#tag' => 'h1',
+-         '#attributes' => array('class' => array('page-title')),
+--        '#value' => t('Search result'),
+--      ),
+--      'string' => array(
+--        '#theme' => 'html_tag',
+--        '#tag' => 'span',
+--        '#attributes' => array('class' => array('search-string')),
+--        '#value' => '"' . $search_result->getSearchRequest()->getFullTextQuery() . '"',
+--      ),
+--      'count' => array(
+--        '#theme' => 'html_tag',
+--        '#tag' => 'span',
+--        '#attributes' => array('class' => array('count')),
+--        '#value' => '(' . format_plural($results, '1 Result', '@count Results') . ')',
+-+        '#value' =>  t('Search result <span class="js-count" data-js-count="!count" class="search-field-in-content--amount">(!count !string)</span>', array(
+-+          '!count' => $results,
+-+          '!string' => format_plural($results > 1 ? $results : 1, 'Result', 'Results'),
+-+        ))
+-       ),
+-     );
+-   }
