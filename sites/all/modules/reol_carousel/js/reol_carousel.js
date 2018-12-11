@@ -202,8 +202,10 @@
       success: function (data) {
         // Remove placeholders.
         $(swiper.el).find('.ding-carousel-item.placeholder').remove();
-        Drupal.attachBehaviors(data.content);
-        swiper.appendSlide(data.content);
+        if (data.content) {
+          Drupal.attachBehaviors(data.content);
+          swiper.appendSlide(data.content);
+        }
         $(swiper.el).data('offset', data.offset);
         $(swiper.el).data('updating', false);
         // Carry on processing the queue.
