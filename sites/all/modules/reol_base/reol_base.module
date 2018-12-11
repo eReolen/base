@@ -670,7 +670,7 @@ function reol_base_preprocess_material_item(&$variables) {
   // Calling field_view_field() would be more proper, but it doesn't like our
   // fake objects. Really there should be hook_(loan|reservation)_buttons, but
   // that's some refactoring.
-  $buttons = module_invoke_all('ding_entity_buttons', '', $ting_entity);
+  $buttons = module_invoke_all('ding_entity_buttons', '', $ting_entity, 'default');
   $variables['buttons'] = drupal_render($buttons);
 }
 

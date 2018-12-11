@@ -135,19 +135,20 @@ function reol_feed_feeds_add_news_item($feed, $source, $node) {
   }
 
   if ($materials) {
-    // Add referenced materials.
-    foreach ($materials as $material) {
-      $tid = $material['value']->endpoints[$lang][1]['entity_id'];
-      $ting_objects = entity_load('ting_object', array($tid));
-      $ting_object = $ting_objects[$tid];
-
-      // Make sure we have cover.
-      ting_covers_get(array($ting_object->id));
-
+    $tids = array_map(function ($material) use ($lang) {
+      return $material['value']->endpoints[$lang][1]['entity_id'];
+    }, $materials);
+    $ting_objects = entity_load('ting_object', $tids);
+    $cover_ids = array();
+    foreach ($ting_objects as $ting_object) {
+      $cover_ids[] = $ting_object->id;
       $isbn = $isbns->addChild('isbn');
       $isbn->{0} = reol_base_get_isbn($ting_object->localId);
       $isbn->addAttribute('cover', file_create_url(ting_covers_object_path($ting_object->id)));
     }
+
+    // Make sure that covers are loaded.
+    $covers = ting_covers_get($cover_ids);
   }
 }
 

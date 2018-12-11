@@ -129,7 +129,8 @@ function reol_loan_loan_ajax($loanable, $form = array(), $form_state = array()) 
       $html = theme('status_messages');
       // If we have loaned the item, display completed form.
       if ($form_state['loaned']) {
-        $html .= drupal_render(ding_provider_build_form('reol_loan_loan_completed_form', $form_state));
+        $form = ding_provider_build_form('reol_loan_loan_completed_form', $form_state);
+        $html .= drupal_render($form);
       }
       elseif ($form_state['rebuild'] || form_get_errors()) {
         // Redisplay form.

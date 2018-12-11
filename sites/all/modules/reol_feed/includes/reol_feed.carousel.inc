@@ -25,9 +25,7 @@ function reol_feed_feeds_carousel() {
     $offset = 0;
     do {
       $results = ting_search_carousel_get_entities($search['query'], $offset, 50);
-      foreach ($results['collections'] as $result) {
-        $ting_object = ding_entity_load($result->id);
-
+      foreach ($results['entities'] as $ting_object) {
         // Determine where to put this book.
         $books = NULL;
         if (reol_base_get_type_name($ting_object->type) == "audiobook") {
