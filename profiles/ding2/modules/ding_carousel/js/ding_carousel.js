@@ -199,9 +199,6 @@
           }
         }
 
-        // Ensure that behaviors are attached to the new content.
-        Drupal.attachBehaviors($('.ding-carousel-item'));
-
         // Carry on processing the queue.
         running = false;
         update();
