@@ -49,3 +49,4 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Run attached behaviours as in DDB core - carousle-attach.patch
 * Fixed "Undefined index" warnings (ding-loan-loans.patch)
 * Fixed offset in carousel search (ting_search_carousel.patch)
+* Fix missing record error title in ting references (error-missing-record.patch)
