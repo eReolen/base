@@ -50,3 +50,5 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Fixed "Undefined index" warnings (ding-loan-loans.patch)
 * Fixed offset in carousel search (ting_search_carousel.patch)
 * Fix missing record error title in ting references (error-missing-record.patch)
+* Allow empty value in bpi field mapping (bpi-mappings.patch)
+* Remove bpi settings from feature (ding_base-bpi-settings.patch)
