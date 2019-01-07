@@ -245,6 +245,7 @@ $material--teaser__margin-bottom: 1.2rem;
   }
 
   &__buttons {
+
     @include grid-media($medium) {
       float: left;
       width: 100%;
@@ -257,6 +258,14 @@ $material--teaser__margin-bottom: 1.2rem;
         justify-content: space-between;
         flex-flow: wrap;
       }
+    }
+    .field-item {
+      position: relative;
+    }
+    .ajax-progress-throbber {
+      position: absolute;
+      top: calc(50% - 2px);
+      left: calc(50% - 8px);
     }
   }
 
