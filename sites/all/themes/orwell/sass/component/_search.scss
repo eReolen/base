@@ -428,7 +428,7 @@ html.js input.form-autocomplete {
 
     .search-result {
 
-      @include grid-media($xsmall) {
+      @include grid-media($xxsmall) {
         width: 50%;
         padding: .75rem;
       }
