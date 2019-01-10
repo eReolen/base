@@ -13,36 +13,37 @@ $material--teaser__margin-bottom: 1.2rem;
   &__aside {
     float: left;
     width: 100%;
-    @include grid-media($small) {
-      width: 33.333336%;
-    }
     @include grid-media($medium) {
       width: 33.333336%;
     }
   }
   &__cover {
-    width: 100%;
     float: left;
     margin-bottom: $material--teaser__margin-bottom;
+    width: 100%;
 
     // Placeholder until cover loads.
     .ting-cover {
-      min-height: 150px;
+      min-height: 100px;
       background-image: url('../images/placeholder.png');
       background-repeat: no-repeat;
       background-position: center center;
     }
 
     @include grid-media($small) {
+      width: 50%;
       margin-bottom: 0;
-
       img {
         width: auto;
       }
     }
 
     @include grid-media($medium) {
-      padding-right: 2.5rem;
+      width: 100%;
+      .ting-cover {
+        min-height: 150px;
+      }
+      //padding-right: 2.5rem;
     }
 
     img {
@@ -58,17 +59,16 @@ $material--teaser__margin-bottom: 1.2rem;
   }
 
   &__content {
-    width: 66.666663%;
+    width: 100%;
     float: left;
-    margin-bottom: $material--teaser__margin-bottom;
 
-    @include grid-media($small) {
-      padding-left: 2rem;
-      width: percentage(2 / 3);
+    @include grid-media($xxsmall) {
       margin-bottom: 0;
     }
 
     @include grid-media($medium) {
+      margin-bottom: $material--teaser__margin-bottom;
+      margin-top: 0;
       padding-left: 3.5rem;
       width: percentage(2 / 3);
     }
@@ -82,7 +82,8 @@ $material--teaser__margin-bottom: 1.2rem;
 
   &__title {
     margin-bottom: $material--teaser__margin-bottom;
-    font-size: 2.1rem;
+    margin-top: $material--teaser__margin-bottom;
+    font-size: 1.7rem;
 
     // Don't display material types on collections.
     .search-result--heading-type {
@@ -94,6 +95,13 @@ $material--teaser__margin-bottom: 1.2rem;
       font-family: $font-light;
       color: $color__font-gray;
       overflow-wrap: break-word;
+    }
+    @include grid-media($small) {
+      font-size: 2.1rem;
+    }
+    @include grid-media($medium) {
+      margin-top: 0;
+      font-size: 2.1rem;
     }
   }
 
@@ -245,23 +253,41 @@ $material--teaser__margin-bottom: 1.2rem;
   }
 
   &__buttons {
+    float: left;
+    @include grid-media($xxsmall) {
+      width: 100%;
+      .action-button {
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+    @include grid-media($small) {
+      width: 50%;
+      padding-left: 30px;
 
+    }
     @include grid-media($medium) {
-      float: left;
       width: 100%;
       clear: left;
-      padding-right: 2.5rem;
+      padding-left: 0;
+      //padding-right: 2.5rem;
       margin-bottom: 3.5rem;
-
       .field-item {
         display: flex;
         justify-content: space-between;
         flex-flow: wrap;
       }
+      .action-button {
+        &:first-child {
+          margin-top: 1rem;
+        }
+      }
     }
     .field-item {
       position: relative;
     }
+
     .ajax-progress-throbber {
       position: absolute;
       top: calc(50% - 2px);
