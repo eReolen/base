@@ -216,11 +216,11 @@ $material--teaser__margin-bottom: 1.2rem;
     color: $color__font-gray;
     clear: left;
     line-height: $line-height__small;
+    margin-bottom: .5rem;
 
     @include grid-media($medium) {
       width: 100%;
       margin-top: 0;
-      margin-bottom: .5rem;
       clear: none;
     }
 
