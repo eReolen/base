@@ -7,3 +7,9 @@ sites/*/private
 
 sites/all/modules/breol/
 sites/all/modules/ereol/
+
+# Dontt commit analyse tools
+.phan/
+composer.json
+composer.lock
+vendor/
