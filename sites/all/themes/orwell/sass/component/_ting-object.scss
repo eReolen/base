@@ -185,7 +185,7 @@ $material--teaser__margin-bottom: 1.2rem;
     display: none;
     margin: 2rem 0 $material--teaser__margin-bottom;
 
-    @include grid-media($medium) {
+    @include grid-media($small) {
       display: block;
     }
 
