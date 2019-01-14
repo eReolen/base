@@ -87,8 +87,10 @@ function reol_bookmark_element_process_material_item($element) {
  */
 function reol_bookmark_bookmark($id, $remove = FALSE) {
   global $user;
-  // Make sure cache is cleared.
-  reol_bookmark_cache_clear();
+
+  if (module_exists('ding_session_cache')) {
+    ding_session_cache_clear('reol_bookmark', 'bookmarks');
+  }
 
   $ting_object = ding_entity_load($id);
 
