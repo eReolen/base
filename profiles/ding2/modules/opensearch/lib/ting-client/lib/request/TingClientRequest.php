@@ -97,7 +97,8 @@ abstract class TingClientRequest {
    * @throws \TingClientException
    */
   public function execute(TingClientRequestAdapter $adapter) {
-    return $adapter->execute($this->getRequest());
+    $clone = clone $this;
+    return $adapter->execute($clone->getRequest());
   }
 
   /**
@@ -110,7 +111,8 @@ abstract class TingClientRequest {
    * @throws \TingClientException
    */
   public function parseResponse($response) {
-    if ($this->getRequest() instanceof TingFulltextRequest) {
+    $clone = clone $this;
+    if ($clone->getRequest() instanceof TingFulltextRequest) {
       // Objectify response since processResponse() awaiting stdClass.
       return $this->processResponse((object) $response);
     }

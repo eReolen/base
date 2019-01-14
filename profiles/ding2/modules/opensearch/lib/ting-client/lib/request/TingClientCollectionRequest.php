@@ -26,6 +26,7 @@ class TingClientCollectionRequest extends TingClientSearchRequest {
     $this->setAllObjects(true);
     $this->setNumResults(1);
 
+
     return parent::getRequest();
   }
 
