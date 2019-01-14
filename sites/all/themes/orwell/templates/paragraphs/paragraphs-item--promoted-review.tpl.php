@@ -27,7 +27,7 @@
  */
 ?>
 <div class="review <?php print $classes; ?>">
-  <a href="<?php print $content['field_promoted-review-link']; ?>" target="_blank">
+  <a href="<?php print render($content['field_promoted_review_link'][0]['#element']['url']); ?>" target="_blank">
     <div class="review__wrapper">
       <div class="review__cover">
         <div class="ting-cover-wrapper">
