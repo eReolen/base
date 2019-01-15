@@ -54,7 +54,7 @@
 }
 
 .field-name-ting-title {
-  font-size: 2.071em;
+  font-size: em(29, $base-font-size);
 
   h2 {
 
@@ -89,8 +89,7 @@
 }
 
 .action-button,
-.search-result--availability-link,
-.search-result--availability a.availability {
+.search-result--availability-link {
   text-decoration: none;
   @include button($green);
   color: white;
@@ -706,4 +705,9 @@
   @include media($tablet-l) {
     display: none;
   }
+}
+
+// Hide search type form until it's actually needed.
+#edit-search-type {
+  display: none;
 }

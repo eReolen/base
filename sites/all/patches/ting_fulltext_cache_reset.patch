@@ -1,0 +1,19 @@
+diff --git a/profiles/ding2/modules/ting_fulltext/includes/ting_fulltext.pages.inc b/profiles/ding2/modules/ting_fulltext/includes/ting_fulltext.pages.inc
+index 9f937032..57e8aac6 100644
+--- a/profiles/ding2/modules/ting_fulltext/includes/ting_fulltext.pages.inc
++++ b/profiles/ding2/modules/ting_fulltext/includes/ting_fulltext.pages.inc
+@@ -19,12 +19,12 @@ function ting_fulltext_page_view($xml) {
+ /**
+  * Parse given xml. Return an array holding selected values.
+  */
+-function ting_fulltext_parse($xml) {
++function ting_fulltext_parse($xml, $reset) {
+   // Use static cache as it may be called more than once by the panels
+   // plugin.
+   $xpath = &drupal_static(__FUNCTION__);
+   $ret = array();
+-  if (!isset($xpath)) {
++  if (!isset($xpath) || $reset) {
+     $xpath = ting_fulltext_get_xpath($xml);
+   }
+ 

@@ -52,6 +52,20 @@ function publizon_ding_provider() {
 }
 
 /**
+ * Implements hook_ding_session_cache_defaults().
+ *
+ * Set default ding_session_cache settings and tell ding_session_cache that this
+ * module supports it.
+ */
+function publizon_ding_session_cache_defaults() {
+  return array(
+    'title' => 'Publizon (information from publizon)',
+    'enabled' => TRUE,
+    'expire' => 3600,
+  );
+}
+
+/**
  * Implements hook_menu().
  */
 function publizon_menu() {
@@ -240,15 +254,23 @@ function publizon_filter_known_municipalities($municipalities) {
  *
  * @param object $account
  *   The user object.
+ * @param $reset
+ *   By-pass/reset cache.
  *
  * @return string
  *   The retailer id.
  */
-function publizon_get_retailer_id($account) {
-  // Get the retailer id on the user.
-  $profile = profile2_load_by_user($account, 'provider_publizon');
-  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
-  return $profile_wrapper->field_publizon_retailer_id->value();
+function publizon_get_retailer_id($account, $reset = FALSE) {
+  $retailer_id = &drupal_static(__FUNCTION__, array());
+
+  if (empty($retailer_id[$account->uid]) || $reset) {
+    // Get the retailer id on the user.
+    $profile = profile2_load_by_user($account, 'provider_publizon');
+    $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
+    $retailer_id[$account->uid] = $profile_wrapper->field_publizon_retailer_id->value();
+  }
+
+  return $retailer_id[$account->uid];
 }
 
 /**
@@ -536,12 +558,13 @@ function publizon_load($local_id) {
  *   The library.
  */
 function publizon_client_library_load($library_id) {
-  $libraries = &drupal_static(__FUNCTION__) || array();
+  $libraries = &drupal_static(__FUNCTION__, array());
+
   // If library is not in cache, get it.
-  if (!isset($libraries[$library_id])) {
+  if (empty($libraries[$library_id])) {
     // Try getting from db cache. Libraries varies by client_id.
-    $cache_id = 'publizon_libraries:' . $library_id . '' . publizon_get_client_id();
-    if ($cache = cache_get($cache_id)) {
+    $cid = 'publizon_libraries:' . $library_id . '' . publizon_get_client_id();
+    if ($cache = cache_get($cid)) {
       $libraries[$library_id] = $cache->data;
     }
     else {
@@ -553,8 +576,9 @@ function publizon_client_library_load($library_id) {
       catch (Exception $e) {
         $libraries[$library_id] = FALSE;
       }
+
       // Save in db cache.
-      cache_set($cache_id, $libraries[$library_id], 'cache', time() + 24 * 60 * 60);
+      cache_set($cid, $libraries[$library_id], 'cache');
     }
   }
 

@@ -9,6 +9,7 @@ dependencies[] = features
 dependencies[] = list
 dependencies[] = reol_bookmark
 dependencies[] = reol_reservation
+dependencies[] = reol_search
 dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = ting_material_details

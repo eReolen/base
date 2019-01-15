@@ -17,48 +17,61 @@
  *   Array containing the loans for the user.
  */
 function publizon_loan_list($account, $reset = FALSE) {
-  // Throw exception if we're not logged in.
-  $creds = ding_user_get_creds($account);
+  $results = &drupal_static(__FUNCTION__, NULL);
 
-  $result = &drupal_static(__FUNCTION__, array());
-  if (!$result || $reset) {
-    $retailer_id = publizon_get_retailer_id($account);
-
-    // Get list of loans from Publizon.
-    $client = PublizonLoanClient::getClient();
-    $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
-
-    $isbns = array();
-    foreach ($loans as $loan) {
-      $isbns[] = $loan->isbn;
+  if (is_null($results) || $reset) {
+    // Check if ding_session_cache is available.
+    if (module_exists('ding_session_cache') && !$reset) {
+      $results = ding_session_cache_get('publizon', 'loans', NULL);
     }
 
-    if ($isbns) {
-      $mapping = reol_base_ding_entity_get_ids($isbns);
-    }
+    // If both static cache and session cache failed, try reloading information
+    // from FBS.
+    if (is_null($results) || $reset) {
+      $retailer_id = publizon_get_retailer_id($account);
 
-    foreach ($loans as $loan) {
-      // Title might not be found, use an fake ID.
-      if (!isset($mapping[$loan->isbn])) {
-        $id = 'publizon:' . $loan->isbn;
+      // Get list of loans from Publizon.
+      $creds = ding_user_get_creds();
+      $client = PublizonLoanClient::getClient();
+      $loans = $client->getLibraryUserOrderList($retailer_id, $creds['name']);
+
+      $isbns = array();
+      foreach ($loans as $loan) {
+        $isbns[] = $loan->isbn;
       }
-      else {
-        $id = $mapping[$loan->isbn];
+
+      if ($isbns) {
+        $mapping = reol_base_ding_entity_get_ids($isbns);
       }
 
-      $result[$id] = new DingProviderLoan($id, array(
-        'ding_entity_id' => $id,
-        'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
-        'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
-        'renewable' => FALSE,
-        'display_name' => $loan->title,
-      ));
+      foreach ($loans as $loan) {
+        // Title might not be found, use an fake ID.
+        if (!isset($mapping[$loan->isbn])) {
+          $id = 'publizon:' . $loan->isbn;
+        }
+        else {
+          $id = $mapping[$loan->isbn];
+        }
 
-      $result[$id]->publizon_type = reol_base_get_ting_type(reol_base_get_type_from_format($loan->format));
+        $results[$id] = new DingProviderLoan($id, array(
+          'ding_entity_id' => $id,
+          'loan_date' => date('Y-m-d H:i:s', $loan->order_date),
+          'expiry' => date('Y-m-d H:i:s', $loan->expire_date),
+          'renewable' => FALSE,
+          'display_name' => $loan->title,
+        ));
+
+        $results[$id]->publizon_type = reol_base_get_ting_type(reol_base_get_type_from_format($loan->format));
+      }
+
+      // Store the loans into ding session cache.
+      if (module_exists('ding_session_cache')) {
+        ding_session_cache_set('publizon', 'loans', $results);
+      }
     }
   }
 
-  return $result;
+  return is_null($results) ? array() : $results;
 }
 
 /**
@@ -70,14 +83,13 @@ function publizon_loan_list($account, $reset = FALSE) {
  *   The local id of the ting object the user is trying to loan.
  */
 function publizon_loan_create($account, $local_id) {
-  // This will throw exception if not logged in.
-  $creds = ding_user_get_creds($account);
-
   $retailer_id = publizon_get_retailer_id($account);
-
   $isbn = reol_base_get_isbn($local_id);
 
   try {
+    // This will throw exception if not logged in.
+    $creds = ding_user_get_creds();
+
     $client = PublizonLoanClient::getClient();
     // This will throw exception if loan does not go through.
     $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
@@ -85,6 +97,11 @@ function publizon_loan_create($account, $local_id) {
   }
   catch (PublizonException $e) {
     PublizonDingProviderException::convert($e);
+  }
+
+  // Clear ding session cache.
+  if (module_exists('ding_session_cache')) {
+    ding_session_cache_clear('publizon', 'loans');
   }
 }
 
@@ -104,10 +121,10 @@ function publizon_loan_get($account, $local_id) {
   $creds = ding_user_get_creds($account);
 
   $retailer_id = publizon_get_retailer_id($account);
-
   $isbn = reol_base_get_isbn($local_id);
 
   $client = PublizonLoanClient::getClient();
+
   // This will throw exception if loan does not go through.
   $result = $client->getLibraryUserOrder($retailer_id, $creds['name'], $isbn);
 

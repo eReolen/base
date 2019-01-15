@@ -47,7 +47,7 @@
     @include outer-container;
 
     padding: 100px 0 0;
-    font-size: 1.857em;
+    font-size: em(26, $base-font-size);
     font-family: $font-light;
     color: $black-medium;
     margin-bottom: 40px;

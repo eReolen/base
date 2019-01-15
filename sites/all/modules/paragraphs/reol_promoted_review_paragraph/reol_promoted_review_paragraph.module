@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Promoted-review paragraph feature.
+ */
+
+include_once 'reol_promoted_review_paragraph.features.inc';

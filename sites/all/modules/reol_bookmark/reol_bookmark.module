@@ -87,8 +87,10 @@ function reol_bookmark_element_process_material_item($element) {
  */
 function reol_bookmark_bookmark($id, $remove = FALSE) {
   global $user;
-  // Make sure cache is cleared.
-  reol_bookmark_cache_clear();
+
+  if (module_exists('ding_session_cache')) {
+    ding_session_cache_clear('reol_bookmark', 'bookmarks');
+  }
 
   $ting_object = ding_entity_load($id);
 
@@ -106,20 +108,24 @@ function reol_bookmark_bookmark($id, $remove = FALSE) {
  *
  * @param object $account
  *   The user to get bookmarks for.
+ * @param bool $reset
+ *   If TRUE cache is reset (default: FALSE).
  *
  * @return array
  *   Array of bookmarks from provider.
  */
-function reol_bookmark_get_bookmarks($account) {
+function reol_bookmark_get_bookmarks($account, $reset = FALSE) {
   // First look in static for bookmarks.
-  $bookmarks = &drupal_static(__FUNCTION__);
-  if (!isset($bookmarks)) {
+  $bookmarks = &drupal_static(__FUNCTION__, NULL);
+
+  if (is_null($bookmarks) || $reset) {
     // Second, use ding_session_cache.
     if (module_exists('ding_session_cache')) {
-      $bookmarks = ding_session_cache_get('reol_bookmark', 'bookmarks');
+      $bookmarks = ding_session_cache_get('reol_bookmark', 'bookmarks', NULL);
     }
+
     // If all else fails, fetch from provider.
-    if (empty($bookmarks)) {
+    if (is_null($bookmarks) || $reset) {
       try {
         $bookmarks = ding_provider_invoke('bookmark', 'list', $account);
         // Filter out bookmarks that's not available in the well.
@@ -138,6 +144,7 @@ function reol_bookmark_get_bookmarks($account) {
       }
     }
   }
+
   return $bookmarks;
 }
 
@@ -330,13 +337,4 @@ function reol_bookmark_ding_session_cache_defaults() {
     'enabled' => TRUE,
     'expire' => 3600,
   );
-}
-
-/**
- * Clears the bookmark cache if ding_session_cache is active.
- */
-function reol_bookmark_cache_clear() {
-  if (module_exists('ding_session_cache')) {
-    ding_session_cache_clear('reol_bookmark', 'bookmarks');
-  }
 }

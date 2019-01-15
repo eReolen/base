@@ -10,11 +10,11 @@ $z-index-cover-base: 1;
   padding: 20px 0;
 
   h2 {
-    font-size: 1.714em;
+    font-size: em(24, $base-font-size);
   }
 
   p {
-    font-size: 1em;
+    font-size: em(14, $base-font-size);
   }
 
   &--breol_section {
@@ -186,10 +186,10 @@ $z-index-cover-base: 1;
     font-family: $font-mikado;
 
     .title {
-      font-size: 2.857em;
+      font-size: em(40, $base-font-size);
 
       @include media($phone) {
-        font-size: 1.429em;
+        font-size: em(20, $base-font-size);
       }
     }
   }
@@ -252,7 +252,7 @@ $z-index-cover-base: 1;
   font-family: $font-light;
   .field-label {
     font-weight: normal;
-    font-size: 1.714em;
+    font-size: em(24, $base-font-size);
     padding: 20px 0;
   }
 }
