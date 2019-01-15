@@ -159,7 +159,6 @@
       $(fields).each(function (id, field) {
 
         $(field).each(function (id, element) {
-          console.log(element);
           $(element)
             .addClass('ting-object-collapsible-enabled')
             .addClass('open')
