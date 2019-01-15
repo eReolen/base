@@ -18,7 +18,7 @@
     </div>
   <?php endif; ?>
   <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
-    <div class="ting-object-related-item last ting-object-collapsible-enabled">
+    <div class="last ting-object-collapsible-enabled">
         <?php echo render($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']); ?>
     </div>
   <?php endif; ?>
