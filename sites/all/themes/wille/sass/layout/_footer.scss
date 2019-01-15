@@ -10,7 +10,7 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
   font-family: $font-light;
 
   overflow: hidden;
-  padding-bottom: 3.214em;
+  padding-bottom: em(45, $base-font-size);
 
   width: 100%;
   float: left;
@@ -48,7 +48,7 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
 
     a {
       color: $white;
-      font-size: 1.143em;
+      font-size: em(16, $base-font-size);
     }
 
     // Desktop.
@@ -95,8 +95,8 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     cursor: pointer;
 
     font-family: $font-light;
-    font-size: 1.286em;
-    margin-bottom: 2.143em;
+    font-size: em(18, $base-font-size);
+    margin-bottom: em(30, $base-font-size);
 
     &:before {
       @include icon('arrow-right');
@@ -130,7 +130,7 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
 
   .leaf {
     margin: 0;
-    margin-bottom: 2.143em;
+    margin-bottom: em(30, $base-font-size);
   }
 
 }
