@@ -219,3 +219,15 @@ fieldset {
     }
   }
 }
+
+
+// Align last expand with the ones above
+.pane-ding-facetbrowser  {
+  .expand-more, .expand-less {
+    padding-right: 2rem;
+    color: $color__geist--grey3;
+  }
+  fieldset .expand-more, fieldset .expand-less {
+    padding-right: 0;
+  }
+}
