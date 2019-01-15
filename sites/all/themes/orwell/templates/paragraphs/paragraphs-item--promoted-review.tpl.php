@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Default theme implementation for a single paragraph item.
+ * Promoted review paragraph bundle.
  *
  * Available variables:
  * - $content: An array of content items. Use render($content) to print them
@@ -31,7 +31,7 @@
     <div class="review__wrapper">
       <div class="review__cover">
         <div class="ting-cover-wrapper">
-            <div class="ting-cover ting-cover-processed" data-ting-cover-object-id="870970-basis:51843134" data-ting-cover-style="reol_review">
+            <div class="ting-cover ting-cover-processed">
               <?php print render($content['field_billede'][0]); ?>
             </div>
           </div>
@@ -41,7 +41,7 @@
           <h4><?php print render($content['field_titel'][0]); ?></h4>
         </div>
         <div class="ting-cover-wrapper">
-          <div class="ting-cover ting-cover-processed" data-ting-cover-object-id="870970-basis:51843134" data-ting-cover-style="reol_review">
+          <div class="ting-cover ting-cover-processed">
             <?php print render($content['field_billede'][0]); ?>
           </div>
         </div>
