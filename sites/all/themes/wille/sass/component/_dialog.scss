@@ -156,7 +156,7 @@
       float: none;
     }
 
-    @include heading(3.571em);
+    @include heading(em(50));
     font-family: $font-mikado;
     text-transform: uppercase;
 
