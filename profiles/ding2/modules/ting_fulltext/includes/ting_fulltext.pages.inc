@@ -19,7 +19,7 @@ function ting_fulltext_page_view($xml) {
 /**
  * Parse given xml. Return an array holding selected values.
  */
-function ting_fulltext_parse($xml, $reset) {
+function ting_fulltext_parse($xml, $reset = FALSE) {
   // Use static cache as it may be called more than once by the panels
   // plugin.
   $xpath = &drupal_static(__FUNCTION__);
