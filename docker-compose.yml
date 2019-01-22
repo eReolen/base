@@ -18,7 +18,6 @@ services:
       - mariadb
     volumes:
       - .:/app
-#      - ./docker/php.ini:/etc/php/7.0/fpm/php.ini
 
   nginx:
     image: bitnami/nginx:latest
