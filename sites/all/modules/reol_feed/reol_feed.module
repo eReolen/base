@@ -417,4 +417,3 @@ function _reol_feed_json_node($node_type) {
   drupal_json_output($newsletter_nodes);
   drupal_exit();
 }
-/
