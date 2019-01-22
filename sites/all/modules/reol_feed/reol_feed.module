@@ -237,7 +237,6 @@ function reol_feed_menu() {
 
   $items['feed/json/node/%'] = array(
     'page callback' => '_reol_feed_json_node',
-    //'delivery callback' => 'drupal_json_output',
     'page arguments' => array(3),
     'access callback' => '_reol_feed_json_node_access',
     'access arguments' => array(3),
@@ -353,6 +352,14 @@ function reol_feed_convert_html($html) {
   return strip_tags(_reol_feed_br2nl($html));
 }
 
+/**
+ * Access callback for newsletter feed.
+ *
+ * @param $node_type
+ *   The type of node to display a feed of.
+ * @return bool
+ *   Whether to grant access or not.
+ */
 function _reol_feed_json_node_access($node_type) {
   $supported_node_types = array(
     'article'
@@ -410,3 +417,4 @@ function _reol_feed_json_node($node_type) {
   drupal_json_output($newsletter_nodes);
   drupal_exit();
 }
+/
