@@ -237,9 +237,10 @@ function reol_feed_menu() {
 
   $items['feed/json/node/%'] = array(
     'page callback' => '_reol_feed_json_node',
-    'delivery callback' => 'drupal_json_output',
+    //'delivery callback' => 'drupal_json_output',
     'page arguments' => array(3),
     'access callback' => '_reol_feed_json_node_access',
+    'access arguments' => array(3),
   );
 
   $items['feeds'] = array(
@@ -400,11 +401,12 @@ function _reol_feed_json_node($node_type) {
           'BaseUrl' => $base_url,
         );
 
-        $nodes[] = $node;
+        $newsletter_nodes[] = $node;
       }
       cache_set('reol_feed_data', $newsletter_nodes, 'cache');
     }
   }
   
-  return $newsletter_nodes;
+  drupal_json_output($newsletter_nodes);
+  drupal_exit();
 }
