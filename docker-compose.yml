@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   mariadb:
@@ -17,7 +17,7 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - .:/app
+      - .:/app:delegated
 
   nginx:
     image: bitnami/nginx:latest
@@ -27,8 +27,8 @@ services:
     ports:
       - '8000'
     volumes:
-      - ./docker/vhost.conf:/opt/bitnami/nginx/conf/vhosts/ereolen.conf:ro
-      - ./:/app
+      - ${PWD}/.docker/vhost.conf:/opt/bitnami/nginx/conf/vhosts/ereolen.conf:ro
+      - ./:/app:delegated
 
   memcached:
     image: 'memcached:latest'
@@ -37,11 +37,28 @@ services:
     environment:
       - MEMCACHED_CACHE_SIZE=64
 
+  varnish:
+    image: 'wodby/varnish:4'
+    depends_on:
+      - nginx
+    ports:
+      - '6081'
+    environment:
+      VARNISHD_VCL_SCRIPT: /etc/varnish/ereolen.vcl
+      VARNISH_SECRET: eca2b7c263eae74c0d746f147691e7ce
+    volumes:
+      - ${PWD}/.docker/ereolen.vcl:/etc/varnish/ereolen.vcl:ro
+
   drush:
-    image: itkdev/drush6
+    image: itkdev/drush6:latest
     depends_on:
       - mariadb
     entrypoint:
       - drush
     volumes:
+      - drush-cache:/root/.drush
       - ./:/app
+
+# Drush cache volume to persist cache between runs. 
+volumes:
+  drush-cache:
