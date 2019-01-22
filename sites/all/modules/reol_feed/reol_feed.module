@@ -239,7 +239,7 @@ function reol_feed_menu() {
     'page callback' => '_reol_feed_json_node',
     'delivery callback' => 'drupal_json_output',
     'page arguments' => array(3),
-    'access callback' => TRUE,
+    'access callback' => '_reol_feed_json_node_access',
   );
 
   $items['feeds'] = array(
@@ -352,6 +352,16 @@ function reol_feed_convert_html($html) {
   return strip_tags(_reol_feed_br2nl($html));
 }
 
+function _reol_feed_json_node_access($node_type) {
+  $supported_node_types = array(
+    'article'
+  );
+  if(!in_array($node_type, $supported_node_types)) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
 /**
  * Provide a json feed for newsletter.
  *
@@ -361,34 +371,23 @@ function reol_feed_convert_html($html) {
  *   An array of items to display in the feed.
  */
 function _reol_feed_json_node($node_type) {
-  $supported_node_types = array(
-    'article'
-  );
-
-  if(!in_array($node_type, $supported_node_types)) {
-    return NULL;
-  }
-
   $base_url = $GLOBALS['base_url'];
 
   // Cache the page.
-  $newsletter_data = &drupal_static(__FUNCTION__);
-  if (!isset($newsletter_data)) {
+  $newsletter_nodes = &drupal_static(__FUNCTION__);
+  if (!isset($newsletter_nodes)) {
     if ($cache = cache_get('reol_feed_data')) {
-      $newsletter_data = $cache->data;
+      $newsletter_nodes = $cache->data;
     }
     else {
       // Fetch the relevant nodes.
       $node_query = new EntityFieldQuery();
       $node_query->entityCondition('entity_type', 'node');
-
-      if (array_key_exists($node_type, node_type_get_names()))  {
-        $node_query->entityCondition('bundle', $node_type);
-      }
+      $node_query->entityCondition('bundle', $node_type);
       $node_query->propertyCondition('status', 1);
       $res = $node_query->execute();
 
-      $nodes = array();
+      $newsletter_nodes = array();
       foreach ($res['node'] as $value) {
         $wrapper = entity_metadata_wrapper('node', $value->nid);
         $node = array(
@@ -403,10 +402,9 @@ function _reol_feed_json_node($node_type) {
 
         $nodes[] = $node;
       }
-      $newsletter_data = $nodes;
-      cache_set('reol_feed_data', $newsletter_data, 'cache');
+      cache_set('reol_feed_data', $newsletter_nodes, 'cache');
     }
   }
   
-  return $newsletter_data;
+  return $newsletter_nodes;
 }
