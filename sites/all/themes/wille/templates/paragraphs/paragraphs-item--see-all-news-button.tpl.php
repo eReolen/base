@@ -2,9 +2,15 @@
 
 /**
  * @file
- * Render two elements paragraph.
+ * Render button paragraph.
  */
 ?>
 <div class='see-all-news'>
-  <?php print l(t('See all news'), '/nyheder', array('attributes' => array('class' => 'more-link btn'))); ?>
+  <?php
+  print l($button_text, '/nyheder', array(
+    'attributes' => array(
+      'class' => 'more-link btn',
+    ),
+    'query' => $button_query
+  )); ?>
 </div>
