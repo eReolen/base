@@ -13,6 +13,7 @@ pipeline {
         }
         stage('Analysis') {
             steps {
+                sh 'mkdir ./phan'
                 sh 'vendor/bin/phan --directory=. --allow-polyfill-parser --output-mode checkstyle --progress-bar --output ./phan/checkstyle-result.xml'
             }
         }
