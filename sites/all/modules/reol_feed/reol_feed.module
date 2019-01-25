@@ -235,6 +235,13 @@ function reol_feed_write_feed(array $file, $contents) {
 function reol_feed_menu() {
   $items = array();
 
+  $items['feed/json/node/%'] = array(
+    'page callback' => '_reol_feed_json_node',
+    'page arguments' => array(3),
+    'access callback' => '_reol_feed_json_node_access',
+    'access arguments' => array(3),
+  );
+
   $items['feeds'] = array(
     'page callback' => 'reol_feed_deliver',
     // This callback should be public.
@@ -343,4 +350,70 @@ function _reol_feed_br2nl($string) {
  */
 function reol_feed_convert_html($html) {
   return strip_tags(_reol_feed_br2nl($html));
+}
+
+/**
+ * Access callback for newsletter feed.
+ *
+ * @param $node_type
+ *   The type of node to display a feed of.
+ * @return bool
+ *   Whether to grant access or not.
+ */
+function _reol_feed_json_node_access($node_type) {
+  $supported_node_types = array(
+    'article'
+  );
+  if(!in_array($node_type, $supported_node_types)) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/**
+ * Provide a json feed for newsletter.
+ *
+ * @param $node_type
+ *   The type of node to display a feed of.
+ * @return array
+ *   An array of items to display in the feed.
+ */
+function _reol_feed_json_node($node_type) {
+  $base_url = $GLOBALS['base_url'];
+
+  // Cache the page.
+  $newsletter_nodes = &drupal_static(__FUNCTION__);
+  if (!isset($newsletter_nodes)) {
+    if ($cache = cache_get('reol_feed_data')) {
+      $newsletter_nodes = $cache->data;
+    }
+    else {
+      // Fetch the relevant nodes.
+      $node_query = new EntityFieldQuery();
+      $node_query->entityCondition('entity_type', 'node');
+      $node_query->entityCondition('bundle', $node_type);
+      $node_query->propertyCondition('status', 1);
+      $res = $node_query->execute();
+
+      $newsletter_nodes = array();
+      foreach ($res['node'] as $value) {
+        $wrapper = entity_metadata_wrapper('node', $value->nid);
+        $node = array(
+          'id' => $value->nid,
+          'ProductName' => $wrapper->title->value(array('sanitize' => TRUE)),
+          'Description' => !empty($wrapper->body->value()['safe_summary']) ? $wrapper->body->value()['safe_summary'] : '',
+          'ProductImageUrl' => image_style_url('ding_campaign_p_100', $wrapper->field_ding_news_list_image->value()['uri']),
+          'CategoryName' => $wrapper->field_article_type->label(),
+          'ProductUrl' => $base_url . '/' .drupal_get_path_alias('node/' . $value->nid),
+          'BaseUrl' => $base_url,
+        );
+
+        $newsletter_nodes[] = $node;
+      }
+      cache_set('reol_feed_data', $newsletter_nodes, 'cache');
+    }
+  }
+  
+  drupal_json_output($newsletter_nodes);
+  drupal_exit();
 }

@@ -8,11 +8,11 @@
 <div class="news-page">
   <div class="news-page__cover-wrapper">
     <div class="news-page__cover" <?php print drupal_attributes($cover_attributes)?>>
-    <div class="news-page__overlay"></div>
-    <div class="news-page__cover__content">
-      <div class="field-name-field-subtitle">eReolenGO</div>
-      <h2 class="title"><?php print t('Nyheder'); ?></h2>
-    </div>
+      <div class="news-page__overlay"></div>
+      <div class="news-page__cover__content">
+        <div class="field-name-field-subtitle">eReolenGO</div>
+        <h2 class="title"><?php print render($title); ?></h2>
+      </div>
     </div>
   </div>
   <div class="organic-element organic-element--page-news"></div>
