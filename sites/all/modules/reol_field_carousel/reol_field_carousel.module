@@ -218,8 +218,10 @@ function reol_field_carousel_build_covers($render_method, $collections) {
       }, $collections);
 
       $entities = ding_entity_load_multiple($ding_entity_ids);
-      foreach ($entities as $entity) {
-        $build[] = ting_object_view($entity, 'compact');
+      if (is_array($entities)) {
+        foreach ($entities as $entity) {
+          $build[] = ting_object_view($entity, 'compact');
+        }
       }
       break;
   }
