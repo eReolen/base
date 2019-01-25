@@ -12,8 +12,6 @@ stylesheets[all][] = search.css
 stylesheets[all][] = panels.css
 ; Kill ding_carousels theming (we got our own).
 stylesheets[all][] = ding_carousel.css
-; And P2s list theming, it's a mess.
-stylesheets[all][] = ding-list-view.css
 
 ;-----------//Javascript.
 scripts[] = scripts/orwell.main.js
