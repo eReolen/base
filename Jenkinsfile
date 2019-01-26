@@ -28,6 +28,11 @@ pipeline {
                 }
             }
         }
+        state('Deployment') {
+            steps {
+               sh  "ansible srvitkphp56 -m shell -a 'echo $TERM'"
+            }
+        }
     }
     
 }
