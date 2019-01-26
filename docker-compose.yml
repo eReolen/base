@@ -24,8 +24,6 @@ services:
     depends_on:
       - phpfpm
       - memcached
-#    ports:
-#      - '80'
     volumes:
       - ${PWD}/.docker/vhost.conf:/etc/nginx/conf.d/default.conf:ro
       - ./:/app:delegated
@@ -41,8 +39,6 @@ services:
     image: 'wodby/varnish:4'
     depends_on:
       - nginx
-#    ports:
-#      - '6081'
     environment:
       VARNISHD_VCL_SCRIPT: /etc/varnish/ereolen.vcl
       VARNISH_SECRET: eca2b7c263eae74c0d746f147691e7ce
