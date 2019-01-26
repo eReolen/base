@@ -21,12 +21,6 @@ pipeline {
                     }
                 }
             }
-            post {
-               always {
-                    recordIssues enabledForFailure: true, tool: checkStyle()
-                    recordIssues enabledForFailure: true, tool: spotBugs()
-                }
-            }
         }
         stage('Deployment') {
             steps {
@@ -34,5 +28,10 @@ pipeline {
             }
         }
     }
-    
+    post {
+       always {
+            recordIssues enabledForFailure: true, tool: checkStyle()
+            recordIssues enabledForFailure: true, tool: spotBugs()
+        }
+    }
 }
