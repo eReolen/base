@@ -2,13 +2,13 @@ pipeline {
     agent none
     stages {
         stage('Docker') {
-            stages {
-               agent {
-                  docker {
-                    image 'itkdev/php7.2-fpm:latest'
-                    args '-v $HOME/.composer-cache:/.composer:rw'
-                  }
-                }      
+            agent {
+              docker {
+                image 'itkdev/php7.2-fpm:latest'
+                args '-v $HOME/.composer-cache:/.composer:rw'
+              }
+            }   
+            stages {   
                 stage('Build') {
                     steps {
                         sh 'composer install'
