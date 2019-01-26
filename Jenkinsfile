@@ -24,7 +24,8 @@ pipeline {
         }
         stage('Deployment') {
             steps {
-               sh  "ansible srvitkphp56 -m shell -a 'echo $TERM'"
+                echo 'Hello, JDK'
+               //sh  "ansible srvitkphp56 -m shell -a 'echo $TERM'"
             }
         }
     }
