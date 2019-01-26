@@ -25,7 +25,7 @@ pipeline {
         stage('Deployment') {
             steps {
                echo 'Hello world'
-               sh  "ansible srvitkphp56 -m shell -a 'echo $TERM'"
+               sh "ansible srvitkphp56 -m shell -a 'uname -a'"
             }
         }
     }
