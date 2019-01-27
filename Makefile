@@ -7,6 +7,9 @@ up:
 stop:
 	docker-compose -p ${PROJECT} stop
 
+ps:
+	docker-compose -p ${PROJECT} ps
+
 clean:
 	docker-compose -p ${PROJECT} rm
 
