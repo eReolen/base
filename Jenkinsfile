@@ -3,9 +3,10 @@ pipeline {
     stages {
         stage('Docker') {
             agent {
-              docker {
-                image 'itkdev/php7.2-fpm:latest'
-                args '-v /var/lib/jenkins/.composer-cache:/.composer:rw'
+                docker {
+                    image 'itkdev/php7.2-fpm:latest'
+                    args '-v /var/lib/jenkins/.composer-cache:/.composer:rw'
+                }
             }
             stages {
                 stage('Build') {
@@ -15,22 +16,27 @@ pipeline {
                 }
                 stage('Analysis') {
                     steps {
-                        sh 'mkdir ./phan'
                         sh 'vendor/bin/phan --directory=. --allow-polyfill-parser --output-mode checkstyle --progress-bar --output ./phan/checkstyle-result.xml'
                     }
                 }
-                post {
-                   always {
-                        recordIssues enabledForFailure: true, tool: checkStyle()
-                        recordIssues enabledForFailure: true, tool: spotBugs()
-                    }
+            }
+            post {
+                always {
+                    recordIssues enabledForFailure: true, tool: checkStyle()
+                    recordIssues enabledForFailure: true, tool: spotBugs()
+                }
+                success {
+                     sh 'echo "This will run only if successful"'
+                }
+                failure {
+                      sh 'echo "This will run only if failed"'
                 }
             }
         }
         stage('Deployment') {
             steps {
-               echo 'Hello world'
-               sh "ansible srvitkphp56 -m shell -a 'uname -a'"
+                echo 'Hello world'
+                sh "ansible srvitkphp56 -m shell -a 'uname -a'"
             }
         }
     }
