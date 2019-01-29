@@ -1,12 +1,6 @@
 pipeline {
     agent any
-    options { skipDefaultCheckout() }
     stages {
-        stage('Checkout code') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Docker') {
             agent {
               docker {
@@ -27,18 +21,18 @@ pipeline {
                     }
                 }
             }
+            post {
+               always {
+                    recordIssues enabledForFailure: true, tool: checkStyle()
+                    recordIssues enabledForFailure: true, tool: spotBugs()
+                }
+            }
         }
         stage('Deployment') {
             steps {
                echo 'Hello world'
                sh "ansible srvitkphp56 -m shell -a 'uname -a'"
             }
-        }
-    }
-    post {
-       always {
-            recordIssues enabledForFailure: true, tool: checkStyle()
-            recordIssues enabledForFailure: true, tool: spotBugs()
         }
     }
 }
