@@ -465,7 +465,7 @@ function opensearch_execute(TingClientRequest $request) {
     // Alternative rewrite the whole ting entity module, which currently is
     // overkill.
     if ($response instanceof TingClientSearchResult) {
-      _opensearch_predict_cache($response->collections, $request);
+      //_opensearch_predict_cache($response->collections, $request);
     }
 
     return $response;
@@ -592,13 +592,6 @@ function _opensearch_cache(TingClientRequest $request, $response = NULL) {
     // Update the cache with the provided value.
     $static_cache[$cid] = $response;
     if ($ttl = variable_get('opensearch_cache_lifetime', OPENSEARCH_DEFAULT_CACHE_LIFETIME)) {
-
-      // HACK HACK - DEBUG DEBUG - DELETE ME LATER
-      if (cache_get($cid, 'cache_opensearch')) {
-        watchdog('HACK', serialize($request), array(), WATCHDOG_CRITICAL, current_path());
-      }
-      // HACK HACK - DEBUG DEBUG - DELETE ME LATER
-
       cache_set($cid, $response, 'cache_opensearch', REQUEST_TIME + $ttl);
     }
     return $response;
