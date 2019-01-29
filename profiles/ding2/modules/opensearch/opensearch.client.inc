@@ -465,7 +465,7 @@ function opensearch_execute(TingClientRequest $request) {
     // Alternative rewrite the whole ting entity module, which currently is
     // overkill.
     if ($response instanceof TingClientSearchResult) {
-      //_opensearch_predict_cache($response->collections, $request);
+      _opensearch_predict_cache($response->collections, $request);
     }
 
     return $response;
