@@ -1,6 +1,12 @@
 pipeline {
     agent any
+    options { skipDefaultCheckout() }
     stages {
+        stage('Checkout code') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Docker') {
             agent {
               docker {
