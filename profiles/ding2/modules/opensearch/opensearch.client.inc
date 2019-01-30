@@ -424,6 +424,7 @@ function opensearch_execute(TingClientRequest $request) {
     // If there are no ids to fetch then there is no need to issue a request.
     // Just return the array of cached objects.
     if (empty($uncached_ids)) {
+      _opensearch_cache($request, $cached_objects);
       return $cached_objects;
     }
   }
@@ -536,7 +537,9 @@ function _opensearch_predict_cache(array $collections, TingClientRequest $reques
 
       // Build the response that matches the request and put it into cache.
       $collection_response = new TingClientObjectCollection($collection->objects);
-      _opensearch_cache($collection_request, $collection_response);
+      if (!_opensearch_cache($collection_request)) {
+        _opensearch_cache($collection_request, $collection_response);
+      }
 
       $object_request = opensearch_get_request_factory()->getObjectRequest();
       // See opensearch_execute() for description of always getting all relations.
@@ -563,7 +566,9 @@ function _opensearch_predict_cache(array $collections, TingClientRequest $reques
       array_map(function (TingClientObjectRequest $object_request) use ($object) {
         $object_response = array();
         $object_response[$object->id] = clone $object;
-        _opensearch_cache($object_request, $object_response);
+        if (!_opensearch_cache($object_request)) {
+          _opensearch_cache($object_request, $object_response);
+        }
       }, [$object_id_request, $local_id_request]);
     }
   }
