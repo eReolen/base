@@ -443,18 +443,21 @@ function opensearch_execute(TingClientRequest $request) {
 
     $response = $request->parseResponse($res);
 
-    if ($request instanceof TingClientObjectRequest) {
-      // Merge in any cached objects. The map uses ids as keys. The order does
-      // not matter for object requests.
-      $response = array_merge($cached_objects, $response);
-    }
-
     // Pass parsed results to other modules.
     $props = module_invoke_all('opensearch_post_execute', $request, $response, $res);
     if (!empty($props)) {
       foreach ($props as $property => $value) {
         $response->{$property} = $value;
       }
+    }
+
+    // This have to be execute after the post_execute hook as the $res and
+    // $response may not match i size and give some strange requirements in the
+    // hooks.
+    if ($request instanceof TingClientObjectRequest) {
+      // Merge in any cached objects. The map uses ids as keys. The order does
+      // not matter for object requests.
+      $response = array_merge($cached_objects, $response);
     }
 
     // Update the cache with the raw response object from the data well for
