@@ -57,12 +57,25 @@ $menu-height__medium: 5rem;
     }
 
     ul {
-      display: flex;
-      justify-content: space-between;
-
+      @include grid-media($xxsmall){
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        a {
+          &:hover {
+            background: darken($color__geist--red, 10%);
+          }
+        }
+      }
       @include grid-media($medium) {
         margin: 0 $padding__default;
-        display: inline-block;
+        display: inline-block !important; // This is set to !important to prevent menu hidden when shifting between breakpoints without reload. It is nessery since .slideToggle is adding display none, when toggleling menu on mobile.
+        flex-direction: row;
+        a {
+          &:hover {
+            background: $color__geist--grey8;
+          }
+        }
       }
     }
 
@@ -224,6 +237,34 @@ $menu-height__medium: 5rem;
           }
         }
       }
+    }
+  }
+
+  /*
+  ** Mobile toggle btn
+  */
+  .menu-toggle {
+    color: white;
+    padding: $padding__default/2;
+    &:after {
+      @include icon;
+      content: $icon__list-menu;
+      margin-left: .5rem;
+    }
+    .menu-toggle-hide {
+      display: none;
+    }
+    &.show {
+      .menu-toggle-hide {
+        display: inline;
+      }
+      .menu-toggle-show {
+        display: none;
+      }
+
+    }
+    @include grid-media($medium) {
+      display: none;
     }
   }
 }
