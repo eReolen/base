@@ -69,7 +69,10 @@ $menu-height__medium: 5rem;
       }
       @include grid-media($medium) {
         margin: 0 $padding__default;
-        display: inline-block !important; // This is set to !important to prevent menu hidden when shifting between breakpoints without reload. It is nessery since .slideToggle is adding display none, when toggleling menu on mobile.
+
+        // Display is set to !important to prevent menu hidden when shifting between breakpoints without reload.
+        // It is nessery since .slideToggle is adding display: none;, when toggleling menu on mobile.
+        display: inline-block !important;
         flex-direction: row;
         a {
           &:hover {
@@ -240,9 +243,7 @@ $menu-height__medium: 5rem;
     }
   }
 
-  /*
-  ** Mobile toggle btn
-  */
+  // Mobile toggle btn
   .menu-toggle {
     color: white;
     padding: $padding__default/2;

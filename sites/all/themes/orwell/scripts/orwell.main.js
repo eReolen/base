@@ -166,7 +166,6 @@
   /**
    * Toggle mobile menu.
    */
-
   Drupal.behaviors.burgerMenu = {
     attach : function (context, settings) {
 
