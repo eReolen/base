@@ -591,10 +591,10 @@ function publizon_client_library_load($library_id) {
 function publizon_form_alter(&$form, &$form_state, $form_id) {
   // Set default value on support_id webform field.
   if (isset($form['submitted']['support_id'])) {
-    global $user;
-    if ($user->uid > 0) {
+    if (user_is_logged_in()) {
       // Try to get value of "friendly_id" field on user profile
       // (cf. publizon_user_authenticate_finalize).
+      global $user;
       $profile = profile2_load_by_user($user->uid, 'provider_publizon');
       if (NULL !== $profile) {
         $wrapper = entity_metadata_wrapper('profile2', $profile);
