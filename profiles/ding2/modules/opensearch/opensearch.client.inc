@@ -58,7 +58,7 @@ function opensearch_get_object($object_id, $collection = FALSE, $with_relations 
     // Execute the request.
     $result = opensearch_execute($request);
 
-    return $collection || is_null($result) ? $result : $result[$object_id];
+    return ($collection || is_null($result)) ? $result : $result[$object_id];
   }
 
   return NULL;
@@ -419,7 +419,6 @@ function opensearch_execute(TingClientRequest $request) {
     // Ids that we still need to be fetched will not be appearing in the list of
     // cached objects.
     $uncached_ids = array_diff_key($object_ids, $cached_objects);
-    $request->setObjectIds(array_keys($uncached_ids));
 
     // If there are no ids to fetch then there is no need to issue a request.
     // Just return the array of cached objects.
@@ -427,6 +426,9 @@ function opensearch_execute(TingClientRequest $request) {
       _opensearch_cache($request, $cached_objects);
       return $cached_objects;
     }
+
+    // Set uncached ids in request.
+    $request->setObjectIds(array_keys($uncached_ids));
   }
 
   try {
@@ -570,6 +572,10 @@ function _opensearch_predict_cache(array $collections, TingClientRequest $reques
 
       // Build the response that matches the request and put it into cache.
       array_map(function (TingClientObjectRequest $object_request) use ($object) {
+        $params = module_invoke_all('opensearch_pre_execute', $object_request);
+        if (!empty($params)) {
+          $object_request->setParameters($params);
+        }
         $object_response = array();
         $object_response[$object->id] = clone $object;
         _opensearch_cache($object_request, $object_response);
