@@ -71,7 +71,8 @@ class TingClientSearchRequest extends TingClientRequest {
 
     foreach ($methodParameterMap as $method => $parameter) {
       $getter = 'get' . ucfirst($method);
-      if ($value = $this->$getter()) {
+      // Add all non-NULL parameters.
+      if (NULL !== ($value = $this->$getter())) {
         $this->setParameter($parameter, $value);
       }
     }
