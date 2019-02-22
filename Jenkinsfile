@@ -33,9 +33,20 @@ pipeline {
                 }
             }
         }
-        stage('Deployment') {
+        stage('Deployment develop') {
+            when {
+                branch 'develop'
+            }
             steps {
-                echo 'Hello world'
+                sh "ansible srvitkphp56 -m shell -a 'uname -a'"
+            }
+        }
+        stage('Deployment production') {
+            when {
+                branch 'master'
+            }
+            steps {
+                input message: 'Should the site be deployed? (Click "Proceed" to continue)'
                 sh "ansible srvitkphp56 -m shell -a 'uname -a'"
             }
         }
