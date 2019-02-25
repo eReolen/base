@@ -683,8 +683,8 @@ function opensearch_search_autocomplete_suggestions(array $query) {
 
   $method = variable_get('ting_search_autocomplete_method', 'facets');
 
-  $rest_url = rtrim(variable_get('opensearch_search_autocomplete_suggestion_url', ''), '/').'/rest/';
-  $url = url($rest_url.$method, array('query' => $query));
+  $rest_url = rtrim(variable_get('opensearch_search_autocomplete_suggestion_url', ''), '/') . '/rest/';
+  $url = url($rest_url . $method, array('query' => $query));
   $headers = array('Accept' => 'application/json');
   $result = drupal_http_request($url, $headers);
 
