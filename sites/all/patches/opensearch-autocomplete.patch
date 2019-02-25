@@ -1,17 +1,8 @@
 diff --git a/profiles/ding2/modules/opensearch/includes/opensearch.search.inc b/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
-index ff141511..0cbe9a3c 100644
+index 9eabb515..3eb0dcd1 100644
 --- a/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
 +++ b/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
-@@ -688,7 +688,7 @@ function opensearch_search_object_ids($ids) {
- function opensearch_search_autocomplete($string) {
-   $matches = array();
-   $default_settings = opensearch_search_autocomplete_settings();
--  
-+
-   $query['q'] = check_plain(strtolower($string));
-   $query['type'] = 'all';
-   $query['rows'] = $default_settings['maxSuggestions'];
-@@ -699,26 +699,11 @@ function opensearch_search_autocomplete($string) {
+@@ -663,22 +663,7 @@ function opensearch_search_autocomplete($string) {
      drupal_exit();
    }
  
@@ -35,12 +26,7 @@ index ff141511..0cbe9a3c 100644
  }
  
  /**
-- * SuggestionService - retrieve suggestions with drupal_http_request() 
-+ * SuggestionService - retrieve suggestions with drupal_http_request()
-  *
-  * @param array $query
-  *   Search suggestion parameters.
-@@ -727,43 +712,29 @@ function opensearch_search_autocomplete($string) {
+@@ -691,19 +676,14 @@ function opensearch_search_autocomplete($string) {
   *   Search suggestion results.
   */
  function opensearch_search_autocomplete_suggestions(array $query) {
@@ -55,33 +41,20 @@ index ff141511..0cbe9a3c 100644
 -    );
 -    return $items;
 -  }
--  
--  $url = url($rest_url, array('query' => $query));
 +  // Hack to use old suggestions service.
 +  $query += variable_get('ting_search_autocomplete_settings', array());
 +  $query['query'] = $query['q'];
 +  $query['maxSuggestions'] = $query['rows'];
 +
 +  $method = variable_get('ting_search_autocomplete_method', 'facets');
-+
+ 
+-  $url = url($rest_url, array('query' => $query));
 +  $url = url('http://opensuggestion.addi.dk/b3.5_2.0/rest/'.$method, array('query' => $query));
    $headers = array('Accept' => 'application/json');
    $result = drupal_http_request($url, $headers);
  
--  if (!empty($result->error)) {
--    watchdog(
--      'opensearch_search_autocomplete',
--      "Autocomplete error: %error (%code)\nURL: !url",
--      array(
--        '%error' => $result->error,
--        '%code' => $result->code,
--        '!url' => $url,
--      ),
--      $severity = WATCHDOG_ERROR
--    );
--    return $items;
--  }
--
+@@ -723,11 +703,16 @@ function opensearch_search_autocomplete_suggestions(array $query) {
+ 
    if (!empty($result->data)) {
      $result_data = drupal_json_decode($result->data);
 -    if (!empty($result_data['response']['docs'])) {
