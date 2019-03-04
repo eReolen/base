@@ -38,15 +38,29 @@ pipeline {
                 branch 'develop'
             }
             steps {
+            	timeout(time: 1, unit: 'MINUTES') {
+                	input 'Should the site be deployed?'
+    			}
+                sh "ansible srvitkphp56 -m shell -a 'uname -a'"
+            }
+        }
+        stage('Staging production') {
+            when {
+                branch 'master'
+            }
+            steps {
                 sh "ansible srvitkphp56 -m shell -a 'uname -a'"
             }
         }
         stage('Deployment production') {
             when {
                 branch 'master'
+                tag '*'
             }
             steps {
-                //input message: 'Should the site be deployed?' ok: "Yes, 'Make it so'"
+                timeout(time: 30, unit: 'MINUTES') {
+                	input 'Should the site be deployed?'
+    			}
                 sh "ansible srvitkphp56 -m shell -a 'uname -a'"
             }
         }
