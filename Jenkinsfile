@@ -46,7 +46,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                input message: 'Should the site be deployed?' ok: "Yes, 'Make it so'"
+                //input message: 'Should the site be deployed?' ok: "Yes, 'Make it so'"
                 sh "ansible srvitkphp56 -m shell -a 'uname -a'"
             }
         }
