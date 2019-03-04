@@ -38,18 +38,37 @@ pipeline {
                 branch 'develop'
             }
             steps {
-            	timeout(time: 1, unit: 'MINUTES') {
-                	input 'Should the site be deployed?'
-    			}
-                sh "ansible srvitkphp56 -m shell -a 'uname -a'"
+                // Deploy eReolen.
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git pull'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git pull'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush --yes updatedb'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush --yes features-revert-all'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush cache-clear all"
+                // Deploy eReolen Go.
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git pull'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git pull'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush --yes updatedb'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush --yes features-revert-all'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush cache-clear all"
             }
         }
-        stage('Staging production') {
+        stage('Deployment staging') {
             when {
-                branch 'master'
+                branch 'release'
             }
             steps {
-                sh "ansible srvitkphp56 -m shell -a 'uname -a'"
+                // Deploy eReolen.
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git pull'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git pull'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush --yes updatedb'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush --yes features-revert-all'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush cache-clear all"
+                // Deploy eReolen Go.
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git pull'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git pull'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush --yes updatedb'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush --yes features-revert-all'"
+                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush cache-clear all"
             }
         }
         stage('Deployment production') {
@@ -59,9 +78,20 @@ pipeline {
             }
             steps {
                 timeout(time: 30, unit: 'MINUTES') {
-                	input 'Should the site be deployed?'
-    			}
-                sh "ansible srvitkphp56 -m shell -a 'uname -a'"
+                    input 'Should the site be deployed?'
+                }
+                // Deploy eReolen.
+                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git pull'"
+                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git pull'"
+                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush --yes updatedb'"
+                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush --yes features-revert-all'"
+                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush cache-clear all"
+                // Deploy eReolen Go.
+                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git pull'"
+                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git pull'"
+                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes updatedb'"
+                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes features-revert-all'"
+                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush cache-clear all"
             }
         }
     }
