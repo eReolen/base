@@ -10,8 +10,5 @@ sites/all/modules/ereol/
 sites/all/modules/kreol/
 sites/all/themes/kreol/
 
-# Dontt commit analyse tools
-.phan/
-composer.json
-composer.lock
+# Do not commit analyse tools
 vendor/
