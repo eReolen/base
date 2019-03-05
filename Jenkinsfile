@@ -4,7 +4,7 @@ pipeline {
         stage('Docker') {
             agent {
                 docker {
-                    image 'itkdev/php7.2-fpm:latest'
+                    image 'itkdev/php7.2-fpm:latest' /* 7.2 is used as phan only runs with this version */
                     args '-v /var/lib/jenkins/.composer-cache:/.composer:rw'
                 }
             }
@@ -16,7 +16,7 @@ pipeline {
                 }
                 stage('Analysis') {
                     steps {
-                        sh 'vendor/bin/phan --directory=. --allow-polyfill-parser --output-mode checkstyle --progress-bar --output ./phan/checkstyle-result.xml'
+                        sh 'vendor/bin/phan --directory=. --allow-polyfill-parser --output-mode checkstyle --progress-bar --output checkstyle-result.xml'
                     }
                 }
             }
