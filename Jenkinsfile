@@ -97,7 +97,11 @@ pipeline {
     }
     post {
         always {
-            deleteDir() /* clean up our workspace */
+            slackNotifier(currentBuild.currentResult)
+
+            // Clean up our workspace
+            cleanWs()
+            deleteDir()
         }
     }
 }
