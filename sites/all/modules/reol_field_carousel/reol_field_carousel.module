@@ -207,23 +207,25 @@ function reol_field_carousel_build_covers($render_method, $collections) {
   $build = array();
   switch ($render_method) {
     case 'cover':
-      foreach ($collections as $collection) {
-        $build[] =ting_object_view($collection, 'compact');
-      }
-      break;
-
     case 'material':
-      $ding_entity_ids = array_map(function ($object) {
-        return $object->id;
-      }, $collections);
-
-      $entities = ding_entity_load_multiple($ding_entity_ids);
-      if (is_array($entities)) {
-        foreach ($entities as $entity) {
-          $build[] = ting_object_view($entity, 'compact');
-        }
+      foreach ($collections as $collection) {
+        $build[] = ting_object_view($collection, 'compact');
       }
       break;
+
+    // @FIXME: We don't know why the collection is mapped to ids and back to
+    // entities when rendering "material". We handle "material" above as a
+    // workaround.
+    // case 'material':
+    //   $ding_entity_ids = array_map(function ($object) {
+    //     return $object->id;
+    //   }, $collections);
+    //
+    //   $entities = ding_entity_load_multiple($ding_entity_ids);
+    //   foreach ($entities as $entity) {
+    //     $build[] = ting_object_view($entity, 'compact');
+    //   }
+    //   break;
   }
 
   return $build;
