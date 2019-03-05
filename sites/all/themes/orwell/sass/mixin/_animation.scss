@@ -6,3 +6,22 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes show {
+  0%   {
+    visibility: hidden;
+    height: 0;
+    opacity: 0;
+  }
+  10%   {
+    visibility: visible;
+  }
+  90%   {
+    transform: scaleY(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1.0);
+    height: 100%;
+  }
+}
