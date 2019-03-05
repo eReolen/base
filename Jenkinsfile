@@ -99,8 +99,9 @@ pipeline {
     }
     post {
         always {
-              echo "Pipeline result: ${currentBuild.currentResult}"
-//            slackNotifier currentBuild.currentResult
+            script {
+                slackNotifier(currentBuild.currentResult)
+            }
 
             // Clean up our workspace
             cleanWs()
