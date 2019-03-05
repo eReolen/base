@@ -1,3 +1,5 @@
+@Library('jenkins-pipeline')_
+
 pipeline {
     agent any
     stages {
@@ -97,7 +99,7 @@ pipeline {
     }
     post {
         always {
-            slackNotifier(currentBuild.currentResult)
+            slackNotifier currentBuild.result
 
             // Clean up our workspace
             cleanWs()
