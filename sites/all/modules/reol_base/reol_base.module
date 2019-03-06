@@ -890,6 +890,13 @@ function reol_base_get_type($type = FALSE) {
  */
 function reol_base_get_type_icon($type) {
   $type = reol_base_get_type($type);
+
+  // This statement is only here to help debug icon issue on live side and
+  // should be removed when issue have been resolved. See ER-489.
+  if (!isset($type['icon'])) {
+    watchdog('ICON', 'Missing icon for %type', array('%type' => $type), WATCHDOG_CRITICAL);
+  }
+
   return isset($type['icon']) ? $type['icon'] : FALSE;
 }
 
