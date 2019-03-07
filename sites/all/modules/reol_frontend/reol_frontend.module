@@ -93,9 +93,7 @@ function theme_reol_overlay_icons($variables) {
   $variables['classes'][] = 'overlay-icons';
 
   foreach ($variables['icons'] as $icon) {
-    if (!empty($icon)) {
-      $spans .= '<span class="icon ' . $icon . '"></span>';
-    }
+    $spans .= '<span class="icon ' . $icon . '"></span>';
   }
 
   if (!$spans) {
