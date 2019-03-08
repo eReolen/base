@@ -60,3 +60,16 @@
     top: 19px;
   }
 }
+
+// Hide buttons on user page (/user/me/view)
+.page-user {
+  // Bookmark ("Huskeliste") buttons.
+  .pane-loans a[id^="bookmark-"],
+  .pane-reservations a[id^="bookmark-"],
+  // General actions ("Delete all", "Update all", …).
+  .pane-reservations .actions-container,
+  // Checkboxes above items.
+  .pane-reservations .item-checkbox {
+    display: none;
+  }
+}
