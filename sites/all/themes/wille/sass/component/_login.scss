@@ -1,5 +1,13 @@
 
 #user-login {
+
+  .intro-text {
+    line-height: 1.3;
+    .lead {
+      margin-bottom: 10px;
+    }
+  }
+
   fieldset {
     border: 2px solid $white-dark;
     padding: 20px;
