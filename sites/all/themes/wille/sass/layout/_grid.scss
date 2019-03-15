@@ -1,7 +1,8 @@
 @import "bourbon";
-@import "neat";
+//@import "neat";
 @import "base/vars";
 @import "base/mixins";
+
 // Grid settings. Needs to be set before we bring in neat.
 $grid-columns: 12;
 $gutter: 0%;
