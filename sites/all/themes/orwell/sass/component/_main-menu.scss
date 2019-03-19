@@ -244,27 +244,33 @@ $menu-height__medium: 5rem;
   }
 
   // Mobile toggle btn
-  .menu-toggle {
-    color: white;
-    padding: $padding__default/2;
-    &:after {
-      @include icon;
-      content: $icon__list-menu;
-      margin-left: .5rem;
-    }
-    .menu-toggle-hide {
-      display: none;
-    }
-    &.show {
-      .menu-toggle-hide {
-        display: inline;
+  &.menu-level-1 {
+    .menu-toggle {
+      color: white;
+      padding: $padding__default/2;
+      &:after {
+        @include icon;
+        content: $icon__list-menu;
+        margin-left: .5rem;
       }
-      .menu-toggle-show {
+      .menu-toggle-hide {
         display: none;
       }
-
+      &.show {
+        .menu-toggle-hide {
+          display: inline;
+        }
+        .menu-toggle-show {
+          display: none;
+        }
+      }
+      @include grid-media($medium) {
+        display: none;
+      }
     }
-    @include grid-media($medium) {
+  }
+  &.menu-level-2 {
+    .menu-toggle {
       display: none;
     }
   }
