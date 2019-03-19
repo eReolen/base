@@ -150,7 +150,7 @@
   /**
    * Toggle show/hide more content on material abstract.
    */
-  $(function () {
+  $(document).ready(function() {
     $('.material__abstract').each(function () {
       var $minHeight = 140;
       if ($(this).height() > $minHeight) {
@@ -166,19 +166,16 @@
   /**
    * Toggle mobile menu.
    */
-  Drupal.behaviors.burgerMenu = {
-    attach : function (context, settings) {
+  $(document).ready(function() {
+    var phoneBreakPoint = 780;
+    if ($(window).width() < phoneBreakPoint) {
+      $('.menu-block-wrapper.menu-level-1 .menu').css('display','none');
+    };
 
-      var phoneBreakPoint = 780;
-      if ($(window).width() < phoneBreakPoint) {
-        $('.menu-block-wrapper .menu').css('display','none');
-      };
-
-      $('.menu-toggle', context).click(function () {
-        $('.menu-block-wrapper .menu').slideToggle(200);
-        $('.menu-block-wrapper .menu-toggle').toggleClass('show');
-      });
-    }
-  };
+    $('.menu-level-1 .menu-toggle').on('click', function () {
+      $('.menu-block-wrapper .menu').slideToggle(200);
+      $('.menu-block-wrapper .menu-toggle').toggleClass('show');
+    });
+  });
 
 })(jQuery);
