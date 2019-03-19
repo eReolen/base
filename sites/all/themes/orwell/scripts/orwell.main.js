@@ -150,7 +150,7 @@
   /**
    * Toggle show/hide more content on material abstract.
    */
-  $(function () {
+  $(document).ready(function() {
     $('.material__abstract').each(function () {
       var $minHeight = 140;
       if ($(this).height() > $minHeight) {
@@ -166,7 +166,7 @@
   /**
    * Toggle mobile menu.
    */
-  $(function () {
+  $(document).ready(function() {
     var phoneBreakPoint = 780;
     if ($(window).width() < phoneBreakPoint) {
       $('.menu-block-wrapper.menu-level-1 .menu').css('display','none');
