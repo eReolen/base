@@ -58,7 +58,7 @@ Handle translated roles https://www.drupal.org/node/1744274
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 
-docker and a makefile to easy the usage. The setup exposes access to
+docker and a makefile to ease the usage. The setup exposes access to
 http (nginx and varnish) and mysql.
 
 The service labels in the compose file is the ones that should be used
