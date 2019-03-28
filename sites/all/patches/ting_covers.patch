@@ -1,0 +1,12 @@
+diff --git a/profiles/ding2/modules/ting_covers/ting_covers.theme.inc b/profiles/ding2/modules/ting_covers/ting_covers.theme.inc
+index 93fdad86..33596690 100644
+--- a/profiles/ding2/modules/ting_covers/ting_covers.theme.inc
++++ b/profiles/ding2/modules/ting_covers/ting_covers.theme.inc
+@@ -42,6 +42,7 @@ function template_preprocess_ting_object_cover(&$variables) {
+                               'style_name' => $variables['image_style'],
+                               'path' => $path,
+                               'alt' => $alt,
++                              'original_path' => $path
+                             ));
+ 
+       // Avoid further javascript processing. Just load the image.
