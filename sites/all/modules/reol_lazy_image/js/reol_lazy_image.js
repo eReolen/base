@@ -5,7 +5,7 @@
 (function($) {
 
   // Obverser configuration.
-  let options = {
+  var options = {
     root: null,
     rootMargin: '0px'
   };
@@ -18,13 +18,10 @@
    *
    * @type {IntersectionObserver}
    */
-  let imageObserver = new IntersectionObserver(function imageHandler(entries, observer) {
+  var imageObserver = new IntersectionObserver(function imageHandler(entries, observer) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-
-        console.log('Load image');
-
-        let lazyImage = entry.target;
+        var lazyImage = entry.target;
         lazyImage.src = lazyImage.dataset.src;
         imageObserver.unobserve(lazyImage);
       }
