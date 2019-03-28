@@ -1,9 +1,8 @@
 <?php
 /**
  * @file
- *
+ * Main module that attach lazy loading to images.
  */
-
 
 /**
  * Implements hook_init().
@@ -29,9 +28,15 @@ function reol_lazy_image_image_effect_info() {
 }
 
 /**
+ * Image effect callback function.
+ *
+ * Resizes the image to 5px with the same aspect rations.
+ *
  * @param stdClass $image
+ *   The image style use the effect on.
  *
  * @return bool
+ *   TRUE if style can be applied else FALSE.
  */
 function reol_lazy_image_placholder_effect(stdClass $image) {
   $image->ops[] = '-resize 5x';
@@ -46,7 +51,8 @@ function reol_lazy_image_placholder_effect(stdClass $image) {
 function reol_lazy_image_image_default_styles() {
   $styles = [];
 
-  // Exported image style: ereol_cover_base.
+  // New style that can be used to generate the placeholders for cover images.
+  // It's base on the eReol_base_cover style.
   $styles['reol_lazy_image_cover_placeholder'] = [
     'label' => 'reol_lazy_cover_placeholder',
     'effects' => [
@@ -77,9 +83,11 @@ function reol_lazy_image_theme_registry_alter(&$theme_registry) {
   }
 }
 
-
 /**
  * Image theme function.
+ *
+ * Insert the "mini" image as source for images with style "ereol_cover_base"
+ * and the real image as data-src for lazy loading.
  */
 function theme_reol_base_image($variables) {
   $attributes = $variables['attributes'];
