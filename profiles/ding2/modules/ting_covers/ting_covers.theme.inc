@@ -42,6 +42,7 @@ function template_preprocess_ting_object_cover(&$variables) {
                               'style_name' => $variables['image_style'],
                               'path' => $path,
                               'alt' => $alt,
+                              'original_path' => $path
                             ));
 
       // Avoid further javascript processing. Just load the image.

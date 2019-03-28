@@ -1,0 +1,103 @@
+<?php
+/**
+ * @file
+ *
+ */
+
+
+/**
+ * Implements hook_init().
+ */
+function reol_lazy_image_init() {
+  drupal_add_js(drupal_get_path('module', 'reol_lazy_image') . '/js/reol_lazy_image.js');
+}
+
+/**
+ * Implements hook_image_effect_info().
+ */
+function reol_lazy_image_image_effect_info() {
+  $effects = [];
+
+  $effects['reol_lazy_image_placholder'] = [
+    'label' => t('Create placeholder image'),
+    'help' => t('Create blurred minimal placeholder image'),
+    'effect callback' => 'reol_lazy_image_placholder_effect',
+    'dimensions passthrough' => TRUE,
+  ];
+
+  return $effects;
+}
+
+/**
+ * @param stdClass $image
+ *
+ * @return bool
+ */
+function reol_lazy_image_placholder_effect(stdClass $image) {
+  $image->ops[] = '-resize 5x';
+  $image->ops[] = '-strip';
+
+  return TRUE;
+}
+
+/**
+ * Implements hook_image_default_styles().
+ */
+function reol_lazy_image_image_default_styles() {
+  $styles = [];
+
+  // Exported image style: ereol_cover_base.
+  $styles['reol_lazy_image_cover_placeholder'] = [
+    'label' => 'reol_lazy_cover_placeholder',
+    'effects' => [
+      1 => [
+        'name' => 'image_scale_and_crop',
+        'data' => [
+          'width' => 260,
+          'height' => 375,
+        ],
+        'weight' => 1,
+      ],
+      2 => [
+        'name' => 'reol_lazy_image_placholder',
+        'weight' => 2,
+      ]
+    ],
+  ];
+
+  return $styles;
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function reol_lazy_image_theme_registry_alter(&$theme_registry) {
+  if (isset($theme_registry['image'])) {
+    $theme_registry['image']['function'] = 'theme_reol_base_image';
+  }
+}
+
+
+/**
+ * Image theme function.
+ */
+function theme_reol_base_image($variables) {
+  $attributes = $variables['attributes'];
+
+  if (array_key_exists('style_name', $variables) && $variables['style_name'] == 'ereol_cover_base') {
+    $attributes['data-src'] = file_create_url($variables['path']);
+    $attributes['src'] = image_style_url('reol_lazy_image_cover_placeholder', $variables['original_path']);;
+    $attributes['class'] = 'js-lazy';
+  }
+  else {
+    $attributes['src'] = file_create_url($variables['path']);
+  }
+
+  foreach (array('width', 'height', 'alt', 'title') as $key) {
+    if (isset($variables[$key])) {
+      $attributes[$key] = $variables[$key];
+    }
+  }
+
+  return '<img' . drupal_attributes($attributes) . ' />';
+}
