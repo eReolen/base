@@ -46,7 +46,7 @@
           imageObserver.observe(image);
         }
         else {
-          // If the browser don't support observer pattern simple load all
+          // If the browser doesn't support observer pattern simply load all
           // images now.
           image.src = image.dataset.src;
         }
