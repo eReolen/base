@@ -91,8 +91,9 @@ function reol_lazy_load_images_theme_registry_alter(&$theme_registry) {
  */
 function theme_reol_base_image($variables) {
   $attributes = $variables['attributes'];
+  $styles = ['ereol_cover_base', 'breol_cover_base'];
 
-  if (array_key_exists('style_name', $variables) && $variables['style_name'] == 'ereol_cover_base') {
+  if (array_key_exists('style_name', $variables) && in_array($variables['style_name'], $styles)) {
     $attributes['data-src'] = file_create_url($variables['path']);
     $attributes['src'] = image_style_url('reol_lazy_load_images_cover_placeholder', $variables['original_path']);;
     $attributes['class'] = 'js-lazy';
