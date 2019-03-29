@@ -809,3 +809,10 @@ function reol_base_update_7164() {
 function reol_base_update_7165() {
   module_enable(array('reol_lazy_load_images'));
 }
+
+/**
+ * Remove advagg module.
+ */
+function reol_base_update_7166() {
+  ding2_remove_module('advagg');
+}
