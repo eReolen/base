@@ -54,10 +54,11 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Remove bpi settings from feature (ding_base-bpi-settings.patch)
 * Enable fulltext render static cache reset (sites/all/patches/ting_fulltext_cache_reset.patch)
 * Fix rotation origin of search spinner (sites/all/patches/ting_search_overlay.patch)
+* Allow lazy loading of covers (sites/all/patches/ting_covers.patch)
 
 # Docker
-This repositrory comes with an `docker-compose.yml` to run the stack in 
-docker and a makefile to easy the usage. The setup exposes access to
+This repository comes with an `docker-compose.yml` to run the stack in 
+docker and a makefile to ease the usage. The setup exposes access to
 http (nginx and varnish) and mysql.
 
 The service labels in the compose file is the ones that should be used
