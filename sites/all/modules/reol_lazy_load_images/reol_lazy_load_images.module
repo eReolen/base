@@ -7,20 +7,20 @@
 /**
  * Implements hook_init().
  */
-function reol_lazy_image_init() {
-  drupal_add_js(drupal_get_path('module', 'reol_lazy_image') . '/js/reol_lazy_image.js');
+function reol_lazy_load_images_init() {
+  drupal_add_js(drupal_get_path('module', 'reol_lazy_load_images') . '/js/reol_lazy_load_images.js');
 }
 
 /**
  * Implements hook_image_effect_info().
  */
-function reol_lazy_image_image_effect_info() {
+function reol_lazy_load_images_image_effect_info() {
   $effects = [];
 
-  $effects['reol_lazy_image_placholder'] = [
+  $effects['reol_lazy_load_images_placeholder'] = [
     'label' => t('Create placeholder image'),
     'help' => t('Create blurred minimal placeholder image'),
-    'effect callback' => 'reol_lazy_image_placholder_effect',
+    'effect callback' => 'reol_lazy_load_images_placeholder_effect',
     'dimensions passthrough' => TRUE,
   ];
 
@@ -38,7 +38,7 @@ function reol_lazy_image_image_effect_info() {
  * @return bool
  *   TRUE if style can be applied else FALSE.
  */
-function reol_lazy_image_placholder_effect(stdClass $image) {
+function reol_lazy_load_images_placeholder_effect(stdClass $image) {
   $image->ops[] = '-resize 5x';
   $image->ops[] = '-strip';
 
@@ -48,12 +48,12 @@ function reol_lazy_image_placholder_effect(stdClass $image) {
 /**
  * Implements hook_image_default_styles().
  */
-function reol_lazy_image_image_default_styles() {
+function reol_lazy_load_images_image_default_styles() {
   $styles = [];
 
   // New style that can be used to generate the placeholders for cover images.
   // It's base on the eReol_base_cover style.
-  $styles['reol_lazy_image_cover_placeholder'] = [
+  $styles['reol_lazy_load_images_cover_placeholder'] = [
     'label' => 'reol_lazy_cover_placeholder',
     'effects' => [
       1 => [
@@ -65,7 +65,7 @@ function reol_lazy_image_image_default_styles() {
         'weight' => 1,
       ],
       2 => [
-        'name' => 'reol_lazy_image_placholder',
+        'name' => 'reol_lazy_load_images_placeholder',
         'weight' => 2,
       ]
     ],
@@ -77,7 +77,7 @@ function reol_lazy_image_image_default_styles() {
 /**
  * Implements hook_theme_registry_alter().
  */
-function reol_lazy_image_theme_registry_alter(&$theme_registry) {
+function reol_lazy_load_images_theme_registry_alter(&$theme_registry) {
   if (isset($theme_registry['image'])) {
     $theme_registry['image']['function'] = 'theme_reol_base_image';
   }
@@ -94,7 +94,7 @@ function theme_reol_base_image($variables) {
 
   if (array_key_exists('style_name', $variables) && $variables['style_name'] == 'ereol_cover_base') {
     $attributes['data-src'] = file_create_url($variables['path']);
-    $attributes['src'] = image_style_url('reol_lazy_image_cover_placeholder', $variables['original_path']);;
+    $attributes['src'] = image_style_url('reol_lazy_load_images_cover_placeholder', $variables['original_path']);;
     $attributes['class'] = 'js-lazy';
   }
   else {

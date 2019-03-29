@@ -1,4 +1,4 @@
-name = Reol lazy image
+name = Reol lazy load images
 description = Added support for lazy loading images
 core = 7.x
 package = eReolen shared

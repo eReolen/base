@@ -807,5 +807,5 @@ function reol_base_update_7164() {
  * Enable lazy image loading.
  */
 function reol_base_update_7165() {
-  module_enable(array('reol_lazy_image'));
+  module_enable(array('reol_lazy_load_images'));
 }
