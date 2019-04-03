@@ -69,6 +69,10 @@ services:
     ports:
       - "1025"
       - "8025"
+  node:
+    image: node:10
+    volumes:
+      - .:/app:delegated
 
   reverse-proxy:
     image: traefik
