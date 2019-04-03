@@ -163,22 +163,4 @@
     });
   });
 
-  /**
-   * Toggle mobile menu.
-   */
-  Drupal.behaviors.burgerMenu = {
-    attach : function (context, settings) {
-
-      var phoneBreakPoint = 780;
-      if ($(window).width() < phoneBreakPoint) {
-        $('.menu-block-wrapper .menu').css('display','none');
-      };
-
-      $('.menu-toggle', context).click(function () {
-        $('.menu-block-wrapper .menu').slideToggle(200);
-        $('.menu-block-wrapper .menu-toggle').toggleClass('show');
-      });
-    }
-  };
-
 })(jQuery);
