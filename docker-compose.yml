@@ -13,7 +13,6 @@ services:
 
   phpfpm:
     image: itkdev/php7.0-fpm:latest
-    restart: always
     environment:
       - PHP_XDEBUG=${PHP_XDEBUG:-0}
       - PHP_XDEBUG_REMOTE_AUTOSTART=${PHP_XDEBUG_REMOTE_AUTOSTART:-0}
@@ -65,7 +64,6 @@ services:
 
   mailhog:
     image: mailhog/mailhog
-    restart: always
     ports:
       - "1025"
       - "8025"
