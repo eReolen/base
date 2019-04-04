@@ -150,7 +150,7 @@
   /**
    * Toggle show/hide more content on material abstract.
    */
-  $(document).ready(function() {
+  $(function () {
     $('.material__abstract').each(function () {
       var $minHeight = 140;
       if ($(this).height() > $minHeight) {
@@ -160,21 +160,6 @@
 
     $('.material__abstract.showmore').on('click', function() {
       $(this).toggleClass('visible');
-    });
-  });
-
-  /**
-   * Toggle mobile menu.
-   */
-  $(document).ready(function() {
-    var phoneBreakPoint = 780;
-    if ($(window).width() < phoneBreakPoint) {
-      $('.menu-block-wrapper.menu-level-1 .menu').css('display','none');
-    };
-
-    $('.menu-level-1 .menu-toggle').on('click', function () {
-      $('.menu-block-wrapper .menu').slideToggle(200);
-      $('.menu-block-wrapper .menu-toggle').toggleClass('show');
     });
   });
 

@@ -816,3 +816,13 @@ function reol_base_update_7165() {
 function reol_base_update_7166() {
   ding2_remove_module('advagg');
 }
+
+/**
+ * Set imagemagick configuration.
+ */
+function reol_base_update_7167() {
+  variable_set('imagemagick_convert', 'convert');
+  variable_set('imagemagick_debug', 0);
+  variable_set('imagemagick_gm', 0);
+  variable_set('imagemagick_quality', '75');
+}
