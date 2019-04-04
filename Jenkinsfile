@@ -28,101 +28,125 @@ pipeline {
                 }
             }
         }
-        stage('Deployment develop') {
-            when {
-                branch 'develop'
-            }
-            steps {
-                // Deploy eReolen.
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git clean -d --force'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git checkout ${BRANCH_NAME}'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git fetch'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git clean -d --force'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git checkout ${BRANCH_NAME}'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git fetch'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush --yes updatedb'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush --yes features-revert-all'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush cache-clear all'"
-                // Deploy eReolen Go.
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git clean -d --force'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git fetch'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush --yes updatedb'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush --yes features-revert-all'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush cache-clear all'"
-            }
-        }
-        stage('Deployment staging') {
-            when {
-                branch 'release'
-            }
-            steps {
-                // Deploy eReolen.
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; git clean -d --force'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; git checkout ${BRANCH_NAME}'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; git fetch'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs/sites/all/modules/ereol; git clean -d --force'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs/sites/all/modules/ereol; git checkout ${BRANCH_NAME}'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs/sites/all/modules/ereol; git fetch'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs/sites/all/modules/ereol; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; drush --yes updatedb'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; drush --yes features-revert-all'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; drush cache-clear all'"
-                // Deploy eReolen Go.
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; git clean -d --force'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; git fetch'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; drush --yes updatedb'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; drush --yes features-revert-all'"
-                sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; drush cache-clear all'"
-            }
-        }
-        stage('Deployment production') {
-            when {
-                branch 'master'
-                tag '*'
-            }
-            steps {
-                timeout(time: 30, unit: 'MINUTES') {
-                    input 'Should the site be deployed?'
+        stage('Deployment') {
+            parallel {
+                stage('eReolen - develop') {
+                    when {
+                        branch 'develop'
+                    }
+                    steps {
+                        // Deploy eReolen.
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git clean -d --force'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git fetch'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git clean -d --force'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git checkout ${BRANCH_NAME}'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git fetch'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs/sites/all/modules/ereol; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush --yes updatedb'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush --yes features-revert-all'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolen_dk/htdocs; drush cache-clear all'"
+                    }
                 }
-                // Deploy eReolen.
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git clean -d --force'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git checkout ${BRANCH_NAME}'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git fetch'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git clean -d --force'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git checkout ${BRANCH_NAME}'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git fetch'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush --yes updatedb'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush --yes features-revert-all'"
-                sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush cache-clear all'"
-                // Deploy eReolen Go.
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git clean -d --force'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git fetch'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes updatedb'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes features-revert-all'"
-                sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush cache-clear all'"
+                stage('eReolenGo - develop') {
+                    when {
+                        branch 'develop'
+                    }
+                    steps {
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git clean -d --force'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git fetch'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush --yes updatedb'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush --yes features-revert-all'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/dev_ereolengo_dk/htdocs; drush cache-clear all'"
+                    }
+                }
+                stage('eReolen - staging') {
+                    when {
+                        branch 'release'
+                    }
+                    steps {
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; git clean -d --force'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; git fetch'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs/sites/all/modules/ereol; git clean -d --force'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs/sites/all/modules/ereol; git checkout ${BRANCH_NAME}'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs/sites/all/modules/ereol; git fetch'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs/sites/all/modules/ereol; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; drush --yes updatedb'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; drush --yes features-revert-all'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolen_dk/htdocs; drush cache-clear all'"
+                    }
+                }
+                stage('eReolenGo - staging') {
+                    when {
+                        branch 'release'
+                    }
+                    steps {
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; git clean -d --force'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; git fetch'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; drush --yes updatedb'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; drush --yes features-revert-all'"
+                        sh "ansible devereolen -m shell -a 'cd /home/deploy/www/stg_ereolengo_dk/htdocs; drush cache-clear all'"
+                    }
+                }
+                stage('eReolen - production') {
+                    when {
+                        branch 'master'
+                        tag '*'
+                    }
+                    steps {
+                        timeout(time: 30, unit: 'MINUTES') {
+                            input 'Should the site be deployed?'
+                        }
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git clean -d --force'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git fetch'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git clean -d --force'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git checkout ${BRANCH_NAME}'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git fetch'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs/sites/all/modules/ereol; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush --yes updatedb'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush --yes features-revert-all'"
+                        sh "ansible ereolen -m shell -a 'cd /home/deploy/www/ereolen_dk/htdocs; drush cache-clear all'"
+                    }
+                }
+                stage('eReolenGo - production') {
+                    when {
+                        branch 'master'
+                        tag '*'
+                    }
+                    steps {
+                        timeout(time: 30, unit: 'MINUTES') {
+                            input 'Should the site be deployed?'
+                        }
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git clean -d --force'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git fetch'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes updatedb'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes features-revert-all'"
+                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush cache-clear all'"
+                    }
+                }
             }
         }
     }
