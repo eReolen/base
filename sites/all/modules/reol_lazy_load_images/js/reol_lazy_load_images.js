@@ -18,15 +18,17 @@
    *
    * @type {IntersectionObserver}
    */
-  var imageObserver = new IntersectionObserver(function imageHandler(entries, observer) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var lazyImage = entry.target;
-        lazyImage.src = lazyImage.dataset.src;
-        imageObserver.unobserve(lazyImage);
-      }
-    });
-  }, options);
+  if ('IntersectionObserver' in window) {
+    var imageObserver = new IntersectionObserver(function imageHandler(entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var lazyImage = entry.target;
+          lazyImage.src = lazyImage.dataset.src;
+          imageObserver.unobserve(lazyImage);
+        }
+      });
+    }, options);
+  }
 
   /**
    * Attached observer to images.
