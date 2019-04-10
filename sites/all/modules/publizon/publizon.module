@@ -584,3 +584,24 @@ function publizon_client_library_load($library_id) {
 
   return $libraries[$library_id];
 }
+
+/**
+ * Implements hook_form_alter().
+ */
+function publizon_form_alter(&$form, &$form_state, $form_id) {
+  // Set default value on support_id webform field.
+  if (isset($form['submitted']['support_id'])) {
+    if (user_is_logged_in()) {
+      // Try to get value of "friendly_id" field on user profile
+      // (cf. publizon_user_authenticate_finalize).
+      global $user;
+      $profile = profile2_load_by_user($user->uid, 'provider_publizon');
+      if (NULL !== $profile) {
+        $wrapper = entity_metadata_wrapper('profile2', $profile);
+        if (isset($wrapper->field_friendly_id)) {
+          $form['submitted']['support_id']['#default_value'] = $wrapper->field_friendly_id->value();
+        }
+      }
+    }
+  }
+}

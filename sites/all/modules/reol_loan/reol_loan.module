@@ -265,3 +265,43 @@ function reol_loan_delete_reservations_ajax($user, $local_ids) {
   }
   ajax_deliver($response);
 }
+
+/**
+ * Implements hook_form_FORMID_alter().
+ *
+ * Add ereol specific admin configuration to user settings form.
+ */
+function reol_loan_form_user_admin_settings_alter(&$form, &$form_state, $form_id) {
+  $form['ereol_user'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Ereol user settings'),
+    '#weight' => 0,
+    '#tree' => FALSE,
+  );
+  $loan_text = variable_get('ereol_loan_text');
+  $form['ereol_user']['ereol_loan_text'] = array(
+    '#type' => 'text_format',
+    '#title' => t('Loan text'),
+    '#format' => 'ding_wysiwyg',
+    '#default_value' => isset($loan_text['value']) ? $loan_text['value'] : '',
+    '#description' => t('Text to display in the loan section of the user page.')
+  );
+}
+
+/**
+ * Implements hook_panels_pane_content_alter().
+ *
+ * Change the content of the loan panel pane on user pages.
+ */
+function reol_loan_panels_pane_content_alter($content, $pane, $args, $contexts) {
+  if ($pane->type =='loans') {
+    if ($pane->subtype == 'loans') {
+      if (!empty($content->content)) {
+        if (isset(variable_get('ereol_loan_text')['value'])) {
+          // Add text to top of loan block.
+          $content->content = '<div>' . variable_get('ereol_loan_text')['value'] . '</div>' . $content->content;
+        }
+      }
+    }
+  }
+}

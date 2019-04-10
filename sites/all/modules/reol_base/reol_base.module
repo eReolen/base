@@ -556,68 +556,6 @@ function reol_base_get_isbn($local_id) {
  */
 function reol_base_theme_registry_alter(&$theme_registry) {
   $theme_registry['material_item']['template'] = drupal_get_path('module', 'reol_base') . '/templates/material_item';
-
-  if (isset($theme_registry['image'])) {
-    $theme_registry['image']['function'] = 'theme_reol_base_image';
-  }
-}
-
-/**
- * Image theme function.
- *
- * Used to do lazy loading of cover images on pages with many carousels to
- * minimize the number of requests to the server.
- */
-function theme_reol_base_image($variables) {
-  libraries_load('lazysizes');
-  drupal_add_js(drupal_get_path('module', 'reol_base') . '/js/reol_base.lazy.js');
-
-  $attributes = $variables['attributes'];
-  if (array_key_exists('style_name', $variables) && $variables['style_name'] == 'ereol_cover_base') {
-    $attributes['data-src'] = file_create_url($variables['path']);
-    $attributes['src'] = '/' . drupal_get_path('module', 'ting_search_carousel') . '/images/placeholder.png';
-    $attributes['class'] = 'js-lazy';
-  }
-  else {
-    $attributes['src'] = file_create_url($variables['path']);
-  }
-
-  foreach (array('width', 'height', 'alt', 'title') as $key) {
-    if (isset($variables[$key])) {
-      $attributes[$key] = $variables[$key];
-    }
-  }
-
-  return '<img' . drupal_attributes($attributes) . ' />';
-}
-
-/**
- * Implements hook_libraries_info().
- */
-function reol_base_libraries_info() {
-  $libraries = array();
-
-  $libraries['lazysizes'] = array(
-    'name' => 'Image lazy loading',
-    'vendor url' => 'https://github.com/aFarkas/lazysizes',
-    'download url' => 'https://github.com/aFarkas/lazysizes/blob/gh-pages/lazysizes.min.js',
-    'version arguments' => array(
-      'file' => 'lazysizes.min.js',
-      'pattern' => '@v([0-9a-zA-Z\.-]+)@',
-    ),
-    'files' => array(
-      'js' => array('lazysizes.min.js'),
-    ),
-    'variants' => array(
-      'non-minified' => array(
-        'files' => array(
-          'js' => array('lazysizes.min.js'),
-        ),
-      ),
-    ),
-  );
-
-  return $libraries;
 }
 
 /**
@@ -788,6 +726,10 @@ function _reol_base_get_types() {
       'online sheet music' => array(
         'base' => 'ebook',
         'ext_name' => 'e-node',
+      ),
+      'online audiobook' => array(
+        'base' => 'audiobook',
+        'ext_name' => 'lyd (net)',
       ),
     );
 

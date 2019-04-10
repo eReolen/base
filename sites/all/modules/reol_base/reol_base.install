@@ -794,3 +794,35 @@ function reol_base_update_7162() {
 function reol_base_update_7163() {
   variable_set('media_wysiwyg_default_render', 'field_attach');
 }
+
+/**
+ * Enable image-magick support
+ */
+function reol_base_update_7164() {
+  module_enable(array('imagemagick'));
+  variable_set('image_toolkit', 'imagemagick');
+}
+
+/**
+ * Enable lazy image loading.
+ */
+function reol_base_update_7165() {
+  module_enable(array('reol_lazy_load_images'));
+}
+
+/**
+ * Remove advagg module.
+ */
+function reol_base_update_7166() {
+  ding2_remove_module('advagg');
+}
+
+/**
+ * Set imagemagick configuration.
+ */
+function reol_base_update_7167() {
+  variable_set('imagemagick_convert', 'convert');
+  variable_set('imagemagick_debug', 0);
+  variable_set('imagemagick_gm', 0);
+  variable_set('imagemagick_quality', '75');
+}
