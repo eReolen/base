@@ -106,7 +106,6 @@ pipeline {
                 stage('eReolen - production') {
                     when {
                         branch 'master'
-                        tag '*'
                     }
                     steps {
                         timeout(time: 30, unit: 'MINUTES') {
@@ -128,7 +127,6 @@ pipeline {
                 stage('eReolenGo - production') {
                     when {
                         branch 'master'
-                        tag '*'
                     }
                     steps {
                         timeout(time: 30, unit: 'MINUTES') {
