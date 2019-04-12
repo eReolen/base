@@ -144,29 +144,22 @@
       }
     }
 
-    // Menu-item: "English titles".
-    &:nth-child(3) {
-      &:before {
-        @include icon('flag-en');
-      }
-    }
-
     // Menu-item: "Login".
-    &:nth-child(4) {
+    &:nth-child(3) {
       &:before {
         @include icon('profile');
       }
     }
 
     // Menu-item: "Hjælp".
-    &:nth-child(5) {
+    &:nth-child(4) {
       &:before {
         @include icon('help');
       }
     }
 
     // Menu-item: "Søgning".
-    &:nth-child(6) {
+    &:nth-child(5) {
       &:before {
         @include icon('search');
       }
