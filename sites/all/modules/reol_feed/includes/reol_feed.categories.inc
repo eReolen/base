@@ -27,7 +27,7 @@ function reol_feed_feeds_categories() {
           foreach ($category as $search) {
             if ($search instanceof ReolCategory) {
               $query = $searches->addChild('query');
-              $query->{0} = $search->query;
+              $query[0] = $search->query;
               $query['title'] = $search->title;
             }
           }
