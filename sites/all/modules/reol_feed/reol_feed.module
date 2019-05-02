@@ -108,6 +108,9 @@ function reol_feed_ensure_feeds() {
       }
     }
 
+    // Never update feeds.
+    $update = FALSE;
+
     // If feed needs to be updated, do it.
     if ($update) {
       // If file is specified, we require it.
