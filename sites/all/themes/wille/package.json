@@ -7,13 +7,13 @@
     "postinstall": "find node_modules/ -name '*.info' -type f -delete"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-jshint": "^2.0.4",
-    "gulp-notify": "^3.0.0",
-    "gulp-sass": "^4.0.2",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
-    "gulp-sourcemaps": "^2.4.1",
-    "jshint": "^2.9.4",
+    "gulp-jshint": "^2.1.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "jshint": "^2.10.2",
     "jshint-stylish": "^2.2.1",
     "node-bourbon": "^4.2.8",
     "node-neat": "^1.7.2"
