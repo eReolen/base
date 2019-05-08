@@ -107,6 +107,8 @@ function reol_review_theme(&$theme, $plugin) {
 function reol_review_get_random_reviews($type = NULL, $count = 1) {
   $query = db_select('reol_review_reviews', 'r')
     ->fields('r')
+    // Get only reviews that actually exist (when last checked).
+    ->condition('http_code', '200')
     ->condition('processed', 0, '<>')
     ->condition('ding_entity_id', '', '<>')
     ->orderRandom();
@@ -259,4 +261,48 @@ function reol_review_process_queue($rrid) {
     ))
     ->condition('rrid', $review->rrid)
     ->execute();
+}
+
+/**
+ * Check status of reviews.
+ *
+ * @param int $count
+ *   Number of reviews to process.
+ * @param string|null $updated_before
+ *   Process reviews last updated before this time.
+ */
+function reol_review_check($count = 100, $updated_before = NULL) {
+  $condition = db_or();
+  $condition->isNull('http_code');
+  if (NULL !== $updated_before) {
+    $time = strtotime($updated_before);
+    if (FALSE !== $time) {
+      $condition->condition('http_code_updated', $time, '<');
+    }
+  }
+
+  $query = db_select('reol_review_reviews', 'r')
+    ->fields('r', array('rrid', 'link'))
+    ->condition($condition)
+    ->range(0, $count);
+  $rows = $query->execute()->fetchAll();
+
+  $count = 0;
+  foreach ($rows as $row) {
+    $count++;
+
+    $url = $row->link;
+    $result = drupal_http_request($url, ['method' => 'HEAD']);
+    $code = $result->code;
+
+    echo sprintf('%04d/%04d % 8s %s %s', $count, count($rows), '#' . $row->rrid, $code, $url), PHP_EOL;
+
+    db_update('reol_review_reviews')
+      ->fields([
+        'http_code' => $code,
+        'http_code_updated' => REQUEST_TIME,
+      ])
+      ->condition('link', $row->link)
+      ->execute();
+  }
 }

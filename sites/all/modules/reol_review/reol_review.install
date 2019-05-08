@@ -144,6 +144,31 @@ function _reol_review_schema_2() {
 }
 
 /**
+ * Fourth schema version.
+ */
+function _reol_review_schema_3() {
+  $schema = _reol_review_schema_2();
+
+  $schema['reol_review_reviews']['fields']['http_code'] = array(
+    'description' => 'Http code from url (link).',
+    'type' => 'int',
+    'unsigned' => FALSE,
+    'not null' => FALSE,
+    'default' => NULL,
+  );
+
+  $schema['reol_review_reviews']['fields']['http_code_updated'] = array(
+    'description' => 'Http code updated time.',
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => FALSE,
+    'default' => NULL,
+  );
+
+  return $schema;
+}
+
+/**
  * Create the database tables.
  */
 function reol_review_update_7101() {
@@ -182,4 +207,13 @@ function reol_review_update_7103() {
   $schema = _reol_review_schema_2();
   db_add_field('reol_review_reviews', 'title', $schema['reol_review_reviews']['fields']['title']);
   db_add_field('reol_review_reviews', 'author', $schema['reol_review_reviews']['fields']['author']);
+}
+
+/**
+ * Add http code to reviews.
+ */
+function reol_review_update_7104() {
+  $schema = _reol_review_schema_3();
+  db_add_field('reol_review_reviews', 'http_code', $schema['reol_review_reviews']['fields']['http_code']);
+  db_add_field('reol_review_reviews', 'http_code_updated', $schema['reol_review_reviews']['fields']['http_code_updated']);
 }
