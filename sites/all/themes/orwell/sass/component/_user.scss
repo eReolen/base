@@ -60,3 +60,33 @@
     top: 19px;
   }
 }
+
+// Hide buttons on user page (/user/me/view)
+.page-user {
+  // Bookmark ("Huskeliste") buttons.
+  .pane-loans a[id^="bookmark-"],
+  .pane-reservations a[id^="bookmark-"],
+  // "Delete all reservations" button.
+  .pane-reservations .actions-container .delete-all,
+  // General actions under "My reservations" (not yet available).
+  #ding-reservation-reservations-notready-form .actions-container,
+  // Checkboxes above items.
+  .pane-reservations .item-checkbox {
+    display: none;
+  }
+
+  // "Delete selected reservations" button.
+  .pane-reservations .delete-reservations.action-button {
+    [type="submit"] {
+      @include button();
+      width: auto;
+      border: none;
+    }
+  }
+
+  // "Select all reservations" checkbox.
+  .select-all.ready-for-pickup {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}

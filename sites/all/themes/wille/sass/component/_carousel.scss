@@ -225,7 +225,7 @@ $carousel-outer-padding: 0 30px;
     font-family: $font-regular;
 
     @include media($tablet-l) {
-      font-size: em(20, $base-font-size);
+      font-size: 1.429em;
     }
   }
 }

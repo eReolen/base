@@ -138,3 +138,16 @@ docker-compose -p ereolen port mariadb 3306
 ```sh
 docker-compose run --rm drush [command]
 ```
+
+
+# Building themes
+
+```sh
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && npm install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && node_modules/.bin/gulp sass"
+```
+
+```sh
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && npm install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && node_modules/.bin/gulp sass"
+```
