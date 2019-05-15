@@ -16,7 +16,7 @@ function reol_review_install() {
  * Implements hook_schema().
  */
 function reol_review_schema() {
-  return _reol_review_schema_1();
+  return _reol_review_schema_3();
 }
 
 /**
