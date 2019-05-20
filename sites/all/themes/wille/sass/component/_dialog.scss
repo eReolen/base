@@ -204,3 +204,43 @@
     position: fixed !important;;
   }
 }
+
+// delete reservations dialog
+
+.page-user {
+  .ui-dialog {
+    form {
+      @include media($phone) {
+        text-align: center;
+      }
+    }
+
+    .ui-dialog-titlebar {
+      font-size: 2.571em;
+      @include media($phone) {
+        margin: 1em;
+        font-size: 2em;
+      }
+      .ui-dialog-title {
+        @include media($phone) {
+          padding-top: 2em;
+        }
+      }
+    }
+    // "Buttons"
+    a#edit-delete {
+      @include button($red, false);
+      margin-top: 1em;
+    }
+    a#edit-cancel {
+      @include button($white, false);
+      margin-left: 1em;
+      color: $black-light;
+      border: 1px solid $white-dark;
+      @include media($phone) {
+        margin-top: 1em;
+        margin-left: 0;
+      }
+    }
+  }
+}
