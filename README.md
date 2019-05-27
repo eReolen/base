@@ -11,7 +11,7 @@ which is tracked by patches in _sites/all/patches_.
 ### Drupal core patches
 
 * http://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch
-* http://drupal.org/files/ssl-socket-transports-1879970-13.patch
+* ~~http://drupal.org/files/ssl-socket-transports-1879970-13.patch~~
 * http://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch
 * http://drupal.org/files/issues/translate_role_names-2205581-1.patch
 
