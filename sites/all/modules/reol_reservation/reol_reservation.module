@@ -43,9 +43,6 @@ function reol_reservation_form_ding_reservation_reservations_form_alter(&$form, 
   unset($form['title']);
 
   foreach ($form['reservations'] as &$reservation_element) {
-    // Hide selection checkbox. We don't use the multiple select feature.
-    $reservation_element['#disabled'] = TRUE;
-
     $reservation = $reservation_element['#reservation'];
 
     $reservation_element['#information']['created']['data'] = format_date(strtotime(check_plain($reservation->created)), 'reol_base_material_lists_date');

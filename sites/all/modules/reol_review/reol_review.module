@@ -107,6 +107,8 @@ function reol_review_theme(&$theme, $plugin) {
 function reol_review_get_random_reviews($type = NULL, $count = 1) {
   $query = db_select('reol_review_reviews', 'r')
     ->fields('r')
+    // Get only reviews that actually exist (when last checked).
+    ->condition('http_code', '200')
     ->condition('processed', 0, '<>')
     ->condition('ding_entity_id', '', '<>')
     ->orderRandom();
