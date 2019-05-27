@@ -10,9 +10,9 @@
 function bpi_features_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-article-field_bpi_workflow'
-  $field_instances['node-article-field_bpi_workflow'] = array(
-    'bundle' => 'article',
+  // Exported field_instance: 'node-ding_news-field_bpi_workflow'
+  $field_instances['node-ding_news-field_bpi_workflow'] = array(
+    'bundle' => 'ding_news',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -53,7 +53,7 @@ function bpi_features_field_default_field_instances() {
       'active' => 1,
       'module' => 'workflowfield',
       'settings' => array(
-        'comment' => 1,
+        'comment' => 0,
         'name_as_title' => 1,
       ),
       'type' => 'workflow_default',
