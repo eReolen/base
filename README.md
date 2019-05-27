@@ -54,6 +54,7 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Enable fulltext render static cache reset (sites/all/patches/ting_fulltext_cache_reset.patch)
 * Fix rotation origin of search spinner (sites/all/patches/ting_search_overlay.patch)
 * Allow lazy loading of covers (sites/all/patches/ting_covers.patch)
+* Remove campaign plus pane in ding_content (ding_content.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 

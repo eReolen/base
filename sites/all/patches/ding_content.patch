@@ -1,0 +1,68 @@
+diff --git a/README.md b/README.md
+index 6856c12a..a00ceece 100644
+--- a/README.md
++++ b/README.md
+@@ -54,6 +54,7 @@ Handle translated roles https://www.drupal.org/node/1744274
+ * Enable fulltext render static cache reset (sites/all/patches/ting_fulltext_cache_reset.patch)
+ * Fix rotation origin of search spinner (sites/all/patches/ting_search_overlay.patch)
+ * Allow lazy loading of covers (sites/all/patches/ting_covers.patch)
++* Remove campaign plus pane in ding_content (ding_content.patch)
+ 
+ # Docker
+ This repository comes with an `docker-compose.yml` to run the stack in 
+diff --git a/profiles/ding2/modules/ding_content/ding_content.info b/profiles/ding2/modules/ding_content/ding_content.info
+index 62959f67..6ae0223c 100644
+--- a/profiles/ding2/modules/ding_content/ding_content.info
++++ b/profiles/ding2/modules/ding_content/ding_content.info
+@@ -8,7 +8,6 @@ dependencies[] = comment
+ dependencies[] = ctools
+ dependencies[] = ctools_custom_content
+ dependencies[] = ding_page
+-dependencies[] = ding_serendipity_taxonomy_term
+ dependencies[] = entity
+ dependencies[] = features
+ dependencies[] = file_entity
+diff --git a/profiles/ding2/modules/ding_content/ding_content.pages_default.inc b/profiles/ding2/modules/ding_content/ding_content.pages_default.inc
+index e3554e69..c4bf8b75 100644
+--- a/profiles/ding2/modules/ding_content/ding_content.pages_default.inc
++++ b/profiles/ding2/modules/ding_content/ding_content.pages_default.inc
+@@ -322,39 +322,6 @@ function ding_content_default_page_manager_handlers() {
+     $pane->uuid = '2cce61b7-483f-44da-b603-745b6a13ab0b';
+     $display->content['new-2cce61b7-483f-44da-b603-745b6a13ab0b'] = $pane;
+     $display->panels['attachment_1_1'][1] = 'new-2cce61b7-483f-44da-b603-745b6a13ab0b';
+-    $pane = new stdClass();
+-    $pane->pid = 'new-79fb4e41-549a-44d4-bc27-dc72474362b2';
+-    $pane->panel = 'attachment_1_1';
+-    $pane->type = 'ding_campaign_plus';
+-    $pane->subtype = 'ding_campaign_plus';
+-    $pane->shown = TRUE;
+-    $pane->access = array();
+-    $pane->configuration = array(
+-      'style' => 'ribbon',
+-      'context' => array(
+-        0 => 'empty',
+-        1 => 'empty',
+-        2 => 'argument_string_1',
+-        3 => 'argument_term_1',
+-      ),
+-      'override_title' => 0,
+-      'override_title_text' => '',
+-      'override_title_heading' => 'h2',
+-    );
+-    $pane->cache = array(
+-      'method' => '0',
+-      'settings' => array(),
+-    );
+-    $pane->style = array(
+-      'settings' => NULL,
+-    );
+-    $pane->css = array();
+-    $pane->extras = array();
+-    $pane->position = 2;
+-    $pane->locks = array();
+-    $pane->uuid = '79fb4e41-549a-44d4-bc27-dc72474362b2';
+-    $display->content['new-79fb4e41-549a-44d4-bc27-dc72474362b2'] = $pane;
+-    $display->panels['attachment_1_1'][2] = 'new-79fb4e41-549a-44d4-bc27-dc72474362b2';
+   $display->hide_title = PANELS_TITLE_FIXED;
+   $display->title_pane = '0';
+   $handler->conf['display'] = $display;
