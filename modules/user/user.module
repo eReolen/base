@@ -2939,7 +2939,19 @@ function user_roles($membersonly = FALSE, $permission = NULL) {
 
   $roles = array();
   foreach ($result as $role) {
-    $roles[$role->rid] = $role->name;
+    switch ($role->rid) {
+      // We only translate the built in role names
+      case DRUPAL_ANONYMOUS_RID:
+        if (!$membersonly) {
+          $roles[$role->rid] = t($role->name);
+        }
+        break;
+      case DRUPAL_AUTHENTICATED_RID:
+        $roles[$role->rid] = t($role->name);
+        break;
+      default:
+        $roles[$role->rid] = $role->name;
+    }
   }
 
   return $roles;
