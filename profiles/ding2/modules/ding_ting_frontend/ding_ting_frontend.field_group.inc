@@ -243,9 +243,7 @@ function ding_ting_frontend_field_group_info() {
   $field_group->data = array(
     'label' => 'Rating',
     'weight' => '78',
-    'children' => array(
-      0 => 'ding_entity_rating_action',
-    ),
+    'children' => array(),
     'format_type' => 'div',
     'format_settings' => array(
       'label' => 'Rating',
@@ -275,9 +273,7 @@ function ding_ting_frontend_field_group_info() {
   $field_group->data = array(
     'label' => 'Rating',
     'weight' => '23',
-    'children' => array(
-      0 => 'ding_entity_rating_action',
-    ),
+    'children' => array(),
     'format_type' => 'div',
     'format_settings' => array(
       'label' => 'Rating',
@@ -307,9 +303,7 @@ function ding_ting_frontend_field_group_info() {
   $field_group->data = array(
     'label' => 'Rating',
     'weight' => '45',
-    'children' => array(
-      0 => 'ding_entity_rating_action',
-    ),
+    'children' => array(),
     'format_type' => 'div',
     'format_settings' => array(
       'label' => 'Rating',
