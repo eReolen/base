@@ -1089,7 +1089,7 @@ function reol_base_entity_ajax_form($popup_id, callable $callback, $entity) {
       $html .= reol_base_get_modal_close_button(t('OK'), $popup_id);
       $commands[] = ajax_command_ding_popup($popup_id, t('Error'), $html, array('refresh' => TRUE));
     }
-    catch (DingProviderUserException $exception) {
+    catch (DingProviderEnduserException $exception) {
       // Some error occurred, show it.
       $commands[] = ajax_command_ding_popup($popup_id, t('Error'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
     }
