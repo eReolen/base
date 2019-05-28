@@ -16,7 +16,7 @@
     $('.action-buttons input[type=submit]').prop('disabled', 'disabled');
 
     // Handle select all checkboxes.
-    var sub_select_all = $('.select-all input[type=checkbox]').click(function() {
+    var sub_select_all = $('.select-all input[type=checkbox]').change(function() {
       var checkboxes = $('input[type=checkbox]', $(this).closest('.select-all').nextUntil('.select-all'));
       if ($(this).prop('checked')) {
         // Only checkboxes that are enabled.
@@ -39,7 +39,7 @@
     var select_all = $('.form-item-select-all input[type=checkbox]').change(function () {
       sub_select_all
         .prop('checked', $(this).prop('checked'))
-        .click()
+        .change()
         // Make sure the select all is checked or unchecked even after events.
         .prop('checked', $(this).prop('checked'));
     });
@@ -76,7 +76,7 @@
       $.merge(checkboxes, $('input[type=checkbox]', item)).not(':disabled');
 
       // Find all checked checkboxes found above and count theme.
-      var checked = checkboxes.find(':checked').size();
+      var checked = checkboxes.find(':checked').length;
 
       // Change the select all based on the count found above.
       item.prevAll('.select-all').find('input[type=checkbox]:not(:disabled)').prop('checked', checked === checkboxes.length);
