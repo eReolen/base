@@ -8,19 +8,19 @@ class TingMarcResult {
   /**
    * Raw data from webservice.
    */
-  private $result;
+  private $object;
 
   private $data = array();
 
   /**
    * Object constructor.
    *
-   * @param object $result
-   *   JSON decoded result from webservice.
+   * @param object $object
+   *   JSON decoded object from webservice.
    */
-  public function __construct($result) {
+  public function __construct($object) {
     $this->_position = 0;
-    $this->result = $result;
+    $this->object = $object;
     $this->process();
   }
 
@@ -28,13 +28,7 @@ class TingMarcResult {
    * Build items from raw data (json).
    */
   protected function process() {
-    // Check for errors.
-    if (!empty($this->result->searchResponse->error)) {
-      throw new TingMarcException($this->result->searchResponse->error);
-    }
-
-    $object = $this->result->searchResponse->result->searchResult[0]->collection->object[0];
-    $records = $object->collection->record;
+    $records = $this->object->collection->record;
 
     // If we have multiple records we need to figure out which one to use.
     if (is_array($records)) {
@@ -72,15 +66,11 @@ class TingMarcResult {
       }
 
       if (is_object($subfields)) {
-        $code = $subfields->{'@code'}->{'$'};
-        $value = $subfields->{'$'};
-        $this->setData($tag, $code, $value, $index);
+        $this->setData($tag, $subfields, $index);
       }
       elseif (is_array($subfields)) {
         foreach ($subfields as $subfield) {
-          $code = $subfield->{'@code'}->{'$'};
-          $value = $subfield->{'$'};
-          $this->setData($tag, $code, $value, $index);
+          $this->setData($tag, $subfield, $index);
         }
       }
       $index++;
@@ -117,18 +107,25 @@ class TingMarcResult {
   }
 
   /**
-   * Store values into internal storage.
+   * Store subfield values into internal storage.
    *
    * @param string $tag
    *   MarcXchange field.
-   * @param string $code
-   *   MarcXchange subfield.
-   * @param string $value
-   *   Field value.
+   * @param string $subfield
+   *   Object representing the subfield with code and value.
    * @param int $index
    *   Index of the tag.
    */
-  private function setData($tag, $code, $value, $index) {
+  private function setData($tag, $subfield, $index) {
+    // Get the subfield code.
+    $code = $subfield->{'@code'}->{'$'};
+    // Some subfields are used as markers and have no value. In these cases we
+    // extract the field and give it an empty value. An example of such field is
+    // 666 0* wich is used on subjects fields to signal that the subjects was
+    // added by DBC.
+    // See: http://www.kat-format.dk/danMARC2/Danmarc2.7f.htm#pgfId=1575319
+    $value = isset($subfield->{'$'}) ? $subfield->{'$'} : '';
+
     if (!empty($this->data[$tag][$code][$index])) {
       if (is_array($this->data[$tag][$code][$index])) {
         $this->data[$tag][$code][$index][] = $value;
