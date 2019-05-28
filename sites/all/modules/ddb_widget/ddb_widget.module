@@ -15,7 +15,7 @@ function ddb_widget_menu() {
     'description' => 'Administer DDB widget',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ddb_widget_settings_form'),
-    'access arguments' => array('administer ddb'),
+    'access arguments' => array('administer site configuration'),
     'file' => 'includes/ddd_widget.admin.inc',
   );
 
@@ -30,7 +30,18 @@ function ddb_widget_menu() {
  */
 function ddb_widget_preprocess_html(&$variables) {
   global $user;
-  $config = variable_get('ddb_widget', []);
+  $config = variable_get('ddb_widget', [
+    'path' => [
+      'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+      'pages' => '',
+    ],
+    'role' => [
+      'roles' => [],
+    ],
+    'script' => [
+      'code' => '',
+    ]
+  ]);
 
   // If a block has no roles associated, it is displayed for every role.
   // For blocks with roles associated, if none of the user's roles matches
@@ -77,8 +88,10 @@ function ddb_widget_preprocess_html(&$variables) {
   }
 
   // All tests parsed, so lets inject the code.
-  drupal_add_js($config['script']['code'], [
-    'type' => 'inline',
-    'scope' => 'footer',
-  ]);
+  if (!empty($config['script']['code'])) {
+    drupal_add_js($config['script']['code'], [
+      'type' => 'inline',
+      'scope' => 'footer',
+    ]);
+  }
 }
