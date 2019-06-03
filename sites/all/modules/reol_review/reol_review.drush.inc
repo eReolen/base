@@ -37,7 +37,7 @@ function reol_review_drush_command() {
  */
 function drush_reol_review_check() {
   $count = drush_get_option('count', 100);
-  $updated_before = drush_get_option('updated_before');
+  $updated_before = drush_get_option('updated-before');
 
   $condition = db_or();
   $condition->isNull('http_code');
