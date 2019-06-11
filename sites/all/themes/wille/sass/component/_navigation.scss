@@ -113,7 +113,7 @@
 
       color: $white;
       text-transform: uppercase;
-      font-size: em(14, $base-font-size);
+      font-size: 1em;
       text-align: center;
       z-index: $z-index-menu;
     }
@@ -130,44 +130,67 @@
       z-index: calc($z-index-menu -  1);
     }
 
-    // Menu-item: "E-bøger".
-    &:nth-child(1) {
-      &:before {
+    // Add menu item icons depending of number of items (5 or 6).
+    // The menu may contain an additional third item (“Engelske titler”).
+    //
+    // @see https://css-tricks.com/solved-with-css-logical-styling-based-on-the-number-of-given-elements/
+    &:first-child:nth-last-child(n+5),
+    &:first-child:nth-last-child(n+5) ~ * {
+      // Menu-item: "E-bøger".
+      &:nth-child(1):before {
         @include icon('e-books');
       }
-    }
 
-    // Menu-item: "Netlydbøger".
-    &:nth-child(2) {
-      &:before {
+      // Menu-item: "Lydbøger".
+      &:nth-child(2):before {
         @include icon('audio-books');
       }
-    }
 
-    // Menu-item: "English titles".
-    &:nth-child(3) {
-      &:before {
-        @include icon('flag-en');
-      }
-    }
-
-    // Menu-item: "Login".
-    &:nth-child(4) {
-      &:before {
+      // Menu-item: "Min side".
+      &:nth-child(3):before {
         @include icon('profile');
       }
-    }
 
-    // Menu-item: "Hjælp".
-    &:nth-child(5) {
-      &:before {
+      // Menu-item: "Hjælp".
+      &:nth-child(4):before {
         @include icon('help');
+      }
+
+      // Menu-item: "Søg".
+      &:nth-child(5):before {
+        @include icon('search');
       }
     }
 
-    // Menu-item: "Søgning".
-    &:nth-child(6) {
-      &:before {
+    &:first-child:nth-last-child(n+6),
+    &:first-child:nth-last-child(n+6) ~ * {
+      // Menu-item: "E-bøger".
+      &:nth-child(1):before {
+        @include icon('e-books');
+      }
+
+      // Menu-item: "Lydbøger".
+      &:nth-child(2):before {
+        @include icon('audio-books');
+      }
+
+      // Menu-item: "Engelske titler".
+      &:nth-child(3):before {
+        @include icon('flag-en');
+      }
+
+      // Menu-item: "Min side".
+      &:nth-child(4):before {
+        @include icon('profile');
+      }
+
+      // Menu-item: "Hjælp".
+      &:nth-child(5):before {
+        @include icon('help');
+      }
+
+      // Menu-item: "Søg".
+      &:nth-child(6):before {
         @include icon('search');
       }
     }

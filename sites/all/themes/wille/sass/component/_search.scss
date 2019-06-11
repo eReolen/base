@@ -54,7 +54,7 @@
 }
 
 .field-name-ting-title {
-  font-size: em(29, $base-font-size);
+  font-size: 2.071em;
 
   h2 {
 
@@ -527,7 +527,7 @@
 
 .icon-spin {
   display: inline-block;
-   @include animation(spin 2s infinite linear);
+  animation: spin 4s linear infinite;
 }
 
 /*  Search Grid View.
@@ -676,7 +676,7 @@
 
   &:before {
     @include icon('arrow-right');
-    @include transition(all 300ms ease-out);
+    transition: all .3s ease-out;
     transform: rotate(.25turn);
     float: right;
     right: 17px;

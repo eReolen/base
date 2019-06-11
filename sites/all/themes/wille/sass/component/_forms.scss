@@ -29,7 +29,7 @@ select {
   background: url(../images/select_arrow.png) no-repeat 96% 10px;
 }
 
-@include placeholder {
+input::placeholder {
   color: lighten($title-color, 0.8);
 }
 
