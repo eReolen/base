@@ -33,6 +33,15 @@ services:
       - ${PWD}/.docker/vhost.conf:/etc/nginx/conf.d/default.conf:ro
       - ./:/app:delegated
 
+  nginx2:
+    image: nginx:latest
+    depends_on:
+      - phpfpm
+      - memcached
+    volumes:
+      - ${PWD}/.docker/vhost.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./:/app:delegated
+
   memcached:
     image: 'memcached:latest'
     ports:

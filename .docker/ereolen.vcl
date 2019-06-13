@@ -17,14 +17,43 @@ vcl 4.0;
 # Import VMod's
 # Used for std.healthy.
 import std;
+import directors;
 
 # Default backend definition. Set this to point to your content server.
-backend default {
+backend server1 {
     .host = "nginx";
     .port = "80";
+    .probe = {
+        .url = "/";
+        .timeout = 5s;
+        .interval = 10s;
+        .window = 5;
+        .threshold = 3;
+    }
+}
+
+backend server2 {
+    .host = "nginx2";
+    .port = "80";
+    .probe = {
+        .url = "/";
+        .timeout = 5s;
+        .interval = 10s;
+        .window = 5;
+        .threshold = 3;
+    }
+}
+
+sub vcl_init {
+    new servers = directors.round_robin();
+    servers.add_backend(server1);
+    servers.add_backend(server2);
 }
 
 sub vcl_recv {
+  # send all traffic to the bar director:
+  set req.backend_hint = servers.backend();
+
   # Remove HTTP Authentication. Assume that any basic auth is handled
   # before reaching us and remove the header, as it messes with
   # caching.
