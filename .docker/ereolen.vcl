@@ -20,8 +20,8 @@ import std;
 import directors;
 
 # Default backend definition. Set this to point to your content server.
-backend server1 {
-    .host = "nginx";
+backend server0 {
+    .host = "nginx0";
     .port = "80";
     .probe = {
         .url = "/";
@@ -32,8 +32,8 @@ backend server1 {
     }
 }
 
-backend server2 {
-    .host = "nginx2";
+backend server1 {
+    .host = "nginx1";
     .port = "80";
     .probe = {
         .url = "/";
@@ -46,8 +46,8 @@ backend server2 {
 
 sub vcl_init {
     new servers = directors.round_robin();
+    servers.add_backend(server0);
     servers.add_backend(server1);
-    servers.add_backend(server2);
 }
 
 sub vcl_recv {
