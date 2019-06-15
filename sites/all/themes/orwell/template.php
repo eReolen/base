@@ -169,6 +169,15 @@ function orwell_preprocess_html(&$vars) {
     );
   }
 
+  // Web App Manifest (cf. reol_base_web_app_manifest()).
+  $tags['manifest'] = array(
+    'type' => 'link',
+    'attributes' => array(
+      'rel' => 'manifest',
+      'href' => '/manifest.json',
+    ),
+  );
+
   foreach ($tags as $name => $tag) {
     $html_tag = array(
       '#type' => 'html_tag',

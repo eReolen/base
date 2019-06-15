@@ -82,6 +82,12 @@ function reol_base_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
+  $items['manifest.json'] = array(
+    'title' => 'Web App Manifest',
+    'page callback' => 'reol_base_web_app_manifest',
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 
@@ -1840,4 +1846,39 @@ function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
     return NULL;
   }
   return $return;
+}
+
+/**
+ * Render Web App Manifest.
+ */
+function reol_base_web_app_manifest() {
+  $manifest = array(
+    'short_name' => t('eReolen', array(), array('context' => 'Web App Manifest')),
+    'name' => t('eReolen app', array(), array('context' => 'Web App Manifest')),
+    'start_url' => base_path(),
+    'display' => 'standalone',
+  );
+
+  foreach (array(192, 512) as $size) {
+    $manifest['icons'][] = array(
+      'src' => '/' . path_to_theme() . '/images/favicon/play-store-icon-' . $size . '.png',
+      'type' => 'image/png',
+      'sizes' => $size . 'x' . $size,
+    );
+  }
+
+  if ($app_id = variable_get('reol_base_play_store_app_id')) {
+    $manifest += array(
+      'prefer_related_applications' => TRUE,
+      'related_applications' => array(
+        array(
+          'platform' => 'play',
+          'id' => $app_id,
+        ),
+      ),
+    );
+  }
+
+  drupal_json_output($manifest);
+  drupal_exit();
 }
