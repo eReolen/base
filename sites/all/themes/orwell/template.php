@@ -170,6 +170,7 @@ function orwell_preprocess_html(&$vars) {
   }
 
   // Web App Manifest (cf. reol_base_web_app_manifest()).
+  // @see https://developers.google.com/web/fundamentals/web-app-manifest/#tell_the_browser_about_your_manifest
   $tags['manifest'] = array(
     'type' => 'link',
     'attributes' => array(

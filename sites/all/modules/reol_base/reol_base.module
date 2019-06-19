@@ -1850,6 +1850,8 @@ function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
 
 /**
  * Render Web App Manifest.
+ *
+ * @see https://developers.google.com/web/fundamentals/app-install-banners/
  */
 function reol_base_web_app_manifest() {
   $manifest = array(
