@@ -1,0 +1,181 @@
+<?php
+
+/**
+ * @file
+ * Module code.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function appbanners_help($path, $arg) {
+  switch ($path) {
+    // Main module help for the block module
+    case 'admin/help#appbanners':
+      return '<p>' . t('Provides support for App Banners for iOS or Android.') . '</p>';
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function appbanners_menu() {
+  $items['admin/config/appbanners'] = array(
+    'title' => t('App Banners'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('appbanners_admin_form'),
+    'access arguments' => array('administer app banners'),
+    'file' => 'includes/appbanners.admin.inc',
+  );
+
+  $items['appbanners/manifest.json'] = array(
+    'title' => t('Manifest JSON for App Banners'),
+    'page callback' => 'appbanners_manifest',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function appbanners_permission() {
+  return array(
+    'administer app banners' => array(
+      'title' => 'Administer App Banners',
+    ),
+  );
+}
+
+/**
+ * Implements hook_page_build().
+ */
+function appbanners_page_build(&$page) {
+  if (appbanners_include_tags()) {
+    appbanners_android_manifest_link();
+    appbanners_ios_meta();
+  }
+}
+
+/**
+ * Add meta tags for iOS.
+ */
+function appbanners_ios_meta() {
+  $app_id = variable_get('appbanners_ios_app_id', '');
+  if ($app_id) {
+    $meta_content = array(
+      'app-id=' . check_plain($app_id),
+    );
+
+    $affiliate_data = check_plain(variable_get('appbanners_ios_affiliate_data', ''));
+    if (!empty($affiliate_data)) {
+      $meta_content[] = 'affiliate-data=' . $affiliate_data;
+    }
+
+    $app_argument = check_plain(variable_get('appbanners_ios_app_argument', ''));
+    if (!empty($app_argument)) {
+      $meta_content[] = 'app-argument=' . $app_argument;
+    }
+
+    $element = array(
+      '#type' => 'html_tag',
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'name' => 'apple-itunes-app',
+        'content' => implode(', ', $meta_content),
+      ),
+    );
+
+    drupal_add_html_head($element, 'appbanners_itunes_app');
+  }
+}
+
+/**
+ * Add a manifest link for Android.
+ */
+function appbanners_android_manifest_link() {
+  $app_id = variable_get('appbanners_android_app_id', '');
+  if ($app_id) {
+    $attributes = array(
+      'rel' => 'manifest',
+      'href' => base_path() . 'appbanners/manifest.json',
+    );
+    drupal_add_html_head_link($attributes);
+  }
+}
+
+/**
+ * Page callback for manifest.json.
+ */
+function appbanners_manifest() {
+  $manifest = array(
+    'prefer_related_applications' => TRUE,
+    'related_applications' => array(
+      array(
+        'platform' => 'play',
+        'id' => check_plain(variable_get('appbanners_android_app_id', '')),
+      ),
+    ),
+  );
+
+  $name = variable_get('appbanners_android_name', '');
+  if ($name) {
+    $manifest['name'] = check_plain($name);
+  }
+
+  $short_name = variable_get('appbanners_android_short_name', '');
+  if ($short_name) {
+    $manifest['short_name'] = check_plain($short_name);
+  }
+
+  $icon = variable_get('appbanners_android_icon', '');
+  if ($icon) {
+    $manifest['icons'] = array(
+      array(
+        'src' => check_plain($icon),
+        'type' => 'image/png',
+        'sizes' => '192x192',
+      ),
+    );
+  }
+
+  drupal_json_output($manifest);
+}
+
+
+/**
+ * Check whether the app banners tags should be included on the current page.
+ *
+ * @return bool
+ *   TRUE if the tags should be included.
+ */
+function appbanners_include_tags() {
+
+  $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+
+  // Should the script be included on admin pages?
+  $show_on_admin = variable_get('appbanners_admin', FALSE);
+  if (path_is_admin($path) && !$show_on_admin) {
+    return FALSE;
+  }
+
+  $pages = variable_get('appbanners_pages', '');
+
+  // Compare the lowercase internal and lowercase path alias (if any).
+  $page_match = drupal_match_path($path, $pages);
+  if ($path != $_GET['q']) {
+    $page_match = $page_match || drupal_match_path($_GET['q'], $pages);
+  }
+
+  $match_type = variable_get('appbanners_visibility', 'exclude');
+  if ($match_type == 'include') {
+    return $page_match;
+  }
+  elseif (!empty($pages)) {
+    return !$page_match;
+  }
+  else {
+    return FALSE;
+  }
+}
