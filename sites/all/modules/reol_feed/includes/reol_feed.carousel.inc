@@ -52,13 +52,16 @@ function reol_feed_feeds_carousel() {
         }
 
         $book = $books->addChild('book');
-        $book->{0} = $ting_object->title;
+        $book[0] = $ting_object->title;
         // The search from _ting_search_carousel_get_content fetches covers,
         // so we are safe to just get the file path, and use that.
         $book->addAttribute('cover', file_create_url(ting_covers_object_path($ting_object->id)));
         $book->addAttribute('isbn', reol_base_get_isbn($ting_object->localId));
       }
       $offset = $results['next_offset'];
+
+      // We want at most 50 results.
+      break;
     } while ($offset > -1);
   }
 
