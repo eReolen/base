@@ -170,13 +170,13 @@ function reol_statistics_cron() {
     $month = ReolStatisticsMonth::fromInt(variable_get($varname, 201609));
 
     while (!$month->isCurrent()) {
-      $month = $month->next();
       $queue = DrupalQueue::get('statistics_backlog_processing');
       $payload = array(
         'class' => get_class($statistic),
         'month' => $month->toInt(),
       );
       $queue->createItem($payload);
+      $month = $month->next();
       variable_set($varname, $month->toInt());
     }
 

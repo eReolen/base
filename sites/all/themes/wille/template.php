@@ -139,9 +139,12 @@ function wille_preprocess_ting_object_cover(&$vars) {
   if (isset($vars['object'])) {
     $entity = $vars['object'];
     if (isset($entity->reply)) {
-      $type = reol_base_get_type_icon($entity->type);
-      if ($type) {
-        $vars['classes'] = array_merge($vars['classes'], _wille_type_icon_classes($type, $entity->reply->on_quota));
+      // @see pratchett_ting_collection_view_alter.
+      if (empty($entity->reol_no_type_icons)) {
+        $type = reol_base_get_type_icon($entity->type);
+        if ($type) {
+          $vars['classes'] = array_merge($vars['classes'], _wille_type_icon_classes($type, $entity->reply->on_quota));
+        }
       }
     }
   }

@@ -99,17 +99,6 @@ function orwell_preprocess_html(&$vars) {
     ),
   );
 
-  // Apple iTunes app id.
-  if ($app_id = variable_get('reol_base_itunes_app_id', FALSE)) {
-    $tags['apple-itunes-app'] = array(
-      'type' => 'meta',
-      'attributes' => array(
-        'name' => 'apple-itunes-app',
-        'content' => 'app-id=' . $app_id,
-      ),
-    );
-  }
-
   // Apple icons.
   $apple_icons = array(
     '57x57',

@@ -108,9 +108,6 @@ function reol_feed_ensure_feeds() {
       }
     }
 
-    // Never update feeds.
-    $update = FALSE;
-
     // If feed needs to be updated, do it.
     if ($update) {
       // If file is specified, we require it.
@@ -258,8 +255,6 @@ function reol_feed_menu() {
  * Deliver a feed.
  */
 function reol_feed_deliver() {
-  // Ensure that feeds are up to date.
-  reol_feed_ensure_feeds();
   $feed_path = array();
   $i = 1;
   while (($p = arg($i)) != NULL) {
@@ -270,6 +265,10 @@ function reol_feed_deliver() {
   // Find the feed.
   $feed_path = implode($feed_path, '/');
   $feed_file = reol_feed_get_feeds_directory() . '/' . $feed_path;
+
+  if (!file_exists($feed_file)) {
+    return MENU_NOT_FOUND;
+  }
 
   // Set content type as the one from the file.
   $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -416,7 +415,7 @@ function _reol_feed_json_node($node_type) {
       cache_set('reol_feed_data', $newsletter_nodes, 'cache');
     }
   }
-  
+
   drupal_json_output($newsletter_nodes);
   drupal_exit();
 }
