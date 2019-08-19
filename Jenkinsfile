@@ -132,17 +132,30 @@ pipeline {
                         timeout(time: 30, unit: 'MINUTES') {
                             input 'Should the site be deployed?'
                         }
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git clean -d --force'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git fetch'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes updatedb'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes features-revert-all'"
-                        sh "ansible ereolengo -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush cache-clear all'"
+                        // Install on server one.
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git clean -d --force'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git fetch'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
+
+                        // Install on server two.
+                        sh "ansible ereolengo2 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git clean -d --force'"
+                        sh "ansible ereolengo2 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                        sh "ansible ereolengo2 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git fetch'"
+                        sh "ansible ereolengo2 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                        sh "ansible ereolengo2 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git clean -d --force'"
+                        sh "ansible ereolengo2 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git checkout ${BRANCH_NAME}'"
+                        sh "ansible ereolengo2 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git fetch'"
+                        sh "ansible ereolengo2 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs/sites/all/modules/breol; git reset origin/${BRANCH_NAME} --hard'"
+
+                        // Update application an clear cache.
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes updatedb'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush --yes features-revert-all'"
+                        sh "ansible ereolengo1 -m shell -a 'cd /home/deploy/www/ereolengo_dk/htdocs; drush cache-clear all'"
                     }
                 }
             }

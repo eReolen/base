@@ -41,6 +41,11 @@
       content: "\e900";
     }
   }
+  &.type-icon-podcast {
+    &:after {
+      content: "\e928";
+    }
+  }
   &.type-icon-audiobook.type-icon-noquota {
     &:after {
       content: "\e904";
@@ -53,6 +58,12 @@
       background-color: $icon-quota-none;
     }
   }
+  &.type-icon-podcast.type-icon-noquota {
+    &:after {
+      content: "\e928";
+      background-color: $icon-quota-none;
+    }
+  }
   &.type-icon-audiobook.type-icon-quota {
     &:after {
       content: "\e904";
@@ -62,6 +73,12 @@
   &.type-icon-ebook.type-icon-quota {
     &:after {
       content: "\e900";
+      background-color: $icon-quota;
+    }
+  }
+  &.type-icon-podcast.type-icon-quota {
+    &:after {
+      content: "\e928";
       background-color: $icon-quota;
     }
   }
