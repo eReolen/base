@@ -25,15 +25,16 @@ function reol_latest_ctools_plugin_directory($module, $plugin) {
  * @return array
  *   Array of random from latest x titles.
  */
-function reol_latest_get_latest_count($count = 5, $type = FALSE) {
+function reol_latest_get_latest_count($count = 5, $type = '') {
   // If type is not defined, show all.
-  $ting_type = $type ? reol_base_get_ting_type($type) : 'all';
+  $ting_type = !empty($type) ? reol_base_get_ting_type($type) : 'all';
 
   // If ting type is not found, do nothing.
   if (!$ting_type) {
     // Log this, it should not happen.
     watchdog('reol_latest', 'Type for showing latest not found: @type', array('@type' => $type), WATCHDOG_ERROR);
-    return FALSE;
+
+    return array();
   }
 
   // Get results from query.
@@ -43,6 +44,7 @@ function reol_latest_get_latest_count($count = 5, $type = FALSE) {
   // Pick $count random ones.
   $results = $ting_results->collections;
   $res_count = count($results);
+
   // If no results, return no results.
   if ($res_count == 0) {
     return array();
@@ -55,7 +57,7 @@ function reol_latest_get_latest_count($count = 5, $type = FALSE) {
 }
 
 /**
- * Fetch the lastest using a query from Ting.
+ * Fetch the latest using a query from Ting.
  *
  * Should not be used, use reol_latest_get_latest().
  *
@@ -67,13 +69,18 @@ function reol_latest_get_latest_count($count = 5, $type = FALSE) {
  */
 function reol_latest_fetch_latest($query) {
   module_load_include('inc', 'ting', 'ting.client');
-  return ting_do_search($query, 1, variable_get('reol_latest_fetch_count', 50), array(
-    'sort' => 'date_descending',
-  ));
+  $query = ting_start_query()
+    ->withFullTextQuery($query)
+    ->withPage(1)
+    ->withCount(variable_get('reol_latest_fetch_count', 50))
+    ->withSort('date', \Ting\Search\TingSearchSort::DIRECTION_DESCENDING);
+  $res = $query->execute();
+
+  return $res->openSearchResul;
 }
 
 /**
- * Get the lastest using a query from ting.
+ * Get the latest using a query from ting.
  *
  * This is the cached version of reol_latest_fetch_latest().
  *
