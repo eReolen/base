@@ -224,12 +224,17 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
         // special status that items get when they have been removed.
         if (!$availability['notloanable']) {
           $link = 'ting/object/' . $entity->id . '/bookmark';
-          if (@$availability['bookmarked']) {
-            $text = t('Delete from bookmarks');
-            $link .= '/delete';
-          }
-          else {
-            $text = t('Bookmark');
+          $text = t('Bookmark');
+          if (user_is_logged_in()) {
+            // We only need to check if the entity is bookmarked if the user is
+            // logged in.
+            global $user;
+            $items = ding_provider_invoke('bookmark', 'list', $user);
+            $id = reol_base_get_isbn($entity->localId);
+            if (array_key_exists($id, array_flip($items))) {
+              $text = t('Delete from bookmarks');
+              $link .= '/delete';
+            }
           }
 
           $buttons[] = reol_base_get_entity_button($text, $link, 'bookmark-' . $entity->id, array('use-ajax'));

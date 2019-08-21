@@ -16,8 +16,6 @@
  *   loaned, reserved. Array is keyed by local id.
  */
 function publizon_availability_items(array $local_ids) {
-  global $user;
-
   // Ensure that ISBN numbers are local ids.
   $to_check = array();
   foreach ($local_ids as $local_id) {
@@ -35,11 +33,22 @@ function publizon_availability_items(array $local_ids) {
   // blue icons, for each ding entity button to figure out if it should be
   // displayed etc. so that's 5-8 time for every material show on the page.
   $results = array();
-  $cache = &drupal_static(__FUNCTION__, array());
+  $static_cache = &drupal_static(__FUNCTION__, array());
   foreach ($to_check as $isbn => $local_id) {
-    if (!empty($cache[$local_id])) {
-      $results[$local_id] = $cache[$local_id];
+    if (!empty($static_cache[$local_id])) {
+      $results[$local_id] = $static_cache[$local_id];
       unset($to_check[$isbn]);
+    }
+    else {
+      $cid = 'availability_' . $local_id;
+      $cache = cache_get($cid);
+      if ($cache && REQUEST_TIME < $cache->expire) {
+        $results[$local_id] = $cache->data;
+        unset($to_check[$isbn]);
+
+        // Also store in static cache to speed up.
+        $static_cache[$local_id] = $results[$local_id];
+      }
     }
   }
 
@@ -49,8 +58,10 @@ function publizon_availability_items(array $local_ids) {
   }
 
   try {
+    global $user;
+
     // This will throw exception if not logged in.
-    $creds = ding_user_get_creds($user);
+    $creds = ding_user_get_creds();
     $retailer_id = publizon_get_retailer_id($user);
     $card_number = $creds['name'];
   }
@@ -62,8 +73,8 @@ function publizon_availability_items(array $local_ids) {
 
   try {
     $client = PublizonLoanClient::getClient();
-    $loanStatus = $client->getProductLoanStatusList($retailer_id, array_keys($to_check), $card_number);
-    foreach ($loanStatus as $loanStatus) {
+    $loanStatusList = $client->getProductLoanStatusList($retailer_id, array_keys($to_check), $card_number);
+    foreach ($loanStatusList as $loanStatus) {
       $isbn = $loanStatus->isbn;
       $status = $loanStatus->loanStatus;
 
@@ -72,14 +83,22 @@ function publizon_availability_items(array $local_ids) {
         'reservable' => $status == 5,
         'loaned' => $status == 1,
         'reserved' => $status == 2,
-        'bookmarked' => $loanStatus->onChecklist,
+        // Always set to FALSE to ensure that this is cacheable for anonymous
+        // users. This information will vbe fetched for the logged in users
+        // cache.
+        'bookmarked' => FALSE,
         'notloanable' => $status == 0,
       );
       $key = $to_check[$isbn];
       $results[$key] = $data;
 
       // Store in cache
-      $cache[$key] = $data;
+      $static_cache[$key] = $data;
+
+      // Store the loans into ding session cache.
+      $cid = 'availability_' . $key;
+      $expire = variable_get('publizon_availability_expire', 3600);
+      cache_set($cid, $data, 'cache', REQUEST_TIME + $expire);
     }
   }
   catch (PublizonException $e) {
