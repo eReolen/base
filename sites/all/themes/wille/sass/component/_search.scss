@@ -154,6 +154,13 @@
   float: right;
   width: 25%;
 
+  label,
+  .form-search-sort__hidden-labels {
+    position: absolute;
+    left: -9999px;
+    visibility: hidden;
+  }
+
   @include media($tablet-l) {
     width: 40%;
   }
