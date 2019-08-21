@@ -56,6 +56,7 @@ function publizon_bookmark_create($account, $local_id) {
     // Add to checklist in Publizon.
     $client = PublizonChecklistClient::getClient();
     $client->addChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+
     if (module_exists('ding_session_cache')) {
       ding_session_cache_clear('reol_bookmark', 'bookmarks');
     }
@@ -87,6 +88,7 @@ function publizon_bookmark_delete($account, $local_id) {
     // Delete from checklist in Publizon.
     $client = PublizonChecklistClient::getClient();
     $client->deleteChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+
     if (module_exists('ding_session_cache')) {
       ding_session_cache_clear('reol_bookmark', 'bookmarks');
     }
