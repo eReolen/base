@@ -73,10 +73,10 @@ function publizon_availability_items(array $local_ids) {
 
   try {
     $client = PublizonLoanClient::getClient();
-    $loanStatusList = $client->getProductLoanStatusList($retailer_id, array_keys($to_check), $card_number);
-    foreach ($loanStatusList as $loanStatus) {
-      $isbn = $loanStatus->isbn;
-      $status = $loanStatus->loanStatus;
+    $loan_status_list = $client->getProductLoanStatusList($retailer_id, array_keys($to_check), $card_number);
+    foreach ($loan_status_list as $loan_status) {
+      $isbn = $loan_status->isbn;
+      $status = $loan_status->loanStatus;
 
       $data = array(
         'available' => $status == 4 || $status == 3,
