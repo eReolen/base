@@ -229,7 +229,7 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
             // We only need to check if the entity is bookmarked if the user is
             // logged in.
             global $user;
-            $items = ding_provider_invoke('bookmark', 'list', $user);
+            $items = reol_bookmark_get_bookmarks($user);
             $id = reol_base_get_isbn($entity->localId);
             if (array_key_exists($id, array_flip($items))) {
               $text = t('Delete from bookmarks');
@@ -255,11 +255,7 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
  *   Renderable array button.
  */
 function reol_bookmark_get_bookmark_button(TingEntity $entity) {
-  list($availability) = array_values(ding_availability_items(array($entity->localId)));
-
-  if (!@$availability['bookmarked']) {
-    return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id, array('use-ajax'));
-  }
+  return reol_base_get_entity_button(t('Bookmark'), 'ting/object/' . $entity->id . '/bookmark', 'bookmark-' . $entity->id, array('use-ajax'));
 }
 
 /**

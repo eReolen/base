@@ -84,7 +84,7 @@ function publizon_availability_items(array $local_ids) {
         'loaned' => $status == 1,
         'reserved' => $status == 2,
         // Always set to FALSE to ensure that this is cacheable for anonymous
-        // users. This information will vbe fetched for the logged in users
+        // users. This information will be fetched from the logged in user's
         // cache.
         'bookmarked' => FALSE,
         'notloanable' => $status == 0,
