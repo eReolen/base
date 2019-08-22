@@ -999,6 +999,8 @@ function reol_base_ctools_plugin_directory($owner, $plugin_type) {
 function reol_base_login_ajax() {
   $commands = array();
 
+  ctools_add_js('ajax-responder');
+
   // Check if the logged in user is a library user.
   if (!user_is_logged_in()) {
     $commands[] = ajax_command_ding_user_authenticate('');
