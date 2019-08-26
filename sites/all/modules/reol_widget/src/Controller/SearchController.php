@@ -43,6 +43,11 @@ class SearchController {
         $query .= ' AND ' . implode(' AND ', $facet_array);
       }
 
+      $sort = $this->getSort($parameters);
+      if ($sort = $this->getSort($parameters)) {
+        $options['sort'] = $sort;
+      }
+
       module_load_include('inc', 'opensearch', 'opensearch.client');
       $result = opensearch_do_search($query, $page, $results_per_page, $options);
 
@@ -211,4 +216,117 @@ class SearchController {
     return url(current_path(), ['absolute' => TRUE, 'query' => $query]);
   }
 
+  /**
+   * Get valid sort key from query parameters.
+   *
+   * @param array $parameters
+   *   The query parameters.
+   * @param string $default
+   *   The default sort key.
+   *
+   * @return null|string
+   *   The sort key if any and valid.
+   */
+  private function getSort(array $parameters, $default = 'date_created_descending') {
+    $sort = $parameters['sort'] ?? $default;
+
+    switch ($sort) {
+      // Valid sort keys from https://oss-services.dbc.dk/opensearch/5.0/ (see
+      // end of this file for info how to get this list)
+      case 'rank_main_title':
+      case 'rank_subject':
+      case 'rank_verification':
+      case 'rank_title':
+      case 'rank_creator':
+      case 'rank_general':
+      case 'rank_none':
+        /* case 'random': // currently not supported in
+        // https://opensource.dbc.dk/services/open-search-web-service */
+      case 'solr_title_ascending':
+      case 'solr_title_descending':
+      case 'solr_creator_ascending':
+      case 'solr_creator_descending':
+      case 'solr_date_ascending':
+      case 'solr_date_descending':
+      case 'solr_acquisitionDate_ascending':
+      case 'solr_acquisitionDate_descending':
+      case 'solr_localAcquisitionDate_ascending':
+      case 'solr_localAcquisitionDate_descending':
+      case 'solr_work_type_ascending':
+      case 'solr_work_type_descending':
+      case 'solr_record_owner_ascending':
+      case 'solr_record_owner_descending':
+      case 'solr_article_date_ascending':
+      case 'solr_article_date_descending':
+      case 'solr_genre_category_ascending':
+      case 'solr_genre_category_descending':
+      case 'solr_dk5_ascending':
+      case 'solr_dk5_descending':
+      case 'solr_numberInSeries_ascending':
+      case 'solr_numberInSeries_descending':
+      case 'solr_dateFirstEdition_ascending':
+      case 'solr_dateFirstEdition_descending':
+      case 'solr_reviewedTitle_ascending':
+      case 'solr_reviewedTitle_descending':
+      case 'solr_reviewedCreator_ascending':
+      case 'solr_reviewedCreator_descending':
+      case 'solr_reviewedDate_ascending':
+      case 'solr_reviewedDate_descending':
+      case 'solr_reviewedWorkType_ascending':
+      case 'solr_reviewedWorkType_descending':
+      case 'solr_001d_ascending':
+      case 'solr_001d_descending':
+      case 'solr_marc_001a001b_ascending':
+      case 'solr_marc_001a001b_descending':
+      case 'solr_docid_ascending':
+
+      case 'acquisitionDate_ascending':
+      case 'acquisitionDate_descending':
+      case 'localAcquisitionDate_ascending':
+      case 'localAcquisitionDate_descending':
+      case 'article_date_ascending':
+      case 'article_date_descending':
+      case 'creator_ascending':
+      case 'creator_descending':
+      case 'date_ascending':
+      case 'date_descending':
+      case 'date_created_ascending':
+      case 'date_created_descending':
+      case 'record_owner_ascending':
+      case 'record_owner_descending':
+      case 'title_ascending':
+      case 'title_descending':
+      case 'work_type_ascending':
+      case 'work_type_descending':
+      case 'genre_category_ascending':
+      case 'genre_category_descending':
+      case 'dk5_ascending':
+      case 'dk5_descending':
+      case 'numberInSeries_ascending':
+      case 'numberInSeries_descending':
+      case 'dateFirstEdition_ascending':
+      case 'dateFirstEdition_descending':
+      case 'reviewed_title_ascending':
+      case 'reviewed_title_descending':
+      case 'reviewed_creator_ascending':
+      case 'reviewed_creator_descending':
+      case 'reviewed_date_ascending':
+      case 'reviewed_date_descending':
+        return $sort;
+    }
+
+    return NULL;
+  }
+
 }
+
+// phpcs:disable
+/*
+	The list of sort keys can be generated with a command like this:
+
+	curl --silent 'https://oss-services.dbc.dk/opensearch/5.0/'						\
+	--data-urlencode 'xml=<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://oss.dbc.dk/ns/opensearch"><SOAP-ENV:Body><ns1:infoRequest><ns1:agency>100200</ns1:agency><ns1:profile>test</ns1:profile></ns1:infoRequest></SOAP-ENV:Body></SOAP-ENV:Envelope>' \
+	| xmlstarlet select -N 'opensearch=http://oss.dbc.dk/ns/opensearch' --template --match '//opensearch:infoSort/opensearch:sort' --copy-of 'text()' -nl
+
+*/
+// phpcs:enable
