@@ -45,6 +45,9 @@ function publizon_user_form_alter(array &$form, array &$form_state) {
  *
  * @return array
  *   Result array.
+ *
+ * @throws DingProviderUserAuthFailure
+ *   On user login failure.
  */
 function publizon_user_authenticate($name, $pass, array $values) {
   $client = PublizonUserClient::getClient();
@@ -74,9 +77,7 @@ function publizon_user_authenticate($name, $pass, array $values) {
 
   }
   else {
-    $res = array(
-      'success' => FALSE,
-    );
+    throw new DingProviderUserAuthFailure();
   }
 
   return $res;

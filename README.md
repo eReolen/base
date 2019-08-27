@@ -11,7 +11,7 @@ which is tracked by patches in _sites/all/patches_.
 ### Drupal core patches
 
 * http://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch
-* http://drupal.org/files/ssl-socket-transports-1879970-13.patch
+* ~~http://drupal.org/files/ssl-socket-transports-1879970-13.patch~~
 * http://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch
 * http://drupal.org/files/issues/translate_role_names-2205581-1.patch
 
@@ -38,7 +38,7 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Disable dependencies for removed core modules (disable_modules_dependencies.patch)
 * Override material details - should be move into alters in base (feature_material_overrride.patch)
 * Update i18n module (i18n.patch)
-* Roll-back auto complete to open-suggestions (pensearch-autocomplete.patch)
+* Roll-back auto complete to open-suggestions (opensearch-autocomplete.patch)
 * Removed the "Other formats" entity button (remove-other-formats-button.patch)
 * Remove auto-logout config (remove_autologout_configuration.patch)
 * Ensure infomedia field file is loaded (ting_infomedia-missing-include.patch)
@@ -46,7 +46,6 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Change the way number of results are displayed (ting_search_result.patch)
 * Update the varnish module (update-varnish.patch)
 * Enabled 'user/%/view' path (user-menu.patch)
-* Run attached behaviours as in DDB core - carousle-attach.patch
 * Fixed "Undefined index" warnings (ding-loan-loans.patch)
 * Fixed offset in carousel search (ting_search_carousel.patch)
 * Fix missing record error title in ting references (error-missing-record.patch)
@@ -55,6 +54,8 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Enable fulltext render static cache reset (sites/all/patches/ting_fulltext_cache_reset.patch)
 * Fix rotation origin of search spinner (sites/all/patches/ting_search_overlay.patch)
 * Allow lazy loading of covers (sites/all/patches/ting_covers.patch)
+* Remove campaign plus pane in ding_content (ding_content.patch)
+* Call provider finalize to load retailer info (ding_user_finalize.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 

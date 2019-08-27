@@ -5,6 +5,10 @@
  * Common popup functionality for Ding!
  */
 
+/* Attached scripts is handled via jquery AJAX call from jQuery.ajaxTransport, 
+   where async is set to false, and will trigger a warning in Gecko 30.0;
+   For now, add javascripts in module.info */
+
 /**
  * Ajax command to open a popup.
  */
@@ -17,7 +21,6 @@ function ajax_command_ding_popup($name, $title, $html, $options = array()) {
     'class' => array(),
   );
   drupal_add_library('system', 'ui.dialog');
-  drupal_add_js(drupal_get_path('module', 'ding_popup') . '/ding_popup.js');
 
   return array(
     'command' => 'ding_popup',

@@ -826,3 +826,10 @@ function reol_base_update_7167() {
   variable_set('imagemagick_gm', 0);
   variable_set('imagemagick_quality', '75');
 }
+
+/**
+ * Enable ding_libs module
+ */
+function reol_base_update_7168() {
+  module_enable(array('ding_libs'));
+}

@@ -30,10 +30,10 @@ class TingClientMarcXchangeRequest extends TingClientRequest {
   }
 
   /**
-   * Set Ting object ID.
+   * Set indentifiers for this object request.
    *
-   * @param string $id
-   *   Ting object ID.
+   * @param mixed $id
+   *   A string with id or an array of ids if multiple object is being fetched.
    */
   public function setIdentifier($id) {
     $this->identifier = $id;
@@ -64,7 +64,20 @@ class TingClientMarcXchangeRequest extends TingClientRequest {
    * {@inheritdoc}
    */
   public function processResponse(stdClass $response) {
-    return new TingMarcResult($response);
+    // Check for errors.
+    if (!empty($response->searchResponse->error)) {
+      throw new TingMarcException($response->searchResponse->error);
+    }
+
+    $objects = [];
+
+    // Collect each marc object from the search result.
+    foreach ($response->searchResponse->result->searchResult as $result) {
+      $object = $result->collection->object[0];
+      $objects[$object->identifier->{'$'}] = new TingMarcResult($object);
+    }
+
+    return $objects;
   }
 
 }

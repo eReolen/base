@@ -1,5 +1,5 @@
 name = eReolen latest module
-description = Module for showing the lastest items from the data well.
+description = Module for showing the latest items from the data well.
 core = 7.x
 package = eReolen shared
 features[features_api][] = api:2
