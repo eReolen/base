@@ -663,7 +663,22 @@ function opensearch_search_autocomplete($string) {
     drupal_exit();
   }
 
-  return opensearch_search_autocomplete_suggestions($query);
+  $suggestions = opensearch_search_autocomplete_suggestions($query);
+  // Maximum space in suggestions dropdown is 60 characters.
+  // Maximum characters for search query string is 256 characters.
+  foreach ($suggestions as $suggestion) {
+    $val = truncate_utf8($suggestion, 60, TRUE, TRUE, 1);
+    $key = truncate_utf8($suggestion, 256, TRUE, FALSE, 1);
+     // Trim whitespace and question mark.
+    $key = trim($key, " \t\n\r\0\x0B?");
+    $key = str_replace('"', '', $key);
+    $key = trim($key, " \t\n\r\0\x0B?");
+    if (strpos($key, ' ')) {
+      $key = '"' . $key . '"';
+    }
+    $matches[$key] = $val;
+  }
+  return $matches;
 }
 
 /**
@@ -676,15 +691,19 @@ function opensearch_search_autocomplete($string) {
  *   Search suggestion results.
  */
 function opensearch_search_autocomplete_suggestions(array $query) {
-  // Hack to use old suggestions service.
-  $query += variable_get('ting_search_autocomplete_settings', array());
-  $query['query'] = $query['q'];
-  $query['maxSuggestions'] = $query['rows'];
-
-  $method = variable_get('ting_search_autocomplete_method', 'facets');
-
+  $items = array();
   $rest_url = rtrim(variable_get('opensearch_search_autocomplete_suggestion_url', ''), '/') . '/rest/';
-  $url = url($rest_url . $method, array('query' => $query));
+  if (empty($rest_url)) {
+    watchdog(
+      'opensearch_search_autocomplete',
+      "Autocomplete error: Empty opensearch autocomplete url",
+      array(),
+      $severity = WATCHDOG_ERROR
+    );
+    return $items;
+  }
+
+  $url = $url = url($rest_url . 'facets', array('query' => $query));
   $headers = array('Accept' => 'application/json');
   $result = drupal_http_request($url, $headers);
 
@@ -704,15 +723,10 @@ function opensearch_search_autocomplete_suggestions(array $query) {
 
   if (!empty($result->data)) {
     $result_data = drupal_json_decode($result->data);
-    if (empty($result->error)) {
-      if (!empty($result_data['suggestions'])) {
-        foreach ($result_data['suggestions'] as $suggestion) {
-          $items[truncate_utf8(strip_tags($suggestion['suggestion']), 256, TRUE, FALSE, 1)] = $suggestion['suggestion'];
-        }
+    if (!empty($result_data['response']['docs'])) {
+      foreach ($result_data['response']['docs'] as $suggestion) {
+        $items[] = $suggestion['all'][0];
       }
-    }
-    else {
-      watchdog('ting_search_autocomplete', 'Autocomplete error: ' . $result->error . ' (' . $result->code . ")\nURL: $url" , array(), $severity = WATCHDOG_ERROR);
     }
   }
 

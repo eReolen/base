@@ -1,0 +1,15 @@
+diff --git a/profiles/ding2/modules/ding_user/ding_user.module b/profiles/ding2/modules/ding_user/ding_user.module
+index df24a2b2..f7643350 100644
+--- a/profiles/ding2/modules/ding_user/ding_user.module
++++ b/profiles/ding2/modules/ding_user/ding_user.module
+@@ -809,6 +809,10 @@ function ding_user_user_login_validate($form, &$form_state) {
+     $form_state['uid'] = $account->uid;
+     // We're not calling user_login_submit like user_external_login_register
+     // does, it's already the submit handler.
++
++    if (ding_provider_implements('user', 'authenticate_finalize')) {
++      ding_provider_invoke('user', 'authenticate_finalize', $account);
++    }
+   }
+   catch (DingProviderUserAuthFailure $e) {
+     // Check if name and pass where filled out. These fields are not required

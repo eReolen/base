@@ -122,6 +122,22 @@
     }, 'json');
   };
 
+
+  /**
+   * Helper function for extracting src="" attribute value.
+   *
+   * @param str
+   * @returns {Array}
+   */
+  function extractSrc(str) {
+    var regex = /<script[^>]*src="([^"]*)"/g;
+    var arr, outp = [];
+    while ((arr = regex.exec(str))) {
+      outp.push(arr[1]);
+    }
+    return outp;
+  }
+
   /**
    * Processes a successful lazy-pane AJAX response.
    */
@@ -129,8 +145,17 @@
     Drupal.freezeHeight();
 
     for (var i in response) {
-      if (response[i]['command'] && this.commands[response[i]['command']]) {
-        this.commands[response[i]['command']](response[i], status);
+      if (response[i].method !== 'prepend') {
+        if (response[i].command && this.commands[response[i].command]) {
+          this.commands[response[i].command](response[i], status);
+        }
+      }
+      else {
+        var data_response = response[i].data;
+        var urls = extractSrc(data_response);
+        $.each(urls, function (i, url) {
+          $.get(url);
+        });
       }
     }
 

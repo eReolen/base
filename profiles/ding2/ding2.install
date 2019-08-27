@@ -480,14 +480,14 @@ function ding2_update_7032() {
  * Enable Mobilesearch module.
  */
 function ding2_update_7034() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
  * Set default variables for MobileSearch.
  */
 function ding2_update_7035() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
@@ -515,7 +515,7 @@ function ding2_update_7038() {
  * Enable E-resource module.
  */
 function ding2_update_7039() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
@@ -536,7 +536,7 @@ function ding2_update_7041() {
  * Enable the ding_ddbasic module.
  */
 function ding2_update_7042() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
@@ -550,14 +550,14 @@ function ding2_update_7043() {
  * Activate toggle_name theme setting
  */
 function ding2_update_7044() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
  * Disable toolbar module.
  */
 function ding2_update_7045() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
@@ -571,14 +571,14 @@ function ding2_update_7046() {
  * Enable ding_app_content_rss module.
  */
 function ding2_update_7047() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
  * Enable ding_app_variables module.
  */
 function ding2_update_7048() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
@@ -617,14 +617,14 @@ function ding2_update_7051() {
  * Enable CustomError modules.
  */
 function ding2_update_7052() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
  * Expand all menu items in the main menu.
  */
 function ding2_update_7053() {
-  // Re-move not need actions for ereolen.
+  // Removed, no action need for ereolen.
 }
 
 /**
@@ -639,4 +639,63 @@ function ding2_update_7054() {
  */
 function ding2_update_7055() {
   ding2_translation_update();
+}
+
+/**
+ * Enable ding_libs.
+ */
+function ding2_update_7056() {
+  module_enable(array('ding_libs'));
+}
+
+/**
+ * Enable Campaign plus module.
+ */
+function ding2_update_7057() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Enable Campaign plus extra modules.
+ */
+function ding2_update_7058() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Update translations.
+ */
+function ding2_update_7059() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Remove ding_webtrends module and clean up related settings.
+ */
+function ding2_update_7060() {
+  ding2_remove_module('ding_webtrends');
+  variable_del('webtrends_domain');
+  variable_del('webtrends_onsitedoms');
+  variable_del('webtrends_dcs_id');
+}
+
+/**
+ * Ensure ding_webtrekk is activated on existing installs.
+ */
+function ding2_update_7061() {
+  module_enable(array('ding_webtrekk'));
+}
+
+/**
+ * Update translations.
+ */
+function ding2_update_7062() {
+  ding2_translation_update();
+}
+
+/**
+ * Enable Section and Nodelist modules.
+ */
+function ding2_update_7063() {
+  // Removed, no action need for ereolen.
 }
