@@ -29,25 +29,6 @@
   }
 
   /**
-   * Make login link toggle login form.
-   */
-  Drupal.behaviors.loginFoldout = {
-    attach: function (context) {
-      // Only add the click-toggle behavior if we have a login form to toggle.
-      if ($('.main-login-form').length) {
-        $('.js-login-link', context).click(function (e) {
-          e.preventDefault();
-          var login = $('.pane-user-login');
-          login.toggle();
-          if (login.is(':visible')) {
-            login.find('#edit-name').focus();
-          }
-        });
-      }
-    }
-  };
-
-  /**
    * Toggle between grid and list view on results page.
    */
   Drupal.behaviors.searchResultsGridToggle = {

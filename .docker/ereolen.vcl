@@ -23,25 +23,11 @@ import directors;
 backend server0 {
     .host = "nginx0";
     .port = "80";
-    .probe = {
-        .url = "/";
-        .timeout = 5s;
-        .interval = 10s;
-        .window = 5;
-        .threshold = 3;
-    }
 }
 
 backend server1 {
     .host = "nginx1";
     .port = "80";
-    .probe = {
-        .url = "/";
-        .timeout = 5s;
-        .interval = 10s;
-        .window = 5;
-        .threshold = 3;
-    }
 }
 
 sub vcl_init {
@@ -89,7 +75,7 @@ sub vcl_recv {
       req.url ~ "^/user/" ||
       req.url ~ "^/flag/" ||
       req.url ~ "^.*/ajax/" ||
-      req.url ~ "/ahah/" || 
+      req.url ~ "/ahah/" ||
       req.url ~ "/edit" ||
       req.url ~ "/ding_availability" ||
       req.url ~ "^/feeds") {
