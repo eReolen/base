@@ -39,7 +39,7 @@ function publizon_reservation_list($account, $get_type = '', $reset = FALSE) {
       );
 
       // Throw exception if we're not logged in.
-      $creds = ding_user_get_creds($account);
+      $creds = ding_user_get_creds();
 
       $retailer_id = publizon_get_retailer_id($account);
 

@@ -135,7 +135,7 @@ function reol_loan_ding_entity_buttons($type, $entity) {
     if ($availability_list) {
       list($availability) = array_values($availability_list);
 
-      switch (_reol_loan_map_availability($availability)) {
+      switch (_reol_loan_map_availability($availability, $entity->id)) {
         case REOL_LOAN_STATUS_LOANABLE:
           $classes = array('btn', 'btn--loan', 'use-ajax');
           $buttons[] = reol_base_get_entity_button(t('Loan'), 'ting/object/' . $entity->id . '/loan', 'loan-' . $entity->id, $classes);
@@ -168,7 +168,7 @@ function reol_loan_ding_entity_is($entity, $is) {
     $availability_list = ding_availability_items(array($entity->localId));
     if ($availability_list) {
       list($availability) = array_values($availability_list);
-      if (_reol_loan_map_availability($availability) != REOL_LOAN_STATUS_RESERVABLE) {
+      if (_reol_loan_map_availability($availability, $entity->id) != REOL_LOAN_STATUS_RESERVABLE) {
         return FALSE;
       }
     }
@@ -213,31 +213,47 @@ function reol_loan_is_right_type(TingEntity $entity) {
  *
  * @param array $availability
  *   Availability received from provider.
+ * @param $ding_entity_id
+ *   The Id of the entity to map availability for.
  *
  * @return int
  *   The status ints from the top of this file.
  */
-function _reol_loan_map_availability(array $availability) {
+function _reol_loan_map_availability(array $availability, $ding_entity_id) {
   // Titles might have the special notloanable-status. This happens when titles
   // are removed. This should trump everything.
   if (@$availability['notloanable']) {
     return REOL_LOAN_STATUS_NOT_LOANABLE;
   }
 
-  // Loaned and reserved indexes might not be set. It is okay,
-  // to ignore errors, if they are not set, they should be FALSE.
-  if (@$availability['loaned']) {
-    return REOL_LOAN_STATUS_LOANED;
+  // If users is logged in enrich the availability array with user related data
+  // which was fetched at login time.
+  if (user_is_logged_in()) {
+    global $user;
+    $loans = ding_provider_invoke('loan', 'list', $user);
+    if (array_key_exists($ding_entity_id, $loans)) {
+      return REOL_LOAN_STATUS_LOANED;
+    }
+    else {
+      $list = ding_provider_invoke('reservation', 'list', $user);
+      foreach ($list as $reservations) {
+        foreach ($reservations as $reservation) {
+          if ($reservation->getEntity()->id == $ding_entity_id) {
+            return REOL_LOAN_STATUS_RESERVED;
+          }
+        }
+      }
+    }
   }
-  elseif ($availability['available']) {
+
+  if ($availability['available']) {
     return REOL_LOAN_STATUS_LOANABLE;
-  }
-  elseif (@$availability['reserved']) {
-    return REOL_LOAN_STATUS_RESERVED;
   }
   elseif ($availability['reservable']) {
     return REOL_LOAN_STATUS_RESERVABLE;
   }
+
+  return REOL_LOAN_STATUS_NOT_LOANABLE;
 }
 
 /**
