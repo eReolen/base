@@ -202,7 +202,7 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
       if ($availability_list) {
         list($availability) = array_values($availability_list);
 
-        $avail_mapped = _reol_loan_map_availability($availability);
+        $avail_mapped = _reol_loan_map_availability($availability, $entity->id);
         $loaned = $avail_mapped == REOL_LOAN_STATUS_LOANED;
         $available = $avail_mapped == REOL_LOAN_STATUS_LOANABLE || $avail_mapped == REOL_LOAN_STATUS_RESERVABLE;
         $type_class = reol_base_get_type_class($entity->type);

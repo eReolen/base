@@ -19,7 +19,7 @@
  */
 function publizon_bookmark_list($account) {
   // Throw exception if we're not logged in.
-  $creds = ding_user_get_creds($account);
+  $creds = ding_user_get_creds();
 
   $retailer_id = publizon_get_retailer_id($account);
 
@@ -48,7 +48,7 @@ function publizon_bookmark_list($account) {
  */
 function publizon_bookmark_create($account, $local_id) {
   // Throw exception if we're not logged in.
-  $creds = ding_user_get_creds($account);
+  $creds = ding_user_get_creds();
 
   $retailer_id = publizon_get_retailer_id($account);
 
@@ -80,7 +80,7 @@ function publizon_bookmark_create($account, $local_id) {
  */
 function publizon_bookmark_delete($account, $local_id) {
   // Throw exception if we're not logged in.
-  $creds = ding_user_get_creds($account);
+  $creds = ding_user_get_creds();
 
   $retailer_id = publizon_get_retailer_id($account);
 

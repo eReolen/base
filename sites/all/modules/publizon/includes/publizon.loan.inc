@@ -129,7 +129,7 @@ function publizon_loan_create($account, $local_id) {
  */
 function publizon_loan_get($account, $local_id) {
   // This will throw exception if not logged in.
-  $creds = ding_user_get_creds($account);
+  $creds = ding_user_get_creds();
 
   $retailer_id = publizon_get_retailer_id($account);
   $isbn = reol_base_get_isbn($local_id);
