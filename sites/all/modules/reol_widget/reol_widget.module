@@ -11,9 +11,13 @@ use Drupal\reol_widget\Controller\SearchController;
  * Implements hook_menu().
  */
 function reol_widget_menu() {
+  $items = [];
+
   $items['widget/search'] = [
     'page callback' => 'reol_widget_search',
     'access arguments' => ['access content'],
+    'type' => MENU_CALLBACK,
+    'delivery callback' => 'ding_varnish_page_delivery',
   ];
 
   return $items;
@@ -24,5 +28,5 @@ function reol_widget_menu() {
  */
 function reol_widget_search() {
   $controller = new SearchController();
-  $controller->search();
+  return $controller->search();
 }

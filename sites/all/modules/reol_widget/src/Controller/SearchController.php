@@ -92,11 +92,14 @@ class SearchController {
       }
 
       // @see http://jsonapi.org/
-      drupal_json_output([
-        'meta' => $meta,
-        'links' => $links,
-        'data' => $data,
-      ]);
+      return [
+        'max_age' => 3600,
+        'content' => [
+          'meta' => $meta,
+          'links' => $links,
+          'data' => $data,
+        ]
+      ];
     }
     catch (\Exception $exception) {
       drupal_add_http_header('status', '400 Bad Request');
@@ -106,6 +109,7 @@ class SearchController {
           'title' => $exception->getMessage(),
         ],
       ]);
+      drupal_exit();
     }
   }
 
