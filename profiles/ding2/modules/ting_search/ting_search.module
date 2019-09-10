@@ -133,6 +133,10 @@ function ting_search_theme($existing, $type, $theme, $path) {
       'file'      => 'ting_search.pages.inc',
       'template'  => 'templates/ting-search-results',
     ),
+    'ting_search_results_count' => array(
+      'variables' => array('count' => NULL),
+      'template'  => 'templates/ting-search-results-count',
+    ),
     'ting_search_mini_pager' => array(
       'variables' => array(
         'tags' => array(),
@@ -206,14 +210,6 @@ function ting_search_form_search_block_form_alter(&$form, &$form_state, $form_id
     '#default_value' => isset($_GET['size']) ? (int) $_GET['size'] : FALSE,
     '#attributes' => array('id' => 'controls_search_size'),
   );
-
-  switch (variable_get('ting_search_form_style', TING_SEARCH_FORM_STYLE_NORMAL)) {
-    case TING_SEARCH_FORM_STYLE_EXTENDED:
-      $form['search_extended_open_button'] = array(
-        '#markup' => '<a href="#" class="search-extended-button">Search extended button</a>',
-      );
-      break;
-  }
 
   // Completely take over the search form submit flow, by removing the default
   // search_box_form_submit handler replacing it with our own as the first.

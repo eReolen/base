@@ -8,7 +8,7 @@
 /**
  * Publizon provider exception.
  */
-class PublizonDingProviderException extends DingProviderUserException {
+class PublizonDingProviderException extends DingProviderEnduserException {
   private $showBookmark;
   private $showReserve;
   private $exception;

@@ -452,6 +452,7 @@ function workflow_schema() {
     'primary key' => array('hid'),
     'indexes' => array(
       'sid' => array('entity_type', 'nid', 'sid'),
+      'nid' => array('nid'),
     ),
   );
   $schema['workflow_node'] = array(
@@ -771,4 +772,13 @@ function workflow_update_7015() {
 
   // The update system is going to flush all caches,
   // including the updated Rules Action, so nothing to do here.
+}
+
+/**
+ * Add an index to {workflow_node_history}.nid.
+ */
+function workflow_update_7016() {
+  if (db_field_exists('workflow_node_history', 'nid') && !db_index_exists('workflow_node_history', 'nid')) {
+    db_add_index('workflow_node_history', 'nid', array('nid'));
+  }
 }

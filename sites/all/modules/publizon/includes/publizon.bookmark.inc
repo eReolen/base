@@ -19,7 +19,7 @@
  */
 function publizon_bookmark_list($account) {
   // Throw exception if we're not logged in.
-  $creds = ding_user_get_creds($account);
+  $creds = ding_user_get_creds();
 
   $retailer_id = publizon_get_retailer_id($account);
 
@@ -48,7 +48,7 @@ function publizon_bookmark_list($account) {
  */
 function publizon_bookmark_create($account, $local_id) {
   // Throw exception if we're not logged in.
-  $creds = ding_user_get_creds($account);
+  $creds = ding_user_get_creds();
 
   $retailer_id = publizon_get_retailer_id($account);
 
@@ -56,6 +56,7 @@ function publizon_bookmark_create($account, $local_id) {
     // Add to checklist in Publizon.
     $client = PublizonChecklistClient::getClient();
     $client->addChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+
     if (module_exists('ding_session_cache')) {
       ding_session_cache_clear('reol_bookmark', 'bookmarks');
     }
@@ -79,7 +80,7 @@ function publizon_bookmark_create($account, $local_id) {
  */
 function publizon_bookmark_delete($account, $local_id) {
   // Throw exception if we're not logged in.
-  $creds = ding_user_get_creds($account);
+  $creds = ding_user_get_creds();
 
   $retailer_id = publizon_get_retailer_id($account);
 
@@ -87,6 +88,7 @@ function publizon_bookmark_delete($account, $local_id) {
     // Delete from checklist in Publizon.
     $client = PublizonChecklistClient::getClient();
     $client->deleteChecklistItem($retailer_id, $creds['name'], reol_base_get_isbn($local_id));
+
     if (module_exists('ding_session_cache')) {
       ding_session_cache_clear('reol_bookmark', 'bookmarks');
     }

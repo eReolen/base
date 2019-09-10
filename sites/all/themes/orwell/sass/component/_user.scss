@@ -1,23 +1,26 @@
 @import 'bootstrap/bootstrap';
 
-.user-login {
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  height: 5rem;
-
-  @include grid-media($medium) {
-    height: 5rem;
-  }
-
-  a {
+.topbar .menu-name-main-menu {
+  a.user-login-link,
+  a.user-login-link:hover,
+  a.user-logged-in-link,
+  a.user-logged-in-link:hover {
     font-size: 0;
     color: transparent;
-    padding: 0 1rem;
+    background: transparent;
   }
 
-  &__link {
+  li:last-child {
+    position: absolute;
+    top: 15px;
+
+    @include grid-media($medium) {
+      right: 35px;
+      top: 0;
+    }
+  }
+
+  .user-login-link {
     &::before {
       @include icon();
       font-size: 28px;
@@ -28,7 +31,7 @@
     }
   }
 
-  &__profile-link {
+  .user-logged-in-link {
     &::before {
       @include icon();
       font-size: 2rem;

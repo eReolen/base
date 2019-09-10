@@ -28,42 +28,9 @@ function orwell_form_search_block_form_alter(&$form, &$form_state) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
- */
-function orwell_form_user_login_block_alter(&$form, &$form_state) {
-  // Hide links.
-  $form['links']['#access'] = FALSE;
-
-  // Add validate handler so we can detect failed login.
-  $form['#validate'][] = 'orwel_form_user_login_block_validate';
-}
-
-/**
- * Form validate callback.
- *
- * Makes a note if the login failed.
- */
-function orwel_form_user_login_block_validate(&$form, &$form_state) {
-  $failed = &drupal_static('orwell_login_failed', FALSE);
-
-  // If UID is not set, login failed.
-  if (empty($form_state['uid'])) {
-    $failed = TRUE;
-  }
-}
-
-/**
  * Preprocess html element.
- *
- * Adds a class to body when the login failed.
  */
 function orwell_preprocess_html(&$vars) {
-  $failed = &drupal_static('orwell_login_failed', FALSE);
-  if (!$failed) {
-    // Hide the main login form unless the user just failed logging in.
-    $vars['classes_array'][] = 'hide-login';
-  }
-
   $tags = array(
     // Add tags for mobile devices.
     // iOS.

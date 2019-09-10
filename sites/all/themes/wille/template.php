@@ -334,3 +334,12 @@ function _wille_alter_brightness($colourstr, $steps) {
 
   return '#' . dechex($r) . dechex($g) . dechex($b);
 }
+
+/**
+ * Implemnets hook_js_alter(),
+ *
+ * Unload ding2 related javascript since it breaks width on search filter select.
+ */
+function wille_js_alter(&$javascript) {
+  unset($javascript['profiles/ding2/modules/ding_ting_frontend/js/select_autosize.js']);
+}

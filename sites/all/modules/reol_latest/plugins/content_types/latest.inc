@@ -27,7 +27,10 @@ function latest_content_type_render($subtype, $conf, $panel_args, $context) {
   }
 
   // There might be no latest.
-  if ($ting_entities = reol_latest_get_latest_count($conf['count'] ? $conf['count'] : 5, !empty($type) ? $type : FALSE)) {
+  $count = $conf['count'] ? $conf['count'] : 5;
+  $type = !empty($type) ? $type : '';
+  $ting_entities = reol_latest_get_latest_count($count, $type);
+  if (!empty($ting_entities)) {
     $ting_rendered = array();
     foreach ($ting_entities as $ting_entity) {
       $ting_rendered[] = array(

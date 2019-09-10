@@ -11,8 +11,7 @@ index 10e5bd4d..03684fab 100644
  dependencies[] = ding_staff
  dependencies[] = bpi
 -dependencies[] = ding_p2_installer
--dependencies[] = ding_campaign
- 
+
  ; Cache/performance modules
  dependencies[] = entitycache
 diff --git a/profiles/ding2/ding2.install b/profiles/ding2/ding2.install
@@ -73,27 +72,3 @@ index 2494dad6..59a54423 100644
  dependencies[] = ting_reference
  dependencies[] = ting_relation
  dependencies[] = ting_search
-diff --git a/sites/all/modules/breol/breol_base/breol_base.install b/sites/all/modules/breol/breol_base/breol_base.install
-index 10f1437a..7f3deb56 100644
---- a/sites/all/modules/breol/breol_base/breol_base.install
-+++ b/sites/all/modules/breol/breol_base/breol_base.install
-@@ -11,7 +11,6 @@
- function breol_base_update_7101() {
-   $modules = array(
-     'ding_bookmark',
--    'ding_frontpage',
-     'ding_groups',
-     'ding_news',
-     'ding_tabroll',
-diff --git a/sites/all/modules/reol_base/reol_base.install b/sites/all/modules/reol_base/reol_base.install
-index 0497524b..4ab0b463 100644
---- a/sites/all/modules/reol_base/reol_base.install
-+++ b/sites/all/modules/reol_base/reol_base.install
-@@ -43,7 +43,6 @@ function reol_base_install() {
- function reol_base_update_7101() {
-   $modules = array(
-     'ding_bookmark',
--    'ding_frontpage',
-     'ding_groups',
-     'ding_news',
-     'ding_tabroll',

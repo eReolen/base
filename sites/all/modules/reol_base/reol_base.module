@@ -141,6 +141,32 @@ function reol_base_init() {
 }
 
 /**
+ * Implements hook_form_alter().
+ */
+function reol_base_form_alter(&$form, &$form_state, $form_id) {
+  switch ($form_id) {
+    case 'user_login':
+    case 'user_login_block':
+      // Remove into text from DDB core.
+      if (!empty($form['intro_text'])) {
+        unset($form['intro_text']);
+      }
+
+      // Change the login fields.
+      unset($form['user_login_container']['name']['#attributes']['placeholder']);
+      $form['user_login_container']['name']['#title_display'] = 'before';
+      unset($form['user_login_container']['pass']['#attributes']['placeholder']);
+      $form['user_login_container']['pass']['#title_display'] = 'before';
+      break;
+
+    case 'ding_loan_loans_form':
+    case 'ding_reservation_reservations_notready_form':
+      $form['actions_container']['#access'] = FALSE;
+      break;
+  }
+}
+
+/**
  * Implements hook_strongarm_import_value_alter()
  */
 function reol_base_strongarm_import_value_alter(&$value, $name) {
@@ -961,20 +987,6 @@ function _reol_base_remove_node_type($type) {
 }
 
 /**
- * Implements hook_user_role_insert().
- *
- * Disable autologout for newly created role.
- */
-function reol_base_user_role_insert($role) {
-  // Make sure role base timeout is enabled.
-  variable_set('autologout_role_logout', TRUE);
-
-  // Set autologout to 0 for this role.
-  variable_set('autologout_role_' . $role->rid, TRUE);
-  variable_set('autologout_role_' . $role->rid . '_timeout', 0);
-}
-
-/**
  * Implements hook_ctools_plugin_directory().
  */
 function reol_base_ctools_plugin_directory($owner, $plugin_type) {
@@ -986,6 +998,8 @@ function reol_base_ctools_plugin_directory($owner, $plugin_type) {
  */
 function reol_base_login_ajax() {
   $commands = array();
+
+  ctools_add_js('ajax-responder');
 
   // Check if the logged in user is a library user.
   if (!user_is_logged_in()) {
@@ -1089,7 +1103,7 @@ function reol_base_entity_ajax_form($popup_id, callable $callback, $entity) {
       $html .= reol_base_get_modal_close_button(t('OK'), $popup_id);
       $commands[] = ajax_command_ding_popup($popup_id, t('Error'), $html, array('refresh' => TRUE));
     }
-    catch (DingProviderUserException $exception) {
+    catch (DingProviderEnduserException $exception) {
       // Some error occurred, show it.
       $commands[] = ajax_command_ding_popup($popup_id, t('Error'), '<p>' . $exception->getMessageT(array()) . '</p>', array('refresh' => TRUE));
     }

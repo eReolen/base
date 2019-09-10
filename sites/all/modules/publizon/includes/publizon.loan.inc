@@ -15,6 +15,9 @@
  *
  * @return array
  *   Array containing the loans for the user.
+ *
+ * @throws DingProviderAuthException
+ *   Is thrown if user is not logged in.
  */
 function publizon_loan_list($account, $reset = FALSE) {
   $results = &drupal_static(__FUNCTION__, NULL);
@@ -26,7 +29,7 @@ function publizon_loan_list($account, $reset = FALSE) {
     }
 
     // If both static cache and session cache failed, try reloading information
-    // from FBS.
+    // from publizon.
     if (is_null($results) || $reset) {
       $retailer_id = publizon_get_retailer_id($account);
 
@@ -81,6 +84,11 @@ function publizon_loan_list($account, $reset = FALSE) {
  *   The account that tries to create a loan.
  * @param string $local_id
  *   The local id of the ting object the user is trying to loan.
+ *
+ * @throws DingProviderAuthException
+ *   Is thrown if user is not logged in.
+ * @throws PublizonDingProviderException
+ *
  */
 function publizon_loan_create($account, $local_id) {
   $retailer_id = publizon_get_retailer_id($account);
@@ -115,10 +123,13 @@ function publizon_loan_create($account, $local_id) {
  *
  * @return array
  *   Array containing order-id and retailer-id.
+ *
+ * @throws DingProviderAuthException
+ *   Is thrown if user is not logged in.
  */
 function publizon_loan_get($account, $local_id) {
   // This will throw exception if not logged in.
-  $creds = ding_user_get_creds($account);
+  $creds = ding_user_get_creds();
 
   $retailer_id = publizon_get_retailer_id($account);
   $isbn = reol_base_get_isbn($local_id);
