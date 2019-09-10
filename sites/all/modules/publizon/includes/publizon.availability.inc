@@ -81,11 +81,11 @@ function publizon_availability_items(array $local_ids) {
       $data = array(
         'available' => $status == 4 || $status == 3,
         'reservable' => $status == 5,
-        'loaned' => $status == 1,
-        'reserved' => $status == 2,
-        // Always set to FALSE to ensure that this is cacheable for anonymous
-        // users. This information will be fetched from the logged in user's
-        // cache.
+        // Always set the next 3 to FALSE to ensure that this is cacheable for
+        // anonymous users. This information will be fetched from the logged
+        // in user's cache.
+        'loaned' => FALSE,
+        'reserved' => FALSE,
         'bookmarked' => FALSE,
         'notloanable' => $status == 0,
       );

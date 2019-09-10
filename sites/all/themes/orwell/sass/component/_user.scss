@@ -1,16 +1,6 @@
 @import 'bootstrap/bootstrap';
 
-.user-login {
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  height: 5rem;
-
-
-}
-
-.menu-name-main-menu {
+.topbar .menu-name-main-menu {
   a.user-login-link,
   a.user-login-link:hover,
   a.user-logged-in-link,
