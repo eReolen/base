@@ -59,18 +59,22 @@ services:
       - MEMCACHED_CACHE_SIZE=64
 
   redis:
-    image: 'redis:3'
+    image: 'redis:5'
     ports:
       - '6379'
 
   varnish:
-    image: 'wodby/varnish:4'
+    image: 'hermsi/alpine-varnish:5'
     depends_on:
       - nginx0
       - nginx1
+    ports:
+      - '80'
+      - '6082'
     environment:
-      VARNISHD_VCL_SCRIPT: /etc/varnish/ereolen.vcl
-      VARNISH_SECRET: eca2b7c263eae74c0d746f147691e7ce
+      VARNISH_PORT: '80'
+      VARNISH_VCL_PATH: /etc/varnish/ereolen.vcl
+      VARNISH_RAM_STORAGE: 265M
     volumes:
       - ${PWD}/.docker/ereolen.vcl:/etc/varnish/ereolen.vcl:ro
     labels:

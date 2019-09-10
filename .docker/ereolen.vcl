@@ -1,15 +1,3 @@
-#
-# This is an VCL file for eReolen.
-#
-# Created by merging the Varnish 3 VCL for Ding2 (originally based on
-# [1]) with Mateusz Papiernik' Varnish 4 VCL for Drupal [2], with
-# tender love.
-#
-# [1] https://fourkitchens.atlassian.net/wiki/display/TECH/Configure+Varnish+3+for+Drupal+7
-# [2] https://www.digitalocean.com/community/tutorials/how-to-speed-up-your-drupal-7-website-with-varnish-4-on-ubuntu-14-04-and-debian-7
-#
-# Might be useful for Ding2 sites in general.
-#
 # Marker to tell the VCL compiler that this VCL has been adapted to the
 # new 4.0 format.
 vcl 4.0;
@@ -19,17 +7,19 @@ vcl 4.0;
 import std;
 import directors;
 
-# Default backend definition. Set this to point to your content server.
+# Backend server 0.
 backend server0 {
     .host = "nginx0";
     .port = "80";
 }
 
+# Backend server 1.
 backend server1 {
     .host = "nginx1";
     .port = "80";
 }
 
+# Group the backend servers into an director to use varnish as load balancing.
 sub vcl_init {
     new servers = directors.round_robin();
     servers.add_backend(server0);
@@ -37,29 +27,13 @@ sub vcl_init {
 }
 
 sub vcl_recv {
-  # send all traffic to the bar director:
+  # Send all traffic to the a backend server:
   set req.backend_hint = servers.backend();
 
   # Remove HTTP Authentication. Assume that any basic auth is handled
   # before reaching us and remove the header, as it messes with
   # caching.
   unset req.http.Authorization;
-
-  # The search-blank hack in ting_search doesn't work. Remove it for
-  # the moment.
-  if (req.url ~ "\?q=search-blank") {
-    set req.url = regsuball(req.url, "\?q=search-blank", "");
-  }
-
-  # Ensure that ding_wayf and SimpleSAMLphp is not cached.
-  if (req.url ~ "^/simplesaml" || req.url ~ "^/wayf") {
-    return (pipe);
-  }
-
-  # Pipe these paths directly to Apache/NginX for streaming.
-  if (req.url ~ "^/admin/content/backup_migrate/export") {
-    return (pipe);
-  }
 
   if (req.method != "GET" && req.method != "HEAD") {
     # We only deal with GET and HEAD by default.
@@ -74,24 +48,23 @@ sub vcl_recv {
       req.url ~ "^/user$" ||
       req.url ~ "^/user/" ||
       req.url ~ "^/flag/" ||
-      req.url ~ "^.*/ajax/" ||
-      req.url ~ "/ahah/" ||
       req.url ~ "/edit" ||
       req.url ~ "/ding_availability" ||
       req.url ~ "^/feeds") {
         return (pass);
   }
 
-  # Use anonymous, cached pages if all backends are down.
+  # Use anonymous, cached pages if all backend's are down.
   if (!std.healthy(req.backend_hint)) {
     unset req.http.Cookie;
   }
 
   # Always cache the following file types for all users.
-  if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js)(\?[\w\d=\.\-]+)?$") {
+  if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js|json)(\?[\w\d=\.\-]+)?$") {
     unset req.http.Cookie;
   }
 
+  # Special DDB CMS handling to check if a given page can be cached by logged in users.
   if (req.restarts == 0 && (req.method == "GET" || req.method == "HEAD")) {
     # Ignore any X-Drupal-Roles from the client.
     unset req.http.X-Drupal-Roles;
@@ -104,66 +77,21 @@ sub vcl_recv {
     return (hash);
   }
 
-  # Remove all cookies that are not necessary for Drupal to work
-  # properly. Since it would be cumbersome to REMOVE certain
-  # cookies, we specify which ones are of interest to us, and remove
-  # all others. In this particular case we leave SESS, SSESS and
-  # NO_CACHE cookies used by Drupal's administrative interface.
-  # Cookies in cookie header are delimited with ";", so when there
-  # are many cookies, the header looks like "Cookie1=value1;
-  # Cookie2=value2; Cookie3..." and so on. That allows us to work
-  # with ";" to split cookies into individual ones.
-  # Cookies are only removed for non-logged in users,
-  # those with role 1 (anonymous user).
-  if (req.http.Cookie && req.http.X-Drupal-Roles == "1") {
-    # 1. We add ; to the beginning of cookie header
-    set req.http.Cookie = ";" + req.http.Cookie;
-    # 2. We remove spaces following each occurence of ";". After
-    # this operation all cookies are delimited with no spaces.
-    set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-    # 3. We replace ";" INTO "; " (adding the space we have
-    # previously removed) in cookies named SESS..., SSESS... and
-    # NO_CACHE. After this operation those cookies will be easy to
-    # differentiate from the others, because those will be the
-    # only one with space after ";"
-    set req.http.Cookie = regsuball(req.http.Cookie, ";(SESS[a-z0-9]+|SSESS[a-z0-9]+|NO_CACHE)=", "; \1=");
-    # 4. We remove all cookies with no space after ";", so
-    # basically we remove all cookies other than those above.
-    set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
-    # 5. We strip leading and trailing whitespace and semicolons.
-    set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+  # Remove all cookies that are not session cookies.
+  if (req.http.Cookie) {
+    # Save the original cookie header so we can mangle it
+    set req.http.X-Varnish-PHP_SID = req.http.Cookie;
+    set req.http.X-Varnish-PHP_SID = regsuball(req.http.X-Varnish-PHP_SID, ";? ?(SESS[a-z0-9]+|SSESS[a-z0-9]+|NO_CACHE)=([a-zA-Z0-9]+)( |;| ;).*","\1");
 
-    # If there are no cookies after our striping procedure, we
-    # remove the header altogether, thus allowing Varnish to cache
-    # this page
-    if (req.http.Cookie == "") {
+    // If not cookies left unset the header.
+    if (req.http.X-Varnish-PHP_SID == "") {
       unset req.http.Cookie;
     }
-    # if any of our cookies of interest are still there, we disable
-    # caching and pass the request straight to Apache/NginX and Drupal
     else {
-      return (pass);
+      // There where a session cookie so lets set it back,
+      set req.http.Cookie = req.http.X-Varnish-PHP_SID;
     }
-  }
-
-  # Handle compression correctly. Different browsers send different
-  # "Accept-Encoding" headers, even though they mostly all support the same
-  # compression mechanisms. By consolidating these compression headers into
-  # a consistent format, we can reduce the size of the cache and get more hits.
-  # @see: http:// varnish.projects.linpro.no/wiki/FAQ/Compression
-  if (req.http.Accept-Encoding) {
-    if (req.http.Accept-Encoding ~ "gzip") {
-      # If the browser supports it, we'll use gzip.
-      set req.http.Accept-Encoding = "gzip";
-    }
-    else if (req.http.Accept-Encoding ~ "deflate") {
-      # Next, try deflate if it is supported.
-      set req.http.Accept-Encoding = "deflate";
-    }
-    else {
-      # Unknown algorithm. Remove it and send unencoded.
-      unset req.http.Accept-Encoding;
-    }
+    unset req.http.X-Varnish-PHP_SID;
   }
 
   # Look up in the cache. ding_varnish sets the appropiate Vary
@@ -172,13 +100,18 @@ sub vcl_recv {
 }
 
 sub vcl_backend_response {
-  # Allow items to be stale if needed.
-  set beresp.grace = 6h;
+  // Compress content if backend don't do it.
+  if (beresp.http.content-type ~ "text") {
+    set beresp.do_gzip = true;
+  }
 
-  # We need this to cache 404s, 301s, 500s. Otherwise, depending on backend but
-  # definitely in Drupal's case these responses are not cacheable by default.
-  if (beresp.status == 404 || beresp.status == 301) {
-#  if (beresp.status == 404 || beresp.status == 301 || beresp.status == 500) {
+  # Allow items to be stale if needed.
+  if (beresp.http.ETag || beresp.http.Last-Modified) {
+    set beresp.keep = 30m;
+  }
+
+  # We need this to cache 404s, 301s and 500s.
+  if (beresp.status == 404 || beresp.status == 301 || beresp.status == 500) {
     set beresp.ttl = 10m;
   }
 
@@ -188,14 +121,8 @@ sub vcl_backend_response {
   # is possible for files generated dynamically by Drupal. Those
   # cookies are unnecessary, but could prevent files from being
   # cached.
-  if (bereq.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js)(\?[\w\d=\.\-]+)?$") {
+  if (bereq.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js|json)(\?[\w\d=\.\-]+)?$") {
     unset beresp.http.set-cookie;
-  }
-
-  # If ding_varnish has marked the page as cachable simply deliver is to make
-  # sure that it's cached.
-  if (beresp.http.X-Drupal-Varnish-Cache) {
-    return (deliver);
   }
 
   # Varnish actually honors Cache-Control: no-cache, despite the
@@ -203,10 +130,15 @@ sub vcl_backend_response {
   # set no-cache in order to stop browsers from caching too much, so
   # we need to pass it through. We do this by copying it here and
   # fudge it. It's then restored in vcl_deliver.
-  # See https://www.varnish-ca che.org/trac/browser/bin/varnishd/default.vcl?rev=791321739fccc7fe5bfaabbad99b0d81b792c1f8&order=name
   if (beresp.http.Cache-Control) {
     set beresp.http.X-Orig-Cache-Control = beresp.http.Cache-Control;
     set beresp.http.Cache-Control = regsuball(beresp.http.Cache-Control, "no-cache", "");
+  }
+
+  # If ding_varnish has marked the page as cachable simply deliver is to make
+  # sure that it's cached.
+  if (beresp.http.X-Drupal-Varnish-Cache) {
+    return (deliver);
   }
 }
 
