@@ -228,8 +228,8 @@ function _reol_loan_map_availability(array $availability, $ding_entity_id) {
 
   // If users is logged in enrich the availability array with user related data
   // which was fetched at login time.
-  if (user_is_logged_in()) {
-    global $user;
+  global $user;
+  if (user_is_logged_in() && ding_user_is_provider_user($user)) {
     $loans = ding_provider_invoke('loan', 'list', $user);
     if (array_key_exists($ding_entity_id, $loans)) {
       return REOL_LOAN_STATUS_LOANED;
