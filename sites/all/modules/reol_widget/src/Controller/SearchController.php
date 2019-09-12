@@ -43,7 +43,6 @@ class SearchController {
         $query .= ' AND ' . implode(' AND ', $facet_array);
       }
 
-      $sort = $this->getSort($parameters);
       if ($sort = $this->getSort($parameters)) {
         $options['sort'] = $sort;
       }
