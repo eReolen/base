@@ -57,52 +57,35 @@ function publizon_availability_items(array $local_ids) {
     return $results;
   }
 
-  try {
-    global $user;
+  // Use not-logged-in user state to get cacheable availability.
+  $client = PublizonLoanClient::getClient();
+  $loan_status_list = $client->getProductLoanStatusList(variable_get('publizon_default_retailer', ''), array_keys($to_check), NULL);
+  foreach ($loan_status_list as $loan_status) {
+    $isbn = $loan_status->isbn;
+    $status = $loan_status->loanStatus;
 
-    // This will throw exception if not logged in.
-    $creds = ding_user_get_creds();
-    $retailer_id = publizon_get_retailer_id($user);
-    $card_number = $creds['name'];
-  }
-  catch (DingProviderAuthException $e) {
-    // If no user is logged in, try with the default retailer.
-    $retailer_id = variable_get('publizon_default_retailer', '');
-    $card_number = NULL;
-  }
+    $data = array(
+      'available' => $status == 4 || $status == 3,
+      'reservable' => $status == 5,
+      // Always set the next 3 to FALSE to ensure that this is cacheable for
+      // anonymous users. This information will be fetched from the logged
+      // in user's cache.
+      'loaned' => FALSE,
+      'reserved' => FALSE,
+      'bookmarked' => FALSE,
+      'notloanable' => $status == 0,
+    );
 
-  try {
-    $client = PublizonLoanClient::getClient();
-    $loan_status_list = $client->getProductLoanStatusList($retailer_id, array_keys($to_check), $card_number);
-    foreach ($loan_status_list as $loan_status) {
-      $isbn = $loan_status->isbn;
-      $status = $loan_status->loanStatus;
+    $key = $to_check[$isbn];
+    $results[$key] = $data;
 
-      $data = array(
-        'available' => $status == 4 || $status == 3,
-        'reservable' => $status == 5,
-        // Always set the next 3 to FALSE to ensure that this is cacheable for
-        // anonymous users. This information will be fetched from the logged
-        // in user's cache.
-        'loaned' => FALSE,
-        'reserved' => FALSE,
-        'bookmarked' => FALSE,
-        'notloanable' => $status == 0,
-      );
-      $key = $to_check[$isbn];
-      $results[$key] = $data;
+    // Store in cache
+    $static_cache[$key] = $data;
 
-      // Store in cache
-      $static_cache[$key] = $data;
-
-      // Store the loans into ding session cache.
-      $cid = 'availability_' . $key;
-      $expire = variable_get('publizon_availability_expire', 3600);
-      cache_set($cid, $data, 'cache', REQUEST_TIME + $expire);
-    }
-  }
-  catch (PublizonException $e) {
-    watchdog('publizon', 'Error getting availability from publizon, error message: @error', array('@error' => $e->getMessage()), WATCHDOG_ERROR);
+    // Store the loans into ding session cache.
+    $cid = 'availability_' . $key;
+    $expire = variable_get('publizon_availability_expire', 3600);
+    cache_set($cid, $data, 'cache', REQUEST_TIME + $expire);
   }
 
   return $results;
