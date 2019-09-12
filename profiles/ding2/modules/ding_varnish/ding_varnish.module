@@ -53,11 +53,11 @@ function _ding_varnish_header() {
   global $user;
 
   // Cache response for 3 minutes to reduce request load on roll requests.
-  header('Cache-Control:public,max-age=180');
+  header('Cache-Control: public,  max-age=180');
 
   // Change the cache of this response on any criteria that may determine this
   // user is coming from a different device.
-  header('Vary: Accept-Encoding,Cookie,User-Agent');
+  header('Vary: Accept-Encoding ,Cookie, User-Agent');
 
   // Set custom X-Drupal-Roles header.
   header('X-Drupal-Roles: ' . implode(',', array_keys($user->roles)));
@@ -147,10 +147,10 @@ function ding_varnish_page_build() {
   // changes after a login and not server browser cached pages. We have to set
   // the header as Drupal do in bootstrap, as this will override the default
   // header for not logged in users.
-  drupal_add_http_header('Cache-Control', 'public,max-age=' . $max_age . ',no-cache');
+  drupal_add_http_header('Cache-Control', 'public, max-age=' . $max_age . ', no-cache');
 
   // Regardless, always vary on X-Drupal-Roles.
-  drupal_add_http_header('Vary', 'X-Drupal-Roles,Accept-Encoding');
+  drupal_add_http_header('Vary', 'X-Drupal-Roles, Accept-Encoding');
 }
 
 /**
@@ -173,4 +173,57 @@ function ding_varnish_flush_caches() {
  */
 function ding_varnish_change_maintenance_mode($maintenance_mode) {
   varnish_purge_all_pages();
+}
+
+/**
+ * Page callback to return json
+ *
+ * It also ensures that the result is cached in revers caches (eg. varnish) by
+ * setting the correct cache headers, which the normal drupal_json_output
+ * pattern don't.
+ *
+ * @param array $page_callback_result
+ *   Array indexed with 'max_age' to force cache and the 'content' key that can
+ *   be an array or an json encoded string. If max-age is set to '0' the cache
+ *   control header will not be set.
+ */
+function ding_varnish_page_delivery(array $page_callback_result) {
+  // Check the static variable form init.
+  $cacheable = &drupal_static('ding_varnish_init', FALSE);
+  $hook_boot_headers = drupal_get_http_header();
+  $max_age = !isset($_COOKIE[session_name()]) || isset($hook_boot_headers['vary']) ? variable_get('page_cache_maximum_age', 0) : 0;
+
+  if ($cacheable || array_key_exists('max_age', $page_callback_result)) {
+    if (array_key_exists('max_age', $page_callback_result)) {
+      $max_age = $page_callback_result['max_age'];
+    }
+    else {
+      $max_age = variable_get('page_cache_maximum_age', 0);
+    }
+
+    if ($max_age) {
+      // Set header to mark this as candidate for caching.
+      drupal_add_http_header('X-Drupal-Varnish-Cache', '1');
+    }
+  }
+
+  // If an max-age was found set cache control headers to make varnish cache the
+  // page.
+  if ($max_age > 0) {
+    drupal_add_http_header('Cache-Control', 'public, max-age=' . $max_age . ', no-cache');
+  }
+
+  // Regardless, always vary on X-Drupal-Roles.
+  drupal_add_http_header('Vary', 'X-Drupal-Roles, Accept-Encoding');
+
+  // If content is an string assume that some one else knows better how to
+  // encode the output else json encode it. Also set headers for json output.
+  if (is_string($page_callback_result['content'])) {
+    drupal_json_output();
+    echo $page_callback_result['content'];
+  }
+  else {
+    drupal_json_output($page_callback_result['content']);
+  }
+  drupal_exit();
 }

@@ -5,6 +5,7 @@ package = eReolen shared
 version = 7.x-1.1
 dependencies[] = features
 dependencies[] = reol_frontend
+dependencies[] = ding_varnish
 features[features_api][] = api:2
 features[field_base][] = field_show_in_app
 features[field_instance][] = node-article-field_show_in_app

@@ -6,6 +6,29 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function reol_feed_menu() {
+  $items = array();
+
+  $items['feed/json/node/%'] = array(
+    'page callback' => '_reol_feed_json_node',
+    'page arguments' => array(3),
+    'access callback' => '_reol_feed_json_node_access',
+    'access arguments' => array(3),
+    'delivery callback' => 'ding_varnish_page_delivery',
+  );
+
+  $items['feeds'] = array(
+    'page callback' => 'reol_feed_deliver',
+    // This callback should be public.
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
  * Implements hook_cron().
  */
 function reol_feed_cron() {
@@ -179,7 +202,6 @@ function reol_feed_get_feeds() {
       ),
       'lifetime' => 60 * 60,
     ),
-
   );
 }
 
@@ -227,28 +249,6 @@ function reol_feed_get_feeds_directory() {
  */
 function reol_feed_write_feed(array $file, $contents) {
   return file_put_contents(reol_feed_get_filename($file), $contents) !== FALSE;
-}
-
-/**
- * Implements hook_menu().
- */
-function reol_feed_menu() {
-  $items = array();
-
-  $items['feed/json/node/%'] = array(
-    'page callback' => '_reol_feed_json_node',
-    'page arguments' => array(3),
-    'access callback' => '_reol_feed_json_node_access',
-    'access arguments' => array(3),
-  );
-
-  $items['feeds'] = array(
-    'page callback' => 'reol_feed_deliver',
-    // This callback should be public.
-    'access callback' => TRUE,
-  );
-
-  return $items;
 }
 
 /**
@@ -382,6 +382,7 @@ function _reol_feed_json_node_access($node_type) {
  */
 function _reol_feed_json_node($node_type) {
   $base_url = $GLOBALS['base_url'];
+  $cache_ttl = '3600';
 
   // Cache the page.
   $newsletter_nodes = &drupal_static(__FUNCTION__);
@@ -412,10 +413,12 @@ function _reol_feed_json_node($node_type) {
 
         $newsletter_nodes[] = $node;
       }
-      cache_set('reol_feed_data', $newsletter_nodes, 'cache');
+      cache_set('reol_feed_data', $newsletter_nodes, 'cache', $cache_ttl);
     }
   }
 
-  drupal_json_output($newsletter_nodes);
-  drupal_exit();
+  return array(
+    'max_age' => $cache_ttl,
+    'content' => $newsletter_nodes,
+  );
 }
