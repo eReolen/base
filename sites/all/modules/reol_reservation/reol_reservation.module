@@ -227,10 +227,13 @@ function reol_reservation_get_reserve_button($entity) {
  * Implements hook_page_build().
  */
 function reol_reservation_page_build(&$page) {
-  global $user;
+  if (!user_is_logged_in()) {
+    return;
+  }
 
   // Add message displaying reservations ready.
   try {
+    global $user;
     $res = count(ding_provider_invoke('reservation', 'list', $user, DING_RESERVATION_READY));
 
     // Display notif if user has reservations ready.

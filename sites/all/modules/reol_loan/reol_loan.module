@@ -235,11 +235,18 @@ function _reol_loan_map_availability(array $availability, $ding_entity_id) {
       return REOL_LOAN_STATUS_LOANED;
     }
     else {
-      $list = ding_provider_invoke('reservation', 'list', $user);
-      foreach ($list as $reservations) {
-        foreach ($reservations as $reservation) {
+      $reservations = ding_provider_invoke('reservation', 'list', $user);
+      if (!empty($reservations['not_ready_for_pickup'])) {
+        foreach ($reservations['not_ready_for_pickup'] as $reservation) {
           if ($reservation->getEntity()->id == $ding_entity_id) {
             return REOL_LOAN_STATUS_RESERVED;
+          }
+        }
+      }
+      if (!empty($reservations['ready_for_pickup'])) {
+        foreach ($reservations['ready_for_pickup'] as $reservation) {
+          if ($reservation->getEntity()->id == $ding_entity_id) {
+            return REOL_LOAN_STATUS_LOANABLE;
           }
         }
       }
