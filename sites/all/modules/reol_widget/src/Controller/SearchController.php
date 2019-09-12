@@ -2,6 +2,10 @@
 
 namespace Drupal\reol_widget\Controller;
 
+use OpenSearch\OpenSearchTingSearchResult;
+use Ting\Search\TingSearchCommonFields;
+use Ting\Search\TingSearchSort;
+
 /**
  * Search controller.
  */
@@ -15,25 +19,24 @@ class SearchController {
       $this->extractQueryFromUrl();
       $parameters = drupal_get_query_parameters();
 
-      if (!isset($parameters['query'])) {
-        throw new \Exception('Empty query');
+      if (empty($parameters['query'])) {
+        throw new \RuntimeException('Empty query');
       }
 
       $query = $parameters['query'];
       $page = max(1, isset($parameters['page']) ? (int) $parameters['page'] : 0);
       $results_per_page = min(100, max(1, isset($parameters['results_per_page']) ? (int) $parameters['results_per_page'] : 10));
+      $sort = $this->getSort($parameters);
 
       $keys = $query;
       $conditions = reol_search_conditions_callback($keys);
-
-      module_load_include('inc', 'opensearch', 'TingSearchCqlDoctor.class');
-      $cqlDoctor = new \TingSearchCqlDoctor($keys);
-      $query = '(' . $cqlDoctor->string_to_cql() . ')';
-      $options['numFacets'] = variable_get('ting_search_number_of_facets', 25);
-      // Extend query with selected facets.
-      if (isset($conditions['facets']) && $conditions['facets'] != NULL) {
-        $facets = $conditions['facets'];
-        foreach ($facets as $facet) {
+      if (isset($conditions['facets'])) {
+        // @TODO: Is this the right way to handle facets?
+        module_load_include('inc', 'opensearch', 'TingSearchCqlDoctor.class');
+        $cqlDoctor = new \TingSearchCqlDoctor($keys);
+        $query = '(' . $cqlDoctor->string_to_cql() . ')';
+        // Extend query with selected facets.
+        foreach ($conditions['facets'] as $facet) {
           $facet = explode(':', $facet, 2);
           if ($facet[0]) {
             $facet_array[] = $facet[0] . '="' . rawurldecode($facet[1]) . '"';
@@ -43,22 +46,31 @@ class SearchController {
         $query .= ' AND ' . implode(' AND ', $facet_array);
       }
 
-      module_load_include('inc', 'opensearch', 'opensearch.client');
-      $result = opensearch_do_search($query, $page, $results_per_page, $options);
+      $query = ting_start_query()
+        ->withFullTextQuery($query)
+        ->withCount($results_per_page)
+        ->withPage($page)
+        ->withTermsPrFacet(variable_get('ting_search_number_of_facets', 25));
+      if (isset($sort['field'], $sort['direction'])) {
+        $query = $query->withSort($sort['field'], $sort['direction']);
+      }
+
+      $result = $query->execute();
 
       $meta = NULL;
       $data = NULL;
       $links = NULL;
-      if ($result) {
-        $covers = $this->getCovers($result);
-        $meta = $this->getMetadata($result, $page, $conditions, $query);
-        $links = $this->getLinks($result, $page, $results_per_page);
+      if ($result->getNumCollections() > 0) {
+        $collections = $result->getTingEntityCollections();
+        $covers = $this->getCovers($collections);
+        $meta = $this->getMetadata($result, $page);
+        $links = $this->getLinks($result, $page);
 
-        foreach ($result->collections as $collection) {
+        foreach ($result->getTingEntityCollections() as $collection) {
           /** @var \TingCollection $collection */
           /** @var \TingEntity $object */
           $object = $collection->getPrimary_object();
-          $cover = isset($covers[$collection->getId()]) ? $covers[$collection->getId()] : NULL;
+          $cover = $covers[$collection->getId()] ?? NULL;
           $url = url('ting/object/' . $collection->getId(), ['absolute' => TRUE]);
           $data[] = [
             'id' => $collection->getId(),
@@ -92,20 +104,20 @@ class SearchController {
       }
 
       // @see http://jsonapi.org/
-      drupal_json_output([
+      return [
         'meta' => $meta,
         'links' => $links,
         'data' => $data,
-      ]);
+      ];
     }
     catch (\Exception $exception) {
       drupal_add_http_header('status', '400 Bad Request');
-      drupal_json_output([
+      return [
         'errors' => [
           'status' => 400,
           'title' => $exception->getMessage(),
         ],
-      ]);
+      ];
     }
   }
 
@@ -136,19 +148,18 @@ class SearchController {
   /**
    * Get list of cover urls from search result.
    *
-   * @param \TingClientSearchResult $result
-   *   The search result.
+   * @param TingCollection[] $collections
+   *   The collections.
    * @param string $imageStyle
    *   The image style.
    *
    * @return array
    *   The covers.
    */
-  private function getCovers(\TingClientSearchResult $result, $imageStyle = 'ding_list_medium') {
-    $ids = [];
-    foreach ($result->collections as $collection) {
-      $ids[] = $collection->getId();
-    }
+  private function getCovers(array $collections, $imageStyle = 'ding_list_medium') {
+    $ids = array_map(function (\TingCollection $collection) {
+      return $collection->getId();
+    }, $collections);
 
     return array_map(function ($uri) use ($imageStyle) {
       $uri = image_style_url($imageStyle, $uri);
@@ -159,29 +170,30 @@ class SearchController {
 
   /**
    * Get search result metadata.
+   *
+   * @param \OpenSearch\OpenSearchTingSearchResult $result
+   *   The search result.
+   * @param int $page
+   *   The page.
+   *
+   * @return array
+   *   The metadata.
    */
-  private function getMetadata(\TingClientSearchResult $result, $page, $conditions, $query) {
-    if (!$result) {
-      return NULL;
-    }
-
+  private function getMetadata(OpenSearchTingSearchResult $result, $page) {
     return [
       'page' => $page,
-      'count' => (int) $result->numTotalCollections,
-      // 'conditions' => $conditions,
-      // 'query' => $query,
-      // 'url' => isset($_GET['url']) ? $_GET['url'] : null,.
+      'count' => (int) $result->getNumCollections($collections),
     ];
   }
 
   /**
    * Get links.
    */
-  private function getLinks(\TingClientSearchResult $result, $page) {
+  private function getLinks(OpenSearchTingSearchResult $result, $page) {
     $query = drupal_get_query_parameters();
 
     $links['self'] = $this->getUrl($query);
-    if (isset($result->more) && $result->more) {
+    if ($result->hasMoreResults()) {
       $links['next'] = $this->getUrl(['page' => $page + 1]);
     }
     if ($page > 1) {
@@ -209,6 +221,55 @@ class SearchController {
       unset($query[$key]);
     }
     return url(current_path(), ['absolute' => TRUE, 'query' => $query]);
+  }
+
+  /**
+   * Map from search field to TingSearchCommonFields constants.
+   *
+   * @var array
+   *
+   * @see _opensearch_search_map_common_sort_fields()
+   */
+  private static $searchFields = [
+    'acquisitionDate' => 'acquisitionDate',
+    // Supported by _opensearch_search_map_common_sort_fields().
+    'author' => TingSearchCommonFields::AUTHOR,
+    'date' => TingSearchCommonFields::DATE,
+    'title' => TingSearchCommonFields::TITLE,
+  ];
+
+  /**
+   * Get sort field and direction.
+   *
+   * @param array $parameters
+   *   The query string parameters.
+   * @param string $defaultField
+   *   The default search field.
+   * @param string $defaultDirection
+   *   The default search direction.
+   *
+   * @return array|null
+   *   The sort if any.
+   */
+  private function getSort(array $parameters, $defaultField = 'acquisitionDate', $defaultDirection = 'desc') {
+    $field = strtolower($parameters['sort']['field'] ?? $defaultField);
+    $direction = strtolower($parameters['sort']['direction'] ?? $defaultDirection);
+
+    // Check that sort field is valid. Otherwise, use default.
+    if (!isset(self::$searchFields[$field])) {
+      if (!isset(self::$searchFields[$defaultField])) {
+        return NULL;
+      }
+      $field = $defaultField;
+    }
+    $field = self::$searchFields[$field];
+
+    // Make sure that direction is valid.
+    $direction = (0 === strcasecmp(TingSearchSort::DIRECTION_DESCENDING, $direction))
+      ? TingSearchSort::DIRECTION_DESCENDING
+      : TingSearchSort::DIRECTION_ASCENDING;
+
+    return ['field' => $field, 'direction' => $direction];
   }
 
 }
