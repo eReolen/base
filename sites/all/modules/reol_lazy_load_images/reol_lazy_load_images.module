@@ -71,6 +71,38 @@ function reol_lazy_load_images_image_default_styles() {
     ],
   ];
 
+  $styles['reol_lazy_cover_podcast_placeholder'] = [
+    'label' => 'reol_lazy_cover_podcast_placeholder',
+    'effects' => [
+      1 => [
+        'name' => 'image_scale_and_crop',
+        'data' => [
+          'width' => 334,
+          'height' => 334,
+        ],
+        'weight' => 1,
+      ],
+      2 => [
+        'name' => 'reol_lazy_load_images_placeholder',
+        'weight' => 2,
+      ]
+    ],
+  ];
+
+  $styles['reol_lazy_cover_podcast'] = [
+    'label' => 'reol_lazy_cover_podcast',
+    'effects' => [
+      1 => [
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 334,
+          'height' => 334,
+        ),
+        'weight' => 1,
+      ],
+    ],
+  ];
+
   return $styles;
 }
 
@@ -91,11 +123,18 @@ function reol_lazy_load_images_theme_registry_alter(&$theme_registry) {
  */
 function theme_reol_base_image($variables) {
   $attributes = $variables['attributes'];
-  $styles = ['ereol_cover_base', 'breol_cover_base'];
+  $styles = ['ereol_cover_base', 'breol_cover_base', 'reol_lazy_cover_podcast'];
 
   if (array_key_exists('style_name', $variables) && in_array($variables['style_name'], $styles)) {
     $attributes['data-src'] = file_create_url($variables['path']);
-    $attributes['src'] = image_style_url('reol_lazy_load_images_cover_placeholder', $variables['original_path']);;
+    if ($variables['style_name'] == 'reol_lazy_cover_podcast') {
+      // Pod-cast cover.
+      $attributes['src'] = image_style_url('reol_lazy_cover_podcast_placeholder', $variables['original_path']);;
+    }
+    else {
+      // Normal cover.
+      $attributes['src'] = image_style_url('reol_lazy_load_images_cover_placeholder', $variables['original_path']);;
+    }
     $attributes['class'] = 'js-lazy';
   }
   else {
@@ -109,4 +148,34 @@ function theme_reol_base_image($variables) {
   }
 
   return '<img' . drupal_attributes($attributes) . ' />';
+}
+
+/**
+ * Implements hook_preprocess_ting_object_cover().
+ *
+ * Change the image style for pod-cast covers in carousel's to match the
+ * pod-cast cover style.
+ *
+ * Note that this is a hack that might make mixed carousels not working.
+ */
+function reol_lazy_load_images_preprocess_ting_object_cover(&$variables) {
+  $styles = ['ereol_cover_base', 'breol_cover_base'];
+
+  if (array_key_exists('image_style', $variables) && in_array($variables['image_style'], $styles)) {
+    $object = $variables['object'];
+    $type = reol_base_get_type_name($object->type);
+    if ($type == 'podcast') {
+      $path = ting_covers_object_path($object->id);
+      $alt = implode(', ', $object->creators) . ': ' . $object->title;
+      if (file_exists($path)) {
+        $variables['image_style'] = 'reol_lazy_cover_podcast';
+        $variables['image'] = theme('image_style', array(
+          'style_name' => $variables['image_style'],
+          'path' => $path,
+          'alt' => $alt,
+          'original_path' => $path
+        ));
+      }
+    }
+  }
 }
