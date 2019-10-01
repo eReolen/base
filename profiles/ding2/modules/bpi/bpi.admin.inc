@@ -179,7 +179,6 @@ function bpi_admin_content_mapping_form($form, $form_state) {
     '#title' => t('BPI teaser'),
     '#description' => t('The field to extract the teaser from. If the content type have a body summary, assign it to the body field.'),
     '#options' => $field_instances,
-    '#empty_value' => '',
     '#default_value' => variable_get('bpi_field_teaser', ''),
   );
 
@@ -188,7 +187,6 @@ function bpi_admin_content_mapping_form($form, $form_state) {
     '#title' => t('BPI body'),
     '#description' => t('Field to extract the main cotenten from (body field).'),
     '#options' => $field_instances,
-    '#empty_value' => '',
     '#default_value' => variable_get('bpi_field_body', ''),
   );
 
@@ -197,7 +195,6 @@ function bpi_admin_content_mapping_form($form, $form_state) {
     '#title' => t('BPI tags'),
     '#description' => t('Field used to get tags from.'),
     '#options' => $field_instances,
-    '#empty_value' => '',
     '#default_value' => variable_get('bpi_field_tags', ''),
   );
 
@@ -206,7 +203,6 @@ function bpi_admin_content_mapping_form($form, $form_state) {
     '#title' => t('BPI materials'),
     '#description' => t('Field used to get reference to the T!NG data well.'),
     '#options' => $field_instances,
-    '#empty_value' => '',
     '#default_value' => variable_get('bpi_field_materials', ''),
   );
 
@@ -274,6 +270,7 @@ function bpi_get_field_instances($node_type) {
     'taxonomy_autocomplete',
     'ting_reference_simple',
     'ting_reference_advanced',
+    'paragraphs_embed',
   );
 
   $field_instances = field_info_instances('node', $node_type);
