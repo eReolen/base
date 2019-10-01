@@ -365,15 +365,26 @@ function ting_entity_info() {
  * Implements hook_ding_entity_is().
  */
 function ting_ding_entity_is($object, $class) {
-  switch ($class) {
-    case 'reservable':
-    case 'cartable':
-      $sources = variable_get('ting_reservable_sources', _ting_default_reservable_sources());
-      $types = variable_get('ting_reservable_types', _ting_default_reservable_types());
-      return (in_array(drupal_strtolower($object->ac_source), $sources) && in_array(drupal_strtolower($object->type), $types));
+  if (!$object instanceof TingEntity) {
+    return NULL;
+  }
 
+  // By not returning FALSE if the object doesn't meet the requirement, we give
+  // more flexibilty to other modules.
+  switch ($class) {
     case 'online':
-      return !empty($object->getOnline_url());
+      if (!empty($object->getOnline_url())) {
+        return TRUE;
+      }
+      return NULL;
+
+    case 'library_material':
+      $sources = variable_get('ting_library_material_sources', array());
+
+      if (in_array(drupal_strtolower($object->getAc_source()), $sources)) {
+        return TRUE;
+      }
+      return NULL;
   }
 }
 
@@ -401,6 +412,28 @@ function ting_ding_entity_buttons($type, $entity, $view_mode, $widget = 'default
           'target' => '_new',
         ],
       ];
+    }
+
+    // Loading collection (specially on empty cache is expensive). So only load
+    // the collection when it's need and here only when this button is required
+    // in the design. Before using context it was load but not used in the
+    // design.
+    if (strpos($view_mode, 'teaser') === FALSE) {
+      $collection = ting_collection_load($entity->id);
+      if (is_a($collection, 'TingCollection') && count($collection->types) > 1) {
+        $buttons[] = [
+          '#theme' => 'link',
+          '#text' => t('Other formats'),
+          '#path' => '#',
+          '#options' => [
+            'attributes' => [
+              'class' => ['action-button', 'other-formats'],
+            ],
+            'html' => FALSE,
+            'external' => TRUE,
+          ],
+        ];
+      }
     }
 
     return $buttons;
@@ -657,61 +690,6 @@ function _ting_default_online_types() {
 }
 
 /**
- * Default reservable sources.
- *
- * Defined as a function as a define can only be scalars.
- */
-function _ting_default_reservable_sources() {
-  return array(
-    'bibliotekskatalog',
-  );
-}
-
-/**
- * Default reservable types.
- *
- * Defined as a function as a define can only be scalars.
- */
-function _ting_default_reservable_types() {
-  return array(
-    'bog',
-    'node',
-    'dvd',
-    'billedbog',
-    'cd (musik)',
-    'lydbog (cd)',
-    'lydbog (bånd)',
-    'tegneserie',
-    'lydbog (cd-mp3)',
-    'sammensat materiale',
-    'cd',
-    'bog stor skrift',
-    'video',
-    'blu-ray',
-    'cd-rom',
-    'pc-spil',
-    'playstation 3',
-    'xbox 360',
-    'wii',
-    'playstation 2',
-    'playstation 4',
-    'graphic novel',
-    'nintendo ds',
-    'dvd-rom',
-    'kort',
-    'xbox',
-    'gameboy advance',
-    'wii u',
-    'grammofonplade',
-    'playstation',
-    'lydbog',
-    'spil',
-    'puslespil',
-    'diskette',
-  );
-}
-
-/**
  * Fetch known types from the datawell.
  *
  * @return array
@@ -829,13 +807,7 @@ function ting_search_object_load($id) {
 function ting_single_object_render($entity_id, $view_mode = 'teaser') {
   // Load the ting objects found.
   $entity = entity_load('ting_object', array($entity_id));
-  $entity = reset($entity);
-
-  // Filter out missing records.
-  if (strpos($entity->getTitle(), 'Error: unknown/missing/inaccessible record:') === 0) {
-    return;
-  }
-  $ting_object = ting_object_view($entity, $view_mode);
+  $ting_object = ting_object_view(reset($entity), $view_mode);
 
   $build = array(
     'id' => $entity_id,
