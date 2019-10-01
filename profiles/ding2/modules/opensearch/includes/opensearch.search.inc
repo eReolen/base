@@ -423,9 +423,8 @@ function _opensearch_search_relation_render_online_url(\TingRelation $relation) 
         break;
       }
 
-      // Reservable sources is library material.
-      $reservable_sources = variable_get('ting_reservable_sources', _ting_default_reservable_sources());
-      if (in_array(strtolower($object->getAc_source()), $reservable_sources)) {
+      // If library material show the entity with availability, holdings, etc.
+      if ($object->is('library_material')) {
         $title = t('Read more about the material');
         $url = '/ting/object/' . $object->id;
       }
@@ -611,7 +610,8 @@ function opensearch_search_object_ids($ids) {
 
     foreach (opensearch_get_objects($ids, TRUE) as $pid => $object) {
       $faust = explode(':', $pid)[1];
-      if ($key = array_search($faust, $ids)) {
+      $key = array_search($faust, $ids);
+      if ($key !== FALSE) {
         $translated_ids[$faust] = $pid;
         unset($ids[$key]);
       }
@@ -692,7 +692,7 @@ function opensearch_search_autocomplete($string) {
  */
 function opensearch_search_autocomplete_suggestions(array $query) {
   $items = array();
-  $rest_url = rtrim(variable_get('opensearch_search_autocomplete_suggestion_url', ''), '/') . '/rest/';
+  $rest_url = variable_get('opensearch_search_autocomplete_suggestion_url', '');
   if (empty($rest_url)) {
     watchdog(
       'opensearch_search_autocomplete',
@@ -703,7 +703,7 @@ function opensearch_search_autocomplete_suggestions(array $query) {
     return $items;
   }
 
-  $url = $url = url($rest_url . 'facets', array('query' => $query));
+  $url = url($rest_url, array('query' => $query));
   $headers = array('Accept' => 'application/json');
   $result = drupal_http_request($url, $headers);
 
