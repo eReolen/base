@@ -11,7 +11,7 @@
 function workflow_enable() {
   $message = t('Thanks for using Workflow. To maintain workflows, enable the
     <a href="!url_ui">Workflow UI module</a>. To add a Workflow Field to your
-    entity, enable the <a href="!url">Workflow Field module</a>.',
+    entity, enable the <a href="!url_field">Workflow Field module</a>.',
     array(
       '!url_ui' => url('admin/config/modules'),
       '!url_field' => url('admin/config/modules'),
@@ -279,6 +279,11 @@ function workflow_schema() {
   );
   $schema['workflow_scheduled_transition'] = array(
     'fields' => array(
+      'tid' => array(
+        'description' => 'The unique ID for this record.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
       'entity_type' => array(
         'description' => 'The type of entity this transition belongs to.',
         'type' => 'varchar',
@@ -354,6 +359,7 @@ function workflow_schema() {
         'not null' => FALSE,
       ),
     ),
+    'primary key' => array('tid'),
     'indexes' => array(
       'entity_type' => array('entity_type'),
       'entity_id' => array('entity_type', 'nid'),
@@ -385,7 +391,6 @@ function workflow_schema() {
         'description' => 'The current version identifier.',
         'type' => 'int',
         'unsigned' => TRUE,
-        'length' => 10,
         'not null' => FALSE,
         'default' => NULL,
       ),
@@ -762,7 +767,8 @@ function workflow_update_7015() {
 
   // Load&save workflows, to populate the label.
   // Do this after all db-updates!!
-  foreach (workflow_load_multiple() as $workflow) {
+  // Do not use workflow_*() functions.
+  foreach (entity_load('Workflow') as $workflow) {
     $workflow->save();
     // Load&save workflow states, to populate the state name.
     foreach ($workflow->getStates(TRUE, TRUE) as $state) {
@@ -781,4 +787,37 @@ function workflow_update_7016() {
   if (db_field_exists('workflow_node_history', 'nid') && !db_index_exists('workflow_node_history', 'nid')) {
     db_add_index('workflow_node_history', 'nid', array('nid'));
   }
+}
+
+/**
+ * Add/correct a primary key to {workflow_scheduled_transition}.
+ */
+function workflow_update_7017() {
+  // Drop existing primary key.
+  db_drop_primary_key('workflow_scheduled_transition');
+
+  // Add new primary key.
+  $spec = array(
+    'type' => 'serial',
+    'not null' => TRUE,
+  );
+  $keys_new =  array(
+    'primary key' => array('tid'),
+  );
+
+  if (!db_field_exists('workflow_scheduled_transition', 'tid') ) {
+    db_add_field('workflow_scheduled_transition', 'tid', $spec, $keys_new);
+  }
+  else {
+    db_change_field('workflow_scheduled_transition', 'tid', 'tid', $spec, $keys_new);
+  }
+
+  return t('Added tid primary key to {workflow_scheduled_transition}');
+}
+
+/**
+ * Enable the List module, newly added as a dependency.
+ */
+function workflow_update_7200() {
+  module_enable(array('list'));
 }

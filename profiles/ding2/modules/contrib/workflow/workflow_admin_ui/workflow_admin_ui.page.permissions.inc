@@ -8,14 +8,18 @@
 /**
  * View workflow permissions by role.
  *
- * @param Workflow $workflow
+ * @param object $workflow
  *   The workflow object.
+ * @param $op (optional)
+ *
+ * @return string
  */
 function workflow_admin_ui_view_permissions_form($workflow, $op) {
   // If we don't have a workflow at this point, go back to admin page.
   if (!$workflow) {
-    drupal_goto('admin/config/workflow/workflow');
+    drupal_goto(WORKFLOW_ADMIN_UI_PATH);
   }
+
 
   $all = array();
   $roles = workflow_get_roles();
@@ -28,7 +32,7 @@ function workflow_admin_ui_view_permissions_form($workflow, $op) {
     foreach ($transition->roles as $rid) {
       $old_state = $transition->getOldState();
       $new_state = $transition->getNewState();
-      $all[$rid]['transitions'][] = array(check_plain(t($old_state->label())), WORKFLOW_ADMIN_UI_ARROW, check_plain(t($new_state->label())));
+      $all[$rid]['transitions'][] = array($old_state->label(), WORKFLOW_ADMIN_UI_ARROW, $new_state->label());
     }
   }
 
