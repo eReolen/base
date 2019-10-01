@@ -32,14 +32,11 @@ function ting_search_result_count_content_type_render($subtype, $conf, $panel_ar
       $search_result->getNumCollections();
 
     $block->content = array(
-      'title' => array(
+      'count' => array(
         '#theme' => 'html_tag',
-        '#tag' => 'h1',
-        '#attributes' => array('class' => array('page-title')),
-        '#value' =>  t('Search result <span class="js-count" data-js-count="!count" class="search-field-in-content--amount">(!count !string)</span>', array(
-          '!count' => $results,
-          '!string' => format_plural($results > 1 ? $results : 1, 'Result', 'Results'),
-        ))
+        '#tag' => 'span',
+        '#attributes' => array('class' => array('count')),
+        '#value' => format_plural($results, '1 Result', '@count Results'),
       ),
     );
   }
