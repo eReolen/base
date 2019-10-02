@@ -1,9 +1,9 @@
-diff --git a/modules/ding_user/ding_user.module b/modules/ding_user/ding_user.module
-index b2d30b4..53d3e16 100644
---- a/modules/ding_user/ding_user.module
-+++ b/modules/ding_user/ding_user.module
-@@ -7,9 +7,9 @@
- include_once 'ding_user_comments.inc';
+diff --git a/profiles/ding2/modules/ding_user/ding_user.module b/profiles/ding2/modules/ding_user/ding_user.module
+index d3322f15..d69d4bae 100644
+--- a/profiles/ding2/modules/ding_user/ding_user.module
++++ b/profiles/ding2/modules/ding_user/ding_user.module
+@@ -25,9 +25,9 @@ function ding_user_pathauto_alias_alter(&$alias, $context) {
+ }
  
  /**
 - * Implements hook_preprocess_html().
@@ -14,3 +14,24 @@ index b2d30b4..53d3e16 100644
    $args = arg();
    if ($args[0] == 'user') {
      // Set default title.
+diff --git a/sites/all/patches/ding_user-redirect.patch b/sites/all/patches/ding_user-redirect.patch
+index 4e6c1eb0..e69de29b 100644
+--- a/sites/all/patches/ding_user-redirect.patch
++++ b/sites/all/patches/ding_user-redirect.patch
+@@ -1,16 +0,0 @@
+-diff --git a/modules/ding_user/ding_user.module b/modules/ding_user/ding_user.module
+-index b2d30b4..53d3e16 100644
+---- a/modules/ding_user/ding_user.module
+-+++ b/modules/ding_user/ding_user.module
+-@@ -7,9 +7,9 @@
+- include_once 'ding_user_comments.inc';
+- 
+- /**
+-- * Implements hook_preprocess_html().
+-+ * Implements hook_init().
+-  */
+--function ding_user_preprocess_html(&$variables) {
+-+function ding_user_init() {
+-   $args = arg();
+-   if ($args[0] == 'user') {
+-     // Set default title.
