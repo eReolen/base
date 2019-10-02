@@ -42,10 +42,11 @@ function template_preprocess_ting_object_cover(&$variables) {
         'style_name' => $variables['image_style'],
         'path' => $path,
         'alt' => $variables['title'],
+        'original_path' => $path
       );
       $variables['image'] = theme('image_style', $params);
 
-      // Avoid further javascriqpt processing. Just load the image.
+      // Avoid further javascript processing. Just load the image.
       $variables['classes'][] = 'ting-cover-processed';
     }
   }
