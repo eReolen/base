@@ -1,9 +1,9 @@
 diff --git a/profiles/ding2/modules/ting/ting.module b/profiles/ding2/modules/ting/ting.module
-index 2679537d..34a7c48e 100644
+index ed00f417..7b44701f 100644
 --- a/profiles/ding2/modules/ting/ting.module
 +++ b/profiles/ding2/modules/ting/ting.module
-@@ -399,28 +399,6 @@ function ting_ding_entity_buttons($type, $entity, $view_mode, $widget = 'default
-       );
+@@ -414,28 +414,6 @@ function ting_ding_entity_buttons($type, $entity, $view_mode, $widget = 'default
+       ];
      }
  
 -    // Loading collection (specially on empty cache is expensive). So only load

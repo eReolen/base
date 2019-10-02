@@ -19,4 +19,4 @@ index 9eabb515..9315a075 100644
 +  $url = $url = url($rest_url . 'facets', array('query' => $query));
    $headers = array('Accept' => 'application/json');
    $result = drupal_http_request($url, $headers);
- 
+
