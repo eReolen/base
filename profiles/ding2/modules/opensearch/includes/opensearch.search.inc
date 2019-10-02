@@ -692,7 +692,7 @@ function opensearch_search_autocomplete($string) {
  */
 function opensearch_search_autocomplete_suggestions(array $query) {
   $items = array();
-  $rest_url = variable_get('opensearch_search_autocomplete_suggestion_url', '');
+  $rest_url = rtrim(variable_get('opensearch_search_autocomplete_suggestion_url', ''), '/') . '/rest/';
   if (empty($rest_url)) {
     watchdog(
       'opensearch_search_autocomplete',
@@ -703,7 +703,7 @@ function opensearch_search_autocomplete_suggestions(array $query) {
     return $items;
   }
 
-  $url = url($rest_url, array('query' => $query));
+  $url = $url = url($rest_url . 'facets', array('query' => $query));
   $headers = array('Accept' => 'application/json');
   $result = drupal_http_request($url, $headers);
 
