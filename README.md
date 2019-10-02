@@ -44,7 +44,6 @@ Check for jQuery differences regarding prop() vs attr().
 * Update i18n module (i18n.patch)
 * Roll-back auto complete to open-suggestions (opensearch-autocomplete.patch)
 * Removed the "Other formats" entity button (remove-other-formats-button.patch)
-* Remove auto-logout config (remove_autologout_configuration.patch)
 * Ensure infomedia field file is loaded (ting_infomedia-missing-include.patch)
 * Change subject link rendering on ting object view (ting_material_details-subjects-view.patch)
 * Change the way number of results are displayed (ting_search_result.patch)
