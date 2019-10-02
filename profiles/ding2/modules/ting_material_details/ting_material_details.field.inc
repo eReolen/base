@@ -617,10 +617,10 @@ function ting_material_details_field_formatter_view($entity_type, $entity, $fiel
           }
           $links = array();
           foreach ($val as $value) {
-            $links[] = l($value, 'search/ting/phrase.subject=' . $value);
+            $links[] = l($value, 'search/ting/phrase.subject=' . $value, array('attributes' => array('class' => array('subject'))));
           }
           $element[$delta] = array(
-            '#markup' => implode(', ', $links),
+            '#markup' => implode(' ', $links),
           );
           break;
 
