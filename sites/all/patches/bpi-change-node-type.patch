@@ -5,7 +5,7 @@ index 466ac3b6..547f6ee7 100644
 @@ -10,9 +10,9 @@
  function bpi_features_field_default_field_instances() {
    $field_instances = array();
- 
+
 -  // Exported field_instance: 'node-ding_news-field_bpi_workflow'
 -  $field_instances['node-ding_news-field_bpi_workflow'] = array(
 -    'bundle' => 'ding_news',
@@ -38,7 +38,7 @@ index 4e61a809..6d90e062 100644
    );
 -  $export['group_workflow|node|ding_news|form'] = $field_group;
 +  $export['group_workflow|node|article|form'] = $field_group;
- 
+
    return $export;
  }
 diff --git a/profiles/ding2/modules/bpi/bpi_features/bpi_features.info b/profiles/ding2/modules/bpi/bpi_features/bpi_features.info
@@ -87,97 +87,4 @@ index b180147b..1f1d0e5a 100644
        "IF" : [
          { "data_is" : { "data" : [ "node:field-bpi-workflow" ], "value" : "3" } }
        ],
-diff --git a/sites/all/patches/bpi-change-node-type.patch b/sites/all/patches/bpi-change-node-type.patch
-index cbe2d1fc..97f0ea51 100644
---- a/sites/all/patches/bpi-change-node-type.patch
-+++ b/sites/all/patches/bpi-change-node-type.patch
-@@ -1,89 +0,0 @@
--diff --git a/modules/bpi/bpi_features/bpi_features.features.field_instance.inc b/modules/bpi/bpi_features/bpi_features.features.field_instance.inc
--index 25211c9..8d13e13 100644
----- a/modules/bpi/bpi_features/bpi_features.features.field_instance.inc
--+++ b/modules/bpi/bpi_features/bpi_features.features.field_instance.inc
--@@ -10,9 +10,9 @@
-- function bpi_features_field_default_field_instances() {
--   $field_instances = array();
-- 
---  // Exported field_instance: 'node-ding_news-field_bpi_workflow'
---  $field_instances['node-ding_news-field_bpi_workflow'] = array(
---    'bundle' => 'ding_news',
--+  // Exported field_instance: 'node-article-field_bpi_workflow'
--+  $field_instances['node-article-field_bpi_workflow'] = array(
--+    'bundle' => 'article',
--     'default_value' => NULL,
--     'deleted' => 0,
--     'description' => '',
--diff --git a/modules/bpi/bpi_features/bpi_features.field_group.inc b/modules/bpi/bpi_features/bpi_features.field_group.inc
--index 4e61a80..6d90e06 100644
----- a/modules/bpi/bpi_features/bpi_features.field_group.inc
--+++ b/modules/bpi/bpi_features/bpi_features.field_group.inc
--@@ -13,10 +13,10 @@ function bpi_features_field_group_info() {
--   $field_group = new stdClass();
--   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
--   $field_group->api_version = 1;
---  $field_group->identifier = 'group_workflow|node|ding_news|form';
--+  $field_group->identifier = 'group_workflow|node|article|form';
--   $field_group->group_name = 'group_workflow';
--   $field_group->entity_type = 'node';
---  $field_group->bundle = 'ding_news';
--+  $field_group->bundle = 'article';
--   $field_group->mode = 'form';
--   $field_group->parent_name = '';
--   $field_group->data = array(
--@@ -36,7 +36,7 @@ function bpi_features_field_group_info() {
--       'formatter' => 'closed',
--     ),
--   );
---  $export['group_workflow|node|ding_news|form'] = $field_group;
--+  $export['group_workflow|node|article|form'] = $field_group;
-- 
--   return $export;
-- }
--diff --git a/modules/bpi/bpi_features/bpi_features.info b/modules/bpi/bpi_features/bpi_features.info
--index f209104..e9095a7 100644
----- a/modules/bpi/bpi_features/bpi_features.info
--+++ b/modules/bpi/bpi_features/bpi_features.info
--@@ -25,8 +25,8 @@ features[ctools][] = strongarm:strongarm:1
-- features[ctools][] = views:views_default:3.0
-- features[features_api][] = api:2
-- features[field_base][] = field_bpi_workflow
---features[field_group][] = group_workflow|node|ding_news|form
---features[field_instance][] = node-ding_news-field_bpi_workflow
--+features[field_group][] = group_workflow|node|article|form
--+features[field_instance][] = node-article-field_bpi_workflow
-- features[rules_config][] = rules_after_workflow_sent_to_bpi
-- features[rules_config][] = rules_before_changing_workflow_to_delete_from_bpi
-- features[rules_config][] = rules_new_content_with_save_and_push_
--diff --git a/modules/bpi/bpi_features/bpi_features.rules_defaults.inc b/modules/bpi/bpi_features/bpi_features.rules_defaults.inc
--index b180147..1f1d0e5 100644
----- a/modules/bpi/bpi_features/bpi_features.rules_defaults.inc
--+++ b/modules/bpi/bpi_features/bpi_features.rules_defaults.inc
--@@ -14,7 +14,7 @@ function bpi_features_default_rules_configuration() {
--       "PLUGIN" : "reaction rule",
--       "OWNER" : "rules",
--       "REQUIRES" : [ "rules" ],
---      "ON" : { "node_update--ding_news" : { "bundle" : "ding_news" } },
--+      "ON" : { "node_update--article" : { "bundle" : "article" } },
--       "IF" : [
--         { "data_is" : { "data" : [ "node:field-bpi-workflow" ], "value" : "4" } }
--       ],
--@@ -26,7 +26,7 @@ function bpi_features_default_rules_configuration() {
--       "PLUGIN" : "reaction rule",
--       "OWNER" : "rules",
--       "REQUIRES" : [ "rules" ],
---      "ON" : { "node_update--ding_news" : { "bundle" : "ding_news" } },
--+      "ON" : { "node_update--article" : { "bundle" : "article" } },
--       "IF" : [
--         { "data_is" : { "data" : [ "node:field-bpi-workflow" ], "value" : "7" } }
--       ],
--@@ -38,7 +38,7 @@ function bpi_features_default_rules_configuration() {
--       "PLUGIN" : "reaction rule",
--       "OWNER" : "rules",
--       "REQUIRES" : [ "rules" ],
---      "ON" : { "node_insert--ding_news" : { "bundle" : "ding_news" } },
--+      "ON" : { "node_insert--article" : { "bundle" : "article" } },
--       "IF" : [
--         { "data_is" : { "data" : [ "node:field-bpi-workflow" ], "value" : "3" } }
--       ],
+

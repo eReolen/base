@@ -14,24 +14,3 @@ index c4c17b89..3f0adf66 100644
        if (isset($item->ding_entity_id)) {
          $ids[] = $item->ding_entity_id;
        }
-diff --git a/sites/all/patches/ding-user-loan-list.patch b/sites/all/patches/ding-user-loan-list.patch
-index 3765d2cb..e69de29b 100644
---- a/sites/all/patches/ding-user-loan-list.patch
-+++ b/sites/all/patches/ding-user-loan-list.patch
-@@ -1,16 +0,0 @@
--diff --git a/profiles/ding2/modules/ding_loan/plugins/content_types/loans.inc b/profiles/ding2/modules/ding_loan/plugins/content_types/loans.inc
--index 1eb0ecdf..1b63087c 100644
----- a/profiles/ding2/modules/ding_loan/plugins/content_types/loans.inc
--+++ b/profiles/ding2/modules/ding_loan/plugins/content_types/loans.inc
--@@ -44,11 +44,6 @@ function ding_loan_loans_content_type_render($subtype, $conf, $panel_args, $cont
--     // Pre-load all entities to speed up the page.
--     $ids = array();
--     foreach ($loans as $key => $item) {
---      if (!$conf['overdue'] && $item->expiry < $today || !$conf['regular'] && $item->expiry >= $today) {
---        unset($loans[$key]);
---        continue;
---      }
---
--       $ids[] = $item->ding_entity_id;
--     }
--     ding_entity_load_multiple($ids);
