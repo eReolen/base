@@ -306,6 +306,9 @@ function publizon_get_product_cover($local_id) {
  * @param array $form_state
  *   The state of the form.
  *
+ * @return array
+ *  Form array.
+ *
  * @see publizon_reservation_options()
  */
 function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &$form_state) {
