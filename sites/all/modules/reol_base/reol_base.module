@@ -936,31 +936,40 @@ function reol_base_field_widget_form_alter(&$element, &$form_state, $context) {
  * @return array
  *   isbn => ding entity ids array.
  */
-function reol_base_ding_entity_get_ids($isbns) {
-  // Get the id from a search in Ting.
-  $chunks = array_chunk($isbns, 50);
-  $mapping = array();
-  foreach ($chunks as $isbn_chunk) {
-    $results = ting_start_query()
-      ->withFullTextQuery('ib any "'. implode(" ", $isbn_chunk) .'"')
-      ->withCount(50)
-      ->withPage(1)
-      ->withTermsPrFacet(1)
-      ->execute();
+function reol_base_ding_entity_get_ids(array $isbns) {
+  // Use static cache to speed up the mapping.
+  $mappings = &drupal_static(__FUNCTION__, array());
+  $cid = md5(serialize($isbns));
 
-    if ($results->getNumCollections() > 0) {
-      $collections = $results->openSearchResult->collections;
-      foreach ($collections as $collection) {
-        foreach ($collection->getEntities() as $entity) {
-          foreach ($entity->getIsbn() as $isbn) {
-            $mapping[$isbn] = $entity->getId();
+  if (!isset($mappings[$cid])) {
+    // Get the id from a search in Ting.
+    $chunks = array_chunk($isbns, 50);
+    $mapping = array();
+    foreach ($chunks as $isbn_chunk) {
+      $results = ting_start_query()
+        ->withFullTextQuery('ib any "'. implode(" ", $isbn_chunk) .'"')
+        ->withCount(50)
+        ->withPage(1)
+        ->withFacets(array('facet.type'))
+        ->withTermsPrFacet(1)
+        ->execute();
+
+      if ($results->getNumCollections() > 0) {
+        $collections = $results->openSearchResult->collections;
+        foreach ($collections as $collection) {
+          foreach ($collection->getEntities() as $entity) {
+            foreach ($entity->getIsbn() as $isbn) {
+              $mapping[$isbn] = $entity->getId();
+            }
           }
         }
       }
     }
+
+    $mappings[$cid] = $mapping;
   }
 
-  return $mapping;
+  return $mappings[$cid];
 }
 
 /**
