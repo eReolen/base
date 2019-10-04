@@ -133,7 +133,7 @@ function ding_reservation_is_reservable_ajax_callback() {
 function ding_reservation_ding_entity_buttons($type, $entity, $view_mode, $widget = 'default') {
   $button = '';
 
-  if ($type == 'ding_entity' && $entity->is('library_material')) {
+  if ($type == 'ding_entity' && $entity->is('reservable')) {
     switch ($widget) {
       case 'ajax':
         drupal_add_library('system', 'drupal.ajax');
@@ -156,14 +156,6 @@ function ding_reservation_ding_entity_buttons($type, $entity, $view_mode, $widge
                 'data-local-id' => $entity->localId,
               ),
               'html' => FALSE,
-            ),
-            '#attached' => array(
-              'js' => array(
-                array(
-                  'type' => 'file',
-                  'data' => drupal_get_path('module', 'ding_reservation') . '/js/ding_reservation_reservability.js',
-                ),
-              ),
             ),
           ),
         );
