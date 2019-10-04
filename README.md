@@ -60,6 +60,7 @@ Check for jQuery differences regarding prop() vs attr().
 * Allow lazy loading of covers (sites/all/patches/ting_covers.patch)
 * Remove campaign plus pane in ding_content (ding_content.patch)
 * Call provider finalize to load retailer info (ding_user_finalize.patch)
+* Remove new reservation provider callback (ding_reservation.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 

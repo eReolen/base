@@ -168,8 +168,8 @@ function reol_loan_ding_entity_is($entity, $is) {
     $availability_list = ding_availability_items(array($entity->localId));
     if ($availability_list) {
       list($availability) = array_values($availability_list);
-      if (_reol_loan_map_availability($availability, $entity->id) != REOL_LOAN_STATUS_RESERVABLE) {
-        return FALSE;
+      if (_reol_loan_map_availability($availability, $entity->id) == REOL_LOAN_STATUS_RESERVABLE) {
+        return TRUE;
       }
     }
   }
