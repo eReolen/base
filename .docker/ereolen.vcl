@@ -40,6 +40,19 @@ sub vcl_recv {
     return (pass);
   }
 
+  # Special DDB CMS handling to check if a given page can be cached by logged in users.
+  if (req.restarts == 0 && (req.method == "GET" || req.method == "HEAD")) {
+    # Ignore any X-Drupal-Roles from the client.
+    unset req.http.X-Drupal-Roles;
+
+    # Lookup Drupal Roles. We're going to change the URL to
+    # x-drupal-roles so we'll need to save the original one first.
+    set req.http.X-Original-URL = req.url;
+    set req.url = "/varnish/roles";
+
+    return (hash);
+  }
+
   # Patterns to pass through un-cached.
   if (req.url ~ "^/status\.php$" ||
       req.url ~ "^/update\.php$" ||
@@ -62,19 +75,6 @@ sub vcl_recv {
   # Always cache the following file types for all users.
   if (req.url ~ "(?i)\.(pdf|asc|dat|txt|doc|xls|ppt|tgz|csv|png|gif|jpeg|jpg|ico|swf|css|js|json)(\?[\w\d=\.\-]+)?$") {
     unset req.http.Cookie;
-  }
-
-  # Special DDB CMS handling to check if a given page can be cached by logged in users.
-  if (req.restarts == 0 && (req.method == "GET" || req.method == "HEAD")) {
-    # Ignore any X-Drupal-Roles from the client.
-    unset req.http.X-Drupal-Roles;
-
-    # Lookup Drupal Roles. We're going to change the URL to
-    # x-drupal-roles so we'll need to save the original one first.
-    set req.http.X-Original-URL = req.url;
-    set req.url = "/varnish/roles";
-
-    return (hash);
   }
 
   # Remove all cookies that are not session cookies.
@@ -170,9 +170,9 @@ sub vcl_deliver {
   # In Varnish 4 the obj.hits counter behaviour has changed, so we use a
   # different method: if X-Varnish contains only 1 id, we have a miss, if it
   # contains more (and therefore a space), we have a hit.
-  if (resp.http.x-varnish ~ " ") {
-    set resp.http.x-cache = "HIT";
+  if (resp.http.X-varnish ~ " ") {
+    set resp.http.X-cache = "HIT";
   } else {
-    set resp.http.x-cache = "MISS";
+    set resp.http.X-cache = "MISS";
   }
 }
