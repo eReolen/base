@@ -257,3 +257,13 @@ function publizon_reservation_default_interest_period() {
 function publizon_reservation_reservation_deletion_enabled() {
   return TRUE;
 }
+
+/**
+ * Implements provider reservation, is_reservable.
+ *
+ * This should not be used as we determined this in reol_loan in entity_button
+ * hook.
+ */
+function publizon_reservation_is_reservable($provider_ids) {
+  return FALSE;
+}

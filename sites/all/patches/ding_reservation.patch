@@ -1,0 +1,28 @@
+diff --git a/profiles/ding2/modules/ding_reservation/ding_reservation.module b/profiles/ding2/modules/ding_reservation/ding_reservation.module
+index 728208b7..f2505a08 100644
+--- a/profiles/ding2/modules/ding_reservation/ding_reservation.module
++++ b/profiles/ding2/modules/ding_reservation/ding_reservation.module
+@@ -133,7 +133,7 @@ function ding_reservation_is_reservable_ajax_callback() {
+ function ding_reservation_ding_entity_buttons($type, $entity, $view_mode, $widget = 'default') {
+   $button = '';
+ 
+-  if ($type == 'ding_entity' && $entity->is('library_material')) {
++  if ($type == 'ding_entity' && $entity->is('reservable')) {
+     switch ($widget) {
+       case 'ajax':
+         drupal_add_library('system', 'drupal.ajax');
+@@ -157,14 +157,6 @@ function ding_reservation_ding_entity_buttons($type, $entity, $view_mode, $widge
+               ),
+               'html' => FALSE,
+             ),
+-            '#attached' => array(
+-              'js' => array(
+-                array(
+-                  'type' => 'file',
+-                  'data' => drupal_get_path('module', 'ding_reservation') . '/js/ding_reservation_reservability.js',
+-                ),
+-              ),
+-            ),
+           ),
+         );
+         break;

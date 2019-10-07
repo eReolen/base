@@ -182,7 +182,11 @@ function reol_bookmark_menu_item_title($account = NULL) {
  */
 function reol_bookmark_view_access($account) {
   global $user;
-  return $user->uid == $account->uid || $user->uid == 1;
+  if (user_is_logged_in()) {
+    return $user->uid == $account->uid || $user->uid == 1;
+  }
+
+  return FALSE;
 }
 
 /**

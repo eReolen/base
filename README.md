@@ -10,10 +10,11 @@ which is tracked by patches in _sites/all/patches_.
 
 ### Drupal core patches
 
-* http://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch
-* ~~http://drupal.org/files/ssl-socket-transports-1879970-13.patch~~
-* http://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch
-* http://drupal.org/files/issues/translate_role_names-2205581-1.patch
+* https://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch
+* https://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch
+* https://drupal.org/files/issues/translate_role_names-2205581-1.patch
+* https://raw.githubusercontent.com/ding2/ding2/master/patches/drupal_core.robots.txt.ding2.patch
+* https://www.drupal.org/files/issues/programatically_added-1079628-29-d7.patch
 
 Fix shortcut_set_save when set does not exist (https://www.drupal.org/node/1175700).
 * https://www.drupal.org/files/fix-shortcut-set-save-1175700-10.patch
@@ -29,6 +30,9 @@ Add alter to strong-arm variables. Note this patch is part of the next release o
 Handle translated roles https://www.drupal.org/node/1744274
 * https://www.drupal.org/files/secure_permissions-duplicate_role_exception-1744274-4.patch
 
+Check for jQuery differences regarding prop() vs attr().
+* https://git.drupalcode.org/project/ctools/commit/18385421a277097d8a92672808f656cc7470b69d.patch
+
 ### Ding2 patches
 
 * Change BPI node type to use (bpi-change-node-type.patch)
@@ -40,12 +44,12 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Update i18n module (i18n.patch)
 * Roll-back auto complete to open-suggestions (opensearch-autocomplete.patch)
 * Removed the "Other formats" entity button (remove-other-formats-button.patch)
-* Remove auto-logout config (remove_autologout_configuration.patch)
 * Ensure infomedia field file is loaded (ting_infomedia-missing-include.patch)
 * Change subject link rendering on ting object view (ting_material_details-subjects-view.patch)
 * Change the way number of results are displayed (ting_search_result.patch)
 * Update the varnish module (update-varnish.patch)
 * Enabled 'user/%/view' path (user-menu.patch)
+* Patch login call to send retailer id to provider (ding_user.patch)
 * Fixed "Undefined index" warnings (ding-loan-loans.patch)
 * Fixed offset in carousel search (ting_search_carousel.patch)
 * Fix missing record error title in ting references (error-missing-record.patch)
@@ -56,6 +60,7 @@ Handle translated roles https://www.drupal.org/node/1744274
 * Allow lazy loading of covers (sites/all/patches/ting_covers.patch)
 * Remove campaign plus pane in ding_content (ding_content.patch)
 * Call provider finalize to load retailer info (ding_user_finalize.patch)
+* Remove new reservation provider callback (ding_reservation.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 

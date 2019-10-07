@@ -660,17 +660,29 @@ function _opensearch_cache(TingClientRequest $request, $response = NULL) {
   // and we want to retrieve the cache value and where $value is set to NULL
   // explicitly.
   if (func_num_args() == 2) {
-    // Update the cache with the provided value.
-    $static_cache[$cid] = $response;
+    // Update the cache with the provided value. If you here just assign the
+    // response to the static variable here even though it's deep clone in the
+    // return statement changes to the collections inside the object from
+    // outside this function changes the cached object.
+    $static_cache[$cid] = unserialize(serialize($response));
     if ($ttl = variable_get('opensearch_cache_lifetime', OPENSEARCH_DEFAULT_CACHE_LIFETIME)) {
       cache_set($cid, $response, 'cache_opensearch', REQUEST_TIME + $ttl);
     }
-    return $response;
+
+    // As the static cache contains objects or objects in arrays we need to do a
+    // deep clone so changes to objects out-side the cache will not change the
+    // objects in the static cache.
+    return unserialize(serialize($response));
   }
   else {
-    // Try to retrieve value from cache.
+    // Try to retrieve value from static cache.
     if (array_key_exists($cid, $static_cache)) {
-      return $static_cache[$cid];
+      $data = $static_cache[$cid];
+
+      // As the static cache contains objects or objects in arrays we need to do a
+      // deep clone so changes to objects out-side the cache will not change the
+      // objects in the static cache.
+      return unserialize(serialize($data));
     }
 
     $cache = cache_get($cid, 'cache_opensearch');
@@ -681,7 +693,10 @@ function _opensearch_cache(TingClientRequest $request, $response = NULL) {
       // next request for the same data.
       $static_cache[$cid] = $data;
 
-      return $data;
+      // As the static cache contains objects or objects in arrays we need to do a
+      // deep clone so changes to objects out-side the cache will not change the
+      // objects in the static cache.
+      return unserialize(serialize($data));
     }
   }
 }

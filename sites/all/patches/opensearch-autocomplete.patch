@@ -14,29 +14,9 @@ index 9eabb515..9315a075 100644
 @@ -703,7 +703,7 @@ function opensearch_search_autocomplete_suggestions(array $query) {
      return $items;
    }
- 
+
 -  $url = url($rest_url, array('query' => $query));
 +  $url = $url = url($rest_url . 'facets', array('query' => $query));
    $headers = array('Accept' => 'application/json');
    $result = drupal_http_request($url, $headers);
- 
-diff --git a/sites/all/patches/opensearch-autocomplete.patch b/sites/all/patches/opensearch-autocomplete.patch
-index aaea4c40..e69de29b 100644
---- a/sites/all/patches/opensearch-autocomplete.patch
-+++ b/sites/all/patches/opensearch-autocomplete.patch
-@@ -1,15 +0,0 @@
--diff --git a/profiles/ding2/modules/opensearch/includes/opensearch.search.inc b/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
--index b7d1af86..d68fdee9 100644
----- a/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
--+++ b/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
--@@ -683,8 +683,8 @@ function opensearch_search_autocomplete_suggestions(array $query) {
-- 
--   $method = variable_get('ting_search_autocomplete_method', 'facets');
-- 
---  $rest_url = rtrim(variable_get('opensearch_search_autocomplete_suggestion_url', ''), '/').'/rest/';
---  $url = url($rest_url.$method, array('query' => $query));
--+  $rest_url = rtrim(variable_get('opensearch_search_autocomplete_suggestion_url', ''), '/') . '/rest/';
--+  $url = url($rest_url . $method, array('query' => $query));
--   $headers = array('Accept' => 'application/json');
--   $result = drupal_http_request($url, $headers);
-- 
+
