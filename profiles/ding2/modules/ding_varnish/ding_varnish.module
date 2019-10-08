@@ -60,7 +60,6 @@ function _ding_varnish_header() {
   header('Vary: Accept-Encoding, Cookie, User-Agent');
 
   // Set custom X-Drupal-Roles header.
-  $t=implode(', ', array_keys($user->roles));
   header('X-Drupal-Roles: ' . implode(', ', array_keys($user->roles)));
 
   // No need to render any content. Just die.
@@ -127,6 +126,8 @@ function ding_varnish_init() {
  * Implements hook_page_build().
  */
 function ding_varnish_page_build(&$page) {
+  global $user;
+
   // Check the static variable form init.
   $cacheable = &drupal_static('ding_varnish_init', FALSE);
   $hook_boot_headers = drupal_get_http_header();
@@ -152,6 +153,9 @@ function ding_varnish_page_build(&$page) {
 
   // Regardless, always vary on X-Drupal-Roles.
   drupal_add_http_header('Vary', 'X-Drupal-Roles, Accept-Encoding');
+
+  // Set custom X-Drupal-Roles header.
+  header('X-Drupal-Roles: ' . implode(', ', array_keys($user->roles)));
 }
 
 /**
