@@ -664,25 +664,19 @@ function _opensearch_cache(TingClientRequest $request, $response = NULL) {
     // response to the static variable here even though it's deep clone in the
     // return statement changes to the collections inside the object from
     // outside this function changes the cached object.
-    $static_cache[$cid] = unserialize(serialize($response));
+    $static_cache[$cid] = _opensearch_deep_clone($response);
     if ($ttl = variable_get('opensearch_cache_lifetime', OPENSEARCH_DEFAULT_CACHE_LIFETIME)) {
       cache_set($cid, $response, 'cache_opensearch', REQUEST_TIME + $ttl);
     }
 
-    // As the static cache contains objects or objects in arrays we need to do a
-    // deep clone so changes to objects out-side the cache will not change the
-    // objects in the static cache.
-    return unserialize(serialize($response));
+    return _opensearch_deep_clone($response);
   }
   else {
     // Try to retrieve value from static cache.
     if (array_key_exists($cid, $static_cache)) {
       $data = $static_cache[$cid];
 
-      // As the static cache contains objects or objects in arrays we need to do a
-      // deep clone so changes to objects out-side the cache will not change the
-      // objects in the static cache.
-      return unserialize(serialize($data));
+      return _opensearch_deep_clone($data);
     }
 
     $cache = cache_get($cid, 'cache_opensearch');
@@ -691,14 +685,28 @@ function _opensearch_cache(TingClientRequest $request, $response = NULL) {
 
       // Update the static cache with the database cache content to speed up the
       // next request for the same data.
-      $static_cache[$cid] = $data;
+      $static_cache[$cid] = _opensearch_deep_clone($data);
 
-      // As the static cache contains objects or objects in arrays we need to do a
-      // deep clone so changes to objects out-side the cache will not change the
-      // objects in the static cache.
-      return unserialize(serialize($data));
+      return _opensearch_deep_clone($data);
     }
   }
+}
+
+/**
+ * Deep clone data structure using serialization.
+ *
+ * This should be use when working with static cache data that contains objects
+ * or objects in arrays. We need to do a deep clone so changes to objects
+ * out-side the cache will not change the objects in the static cache.
+ *
+ * @param $data
+ *   Data structure to clone.
+ *
+ * @return mixed
+ *   Clone off the inputted data structure.
+ */
+function _opensearch_deep_clone($data) {
+  return unserialize(serialize($data));
 }
 
 /**
