@@ -93,7 +93,7 @@ function reol_base_menu() {
  */
 function reol_base_preprocess_menu_link(&$variables) {
   $element = &$variables['element'];
-  if (module_exists('ding_adgangsplatformen')) {
+  if (module_exists('ding_adgangsplatformen') && !module_exists('breol_base')) {
     // Rewrite login links if adgangsplatformen is enabled.
     if (isset($element['#original_link']['menu_name']) && $element['#original_link']['menu_name'] == 'main-menu') {
       if ($element['#href'] == 'login/nojs') {
