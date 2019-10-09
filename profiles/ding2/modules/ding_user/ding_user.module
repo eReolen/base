@@ -138,7 +138,7 @@ function ding_user_authenticate(array $user_info) {
     if (array_key_exists('single_sign_on', $user_info) && $user_info['single_sign_on'] == TRUE) {
       // No password provided by the authentication request (not even the empty
       // string), so we assume that this is a single-sign-on request.
-      $auth_res = ding_provider_invoke('auth', 'single_sign_on', $user_info['name']);
+      $auth_res = ding_provider_invoke('auth', 'single_sign_on', $user_info['name'], $user_info['extra']);
 
       // Store value in session to be used later on to check if user was signed
       // in with SSO.

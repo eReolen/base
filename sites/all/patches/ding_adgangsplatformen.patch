@@ -1,0 +1,25 @@
+diff --git a/profiles/ding2/modules/ding_adgangsplatformen/ding_adgangsplatformen.module b/profiles/ding2/modules/ding_adgangsplatformen/ding_adgangsplatformen.module
+index 9d5fcaf6..c63b7b7c 100644
+--- a/profiles/ding2/modules/ding_adgangsplatformen/ding_adgangsplatformen.module
++++ b/profiles/ding2/modules/ding_adgangsplatformen/ding_adgangsplatformen.module
+@@ -440,6 +440,7 @@ function _ding_adgangsplatformen_provider_login(array $user_info) {
+     $account = ding_user_authenticate(array(
+       'name' => $user_info['attributes']['userId'],
+       'extra' => $user_info,
++      'single_sign_on' => TRUE,
+     ));
+ 
+     if ($account !== FALSE) {
+diff --git a/profiles/ding2/modules/ding_user/ding_user.module b/profiles/ding2/modules/ding_user/ding_user.module
+index a1725e31..5fb5a2cb 100644
+--- a/profiles/ding2/modules/ding_user/ding_user.module
++++ b/profiles/ding2/modules/ding_user/ding_user.module
+@@ -138,7 +138,7 @@ function ding_user_authenticate(array $user_info) {
+     if (array_key_exists('single_sign_on', $user_info) && $user_info['single_sign_on'] == TRUE) {
+       // No password provided by the authentication request (not even the empty
+       // string), so we assume that this is a single-sign-on request.
+-      $auth_res = ding_provider_invoke('auth', 'single_sign_on', $user_info['name']);
++      $auth_res = ding_provider_invoke('auth', 'single_sign_on', $user_info['name'], $user_info['extra']);
+ 
+       // Store value in session to be used later on to check if user was signed
+       // in with SSO.
