@@ -61,6 +61,8 @@ Check for jQuery differences regarding prop() vs attr().
 * Remove campaign plus pane in ding_content (ding_content.patch)
 * Call provider finalize to load retailer info (ding_user_finalize.patch)
 * Remove new reservation provider callback (ding_reservation.patch)
+* Enabled SSO (ding_adgangsplatformen.patch)
+* Add extra info need for SSO (ding_user_extra.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 
