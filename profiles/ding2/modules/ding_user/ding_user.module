@@ -135,7 +135,8 @@ function ding_user_authenticate(array $user_info) {
   $account = FALSE;
 
   try {
-    // Check if more info is provide from the user login form or SSO provider and default to empty array.
+    // If more info is provide from the user login form or SSO provider use it
+    // else default to empty array.
     $extra = $user_info['extra'] ?? [];
 
     if (array_key_exists('single_sign_on', $user_info) && $user_info['single_sign_on'] == TRUE) {
