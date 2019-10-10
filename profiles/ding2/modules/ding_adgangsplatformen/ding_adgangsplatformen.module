@@ -440,6 +440,7 @@ function _ding_adgangsplatformen_provider_login(array $user_info) {
     $account = ding_user_authenticate(array(
       'name' => $user_info['attributes']['userId'],
       'extra' => $user_info,
+      'single_sign_on' => TRUE,
     ));
 
     if ($account !== FALSE) {

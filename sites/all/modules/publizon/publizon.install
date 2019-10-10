@@ -85,7 +85,7 @@ function publizon_uninstall() {
  */
 function publizon_update_7100() {
   require drupal_get_path('module', 'publizon') . '/includes/publizon.default_error_messages.inc';
-  variable_set('publizon_error_messages', $errors);
+  variable_set('publizon_error_messages', $messages);
 }
 
 /**
