@@ -878,7 +878,8 @@ function ajax_command_ding_user_authenticate($extra_data, $redirect_uri = '') {
       }
     }
   }
-  else {
+
+  if (!isset($command)) {
     // Change default ajax action to default login form's if https is enabled.
     if (variable_get('https', FALSE)) {
       $form = drupal_get_form('user_login');

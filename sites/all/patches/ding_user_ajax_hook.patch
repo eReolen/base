@@ -4,7 +4,7 @@ index 4f88c3bd..436d6b6d 100644
 +++ b/profiles/ding2/modules/ding_user/ding_user.module
 @@ -872,7 +872,10 @@ function ajax_command_ding_user_authenticate($extra_data, $redirect_uri = '') {
      }
- 
+
      foreach ($modules as $module) {
 -      $command = module_invoke($module, $hook, $redirect_uri);
 +      $cmd = module_invoke($module, $hook, $redirect_uri);
@@ -14,3 +14,17 @@ index 4f88c3bd..436d6b6d 100644
      }
    }
    else {
+diff --git a/profiles/ding2/modules/ding_user/ding_user.module b/profiles/ding2/modules/ding_user/ding_user.module
+index 436d6b6d..4e8cea46 100644
+--- a/profiles/ding2/modules/ding_user/ding_user.module
++++ b/profiles/ding2/modules/ding_user/ding_user.module
+@@ -878,7 +878,8 @@ function ajax_command_ding_user_authenticate($extra_data, $redirect_uri = '') {
+       }
+     }
+   }
+-  else {
++
++  if (!isset($command)) {
+     // Change default ajax action to default login form's if https is enabled.
+     if (variable_get('https', FALSE)) {
+       $form = drupal_get_form('user_login');
