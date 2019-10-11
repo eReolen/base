@@ -64,6 +64,7 @@ Check for jQuery differences regarding prop() vs attr().
 * Enabled SSO (ding_adgangsplatformen.patch)
 * Add extra info need for SSO (ding_user_extra.patch)
 * Allow ajax hook to be overwritten when using adgangsplatformen (ding_user_ajax_hook.patch)
+* Disable tracking of user under /user path (disable-user-tracking.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 
