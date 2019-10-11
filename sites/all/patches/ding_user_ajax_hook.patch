@@ -1,0 +1,16 @@
+diff --git a/profiles/ding2/modules/ding_user/ding_user.module b/profiles/ding2/modules/ding_user/ding_user.module
+index 4f88c3bd..436d6b6d 100644
+--- a/profiles/ding2/modules/ding_user/ding_user.module
++++ b/profiles/ding2/modules/ding_user/ding_user.module
+@@ -872,7 +872,10 @@ function ajax_command_ding_user_authenticate($extra_data, $redirect_uri = '') {
+     }
+ 
+     foreach ($modules as $module) {
+-      $command = module_invoke($module, $hook, $redirect_uri);
++      $cmd = module_invoke($module, $hook, $redirect_uri);
++      if (is_array($cmd)) {
++        $command = $cmd;
++      }
+     }
+   }
+   else {
