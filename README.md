@@ -63,6 +63,7 @@ Check for jQuery differences regarding prop() vs attr().
 * Remove new reservation provider callback (ding_reservation.patch)
 * Enabled SSO (ding_adgangsplatformen.patch)
 * Add extra info need for SSO (ding_user_extra.patch)
+* Disable tracking of user under /user path (disable-user-tracking.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 
