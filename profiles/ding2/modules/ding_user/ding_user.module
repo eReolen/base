@@ -872,7 +872,10 @@ function ajax_command_ding_user_authenticate($extra_data, $redirect_uri = '') {
     }
 
     foreach ($modules as $module) {
-      $command = module_invoke($module, $hook, $redirect_uri);
+      $cmd = module_invoke($module, $hook, $redirect_uri);
+      if (is_array($cmd)) {
+        $command = $cmd;
+      }
     }
   }
   else {
