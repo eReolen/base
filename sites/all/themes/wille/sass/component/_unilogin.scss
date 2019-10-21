@@ -1,7 +1,9 @@
 /* Unilogin link theming. */
 
 .unilogin-button,
-.ui-dialog a.unilogin-button {
+.ui-dialog a.unilogin-button,
+.adgangsplatformen-button,
+.ui-dialog a.adgangsplatformen-button {
   color: $title-color;
 
   .unilogin-logo {

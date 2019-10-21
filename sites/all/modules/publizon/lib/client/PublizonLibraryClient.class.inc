@@ -11,8 +11,11 @@ class PublizonLibraryClient extends PublizonClient {
    * @param string $retailer_id
    *   The library's ID at Publizon.
    *
-   * @return PublizonLibrary
+   * @return PublizonLibrary|bool
    *   Library information object.
+   *
+   * @throws \PublizonConnectionException
+   * @throws \PublizonException
    */
   public function getLibraryProfile($retailer_id = NULL) {
     // Make the web-service call.

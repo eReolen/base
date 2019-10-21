@@ -585,7 +585,7 @@ function publizon_form_ding_adgangsplatformen_admin_settings_form_alter(array &$
  * Change Publizon client id for SSO users.
  */
 function publizon_publizon_client_id_alter(&$client_id) {
-  if (module_exists('ding_adgangsplatformen')) {
+  if (module_exists('ding_adgangsplatformen') && isset($_SESSION['oauth2token'])) {
     $client_id = variable_get('publizon_sso_client_id', '');
   }
 }
