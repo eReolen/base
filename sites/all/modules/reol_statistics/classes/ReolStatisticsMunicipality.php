@@ -61,27 +61,11 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
       'loans' => 0,
       'users' => 0,
     );
-    // Collect loans.
+    // Collect loans and unique users.
     $query = db_select('reol_statistics_loans', 'l');
     $query->join('reol_statistics_unilogin', 'u', 'l.sid = u.sid');
     $query->fields('l', array('retailer_id'));
     $query->addExpression('COUNT(l.sid)', 'loans');
-    $query->condition('l.timestamp', array($month->getStartTimestamp(), $month->getEndTimestamp()), 'BETWEEN');
-    $query->groupBy('l.retailer_id');
-
-    foreach ($query->execute() as $row) {
-      if (!isset($data[$row->retailer_id])) {
-        $data[$row->retailer_id] = $empty + array(
-          'retailer_id' => $row->retailer_id,
-        );
-      }
-      $data[$row->retailer_id]['loans'] += $row->loans;
-    }
-
-    // Collect unique users.
-    $query = db_select('reol_statistics_loans', 'l');
-    $query->join('reol_statistics_unilogin', 'u', 'l.sid = u.sid');
-    $query->fields('l', array('retailer_id'));
     $query->addExpression('COUNT(DISTINCT l.user_hash)', 'users');
     $query->condition('l.timestamp', array($month->getStartTimestamp(), $month->getEndTimestamp()), 'BETWEEN');
     $query->groupBy('l.retailer_id');
@@ -92,6 +76,7 @@ class ReolStatisticsMunicipality implements ReolStatisticsInterface, ReolStatist
           'retailer_id' => $row->retailer_id,
         );
       }
+      $data[$row->retailer_id]['loans'] = $row->loans;
       $data[$row->retailer_id]['users'] = $row->users;
     }
 
