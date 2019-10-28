@@ -163,6 +163,13 @@ function reol_statistics_cron() {
   $statistics = reol_statistics_get();
 
   foreach ($statistics as $statistic) {
+    if ($statistic instanceof ReolStatisticsISBN) {
+      // Crunching data for ReolStatisticsISBN takes too much time and must be
+      // handled by calling `drush reol-statistics-crunch-isbn` outside the
+      // Drupal cron schedule.
+      continue;
+    }
+
     $varname = 'reol_statistics_last_queued_' . get_class($statistic);
     if (reol_statistics_ensure_schema($statistic)) {
       variable_del($varname);
