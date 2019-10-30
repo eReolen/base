@@ -32,7 +32,8 @@ services:
       - PHP_MAIL=1
       - PHP_MAX_EXECUTION_TIME=120
       - PHP_MEMORY_LIMIT=512M
-      - DOCKER_HOST_DOMAIN=${COMPOSE_PROJECT_NAME}.docker.localhost
+      - PHP_IDE_CONFIG=serverName=localhost
+      - DOCKER_HOST_DOMAIN=${COMPOSE_DOMAIN}
     depends_on:
       - mariadb
     volumes:

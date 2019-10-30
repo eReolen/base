@@ -129,6 +129,7 @@ function reol_use_loan_deliver_html_page($page_callback_result) {
     $variables['head_title'] = drupal_get_title();
     $variables['language'] = $language;
     $variables['styles'] = drupal_get_css(NULL, TRUE);
+
     $variables['scripts'] = drupal_get_js('player', NULL, TRUE);
 
     // Set page content
@@ -175,13 +176,20 @@ function reol_use_loan_read($entity) {
   $render['#publizon_reader_stream_url'] = variable_get('publizon_reader_stream_url', '');
   $render['#publizon_reader_url'] = $publizon_reader_url;
 
-
   // Add dependencies.
   drupal_add_css($publizon_reader_url . '/scripts/reader-' . $reader_version . '/css', array(
     'type' => 'external',
     'scope' => 'player',
     'cache' => FALSE,
     'preprocess' => FALSE,
+  ));
+
+  // As jQuery update module is installed adding jQuery is a little tricky.
+  $jquery = drupal_get_library('system', 'jquery');
+  $jquery = reset($jquery['js']);
+  drupal_add_js($jquery['data'], array(
+    'type' => 'file',
+    'scope' => 'player',
   ));
 
   drupal_add_js($js_publizon_url, array(
