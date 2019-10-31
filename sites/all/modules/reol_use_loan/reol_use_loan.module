@@ -233,10 +233,12 @@ function reol_use_loan_listen($entity) {
 
   $order = reol_use_loan_get_order($entity->localId);
   if (!$order) {
+    // There is no order, start player in preview mode.
+    $render['#title'] = t('Try');
     $render['#isbn'] = reol_base_get_isbn($entity->localId);
   }
   else {
-    // There is no order, start player in preview mode.
+    $render['#title'] = t('Listen');
     $render['#internal_order_number'] = $order['internal_order_number'];
   }
 
@@ -463,7 +465,7 @@ function reol_use_loan_use_loan_ajax(TingEntity $entity, $type) {
   }
 
   $output = drupal_render($render);
-  $commands[] = ajax_command_ding_popup('reol_use_loan', t('Try'), $output, array('class' => array($class), 'refresh' => TRUE));
+  $commands[] = ajax_command_ding_popup('reol_use_loan', $render['#title'], $output, array('class' => array($class), 'refresh' => TRUE));
 
   return array('#type' => 'ajax', '#commands' => $commands);
 }
