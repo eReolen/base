@@ -92,7 +92,8 @@ function ding_webtrekk_page_alter(&$page) {
     }
     // Fallback to cpr+pin if none the modules we know about was used to log in.
     else {
-      if (ding_user_is_provider_user()) {
+      global $user;
+      if (ding_user_is_provider_user($user)) {
         $params['p_isloggedin'] = 'cpr+pinkode';
       }
       else {
