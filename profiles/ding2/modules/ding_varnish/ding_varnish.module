@@ -155,7 +155,7 @@ function ding_varnish_page_build(&$page) {
   drupal_add_http_header('Vary', 'X-Drupal-Roles, Accept-Encoding');
 
   // Set custom X-Drupal-Roles header.
-  header('X-Drupal-Roles: ' . implode(', ', array_keys($user->roles)));
+  drupal_add_http_header('X-Drupal-Roles: ', implode(', ', array_keys($user->roles)));
 }
 
 /**

@@ -81,7 +81,7 @@ sub vcl_recv {
   if (req.http.Cookie) {
     # Save the original cookie header so we can mangle it
     set req.http.X-Varnish-PHP_SID = req.http.Cookie;
-    set req.http.X-Varnish-PHP_SID = regsuball(req.http.X-Varnish-PHP_SID, ";? ?(SESS[a-z0-9]+|SSESS[a-z0-9]+|NO_CACHE)=([a-zA-Z0-9]+)( |;| ;).*","\1");
+    set req.http.X-Varnish-PHP_SID = regsuball(req.http.X-Varnish-PHP_SID, ".*;? (S+ESS[a-zA-Z0-9]+)=([a-zA-Z0-9-]+)( |;| ;).*", "\1=\2");
 
     // If not cookies left unset the header.
     if (req.http.X-Varnish-PHP_SID == "") {
