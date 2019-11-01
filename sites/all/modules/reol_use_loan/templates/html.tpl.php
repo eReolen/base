@@ -7,6 +7,7 @@
 
 <head profile="http://www.w3.org/1999/xhtml/vocab"">
   <?php print $head; ?>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title><?php print $head_title; ?></title>
   <?php print $styles; ?>
 </head>
