@@ -81,6 +81,10 @@ function reol_loan_loan_form_submit($form, &$form_state) {
         if (module_exists('ding_session_cache')) {
           ding_session_cache_clear('ding_loan', 'list');
           ding_session_cache_clear('ding_reservation', 'reservations');
+
+          // Clear provider cache.
+          ding_session_cache_clear('publizon', 'loans');
+          ding_session_cache_clear('publizon', 'reservation');
         }
 
         $form_state['loaned'] = TRUE;
