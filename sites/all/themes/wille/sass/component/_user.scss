@@ -508,12 +508,15 @@ input.password-confirm, input.password-field {
   // "Delete selected reservations" button.
   .pane-reservations .delete-reservations.action-button {
     // Make "Reservations available" fall down below the button.
-    float: none;
-
-    margin: 0;
-    padding: 0;
+    background: none;
+    &:before {
+      display: none;
+    }
 
     [type="submit"] {
+      float: none;
+      margin: 0;
+      padding: 0;
       @include button($red, false);
     }
   }
