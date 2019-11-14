@@ -46,16 +46,14 @@ function workflow_get_workflows_by_name($name) {
  * @deprecated: workflow_get_wid_label --> workflow_label
  */
 function workflow_get_wid_label($wid) {
+  $label = t('Unknown workflow');
   if (empty($wid)) {
-    $output = t('No workflow');
+    $label = t('No workflow');
   }
   elseif ($workflow = workflow_load_single($wid)) {
-    $output = $workflow->label();
+    $label = $workflow->label();
   }
-  else {
-    $output = t('Unknown workflow');
-  }
-  return $output;
+  return $label;
 }
 
 /**
@@ -63,6 +61,8 @@ function workflow_get_wid_label($wid) {
  *
  * @param mixed $wid
  *   The ID of the workflow.
+ *
+ * @return int
  *
  * @deprecated: workflow_get_creation_state_by_wid($wid) --> $workflow->getCreationSid().
  */

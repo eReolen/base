@@ -7,14 +7,12 @@
  * As you will notice this file will only handle the <export> of Worflows,
  * including states and transitions. The <import> is handeled magically,
  * and all modifications are done in function Workflow::save().
- *
- * @see http://foxinbox.org/content/features-magic-how-features-adds-additional-items-export for an introduction.
  */
 
 define('WORKFLOW_FEATURES_AUTHOR_NAME', 'workflow_features_author_name');
 
 // Even if workflow Node is not enabled, Features may use Node API's type_maps.
-module_load_include('inc', 'workflow', 'workflow.node.type_map');
+require_once dirname(__FILE__) . '/workflow.node.type_map.inc';
 
 /**
  * Default controller handling features integration.
@@ -33,8 +31,6 @@ class WorkflowFeaturesController extends EntityDefaultFeaturesController {
         if (count($workflow->getTypeMap())) {
           $export['dependencies']['workflownode'] = 'workflownode';
         }
-        // Add dependency on workflow_field.
-        $export['features']['Workflow'][$workflow_name] = $workflow_name;
       }
     }
 
@@ -111,7 +107,21 @@ class WorkflowFeaturesController extends EntityDefaultFeaturesController {
     // Add roles to translate role IDs on target system.
     $permission = NULL;
 
+    // Get system roles.
     $workflow->system_roles = workflow_get_roles($permission);
+    // Only export system roles for roles used by this workflow.
+    $roles = array();
+    foreach ($workflow->transitions as $id => $transition) {
+      foreach ($transition->roles as $rid) {
+        $roles[] = $rid;
+      }
+    }
+    $roles = array_unique($roles);
+    foreach ($workflow->system_roles as $id => $system_role) {
+      if (!in_array($id, $roles)) {
+        unset($workflow->system_roles[$id]);
+      }
+    }
 
     $sid_to_name_map = $this->pack_states($workflow);
     $this->pack_transitions($workflow, $sid_to_name_map);
@@ -143,6 +153,7 @@ class WorkflowFeaturesController extends EntityDefaultFeaturesController {
 
       $named_states[$name] = $state;
     }
+    ksort($named_states);
 
     // Identify states by machine name.
     $workflow->states = $named_states;
@@ -167,10 +178,7 @@ class WorkflowFeaturesController extends EntityDefaultFeaturesController {
       /* @var WorkflowTransition $transition */
       $start_name = $sid_to_name_map[$transition->sid];
       $end_name   = $sid_to_name_map[$transition->target_sid];
-      $new_name   = sprintf("%s_to_%s", $start_name, $end_name);
-
-      // Special case: replace parens in creation state transition names.
-      $new_name   = str_replace("(creation)", "_creation", $new_name);
+      $new_name = WorkflowConfigTransition::machineName($start_name, $end_name);
 
       $transition->name        = $new_name;
       $transition->start_state = $start_name;
@@ -185,6 +193,7 @@ class WorkflowFeaturesController extends EntityDefaultFeaturesController {
 
       $named_transitions[$new_name] = $transition;
     }
+    ksort($named_transitions);
 
     // Identify transitions by new machine name.
     $workflow->transitions = $named_transitions;
@@ -199,22 +208,12 @@ class WorkflowFeaturesController extends EntityDefaultFeaturesController {
    */
   function revert($module = NULL) {
     // Loads defaults from feature code.
-    $defaults = features_get_default($this->type, $module);
+    $defaults = workflow_get_defaults($module);
 
-    foreach ($defaults as $machine_name => $entity) {
-      /* @var Workflow $entity */
-      $existing_workflow = workflow_load_by_name($machine_name);
-
-      if (!empty($existing_workflow)) {
-        /* @var Workflow $existing_workflow */
-
-        // Update existing entity.
-        $entity->wid         = $existing_workflow->wid;
-        $entity->is_new      = FALSE;
-        $entity->is_reverted = TRUE;
+    if (!empty($defaults)) {
+      foreach ($defaults as $machine_name => $entity) {
+        workflow_revert($defaults, $machine_name);
       }
-
-      $entity->save();
     }
   }
 }

@@ -287,30 +287,24 @@ function wille_field($variables) {
  * Theme user login form.
  */
 function wille_user_login(&$vars) {
-  // Add uni-login to the form.
-  $vars['element']['unilogin_wrapper'] = array(
-    '#type' => 'fieldset',
-    '#description' => $vars['element']['unilogin']['#title'],
-  );
-  $vars['element']['unilogin_wrapper']['unilogin'] = $vars['element']['unilogin'];
-  unset($vars['element']['unilogin']);
-  $vars['element']['unilogin_wrapper']['unilogin']['#title'] = $vars['element']['user_login_container']['actions']['submit']['#value'];
-  $vars['element']['unilogin_wrapper']['unilogin']['#prefix'] = '<div class="unilogin-wrapper">';
-  $vars['element']['unilogin_wrapper']['unilogin']['#suffix'] = '</div>';
+  $element = &$vars['element'];
 
-  // Move login information into new wrapper.
-  $vars['element']['login_wrapper'] = array(
-    '#type' => 'fieldset',
-    '#description' => t('Log in with CPR or borrower number'),
-  );
-  $vars['element']['login_wrapper']['name'] = $vars['element']['user_login_container']['name'];
-  $vars['element']['login_wrapper']['pass'] = $vars['element']['user_login_container']['pass'];
-  $vars['element']['login_wrapper']['retailer_id'] = $vars['element']['user_login_container']['retailer_id'];
-  $vars['element']['login_wrapper']['actions'] = $vars['element']['user_login_container']['actions'];
-  unset($vars['element']['user_login_container']['name']);
-  unset($vars['element']['user_login_container']['pass']);
-  unset($vars['element']['user_login_container']['retailer_id']);
-  unset($vars['element']['user_login_container']['actions']);
+  if (module_exists('ding_user_form')) {
+    // Move login information into new wrapper.
+    $element['login_wrapper'] = array(
+      '#type' => 'fieldset',
+      '#description' => t('Log in with CPR or borrower number'),
+    );
+    $element['login_wrapper']['name'] = $element['user_login_container']['name'];
+    $element['login_wrapper']['pass'] = $element['user_login_container']['pass'];
+    $element['login_wrapper']['retailer_id'] = $element['user_login_container']['retailer_id'];
+    $element['login_wrapper']['actions'] = $element['user_login_container']['actions'];
+  }
+
+  unset($vars['element']['name']);
+  unset($vars['element']['pass']);
+  unset($vars['element']['actions']['submit']);
+  unset($vars['element']['user_login_container']);
 
   return drupal_render_children($vars['element']);
 }

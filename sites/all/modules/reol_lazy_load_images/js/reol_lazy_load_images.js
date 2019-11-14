@@ -38,7 +38,7 @@
    *
    * @type {{attach: Drupal.behaviors.reader.attach}}
    */
-  Drupal.behaviors.reader = {
+  Drupal.behaviors.lazyLoad = {
     attach : function(context, settings) {
       $('.js-lazy').once('lazy-loading', function (index, image) {
         if ('IntersectionObserver' in window) {

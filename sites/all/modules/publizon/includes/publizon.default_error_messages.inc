@@ -5,7 +5,7 @@
  * Defines the sensible defaults for error messages in publizon.
  */
 
-$errors = array(
+$messages = array(
   -1 => array(
     'error_code' => '-1',
     'show_bookmark' => 0,

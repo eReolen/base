@@ -163,6 +163,13 @@ function reol_statistics_cron() {
   $statistics = reol_statistics_get();
 
   foreach ($statistics as $statistic) {
+    if ($statistic instanceof ReolStatisticsISBN) {
+      // Crunching data for ReolStatisticsISBN takes too much time and must be
+      // handled by calling `drush reol-statistics-crunch-isbn` outside the
+      // Drupal cron schedule.
+      continue;
+    }
+
     $varname = 'reol_statistics_last_queued_' . get_class($statistic);
     if (reol_statistics_ensure_schema($statistic)) {
       variable_del($varname);
@@ -326,7 +333,7 @@ function _reol_statistics_get_unilogin_data($name, $partial = TRUE) {
     foreach ($institutions as $institution_id) {
       $institution = $institution_service->getInstitution($institution_id);
       if (isset($institution->kommunenr)) {
-        $libraries = publizon_filter_known_municipalities(array($institution->kommunenr));
+        $libraries = publizon_filter_libraries_list(array($institution->kommunenr));
         if (!empty($libraries)) {
           $inst = $institution;
           break;

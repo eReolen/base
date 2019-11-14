@@ -1,0 +1,12 @@
+diff --git a/profiles/ding2/modules/ding_adgangsplatformen/ding_adgangsplatformen.module b/profiles/ding2/modules/ding_adgangsplatformen/ding_adgangsplatformen.module
+index 9d5fcaf6..c63b7b7c 100644
+--- a/profiles/ding2/modules/ding_adgangsplatformen/ding_adgangsplatformen.module
++++ b/profiles/ding2/modules/ding_adgangsplatformen/ding_adgangsplatformen.module
+@@ -440,6 +440,7 @@ function _ding_adgangsplatformen_provider_login(array $user_info) {
+     $account = ding_user_authenticate(array(
+       'name' => $user_info['attributes']['userId'],
+       'extra' => $user_info,
++      'single_sign_on' => TRUE,
+     ));
+
+     if ($account !== FALSE) {

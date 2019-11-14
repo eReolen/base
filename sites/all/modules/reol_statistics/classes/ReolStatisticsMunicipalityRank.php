@@ -92,7 +92,7 @@ class ReolStatisticsMunicipalityRank implements ReolStatisticsInterface, ReolSta
     $placement = 1;
     foreach ($munis as $muni) {
       foreach ($muni as $row) {
-        $muni[0]->placement = $placement;
+        $row->placement = $placement;
       }
       $placement++;
     }

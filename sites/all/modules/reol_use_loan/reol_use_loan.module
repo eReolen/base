@@ -1,11 +1,8 @@
 <?php
-
 /**
  * @file
  * Code for the eReolen use loan module feature.
  */
-
-include_once 'reol_use_loan.features.inc';
 
 /**
  * Implements hook_menu().
@@ -13,23 +10,29 @@ include_once 'reol_use_loan.features.inc';
 function reol_use_loan_menu() {
   $items = array();
 
-  $items['reol_use_loan/reader/session/renew'] = array(
+  $items['ting/object/%ting_object/read'] = array(
+    'page callback' => 'reol_use_loan_read',
+    'delivery callback' => 'reol_use_loan_deliver_html_page',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+  );
+
+  $items['ting/object/%ting_object/listen'] = array(
+    'page callback' => 'reol_use_loan_listen',
+    'delivery callback' => 'reol_use_loan_deliver_html_page',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+  );
+
+  $items['reol_use_loan/reader/session/renew/%'] = array(
     'page callback' => 'reol_use_loan_reader_renew_session',
     'page arguments' => array(4),
     'access callback' => 'user_is_logged_in',
   );
 
-  $items['reol_use_loan/reader'] = array(
-    'page callback' => 'reol_use_loan_reader',
-    'page arguments' => array(2, 3),
-    // The page checks for access.
-    'access callback' => TRUE,
-  );
-
   $items['ting/object/%ting_object/%/ajax'] = array(
     'page callback' => 'reol_use_loan_use_loan_ajax',
     'page arguments' => array(2, 3),
-    // The page checks for access.
     'access callback' => TRUE,
     'delivery callback' => 'ajax_deliver',
   );
@@ -38,39 +41,208 @@ function reol_use_loan_menu() {
 }
 
 /**
- * Implements hook_permission().
+ * Implements hook_theme().
  */
-function reol_use_loan_permission() {
+function reol_use_loan_theme($existing, $type, $theme, $path) {
   return array(
-    'listen to audiobook' => array(
-      'title' => t('Listen to audiobook'),
-      'description' => t('Listen to a loaned audiobook.'),
+    'reol_use_loan_html' => array(
+      'variables' => array(
+        'vars' => NULL
+      ),
+      'path' => $path,
+      'template' => 'templates/html',
+    ),
+    'reol_use_loan_read' => array(
+      'variables' => array(
+        'retailer_order_number' => NULL,
+        'isbn' => NULL,
+        'reader_version' => NULL,
+        'publizon_reader_stream_url' => NULL,
+        'publizon_reader_url' => NULL,
+      ),
+      'path' => $path,
+      'template' => 'templates/read',
+    ),
+    'reol_use_loan_listen' => array(
+      'variables' => array(
+        'isbn' => NULL,
+        'internal_order_number' => NULL,
+      ),
+      'path' => $path,
+      'template' => 'templates/listen',
     ),
   );
 }
 
 /**
- * Implements hook_secure_permissions().
+ * Implements hook_ding_session_cache_defaults().
  *
- * Define which users should be able to perform a loan.
+ * Set default ding_session_cache settings and tell ding_session_cache that this
+ * module supports it.
  */
-function reol_use_loan_secure_permissions($role) {
-  $permissions = array(
-    'provider' => array(
-      'listen to audiobook',
-    ),
+function reol_use_loan_ding_session_cache_defaults() {
+  return array(
+    'title' => 'eReolen session renew cache',
+    'enabled' => TRUE,
+    'expire' => 10800,
   );
+}
 
-  if (isset($permissions[$role])) {
-    return $permissions[$role];
+/**
+ * Page deliver callback for publizon reader/player.
+ *
+ * The players form publizon has issues with the JavaScript form Drupal and DDB
+ * CMS core. So this callback makes an minimal page to display the readers.
+ *
+ * @TODO: Added fav-icon rel headers to rendered page.
+ *
+ * @param $page_callback_result
+ *   Page content as render array.
+ *
+ * @throws \Exception
+ */
+function reol_use_loan_deliver_html_page($page_callback_result) {
+  // Cache control for user pages.
+  drupal_add_http_header('Cache-Control', 'no-store, must-revalidate');
+  drupal_add_http_header('Pragma', 'no-cache');
+
+  // Menu status constants are integers; page content is a string or array.
+  if (is_int($page_callback_result)) {
+    // Fallback to Drupal's normal page deliver page.
+    drupal_deliver_html_page($page_callback_result);
+  }
+  else {
+    if (isset($page_callback_result) && is_null(drupal_get_http_header('Content-Type'))) {
+      drupal_add_http_header('Content-Type', 'text/html; charset=utf-8');
+    }
+
+    // Send appropriate HTTP-Header for browsers and search engines.
+    global $language;
+    drupal_add_http_header('Content-Language', $language->language);
+
+    // By default, do not allow the site to be rendered in an iframe on another
+    // domain.
+    drupal_add_http_header('X-Frame-Options', 'SAMEORIGIN');
+
+    // Get basic stuff need to render HTML page.
+    $variables['head'] = drupal_get_html_head();
+    $variables['head_title'] = drupal_get_title();
+    $variables['language'] = $language;
+    $variables['styles'] = drupal_get_css(NULL, TRUE);
+
+    $variables['scripts'] = drupal_get_js('player', NULL, TRUE);
+
+    // Set page content
+    $variables['content'] = $page_callback_result;
+
+    print theme('reol_use_loan_html', $variables);
+    drupal_exit();
   }
 }
 
 /**
- * Implements hook_ctools_plugin_directory().
+ * Menu callback to display e-book reader.
+ *
+ * @param $entity
+ *   Ting object entity.
+ *
+ * @return array
+ *   Render array.
+ *
+ * @throws \DingProviderDoesntImplement
+ * @throws \DingProviderNoProvider
  */
-function reol_use_loan_ctools_plugin_directory($owner, $plugin_type) {
-  return 'plugins/' . $plugin_type;
+function reol_use_loan_read($entity) {
+  $order = reol_use_loan_get_order($entity->localId);
+
+  $render = array(
+    '#theme' => 'reol_use_loan_read',
+  );
+
+  if (!$order) {
+    $render['#isbn'] = reol_base_get_isbn($entity->localId);
+  }
+  else {
+    // There is no order, start reader in preview mode.
+    $render['#retailer_order_number'] = $order['retailer_order_number'];
+  }
+
+  $reader_version = variable_get('publizon_reader_version', '1.6.0');
+  $publizon_reader_url = variable_get('publizon_reader_url', '');
+  $module_url = drupal_get_path('module', 'reol_use_loan');
+  $js_publizon_url = $publizon_reader_url . '/scripts/reader-' . $reader_version . '/js?' . time();
+
+  $render['#reader_version'] = $reader_version;
+  $render['#publizon_reader_stream_url'] = variable_get('publizon_reader_stream_url', '');
+  $render['#publizon_reader_url'] = $publizon_reader_url;
+
+  // Add dependencies.
+  drupal_add_css($publizon_reader_url . '/scripts/reader-' . $reader_version . '/css', array(
+    'type' => 'external',
+    'scope' => 'player',
+    'cache' => FALSE,
+    'preprocess' => FALSE,
+  ));
+
+  // As jQuery update module is installed adding jQuery is a little tricky.
+  $jquery = drupal_get_library('system', 'jquery');
+  $jquery = reset($jquery['js']);
+  drupal_add_js($jquery['data'], array(
+    'type' => 'file',
+    'scope' => 'player',
+  ));
+
+  drupal_add_js($js_publizon_url, array(
+    'type' => 'external',
+    'scope' => 'player',
+    'cache' => FALSE,
+    'preprocess' => FALSE,
+  ));
+  drupal_add_css($module_url . '/css/reader.css', array(
+    'type' => 'file',
+    'scope' => 'player',
+  ));
+  drupal_add_js($module_url . '/js/reader_standalone.js', array(
+    'type' => 'file',
+    'scope' => 'player',
+  ));
+  drupal_set_title($entity->getTitle() . ' | ' . variable_get('site_name', ''));
+
+  return $render;
+}
+
+/**
+ * Menu callback to display audio-book reader.
+ *
+ * @param $entity
+ *   Ting object entity.
+ *
+ * @return array
+ *   Render array.
+ *
+ * @throws \DingProviderDoesntImplement
+ * @throws \DingProviderNoProvider
+ */
+function reol_use_loan_listen($entity) {
+  $render = array(
+    '#theme' => 'reol_use_loan_listen',
+  );
+
+  drupal_add_css(drupal_get_path('module', 'reol_use_loan') . '/css/player.css');
+  drupal_set_title($entity->getTitle() . ' | ' . variable_get('site_name', ''));
+
+  $order = reol_use_loan_get_order($entity->localId);
+  if (!$order) {
+    // There is no order, start player in preview mode.
+    $render['#title'] = t('Try');
+    $render['#isbn'] = reol_base_get_isbn($entity->localId);
+  }
+  else {
+    $render['#title'] = t('Listen');
+    $render['#internal_order_number'] = $order['internal_order_number'];
+  }
+
+  return $render;
 }
 
 /**
@@ -78,38 +250,56 @@ function reol_use_loan_ctools_plugin_directory($owner, $plugin_type) {
  *
  * Call the Publizon stream session API to get a session
  * for the reader.
+ *
+ * @param $retailer_order
+ *   Order id for the session to renew.
  */
-function reol_use_loan_reader_renew_session($id) {
-  // Make sure we have url to call.
-  if (!variable_get('publizon_reader_stream_url', FALSE)) {
-    http_response_code(500);
-    echo t('URL for the stream server has not been defined!');
-    drupal_exit();
+function reol_use_loan_reader_renew_session($retailer_order) {
+  $response = FALSE;
+  if (module_exists('ding_session_cache')) {
+    $response = ding_session_cache_get('reol_use_loan', $retailer_order, FALSE);
   }
 
-  // Make sure we have client id.
-  if (!variable_get('publizon_client_id', FALSE)) {
-    http_response_code(500);
-    echo t('Client ID has not been defined!');
-    drupal_exit();
+  if (!$response) {
+    // Make sure we have url to call.
+    $url = variable_get('publizon_reader_stream_url', FALSE);
+    if (!$url) {
+      http_response_code(500);
+      echo t('URL for the stream server has not been defined!');
+      drupal_exit();
+    }
+
+    // Make sure we have client id.
+    $client_id = variable_get('publizon_client_id', FALSE);
+    if (!$client_id) {
+      http_response_code(500);
+      echo t('Client ID has not been defined!');
+      drupal_exit();
+    }
+
+    // Get the retailer id on the user.
+    global $user;
+    $profile = profile2_load_by_user($user, 'provider_publizon');
+    $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
+    $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
+
+    // Get information for request.
+    $library = publizon_get_library($retailer_id);
+
+    // Get response from endpoint.
+    $response = reol_use_loan_get_reader_session($url, $retailer_order, $client_id, $library->retailer_id, md5($library->retailer_key_code));
+
+    // Store the session into ding session cache.
+    if (module_exists('ding_session_cache')) {
+      ding_session_cache_set('reol_use_loan', $retailer_order, $response);
+    }
   }
-
-  // Get the retailer id on the user.
-  global $user;
-  $profile = profile2_load_by_user($user, 'provider_publizon');
-  $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
-  $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
-
-  // Get information for request.
-  $client_id = variable_get('publizon_client_id', '');
-  $retailer = publizon_get_library($retailer_id);
-  $url = variable_get('publizon_reader_stream_url', '');
-
-  // Get response from endpoint.
-  $response = reol_use_loan_get_reader_session($url, $id, $client_id, $retailer->retailer_id, md5($retailer->retailer_key_code));
 
   // Write response to browser.
+  drupal_add_http_header('Cache-Control', 'no-store, must-revalidate');
+  drupal_add_http_header('Pragma', 'no-cache');
   http_response_code($response['status']);
+  drupal_json_output();
   echo $response['result'];
   drupal_exit();
 }
@@ -137,55 +327,22 @@ function reol_use_loan_get_reader_session($url, $retailer_order, $client_id, $re
   curl_setopt($ch, CURLOPT_URL, $url . '/publicstreaming/v1/' . $retailer_order . '/session/' . $client_id . '/' . $retailer_id . '/' . $retailer_key_code . '/');
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
   curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+  curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
 
   // Execute it.
-  $output = curl_exec($ch);
+  $response = curl_exec($ch);
   $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
   // Return code and result.
-  return array('status' => $status, 'result' => $output);
-}
-
-/**
- * Render the page for the reader.
- *
- * @param string $id
- *   The retailer order number.
- */
-function reol_use_loan_reader($id, $try = FALSE) {
-  $vars = array();
-  if ($try) {
-    $vars['isbn'] = $id;
-  }
-  else {
-    $vars['retailer_order_number'] = $id;
-  }
-
-  $vars['reader_version'] = variable_get('publizon_reader_version', '1.5.0');
-
-  echo theme('reol_use_loan_reader', $vars);
-  drupal_exit();
-}
-
-/**
- * Implements hook_theme().
- */
-function reol_use_loan_theme($existing, $type, $theme, $path) {
-  return array(
-    'reol_use_loan_reader' => array(
-      'variables' => array(
-        'retailer_order_number' => NULL,
-      ),
-      'path' => drupal_get_path('module', 'reol_use_loan') . '/templates',
-      'template' => 'reader',
-    ),
-  );
+  return array('status' => $status, 'result' => $response);
 }
 
 /**
  * Implements hook_ding_entity_buttons().
  *
- * Add read/listen buttons on entity view page for audiobook or ebook.
+ * Add read/listen buttons on entity view page for audio-book or e-book.
  */
 function reol_use_loan_ding_entity_buttons($type, $entity) {
   // Materials might be deleted in the well, but still loaned by a user. We need
@@ -232,10 +389,9 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
           if ($loaned) {
             $text = t('Listen');
           }
-          else {
-            $link .= '/ajax';
-            $classes[] = 'use-ajax';
-          }
+
+          $link .= '/ajax';
+          $classes[] = 'use-ajax';
           $html_id = 'listen-' . $entity->id;
           break;
       }
@@ -255,9 +411,13 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
  * @param string $local_id
  *   The local id of the title to get order for.
  *
- * @return array
+ * @return bool|mixed
  *   Array containing retailer and internal order numbers.
  *   FALSE on error.
+ *
+ * @return bool|mixed
+ * @throws \DingProviderDoesntImplement
+ * @throws \DingProviderNoProvider
  */
 function reol_use_loan_get_order($local_id) {
   global $user;
@@ -279,42 +439,33 @@ function reol_use_loan_get_order($local_id) {
 /**
  * Deliver read/listen pages using ajax.
  *
- * @param TingEntity $ting_object
+ * @param TingEntity $entity
  *   The ting object from menu hook.
  * @param string $type
  *   Either read or listen.
  *
- * @return array|null
+ * @return array
  *   Array as expected by ajax_deliver.
+ *
+ * @throws \DingProviderDoesntImplement
+ * @throws \DingProviderNoProvider
  */
-function reol_use_loan_use_loan_ajax(TingEntity $ting_object, $type) {
-  module_load_include('inc', 'page_manager', 'plugins/tasks/page');
-  module_load_include('inc', 'ctools', 'includes/context');
+function reol_use_loan_use_loan_ajax(TingEntity $entity, $type) {
   $commands = array();
 
   // Figure out which page to load.
+  $class = '';
   if ($type == "read") {
-    $subtask_id = "read_ebook";
+    $render = reol_use_loan_read($entity);
     $class = 'try-ebook';
   }
   elseif ($type == "listen") {
-    $subtask_id = "listen_to_audiobook";
+    $render = reol_use_loan_listen($entity);
     $class = 'try-audiobook';
   }
-  else {
-    return;
-  }
 
-  // Load page argument context.
-  $page = page_manager_page_load($subtask_id);
-  $arg = $page->arguments['ting_object'];
-  $arg['keyword'] = '%ting_object';
-  $context = ctools_context_get_context_from_argument($arg, $ting_object);
+  $output = drupal_render($render);
+  $commands[] = ajax_command_ding_popup('reol_use_loan', $render['#title'], $output, array('class' => array($class), 'refresh' => TRUE));
 
-  // Return page html in popup.
-  $output = page_manager_page_execute($subtask_id, $context);
-  $commands[] = ajax_command_ding_popup('reol_use_loan', t('Try'), $output, array('class' => array($class), 'refresh' => TRUE));
-
-  // Return the ajax commands as an render array.
   return array('#type' => 'ajax', '#commands' => $commands);
 }

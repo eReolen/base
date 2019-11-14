@@ -168,8 +168,8 @@ function reol_loan_ding_entity_is($entity, $is) {
     $availability_list = ding_availability_items(array($entity->localId));
     if ($availability_list) {
       list($availability) = array_values($availability_list);
-      if (_reol_loan_map_availability($availability, $entity->id) != REOL_LOAN_STATUS_RESERVABLE) {
-        return FALSE;
+      if (_reol_loan_map_availability($availability, $entity->id) == REOL_LOAN_STATUS_RESERVABLE) {
+        return TRUE;
       }
     }
   }
@@ -218,6 +218,9 @@ function reol_loan_is_right_type(TingEntity $entity) {
  *
  * @return int
  *   The status ints from the top of this file.
+ *
+ * @throws \DingProviderDoesntImplement
+ * @throws \DingProviderNoProvider
  */
 function _reol_loan_map_availability(array $availability, $ding_entity_id) {
   // Titles might have the special notloanable-status. This happens when titles
@@ -270,6 +273,8 @@ function _reol_loan_map_availability(array $availability, $ding_entity_id) {
  *   The user from request.
  * @param string $local_ids
  *   The local ids to delete reservations for, comma separated.
+ *
+ * @throws \Exception
  */
 function reol_loan_delete_reservations_ajax($user, $local_ids) {
   $response = array(
