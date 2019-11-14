@@ -21,9 +21,11 @@ class PublizonUserClient extends PublizonClient {
    * @param string $pincode
    *   The users pin code. Null for UNI•Login users.
    *
-   * @return bool|string
+   * @return bool|string|null
    *   FALSE if the user is invalid, TRUE or their friendly card number
    *   otherwise.
+   *
+   * @throws \Exception
    */
   public function validateLibraryUser($card_number, $pincode, $retailer_id) {
     $arguments = array(
@@ -39,7 +41,7 @@ class PublizonUserClient extends PublizonClient {
     try {
       $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, $arguments, array('pub' => 'http://pubhub.dk/'));
 
-      // Extract friendlycardnumber.
+      // Extract friendly card number.
       $friendly_elements = $response->xpath('//data/friendlycardnumber');
       if (isset($friendly_elements[0])) {
         $friendly_id = (string) $friendly_elements[0];

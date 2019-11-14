@@ -114,7 +114,7 @@ function theme_workflow_admin_ui_transitions_form($variables) {
       $header = array(array('data' => t('From / To') . ' &nbsp;' . WORKFLOW_ADMIN_UI_ARROW));
       $rows = array();
       foreach ($states as $state) {
-        $label = check_plain($state->label());
+        $label = $state->label();
         // Don't allow transition TO (creation).
         if (!$state->isCreationState()) {
           $header[] = array('data' => $label);
@@ -218,5 +218,5 @@ function workflow_admin_ui_transitions_form_submit($form, &$form_state) {
   }
 
   drupal_set_message(t('The workflow was updated.'));
-  // $form_state['redirect'] = 'admin/config/workflow/workflow';
+  // $form_state['redirect'] = WORKFLOW_ADMIN_UI_PATH;
 }

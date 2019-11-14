@@ -88,7 +88,7 @@ class PublizonChecklistClient extends PublizonClient {
     $data = $response->xpath('//data/checklist');
     $checklist = array();
     if (isset($data[0])) {
-      while (list(, $chk) = each($data)) {
+      foreach ($data as $chk) {
         $checklist[] = new PublizonChecklistItem($chk);
       }
     }

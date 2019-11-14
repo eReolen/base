@@ -12,12 +12,9 @@ class EntityWorkflowUIController extends EntityDefaultUIController {
   public function hook_menu() {
     $items = parent::hook_menu();
 
-    // Workflow is now an exportable entity. But the 'Import' menu item is
-    // still broken. We show it, but it requires #1967794 before it works.
-    // unset($items['admin/config/workflow/workflow/import']);
-
     // Set this on the object so classes that extend hook_menu() can use it.
-    $id_count = count(explode('/', $this->path));
+    $admin_path = $this->path;
+    $id_count = count(explode('/', $admin_path));
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%entity_object';
     $plural_label = isset($this->entityInfo['plural label']) ? $this->entityInfo['plural label'] : $this->entityInfo['label'] . 's';
     $entityType = $this->entityInfo['entity class'];
@@ -31,34 +28,34 @@ class EntityWorkflowUIController extends EntityDefaultUIController {
       'type' => MENU_LOCAL_TASK,
     );
 
-    $items[$this->path . '/manage/' . $wildcard . '/states'] = $item + array(
+    $items["$admin_path/manage/$wildcard/states"] = $item + array(
       'file' => 'workflow_admin_ui/workflow_admin_ui.page.states.inc',
       'title' => 'States',
-      'weight' => '1',
+      'weight' => '11',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('workflow_admin_ui_states_form', $id_count + 1, $id_count + 2),
     );
 
-    $items[$this->path . '/manage/' . $wildcard . '/transitions'] = $item + array(
+    $items["$admin_path/manage/$wildcard/transitions"] = $item + array(
       'file' => 'workflow_admin_ui/workflow_admin_ui.page.transitions.inc',
       'title' => 'Transitions',
-      'weight' => '2',
+      'weight' => '12',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('workflow_admin_ui_transitions_form', $id_count + 1, $id_count + 2),
     );
 
-    $items[$this->path . '/manage/' . $wildcard . '/labels'] = $item + array(
+    $items["$admin_path/manage/$wildcard/labels"] = $item + array(
       'file' => 'workflow_admin_ui/workflow_admin_ui.page.labels.inc',
       'title' => 'Labels',
-      'weight' => '3',
+      'weight' => '13',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('workflow_admin_ui_labels_form', $id_count + 1, $id_count + 2),
     );
 
-    $items[$this->path . '/manage/' . $wildcard . '/permissions'] = $item + array(
+    $items["$admin_path/manage/$wildcard/permissions"] = $item + array(
       'file' => 'workflow_admin_ui/workflow_admin_ui.page.permissions.inc',
       'title' => 'Permission summary',
-      'weight' => '4',
+      'weight' => '14',
       'page callback' => 'workflow_admin_ui_view_permissions_form',
       'page arguments' => array($id_count + 1, $id_count + 2),
       // @todo: convert to drupal_get_form('workflow_admin_ui_view_permissions_form');
@@ -150,47 +147,16 @@ class EntityWorkflowUIController extends EntityDefaultUIController {
    * @see https://www.drupal.org/node/1043634
    */
   public function applyOperation($op, $entity) {
+    $admin_path = $this->path;
     $label = entity_label($this->entityType, $entity);
     $vars = array('%entity' => $this->entityInfo['label'], '%label' => $label);
-    $id = entity_id($this->entityType, $entity);
-    $edit_link = l(t('edit'), $this->path . '/manage/' . $id . '/edit');
+    $wid = entity_id($this->entityType, $entity);
+    $edit_link = l(t('edit'), "$admin_path/manage/$wid/edit");
 
     switch ($op) {
       case 'revert':
-        // Do not delete the workflow, but recreate features_get_default($entity_type, $module);
-        // entity_delete($this->entityType, $id);
-        $workflow = $entity;
-        $entity_type = $this->entityType;
-        $funcname = $workflow->module . '_default_' . $this->entityType;
-        $defaults = $funcname();
-        // No defaults, no processing.
-        if (empty($defaults)) {
-          return;
-        }
-
-        foreach ($defaults as $name => $entity) {
-          $existing[$name] = workflow_load($name);
-          // If we got an existing entity with the same name, we reuse its entity id.
-          if (isset($existing[$name])) {
-            // Set the original as later reference.
-            $entity->original = $existing[$name];
-
-            // As we got an ID, the entity is not new.
-            $entity->wid = $entity->original->wid;
-            unset($entity->is_new);
-
-            // Update the status to be in code.
-            // $entity->status |= ENTITY_IN_CODE;
-            $entity->status = ENTITY_IN_CODE;
-
-            // We mark it for being in revert mode.
-            $entity->is_reverted = TRUE;
-            entity_save($entity_type, $entity);
-            unset($entity->is_reverted);
-          }
-          // The rest of the defaults is handled by default implementation.
-          // @see entity_defaults_rebuild()
-        }
+        $defaults = workflow_get_defaults($entity->module);
+        workflow_revert($defaults, $entity->getName());
         watchdog($this->entityType, 'Reverted %entity %label to the defaults.', $vars, WATCHDOG_NOTICE, $edit_link);
         return t('Reverted %entity %label to the defaults.', $vars);
 

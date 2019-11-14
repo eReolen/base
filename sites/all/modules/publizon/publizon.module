@@ -43,6 +43,10 @@ function publizon_ding_provider() {
         'prefix' => 'bookmark',
         'file' => 'includes/publizon.bookmark.inc',
       ),
+      'auth' => array(
+        'prefix' => 'auth',
+        'file' => 'includes/publizon.auth.inc',
+      ),
       'user_consent' => array(
         'prefix' => 'user_consent',
         'file' => 'includes/publizon.user_consent.inc',
@@ -143,7 +147,7 @@ function publizon_get_libraries($reset = FALSE) {
   $libraries = drupal_static(__FUNCTION__, array());
   if (empty($libraries) || $reset) {
     $libraries = db_select('publizon_libraries', 'p')
-      ->fields('p', PublizonConfiguredLibrary::fields())
+      ->fields('p')
       ->orderBy('p.library_name')
       ->execute()
       ->fetchAllAssoc('retailer_id', 'PublizonConfiguredLibrary');
@@ -169,7 +173,7 @@ function publizon_get_libraries($reset = FALSE) {
  * @param bool $reset
  *   If TRUE the static cache will be rebuild. Defaults to FALSE.
  *
- * @return PublizonConfiguredLibrary
+ * @return array PublizonConfiguredLibrary
  *   Basic information about the library entered at the publizon administration
  *   interface.
  */
@@ -214,34 +218,18 @@ function publizon_get_libraries_list() {
 }
 
 /**
- * Implements hook_ting_covers().
+ * Filter list of libraries based municipalities ID's.
  *
- * Fetch covers from Publizon.
+ * @param array $municipalities
+ *   Municipality ID's for to return libraries for.
+ *
+ * @return array
  */
-function publizon_ting_covers($entities) {
-  $covers = array();
-  foreach ($entities as $id => $entity) {
-    $local_id = $entity->localId;
-
-    $uri = publizon_get_product_cover($local_id);
-
-    if (!empty($uri)) {
-      $covers[$id] = $uri;
-    }
-  }
-
-  return $covers;
-}
-
-/**
- * Filter list of municipalities down to list of UNI•Login ones.
- */
-function publizon_filter_known_municipalities($municipalities) {
+function publizon_filter_libraries_list(array $municipalities) {
   $filtered = array();
   $libraries = publizon_get_libraries();
   foreach ($libraries as $library) {
-    if (!empty($library->unilogin_id) &&
-      in_array($library->unilogin_id, $municipalities)) {
+    if (!empty($library->unilogin_id) && in_array($library->unilogin_id, $municipalities)) {
       $filtered[$library->unilogin_id] = $library;
     }
   }
@@ -251,6 +239,8 @@ function publizon_filter_known_municipalities($municipalities) {
 
 /**
  * Get the retailer id for a user.
+ *
+ * Loaded form the users profile2 profile.
  *
  * @param object $account
  *   The user object.
@@ -296,6 +286,23 @@ function publizon_get_product_cover($local_id) {
 }
 
 /**
+ * Implements hook_ting_covers().
+ */
+function publizon_ting_covers($entities) {
+  $covers = array();
+  foreach ($entities as $id => $entity) {
+    $local_id = $entity->localId;
+    $uri = publizon_get_product_cover($local_id);
+
+    if (!empty($uri)) {
+      $covers[$id] = $uri;
+    }
+  }
+
+  return $covers;
+}
+
+/**
  * Alter reserve form.
  *
  * As we are adding field widgets we cannot use the options form
@@ -305,6 +312,9 @@ function publizon_get_product_cover($local_id) {
  *   The form.
  * @param array $form_state
  *   The state of the form.
+ *
+ * @return array
+ *  Form array.
  *
  * @see publizon_reservation_options()
  */
@@ -440,7 +450,7 @@ function publizon_form_ding_reservation_reserve_form_submit(array $form, array &
   // Check if fields have changed, and change them on the profile.
   foreach ($fields as $field => $checkbox) {
     // To not confuse the user, we only save values that result in notification.
-    // If they have not chosen notif for the field, do not save the value.
+    // If they have not chosen notify for the field, do not save the value.
     if (!$values[$checkbox]) {
       continue;
     }
@@ -458,38 +468,6 @@ function publizon_form_ding_reservation_reserve_form_submit(array $form, array &
 }
 
 /**
- * Get custom error messages for publizon error codes.
- */
-function _publizon_error_messages() {
-  $messages = variable_get('publizon_error_messages', array());
-  if (empty($messages)) {
-    // Return default messages.
-    $messages = array(
-      -1 => t('Unknown error.'),
-      // Doesn't make sense to include 101 which is 'OK'.
-      105 => 'ebookid er ikke er gyldigt isbn nummer (#105).',
-      114 => 'Ugyldigt kortnummer og/eller pinkode (#114).',
-      118 => 'Biblioteket kunne ikke autoriseres (#118).',
-      120 => 'Antallet af samtidige lån er overskredet (#120).',
-      125 => 'Biblioteket har nået forbrugsgrænsen i indeværende måned. Kontakt evt. dit lokale bibliotek for yderligere oplysninger (#125).',
-      126 => 'Biblioteket har nået grænsen for antal udlån i indeværende måned. Kontakt evt. dit lokale bibliotek for yderligere oplysninger (#126).',
-      128 => 'Bogen er ikke tilgængelig for udlån (#128).',
-      129 => 'Bogen kan højst genlånes én gang (#129).',
-      130 => 'Bogen kan først lånes igen 90 dage efter sidste låns udløb (#130).',
-      131 => 'Bogen kan ikke lånes (#131).',
-      134 => 'Kortet er midlertidigt blokeret (#134)',
-      135 => 'Grænsen for antal tilladte lån på bogen er nået (#135)',
-      136 => 'De opkøbte klip er alle taget i brug (#136).',
-      137 => 'Dit bibliotek tillader kun op til X samtidige reserveringer (#137).',
-      138 => 'Der skete en uventet fejl. (#138).',
-      139 => 'Ugyldigt clientid. (#139).',
-    );
-  }
-
-  return $messages;
-}
-
-/**
  * Get error message array.
  *
  * @param int $code
@@ -500,18 +478,12 @@ function _publizon_error_messages() {
  */
 function publizon_get_message($code) {
   $messages = variable_get('publizon_error_messages', array());
-  $code = isset($messages[$code]) ? $code : -1;
+  if (empty($messages)) {
+    // Set variable $message to default messages.
+    require drupal_get_path('module', 'publizon') . '/includes/publizon.default_error_messages.inc';
+  }
 
-  if (!isset($messages[$code])) {
-    return array(
-      'error_text' => 'Error',
-      'show_bookmark' => FALSE,
-      'show_reserve' => FALSE,
-    );
-  }
-  else {
-    return $messages[$code];
-  }
+  return $messages[$code] ?? $messages[-1];
 }
 
 /**
@@ -583,6 +555,39 @@ function publizon_client_library_load($library_id) {
   }
 
   return $libraries[$library_id];
+}
+
+/**
+ * Implements hook_form_ding_adgangsplatformen_admin_settings_form_alter().
+ */
+function publizon_form_ding_adgangsplatformen_admin_settings_form_alter(array &$form, array &$form_state) {
+  if (module_exists('ding_adgangsplatformen')) {
+    $form['publizon'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Publizon configuration'),
+      '#tree' => FALSE,
+      '#weight' => -1
+    );
+
+    $form['publizon']['publizon_sso_client_id'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Publizon SSO client ID'),
+      '#description' => t('The client ID to send to publizon, for single sign on (SSO) users.'),
+      '#default_value' => variable_get('publizon_sso_client_id', ''),
+      '#required' => TRUE,
+    );
+  }
+}
+
+/**
+ * Implements hook_publizon_client_id_alter().
+ *
+ * Change Publizon client id for SSO users.
+ */
+function publizon_publizon_client_id_alter(&$client_id) {
+  if (module_exists('ding_adgangsplatformen') && isset($_SESSION['oauth2token'])) {
+    $client_id = variable_get('publizon_sso_client_id', '');
+  }
 }
 
 /**

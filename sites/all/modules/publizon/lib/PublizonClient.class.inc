@@ -72,13 +72,15 @@ abstract class PublizonClient {
    *   Index into the end-points array (defined in the top of the object).
    * @param string $action
    *   SOAP action to request.
+   * @param $retailer_id
+   *   Retailer id.
    * @param array $parameters
    *   The parameters to call the actions with. Also known as the content of the
    *   message. Remember to prefix them with the namespace they should use.
    * @param array $namespace
    *   The namespaces that is used inside the SOAP message.
    *
-   * @return SimpleXMLElement
+   * @return bool|\SimpleXMLElement|string
    *   The response from the web-service.
    *
    * @throws PublizonConnectionException

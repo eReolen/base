@@ -197,6 +197,13 @@ function ding2_update_dependencies() {
     'ting' => 7014,
   );
 
+  // Update hook which sets custom configuration for EU Cookie Compliance.
+  $dependencies['ding2'][7064] = array(
+    // Update hook that updates the configuration format for EU Cookie
+    // Compliance module.
+    'eu_cookie_compliance' => 7010,
+  );
+
   return $dependencies;
 }
 
@@ -697,5 +704,68 @@ function ding2_update_7062() {
  * Enable Section and Nodelist modules.
  */
 function ding2_update_7063() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Update EU Cookie Compliance settings.
+ */
+function ding2_update_7064() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Update translations.
+ */
+function ding2_update_7065() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Update translations.
+ */
+function ding2_update_7066() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Delete {system} records for ding_wayf module.
+ */
+function ding2_update_7067() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Disable GateWAYF modules and migrate config.
+ */
+function ding2_update_7068() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Enable adgangsplatformen module.
+ */
+function ding2_update_7069() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Update translations.
+ */
+function ding2_update_7070() {
+  // Removed, no action need for ereolen.
+}
+
+/**
+ * Update translations.
+ */
+function ding2_update_7071() {
+  ding2_translation_update();
+}
+
+/**
+ * Enable Ding paragraphs module.
+ */
+function ding2_update_7072() {
   // Removed, no action need for ereolen.
 }

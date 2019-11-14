@@ -1,8 +1,8 @@
 diff --git a/profiles/ding2/modules/ting/ting.module b/profiles/ding2/modules/ting/ting.module
-index 4dbf8470..60c920cb 100644
+index 10ce0444..ed00f417 100644
 --- a/profiles/ding2/modules/ting/ting.module
 +++ b/profiles/ding2/modules/ting/ting.module
-@@ -825,7 +825,13 @@ function ting_search_object_load($id) {
+@@ -807,7 +807,13 @@ function ting_search_object_load($id) {
  function ting_single_object_render($entity_id, $view_mode = 'teaser') {
    // Load the ting objects found.
    $entity = entity_load('ting_object', array($entity_id));

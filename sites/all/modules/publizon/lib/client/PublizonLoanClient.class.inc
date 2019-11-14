@@ -9,7 +9,7 @@ class PublizonLoanClient extends PublizonClient {
    * Create a loan.
    *
    * Create a new loan at Publizon. It throws an exception if the loan is not
-   * successfull, otherwise the retailer orderno and internal orderno is
+   * successful, otherwise the retailer order no and internal order no is
    * returned.
    *
    * @param string $retailer_id
@@ -24,7 +24,8 @@ class PublizonLoanClient extends PublizonClient {
    * @return array
    *   Array containing the retailer and internal order numbers.
    *
-   * @throws PublizonException
+   * @throws \PublizonConnectionException
+   * @throws \PublizonException
    */
   public function createLoan($retailer_id, $card_number, $pincode, $isbn) {
     // Call the webservice, throwing exception on failure.
@@ -54,13 +55,16 @@ class PublizonLoanClient extends PublizonClient {
   /**
    * Retrieves information about the user loans stored at Publizon.
    *
+   * @param $retailer_id
+   *   Retailer id.
    * @param string $card_number
    *   User card_number/CPR also known as login id.
    *
-   * @return bool
+   * @return array
    *   Returns an array of PublizonLoan objects.
    *
-   * @throws PublizonException
+   * @throws \PublizonConnectionException
+   * @throws \PublizonException
    */
   public function getLibraryUserOrderList($retailer_id, $card_number) {
     // Make request to the web-service for the loans.
@@ -76,6 +80,7 @@ class PublizonLoanClient extends PublizonClient {
         $loans[] = new PublizonLoan($loan);
       }
     }
+
     return $loans;
   }
 
@@ -89,7 +94,7 @@ class PublizonLoanClient extends PublizonClient {
    * @param string $isbn
    *   ISBN number on the product.
    *
-   * @return PublizonLoan
+   * @return PublizonLoan|bool
    *   Returns the loan, or FALSE if no loan exists.
    *
    * @throws PublizonException
@@ -144,7 +149,7 @@ class PublizonLoanClient extends PublizonClient {
     $data = $response->xpath('//data/productloanstatus');
     $status = array();
     if (isset($data[0])) {
-      while (list(, $stat) = each($data)) {
+      foreach ($data as $stat) {
         $status[] = new PublizonLoanStatus($stat);
       }
     }
