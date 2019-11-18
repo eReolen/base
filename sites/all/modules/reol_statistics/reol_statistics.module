@@ -319,6 +319,7 @@ function _reol_statistics_get_unilogin_data($name, $partial = TRUE) {
     $user_service = ding_unilogin_wservice('user');
     $institution_service = ding_unilogin_wservice('inst');
     $institutions = $user_service->getUserInstitutions($name);
+    $institutions = ding_unilogin_filter_institutions($institutions);
     if (!$institutions) {
       watchdog(
         'reol_statistics',
