@@ -65,16 +65,6 @@ function _reol_statistics_get_unilogin_data() {
 }
 
 /**
- * Implements hook_ding_unilogin_login_success().
- */
-function reol_statistics_ding_unilogin_login_success($user) {
-  if (isset($user->data['unilogin'],
-    $user->data['unilogin']['institutions'])) {
-    // Collect statistics.
-  }
-}
-
-/**
  * Implements hook_menu().
  */
 function reol_statistics_menu() {
