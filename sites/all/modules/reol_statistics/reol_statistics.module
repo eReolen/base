@@ -38,19 +38,19 @@ function reol_statistics_publizon_loan($account, $name, $isbn, $retailer_id) {
 /**
  * Get UNI•Login log data for the current user.
  *
- * @return array
- *   Array of collected data or an empty array.
+ * @return null|array
+ *   Array of collected data if any.
  */
 function _reol_statistics_get_unilogin_data() {
-  global $user;
+  $unilogin_data = module_exists('ding_unilogin') ? ding_unilogin_get_user_data() : NULL;
 
-  if (!isset($user->data['unilogin']['institutions'])
-      || !is_array($user->data['unilogin']['institutions'])
-      || empty($user->data['unilogin']['institutions'])) {
+  if (!isset($unilogin_data['institutions'])
+    || !is_array($unilogin_data['institutions'])
+    || empty($unilogin_data['institutions'])) {
     return NULL;
   }
 
-  $institutions = $user->data['unilogin']['institutions'];
+  $institutions = $unilogin_data['institutions'];
   $institution = reset($institutions);
 
   return [
