@@ -98,9 +98,22 @@ function publizon_loan_create($account, $local_id) {
     // This will throw exception if not logged in.
     $creds = ding_user_get_creds();
 
+    $institution_id = NULL;
+    if (function_exists('ding_unilogin_get_user_data')) {
+      $unilogin_data = ding_unilogin_get_user_data();
+      if (isset($unilogin_data['institutions'])
+        && is_array($unilogin_data['institutions'])) {
+        $institutions = $unilogin_data['institutions'];
+        $institution = reset($institutions);
+        if (NULL !== $institution) {
+          $institution_id = $institution->instnr;
+        }
+      }
+    }
+
     $client = PublizonLoanClient::getClient();
     // This will throw exception if loan does not go through.
-    $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn);
+    $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn, $institution_id);
     module_invoke_all('publizon_loan', $account, $creds['name'], $isbn, $retailer_id);
   }
   catch (PublizonException $e) {
