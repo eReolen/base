@@ -28,38 +28,65 @@ function publizon_availability_items(array $local_ids) {
     $to_check[$isbn] = $local_id;
   }
 
+  $use_cache = !user_is_logged_in();
+  if ($use_cache) {
+    $arg = arg();
+    // Don't cache on ting object details page.
+    if (2 < count($arg) && 'ting' === $arg[0] && 'object' === $arg[1]) {
+      $use_cache = FALSE;
+    }
+  }
+
   // Check cache as calls to publizon is expensive and this availability
   // function is called many time for each material displayed. When selecting
   // blue icons, for each ding entity button to figure out if it should be
   // displayed etc. so that's 5-8 time for every material show on the page.
   $results = array();
-  $static_cache = &drupal_static(__FUNCTION__, array());
+  $static_cache = &drupal_static(__FUNCTION__, []);
   foreach ($to_check as $isbn => $local_id) {
     if (!empty($static_cache[$local_id])) {
       $results[$local_id] = $static_cache[$local_id];
       unset($to_check[$isbn]);
     }
     else {
-      $cid = 'availability_' . $local_id;
-      $cache = cache_get($cid);
-      if ($cache && REQUEST_TIME < $cache->expire) {
-        $results[$local_id] = $cache->data;
-        unset($to_check[$isbn]);
+      if ($use_cache) {
+        $cid = 'availability_' . $local_id;
+        $cache = cache_get($cid);
+        if ($cache && REQUEST_TIME < $cache->expire) {
+          $results[$local_id] = $cache->data;
+          unset($to_check[$isbn]);
 
-        // Also store in static cache to speed up.
-        $static_cache[$local_id] = $results[$local_id];
+          // Also store in static cache to speed up.
+          $static_cache[$local_id] = $results[$local_id];
+        }
       }
+    }
+
+    // Fast escape as all was fetched from cache.
+    if (empty($to_check)) {
+      return $results;
     }
   }
 
-  // Fast escape as all was fetched from cache.
-  if (empty($to_check)) {
-    return $results;
+  $retailer_id = variable_get('publizon_default_retailer', '');
+  $card_number = NULL;
+  if (!$use_cache) {
+    try {
+      global $user;
+
+      // This will throw exception if not logged in.
+      $creds = ding_user_get_creds();
+      $retailer_id = publizon_get_retailer_id($user);
+      $card_number = $creds['name'];
+    }
+    catch (DingProviderAuthException $e) {
+      // If no user is logged in, try with the default retailer.
+    }
   }
 
-  // Use not-logged-in user state to get cacheable availability.
   $client = PublizonLoanClient::getClient();
-  $loan_status_list = $client->getProductLoanStatusList(variable_get('publizon_default_retailer', ''), array_keys($to_check), NULL);
+  $loan_status_list = $client->getProductLoanStatusList($retailer_id, array_keys($to_check), $card_number);
+
   foreach ($loan_status_list as $loan_status) {
     $isbn = $loan_status->isbn;
     $status = $loan_status->loanStatus;
@@ -82,10 +109,12 @@ function publizon_availability_items(array $local_ids) {
     // Store in cache
     $static_cache[$key] = $data;
 
-    // Store the loans into ding session cache.
-    $cid = 'availability_' . $key;
-    $expire = variable_get('publizon_availability_expire', 3600);
-    cache_set($cid, $data, 'cache', REQUEST_TIME + $expire);
+    if ($use_cache) {
+      // Store the loans into ding session cache.
+      $cid = 'availability_' . $key;
+      $expire = variable_get('publizon_availability_expire', 3600);
+      cache_set($cid, $data, 'cache', REQUEST_TIME + $expire);
+    }
   }
 
   return $results;
