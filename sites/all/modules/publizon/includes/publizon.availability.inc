@@ -28,14 +28,13 @@ function publizon_availability_items(array $local_ids) {
     $to_check[$isbn] = $local_id;
   }
 
-  $use_cache = !user_is_logged_in();
-  if ($use_cache) {
-    $arg = arg();
-    // Don't cache on ting object details page.
-    if (2 < count($arg) && 'ting' === $arg[0] && 'object' === $arg[1]) {
-      $use_cache = FALSE;
-    }
-  }
+  $arg = arg();
+  $use_cache = !(
+    // Don't use cache on ting object details page …
+    (2 < count($arg) && 'ting' === $arg[0] && 'object' === $arg[1])
+    // … or user page.
+    || (1 < count($arg) && 'user' === $arg[0])
+  );
 
   // Check cache as calls to publizon is expensive and this availability
   // function is called many time for each material displayed. When selecting
