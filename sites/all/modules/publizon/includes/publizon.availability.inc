@@ -30,10 +30,11 @@ function publizon_availability_items(array $local_ids) {
 
   $arg = arg();
   $use_cache = !(
-    // Don't use cache on ting object details page …
-    (2 < count($arg) && 'ting' === $arg[0] && 'object' === $arg[1])
-    // … or user page.
-    || (1 < count($arg) && 'user' === $arg[0])
+    // Don't use cache
+    // … on ting details page …
+    (count($arg) > 1 && 'ting' === $arg[0] && ('collection' === $arg[1] || 'object' === $arg[1]))
+    // … or on user pages.
+    || (count($arg) > 0 && 'user' === $arg[0])
   );
 
   // Check cache as calls to publizon is expensive and this availability
