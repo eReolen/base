@@ -1,0 +1,8 @@
+name = eReolen app feed
+description = App feeds for eReolen and eReolen Go
+core = 7.x
+package = eReolen Base
+version = 7.x-1.0
+dependencies[] = xautoload
+dependencies[] = reol_review
+dependencies[] = overdrive
