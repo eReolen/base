@@ -79,9 +79,9 @@ function reol_app_feeds_theme($existing, $type, $theme, $path) {
 /**
  * Get hierarchical variable.
  *
- * @param $group_name
+ * @param string $group_name
  *   The name of the variable to fetch.
- * @param $name
+ * @param string $name
  *   The index name for the group given in $group_name.
  * @param mixed $default
  *   Default value(s) to return. Defaults to NULL.

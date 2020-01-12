@@ -16,8 +16,8 @@ function reol_app_feeds_install() {
     'reol_app_feeds_themes',
   ];
   foreach ($variable_names as $name) {
-    $value = variable_get('e'.$name);
-    if (NULL !== $value && null === variable_get($name)) {
+    $value = variable_get('e' . $name);
+    if (NULL !== $value && NULL === variable_get($name)) {
       variable_set($name, $value);
     }
   }
