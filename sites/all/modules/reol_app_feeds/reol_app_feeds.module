@@ -8,16 +8,6 @@
 use Drupal\reol_app_feeds\Controller\DefaultController;
 
 /**
- * Implements hook_page_alter().
- */
-function reol_app_feeds_page_alter(&$page) {
-  // Warn admin users to uninstall the deprecated ereol_app_feeds module.
-  if (user_is_logged_in() && path_is_admin(current_path()) && module_exists('ereol_app_feeds')) {
-    drupal_set_message('Please uninstall the ereol_app_feeds module!', 'warning');
-  }
-}
-
-/**
  * Implements hook_menu().
  */
 function reol_app_feeds_menu() {

@@ -9,17 +9,24 @@
  * Implements hook_install().
  */
 function reol_app_feeds_install() {
-  // Migrate settings from ereol_app_feeds module.
-  $variable_names = [
-    'reol_app_feeds_frontpage',
-    'reol_app_feeds_category',
-    'reol_app_feeds_themes',
-  ];
-  foreach ($variable_names as $name) {
-    $value = variable_get('e' . $name);
-    if (NULL !== $value && NULL === variable_get($name)) {
-      variable_set($name, $value);
+  if (module_exists('ereol_app_feeds')) {
+    // Migrate settings from ereol_app_feeds module.
+    $variable_names = [
+      'ereol_app_feeds_frontpage' => 'reol_app_feeds_frontpage',
+      'ereol_app_feeds_category' => 'reol_app_feeds_category',
+      'ereol_app_feeds_themes' => 'reol_app_feeds_themes',
+    ];
+    foreach ($variable_names as $old_name => $name) {
+      $value = variable_get($old_name);
+      if (NULL !== $value && NULL === variable_get($name)) {
+        variable_set($name, $value);
+        drupal_set_message(t('Value of variable !old_name migrated to !name.', ['!old_name' => $old_name, '!name' => $name]));
+      }
     }
+
+    // Disable deprecated app feeds module.
+    module_disable(['ereol_app_feeds']);
+    drupal_set_message(t('Module ereol_app_feeds disabled.'));
   }
 }
 

@@ -8,12 +8,15 @@ for details on feed structure.
 
 ## Installation
 
+**NOTE**: Installing this module will uninstall the `ereol_app_feeds` module,
+but the settings from `ereol_app_feeds` are automatically migrated to
+`reol_app_feeds` settings first.
+
 Install the `reol_app_feeds` module and go to
 [/admin/config/ereolen/reol_app_feeds](/admin/config/ereolen/reol_app_feeds)
 to configure the feeds.
 
-**NOTE**: After installing this module (but not before!) you must uninstall the
-`ereol_app_feeds` module.
+
 
 ## Endpoints
 
