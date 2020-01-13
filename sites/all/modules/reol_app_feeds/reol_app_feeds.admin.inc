@@ -131,6 +131,14 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
     ];
   }
 
+  $form[$group_name]['default_color'] = [
+    '#type' => 'textfield',
+    '#title' => t('Default color'),
+    '#default_value' => _reol_app_feeds_variable_get($group_name, 'default_color'),
+    '#description' => t('The default color (Format: #RRGGBB).'),
+    '#element_validate' => ['_reol_app_feeds_admin_validate_color_rgb'],
+  ];
+
   $group_name = 'reol_app_feeds_themes';
   $form[$group_name] = [
     '#type' => 'fieldset',
@@ -237,4 +245,19 @@ function reol_app_feeds_admin_form_validate(array $form, array &$form_state) {
   uasort($items, function ($a, $b) {
     return $a['weight'] - $b['weight'];
   });
+}
+
+/**
+ * Validation function for rgb color in the hexadecimal format (#RRGGBB).
+ *
+ * @param array $element
+ *   The element.
+ * @param array $form_state
+ *   The form state.
+ */
+function _reol_app_feeds_admin_validate_color_rgb(array $element, array &$form_state) {
+  $value = $element['#value'];
+  if ($value !== '' && !preg_match('@^#[0-9a-fA-F]{6}$@', $value)) {
+    form_error($element, t('%name must be a valid color in the hexadecimal format (#RRGGBB).', ['%name' => $element['#title']]));
+  }
 }

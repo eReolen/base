@@ -14,7 +14,7 @@ class CategoriesFeed extends AbstractFeed {
   /**
    * Get categories feed data.
    *
-   * @see https://docs.google.com/document/d/1lJ3VPAJf7DAbBWAQclRHfcltzZefUG3iGCec-z97KlA/edit?ts=5c4ef9d5#heading=h.r3okoat4q87f
+   * @see https://docs.google.com/document/d/1RNBH_mJFX9pQRVQBBr2-8JZlU0zXTiLyAt92GmgTnfE/edit
    * for details on the feed structure.
    *
    * @return array
@@ -57,7 +57,7 @@ class CategoriesFeed extends AbstractFeed {
               $subcategories[] = [
                 'title' => $carousel['title'],
                 'type' => 'sub_category',
-                'query' => $carousel['search'],
+                'query' => trim($carousel['search']),
                 'attachment' => ParagraphHelper::VALUE_NONE,
               ];
             }
@@ -72,7 +72,21 @@ class CategoriesFeed extends AbstractFeed {
         $wrapper = entity_metadata_wrapper('node', $node);
         $query = ParagraphHelper::VALUE_NONE;
         if (!empty($wrapper->field_category_query->value())) {
-          $query = $wrapper->field_category_query->value();
+          $query = trim($wrapper->field_category_query->value());
+        }
+        $color = _reol_app_feeds_variable_get('reol_app_feeds_category', 'default_color');
+        if (isset($wrapper->field_app_feed_color)) {
+          $value = $wrapper->field_app_feed_color->value();
+          if (isset($value['rgb'])) {
+            $color = $value['rgb'];
+          }
+        }
+        $imageUrl = NULL;
+        if (isset($wrapper->field_app_feed_image)) {
+          $value = $wrapper->field_app_feed_image->value();
+          if (isset($value['uri'])) {
+            $imageUrl = $this->nodeHelper->getFileUrl($value['uri']);
+          }
         }
         $data[] = [
           'title' => $node->title,
@@ -80,6 +94,8 @@ class CategoriesFeed extends AbstractFeed {
           'type' => 'category',
           'query' => $query,
           'subcategories' => $subcategories,
+          'color' => $color,
+          'imageUrl' => $imageUrl,
         ];
       }
     }
