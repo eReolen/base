@@ -137,6 +137,7 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
     '#default_value' => _reol_app_feeds_variable_get($group_name, 'default_color'),
     '#description' => t('The default color (Format: #RRGGBB).'),
     '#element_validate' => ['_reol_app_feeds_admin_validate_color_rgb'],
+    '#required' => TRUE,
   ];
 
   $group_name = 'reol_app_feeds_themes';
