@@ -78,6 +78,7 @@ function publizon_uninstall() {
   variable_del('publizon_player_url');
   variable_del('publizon_reader_stream_url');
   variable_del('publizon_reader_url');
+  variable_del('publizon_test_card_numbers');
 }
 
 /**
