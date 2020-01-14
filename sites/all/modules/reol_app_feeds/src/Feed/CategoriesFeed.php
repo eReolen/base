@@ -71,7 +71,7 @@ class CategoriesFeed extends AbstractFeed {
       if (!empty($subcategories)) {
         $wrapper = entity_metadata_wrapper('node', $node);
         $query = ParagraphHelper::VALUE_NONE;
-        if (!empty($wrapper->field_category_query->value())) {
+        if (isset($wrapper->field_category_query)) {
           $query = trim($wrapper->field_category_query->value());
         }
         $color = _reol_app_feeds_variable_get('reol_app_feeds_category', 'default_color');
