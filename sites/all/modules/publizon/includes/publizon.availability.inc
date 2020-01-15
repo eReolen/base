@@ -109,10 +109,10 @@ function publizon_availability_items(array $local_ids) {
     $key = $to_check[$isbn];
     $results[$key] = $data;
 
-    if ($use_cache) {
-      // Store in cache.
-      $static_cache[$key] = $data;
+    // Store in cache.
+    $static_cache[$key] = $data;
 
+    if ($use_cache) {
       // Store the loans into ding session cache.
       $cid = 'availability_' . $key;
       $expire = variable_get('publizon_availability_expire', 3600);
