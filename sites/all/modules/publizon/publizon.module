@@ -87,7 +87,7 @@ function publizon_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('publizon_admin_settings_form'),
     'access arguments' => array('configure publizon'),
-    'file' => 'publizon.admin.inc',
+    'file' => 'includes/publizon.admin.inc',
   );
 
   return $items;
