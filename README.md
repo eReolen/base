@@ -65,6 +65,7 @@ Check for jQuery differences regarding prop() vs attr().
 * Add extra info need for SSO (ding_user_extra.patch)
 * Allow ajax hook to be overwritten when using adgangsplatformen (ding_user_ajax_hook.patch)
 * Disable tracking of user under /user path (disable-user-tracking.patch)
+* Added `ding_test` module (ding_test.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 
