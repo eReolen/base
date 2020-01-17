@@ -129,13 +129,19 @@ class NodeHelper {
    * @return string[]|string|null
    *   The image url(s).
    */
-  public function getImage($value, $multiple = FALSE) {
+  public function getImage($value, $multiple = FALSE, $image_style_name = NULL) {
     if (!isset($value[LANGUAGE_NONE])) {
       return NULL;
     }
     $values = $value[LANGUAGE_NONE];
     $uris = array_column($values, 'uri');
-    $urls = array_map([$this, 'getFileUrl'], $uris);
+    if (NULL !== $image_style_name && !empty(image_style_load($image_style_name))) {
+      $urls = array_map(function($uri) use ($image_style_name) {
+        return image_style_url($image_style_name, $uri);
+      }, $uris);
+    } else {
+      $urls = array_map([$this, 'getFileUrl'], $uris);
+    }
 
     return $multiple ? $urls : reset($urls);
   }
