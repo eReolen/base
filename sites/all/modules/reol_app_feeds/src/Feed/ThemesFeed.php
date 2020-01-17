@@ -26,6 +26,9 @@ class ThemesFeed extends AbstractFeed {
 
     $entity_type = NodeHelper::ENTITY_TYPE_NODE;
     $bundle = 'article';
+    if (node_type_load('breol_news')) {
+      $bundle = 'breol_news';
+    }
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', $entity_type)
       ->entityCondition('bundle', $bundle)

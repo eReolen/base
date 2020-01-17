@@ -413,15 +413,21 @@ class ParagraphHelper {
   public function getThemeData($node) {
     $view = $this->nodeHelper->getFieldValue($node, 'field_image_teaser', 'value') ? 'image' : 'covers';
 
+    if ('breol_news' === $node->type) {
+      $view = 'image';
+    }
+
     $contentType = $this->nodeHelper->getFieldValue($node, 'field_article_type', 'value');
     $type = $this->nodeHelper->getThemeType($contentType);
+
+    $image = isset($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, false, 'app_feed_image') : NULL;
 
     return [
       'guid' => $node->nid,
       'type' => $type,
       'title' => $this->getTitle($node->title),
       'view' => $view,
-      'image' => $this->nodeHelper->getImage($node->field_ding_news_list_image),
+      'image' => $image,
       'body' => $this->nodeHelper->getBody($node),
       'identifiers' => $this->nodeHelper->getTingIdentifiers($node, 'field_ding_news_materials'),
     ];
