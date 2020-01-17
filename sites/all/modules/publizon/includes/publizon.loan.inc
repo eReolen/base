@@ -111,6 +111,15 @@ function publizon_loan_create($account, $local_id) {
       }
     }
 
+    // The user may belong to an institution that has been removed from the
+    // current institution list (session with old data is still alive).  Don't
+    // allow creating a new loan in this case.
+    if (NULL !== $institution_id
+        && function_exists('ding_unilogin_filter_institutions')
+        && empty(ding_unilogin_filter_institutions([$institution_id]))) {
+      throw new PublizonException('Invalid institution', 87);
+    }
+
     $client = PublizonLoanClient::getClient();
     // This will throw exception if loan does not go through.
     $client->createLoan($retailer_id, $creds['name'], $creds['pass'], $isbn, $institution_id);
