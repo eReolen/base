@@ -35,7 +35,7 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
   }
 
   $inspiration_pages_options = array_combine(array_keys($inspiration_pages), array_map(function ($node) {
-    return $node->title;
+    return sprintf('%s (%d)', check_plain($node->title), $node->nid);
   }, $inspiration_pages));
 
   $group_name = 'reol_app_feeds_frontpage';
@@ -113,7 +113,7 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
     $node = $inspiration_pages[$nid];
     $form[$group_name][$field_name][$nid] = [
       'name' => [
-        '#markup' => check_plain($node->title),
+        '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
       ],
 
       'included' => [
