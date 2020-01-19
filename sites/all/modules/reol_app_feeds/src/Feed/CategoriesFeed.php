@@ -34,37 +34,25 @@ class CategoriesFeed extends AbstractFeed {
 
         switch ($paragraph->bundle()) {
           case ParagraphHelper::PARAGRAPH_PICKED_ARTICLE_CAROUSEL:
-            $paragraphData = $this->paragraphHelper->getParagraphData($paragraph);
-            $attachment = ParagraphHelper::VALUE_NONE;
-            if (!empty($paragraphData['list'])) {
-              $attachment = [
-                'view' => ParagraphHelper::VIEW_DOTTED,
-                'elements' => $paragraphData['list'],
-              ];
+            foreach ($wrapper->field_picked_articles->value() as $article) {
+              $subcategories[] = $this->paragraphHelper->getThemeData($article);
             }
-            $subcategories[] = [
-              'title' => $wrapper->field_picked_title->value(),
-              'view' => ParagraphHelper::VIEW_SCROLL,
-              'type' => 'sub_category',
-              'query' => ParagraphHelper::VALUE_NONE,
-              'attachment' => $attachment,
-            ];
             break;
 
           case ParagraphHelper::PARAGRAPH_MATERIAL_CAROUSEL:
             // @TODO: Can we use entity_metadata_wrapper to get the list of carousels?
             foreach ($paragraph->field_carousel[LANGUAGE_NONE] as $carousel) {
-              $subcategories[] = [
-                'title' => $carousel['title'],
-                'type' => 'sub_category',
-                'query' => trim($carousel['search']),
-                'attachment' => ParagraphHelper::VALUE_NONE,
-              ];
+              $query = trim($carousel['search']);
+              if (!empty($query)) {
+                $subcategories[] = [
+                  'title' => $carousel['title'],
+                  'type' => 'carousel',
+                  'query' => trim($carousel['search']),
+                ];
+              }
             }
             break;
 
-          case ParagraphHelper::PARAGRAPH_SPOTLIGHT_BOX:
-            // @TODO: Do something clever with "author portraits"?
         }
       }
 
@@ -83,19 +71,16 @@ class CategoriesFeed extends AbstractFeed {
         }
         $imageUrl = NULL;
         if (isset($wrapper->field_app_feed_image)) {
-          $value = $wrapper->field_app_feed_image->value();
-          if (isset($value['uri'])) {
-            $imageUrl = $this->nodeHelper->getFileUrl($value['uri']);
-          }
+          $imageUrl = $this->nodeHelper->getImage($wrapper->field_app_feed_image->value(), FALSE, 'app_feed_image');
         }
         $data[] = [
-          'title' => $node->title,
           'guid' => $node->nid,
           'type' => 'category',
-          'query' => $query,
-          'subcategories' => $subcategories,
+          'title' => $node->title,
           'color' => $color,
           'imageUrl' => $imageUrl,
+          'query' => $query,
+          'subcategories' => $subcategories,
         ];
       }
     }

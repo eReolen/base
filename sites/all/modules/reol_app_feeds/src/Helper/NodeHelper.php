@@ -125,21 +125,26 @@ class NodeHelper {
    * @param bool $multiple
    *   If set, multiple values will be returned as an array. Otherwise,
    *   only the first value will be returned.
+   * @param string|null $image_style_name
+   *   An optional image style to apply if it exists.
    *
    * @return string[]|string|null
    *   The image url(s).
    */
   public function getImage($value, $multiple = FALSE, $image_style_name = NULL) {
-    if (!isset($value[LANGUAGE_NONE])) {
-      return NULL;
+    if (isset($value[LANGUAGE_NONE])) {
+      $value = $value[LANGUAGE_NONE];
     }
-    $values = $value[LANGUAGE_NONE];
-    $uris = array_column($values, 'uri');
+    if (ParagraphHelper::isAssoc($value)) {
+      $value = [$value];
+    }
+    $uris = array_column($value, 'uri');
     if (NULL !== $image_style_name && !empty(image_style_load($image_style_name))) {
-      $urls = array_map(function($uri) use ($image_style_name) {
+      $urls = array_map(function ($uri) use ($image_style_name) {
         return image_style_url($image_style_name, $uri);
       }, $uris);
-    } else {
+    }
+    else {
       $urls = array_map([$this, 'getFileUrl'], $uris);
     }
 
@@ -299,7 +304,7 @@ class NodeHelper {
    *   The theme type.
    */
   public function getThemeType($contentType) {
-    return isset(self::$themeTypes[$contentType]) ? self::$themeTypes[$contentType] : 'theme';
+    return self::$themeTypes[$contentType] ?? 'theme';
   }
 
 }

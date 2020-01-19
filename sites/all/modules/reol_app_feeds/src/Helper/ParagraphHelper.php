@@ -244,7 +244,7 @@ class ParagraphHelper {
 
     // Make sure that all items are numeric arrays.
     foreach ($data as &$datum) {
-      if ($this->isAssoc($datum)) {
+      if (static::isAssoc($datum)) {
         $datum = [$datum];
       }
     }
@@ -420,7 +420,7 @@ class ParagraphHelper {
     $contentType = $this->nodeHelper->getFieldValue($node, 'field_article_type', 'value');
     $type = $this->nodeHelper->getThemeType($contentType);
 
-    $image = isset($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, false, 'app_feed_image') : NULL;
+    $image = isset($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, FALSE, 'app_feed_image') : NULL;
 
     return [
       'guid' => $node->nid,
@@ -954,7 +954,7 @@ class ParagraphHelper {
    * @return string
    *   The title with html entities decoded.
    */
-  private function getTitle($title) {
+  public function getTitle($title) {
     return html_entity_decode($title);
   }
 
@@ -969,7 +969,7 @@ class ParagraphHelper {
    *
    * @see https://stackoverflow.com/a/173479
    */
-  private function isAssoc(array $arr = NULL) {
+  public static function isAssoc(array $arr = NULL) {
     if (NULL === $arr || [] === $arr) {
       return FALSE;
     }
