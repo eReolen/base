@@ -559,31 +559,25 @@ function opensearch_search_sort_options() {
       'label' => t('Date (Ascending)'),
       'sort' => new TingSearchSort(TingSearchCommonFields::DATE, TingSearchSort::DIRECTION_ASCENDING),
     ],
-  ];
 
-  // Do not show sort-options specific for rank_frequency if
-  // custom_ranking is enabled or another rank is selected.
-  $default_sort = variable_get('opensearch_sort_default', 'rank_frequency');
-  $custom_ranking = variable_get('opensearch_ranking_custom', FALSE);
-  if ($default_sort === 'rank_frequency' && empty($custom_ranking)) {
-    $options = array_merge($options, [
-      'rank_title' => [
-        'label' => t('Title', array(), array('context' => 'opensearch_ranking')),
-        'label_short' => t('Title', array(), array('context' => 'opensearch_ranking')),
-        'sort' => new TingSearchSort('rank_title'),
-      ],
-      'rank_creator' => [
-        'label' => t('Creator', array(), array('context' => 'opensearch_ranking')),
-        'label_short' => t('Creator', array(), array('context' => 'opensearch_ranking')),
-        'sort' => new TingSearchSort('rank_creator'),
-      ],
-      'rank_subject' => [
-        'label' => t('Subject', array(), array('context' => 'opensearch_ranking')),
-        'label_short' => t('Subject', array(), array('context' => 'opensearch_ranking')),
-        'sort' => new TingSearchSort('rank_subject'),
-      ],
-    ]);
-  }
+    'title_ascending' => [
+      'label' => t('Title (Ascending)'),
+      'sort' => new TingSearchSort(TingSearchCommonFields::TITLE, TingSearchSort::DIRECTION_ASCENDING),
+    ],
+    'title_descending' => [
+      'label' => t('Title (Descending)'),
+      'sort' => new TingSearchSort(TingSearchCommonFields::TITLE, TingSearchSort::DIRECTION_DESCENDING),
+    ],
+
+    'author_ascending' => [
+      'label' => t('Author (Ascending)'),
+      'sort' => new TingSearchSort(TingSearchCommonFields::AUTHOR, TingSearchSort::DIRECTION_ASCENDING),
+    ],
+    'author_descending' => [
+      'label' => t('Author (Descending)'),
+      'sort' => new TingSearchSort(TingSearchCommonFields::AUTHOR, TingSearchSort::DIRECTION_DESCENDING),
+    ],
+  ];
 
   return $options;
 }
