@@ -34,8 +34,16 @@ class CategoriesFeed extends AbstractFeed {
 
         switch ($paragraph->bundle()) {
           case ParagraphHelper::PARAGRAPH_PICKED_ARTICLE_CAROUSEL:
+            $themes = [];
             foreach ($wrapper->field_picked_articles->value() as $article) {
-              $subcategories[] = $this->paragraphHelper->getThemeData($article);
+              $themes[] = $this->paragraphHelper->getThemeData($article);
+            }
+            if (!empty($themes)) {
+              $subcategories[] = [
+                'type' => 'theme_list',
+                'view' => ParagraphHelper::VIEW_DOTTED,
+                'list' => $themes,
+              ];
             }
             break;
 
