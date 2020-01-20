@@ -81,6 +81,15 @@ function publizon_menu() {
     'file' => 'includes/publizon.admin.inc',
   );
 
+  $items['admin/config/ereolen/publizon'] = array(
+    'title' => 'Publizon settings',
+    'description' => 'Settings for the publizon module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('publizon_admin_settings_form'),
+    'access arguments' => array('administer ding provider'),
+    'file' => 'includes/publizon.admin.inc',
+  );
+
   return $items;
 }
 
