@@ -471,3 +471,12 @@ function orwell_ting_search_pager($variables) {
       ));
   }
 }
+
+/**
+ * Implements hook_js_alter(),
+ *
+ * Unload ding2 related javascript since it breaks width on search filter select.
+ */
+function orwell_js_alter(&$javascript) {
+  unset($javascript['profiles/ding2/modules/ding_ting_frontend/js/select_autosize.js']);
+}

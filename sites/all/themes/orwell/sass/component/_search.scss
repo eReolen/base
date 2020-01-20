@@ -496,3 +496,11 @@ html.js input.form-autocomplete {
     }
   }
 }
+
+.pane-ting-search-sort-form {
+  .form-search-sort__hidden-labels {
+    position: absolute;
+    left: -9999px;
+    visibility: hidden;
+  }
+}
