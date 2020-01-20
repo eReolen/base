@@ -412,15 +412,35 @@ class ParagraphHelper {
    */
   public function getThemeData($node) {
     $view = $this->nodeHelper->getFieldValue($node, 'field_image_teaser', 'value') ? 'image' : 'covers';
-
-    if ('breol_news' === $node->type) {
-      $view = 'image';
-    }
-
     $contentType = $this->nodeHelper->getFieldValue($node, 'field_article_type', 'value');
     $type = $this->nodeHelper->getThemeType($contentType);
 
-    $image = isset($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, FALSE, 'app_feed_image') : NULL;
+    $image = !empty($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, FALSE, 'app_feed_image') : NULL;
+    $identifiers = $this->nodeHelper->getTingIdentifiers($node, 'field_ding_news_materials');
+
+    // Hack for eReolen Go!
+    if ('breol_news' === $node->type) {
+      $view = 'image';
+
+      // Get identifiers from carousel queries.
+      $carousels = $this->nodeHelper->getFieldValue($node, 'field_carousels', NULL, TRUE);
+      $identifiers = [];
+      foreach ($carousels as $carousel) {
+        module_load_include('inc', 'opensearch', 'opensearch.client');
+        $result = opensearch_do_search($carousel['search']);
+        foreach ($result->collections as $collection) {
+          /** @var \TingCollection $collection */
+          /** @var \TingEntity $object */
+          $object = $collection->getPrimary_object();
+          $identifier = $object->getId();
+          if (!in_array($identifier, $identifiers)) {
+            $identifiers[] = $identifier;
+          }
+        }
+        // Only get identifiers from the first query.
+        break;
+      }
+    }
 
     return [
       'guid' => $node->nid,
@@ -429,7 +449,7 @@ class ParagraphHelper {
       'view' => $view,
       'image' => $image,
       'body' => $this->nodeHelper->getBody($node),
-      'identifiers' => $this->nodeHelper->getTingIdentifiers($node, 'field_ding_news_materials'),
+      'identifiers' => $identifiers,
     ];
   }
 

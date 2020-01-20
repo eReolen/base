@@ -132,6 +132,9 @@ class NodeHelper {
    *   The image url(s).
    */
   public function getImage($value, $multiple = FALSE, $image_style_name = NULL) {
+    if (NULL === $value) {
+      return NULL;
+    }
     if (isset($value[LANGUAGE_NONE])) {
       $value = $value[LANGUAGE_NONE];
     }
