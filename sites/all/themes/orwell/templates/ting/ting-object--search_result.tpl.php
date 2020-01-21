@@ -25,6 +25,13 @@ unset($content['group_ting_right_col_search']);
       <div class="material__language">
         <?php echo $object->getLanguage() ?>
       </div>
+
+      <?php if (isset($series)): ?>
+        <div class="material__series-x">
+          <?php echo t('No. !number in !series', ['!number' => $series['number'], '!series' => $series['series']]) ?>
+        </div>
+      <?php endif ?>
+
       <div class="material__title">
         <?php echo render($content['group_ting_object_teaser_right']['ting_title']); ?>
       </div>
