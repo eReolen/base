@@ -421,6 +421,7 @@ class ParagraphHelper {
     // Hack for eReolen Go!
     if ('breol_news' === $node->type) {
       $view = 'image';
+      $image = !empty($node->field_breol_cover_image) ? $this->nodeHelper->getImage($node->field_breol_cover_image) : NULL;
 
       // Get identifiers from carousel queries.
       $carousels = $this->nodeHelper->getFieldValue($node, 'field_carousels', NULL, TRUE);
