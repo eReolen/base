@@ -415,13 +415,13 @@ class ParagraphHelper {
     $contentType = $this->nodeHelper->getFieldValue($node, 'field_article_type', 'value');
     $type = $this->nodeHelper->getThemeType($contentType);
 
-    $image = !empty($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, FALSE, 'app_news_image') : NULL;
+    $image = !empty($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, FALSE, 'app_news_image') : static::VALUE_NONE;
     $identifiers = $this->nodeHelper->getTingIdentifiers($node, 'field_ding_news_materials');
 
     // Hack for eReolen Go!
     if ('breol_news' === $node->type) {
       $view = 'image';
-      $image = !empty($node->field_breol_cover_image) ? $this->nodeHelper->getImage($node->field_breol_cover_image) : NULL;
+      $image = !empty($node->field_breol_cover_image) ? $this->nodeHelper->getImage($node->field_breol_cover_image) : static::VALUE_NONE;
 
       // Get identifiers from carousel queries.
       $carousels = $this->nodeHelper->getFieldValue($node, 'field_carousels', NULL, TRUE);

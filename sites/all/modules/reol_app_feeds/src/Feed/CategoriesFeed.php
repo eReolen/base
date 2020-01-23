@@ -77,7 +77,7 @@ class CategoriesFeed extends AbstractFeed {
             $color = $value['rgb'];
           }
         }
-        $imageUrl = NULL;
+        $imageUrl = ParagraphHelper::VALUE_NONE;
         if (isset($wrapper->field_app_feed_image)) {
           $imageUrl = $this->nodeHelper->getImage($wrapper->field_app_feed_image->value(), FALSE, 'app_feed_image');
         }
