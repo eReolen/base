@@ -115,7 +115,7 @@ function publizon_loan_create($account, $local_id) {
     // current institution list (session with old data is still alive).  Don't
     // allow creating a new loan in this case.
     if (NULL !== $institution_id
-        && function_exists('ding_unilogin_filter_institutions')
+        && module_exists('ding_unilogin')
         && empty(ding_unilogin_filter_institutions([$institution_id]))) {
       throw new PublizonException('Invalid institution', 87);
     }
