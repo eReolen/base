@@ -9,7 +9,6 @@ class PublizonChecklistItem extends Publizon {
     'creationDateUtc' => NULL,
     'title' => NULL,
     'isbn' => NULL,
-    'loanStatus' => NULL,
   );
 
   /**
@@ -32,6 +31,5 @@ class PublizonChecklistItem extends Publizon {
     $this->creationDateUtc = strtotime((string) $item->creationdateutc);
     $this->title = (string) $item->title;
     $this->isbn = (string) $item->isbn;
-    $this->loanStatus = (int) $item->loanstatus;
   }
 }
