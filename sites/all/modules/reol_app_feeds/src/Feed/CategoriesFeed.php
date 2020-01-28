@@ -79,7 +79,7 @@ class CategoriesFeed extends AbstractFeed {
         }
         $imageUrl = ParagraphHelper::VALUE_NONE;
         if (isset($wrapper->field_app_feed_image)) {
-          $imageUrl = $this->nodeHelper->getImage($wrapper->field_app_feed_image->value(), FALSE, 'app_feed_image');
+          $imageUrl = $this->nodeHelper->getImage($wrapper->field_app_feed_image->value(), 'app_feed_image');
         }
         $data[] = [
           'guid' => $node->nid,

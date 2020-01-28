@@ -415,7 +415,7 @@ class ParagraphHelper {
     $contentType = $this->nodeHelper->getFieldValue($node, 'field_article_type', 'value');
     $type = $this->nodeHelper->getThemeType($contentType);
 
-    $image = !empty($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, FALSE, 'app_news_image') : static::VALUE_NONE;
+    $image = !empty($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, 'app_news_image') : static::VALUE_NONE;
     $identifiers = $this->nodeHelper->getTingIdentifiers($node, 'field_ding_news_materials');
 
     // Hack for eReolen Go!
