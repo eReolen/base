@@ -45,19 +45,6 @@ class DefaultController {
   }
 
   /**
-   * Render paragraphs data.
-   */
-  public function paragraphs($type) {
-    $nids = $this->getQueryParameter('nids', FrontPageFeed::getFrontPageIds());
-
-    $feed = new ParagraphsFeed();
-    $data = $feed->getData($nids, $type);
-
-    drupal_json_output($data);
-    drupal_exit();
-  }
-
-  /**
    * Render Overdrive mappings.
    */
   public function overdriveMapping() {
@@ -75,7 +62,15 @@ class DefaultController {
   }
 
   /**
-   * Get a query parameter.
+   * Get a query parameter by name.
+
+   * @param string $name
+   *   The parameter name.
+   * @param mixed $defaultValue
+   *   The default parameter value.
+   *
+   * @return array|string|null
+   *   The parameter value.
    */
   protected function getQueryParameter($name, $defaultValue = NULL) {
     $query_parameters = drupal_get_query_parameters();

@@ -40,12 +40,6 @@ function reol_app_feeds_menu() {
     'access arguments' => ['access content'],
   ];
 
-  $items['app/feed/v2/paragraphs/%'] = [
-    'page callback' => 'reol_app_feeds_paragraphs',
-    'page arguments' => [3],
-    'access arguments' => ['access content'],
-  ];
-
   $items['app/feed/v2/overdrive/mapping'] = [
     'page callback' => 'reol_app_feeds_overdrive_mapping',
     'access arguments' => ['access content'],
@@ -141,14 +135,6 @@ function reol_app_feeds_themes() {
 function reol_app_feeds_categories() {
   $controller = new DefaultController();
   $controller->categories();
-}
-
-/**
- * Paragraphs.
- */
-function reol_app_feeds_paragraphs($type) {
-  $controller = new DefaultController();
-  $controller->paragraphs($type);
 }
 
 /**
