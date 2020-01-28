@@ -23,10 +23,6 @@ function reol_app_feeds_install() {
         drupal_set_message(t('Value of variable !old_name migrated to !name.', ['!old_name' => $old_name, '!name' => $name]));
       }
     }
-
-    // Disable deprecated app feeds module.
-    module_disable(['ereol_app_feeds']);
-    drupal_set_message(t('Module ereol_app_feeds disabled.'));
   }
 }
 

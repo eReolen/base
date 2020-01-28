@@ -14,8 +14,8 @@ function reol_app_feeds_menu() {
   $items = [];
 
   $items['admin/config/ereolen/reol_app_feeds'] = [
-    'title' => 'App feed settings',
-    'description' => 'Settings for the app feeds',
+    'title' => 'App feed settings (v2)',
+    'description' => 'Settings for the app feeds (v2)',
     'page callback' => 'drupal_get_form',
     'page arguments' => ['reol_app_feeds_admin_form'],
     'access arguments' => ['administer site configuration'],
@@ -23,28 +23,28 @@ function reol_app_feeds_menu() {
     'file' => 'includes/reol_app_feeds.admin.inc',
   ];
 
-  $items['app/feed/frontpage'] = [
+  $items['app/feed/v2/frontpage'] = [
     'page callback' => 'reol_app_feeds_frontpage',
     'access arguments' => ['access content'],
   ];
 
-  $items['app/feed/themes'] = [
+  $items['app/feed/v2/themes'] = [
     'page callback' => 'reol_app_feeds_themes',
     'access arguments' => ['access content'],
   ];
 
-  $items['app/feed/categories'] = [
+  $items['app/feed/v2/categories'] = [
     'page callback' => 'reol_app_feeds_categories',
     'access arguments' => ['access content'],
   ];
 
-  $items['app/feed/paragraphs/%'] = [
+  $items['app/feed/v2/paragraphs/%'] = [
     'page callback' => 'reol_app_feeds_paragraphs',
     'page arguments' => [3],
     'access arguments' => ['access content'],
   ];
 
-  $items['app/feed/overdrive/mapping'] = [
+  $items['app/feed/v2/overdrive/mapping'] = [
     'page callback' => 'reol_app_feeds_overdrive_mapping',
     'access arguments' => ['access content'],
   ];

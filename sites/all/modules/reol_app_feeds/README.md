@@ -20,14 +20,18 @@ to configure the feeds.
 
 ## Endpoints
 
-* [/app/feed/frontpage](/app/feed/frontpage)
+* [/app/feed/v2/frontpage](/app/feed/v2/frontpage)
 
   Frontpage feed.
 
-* [/app/feed/themes](/app/feed/themes)
+* [/app/feed/v2/themes](/app/feed/v2/themes)
 
   Theme feed.
 
-* [/app/feed/categories](/app/feed/categories)
+* [/app/feed/v2/categories](/app/feed/v2/categories)
 
   Categories feed.
+
+* [/app/feed/v2/overdrive/mapping](/app/feed/v2/overdrive/mapping)
+
+  Overdrive mapping.
