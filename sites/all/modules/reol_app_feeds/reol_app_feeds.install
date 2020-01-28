@@ -20,7 +20,6 @@ function reol_app_feeds_install() {
       $value = variable_get($old_name);
       if (NULL !== $value && NULL === variable_get($name)) {
         variable_set($name, $value);
-        drupal_set_message(t('Value of variable !old_name migrated to !name.', ['!old_name' => $old_name, '!name' => $name]));
       }
     }
   }

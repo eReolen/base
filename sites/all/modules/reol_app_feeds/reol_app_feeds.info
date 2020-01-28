@@ -1,8 +1,7 @@
-name = eReolen app feed
+name = eReolen(go) app feeds
 description = App feeds for eReolen and eReolen Go
 core = 7.x
 package = eReolen shared
-version = 7.x-1.0
 dependencies[] = image
 dependencies[] = overdrive
 dependencies[] = reol_review
