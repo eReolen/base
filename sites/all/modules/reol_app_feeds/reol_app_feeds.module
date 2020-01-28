@@ -7,6 +7,8 @@
 
 use Drupal\reol_app_feeds\Controller\DefaultController;
 
+include_once 'reol_app_feeds.features.inc';
+
 /**
  * Implements hook_menu().
  */
