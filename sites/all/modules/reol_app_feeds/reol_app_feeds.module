@@ -20,7 +20,7 @@ function reol_app_feeds_menu() {
     'page arguments' => ['reol_app_feeds_admin_form'],
     'access arguments' => ['administer site configuration'],
     'type' => MENU_NORMAL_ITEM,
-    'file' => 'reol_app_feeds.admin.inc',
+    'file' => 'includes/reol_app_feeds.admin.inc',
   ];
 
   $items['app/feed/frontpage'] = [
@@ -60,7 +60,7 @@ function reol_app_feeds_theme($existing, $type, $theme, $path) {
 
   $themes['reol_app_feeds_admin_form'] = [
     'render element' => 'form',
-    'file' => 'reol_app_feeds.admin.inc',
+    'file' => 'includes/reol_app_feeds.admin.inc',
   ];
 
   return $themes;
