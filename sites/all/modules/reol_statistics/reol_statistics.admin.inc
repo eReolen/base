@@ -11,6 +11,13 @@
 function reol_statistics_settings($form, &$form_state) {
   $form = array();
 
+  $form['reol_statistics_message'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Message'),
+    '#description' => t('Message to show on statistics overview page. Can contain html and will be shown as is on the overview page.'),
+    '#default_value' => variable_get('reol_statistics_message', ''),
+  );
+
   $form['reol_statistics_title'] = array(
     '#type' => 'textfield',
     '#title' => t('Title'),
