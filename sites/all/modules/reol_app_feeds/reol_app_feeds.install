@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the reol_app_feeds module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function reol_app_feeds_install() {
+  if (module_exists('ereol_app_feeds')) {
+    // Migrate settings from ereol_app_feeds module.
+    $variable_names = [
+      'ereol_app_feeds_frontpage' => 'reol_app_feeds_frontpage',
+      'ereol_app_feeds_category' => 'reol_app_feeds_category',
+      'ereol_app_feeds_themes' => 'reol_app_feeds_themes',
+    ];
+    foreach ($variable_names as $old_name => $name) {
+      $value = variable_get($old_name);
+      if (NULL !== $value && NULL === variable_get($name)) {
+        variable_set($name, $value);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function reol_app_feeds_uninstall() {
+  variable_del('reol_app_feeds_frontpage');
+  variable_del('reol_app_feeds_category');
+  variable_del('reol_app_feeds_themes');
+}

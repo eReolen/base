@@ -1,0 +1,10 @@
+name = eReolen(go) app feeds
+description = App feeds for eReolen and eReolen Go
+core = 7.x
+package = eReolen shared
+dependencies[] = image
+dependencies[] = overdrive
+dependencies[] = reol_review
+dependencies[] = xautoload
+features[features_api][] = api:2
+features[image][] = app_feed_image

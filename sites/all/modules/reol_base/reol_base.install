@@ -833,3 +833,10 @@ function reol_base_update_7167() {
 function reol_base_update_7168() {
   module_enable(array('ding_libs'));
 }
+
+/**
+ * Enable reol_app_feeds module.
+ */
+function reol_base_update_7169() {
+  module_enable(array('reol_app_feeds'));
+}

@@ -1,0 +1,146 @@
+<?php
+
+/**
+ * @file
+ * Module file for reol_app_feeds.
+ */
+
+use Drupal\reol_app_feeds\Controller\DefaultController;
+
+include_once 'reol_app_feeds.features.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function reol_app_feeds_menu() {
+  $items = [];
+
+  $items['admin/config/ereolen/reol_app_feeds'] = [
+    'title' => 'App feed settings (v2)',
+    'description' => 'Settings for the app feeds (v2)',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['reol_app_feeds_admin_form'],
+    'access arguments' => ['administer site configuration'],
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/reol_app_feeds.admin.inc',
+  ];
+
+  $items['app/feed/v2/frontpage'] = [
+    'page callback' => 'reol_app_feeds_frontpage',
+    'access arguments' => ['access content'],
+  ];
+
+  $items['app/feed/v2/themes'] = [
+    'page callback' => 'reol_app_feeds_themes',
+    'access arguments' => ['access content'],
+  ];
+
+  $items['app/feed/v2/categories'] = [
+    'page callback' => 'reol_app_feeds_categories',
+    'access arguments' => ['access content'],
+  ];
+
+  $items['app/feed/v2/overdrive/mapping'] = [
+    'page callback' => 'reol_app_feeds_overdrive_mapping',
+    'access arguments' => ['access content'],
+  ];
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function reol_app_feeds_theme($existing, $type, $theme, $path) {
+  $themes = [];
+
+  $themes['reol_app_feeds_admin_form'] = [
+    'render element' => 'form',
+    'file' => 'includes/reol_app_feeds.admin.inc',
+  ];
+
+  return $themes;
+}
+
+/**
+ * Get hierarchical variable.
+ *
+ * @param string $group_name
+ *   The name of the variable to fetch.
+ * @param string $name
+ *   The index name for the group given in $group_name.
+ * @param mixed $default
+ *   Default value(s) to return. Defaults to NULL.
+ *
+ * @return mixed
+ *   The value(s) fetched or the default value.
+ */
+function _reol_app_feeds_variable_get($group_name, $name, $default = NULL) {
+  $group = variable_get($group_name);
+  return isset($group[$name]) ? $group[$name] : $default;
+}
+
+/**
+ * Implements theme_hook().
+ *
+ * Default theme function for front page components.
+ */
+function theme_reol_app_feeds_frontpages_components($vars) {
+  $element = $vars['element'];
+  drupal_add_tabledrag('reol_app_feeds_frontpages_table', 'order', 'sibling', 'item-row-weight');
+
+  $header = array(
+    'label' => t('Title'),
+    'include' => t('Include'),
+    'weight' => t('Weight'),
+  );
+
+  $rows = array();
+  foreach (element_children($element) as $key) {
+    $row = array();
+    $row['data'] = array();
+    foreach ($header as $fieldname => $title) {
+      $row['data'][] = drupal_render($element[$key][$fieldname]);
+      $row['class'] = array('draggable');
+    }
+    $rows[] = $row;
+  }
+
+  return theme('table', array(
+    'header' => $header,
+    'rows' => $rows,
+    'attributes' => array('id' => 'reol_app_feeds_frontpages_table'),
+  ));
+}
+
+/**
+ * Frontpage.
+ */
+function reol_app_feeds_frontpage() {
+  $controller = new DefaultController();
+  $controller->frontpage();
+}
+
+/**
+ * Themes.
+ */
+function reol_app_feeds_themes() {
+  $controller = new DefaultController();
+  $controller->themes();
+}
+
+/**
+ * Categories.
+ */
+function reol_app_feeds_categories() {
+  $controller = new DefaultController();
+  $controller->categories();
+}
+
+/**
+ * Overdrive mapping.
+ */
+function reol_app_feeds_overdrive_mapping() {
+  $controller = new DefaultController();
+  $controller->overdriveMapping();
+}

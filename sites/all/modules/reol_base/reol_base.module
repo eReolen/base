@@ -1864,3 +1864,63 @@ function _reol_base_get_marc_value($marc_records, $field, $subfield_name) {
   }
   return $return;
 }
+
+/**
+ * Validate size of image.
+ *
+ * @param object $node
+ *   The node.
+ * @param string $field_name
+ *   The field name.
+ *
+ * @return null|string
+ *   Null if size is valid or if the field does not exist. Otherwise an error
+ *   message.
+ */
+function reol_base_validate_image_size($node, $field_name) {
+  $wrapper = entity_metadata_wrapper('node', $node);
+  if (isset($wrapper->{$field_name})) {
+    $value = $wrapper->{$field_name}->value();
+    if (isset($value['fid'])) {
+      $file = file_load($value['fid']);
+      if ($file) {
+        $field = field_info_instance('node', $field_name, $node->type);
+        $require_exact_dimensions = isset($field['settings']['min_resolution'], $field['settings']['max_resolution'])
+          && $field['settings']['min_resolution'] === $field['settings']['max_resolution'];
+
+        if (isset($field['settings']['min_resolution']) && preg_match('/^(?P<width>\d+)x(?P<height>\d+)$/', $field['settings']['min_resolution'], $dimensions)) {
+          if ($file->width < $dimensions['width'] || $file->height < $dimensions['height']) {
+            return $require_exact_dimensions
+              ? t('Image %image must be exactly %widthx%height pixels.', [
+                '%image' => $field['label'],
+                '%width' => $dimensions['width'],
+                '%height' => $dimensions['height'],
+              ])
+              : t('Image %image must be at least %widthx%height pixels.', [
+                '%image' => $field['label'],
+                '%width' => $dimensions['width'],
+                '%height' => $dimensions['height'],
+              ]);
+          }
+        }
+        if (isset($field['settings']['max_resolution']) && preg_match('/^(?P<width>\d+)x(?P<height>\d+)$/', $field['settings']['max_resolution'], $dimensions)) {
+          if ($file->width > $dimensions['width'] || $file->height > $dimensions['height']) {
+            return $require_exact_dimensions
+              ? t('Image %image must be exactly %widthx%height pixels.', [
+                '%image' => $field['label'],
+                '%width' => $dimensions['width'],
+                '%height' => $dimensions['height'],
+              ])
+              : t('Image %image must be at most %widthx%height pixels.', [
+                '%image' => $field['label'],
+                '%width' => $dimensions['width'],
+                '%height' => $dimensions['height'],
+              ]);
+          }
+        }
+      }
+    }
+  }
+
+  return NULL;
+}
