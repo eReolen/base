@@ -10,6 +10,12 @@
  */
 function reol_statistics_select_municipality_page() {
   $output = '';
+
+  $message = trim(variable_get('reol_statistics_message', ''));
+  if (!empty($message)) {
+    $output .= '<div class="statistics-message">' . $message . '</div>';
+  }
+
   $publizon_libraries = publizon_get_libraries();
 
   $libraries = array();
@@ -26,7 +32,7 @@ function reol_statistics_select_municipality_page() {
   );
 
   $current_month = date('Ym');
-  foreach (range(2016, date('Y')) as $year) {
+  foreach (range(2016, _reol_statistics_get_final_year()) as $year) {
     $table['rows'][] = array(
       array(
         'data' => $year,
@@ -57,7 +63,7 @@ function reol_statistics_select_municipality_page() {
     $table['rows'][] = $row;
   }
 
-  $output = theme('table', $table);
+  $output .= theme('table', $table);
 
   // Library listing.
   ksort($libraries);
@@ -76,7 +82,7 @@ function reol_statistics_select_municipality_page() {
 
   $year = 2017;
   $current = date('Ym');
-  while ($year <= date('Y')) {
+  while ($year <= _reol_statistics_get_final_year()) {
     foreach ($quarter_spec as $num => $def) {
       list($from, $to) = $def;
       $start = sprintf('%d%02d', $year, $from);
@@ -104,6 +110,10 @@ function reol_statistics_select_municipality_page() {
  * Page callback for general statistics display.
  */
 function reol_statistics_general_page($from, $to) {
+  if (!_reol_statistics_are_valid_months([$from, $to])) {
+    return drupal_goto('/statistics');
+  }
+
   $statistics = reol_statistics_get();
 
   $output = '';
@@ -121,6 +131,10 @@ function reol_statistics_general_page($from, $to) {
  * Page callback for municipality statistics display.
  */
 function reol_statistics_municipality_page($library, $from, $to) {
+  if (!_reol_statistics_are_valid_months([$from, $to])) {
+    return drupal_goto('/statistics');
+  }
+
   $statistics = reol_statistics_get();
 
   $output = '';
@@ -181,4 +195,54 @@ function reol_statistics_publizon_page($library, $month = NULL) {
 
   echo (string) $count;
   drupal_exit();
+}
+
+/**
+ * Get final year that we support showing statistics for.
+ *
+ * From 2020-01-01 all collection and display of statistics are handled by
+ * Publizon.
+ *
+ * @return int
+ *   The final year.
+ */
+function _reol_statistics_get_final_year() {
+  return 2019;
+}
+
+/**
+ * Check if a month is valid.
+ *
+ * A month is valid if and only if it ends before the first day we do not
+ * support statistics for.
+ *
+ * @param ReolStatisticsMonth $month
+ *   The month.
+ *
+ * @return bool
+ *   True iff the month is valid.
+ */
+function _reol_statistics_is_valid_month(ReolStatisticsMonth $month) {
+  $finalDate = new DateTime(sprintf('first day of January %d', _reol_statistics_get_final_year() + 1));
+
+  return $month->getEndDateTime() < $finalDate;
+}
+
+/**
+ * Check if a list of months are valid (cf. _reol_statistics_is_valid_month).
+ *
+ * @param ReolStatisticsMonth[] $months
+ *   The months.
+ *
+ * @return bool
+ *   True iff all months are valid.
+ */
+function _reol_statistics_are_valid_months(array $months) {
+  foreach ($months as $month) {
+    if (!_reol_statistics_is_valid_month($month)) {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
 }
