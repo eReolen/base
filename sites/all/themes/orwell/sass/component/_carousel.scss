@@ -184,6 +184,21 @@
   }
 }
 
+
+// Make carousel placeholders have the same size as the actual slides
+// (cf. `.article--teaser` in `_article.scss')
+.article__other-articles {
+  .ding-carousel-item {
+    &.placeholder {
+      @include grid-media($medium) {
+        padding: 2rem 4rem;
+        max-width: 100vw;
+        width: 1049px;
+      }
+    }
+  }
+}
+
 // scss-lint:disable MergeableSelector
 // Content specific tweaks.
 .ding-carousel .article-placeholder {
