@@ -248,21 +248,6 @@ function orwell_preprocess_ting_object(&$variables) {
       }
     }
   }
-
-  if (isset($variables['object']) && $variables['object'] instanceof TingEntity) {
-    $series = $variables['object']->getSeriesTitles();
-    if (NULL !== $series) {
-      foreach ($series as $item) {
-        $item = array_map('trim', $item);
-        if (2 === count($item) && !empty($item[0]) && !empty($item[1])) {
-          $variables['series'] = [
-            'series' => $item[0],
-            'number' => $item[1],
-          ];
-        }
-      }
-    }
-  }
 }
 
 /**
