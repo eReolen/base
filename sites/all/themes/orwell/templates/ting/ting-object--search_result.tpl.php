@@ -22,15 +22,17 @@ unset($content['group_ting_right_col_search']);
       <?php echo render($content['group_ting_object_teaser_left']['ting_cover']); ?>
     </div>
     <div class="material__content text">
-      <div class="material__language">
-        <?php echo $object->getLanguage() ?>
-      </div>
-
-      <?php if (isset($series)): ?>
-        <div class="material__series-x">
-          <?php echo t('No. !number in !series', ['!number' => $series['number'], '!series' => $series['series']]) ?>
+      <div class="material__metadata">
+        <div class="material__language">
+          <?php echo $object->getLanguage() ?>
         </div>
-      <?php endif ?>
+
+        <?php if (isset($series['number'], $series['series'])): ?>
+          <div class="material__number-in-series">
+            <span class="material__series-number"><?php echo $series['number']; ?></span><span class="material__series-series"><?php echo $series['series']; ?></span>
+          </div>
+        <?php endif ?>
+      </div>
 
       <div class="material__title">
         <?php echo render($content['group_ting_object_teaser_right']['ting_title']); ?>

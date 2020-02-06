@@ -482,7 +482,12 @@ html.js input.form-autocomplete {
         margin-top: 10px;
       }
 
+      .material__metadata {
+        white-space: nowrap;
+      }
+
       .material__language {
+        display: inline-block;
         font-family: $font-light;
         font-size: 14px;
 
@@ -491,6 +496,32 @@ html.js input.form-autocomplete {
           color: $color__font-gray;
           font-size: 12px;
           content: $icon__language;
+        }
+      }
+
+      // @TODO: Handle both grid and list view.
+      .material__number-in-series {
+        display: inline-block;
+        font-family: $font-light;
+        font-size: 14px;
+
+        overflow: hidden;
+        margin-left: 1em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &::before {
+          @include icon;
+          color: $color__font-gray;
+          font-size: 12px;
+          content: $icon__stack;
+        }
+
+        .material__series-number + .material__series-series {
+          &::before {
+            content: ' – ';
+          }
         }
       }
     }
