@@ -78,6 +78,12 @@ function reol_base_field_formatter_info() {
         'reol_base_lix',
       ),
     ),
+    'reol_base_series' => array(
+      'label' => t('Reol base series'),
+      'field types' => array(
+        'ting_series',
+      ),
+    ),
   );
 }
 
@@ -139,6 +145,18 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
           );
         }
         break;
+
+      case 'reol_base_series':
+        $data = reol_base_get_series_data($entity);
+        if (NULL !== $data) {
+          // This is almost as ugly as the stuff in ting_field_formatter_view.
+          $element[$delta] = array(
+            '#markup' => '<span class="material__series-number">' . $data['number'] . '</span>'
+            . '<span class="material__series-series">' . $data['series'] . '</span>',
+          );
+        }
+        break;
+
     }
   }
 
