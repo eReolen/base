@@ -117,19 +117,32 @@
 }
 
 .field-type-ting-series {
-  border-top: 1px solid $white-medium;
-  border-bottom: 1px solid $white-medium;
-  padding: 20px 0;
-  margin: 20px 0;
+  color: $title-color;
+  font-family: $font-light;
+  font-size: 12px;
+  margin: .5em 0;
 
-  a {
-    color: $red-light;
-    font-family: $font-mikado;
-    text-decoration: none;
+  /* align the text and icon */
+  .field-items,
+  .field-item,
+  .material__series-icon {
+    vertical-align: middle;
+  }
 
-    &:hover {
-      color: $blue-medium;
-      text-decoration: underline;
+  /* show dots at end of line */
+  .field-item {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .material__series-number {
+    padding-left: .5em;
+  }
+  .material__series-number + .material__series-series {
+    &::before {
+      content: ' – ';
     }
   }
 }
