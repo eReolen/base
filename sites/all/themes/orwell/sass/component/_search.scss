@@ -410,6 +410,44 @@ html.js input.form-autocomplete {
     padding: 3.75rem 0;
   }
 
+  .material__metadata {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: $font-light;
+    font-size: 14px;
+    color: $color__font-gray;
+  }
+
+  .material__language {
+    display: inline-block;
+
+    &::before {
+      @include icon;
+      font-size: 12px;
+      content: $icon__language;
+    }
+  }
+
+  .material__number-in-series {
+    display: inline;
+    margin-left: .5em;
+
+    &::before {
+      @include icon;
+      font-size: 12px;
+      content: $icon__stack-solid;
+    }
+    .material__series-number {
+      padding-left: .5em;
+    }
+    .material__series-number + .material__series-series {
+      &::before {
+        content: ' – ';
+      }
+    }
+  }
+
   &.grid-view {
 
     .arrangement-toggles {
@@ -480,49 +518,6 @@ html.js input.form-autocomplete {
         letter-spacing: .5px;
         margin: 0;
         margin-top: 10px;
-      }
-
-      .material__metadata {
-        white-space: nowrap;
-      }
-
-      .material__language {
-        display: inline-block;
-        font-family: $font-light;
-        font-size: 14px;
-
-        &::before {
-          @include icon;
-          color: $color__font-gray;
-          font-size: 12px;
-          content: $icon__language;
-        }
-      }
-
-      // @TODO: Handle both grid and list view.
-      .material__number-in-series {
-        display: inline-block;
-        font-family: $font-light;
-        font-size: 14px;
-
-        overflow: hidden;
-        margin-left: 1em;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        &::before {
-          @include icon;
-          color: $color__font-gray;
-          font-size: 12px;
-          content: $icon__stack;
-        }
-
-        .material__series-number + .material__series-series {
-          &::before {
-            content: ' – ';
-          }
-        }
       }
     }
   }
