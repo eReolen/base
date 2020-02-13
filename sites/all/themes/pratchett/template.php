@@ -131,17 +131,3 @@ function pratchett_preprocess_menu_link(&$variables) {
     }
   }
 }
-
-/**
- * Implements hook_preprocess_ting_object().
- *
- * Add information on series.
- */
-function pratchett_preprocess_ting_object(&$variables) {
-  if (isset($variables['object']) && $variables['object'] instanceof TingEntity) {
-    $data = reol_base_get_series_data($variables['object']);
-    if (NULL !== $data) {
-      $variables['series'] = $data;
-    }
-  }
-}
