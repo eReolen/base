@@ -116,33 +116,47 @@
 
 }
 
-.field-type-ting-series {
-  color: $title-color;
-  font-family: $font-light;
-  font-size: 12px;
-  margin: .5em 0;
-
-  /* align the text and icon */
-  .field-items,
-  .field-item,
-  .material__series-icon {
-    vertical-align: middle;
-  }
-
-  /* show dots at end of line */
-  .field-item {
-    text-overflow: ellipsis;
+.js-search-results-grid-view {
+  .group-ting-left-col-search {
+    // show dots at end of line.
     white-space: nowrap;
-    width: 100%;
     overflow: hidden;
-  }
+    text-overflow: ellipsis;
 
-  .material__series-number {
-    padding-left: .5em;
+    // Make language and series line up on one line.
+    .field-type-ting-details-language,
+    .field-type-ting-details-language div {
+      display: inline-block;
+    }
+
+    .field-type-ting-series,
+    .field-type-ting-series div {
+      display: inline;
+    }
+
+    .field-type-ting-series {
+      white-space: nowrap;
+      margin-left: .5em;
+    }
   }
-  .material__series-number + .material__series-series {
-    &::before {
-      content: ' – ';
+}
+
+.group-ting-left-col-search {
+  .field-type-ting-series {
+    font-size: 12px;
+
+    .material__series-number {
+      &::before {
+        @include icon('stack-solid');
+        font-size: 12px;
+        margin-right: 5px;
+      }
+    }
+
+    .material__series-number + .material__series-series {
+      &::before {
+        content: ' – ';
+      }
     }
   }
 }

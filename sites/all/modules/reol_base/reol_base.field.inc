@@ -151,9 +151,7 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
         if (NULL !== $data) {
           // This is almost as ugly as the stuff in ting_field_formatter_view.
           $element[$delta] = array(
-            '#markup' => '<span class="material__series-icon"><svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.35.55a.5.5 0 01.45 0l5.57 2.8a.5.5 0 010 .9L6.8 7.02a.5.5 0 01-.45 0L.78 4.25a.5.5 0 010-.9L6.35.55zm6.44 5.26a.5.5 0 01-.25.66l-5.76 2.6a.5.5 0 01-.42 0L.8 6.47a.5.5 0 01.42-.9l5.37 2.5 5.55-2.5a.5.5 0 01.66.24zm0 2.04a.5.5 0 01-.25.67l-5.76 2.6a.5.5 0 01-.42 0L.8 8.51a.5.5 0 11.42-.91l5.37 2.5 5.55-2.5a.5.5 0 01.66.24zm0 2.05a.5.5 0 01-.25.66l-5.76 2.6a.5.5 0 01-.42 0L.8 10.56a.5.5 0 01.42-.9l5.37 2.5 5.55-2.51a.5.5 0 01.66.25z" fill="#6D6D6D"/>
-          </svg></span><span class="material__series-number">' . $data['number'] . '</span>'
+            '#markup' => '<span class="material__series-number">' . $data['number'] . '</span>'
             . '<span class="material__series-series" title="' . $data['series'] . '">' . $data['series'] . '</span>',
           );
         }
