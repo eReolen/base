@@ -116,20 +116,47 @@
 
 }
 
-.field-type-ting-series {
-  border-top: 1px solid $white-medium;
-  border-bottom: 1px solid $white-medium;
-  padding: 20px 0;
-  margin: 20px 0;
+.js-search-results-grid-view {
+  .group-ting-left-col-search {
+    // show dots at end of line.
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-  a {
-    color: $red-light;
-    font-family: $font-mikado;
-    text-decoration: none;
+    // Make language and series line up on one line.
+    .field-type-ting-details-language,
+    .field-type-ting-details-language div {
+      display: inline-block;
+    }
 
-    &:hover {
-      color: $blue-medium;
-      text-decoration: underline;
+    .field-type-ting-series,
+    .field-type-ting-series div {
+      display: inline;
+    }
+
+    .field-type-ting-series {
+      white-space: nowrap;
+      margin-left: .5em;
+    }
+  }
+}
+
+.group-ting-left-col-search {
+  .field-type-ting-series {
+    font-size: 12px;
+
+    .material__series-number {
+      &::before {
+        @include icon('stack-solid');
+        font-size: 12px;
+        margin-right: 5px;
+      }
+    }
+
+    .material__series-number + .material__series-series {
+      &::before {
+        content: ' – ';
+      }
     }
   }
 }
@@ -569,7 +596,6 @@
     }
 
     .field-name-ting-abstract,
-    .field-name-ting-series,
     .search-result--availability,
     .field-type-ting-collection-types {
       display: none;

@@ -1924,3 +1924,29 @@ function reol_base_validate_image_size($node, $field_name) {
 
   return NULL;
 }
+
+/**
+ * Get data on series from a ting entity.
+ *
+ * @param TingEntity $entity
+ *   The entity.
+ *
+ * @return null|array
+ *   An array with keys "series" and "number" if part of a series.
+ */
+function reol_base_get_series_data(TingEntity $entity) {
+  $series = $entity->getSeriesTitles();
+  if (NULL !== $series) {
+    foreach ($series as $item) {
+      $item = array_map('trim', $item);
+      if (2 === count($item) && !empty($item[0]) && !empty($item[1])) {
+        return [
+          'series' => $item[0],
+          'number' => $item[1],
+        ];
+      }
+    }
+  }
+
+  return NULL;
+}

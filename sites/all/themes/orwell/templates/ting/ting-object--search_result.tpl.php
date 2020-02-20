@@ -22,9 +22,17 @@ unset($content['group_ting_right_col_search']);
       <?php echo render($content['group_ting_object_teaser_left']['ting_cover']); ?>
     </div>
     <div class="material__content text">
-      <div class="material__language">
-        <?php echo $object->getLanguage() ?>
+      <div class="material__metadata">
+        <div class="material__language">
+          <?php echo $object->getLanguage() ?>
+        </div>
+        <?php if (isset($content['group_ting_object_teaser_right']['group_info']['ting_series'][0])): ?>
+          <div class="material__number-in-series">
+            <?php echo render($content['group_ting_object_teaser_right']['group_info']['ting_series'][0]); ?>
+          </div>
+        <?php endif ?>
       </div>
+
       <div class="material__title">
         <?php echo render($content['group_ting_object_teaser_right']['ting_title']); ?>
       </div>
