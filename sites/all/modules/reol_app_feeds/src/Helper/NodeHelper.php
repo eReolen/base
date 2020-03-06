@@ -135,6 +135,10 @@ class NodeHelper {
     if (isset($value[LANGUAGE_NONE])) {
       $value = $value[LANGUAGE_NONE];
     }
+    // Use first image if we have a list.
+    if (isset($value[0])) {
+      $value = $value[0];
+    }
     if (!isset($value['uri'])) {
       return NULL;
     }
