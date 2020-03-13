@@ -12,7 +12,7 @@ gulp.task('sass', function () {
   var neatRequire = require('node-neat').includePaths,
     bourbonRequire = require('node-bourbon').includePaths;
 
-  return gulp.src('./sass/*.scss')
+  return gulp.src('./sass/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths: [].concat(neatRequire, bourbonRequire),
@@ -30,7 +30,7 @@ gulp.task('sass', function () {
 
 // JsHint.
 gulp.task('jshint', function () {
-  return gulp.src(['gulpfile.js', './js/*.js'])
+  return gulp.src(['gulpfile.js', './js/**/*.js'])
   .pipe(jshint())
   // Get stylish output.
   .pipe(jshint.reporter(stylish))
@@ -43,8 +43,8 @@ gulp.task('jshint', function () {
 
 // Watch
 gulp.task('watch', function() {
-  gulp.watch('./sass/**/*.scss', {interval: 1000}, ['sass']);
-  gulp.watch(['gulpfile.js', './js/*.js'], { interval: 1000 }, ['jshint']);
+  gulp.watch('./sass/**/*.scss', {interval: 1000}, gulp.series('sass'));
+  gulp.watch(['gulpfile.js', './js/**/*.js'], { interval: 1000 }, gulp.series('jshint'));
 });
 
 // default
