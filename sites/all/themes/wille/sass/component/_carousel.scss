@@ -260,6 +260,10 @@ $carousel-outer-padding: 0 30px;
     text-overflow: ellipsis;
     color: $title-color;
 
+    .material-carousel-colored & {
+      color: $white;
+    }
+
     // Make language and series line up on one line.
     .field-type-ting-details-language,
     .field-type-ting-details-language div {
