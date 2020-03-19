@@ -55,6 +55,10 @@ function publizon_availability_items(array $local_ids) {
 
   // Whitelisted cards should not use cached responses.
   $use_cache = !in_array($card_number, variable_get('publizon_test_card_numbers', []));
+  // Others should use cached anonymous availability information.
+  if ($use_cache) {
+    $card_number = NULL;
+  }
 
   // Check cache as calls to publizon is expensive and this availability
   // function is called many time for each material displayed. When selecting

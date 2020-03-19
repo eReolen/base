@@ -545,7 +545,8 @@ function publizon_client_library_load($library_id) {
   if (empty($libraries[$library_id])) {
     // Try getting from db cache. Libraries varies by client_id.
     $cid = 'publizon_libraries:' . $library_id . '' . publizon_get_client_id();
-    if ($cache = cache_get($cid)) {
+    $cache = cache_get($cid);
+    if ($cache && REQUEST_TIME < $cache->expire) {
       $libraries[$library_id] = $cache->data;
     }
     else {
@@ -559,7 +560,8 @@ function publizon_client_library_load($library_id) {
       }
 
       // Save in db cache.
-      cache_set($cid, $libraries[$library_id], 'cache');
+      $expire = variable_get('publizon_client_library_expire', 24 * 60 * 60);
+      cache_set($cid, $libraries[$library_id], 'cache', REQUEST_TIME + $expire);
     }
   }
 

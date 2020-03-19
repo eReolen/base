@@ -252,6 +252,52 @@ $carousel-outer-padding: 0 30px;
     font-family: $font-light;
     font-size: 10px;
   }
+
+  .ting-object.view-mode-compact {
+    // show dots at end of line.
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $title-color;
+
+    .material-carousel-colored & {
+      color: $white;
+    }
+
+    // Make language and series line up on one line.
+    .field-type-ting-details-language,
+    .field-type-ting-details-language div {
+      display: inline-block;
+    }
+
+    .field-type-ting-series,
+    .field-type-ting-series div {
+      display: inline;
+    }
+
+    .field-type-ting-series {
+      white-space: nowrap;
+      margin-left: .5em;
+    }
+
+    .field-type-ting-series {
+      font-size: 12px;
+
+      .material__series-number {
+        &::before {
+          @include icon('stack-solid');
+          font-size: 12px;
+          margin-right: 5px;
+        }
+      }
+
+      .material__series-number + .material__series-series {
+        &::before {
+          content: ' – ';
+        }
+      }
+    }
+  }
 }
 
 // Change color of text and arrows on colored carousels.
