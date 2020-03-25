@@ -124,15 +124,11 @@ abstract class PublizonClient {
     // Check for SOAP faults.
     $fault = $response->xpath('//soap:Fault');
     if (isset($fault[0])) {
-      if (isset($fault[0]->faultstring)) {
-        $this->logger->log(check_plain($fault[0]->faultstring));
-      }
-      else {
-        $this->logger->log('Fault from Publizon web-service.');
-      }
+      $message = $fault[0]->faultstring ?? 'Fault from Publizon web-service.';
+      $this->logger->log($message);
 
       // Throw exception, it's translated in the exception.
-      throw new PublizonException($fault[0]->faultstring);
+      throw new PublizonException($message);
     }
 
     // Check the response error codes.
@@ -142,20 +138,18 @@ abstract class PublizonClient {
         return $response;
       }
       else {
-        if (isset($status[0]->message)) {
-          $this->logger->log(check_plain($status[0]->message));
-        }
-        else {
-          $this->logger->log('Connection with the Publizon web-service failed.');
-        }
+        $message = $status[0]->message ?? 'Connection with the Publizon web-service failed.';
+        $this->logger->log(check_plain($message));
 
         // Throw exception, it's translated in the exception.
-        throw new PublizonException($status[0]->message, intval($status[0]->code));
+        throw new PublizonException($message, intval($status[0]->code));
       }
     }
     else {
-      $this->logger->log('No status code from Publizon web-service.');
-      throw new PublizonException('No status code from Publizon web-service.');
+      $message = 'No status code from Publizon web-service.';
+      $this->logger->log($message);
+
+      throw new PublizonException($message);
     }
 
     return FALSE;
