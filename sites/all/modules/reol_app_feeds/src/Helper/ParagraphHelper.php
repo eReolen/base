@@ -33,6 +33,8 @@ class ParagraphHelper {
   const PARAGRAPH_SPOTLIGHT_BOX = 'spotlight_box';
   // Video.
   const PARAGRAPH_VIDEO = 'video';
+  // To elementer.
+  const PARAGRAPH_TWO_ELEMENTS = 'two_elements';
 
   // Paragraph aliases.
   const PARAGRAPH_ALIAS_AUDIO = self::PARAGRAPH_AUDIO_PREVIEW;
@@ -203,8 +205,8 @@ class ParagraphHelper {
   /**
    * Get data for a list of paragraphs.
    *
-   * @param string $type
-   *   The paragraphs bundle type.
+   * @param string|string[] $types
+   *   The paragraphs bundle types.
    * @param array|null $paragraphIds
    *   The paragraph ids.
    * @param callable|null $filter
@@ -213,13 +215,14 @@ class ParagraphHelper {
    * @return array|\ParagraphsItemEntity[]
    *   The list of paragraphs.
    */
-  public function getParagraphs($type, array $paragraphIds = NULL, callable $filter = NULL) {
+  public function getParagraphs($types, array $paragraphIds = NULL, callable $filter = NULL) {
+    $types = [$types];
     $paragraphs = [];
 
     $entity_type = NodeHelper::ENTITY_TYPE_PARAGRAPH;
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', $entity_type)
-      ->entityCondition('bundle', $type)
+      ->entityCondition('bundle', $types, 'IN')
       ->entityCondition('entity_id', $paragraphIds ?: [0], 'IN');
     $result = $query->execute();
 
@@ -684,21 +687,40 @@ class ParagraphHelper {
    *   The view list data.
    */
   public function getVideoList(\ParagraphsItemEntity $paragraph) {
-    $subParagraphIds = $this->nodeHelper->getFieldValue($paragraph, 'field_spotlight_primary', 'value', TRUE);
-    $subParagraphs = $this->getParagraphs(ParagraphHelper::PARAGRAPH_VIDEO, $subParagraphIds);
-    $list = array_values(array_map(function (\ParagraphsItemEntity $subParagraph) {
-      $video = $this->nodeHelper->loadReferences($subParagraph, 'field_video_node', FALSE);
-      $url = $this->nodeHelper->getFieldValue($video, 'field_video', 'uri');
+    $list = [];
 
-      return [
-        'guid' => $this->getGuid($subParagraph),
-        'type' => $this->getType($subParagraph),
-        'title' => $this->getTitle($video->title),
-        'image' => self::VALUE_NONE,
-        'source' => $this->getVideoSource($url),
-        'url' => $this->nodeHelper->getFileUrl($url),
-      ];
-    }, $subParagraphs));
+    $sub_paragraphs_field_name = NULL;
+    $sub_paragraphs_video_field_name = NULL;
+
+    switch ($paragraph->bundle()) {
+      case ParagraphHelper::PARAGRAPH_SPOTLIGHT_BOX:
+        $sub_paragraphs_field_name = 'field_spotlight_primary';
+        $sub_paragraphs_video_field_name = 'field_video';
+        break;
+
+      case ParagraphHelper::PARAGRAPH_TWO_ELEMENTS:
+        $sub_paragraphs_field_name = 'field_two_elements_primary';
+        $sub_paragraphs_video_field_name = 'field_breol_video';
+        break;
+    }
+
+    if (isset($sub_paragraphs_field_name, $sub_paragraphs_video_field_name)) {
+      $subParagraphIds = $this->nodeHelper->getFieldValue($paragraph, $sub_paragraphs_field_name, 'value', TRUE);
+      $subParagraphs = $this->getParagraphs(ParagraphHelper::PARAGRAPH_VIDEO, $subParagraphIds);
+      $list = array_values(array_map(function (\ParagraphsItemEntity $subParagraph) use ($sub_paragraphs_video_field_name) {
+        $video = $this->nodeHelper->loadReferences($subParagraph, 'field_video_node', FALSE);
+        $url = $this->nodeHelper->getFieldValue($video, $sub_paragraphs_video_field_name, 'uri');
+
+        return [
+          'guid' => $this->getGuid($subParagraph),
+          'type' => $this->getType($subParagraph),
+          'title' => $this->getTitle($video->title),
+          'image' => self::VALUE_NONE,
+          'source' => $this->getVideoSource($url),
+          'url' => $this->nodeHelper->getFileUrl($url),
+        ];
+      }, $subParagraphs));
+    }
 
     return $list;
   }

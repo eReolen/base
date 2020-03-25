@@ -1,0 +1,34 @@
+diff --git a/profiles/ding2/modules/opensearch/includes/opensearch.search.inc b/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
+index 6d262c46..b58e5f45 100644
+--- a/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
++++ b/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
+@@ -342,18 +342,18 @@ function _opensearch_search_relation_render_title(\TingRelation $relation) {
+   // Set default fallback title.
+   if (!empty($object)) {
+     $title = $object->getTitle();
+-  }
+ 
+-  // Find better title based on relation type.
+-  switch ($relation->getType()) {
+-    case 'dbcaddi:hasReview':
+-      // If the relation has "isPartOf" it's always a better title than the one
+-      // in the object title as it is always "Anmeldelse".
+-      $is_part_of = $object->getIsPartOf();
+-      if (!empty($is_part_of)) {
+-        $title = reset($is_part_of);
+-      }
+-      break;
++    // Find better title based on relation type.
++    switch ($relation->getType()) {
++      case 'dbcaddi:hasReview':
++        // If the relation has "isPartOf" it's always a better title than the one
++        // in the object title as it is always "Anmeldelse".
++        $is_part_of = $object->getIsPartOf();
++        if (!empty($is_part_of)) {
++          $title = reset($is_part_of);
++        }
++        break;
++    }
+   }
+ 
+   return $title;

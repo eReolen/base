@@ -840,3 +840,13 @@ function reol_base_update_7168() {
 function reol_base_update_7169() {
   module_enable(array('reol_app_feeds'));
 }
+
+/**
+ * Update module weight to ensure alter runs last.
+ */
+function reol_base_update_7170() {
+  db_update('system')
+    ->fields(array('weight' => 10))
+    ->condition('name', 'reol_base', '=')
+    ->execute();
+}
