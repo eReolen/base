@@ -140,7 +140,10 @@ class FrontPageFeed extends AbstractFeed {
   private function getVideos(array $paragraphIds) {
     // Wrap all videos in a fake list element.
     $list = [];
-    $paragraphs = $this->paragraphHelper->getParagraphs(ParagraphHelper::PARAGRAPH_SPOTLIGHT_BOX, $paragraphIds);
+    $paragraphs = $this->paragraphHelper->getParagraphs([
+      ParagraphHelper::PARAGRAPH_SPOTLIGHT_BOX,
+      ParagraphHelper::PARAGRAPH_TWO_ELEMENTS,
+    ], $paragraphIds);
 
     foreach ($paragraphs as $paragraph) {
       $item = $this->paragraphHelper->getVideoList($paragraph);
