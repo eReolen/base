@@ -1950,3 +1950,12 @@ function reol_base_get_series_data(TingEntity $entity) {
 
   return NULL;
 }
+
+/**
+ * Implements hook_form_search_block_form_alter().
+ *
+ * Change the max length of the search input form.
+ */
+function reol_base_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+  $form['search_block_form']['#maxlength'] = 2048;
+}

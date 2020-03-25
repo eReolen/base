@@ -342,18 +342,18 @@ function _opensearch_search_relation_render_title(\TingRelation $relation) {
   // Set default fallback title.
   if (!empty($object)) {
     $title = $object->getTitle();
-  }
 
-  // Find better title based on relation type.
-  switch ($relation->getType()) {
-    case 'dbcaddi:hasReview':
-      // If the relation has "isPartOf" it's always a better title than the one
-      // in the object title as it is always "Anmeldelse".
-      $is_part_of = $object->getIsPartOf();
-      if (!empty($is_part_of)) {
-        $title = reset($is_part_of);
-      }
-      break;
+    // Find better title based on relation type.
+    switch ($relation->getType()) {
+      case 'dbcaddi:hasReview':
+        // If the relation has "isPartOf" it's always a better title than the one
+        // in the object title as it is always "Anmeldelse".
+        $is_part_of = $object->getIsPartOf();
+        if (!empty($is_part_of)) {
+          $title = reset($is_part_of);
+        }
+        break;
+    }
   }
 
   return $title;
