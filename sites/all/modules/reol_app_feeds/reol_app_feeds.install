@@ -33,3 +33,22 @@ function reol_app_feeds_uninstall() {
   variable_del('reol_app_feeds_category');
   variable_del('reol_app_feeds_themes');
 }
+
+/**
+ * Add selected feed frontpages to weighted list.
+ */
+function reol_app_feeds_update_7001(&$sandbox) {
+  $name = 'reol_app_feeds_frontpage';
+  $value = variable_get($name, []);
+  $value['page_ids'] = [];
+  if (isset($value['frontpage_ids'])) {
+    foreach ($value['frontpage_ids'] as $page_id => $included) {
+      $value['page_ids'][$page_id] = array(
+        'included' => 0 !== $included ? 1 : 0,
+        'weight' => 0 !== $included ? count($value['page_ids']) : 1000,
+      );
+    }
+  }
+
+  variable_set($name, $value);
+}
