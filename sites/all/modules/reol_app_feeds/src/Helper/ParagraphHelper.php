@@ -378,7 +378,7 @@ class ParagraphHelper {
     //
     // @TODO: Can we improve this so we don't have to load all items and throw
     // away some of them?
-    $items = $this->nodeHelper->loadReferences($paragraph, 'field_picked_articles');
+    $items = $this->nodeHelper->loadReferences($paragraph, 'field_picked_articles') ?? [];
 
     $list = array_values(array_map([$this, 'getThemeData'], $items));
     // Remove items with no identifiers.
