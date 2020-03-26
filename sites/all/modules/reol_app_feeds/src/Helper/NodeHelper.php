@@ -240,16 +240,22 @@ class NodeHelper {
    *   The node ids.
    * @param int $status
    *   The optional node status.
+   * @param string $entity_type
+   *   The optional entity type.
+   * @param string $bundle
+   *   The optional bundle (node type).
    *
    * @return array
    *   An array of node objects indexed by nid.
    */
-  public function loadNodes(array $nids, $status = NODE_PUBLISHED) {
-    $entity_type = self::ENTITY_TYPE_NODE;
+  public function loadNodes(array $nids, $status = NODE_PUBLISHED, $entity_type = self::ENTITY_TYPE_NODE, $bundle = NULL) {
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', $entity_type)
       ->propertyCondition('status', $status)
       ->entityCondition('entity_id', $nids + [0]);
+    if (NULL !== $bundle) {
+      $query->entityCondition('bundle', $bundle);
+    }
     $result = $query->execute();
 
     $nodes = isset($result[$entity_type]) ? node_load_multiple(array_keys($result[$entity_type])) : [];
@@ -270,12 +276,12 @@ class NodeHelper {
    *   The optional id key in the items.
    */
   public static function sortByIds(array &$items, array $ids, $id_key = 'nid') {
-    // Order by index in $nids.
+    // Order by index in $ids.
     uasort($items, function ($a, $b) use ($ids, $id_key) {
       $a = array_search($a->{$id_key}, $ids);
       $b = array_search($b->{$id_key}, $ids);
 
-      return $a - $b;
+      return $a <=> $b;
     });
   }
 
