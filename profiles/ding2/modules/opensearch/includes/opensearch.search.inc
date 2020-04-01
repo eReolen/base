@@ -692,7 +692,7 @@ function opensearch_search_autocomplete($string) {
  */
 function opensearch_search_autocomplete_suggestions(array $query) {
   $items = array();
-  $rest_url = variable_get('opensearch_search_autocomplete_suggestion_url', '');
+  $rest_url = rtrim(variable_get('opensearch_search_autocomplete_suggestion_url', ''), '/') . '/rest/';
   if (empty($rest_url)) {
     watchdog(
       'opensearch_search_autocomplete',
@@ -703,10 +703,7 @@ function opensearch_search_autocomplete_suggestions(array $query) {
     return $items;
   }
 
-  // Make stuff work with http://opensuggestion.addi.dk/b3.5_2.0/#facets
-  $rest_url = rtrim($rest_url, '/') . '/rest/';
-  $query['query'] = $query['q'];
-  $url = url($rest_url . 'facets', array('query' => $query));
+  $url = $url = url($rest_url . 'facets', array('query' => $query));
   $headers = array('Accept' => 'application/json');
   $result = drupal_http_request($url, $headers);
 
@@ -730,9 +727,6 @@ function opensearch_search_autocomplete_suggestions(array $query) {
       foreach ($result_data['response']['docs'] as $suggestion) {
         $items[] = $suggestion['all'][0];
       }
-    }
-    elseif (!empty($result_data['suggestions'])) {
-      $items = array_column($result_data['suggestions'], 'suggestion');
     }
   }
 
