@@ -19,9 +19,14 @@ class FrontPageFeed extends AbstractFeed {
    *   The front page ids.
    */
   public static function getFrontPageIds() {
-    $value = _reol_app_feeds_variable_get('reol_app_feeds_frontpage', 'frontpage_ids', []);
+    $group_name = 'reol_app_feeds_frontpage';
+    $field_name = 'page_ids';
+    $pages = _reol_app_feeds_variable_get($group_name, $field_name, []);
+    $included = array_filter($pages, function ($page) {
+      return isset($page['included']) && 1 === $page['included'];
+    });
 
-    return array_filter(array_values($value));
+    return array_keys($included);
   }
 
   /**

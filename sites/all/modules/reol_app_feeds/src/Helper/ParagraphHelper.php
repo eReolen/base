@@ -80,24 +80,12 @@ class ParagraphHelper {
       $paragraphIds[] = $paragraph->item_id;
     };
 
-    $entity_type = NodeHelper::ENTITY_TYPE_NODE;
-    $query = new EntityFieldQuery();
-    $query->entityCondition('entity_type', $entity_type)
-      ->propertyCondition('status', NODE_PUBLISHED)
-      ->propertyCondition('nid', $nids ?: [0], 'IN');
-    if (NULL !== $node_type) {
-      $query->entityCondition('bundle', $node_type);
-    }
-    $result = $query->execute();
-
-    if (isset($result[$entity_type])) {
-      $nodes = node_load_multiple(array_keys($result[$entity_type]));
-      foreach ($nodes as $node) {
-        $paragraph_fields = $this->getParagraphFields($node);
-        foreach ($paragraph_fields as $field_name => $field) {
-          $paragraphs = $this->loadParagraphs($node, $field_name);
-          $this->processParagraphs($paragraphs, TRUE, $accumulator);
-        }
+    $nodes = $this->nodeHelper->loadNodes($nids, NODE_PUBLISHED, NodeHelper::ENTITY_TYPE_NODE, $node_type);
+    foreach ($nodes as $node) {
+      $paragraph_fields = $this->getParagraphFields($node);
+      foreach ($paragraph_fields as $field_name => $field) {
+        $paragraphs = $this->loadParagraphs($node, $field_name);
+        $this->processParagraphs($paragraphs, TRUE, $accumulator);
       }
     }
 
@@ -228,6 +216,7 @@ class ParagraphHelper {
 
     if (isset($result[$entity_type])) {
       $paragraphs = paragraphs_item_load_multiple(array_keys($result[$entity_type]));
+      NodeHelper::sortByIds($paragraphs, $paragraphIds, 'item_id');
       if (NULL !== $filter) {
         $paragraphs = array_filter($paragraphs, $filter);
       }
@@ -389,7 +378,7 @@ class ParagraphHelper {
     //
     // @TODO: Can we improve this so we don't have to load all items and throw
     // away some of them?
-    $items = $this->nodeHelper->loadReferences($paragraph, 'field_picked_articles');
+    $items = $this->nodeHelper->loadReferences($paragraph, 'field_picked_articles') ?? [];
 
     $list = array_values(array_map([$this, 'getThemeData'], $items));
     // Remove items with no identifiers.
