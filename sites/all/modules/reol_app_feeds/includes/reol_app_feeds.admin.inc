@@ -5,8 +5,6 @@
  * Admin form for reol_app_feeds.
  */
 
-use Drupal\reol_app_feeds\Feed\FrontPageFeed;
-
 /**
  * The administration form for this module.
  *
@@ -39,21 +37,54 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
   }, $inspiration_pages));
 
   $group_name = 'reol_app_feeds_frontpage';
+  $field_name = 'page_ids';
+
   $form[$group_name] = [
     '#type' => 'fieldset',
     '#title' => t('Frontpage feed'),
     '#tree' => TRUE,
+    '#description' => t('Select pages to include in frontpage feed and specify order.'),
   ];
 
-  $form[$group_name]['frontpage_ids'] = [
-    '#type' => 'checkboxes',
-    '#title' => t('Front pages'),
-    '#default_value' => FrontPageFeed::getFrontPageIds(),
-    '#options' => $inspiration_pages_options,
-    '#multiple' => TRUE,
-    '#description' => t('Frontpages used in feeds'),
-    '#required' => TRUE,
-  ];
+  $form[$group_name][$field_name]['#tree'] = TRUE;
+
+  // The max weight used when sorting pages.
+  $max_weight = count($inspiration_pages);
+
+  // Get info on pages that have been included in the feed.
+  $frontpage_feed_pages = _reol_app_feeds_variable_get($group_name, $field_name, []);
+
+  // Add any new/missing inspiration pages to frontpage feed pages.
+  foreach ($inspiration_pages as $nid => $page) {
+    if (!isset($frontpage_feed_pages[$nid])) {
+      $frontpage_feed_pages[$nid] = [
+        'included' => 0,
+        'weight' => $max_weight,
+      ];
+    }
+  }
+
+  foreach ($frontpage_feed_pages as $nid => $data) {
+    $node = $inspiration_pages[$nid];
+    $form[$group_name][$field_name][$nid] = [
+      'name' => [
+        '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
+      ],
+
+      'included' => [
+        '#type' => 'checkbox',
+        '#default_value' => isset($data['included']) && 1 === $data['included'],
+      ],
+
+      'weight' => [
+        '#type' => 'weight',
+        '#title' => t('Weight'),
+        '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
+        '#delta' => $max_weight,
+        '#title_display' => 'invisible',
+      ],
+    ];
+  }
 
   $form[$group_name]['link_button_text'] = [
     '#type' => 'textfield',
@@ -180,46 +211,54 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
 function theme_reol_app_feeds_admin_form($variables) {
   $form = $variables['form'];
 
-  // Initialize the variable which will store our table rows.
-  $rows = [];
+  // Build draggable page lists.
+  $draggable_group_names = [
+    'reol_app_feeds_frontpage',
+    'reol_app_feeds_category',
+  ];
+  $field_name = 'page_ids';
 
-  $group_name = 'reol_app_feeds_category';
-  foreach (element_children($form[$group_name]['page_ids']) as $id) {
-    $form[$group_name]['page_ids'][$id]['weight']['#attributes']['class'] = [$group_name . '-item-weight'];
+  foreach ($draggable_group_names as $group_name) {
+    // Initialize the variable which will store our table rows.
+    $rows = [];
 
-    // We are now ready to add each element of our $form data to the $rows
-    // array, so that they end up as individual table cells when rendered
-    // in the final table.  We run each element through the drupal_render()
-    // function to generate the final html markup for that element.
-    $rows[] = [
-      'data' => [
-        drupal_render($form[$group_name]['page_ids'][$id]['name']),
-        drupal_render($form[$group_name]['page_ids'][$id]['included']),
-        drupal_render($form[$group_name]['page_ids'][$id]['weight']),
-      ],
-      'class' => ['draggable'],
+    foreach (element_children($form[$group_name][$field_name]) as $id) {
+      $form[$group_name][$field_name][$id]['weight']['#attributes']['class'] = [$group_name . '-item-weight'];
+
+      // We are now ready to add each element of our $form data to the $rows
+      // array, so that they end up as individual table cells when rendered
+      // in the final table.  We run each element through the drupal_render()
+      // function to generate the final html markup for that element.
+      $rows[] = [
+        'data' => [
+          drupal_render($form[$group_name][$field_name][$id]['name']),
+          drupal_render($form[$group_name][$field_name][$id]['included']),
+          drupal_render($form[$group_name][$field_name][$id]['weight']),
+        ],
+        'class' => ['draggable'],
+      ];
+    }
+
+    // We now define the table header values.  Ensure that the 'header' count
+    // matches the final column count for your table.
+    $header = [
+      t('Name'),
+      t('Included'),
+      t('Weight'),
     ];
+
+    $table_id = $group_name;
+
+    $form[$group_name][$field_name] = [
+      '#markup' => theme('table', [
+        'header' => $header,
+        'rows' => $rows,
+        'attributes' => ['id' => $table_id],
+      ]),
+    ];
+
+    drupal_add_tabledrag($table_id, 'order', 'sibling', $group_name . '-item-weight');
   }
-
-  // We now define the table header values.  Ensure that the 'header' count
-  // matches the final column count for your table.
-  $header = [
-    t('Name'),
-    t('Included'),
-    t('Weight'),
-  ];
-
-  $table_id = $group_name;
-
-  $form['reol_app_feeds_category']['page_ids'] = [
-    '#markup' => theme('table', [
-      'header' => $header,
-      'rows' => $rows,
-      'attributes' => ['id' => $table_id],
-    ]),
-  ];
-
-  drupal_add_tabledrag($table_id, 'order', 'sibling', $group_name . '-item-weight');
 
   return drupal_render_children($form);
 }
@@ -227,8 +266,8 @@ function theme_reol_app_feeds_admin_form($variables) {
 /**
  * Validate handler for the administration form.
  *
- * Sort 'reol_app_feeds_category' array by weight before it's saved to the
- * database in the submit handler.
+ * Sort 'reol_app_feeds_frontpage' and 'reol_app_feeds_category' arrays by
+ * weight before they're saved to the database in the submit handler.
  *
  * @param array $form
  *   The form input.
@@ -236,16 +275,23 @@ function theme_reol_app_feeds_admin_form($variables) {
  *   The state of the form.
  */
 function reol_app_feeds_admin_form_validate(array $form, array &$form_state) {
-  $items = &$form_state['values']['reol_app_feeds_category']['page_ids'];
-  foreach ($items as &$item) {
-    if (1 !== $item['included']) {
-      $item['weight'] = 1000;
-    }
-  }
+  $draggable_group_names = [
+    'reol_app_feeds_frontpage',
+    'reol_app_feeds_category',
+  ];
 
-  uasort($items, function ($a, $b) {
-    return $a['weight'] - $b['weight'];
-  });
+  foreach ($draggable_group_names as $group_name) {
+    $items = &$form_state['values'][$group_name]['page_ids'];
+    foreach ($items as &$item) {
+      if (1 !== $item['included']) {
+        $item['weight'] = 1000;
+      }
+    }
+
+    uasort($items, function ($a, $b) {
+      return $a['weight'] - $b['weight'];
+    });
+  }
 }
 
 /**
