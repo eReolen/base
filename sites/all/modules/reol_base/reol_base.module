@@ -1961,4 +1961,7 @@ function reol_base_form_search_block_form_alter(&$form, &$form_state, $form_id) 
 
   // Autocompletion doesn't work as hoped. We disable it.
   unset($form['search_block_form']['#autocomplete_path']);
+  // However, a number of scripts expects to the autocomplete JavaScript to be
+  // loaded. We load it.
+  drupal_add_library('system', 'drupal.autocomplete');
 }
