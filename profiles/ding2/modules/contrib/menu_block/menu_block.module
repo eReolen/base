@@ -317,7 +317,7 @@ function menu_block_get_exported_blocks() {
  */
 function menu_block_get_config($delta = NULL) {
   static $defaults, $exported;
-  watchdog('menu_block', 'menu_block_get_config() is deprecated and will be removed in the future');
+  // watchdog('menu_block', 'menu_block_get_config() is deprecated and will be removed in the future');
 
   if (!isset($defaults)) {
     $defaults = menu_block_default_config();
