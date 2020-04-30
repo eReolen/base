@@ -1964,4 +1964,6 @@ function reol_base_form_search_block_form_alter(&$form, &$form_state, $form_id) 
   // However, a number of scripts expects to the autocomplete JavaScript to be
   // loaded. We load it.
   drupal_add_library('system', 'drupal.autocomplete');
+  // Disable browser's built-in autocompletion.
+  $form['search_block_form']['#attributes']['autocomplete'] = 'off';
 }
