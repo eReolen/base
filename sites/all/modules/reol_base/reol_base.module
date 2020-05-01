@@ -1730,7 +1730,19 @@ function reol_base_opensearch_post_execute($request, $response, $raw_response) {
       switch (get_class($res)) {
         case 'TingClientObject':
           $res->on_quota = TRUE;
-          if (isset($raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record)) {
+          // @TODO $raw_response->searchResponse->result->searchResult[$raw_index]->collection->object may be an object here, e.g.
+          //          stdClass::__set_state(array(
+          //            'error' =>
+          //              stdClass::__set_state(array(
+          //                '$' => 'unknown/missing/inaccessible record: 870970-basis:28836929',
+          //              )),
+          //            'identifier' =>
+          //              stdClass::__set_state(array(
+          //                '$' => '870970-basis:28836929',
+          //              )),
+          //          ))
+          if (is_array($raw_response->searchResponse->result->searchResult[$raw_index]->collection->object)
+            && isset($raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record)) {
             _reol_base_odd_marc_data($res, $raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record);
           }
           break;
