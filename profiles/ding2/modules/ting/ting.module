@@ -788,7 +788,7 @@ function ting_single_object_render($entity_id, $view_mode = 'teaser') {
   $entity = reset($entity);
 
   // Filter out missing records.
-  if (strpos($entity->getTitle(), 'Error: unknown/missing/inaccessible record:') === 0) {
+  if (empty($entity) || strpos($entity->getTitle(), 'Error: unknown/missing/inaccessible record:') === 0) {
     return;
   }
   $ting_object = ting_object_view($entity, $view_mode);
