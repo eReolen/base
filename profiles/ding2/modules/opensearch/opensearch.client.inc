@@ -492,11 +492,13 @@ function opensearch_execute(TingClientRequest $request) {
     }
 
     $response = $request->parseResponse($res);
+    // @TODO What if response is empty?
 
     // Pass parsed results to other modules.
     $props = module_invoke_all('opensearch_post_execute', $request, $response, $res);
     if (!empty($props)) {
       foreach ($props as $property => $value) {
+        // @TODO This looks fishy. We settings object properties, but use array_merge in line 510.
         $response->{$property} = $value;
       }
     }
@@ -506,6 +508,7 @@ function opensearch_execute(TingClientRequest $request) {
     // $response and $res need to correspond.
     if ($request instanceof TingClientObjectRequest) {
       // The map uses ids as keys. Order does not matter for object requests.
+      // @TODO What if response is empty?
       $response = array_merge($cached_objects, $response);
 
       // Restore the original ids on the request so that our generated cache id
