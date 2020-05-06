@@ -31,14 +31,35 @@ function reol_audio_preview_paragraph_preprocess_entity(&$variables) {
         // No cover icons, please.
         $ting_entity->reol_no_icons = TRUE;
         $build = ting_object_view($ting_entity, 'compact');
+
         // For some reason this is an array.
         list($isbn,) = $ting_entity->getIsbn();
-        list($author,) = $ting_entity->getCreators();
         $variables['isbn'] = $isbn;
         $variables['cover'] = $build['ting_cover'];
-        $variables['author'] = check_plain($author);
+        $variables['author'] = check_plain(reol_audio_preview_getAuthor($ting_entity));
         $variables['title'] = check_plain($ting_entity->getTitle());
       }
     }
   }
+}
+
+/**
+ * Helper function to get author.
+ *
+ * @param $ting_entity
+ *   The entity to get author from.
+ *
+ * @return mixed
+ */
+function reol_audio_preview_getAuthor($ting_entity) {
+  $creators = $ting_entity->getCreators();
+  if (!empty($creators)) {
+    $author = array_shift($creators);
+  }
+  else {
+    $contributors = $ting_entity->getContributors();
+    $author = array_shift($contributors);
+  }
+
+  return $author;
 }
