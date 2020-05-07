@@ -125,29 +125,6 @@ abstract class TingClientRequest {
       throw new TingClientException('Unexpected JSON response: ' . var_export($response, TRUE));
     }
 
-    // Find error messages in the response - data well v3. The data well return
-    // objects with only title elements that contains an error message (not the
-    // title), but the hit count is zero on these error objects. I may have
-    // been fixed on later version of the data well (3.0+), but it have to be
-    // tested.
-    if (!empty($response->searchResponse->result->hitCount)) {
-      if (!empty($response->searchResponse->result->searchResult)) {
-        $search_result = $response->searchResponse->result->searchResult;
-        foreach ($search_result as $index => $result) {
-          foreach ($result->collection->object as $object) {
-            if (isset($object->error)) {
-              // As the code have change to get more than on object in getObject
-              // request to the data well. The whole processing should not stop
-              // do to a single missing object from the data well. So removed
-              // the error'ed object at continue processing.
-              unset($search_result[$index]);
-              watchdog_exception('ting', new TingClientException('Unexpected error message in response: ' . var_export($response, TRUE)));
-            }
-          }
-        }
-      }
-    }
-
     return $this->processResponse($response);
   }
 
