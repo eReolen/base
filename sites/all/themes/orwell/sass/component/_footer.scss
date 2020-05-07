@@ -16,7 +16,7 @@
     max-width: 1200px;
     margin: 0 auto;
 
-    @include grid-media($medium){
+    @include grid-media($medium) {
       display: flex;
       padding: 4rem 0;
     }
@@ -35,7 +35,7 @@
       @include icon;
       content: $icon__ereol-symbol;
       font-size: 2rem;
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
   }
 
@@ -56,7 +56,7 @@
     margin: 0;
     padding: 0;
 
-    @include grid-media($medium){
+    @include grid-media($medium) {
       display: block;
     }
 
@@ -65,23 +65,22 @@
       padding: 0;
       margin: 0;
 
-      @include grid-media($medium){
+      @include grid-media($medium) {
         display: block !important;
       }
     }
   }
 
   .panel-pane {
-
     a {
       display: block;
-      color: $color__font-gray;
+      color: $color__font-gray--light;
       font-size: 1.1rem;
       text-decoration: none;
       padding: 1rem 2rem;
     }
 
-    @include grid-media($medium){
+    @include grid-media($medium) {
       flex: 1;
     }
   }
@@ -95,7 +94,7 @@
     margin: 0;
     padding: 2rem;
 
-    @include grid-media($medium){
+    @include grid-media($medium) {
       border-top: none;
     }
   }

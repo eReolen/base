@@ -29,7 +29,7 @@ $menu-height__medium: 5rem;
     a {
       text-decoration: none;
       font-family: $font-semibold;
-      font-size: .75rem;
+      font-size: 0.75rem;
       line-height: $menu-height__default;
       display: block;
       padding: 0;
@@ -74,7 +74,7 @@ $menu-height__medium: 5rem;
 
     a {
       color: $color__white;
-      opacity: .7;
+      opacity: 0.7;
 
       @include grid-media($medium) {
         color: $color__font-gray--dark;
@@ -119,8 +119,8 @@ $menu-height__medium: 5rem;
         &::after {
           @include icon;
           content: $icon__arrow-down;
-          font-size: .5rem;
-          margin-left: .5rem;
+          font-size: 0.5rem;
+          margin-left: 0.5rem;
         }
       }
 
@@ -154,7 +154,7 @@ $menu-height__medium: 5rem;
 
         // A triangle on the top of the menu.
         &.js-active > a::before {
-          content: '';
+          content: "";
           color: $color__gray--dark;
           position: absolute;
           width: 0;
@@ -172,7 +172,7 @@ $menu-height__medium: 5rem;
 
     // Shared between level 2 and 3.
     a {
-      color: $color__font-gray--light;
+      color: $color__font-gray--dark;
 
       @include grid-media($medium) {
         &:hover {
@@ -180,7 +180,6 @@ $menu-height__medium: 5rem;
         }
       }
     }
-
 
     li {
       div {
@@ -214,7 +213,6 @@ $menu-height__medium: 5rem;
           color: $color__font-gray--light;
           font-family: $font-regular;
           padding: 0;
-
           @include grid-media($medium) {
             line-height: 2rem;
           }
