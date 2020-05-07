@@ -616,7 +616,7 @@ function reol_base_preprocess_material_item(&$variables) {
   $ding_entity_id = $entity->ding_entity_id;
   $ting_entity = ding_entity_load($ding_entity_id);
 
-  if (reol_base_fake_id($ting_entity->ding_entity_id)) {
+  if (reol_base_fake_id($ding_entity_id)) {
     // Material not found in the well, fake it, we need it to call
     // ding_entity_buttons. In retrospect, ding_entity_buttons isn't such a
     // good fit as we've discovered we need to handle loans/reservations
@@ -628,13 +628,12 @@ function reol_base_preprocess_material_item(&$variables) {
 
   // Make a note of the loan type if it's one of our fake IDs.
   // reol_use_loan_ding_entity_buttons will use this.
-  if (reol_base_fake_id($ting_entity->ding_entity_id)) {
+  if (reol_base_fake_id($ding_entity_id)) {
     $ting_entity->publizon_type = $entity->publizon_type;
   }
 
-  // Calling field_view_field() would be more proper, but it doesn't like our
-  // fake objects. Really there should be hook_(loan|reservation)_buttons, but
-  // that's some refactoring.
+  // The entity may not exists and ding_entity_buttons will assume that it
+  // exists.
   $buttons = module_invoke_all('ding_entity_buttons', '', $ting_entity, 'default');
   $variables['buttons'] = drupal_render($buttons);
 }
@@ -1730,7 +1729,8 @@ function reol_base_opensearch_post_execute($request, $response, $raw_response) {
       switch (get_class($res)) {
         case 'TingClientObject':
           $res->on_quota = TRUE;
-          if (isset($raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record)) {
+          if (is_array($raw_response->searchResponse->result->searchResult[$raw_index]->collection->object) &&
+            isset($raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record)) {
             _reol_base_odd_marc_data($res, $raw_response->searchResponse->result->searchResult[$raw_index]->collection->object[0]->collection->record);
           }
           break;
@@ -1738,7 +1738,8 @@ function reol_base_opensearch_post_execute($request, $response, $raw_response) {
         case 'TingClientObjectCollection':
           foreach ($res->objects as $key => $object) {
             $object->on_quota = TRUE;
-            if (isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
+            if (is_array($raw_response->searchResponse->result->searchResult[0]->collection->object) &&
+              isset($raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record)) {
               _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[0]->collection->object[$key]->collection->record);
             }
           }
@@ -1748,7 +1749,8 @@ function reol_base_opensearch_post_execute($request, $response, $raw_response) {
           foreach ($res->collections as $col_key => $object_collection) {
             foreach ($object_collection->objects as $key => $object) {
               $object->on_quota = TRUE;
-              if (isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
+              if (is_array($raw_response->searchResponse->result->searchResult[$col_key]->collection->object) &&
+                isset($raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record)) {
                 _reol_base_odd_marc_data($object, $raw_response->searchResponse->result->searchResult[$col_key]->collection->object[$key]->collection->record);
               }
             }

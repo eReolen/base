@@ -10,10 +10,10 @@ index 10ce0444..ed00f417 100644
 +  $entity = reset($entity);
 +
 +  // Filter out missing records.
-+  if (strpos($entity->getTitle(), 'Error: unknown/missing/inaccessible record:') === 0) {
++  if (FALSE !== $entity && strpos($entity->getTitle(), 'Error: unknown/missing/inaccessible record:') === 0) {
 +    return;
 +  }
 +  $ting_object = ting_object_view($entity, $view_mode);
- 
+
    $build = array(
      'id' => $entity_id,
