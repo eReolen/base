@@ -89,7 +89,7 @@ services:
       - '6379'
 
   varnish:
-    image: 'hermsi/alpine-varnish:5'
+    image: 'hermsi/alpine-varnish:6'
     depends_on:
       - nginx0
       - nginx1
