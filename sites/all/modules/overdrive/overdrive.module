@@ -125,7 +125,6 @@ function overdrive_ting_covers($entities) {
 function overdrive_ding_entity_buttons($type, $entity) {
   $buttons = array();
 
-//  if (preg_match('/^publizon:/', $entity->ding_entity_id);
   if (strpos($entity->getId(), ':ODN') !== false) {
     drupal_add_library('system', 'drupal.ajax');
 
