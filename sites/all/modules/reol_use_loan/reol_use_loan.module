@@ -10,14 +10,14 @@
 function reol_use_loan_menu() {
   $items = array();
 
-  $items['ting/object/%ting_object/read'] = array(
+  $items['ting/object/%/read'] = array(
     'page callback' => 'reol_use_loan_read',
-    'delivery callback' => 'reol_use_loan_deliver_html_page',
     'page arguments' => array(2),
+    'delivery callback' => 'reol_use_loan_deliver_html_page',
     'access callback' => TRUE,
   );
 
-  $items['ting/object/%ting_object/listen'] = array(
+  $items['ting/object/%/listen'] = array(
     'page callback' => 'reol_use_loan_listen',
     'delivery callback' => 'reol_use_loan_deliver_html_page',
     'page arguments' => array(2),
@@ -30,7 +30,7 @@ function reol_use_loan_menu() {
     'access callback' => 'user_is_logged_in',
   );
 
-  $items['ting/object/%ting_object/%/ajax'] = array(
+  $items['ting/object/%/%/ajax'] = array(
     'page callback' => 'reol_use_loan_use_loan_ajax',
     'page arguments' => array(2, 3),
     'access callback' => TRUE,
@@ -143,8 +143,8 @@ function reol_use_loan_deliver_html_page($page_callback_result) {
 /**
  * Menu callback to display e-book reader.
  *
- * @param $entity
- *   Ting object entity.
+ * @param $id
+ *   Ting object entity id.
  *
  * @return array
  *   Render array.
@@ -152,15 +152,20 @@ function reol_use_loan_deliver_html_page($page_callback_result) {
  * @throws \DingProviderDoesntImplement
  * @throws \DingProviderNoProvider
  */
-function reol_use_loan_read($entity) {
-  $order = reol_use_loan_get_order($entity->localId);
+function reol_use_loan_read($id) {
+  $local_id = _reol_use_load_get_local_id($id);
+
+  /** @var \PublizonProduct $product */
+  $product = publizon_load($local_id);
+
+  $order = reol_use_loan_get_order($local_id);
 
   $render = array(
     '#theme' => 'reol_use_loan_read',
   );
 
   if (!$order) {
-    $render['#isbn'] = reol_base_get_isbn($entity->localId);
+    $render['#isbn'] = reol_base_get_isbn($local_id);
   }
   else {
     // There is no order, start reader in preview mode.
@@ -206,7 +211,7 @@ function reol_use_loan_read($entity) {
     'type' => 'file',
     'scope' => 'player',
   ));
-  drupal_set_title($entity->getTitle() . ' | ' . variable_get('site_name', ''));
+  drupal_set_title($product->title . ' | ' . variable_get('site_name', ''));
 
   return $render;
 }
@@ -214,8 +219,8 @@ function reol_use_loan_read($entity) {
 /**
  * Menu callback to display audio-book reader.
  *
- * @param $entity
- *   Ting object entity.
+ * @param $id
+ *   Ting object entity id.
  *
  * @return array
  *   Render array.
@@ -223,19 +228,24 @@ function reol_use_loan_read($entity) {
  * @throws \DingProviderDoesntImplement
  * @throws \DingProviderNoProvider
  */
-function reol_use_loan_listen($entity) {
+function reol_use_loan_listen($id) {
+  $local_id = _reol_use_load_get_local_id($id);
+
+  /** @var \PublizonProduct $product */
+  $product = publizon_load($local_id);
+
   $render = array(
     '#theme' => 'reol_use_loan_listen',
   );
 
   drupal_add_css(drupal_get_path('module', 'reol_use_loan') . '/css/player.css');
-  drupal_set_title($entity->getTitle() . ' | ' . variable_get('site_name', ''));
+  drupal_set_title($product->title . ' | ' . variable_get('site_name', ''));
 
-  $order = reol_use_loan_get_order($entity->localId);
+  $order = reol_use_loan_get_order($local_id);
   if (!$order) {
     // There is no order, start player in preview mode.
     $render['#title'] = t('Try');
-    $render['#isbn'] = reol_base_get_isbn($entity->localId);
+    $render['#isbn'] = reol_base_get_isbn($local_id);
   }
   else {
     $render['#title'] = t('Listen');
@@ -439,8 +449,8 @@ function reol_use_loan_get_order($local_id) {
 /**
  * Deliver read/listen pages using ajax.
  *
- * @param TingEntity $entity
- *   The ting object from menu hook.
+ * @param $id
+ *   Ting object entity id.
  * @param string $type
  *   Either read or listen.
  *
@@ -450,17 +460,17 @@ function reol_use_loan_get_order($local_id) {
  * @throws \DingProviderDoesntImplement
  * @throws \DingProviderNoProvider
  */
-function reol_use_loan_use_loan_ajax(TingEntity $entity, $type) {
+function reol_use_loan_use_loan_ajax($id, $type) {
   $commands = array();
 
   // Figure out which page to load.
   $class = '';
   if ($type == "read") {
-    $render = reol_use_loan_read($entity);
+    $render = reol_use_loan_read($id);
     $class = 'try-ebook';
   }
   elseif ($type == "listen") {
-    $render = reol_use_loan_listen($entity);
+    $render = reol_use_loan_listen($id);
     $class = 'try-audiobook';
   }
 
@@ -468,4 +478,26 @@ function reol_use_loan_use_loan_ajax(TingEntity $entity, $type) {
   $commands[] = ajax_command_ding_popup('reol_use_loan', $render['#title'], $output, array('class' => array($class), 'refresh' => TRUE));
 
   return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Helper function get get local id for an given id.
+ *
+ * @param $id
+ *   Id for material.
+ *
+ * @return string
+ *   The local id prefixed with 'isbn_'.
+ */
+function _reol_use_load_get_local_id($id) {
+  $local_id = reol_base_fake_id($id);
+  if (!$local_id) {
+    $entity = ting_object_load($id);
+    $local_id = $entity->localId;
+  }
+  else {
+    $local_id = REOL_BASE_LOCAL_ID_PREFIX . $local_id;
+  }
+
+  return $local_id;
 }
