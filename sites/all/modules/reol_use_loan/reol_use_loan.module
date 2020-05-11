@@ -487,6 +487,7 @@ function reol_use_loan_use_loan_ajax($id, $type) {
  *   Id for material.
  *
  * @return string
+ *   The local id prefixed with 'isbn_'.
  */
 function _reol_use_load_get_local_id($id) {
   $local_id = reol_base_fake_id($id);
