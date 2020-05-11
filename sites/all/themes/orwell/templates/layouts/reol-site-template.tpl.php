@@ -5,19 +5,19 @@
  * Override reol default site template.
  */
 ?>
-<div id="audiobook" class="hidden-from-sight">
+<div id="audiobook" class="element-invisible element-focusable">
   Lydbog
 </div>
-<div id="link" class="hidden-from-sight">
+<div id="link" class="element-invisible element-focusable">
   Link
 </div>
-<div id="ebook" class="hidden-from-sight">
+<div id="ebook" class="element-invisible element-focusable">
   E-bog
 </div>
-<div id="podcast" class="hidden-from-sight">
+<div id="podcast" class="element-invisible element-focusable">
   Podcast
 </div>
-<div id="no-quota" class="hidden-from-sight">
+<div id="no-quota" class="element-invisible element-focusable">
   Der bruges ikke en kvote på at låne dette materiale
 </div>
 <div id="page<?php print $css_id ? " $css_id" : ''; ?>" class="<?php print $classes; ?>">
