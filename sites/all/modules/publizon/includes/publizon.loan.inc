@@ -132,6 +132,7 @@ function publizon_loan_create($account, $local_id) {
   // Clear ding session cache.
   if (module_exists('ding_session_cache')) {
     ding_session_cache_clear('publizon', 'loans');
+    ding_session_cache_clear('ding_loan', 'list');
   }
 }
 

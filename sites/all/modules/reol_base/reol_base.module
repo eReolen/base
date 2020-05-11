@@ -623,7 +623,7 @@ function reol_base_preprocess_material_item(&$variables) {
     // that's been deleted in the well, but that's how it is.
     $ting_entity = ding_provider_get_pseudo_entity($entity->ding_entity_id);
     $ting_entity->type = FALSE;
-    $ting_entity->localId = 'isbn_' . $ting_entity->tid;
+    $ting_entity->localId = REOL_BASE_LOCAL_ID_PREFIX . $ting_entity->tid;
   }
 
   // Make a note of the loan type if it's one of our fake IDs.

@@ -9,11 +9,12 @@ index 10ce0444..ed00f417 100644
 -  $ting_object = ting_object_view(reset($entity), $view_mode);
 +  $entity = reset($entity);
 +
-+  // Filter out missing records.
-+  if (FALSE !== $entity && strpos($entity->getTitle(), 'Error: unknown/missing/inaccessible record:') === 0) {
++  // The entity may not exists in the data well.
++  if (FALSE === $entity) {
 +    return;
 +  }
 +  $ting_object = ting_object_view($entity, $view_mode);
+
 
    $build = array(
      'id' => $entity_id,

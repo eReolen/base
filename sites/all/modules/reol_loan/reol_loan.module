@@ -82,6 +82,14 @@ function reol_loan_form_ding_loan_loans_form_alter(&$form, &$form_state) {
       }
       $form['all_loans'][$child] = $loan_group[$child];
 
+      $item = &$form['all_loans'][$child];
+      if (reol_base_fake_id($item['#id'])) {
+        $ting_entity = ding_provider_get_pseudo_entity($item['#id']);
+        $ting_entity->type = FALSE;
+        $ting_entity->localId = REOL_BASE_LOCAL_ID_PREFIX . $ting_entity->tid;
+        $item['#cover'] = field_view_field('ting_object', $ting_entity, 'ting_cover', 'user_list');
+      }
+
       // Add another information regarding when the loan expires.
       $loan = $form['all_loans'][$child]['#loan'];
       $time = strtotime(check_plain($loan->expiry));
