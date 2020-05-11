@@ -300,7 +300,13 @@ function publizon_get_product_cover($local_id) {
 function publizon_ting_covers($entities) {
   $covers = array();
   foreach ($entities as $id => $entity) {
-    $local_id = $entity->localId;
+    if (FALSE === $entity && reol_base_fake_id($id)) {
+      $local_id = drupal_substr($id, strpos($id, ':') + 1);
+      $local_id =  REOL_BASE_LOCAL_ID_PREFIX . $local_id;
+    }
+    else {
+      $local_id = $entity->localId;
+    }
     $uri = publizon_get_product_cover($local_id);
 
     if (!empty($uri)) {
