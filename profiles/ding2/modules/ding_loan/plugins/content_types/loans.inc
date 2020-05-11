@@ -33,7 +33,7 @@ function ding_loan_loans_content_type_render($subtype, $conf, $panel_args, $cont
 
   $loans = FALSE;
   // Don't pollute the log with "Undefined index" warnings.
-  $cache_key = isset($conf['overdue'], $conf['regular']) ? 'list-' . $conf['overdue'] . '-' . $conf['regular'] : 'list-' . '' . '-' . '';
+  $cache_key = 'list';
   if (module_exists('ding_session_cache')) {
     $loans = ding_session_cache_get('ding_loan', $cache_key);
   }
