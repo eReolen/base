@@ -1,4 +1,3 @@
-
 .ting-cover-wrapper,
 .linkbox {
   // Establish a positioning context for the type icons.
@@ -15,12 +14,12 @@
 
   .icon::before {
     @include icon;
-    padding: .5rem;
+    padding: 0.5rem;
     background-color: $color__white;
     border-radius: 50%;
     color: $color__font-gray;
     font-size: 1rem;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
   }
 
   &.no-quota .icon::before {
@@ -44,4 +43,9 @@
     content: $icon__link;
     color: $color__link__default;
   }
+}
+
+.hidden-from-sight {
+  position: absolute;
+  top: -10000px;
 }

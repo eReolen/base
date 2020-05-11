@@ -86,6 +86,7 @@ function reol_frontend_form_search_block_form_alter(&$form, &$form_state, $form_
  */
 function theme_reol_overlay_icons($variables) {
   $spans = '';
+  $title = "Der bruges en kvote på at låne dette materiale";
 
   if (!isset($variables['classes']) || !is_array($variables['classes'])) {
     $variables['classes'] = array();
@@ -93,7 +94,11 @@ function theme_reol_overlay_icons($variables) {
   $variables['classes'][] = 'overlay-icons';
 
   foreach (array_filter($variables['icons']) as $icon) {
-    $spans .= '<span class="icon ' . $icon . '"></span>';
+    if (in_array('no-quota', $variables['classes'])) {
+      $quota .= " no-quota";
+      $title = "Der bruges ikke en kvote på at låne dette materiale";
+    }
+    $spans .= '<span title="' . $title . '" aria-labelledby="' . $icon . $quota . '" class="icon ' . $icon . '"></span>';
   }
 
   if (!$spans) {
@@ -213,6 +218,7 @@ function reol_frontend_views_query_alter(&$view, &$query) {
  *   HTML for the icons, or an empty string.
  */
 function reol_frontend_ding_entity_icons(DingEntity $ding_entity) {
+  
   if (!isset($ding_entity->reol_no_icons)) {
     $classes = array();
     $icons = array();
