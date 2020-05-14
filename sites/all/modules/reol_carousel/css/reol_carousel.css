@@ -1,0 +1,3 @@
+.ding-carousel.single-slide [class^="button-"] {
+  display: none;
+}

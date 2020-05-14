@@ -204,6 +204,9 @@
         $(swiper.el).find('.ding-carousel-item.placeholder').remove();
         if (data.content) {
           swiper.appendSlide(data.content);
+          if (swiper.slides.length === 1) {
+            $(swiper.el).addClass('single-slide')
+          }
           Drupal.attachBehaviors(data.content);
         }
         $(swiper.el).data('offset', data.offset);

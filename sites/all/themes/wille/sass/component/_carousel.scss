@@ -379,6 +379,11 @@ $carousel-outer-padding: 0 30px;
       margin: 0;
     }
   }
+
+  .single-slide .ding-carousel-item {
+    width: 100%;
+    padding-right: 0;
+  }
 }
 
 // Inspiration pages are full width, limit the content.
