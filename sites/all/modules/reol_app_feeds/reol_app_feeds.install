@@ -52,3 +52,10 @@ function reol_app_feeds_update_7001(&$sandbox) {
 
   variable_set($name, $value);
 }
+
+/**
+ * Enable publication_date module.
+ */
+function reol_app_feeds_update_7002(&$sandbox) {
+  module_enable(['publication_date']);
+}
