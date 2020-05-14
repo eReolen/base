@@ -370,9 +370,12 @@ $carousel-outer-padding: 0 30px;
       padding: 0;
     }
 
+    .article--breol-news--teaser,
     &.placeholder {
-      // Height of .article--breol-news--teaser
-      height: 380px;
+      // News images have a fixed size (1080x400).
+      padding-top: (400/1080)*100%;
+      padding-bottom: 0;
+      height: auto;
     }
 
     .article--breol-news--teaser {
