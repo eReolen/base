@@ -144,3 +144,18 @@ function reol_app_feeds_overdrive_mapping() {
   $controller = new DefaultController();
   $controller->overdriveMapping();
 }
+
+/**
+ * Implements hook_query_alter().
+ */
+function reol_app_feeds_query_alter(QueryAlterableInterface $query) {
+  if ($query->hasTag('published_at')) {
+    $metadata = $query->getMetaData('published_at');
+    if (isset($metadata['order_by']['direction'])) {
+      $query->join('publication_date', 'publication_date',
+        'publication_date.nid = node.nid');
+      $query->orderBy('publication_date.published_at',
+        $metadata['order_by']['direction']);
+    }
+  }
+}
