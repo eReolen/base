@@ -41,7 +41,7 @@ function appbanners_admin_form() {
     '#title' => t('Android'),
     '#description' => t('See the <a href="!android">Google Developer Fundamentals</a> for more information on Native App Install Banners in Android',
       array(
-        '!android' => 'https://developers.google.com/web/fundamentals/app-install-banners/#native_app_install_banners',
+        '!android' => 'https://developers.google.com/web/fundamentals/app-install-banners/',
       )),
   );
 
@@ -61,6 +61,20 @@ function appbanners_admin_form() {
     '#type' => 'textfield',
     '#title' => t('Name'),
     '#default_value' => variable_get('appbanners_android_name', ''),
+  );
+  
+  $form['android']['appbanners_android_start_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Start URL'),
+    '#description' => t('This relative path MUST be a valid path on your site. It determines when the app install prompt should appear.'),
+    '#default_value' => variable_get('appbanners_android_start_url', ''),
+  );
+  
+  $form['android']['appbanners_android_display'] = array(
+    '#type' => 'select',
+    '#title' => t('Name'),
+    '#options' => array('standalone' => 'Standalone', 'fullscreen' => 'Full screen', 'minimal-ui' => 'Minimal UI'),
+    '#default_value' => variable_get('appbanners_android_display', 'standalone'),
   );
 
   $form['android']['appbanners_android_icon'] = array(
