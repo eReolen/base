@@ -34,7 +34,12 @@ class ThemesFeed extends AbstractFeed {
       ->entityCondition('bundle', $bundle)
       ->propertyCondition('status', NODE_PUBLISHED)
       ->fieldCondition('field_show_in_app', 'value', 1)
-      ->propertyOrderBy('created', 'DESC')
+      ->addTag('published_at')
+      ->addMetaData('published_at', [
+        'order_by' => [
+          'direction' => 'DESC',
+        ]
+      ])
       ->range(0, $max_number_of_items);
     $result = $query->execute();
 
