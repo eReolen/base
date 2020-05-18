@@ -27,6 +27,9 @@
       <div class="material__language">
         <?php echo $object->getLanguage() ?>
       </div>
+      <div class="material__quota">
+        <?php echo $object->getMaterialQuotaAndType() ?>
+      </div>
       <div class="material__abstract">
         <?php echo render($content['group_text']['ting_abstract']); ?>
       </div>

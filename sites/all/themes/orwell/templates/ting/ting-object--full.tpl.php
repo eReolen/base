@@ -35,6 +35,9 @@
         <div class="material__author">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_author']); ?>
         </div>
+        <div class="material__quota">
+          <?php echo $object->getMaterialQuota() ?>
+        </div>
         <div class="material__abstract text desktop-only">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_abstract']); ?>
         </div>

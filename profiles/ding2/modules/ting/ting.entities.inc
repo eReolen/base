@@ -299,6 +299,38 @@ class TingEntity extends DingEntity {
     return empty($this->reply) ? FALSE : $this->reply->getLanguage();
   }
 
+    /**
+   * Whether renting the material uses quota, and which type the material is
+   *
+   * @return string
+   * 
+   */
+  public function getMaterialQuotaAndType() {
+    $materialType = strtolower($this->properties['type']);
+    $isOnQuota = $this->reply->openSearchObject->on_quota;
+    $quotaString = 'Dette materiale er en ' . $materialType . ', og den indgår ikke i din kvote';
+    if ($isOnQuota) {
+      $quotaString ='Dette materiale er en ' . $materialType . ', og den indgår i din kvote';
+    }
+    return $quotaString;
+  }
+
+    /**
+   * Whether renting the material uses quota
+   *
+   * @return string
+   * 
+   */
+  public function getMaterialQuota() {
+    $isOnQuota = $this->reply->openSearchObject->on_quota;
+    $quotaString = 'Dette materiale indgår ikke i din kvote';
+    if ($isOnQuota) {
+      $quotaString = 'Dette materiale indgår i din kvote';
+    }
+    return $quotaString;
+  }
+  
+
   /**
    * Get the year the material was produced.
    *
