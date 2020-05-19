@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the ereol_article module.
+ */
+
+/**
+ * Enable scheduler module.
+ */
+function ereol_article_update_7101() {
+  module_enable(array('scheduler'), TRUE);
+}
