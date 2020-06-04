@@ -264,9 +264,9 @@ function publizon_get_retailer_id($account, $reset = FALSE) {
 
   if (empty($retailer_id[$account->uid]) || $reset) {
     // Get the retailer id on the user.
-    $profile = profile2_load_by_user($account, 'provider_publizon');
-    $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
-    $retailer_id[$account->uid] = $profile_wrapper->field_publizon_retailer_id->value();
+    if (isset($_SESSION['ding_user']['user']['data']['retailer_id'])) {
+      $retailer_id[$account->uid] = $_SESSION['ding_user']['user']['data']['retailer_id'];
+    }
   }
 
   return $retailer_id[$account->uid];
@@ -613,16 +613,13 @@ function publizon_publizon_client_id_alter(&$client_id) {
 function publizon_form_alter(&$form, &$form_state, $form_id) {
   // Set default value on support_id webform field.
   if (isset($form['submitted']['support_id'])) {
-    if (user_is_logged_in()) {
-      // Try to get value of "friendly_id" field on user profile
-      // (cf. publizon_user_authenticate_finalize).
-      global $user;
-      $profile = profile2_load_by_user($user->uid, 'provider_publizon');
-      if (NULL !== $profile) {
-        $wrapper = entity_metadata_wrapper('profile2', $profile);
-        if (isset($wrapper->field_friendly_id)) {
-          $form['submitted']['support_id']['#default_value'] = $wrapper->field_friendly_id->value();
-        }
+    global $user;
+    // See publizon_user_authenticate that returns this data that is set in
+    // under ding_user in the session.
+    if (user_is_logged_in() && isset($_SESSION['ding_user']['user']['data'])) {
+      $user_data = $_SESSION['ding_user']['user']['data'];
+      if (isset($user_data['support_id'])) {
+        $form['submitted']['support_id']['#default_value'] = $user_data['support_id'];
       }
     }
   }

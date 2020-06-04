@@ -16,7 +16,8 @@ function reol_carousel_element_info_alter(&$type) {
       $path . '/js/swiper.min.js',
     );
 
-    // Kill CSS.
-    $type['ding_carousel']['#attached']['css'] = array();
+    $type['ding_carousel']['#attached']['css'] = array(
+      $path . '/css/reol_carousel.css',
+    );
   }
 }

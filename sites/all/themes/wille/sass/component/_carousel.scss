@@ -301,7 +301,8 @@ $carousel-outer-padding: 0 30px;
 }
 
 // Change color of text and arrows on colored carousels.
-.material-carousel-colored {
+.material-carousel-colored,
+.paragraphs-item-picked-article-carousel {
   padding-top: 0;
   padding-bottom: $mobile-margin;
 
@@ -339,6 +340,53 @@ $carousel-outer-padding: 0 30px;
     right: 0;
   }
 
+}
+
+// @TODO: Design
+.paragraphs-item-picked-article-carousel {
+  // Make room for prev/next buttons.
+  padding: 0 100px;
+
+  h2.carousel__header {
+    color: $black-medium;
+
+    .carousel__more-link a {
+      color: inherit;
+    }
+  }
+
+  @include media($tablet-l) {
+    padding: 0;
+  }
+
+  .ding-carousel-item {
+    // Make room for rounded corners on .article--breol-news--teaser
+    padding: 0 20px;
+    max-width: 100vw;
+    width: 1049px;
+
+    @include media($tablet-l) {
+      width: 100vh;
+      padding: 0;
+    }
+
+    .article--breol-news--teaser,
+    &.placeholder {
+      // News images have a fixed size (1080x400).
+      padding-top: (400/1080)*100%;
+      padding-bottom: 0;
+      height: auto;
+    }
+
+    .article--breol-news--teaser {
+      margin: 0;
+    }
+  }
+
+  .single-slide .ding-carousel-item {
+    width: 100%;
+    padding-right: 0;
+  }
 }
 
 // Inspiration pages are full width, limit the content.

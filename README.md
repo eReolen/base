@@ -33,6 +33,9 @@ Handle translated roles https://www.drupal.org/node/1744274
 Check for jQuery differences regarding prop() vs attr().
 * https://git.drupalcode.org/project/ctools/commit/18385421a277097d8a92672808f656cc7470b69d.patch
 
+Android install prompt is not displayed (https://www.drupal.org/node/3047715)
+* https://www.drupal.org/files/issues/2019-06-25/appbanners-android-fix-d7-3047715-9.patch
+
 ### Ding2 patches
 
 * Change BPI node type to use (bpi-change-node-type.patch)
