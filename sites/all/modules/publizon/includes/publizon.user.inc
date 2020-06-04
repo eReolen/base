@@ -52,8 +52,8 @@ function publizon_user_form_alter(array &$form, array &$form_state) {
 function publizon_user_authenticate($name, $pass, array $values) {
   $client = PublizonUserClient::getClient();
 
-  $friendly_id = $client->validateLibraryUser($name, $pass, $values['retailer_id']);
-  if ($friendly_id) {
+  $support_id = $client->validateLibraryUser($name, $pass, $values['retailer_id']);
+  if ($support_id) {
     $res = array(
       'success' => TRUE,
       'creds' => array(
@@ -67,7 +67,7 @@ function publizon_user_authenticate($name, $pass, array $values) {
           'display_name' => '',
           // Transfer retailer id to save on the user.
           'retailer_id' => $values['retailer_id'],
-          'friendly_id' => is_string($friendly_id) ? $friendly_id : '',
+          'support_id' => is_string($support_id) ? $support_id : '',
         ),
       ),
     );
@@ -97,21 +97,6 @@ function publizon_user_external_authenticate($name, $pass = NULL, array $values 
 
 /**
  * Finalize the account after login.
- *
- * TODO This should not be used, we get data from session instead
- * of receiving it directly. Not good!
  */
 function publizon_user_authenticate_finalize($account) {
-  $profile = profile2_load_by_user($account->uid, 'provider_publizon');
-  $wrapper = entity_metadata_wrapper('profile2', $profile);
-
-  $data = $_SESSION['ding_user']['user']['data'];
-
-  // Get retailer id from session.
-  // TODO NOT the right way to do it.
-  $wrapper->field_publizon_retailer_id = $data['retailer_id'];
-
-  $wrapper->field_friendly_id = $data['friendly_id'];
-
-  $profile->save();
 }

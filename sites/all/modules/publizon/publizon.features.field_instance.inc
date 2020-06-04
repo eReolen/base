@@ -43,40 +43,6 @@ function publizon_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'profile2-provider_publizon-field_friendly_id'.
-  $field_instances['profile2-provider_publizon-field_friendly_id'] = array(
-    'bundle' => 'provider_publizon',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Your friendly id for using in support requests.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 3,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_friendly_id',
-    'label' => 'Friendly id',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 1,
-    ),
-  );
-
   // Exported field_instance: 'profile2-provider_publizon-field_phone'.
   $field_instances['profile2-provider_publizon-field_phone'] = array(
     'bundle' => 'provider_publizon',
@@ -117,44 +83,10 @@ function publizon_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance:
-  // 'profile2-provider_publizon-field_publizon_retailer_id'.
-  $field_instances['profile2-provider_publizon-field_publizon_retailer_id'] = array(
-    'bundle' => 'provider_publizon',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'profile2',
-    'field_name' => 'field_publizon_retailer_id',
-    'label' => 'Retailer id',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 0,
-    ),
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
   t('Email');
-  t('Friendly id');
   t('Phone');
-  t('Retailer id');
   t('Your friendly id for using in support requests.');
 
   return $field_instances;
