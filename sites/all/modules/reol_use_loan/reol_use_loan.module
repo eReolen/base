@@ -288,10 +288,10 @@ function reol_use_loan_reader_renew_session($retailer_order) {
     }
 
     // Get the retailer id on the user.
-    global $user;
-    $profile = profile2_load_by_user($user, 'provider_publizon');
-    $profile_wrapper = entity_metadata_wrapper('profile2', $profile);
-    $retailer_id = $profile_wrapper->field_publizon_retailer_id->value();
+    $retailer_id = null;
+    if (isset($_SESSION['ding_user']['user']['data']['retailer_id'])) {
+      $retailer_id = $_SESSION['ding_user']['user']['data']['retailer_id'];
+    }
 
     // Get information for request.
     $library = publizon_get_library($retailer_id);

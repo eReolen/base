@@ -19,8 +19,8 @@ function publizon_auth_single_sign_on($name, array $extra) {
   $lib = publizon_filter_libraries_list(array($extra['attributes']['municipality']));
   $retailer_id = reset($lib)->retailer_id;
 
-  $friendly_id = $client->validateLibraryUser($name, NULL, $retailer_id);
-  if ($friendly_id) {
+  $support_id = $client->validateLibraryUser($name, NULL, $retailer_id);
+  if ($support_id) {
     $res = array(
       'success' => TRUE,
       'creds' => array(
@@ -34,7 +34,7 @@ function publizon_auth_single_sign_on($name, array $extra) {
           'display_name' => '',
           // Transfer retailer id to save on the user.
           'retailer_id' => $retailer_id,
-          'friendly_id' => is_string($friendly_id) ? $friendly_id : '',
+          'support_id' => is_string($support_id) ? $support_id : '',
         ),
       ),
     );
