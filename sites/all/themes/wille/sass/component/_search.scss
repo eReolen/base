@@ -89,7 +89,8 @@
 }
 
 .action-button,
-.search-result--availability-link {
+.search-result--availability-link,
+.search-result--availability a {
   text-decoration: none;
   @include button($green);
   color: white;

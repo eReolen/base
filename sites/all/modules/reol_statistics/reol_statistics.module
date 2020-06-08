@@ -12,27 +12,7 @@ define('REOL_STATISTICS_DEFAULT_HEADER', "Dato: @date\nKommunenavn: @municipalit
  * Implements hook_publizon_loan().
  */
 function reol_statistics_publizon_loan($account, $name, $isbn, $retailer_id) {
-  // We generate an unique hash from our private key and user uid. Hopefully
-  // this is enough disassociation between user and loans.
-  $user_hash = hash('sha512', drupal_get_private_key() . $account->uid);
-  $data = array(
-    'timestamp' => REQUEST_TIME,
-    'retailer_id' => $retailer_id,
-    'user_hash' => $user_hash,
-    'isbn' => $isbn,
-  );
-
-  $sid = db_insert('reol_statistics_loans')
-    ->fields($data)
-    ->execute();
-
-  $unilogin_data = _reol_statistics_get_unilogin_data();
-  if ($sid && $unilogin_data) {
-    $unilogin_data['sid'] = $sid;
-    db_insert('reol_statistics_unilogin')
-      ->fields($unilogin_data)
-      ->execute();
-  }
+  // Stats have been moved into publizon, hence this function is empty.
 }
 
 /**

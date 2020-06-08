@@ -162,3 +162,19 @@ function publizon_update_7102() {
 function publizon_update_7103() {
   variable_del('publizon_unilogin_client_id');
 }
+
+/**
+ * Delete 'field_friendly_id' field and purge data.
+ */
+function publizon_update_7104() {
+  field_delete_field('field_friendly_id');
+  field_purge_batch(200000);
+}
+
+/**
+ * Delete 'field_publizon_retailer_id' field and purge data.
+ */
+function publizon_update_7105() {
+  field_delete_field('field_publizon_retailer_id');
+  field_purge_batch(250000);
+}

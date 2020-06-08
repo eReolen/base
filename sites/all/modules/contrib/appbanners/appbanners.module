@@ -55,6 +55,7 @@ function appbanners_page_build(&$page) {
   if (appbanners_include_tags()) {
     appbanners_android_manifest_link();
     appbanners_ios_meta();
+    drupal_add_js(drupal_get_path('module', 'appbanners') . '/includes/appbanners.js');
   }
 }
 
@@ -128,6 +129,14 @@ function appbanners_manifest() {
   if ($short_name) {
     $manifest['short_name'] = check_plain($short_name);
   }
+  
+  $start_url = variable_get('appbanners_android_start_url', '');
+  if ($short_name) {
+    $manifest['start_url'] = check_plain($start_url);
+  }
+  
+  $display = variable_get('appbanners_android_display', 'standalone');
+  $manifest['display'] = $display;
 
   $icon = variable_get('appbanners_android_icon', '');
   if ($icon) {

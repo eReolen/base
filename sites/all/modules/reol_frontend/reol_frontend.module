@@ -248,11 +248,16 @@ function reol_frontend_view_video($node) {
  * Implements hook_form_FORM_ID_alter().
  */
 function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &$form_state) {
-  // Hide retailer id.
-  $form['profile_provider_publizon']['field_publizon_retailer_id']['#access'] = FALSE;
-
-  // Make friendly id read only.
-  $form['profile_provider_publizon']['field_friendly_id']['#disabled'] = TRUE;
+  // Add support id to form as read-only field.
+  $form['support_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Support id'),
+    '#description' => t('Your friendly id for using in support requests.'),
+    '#default_value' => $_SESSION['ding_user']['user']['data']['support_id'],
+    '#disabled' => TRUE,
+    '#size' => 60,
+    '#weight' => -50,
+  );
 
   // Hide pass change fieldset.
   $form['pass']['#access'] = FALSE;

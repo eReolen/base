@@ -36,7 +36,7 @@ class PublizonUserClient extends PublizonClient {
       $arguments['pub:pincode'] = $pincode;
     }
 
-    $friendly_id = NULL;
+    $support_id = NULL;
     // Call the webservice, throwing exception on failure.
     try {
       $response = $this->call('user', 'ValidateLibraryUser', $retailer_id, $arguments, array('pub' => 'http://pubhub.dk/'));
@@ -44,7 +44,7 @@ class PublizonUserClient extends PublizonClient {
       // Extract friendly card number.
       $friendly_elements = $response->xpath('//data/friendlycardnumber');
       if (isset($friendly_elements[0])) {
-        $friendly_id = (string) $friendly_elements[0];
+        $support_id = (string) $friendly_elements[0];
       }
     }
     // On exception we are not logged in.
@@ -53,9 +53,9 @@ class PublizonUserClient extends PublizonClient {
       return FALSE;
     }
 
-    // If we end up here, we are logged in. Return friendly_id if it's not
+    // If we end up here, we are logged in. Return support_id if it's not
     // empty.
-    return empty($friendly_id) ? TRUE : $friendly_id;
+    return empty($support_id) ? TRUE : $support_id;
   }
 
 }
