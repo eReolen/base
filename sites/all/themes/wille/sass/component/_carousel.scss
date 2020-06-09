@@ -344,14 +344,20 @@ $carousel-outer-padding: 0 30px;
 
 // @TODO: Design
 .paragraphs-item-picked-article-carousel {
-  // Make room for prev/next buttons.
-  padding: 0 100px;
+  .content {
+    @include outer-container;
+  }
 
   h2.carousel__header {
     color: $black-medium;
 
     .carousel__more-link a {
       color: inherit;
+    }
+
+    .button-prev,
+    .button-next {
+      top: 50%;
     }
   }
 
@@ -363,12 +369,7 @@ $carousel-outer-padding: 0 30px;
     // Make room for rounded corners on .article--breol-news--teaser
     padding: 0 20px;
     max-width: 100vw;
-    width: 1049px;
-
-    @include media($tablet-l) {
-      width: 100vh;
-      padding: 0;
-    }
+    width: 90%;
 
     .article--breol-news--teaser,
     &.placeholder {
