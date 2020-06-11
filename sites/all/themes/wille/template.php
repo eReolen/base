@@ -112,18 +112,26 @@ function wille_ting_collection_view_alter(&$build) {
  * Wraps the cover in a link to the material.
  */
 function wille_ting_object_cover($variables) {
+  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
+  $id_quota = $ding_entity_id . '_quota';
+  $type = $variables['meta_for_labels']['type'];
+  $id_type = $ding_entity_id . '_' . $type; 
+  $quota_explanation = ($variables['meta_for_labels']['on_quota'] ? t('A quota will be used on this material') : t('A quota will not be used on this material'));
   $attributes = array(
     'class' => implode(' ', $variables['classes']),
   );
-
+  $attributes['aria-labelledby'] = $id_quota . ' ' . $id_type;
+  
   foreach ($variables['data'] as $name => $value) {
     $attributes['data-' . $name] = $value;
   }
 
-  $cover = '<div ' . drupal_attributes($attributes) . '>' . $variables['image'] . '</div>';
-
+  $label_quota = '<label '.drupal_attributes(['class' => 'element-invisible', 'id'=>$id_quota]) . '>'. $quota_explanation .'</label>';
+  $label_type = '<label '.drupal_attributes(['class' => 'element-invisible', 'id'=>$id_type]) . '>' . $type . '</label>';
+  
+  $cover = '<div ' . drupal_attributes($attributes) . '>' . $label_quota . $label_type . $variables['image'] . '</div>';
+  
   // Add link if the id is not to a fake material.
-  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
   if (!reol_base_fake_id($ding_entity_id)) {
     $cover = l($cover, 'ting/collection/' . $ding_entity_id, array('html' => TRUE));
   }
@@ -144,6 +152,7 @@ function wille_preprocess_ting_object_cover(&$vars) {
         $type = reol_base_get_type_icon($entity->type);
         if ($type) {
           $vars['classes'] = array_merge($vars['classes'], _wille_type_icon_classes($type, $entity->reply->on_quota));
+          $vars['meta_for_labels'] = ['on_quota'=>$entity->reply->on_quota, 'type'=>$entity->type, 'id'->_entity->ding_entity_id];
         }
       }
     }
