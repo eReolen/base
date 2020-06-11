@@ -99,7 +99,7 @@ function theme_reol_overlay_icons($variables) {
     // The id connecting the two is the id of the ding-entity
     if (isset($variables['material_type'])) {
       $label_id = $variables['id'];
-      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id, 'class' => 'element-invisible']) . '>'. $variables['material_type'] .'</label>';
+      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id, 'class' => 'element-invisible', 'aria-hidden' => 'true']) . '>'. $variables['material_type'] .'</label>';
       $icon_attributes['aria-labelledby'] = $label_id;
     } 
   }
@@ -109,12 +109,12 @@ function theme_reol_overlay_icons($variables) {
     if ($variables['no_quota']) {
       $wrapper_attributes['class'] .= ' no-quota';
       $quota_explanation = t('A quota will not be used on this material');
-      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id . 'no-qouta', 'class' => 'element-invisible']) . '>'. $quota_explanation .'</label>';
+      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id . 'no-qouta', 'class' => 'element-invisible', 'aria-hidden' => 'true']) . '>'. $quota_explanation .'</label>';
       $icon_attributes['aria-labelledby'] .= ' ' . $label_id . 'no-qouta';
       $icon_attributes['class'] .= ' no-quota';
     } 
     else {
-      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id . 'qouta', 'class' => 'element-invisible']) . '>'. $quota_explanation .'</label>';
+      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id . 'qouta', 'class' => 'element-invisible', 'aria-hidden' => 'true']) . '>'. $quota_explanation .'</label>';
       $icon_attributes['aria-labelledby'] .= ' ' . $label_id . 'qouta';
     }
   }
