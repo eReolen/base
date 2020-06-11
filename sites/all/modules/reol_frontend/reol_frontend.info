@@ -20,6 +20,7 @@ dependencies[] = options
 dependencies[] = page_manager
 dependencies[] = panels
 dependencies[] = pm_existing_pages
+dependencies[] = reol_base
 dependencies[] = ting_infomedia
 dependencies[] = views
 dependencies[] = views_content

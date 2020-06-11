@@ -5,21 +5,6 @@
  * Override reol default site template.
  */
 ?>
-<div id="audiobook" class="element-invisible element-focusable">
-  Lydbog
-</div>
-<div id="link" class="element-invisible element-focusable">
-  Link
-</div>
-<div id="ebook" class="element-invisible element-focusable">
-  E-bog
-</div>
-<div id="podcast" class="element-invisible element-focusable">
-  Podcast
-</div>
-<div id="no-quota" class="element-invisible element-focusable">
-  Der bruges ikke en kvote på at låne dette materiale
-</div>
 <div id="page<?php print $css_id ? " $css_id" : ''; ?>" class="<?php print $classes; ?>">
   <?php if (!empty($content['branding']) || !empty($content['header']) || !empty($content['navigation']) || !empty($content['top'])): ?>
     <header class="site-header">
