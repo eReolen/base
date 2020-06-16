@@ -82,27 +82,27 @@ $carousel-outer-padding: 0 30px;
       a {
         color: $black;
         font-family: $font-bold;
-        font-size: 14px;
+        font-size: 14pt;
         text-decoration: none;
         text-transform: uppercase;
       }
 
       &::after {
-        @include icon('arrow-right-funny');
+        @include icon("arrow-right-funny");
 
         position: relative;
         // Try to make the stem of the arrow line up with the text.
         top: 1px;
-        font-size: 15px;
+        font-size: 14pt;
       }
 
       @include media($tablet-l) {
         a {
-          font-size: 10px;
+          font-size: 14pt;
         }
 
         &::after {
-          font-size: 14px;
+          font-size: 14pt;
         }
       }
     }
@@ -125,11 +125,11 @@ $carousel-outer-padding: 0 30px;
   }
 
   .slick-prev.slick-arrow {
-    background-image: url('../svg/arrow_left.svg');
+    background-image: url("../svg/arrow_left.svg");
     left: 5px;
   }
   .slick-next.slick-arrow {
-    background-image: url('../svg/arrow_right.svg');
+    background-image: url("../svg/arrow_right.svg");
     right: 5px;
   }
 }
@@ -170,11 +170,11 @@ $carousel-outer-padding: 0 30px;
   }
 
   .button-prev {
-    background-image: url('../svg/arrow_left.svg');
+    background-image: url("../svg/arrow_left.svg");
     left: 0;
   }
   .button-next {
-    background-image: url('../svg/arrow_right.svg');
+    background-image: url("../svg/arrow_right.svg");
     background-position-x: right;
     right: 0;
   }
@@ -185,10 +185,9 @@ $carousel-outer-padding: 0 30px;
   color: $title-color;
   text-decoration: none;
   font-family: $font-regular;
-  line-height: 20px;
   margin-top: 10px;
   margin-bottom: 5px;
-  font-weight: bold;
+  // font-weight: bold;
   display: block;
 
   // One line - word wrap with ellipsis.
@@ -207,7 +206,7 @@ $carousel-outer-padding: 0 30px;
   img {
     width: 100%;
     height: auto;
-    background-image: url('../images/placeholder.png');
+    background-image: url("../images/placeholder.png");
     background-repeat: no-repeat;
     background-position: center center;
   }
@@ -235,22 +234,26 @@ $carousel-outer-padding: 0 30px;
     color: $title-color;
     text-decoration: none;
     font-family: $font-regular;
-    line-height: 20px;
-    margin-top: 10px;
-    margin-bottom: 5px;
     font-weight: bold;
     display: block;
-    // Reset h2 size.
-    font-size: 12px;
+    font-size: 14pt;
+    line-height: normal;
 
     // One line - word wrap with ellipsis.
     @include word-wrap();
+
+    max-width: 100%;
   }
 
-  .field-name-ting-author {
+  .field-name-ting-author div div {
     // Override _search.scss.
     font-family: $font-light;
-    font-size: 10px;
+    font-size: 14pt;
+    max-width: 100%;
+    line-height: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .ting-object.view-mode-compact {
@@ -268,6 +271,7 @@ $carousel-outer-padding: 0 30px;
     .field-type-ting-details-language,
     .field-type-ting-details-language div {
       display: inline-block;
+      font-size: 14pt;
     }
 
     .field-type-ting-series,
@@ -277,23 +281,23 @@ $carousel-outer-padding: 0 30px;
 
     .field-type-ting-series {
       white-space: nowrap;
-      margin-left: .5em;
+      margin-left: 0.5em;
     }
 
     .field-type-ting-series {
-      font-size: 12px;
+      font-size: 14pt;
 
       .material__series-number {
         &::before {
-          @include icon('stack-solid');
-          font-size: 12px;
+          @include icon("stack-solid");
+          font-size: 14pt;
           margin-right: 5px;
         }
       }
 
       .material__series-number + .material__series-series {
         &::before {
-          content: ' – ';
+          content: " ";
         }
       }
     }
@@ -315,8 +319,12 @@ $carousel-outer-padding: 0 30px;
   }
 
   .field-name-ting-title h2,
-  .field-name-ting-author {
+  .field-name-ting-author div div {
     color: #fff;
+    line-height: normal;
+    margin: 0px;
+    @include word-wrap();
+    max-width: 100%;
   }
 
   .button-prev,
@@ -325,21 +333,20 @@ $carousel-outer-padding: 0 30px;
     height: 70px;
 
     &:hover {
-      opacity: .9;
+      opacity: 0.9;
     }
   }
 
   .button-prev {
-    background-image: url('../svg/round_arrow_left.svg');
+    background-image: url("../svg/round_arrow_left.svg");
     left: 0;
   }
 
   .button-next {
-    background-image: url('../svg/round_arrow_right.svg');
+    background-image: url("../svg/round_arrow_right.svg");
     background-position-x: right;
     right: 0;
   }
-
 }
 
 // @TODO: Design
@@ -364,6 +371,7 @@ $carousel-outer-padding: 0 30px;
     padding: 0 20px;
     max-width: 100vw;
     width: 1049px;
+    font-size: 14pt;
 
     @include media($tablet-l) {
       width: 100vh;
@@ -373,7 +381,7 @@ $carousel-outer-padding: 0 30px;
     .article--breol-news--teaser,
     &.placeholder {
       // News images have a fixed size (1080x400).
-      padding-top: (400/1080)*100%;
+      padding-top: (400/1080) * 100%;
       padding-bottom: 0;
       height: auto;
     }

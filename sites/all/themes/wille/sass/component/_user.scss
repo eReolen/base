@@ -46,7 +46,7 @@
       }
 
       &:before {
-        @include icon('lock');
+        @include icon("lock");
         margin-right: 5px;
         font-size: 28px;
         top: 5px;
@@ -108,7 +108,6 @@
 /*  Loans and reservations.
     ------------------------------------------------------- */
 .material-item {
-
   @extend .search-result;
   padding: 40px 0;
 
@@ -159,7 +158,6 @@
   }
 
   .menu {
-
     @include outer-container;
 
     li {
@@ -177,7 +175,7 @@
 
     a {
       @include button($white, false);
-      color: $black-light;
+      color: $black-medium;
       border: 1px solid $white-dark;
       width: 96%;
       text-align: center;
@@ -212,7 +210,7 @@
 
 .item-information-label {
   float: left;
-  width: 20%;
+  width: 25%;
 
   @include media($tablet-l) {
     width: 30%;
@@ -225,7 +223,7 @@
 
 .item-information-data {
   float: left;
-  width: 80%;
+  width: 75%;
 
   @include media($tablet-l) {
     width: 70%;
@@ -237,7 +235,6 @@
 }
 
 .item-information-list {
-
   padding: 0;
   margin: 0;
 
@@ -245,6 +242,7 @@
     list-style-type: none;
     padding: 10px 0;
     font-family: $font-light;
+    font-size: 14pt;
 
     @include media($phone) {
       line-height: 24px;
@@ -275,7 +273,6 @@
 
 .pane-loans,
 .pane-reservations {
-
   @include media($tablet-l) {
     margin-bottom: 50px;
     margin-top: 0;
@@ -284,6 +281,7 @@
   .pane-content {
     padding: 20px 0;
     font-family: $font-light;
+    font-size: 14pt;
   }
 
   .pane-title {
@@ -302,7 +300,6 @@
 /*  Profile edit form.
     ------------------------------------------------------- */
 .pane-profile2-form {
-
   margin-top: 50px;
 
   .pane-title {
@@ -323,9 +320,10 @@
   }
 }
 
-input.password-confirm, input.password-field {
-    width: 99%;
-    margin-bottom: 0;
+input.password-confirm,
+input.password-field {
+  width: 99%;
+  margin-bottom: 0;
 }
 
 #edit-ding-user-fee-sms {
@@ -334,7 +332,6 @@ input.password-confirm, input.password-field {
 }
 
 .field-name-field-phone {
-
   input {
     padding: 15px 22px 15px 62px;
   }
@@ -360,7 +357,6 @@ input.password-confirm, input.password-field {
 }
 
 .page-user-bookmarks {
-
   .form-item-title {
     border-top: 1px solid $white-dark;
     border-bottom: 1px solid $white-dark;
@@ -398,7 +394,6 @@ input.password-confirm, input.password-field {
 /* Quota display.
     ------------------------------------------------------- */
 .user-quota-info {
-  color: $black-light;
   .user-quota-info__section {
     @include span-columns(1 of 2);
 
@@ -422,7 +417,6 @@ input.password-confirm, input.password-field {
         margin-top: 20px;
       }
     }
-
   }
   .user-quota-info__section-inner {
     background-color: $gray;
@@ -449,7 +443,7 @@ input.password-confirm, input.password-field {
 
   p {
     font-size: 18px;
-    color: #969696;
+    color: $black-medium;
     font-family: $font-light;
     padding: 0 20%;
 
@@ -491,7 +485,6 @@ input.password-confirm, input.password-field {
   margin-bottom: 40px;
   margin-top: 40px;
 }
-
 
 // Hide buttons on user page (/user/me/view)
 .page-user {

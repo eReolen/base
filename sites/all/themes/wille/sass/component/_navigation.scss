@@ -9,14 +9,13 @@
    ========================================================================== */
 
 .topbar {
-
   // Layout.
   display: block;
   padding: 0;
   width: 100%;
 
   ul.menu {
-    width: calc-percentage(9,12);
+    width: calc-percentage(9, 12);
     float: left;
 
     @include media($tablet-p) {
@@ -30,6 +29,7 @@
 
       li {
         width: 20%;
+
         @include media($phone) {
           width: 100%;
         }
@@ -76,7 +76,7 @@
 
     .ajax-progress-throbber {
       position: absolute;
-      top:0;
+      top: 0;
       left: 0;
       height: 100%;
       width: 100%;
@@ -86,7 +86,7 @@
 
       .throbber {
         &::before {
-          @include icon('spinner');
+          @include icon("spinner");
         }
 
         position: absolute;
@@ -116,6 +116,7 @@
       font-size: 1em;
       text-align: center;
       z-index: $z-index-menu;
+      font-family: $font-regular;
     }
 
     &:before {
@@ -127,7 +128,7 @@
       right: 0;
       overflow: hidden;
       top: 20px;
-      z-index: calc($z-index-menu -  1);
+      z-index: calc($z-index-menu - 1);
     }
 
     // Icons on menu items.
