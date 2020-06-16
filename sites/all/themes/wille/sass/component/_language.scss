@@ -4,13 +4,13 @@
   color: $title-color;
   text-decoration: none;
   font-family: $font-light;
-  font-size: 14pt;
+  font-size: 12px;
   line-height: normal;
 
   &:before {
     @include icon("flag");
     margin: 0 5px 0 2px;
-    font-size: 12pt;
+    font-size: 10px;
   }
   .material-carousel-colored & {
     color: $white;

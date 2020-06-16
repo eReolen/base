@@ -249,18 +249,14 @@ $carousel-outer-padding: 0 30px;
     // Override _search.scss.
     font-family: $font-light;
     font-size: 14pt;
+    // One line - word wrap with ellipsis.
+    @include word-wrap();
     max-width: 100%;
-    line-height: normal;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .ting-object.view-mode-compact {
-    // show dots at end of line.
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    // One line - word wrap with ellipsis.
+    @include word-wrap();
     color: $title-color;
 
     .material-carousel-colored & {
@@ -272,6 +268,9 @@ $carousel-outer-padding: 0 30px;
     .field-type-ting-details-language div {
       display: inline-block;
       font-size: 14pt;
+      &:before {
+        font-size: 12pt;
+      }
     }
 
     .field-type-ting-series,
