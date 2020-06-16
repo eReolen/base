@@ -116,9 +116,15 @@ function ereol_article_get_articles($count, $offset = 0) {
   $more = FALSE;
   $query = new EntityFieldQuery();
 
+  $bundle = 'article';
+  // Hack for eReolen Go!
+  if (module_exists('breol_news')) {
+    $bundle = 'breol_news';
+  }
+
   // Fetch one more than count to check if there's more.
   $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'article')
+    ->entityCondition('bundle', $bundle)
     ->propertyCondition('status', NODE_PUBLISHED)
     ->propertyOrderBy('created', 'DESC')
     ->range($offset, $count + 1);
