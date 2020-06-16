@@ -57,7 +57,6 @@
   font-size: 2.071em;
 
   h2 {
-
     color: $black-medium;
     font-family: $font-light;
     margin: 0 0 10px;
@@ -73,11 +72,11 @@
 
 .field-name-ting-author {
   font-family: $font-light-italic;
-   color: $black-medium;
+  color: $black-medium;
   a {
     font-family: $font-light-italic;
     text-decoration: none;
-     color: $black-medium;
+    color: $black-medium;
   }
 }
 
@@ -114,7 +113,6 @@
   &.not-reservable &.unavailable {
     display: none;
   }
-
 }
 
 .js-search-results-grid-view {
@@ -137,7 +135,7 @@
 
     .field-type-ting-series {
       white-space: nowrap;
-      margin-left: .5em;
+      margin-left: 0.5em;
     }
   }
 }
@@ -148,7 +146,7 @@
 
     .material__series-number {
       &::before {
-        @include icon('stack-solid');
+        @include icon("stack-solid");
         font-size: 12px;
         margin-right: 5px;
       }
@@ -156,7 +154,7 @@
 
     .material__series-number + .material__series-series {
       &::before {
-        content: ' – ';
+        content: " – ";
       }
     }
   }
@@ -170,10 +168,10 @@
   margin: 22px 0 14px;
 
   /* .page-title { */
-    color: $black-medium;
-    font-family: $font-light;
-    text-decoration: none;
-    font-size: 28px;
+  color: $black-medium;
+  font-family: $font-light;
+  text-decoration: none;
+  font-size: 28px;
   /* } */
 }
 
@@ -186,7 +184,6 @@
   .form-search-sort__hidden-labels {
     position: absolute;
     left: -9999px;
-    visibility: hidden;
   }
 
   @include media($tablet-l) {
@@ -258,18 +255,15 @@
   font-size: 20px;
 }
 
-
 /*  Facets
     ------------------------------------------------------- */
 .pane-breol-facetbrowser {
-
   display: inline-block;
   width: 100%;
   float: left;
   margin-bottom: 50px;
 
   fieldset {
-
     @include span-columns(3);
     position: relative;
     margin-top: 20px;
@@ -299,9 +293,9 @@
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
-      -webkit-appearance:none;
-      -moz-appearance:none;
-      appearance:none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
       border: 1px solid #d5d5d5;
       width: 99%;
       padding: 8px;
@@ -367,7 +361,7 @@
       }
 
       &:before {
-        @include icon('arrow-right');
+        @include icon("arrow-right");
         float: right;
         -webkit-transform: rotate(0);
         transform: rotate(0);
@@ -460,7 +454,7 @@
   padding: 40px;
   overflow: hidden;
 
-  input[type='text'] {
+  input[type="text"] {
     border: none;
     border: none;
     padding: 40px 80px;
@@ -487,11 +481,10 @@
   }
 
   .container-inline {
-
     position: relative;
 
     &:before {
-      @include icon('search');
+      @include icon("search");
       position: absolute;
       right: 0;
       font-size: 180px;
@@ -568,9 +561,7 @@
 /*  Search Grid View.
     ------------------------------------------------------- */
 .js-search-results-grid-view {
-
   .search-results {
-
     .list {
       display: flex;
       flex-wrap: wrap;
@@ -613,12 +604,11 @@
 
     // Make heigth 100% of all items.
     .ting-object,
-    .search-snippet-info  {
+    .search-snippet-info {
       height: 100%;
     }
 
     .field-name-ting-title {
-
       h2 {
         margin: 0;
       }
@@ -697,8 +687,7 @@
 
 // Show/hide search on tablet and mobile.
 .js-toggle-facets {
-  @include button($white-medium, false)
-  display: none;
+  @include button($white-medium, false) display: none;
   color: #646464;
   border: 1px solid #d5d5d5;
   text-align: left;
@@ -709,9 +698,9 @@
   float: right;
 
   &:before {
-    @include icon('arrow-right');
-    transition: all .3s ease-out;
-    transform: rotate(.25turn);
+    @include icon("arrow-right");
+    transition: all 0.3s ease-out;
+    transform: rotate(0.25turn);
     float: right;
     right: 17px;
     position: absolute;

@@ -196,6 +196,13 @@ function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function wille_form_ting_search_per_page_form_alter(&$form, &$form_state, $form_id) {
+  $form["size"]['#title'] = t('Search results pr page');
+}
+
+/**
  * Implements hook_preprocess_panels_pane().
  */
 function wille_preprocess_panels_pane(&$variables) {
