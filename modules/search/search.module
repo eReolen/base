@@ -1055,6 +1055,7 @@ function search_box_form_submit($form, &$form_state) {
   }
 }
 
+
 /**
  * Process variables for search-block-form.tpl.php.
  *
@@ -1078,6 +1079,10 @@ function template_preprocess_search_block_form(&$variables) {
   }
   // Hidden form elements have no value to themers. No need for separation.
   $variables['search']['hidden'] = implode($hidden);
+
+  // Add fieldset/legend for screen readers
+  $add_label = '<fieldset><legend ' . drupal_attributes(["class" => "element-hidden"]) . '>' . t('Search in') .'</legend>' . $variables['search']['search_type'] . '</fieldset>';
+  $variables['search']['search_type'] = $add_label;
   // Collect all form elements to make it easier to print the whole form.
   $variables['search_form'] = implode($variables['search']);
 }
