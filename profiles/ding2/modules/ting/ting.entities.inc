@@ -308,9 +308,9 @@ class TingEntity extends DingEntity {
   public function getMaterialQuotaAndType() {
     $materialType = strtolower($this->properties['type']);
     $isOnQuota = $this->reply->openSearchObject->on_quota;
-    $quotaString = 'Dette materiale er en ' . $materialType . ', og den indgår ikke i din kvote';
+    $quotaString = t("This material is a !type and is not on your quota", array('!type' => $materialType));
     if ($isOnQuota) {
-      $quotaString ='Dette materiale er en ' . $materialType . ', og den indgår i din kvote';
+      $quotaString = t("This material is a !type and is on your quota", array('!type' => $materialType));
     }
     return $quotaString;
   }
@@ -323,9 +323,9 @@ class TingEntity extends DingEntity {
    */
   public function getMaterialQuota() {
     $isOnQuota = $this->reply->openSearchObject->on_quota;
-    $quotaString = 'Dette materiale indgår ikke i din kvote';
+    $quotaString = t('This material is not included in your quota');
     if ($isOnQuota) {
-      $quotaString = 'Dette materiale indgår i din kvote';
+      $quotaString = t('This material is included in your quota');
     }
     return $quotaString;
   }
