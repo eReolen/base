@@ -1081,7 +1081,7 @@ function template_preprocess_search_block_form(&$variables) {
   $variables['search']['hidden'] = implode($hidden);
 
   // Add fieldset/legend for screen readers
-  $add_label = '<fieldset><legend ' . drupal_attributes(["class" => "element-hidden"]) . '>' . t('Search in') .'</legend>' . $variables['search']['search_type'] . '</fieldset>';
+  $add_label = '<fieldset><legend>' . t('Search in string') .'</legend>' . $variables['search']['search_type'] . '</fieldset>';
   $variables['search']['search_type'] = $add_label;
   // Collect all form elements to make it easier to print the whole form.
   $variables['search_form'] = implode($variables['search']);
