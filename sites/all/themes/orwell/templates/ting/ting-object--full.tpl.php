@@ -20,11 +20,16 @@
         <div class="material__cover">
           <?php echo render($content['group_ting_object_left_column']['ting_cover']); ?>
         </div>
-
         <div class="material__buttons material__buttons--desktop mobile-only">
+          <div class="material__quota">
+            <?php echo $object->getMaterialQuota() ?>
+          </div>
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_a']['ding_entity_buttons']); ?>
         </div>
         <div class="material__buttons desktop-only">
+          <div class="material__quota">
+            <?php echo $object->getMaterialQuota() ?>
+          </div>
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_a']['ding_entity_buttons']); ?>
         </div>
       </div>
@@ -35,9 +40,7 @@
         <div class="material__author">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_author']); ?>
         </div>
-        <div class="material__quota">
-          <?php echo $object->getMaterialQuota() ?>
-        </div>
+  
         <div class="material__abstract text desktop-only">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_abstract']); ?>
         </div>
