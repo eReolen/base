@@ -85,47 +85,40 @@ function reol_frontend_form_search_block_form_alter(&$form, &$form_state, $form_
  * Returns HTML for overlay icons.
  */
 function theme_reol_overlay_icons($variables) {
-  $icon_and_labels = '';
-  $quota_explanation = t('A quota will be used on this material');
+  $icon_with_attributes = '';
+
+  $quota_explanation = '';
   $wrapper_attributes = [
     'class' => 'overlay-icons'
   ];
+
+
+
   foreach (array_filter($variables['icons']) as $icon) {
     $icon_attributes = [
       'class' => 'icon ' . $icon,
     ];
 
-    // If there is a material type, then the icon gets a label for screen readers
-    // The id connecting the two is the id of the ding-entity
+    // If material-type is set, then it is of the type that has the material-icon and color-indication of quota
+    // $quota_explanation is for aria-label, so only "visible" for screen-readers
     if (isset($variables['material_type'])) {
-      $label_id = $variables['id'];
-      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id, 'class' => 'element-invisible', 'aria-hidden' => 'true']) . '>'. $variables['material_type'] .'</label>';
-      $icon_attributes['aria-labelledby'] = $label_id;
-    } 
-  }
-  // If no_quota is set, then a label will be created for quota or no quota
-  // Furthermore the icon wrapper will be decorated with a class to color the circle
-  if (isset($variables['no_quota'])) {
-    if ($variables['no_quota']) {
-      $wrapper_attributes['class'] .= ' no-quota';
-      $quota_explanation = t('A quota will not be used on this material');
-      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id . 'no-qouta', 'class' => 'element-invisible', 'aria-hidden' => 'true']) . '>'. $quota_explanation .'</label>';
-      $icon_attributes['aria-labelledby'] .= ' ' . $label_id . 'no-qouta';
-      $icon_attributes['class'] .= ' no-quota';
-    } 
-    else {
-      $icon_and_labels .= '<label' . drupal_attributes(['id' => $label_id . 'qouta', 'class' => 'element-invisible', 'aria-hidden' => 'true']) . '>'. $quota_explanation .'</label>';
-      $icon_attributes['aria-labelledby'] .= ' ' . $label_id . 'qouta';
+      $quota_explanation = t('This material is a !type and is on your quota', array('!type' => $variables['material_type']));
     }
+    // If no_quota is set, then the string changes to not-on-your-quota
+     if (isset($variables['no_quota']) && $variables['no_quota']) {
+       $wrapper_attributes['class'] .= ' no-quota';
+       $quota_explanation = t('This material is a !type and is not on your quota', array('!type' => $variables['material_type']));
+       $icon_attributes['class'] .= ' no-quota';
+   }
   }
-
-  $icon_and_labels .= '<span' . drupal_attributes($icon_attributes) . '></span>';
+ 
+  $icon_with_attributes .= '<span aria-label="'. $quota_explanation . '"' . drupal_attributes($icon_attributes) . '></span>';
   
-  if (!$icon_and_labels) {
+  if (!$icon_with_attributes) {
     return '';
   }
 
-  return '<div '. drupal_attributes($wrapper_attributes) . '>' . $icon_and_labels . '</div>';
+  return '<div '. drupal_attributes($wrapper_attributes) . '>' . $icon_with_attributes . '</div>';
 }
 
 /**
@@ -247,8 +240,7 @@ function reol_frontend_ding_entity_icons(DingEntity $ding_entity) {
     return theme('reol_overlay_icons', array(
       'icons' => $icons,
       'material_type' => $ding_entity->getType(),
-      'no_quota' => !$ding_entity->reply->on_quota, 
-      'id'=>$ding_entity->ding_entity_id,
+      'no_quota' => !$ding_entity->reply->on_quota,
     ));
   }
   return '';
