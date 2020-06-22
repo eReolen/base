@@ -13,6 +13,13 @@ function reol_base_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'image_toolkit';
+  $strongarm->value = 'tinypng';
+  $export['image_toolkit'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'ting_cache_lifetime';
   $strongarm->value = '86400';
   $export['ting_cache_lifetime'] = $strongarm;
@@ -48,6 +55,20 @@ function reol_base_strongarm() {
     2 => 'netlydbog',
   );
   $export['ting_reservable_sources'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tinypng_api_key';
+  $strongarm->value = 'SET ME IN SETTINGS.PHP';
+  $export['tinypng_api_key'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tinypng_fallback_toolkit';
+  $strongarm->value = 'imagemagick';
+  $export['tinypng_fallback_toolkit'] = $strongarm;
 
   return $export;
 }
