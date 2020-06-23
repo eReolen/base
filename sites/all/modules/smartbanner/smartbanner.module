@@ -68,7 +68,7 @@ function smartbanner_page_build(&$page) {
 
           'price-suffix-google' => $locale_settings['android']['price_suffix'] ?? NULL,
           'icon-google' => $locale_settings['android']['icon_url'] ?? NULL,
-          'button-url-google' => $locale_settings['ios']['app_url'] ?? NULL,
+          'button-url-google' => $locale_settings['android']['app_url'] ?? NULL,
         ],
         static function ($value) {
           return NULL !== $value;
