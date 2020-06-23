@@ -51,24 +51,29 @@ function smartbanner_page_build(&$page) {
       $settings = _smartbanner_get_settings();
       $locale_settings = $settings[$language->language] ?? NULL;
 
-      $data = array_filter([
-        'enabled-platforms' => implode(',', array_filter($settings['enabled_platforms'] ?? [])),
+      $data = array_filter(
+        [
+          'enabled-platforms' => implode(',', array_filter($settings['enabled_platforms'] ?? [])),
 
-        'title' => $locale_settings['general']['title'] ?? NULL,
-        'author' => $locale_settings['general']['author'] ?? NULL,
-        'price' => $locale_settings['general']['price'] ?? NULL,
+          'title' => $locale_settings['general']['title'] ?? NULL,
+          'author' => $locale_settings['general']['author'] ?? NULL,
+          'price' => $locale_settings['general']['price'] ?? NULL,
 
-        'button' => $locale_settings['general']['show_label'] ?? NULL,
-        'close-label' => $locale_settings['general']['close_label'] ?? NULL,
+          'button' => $locale_settings['general']['show_label'] ?? NULL,
+          'close-label' => $locale_settings['general']['close_label'] ?? NULL,
 
-        'price-suffix-apple' => $locale_settings['ios']['price_suffix'] ?? NULL,
-        'icon-apple' => $locale_settings['ios']['icon_url'] ?? NULL,
-        'button-url-apple' => $locale_settings['ios']['app_url'] ?? NULL,
+          'price-suffix-apple' => $locale_settings['ios']['price_suffix'] ?? NULL,
+          'icon-apple' => $locale_settings['ios']['icon_url'] ?? NULL,
+          'button-url-apple' => $locale_settings['ios']['app_url'] ?? NULL,
 
-        'price-suffix-google' => $locale_settings['android']['price_suffix'] ?? NULL,
-        'icon-google' => $locale_settings['android']['icon_url'] ?? NULL,
-        'button-url-google' => $locale_settings['ios']['app_url'] ?? NULL,
-      ]);
+          'price-suffix-google' => $locale_settings['android']['price_suffix'] ?? NULL,
+          'icon-google' => $locale_settings['android']['icon_url'] ?? NULL,
+          'button-url-google' => $locale_settings['android']['app_url'] ?? NULL,
+        ],
+        static function ($value) {
+          return NULL !== $value;
+        }
+      );
 
       if (!empty($data)) {
         foreach ($data as $name => $content) {
