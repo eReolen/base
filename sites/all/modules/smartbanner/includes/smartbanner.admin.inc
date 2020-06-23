@@ -143,7 +143,7 @@ function smartbanner_admin_form() {
         'icon_url' => [
           '#type' => 'textfield',
           '#title' => t('Icon url'),
-          '#description' => t('Recommended size: 64 px × 64 px.'),
+          '#description' => t('Local file path, e.g. sites/all/icons/app-icon.png, or an absolute url. Recommended size: 64 px × 64 px.'),
           '#required' => TRUE,
           '#default_value' => $default_values['icon_url'] ?? NULL,
           '#element_validate' => ['_smartbanner_validate_icon_url'],
