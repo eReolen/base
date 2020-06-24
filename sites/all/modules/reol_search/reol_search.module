@@ -34,7 +34,6 @@ function reol_search_conditions_callback(&$keys) {
 
   return $conditions;
 }
-
 /**
  * Implements hook_form_FORM_ID_alter().
  */
@@ -56,6 +55,8 @@ function reol_search_form_search_block_form_alter(&$form, &$form_state) {
     foreach ($searches as $options) {
       $form['search_type'] = array(
         '#type' => 'radios',
+        '#title' => t('Search in string'),
+        '#title_display' => 'invisible',
         '#options' => $options,
         '#default_value' => url('search/' . arg(1)),
         '#attached' => array(

@@ -154,20 +154,6 @@ $icon-color: #9c9c9c;
     height: $item-height;
     align-items: center;
 
-    fieldset {
-      background-color: transparent;
-      border: 0;
-      padding: 0;
-      margin: 0;
-      min-width: 0;
-
-      legend {
-        position: absolute !important;
-        top: -9999px !important;
-        left: -9999px !important;
-      }
-    }
-
     // On the search page, we display tabs too.
     .page-search & {
       height: $item-height + 3rem;

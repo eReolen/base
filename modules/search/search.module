@@ -1080,9 +1080,6 @@ function template_preprocess_search_block_form(&$variables) {
   // Hidden form elements have no value to themers. No need for separation.
   $variables['search']['hidden'] = implode($hidden);
 
-  // Add fieldset/legend for screen readers
-  $add_label = '<fieldset><legend>' . t('Search in string') .'</legend>' . $variables['search']['search_type'] . '</fieldset>';
-  $variables['search']['search_type'] = $add_label;
   // Collect all form elements to make it easier to print the whole form.
   $variables['search_form'] = implode($variables['search']);
 }
