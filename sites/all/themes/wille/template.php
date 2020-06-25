@@ -113,23 +113,22 @@ function wille_ting_collection_view_alter(&$build) {
  */
 function wille_ting_object_cover($variables) {
   $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
-  $id_quota = $ding_entity_id . '_quota';
   $type = $variables['meta_for_labels']['type'];
-  $id_type = $ding_entity_id . '_' . $type; 
-  $quota_explanation = ($variables['meta_for_labels']['on_quota'] ? t('A quota will be used on this material') : t('A quota will not be used on this material'));
+  $quota_explanation = t('This material is a !type and is not on your quota', array('!type' => $type));
+  if (isset($variables['meta_for_labels']['on_quota']) && $variables['meta_for_labels']['on_quota']) {
+    $quota_explanation = t('This material is a !type and is on your quota', array('!type' => $type)); 
+  }
+  $attributes['aria-label'] = $quota_explanation;
+  
   $attributes = array(
     'class' => implode(' ', $variables['classes']),
   );
-  $attributes['aria-labelledby'] = $id_quota . ' ' . $id_type;
   
   foreach ($variables['data'] as $name => $value) {
     $attributes['data-' . $name] = $value;
   }
 
-  $label_quota = '<label '.drupal_attributes(['class' => 'element-invisible', 'id'=>$id_quota]) . '>'. $quota_explanation .'</label>';
-  $label_type = '<label '.drupal_attributes(['class' => 'element-invisible', 'id'=>$id_type]) . '>' . $type . '</label>';
-  
-  $cover = '<div ' . drupal_attributes($attributes) . '>' . $label_quota . $label_type . $variables['image'] . '</div>';
+  $cover = '<div ' . drupal_attributes($attributes) . '>'  . $variables['image'] . '</div>';
   
   // Add link if the id is not to a fake material.
   if (!reol_base_fake_id($ding_entity_id)) {
