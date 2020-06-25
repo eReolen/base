@@ -213,8 +213,8 @@ function orwell_preprocess_ting_object(&$variables) {
   $variables['also_available'] = '';
   // Copied and adapted from ting_block_view().
   if ($variables['elements']['#view_mode'] == 'full') {
-    $variables["content"]["ting_title"][0]["#prefix"] = "<h1>";
-    $variables["content"]["ting_title"][0]["#suffix"] = "<h1>";
+    $variables['content']['ting_title'][0]['#prefix'] = '<h1>';
+    $variables['content']['ting_title'][0]['#suffix'] = '</h1>';
     if ($collection = ting_collection_load($variables['object']->id)) {
       $items = array();
       foreach ($collection->types as $k => $type) {
