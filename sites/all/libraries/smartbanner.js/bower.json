@@ -1,0 +1,30 @@
+{
+  "name": "smartbanner.js",
+  "description": "Customisable smart app banner for iOS and Android",
+  "main": [
+    "dist/smartbanner.js",
+    "dist/smartbanner.css"
+  ],
+  "authors": [
+    "Ain Tohvri <ain@flashbit.net>"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "javascript",
+    "mobile",
+    "ios",
+    "android",
+    "banner"
+  ],
+  "homepage": "https://github.com/ain/smartbanner.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "Gemfile*",
+    "banner.tmpl",
+    "*.png",
+    "*.svg"
+  ]
+}
