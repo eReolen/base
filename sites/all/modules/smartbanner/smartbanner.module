@@ -1,0 +1,149 @@
+<?php
+
+/**
+ * @file
+ * Module file for smartbanner.js.
+ */
+
+/**
+ * Implements hook_libraries_info().
+ */
+function smartbanner_libraries_info() {
+  $libraries['smartbanner.js'] = [
+    'name' => 'smartbanner.js',
+    'vendor url' => 'https://github.com/ain/smartbanner.js',
+    'download url' => 'https://github.com/ain/smartbanner.js/archive/v1.16.0.zip',
+    'version arguments' => [
+      'file' => 'dist/smartbanner.min.js',
+      'pattern' => '/v((\d+)\.(\d+)\.(\d+))/',
+    ],
+    'files' => [
+      'css' => ['dist/smartbanner.min.css'],
+      'js' => ['dist/smartbanner.min.js'],
+    ],
+  ];
+
+  return $libraries;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function smartbanner_menu() {
+  $items['admin/config/smartbanner'] = [
+    'title' => 'smartbanner.js',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smartbanner_admin_form'),
+    'access arguments' => array('administer smartbanner'),
+    'file' => 'includes/smartbanner.admin.inc',
+  ];
+
+  return $items;
+}
+
+/**
+ * Implements hook_page_build().
+ */
+function smartbanner_page_build(&$page) {
+  if (smartbanner_include()) {
+    if (($library = libraries_detect('smartbanner.js')) && !empty($library['installed'])) {
+      global $language;
+      $settings = _smartbanner_get_settings();
+      $locale_settings = $settings[$language->language] ?? NULL;
+
+      $data = array_filter(
+        [
+          'enabled-platforms' => implode(',', array_filter($settings['enabled_platforms'] ?? [])),
+
+          'title' => $locale_settings['general']['title'] ?? NULL,
+          'author' => $locale_settings['general']['author'] ?? NULL,
+          'price' => $locale_settings['general']['price'] ?? NULL,
+
+          'button' => $locale_settings['general']['show_label'] ?? NULL,
+          'close-label' => $locale_settings['general']['close_label'] ?? NULL,
+
+          'price-suffix-apple' => $locale_settings['ios']['price_suffix'] ?? NULL,
+          'icon-apple' => $locale_settings['ios']['icon_url'] ?? NULL,
+          'button-url-apple' => $locale_settings['ios']['app_url'] ?? NULL,
+
+          'price-suffix-google' => $locale_settings['android']['price_suffix'] ?? NULL,
+          'icon-google' => $locale_settings['android']['icon_url'] ?? NULL,
+          'button-url-google' => $locale_settings['android']['app_url'] ?? NULL,
+        ],
+        static function ($value) {
+          return NULL !== $value;
+        }
+      );
+
+      if (!empty($data)) {
+        foreach ($data as $name => $content) {
+          drupal_add_html_head(
+            [
+              '#tag' => 'meta',
+              '#attributes' => [
+                'name' => 'smartbanner:' . $name,
+                'content' => $content,
+              ],
+            ],
+            'smartbanner_' . $name
+          );
+        }
+
+        libraries_load_files($library);
+      }
+      else {
+        watchdog('smartbanner', 'Cannot load smartbanner.js library');
+      }
+    }
+  }
+}
+
+/**
+ * Check whether the app banners tags should be included on the current page.
+ *
+ * @return bool
+ *   TRUE if the tags should be included.
+ */
+function smartbanner_include() {
+  $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+
+  // Never show on admin pages.
+  if (path_is_admin($path)) {
+    return FALSE;
+  }
+
+  $settings = _smartbanner_get_settings('visibility');
+  $pages = $settings['pages'] ?? '';
+
+  // Compare the lowercase internal and lowercase path alias (if any).
+  $page_match = drupal_match_path($path, $pages);
+  if ($path != $_GET['q']) {
+    $page_match = $page_match || drupal_match_path($_GET['q'], $pages);
+  }
+
+  $match_type = $settings['visibility'] ?? 'exclude';
+
+  if ('include' === $match_type) {
+    return $page_match;
+  }
+  elseif (!empty($pages)) {
+    return !$page_match;
+  }
+
+  return TRUE;
+}
+
+/**
+ * Get module settings.
+ *
+ * @param string|null $key
+ *   Optional settings key.
+ *
+ * @return array|null
+ *   The settings, if any.
+ */
+function _smartbanner_get_settings($key = NULL) {
+  $settings = variable_get('smartbanner_settings', []);
+
+  return NULL === $key ? $settings : ($settings[$key] ?? NULL);
+}

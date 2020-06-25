@@ -3,6 +3,7 @@
 namespace Drupal\reol_app_feeds\Feed;
 
 use Drupal\reol_app_feeds\Helper\ParagraphHelper;
+use EntityFieldQuery;
 
 /**
  * Class FrontPageFeed.
@@ -83,13 +84,54 @@ class FrontPageFeed extends AbstractFeed {
   private function getThemes(array $paragraphIds) {
     $themes = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ALIAS_THEME_LIST, $paragraphIds);
 
+    if (module_exists('breol_news')) {
+      $latestNews = $this->getLatestNews();
+    }
+    else {
+      $latestNews = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL, $paragraphIds);
+    }
+
     // Prepend "Latest news".
-    $latestNews = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL, $paragraphIds);
-    $themes = array_merge($latestNews, $themes);
+    if (!empty($latestNews)) {
+      $themes = array_merge($latestNews, $themes);
+    }
 
     return array_values(array_filter($themes, function ($theme) {
       return isset($theme['list']) && $theme['list'];
     }));
+  }
+
+  /**
+   * Get latest news as a theme list.
+   */
+  private function getLatestNews() {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'breol_news')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->addTag('published_at')
+      ->addMetaData('published_at', [
+        'order_by' => [
+          'direction' => 'DESC',
+        ],
+      ])
+      ->range(0, (int) _reol_app_feeds_variable_get('reol_app_feeds_frontpage', 'max_news_count', 6));
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      $ids = array_keys($result['node']);
+      $nodes = $this->nodeHelper->loadNodes($ids, NODE_PUBLISHED, 'node', 'breol_news');
+
+      return [
+        [
+          'guid' => ParagraphHelper::VALUE_NONE,
+          'type' => 'theme_list',
+          'view' => 'dotted',
+          'list' => array_values(array_map([$this->paragraphHelper, 'getThemeData'], $nodes)),
+        ],
+      ];
+    }
+
+    return NULL;
   }
 
   /**

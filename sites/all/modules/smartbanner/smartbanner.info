@@ -1,0 +1,5 @@
+name = smartbanner.js
+description = Use smartbanner.js to display app stuff (https://github.com/ain/smartbanner.js)
+core = 7.x
+
+configure = admin/config/smartbanner

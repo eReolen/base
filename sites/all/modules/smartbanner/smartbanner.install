@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for smartbanner.js.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function smartbanner_uninstall() {
+  variable_del('smartbanner_settings');
+}
