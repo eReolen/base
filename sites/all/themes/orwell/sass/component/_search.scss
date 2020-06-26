@@ -1,4 +1,4 @@
-@import "bootstrap/bootstrap";
+@import 'bootstrap/bootstrap';
 
 $color__search-form: #d8d8d8;
 $item-height: 5rem;
@@ -44,7 +44,7 @@ $icon-color: #9c9c9c;
       label {
         text-transform: uppercase;
         cursor: pointer;
-        opacity: 0.5;
+        opacity: .5;
         font-size: 1.3rem;
       }
 
@@ -55,7 +55,7 @@ $icon-color: #9c9c9c;
 
     @include grid-media($medium) {
       .form-item {
-        margin: 0 0.4rem;
+        margin: 0 .4rem;
 
         label {
           color: white;
@@ -110,7 +110,7 @@ $icon-color: #9c9c9c;
 
       &::before {
         position: relative;
-        content: "\ea0f";
+        content: '\ea0f';
         font-size: 1.5rem;
         right: 17px;
         top: 0;
@@ -140,6 +140,7 @@ $icon-color: #9c9c9c;
 
   &__icon {
     width: auto;
+
   }
 
   &__content {
@@ -179,6 +180,7 @@ $icon-color: #9c9c9c;
         padding: 1.2rem;
         background-color: $color__red;
       }
+
     }
   }
 
@@ -254,9 +256,9 @@ $icon-color: #9c9c9c;
       color: $color__white;
       content: $icon__cross;
       font-size: 1rem;
-      left: 0.5rem;
+      left: .5rem;
       position: absolute;
-      top: 0.5rem;
+      top: .5rem;
     }
   }
 
@@ -287,7 +289,7 @@ html.js input.form-autocomplete {
   .panel-col-first {
     @include grid-media($mobile-only) {
       width: 100%;
-      background-color: rgba(250, 250, 250, 0.9);
+      background-color: rgba(250, 250, 250, .9);
     }
 
     @include grid-media($medium) {
@@ -334,6 +336,7 @@ html.js input.form-autocomplete {
   display: flex;
   background-color: transparent;
 
+
   @include grid-media($medium) {
     // Simply display inline on desktop.
     position: relative;
@@ -356,7 +359,7 @@ html.js input.form-autocomplete {
     cursor: pointer;
     background-color: white;
     // Transition
-    transition: background-color 0.12s $global__hover-easing;
+    transition: background-color .12s $global__hover-easing;
 
     &:hover {
       background-color: $color__geist--grey6;
@@ -364,7 +367,7 @@ html.js input.form-autocomplete {
 
     // distance between the two buttons
     + .arrangement-toggle {
-      margin-left: 0.7rem;
+      margin-left: .7rem;
     }
 
     &::before {
@@ -385,12 +388,14 @@ html.js input.form-autocomplete {
     }
 
     &.toggle-list {
+
       &::before {
         content: $icon__list-square;
       }
     }
 
     &.toggle-grid {
+
       &::before {
         content: $icon__grid-dense;
       }
@@ -426,7 +431,7 @@ html.js input.form-autocomplete {
 
   .material__number-in-series {
     display: inline;
-    margin-left: 0.5em;
+    margin-left: .5em;
 
     &::before {
       @include icon;
@@ -434,16 +439,17 @@ html.js input.form-autocomplete {
       content: $icon__stack-solid;
     }
     .material__series-number {
-      padding-left: 0.5em;
+      padding-left: .5em;
     }
     .material__series-number + .material__series-series {
       &::before {
-        content: " – ";
+        content: ' – ';
       }
     }
   }
 
   &.grid-view {
+
     .arrangement-toggles {
       margin-bottom: 2rem;
     }
@@ -453,20 +459,21 @@ html.js input.form-autocomplete {
       justify-content: flex-start;
       align-items: end;
       flex-flow: wrap;
-      margin-left: -0.75rem;
-      margin-right: -0.75rem;
-      margin-top: -0.75rem;
+      margin-left: -.75rem;
+      margin-right: -.75rem;
+      margin-top: -.75rem;
     }
 
     .search-result {
+
       @include grid-media($xxsmall) {
         width: 50%;
-        padding: 0.75rem;
+        padding: .75rem;
       }
 
       @include grid-media($small) {
         width: 33.3333%;
-        padding: 0.75rem;
+        padding: .75rem;
       }
 
       .material {
@@ -491,7 +498,7 @@ html.js input.form-autocomplete {
         h2 {
           font-family: $font-regular;
           font-size: 16px;
-          letter-spacing: 0.5px;
+          letter-spacing: .5px;
           margin-top: 6px;
           white-space: nowrap;
           overflow: hidden;
@@ -508,7 +515,7 @@ html.js input.form-autocomplete {
       .material__author {
         font-family: $font-light;
         font-size: 14px;
-        letter-spacing: 0.5px;
+        letter-spacing: .5px;
         margin: 0;
         margin-top: 10px;
       }
