@@ -123,7 +123,7 @@ function reol_lazy_load_images_theme_registry_alter(&$theme_registry) {
  */
 function theme_reol_base_image($variables) {
   $attributes = $variables['attributes'];
-  // hide all <img from screen readers
+  // Hide all <img from screen readers.
   $attributes['aria-hidden'] = 'true';
 
   $styles = ['ereol_cover_base', 'breol_cover_base', 'reol_lazy_cover_podcast'];
@@ -143,6 +143,7 @@ function theme_reol_base_image($variables) {
   else {
     $attributes['src'] = file_create_url($variables['path']);
   }
+  
   foreach (array('width', 'height', 'alt', 'title') as $key) {
     if (isset($variables[$key])) {
       $attributes[$key] = $variables[$key];
