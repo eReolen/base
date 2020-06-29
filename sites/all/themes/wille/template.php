@@ -119,11 +119,9 @@ function wille_ting_object_cover($variables) {
     $quota_explanation = t('This material is a !type and is on your quota', array('!type' => $type)); 
   }
   $attributes['aria-label'] = $quota_explanation;
-  
   $attributes = array(
     'class' => implode(' ', $variables['classes']),
   );
-  
   foreach ($variables['data'] as $name => $value) {
     $attributes['data-' . $name] = $value;
   }
