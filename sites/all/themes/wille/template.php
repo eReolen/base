@@ -151,7 +151,10 @@ function wille_preprocess_ting_object_cover(&$vars) {
         $type = reol_base_get_type_icon($entity->type);
         if ($type) {
           $vars['classes'] = array_merge($vars['classes'], _wille_type_icon_classes($type, $entity->reply->on_quota));
-          $vars['meta_for_labels'] = ['on_quota'=>$entity->reply->on_quota, 'type'=>$entity->type, 'id'->_entity->ding_entity_id];
+          $vars['meta_for_labels'] = [
+            'on_quota'=>$entity->reply->on_quota, 
+            'type'=>$entity->type
+          ];
         }
       }
     }
