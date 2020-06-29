@@ -127,7 +127,6 @@ function wille_ting_object_cover($variables) {
   }
 
   $cover = '<div ' . drupal_attributes($attributes) . '>' . $variables['image'] . '</div>';
-  
   // Add link if the id is not to a fake material.
   if (!reol_base_fake_id($ding_entity_id)) {
     $cover = l($cover, 'ting/collection/' . $ding_entity_id, array('html' => TRUE));
