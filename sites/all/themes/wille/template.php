@@ -114,9 +114,9 @@ function wille_ting_collection_view_alter(&$build) {
 function wille_ting_object_cover($variables) {
   $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
   $type = $variables['meta_for_labels']['type'];
-  $quota_explanation = t('This material is a !type and is not on your quota', array('!type' => $type));
+  $quota_explanation = t('This material is a !type and is not on your quota', ['!type' => $type]);
   if (isset($variables['meta_for_labels']['on_quota']) && $variables['meta_for_labels']['on_quota']) {
-    $quota_explanation = t('This material is a !type and is on your quota', array('!type' => $type)); 
+    $quota_explanation = t('This material is a !type and is on your quota', ['!type' => $type]);
   }
   $attributes['aria-label'] = $quota_explanation;
   $attributes = array(
@@ -149,8 +149,8 @@ function wille_preprocess_ting_object_cover(&$vars) {
         if ($type) {
           $vars['classes'] = array_merge($vars['classes'], _wille_type_icon_classes($type, $entity->reply->on_quota));
           $vars['meta_for_labels'] = [
-            'on_quota'=>$entity->reply->on_quota, 
-            'type'=>$entity->type
+            'on_quota' => $entity->reply->on_quota,
+            'type' => $entity->type,
           ];
         }
       }
