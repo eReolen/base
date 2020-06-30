@@ -34,6 +34,7 @@ function reol_search_conditions_callback(&$keys) {
 
   return $conditions;
 }
+
 /**
  * Implements hook_form_FORM_ID_alter().
  */
