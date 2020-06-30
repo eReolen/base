@@ -302,7 +302,7 @@ function publizon_ting_covers($entities) {
   foreach ($entities as $id => $entity) {
     if (FALSE === $entity && reol_base_fake_id($id)) {
       $local_id = drupal_substr($id, strpos($id, ':') + 1);
-      $local_id =  REOL_BASE_LOCAL_ID_PREFIX . $local_id;
+      $local_id = REOL_BASE_LOCAL_ID_PREFIX . $local_id;
     }
     else {
       $local_id = $entity->localId;
@@ -329,7 +329,7 @@ function publizon_ting_covers($entities) {
  *   The state of the form.
  *
  * @return array
- *  Form array.
+ *   Form array.
  *
  * @see publizon_reservation_options()
  */
@@ -583,7 +583,7 @@ function publizon_form_ding_adgangsplatformen_admin_settings_form_alter(array &$
       '#type' => 'fieldset',
       '#title' => t('Publizon configuration'),
       '#tree' => FALSE,
-      '#weight' => -1
+      '#weight' => -1,
     );
 
     $form['publizon']['publizon_sso_client_id'] = array(

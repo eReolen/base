@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Main module that attach lazy loading to images.
@@ -32,7 +33,7 @@ function reol_lazy_load_images_image_effect_info() {
  *
  * Resizes the image to 5px with the same aspect rations.
  *
- * @param stdClass $image
+ * @param object $image
  *   The image style use the effect on.
  *
  * @return bool
@@ -67,7 +68,7 @@ function reol_lazy_load_images_image_default_styles() {
       2 => [
         'name' => 'reol_lazy_load_images_placeholder',
         'weight' => 2,
-      ]
+      ],
     ],
   ];
 
@@ -85,7 +86,7 @@ function reol_lazy_load_images_image_default_styles() {
       2 => [
         'name' => 'reol_lazy_load_images_placeholder',
         'weight' => 2,
-      ]
+      ],
     ],
   ];
 
@@ -173,7 +174,7 @@ function reol_lazy_load_images_preprocess_ting_object_cover(&$variables) {
           'style_name' => $variables['image_style'],
           'path' => $path,
           'alt' => $alt,
-          'original_path' => $path
+          'original_path' => $path,
         ));
       }
     }

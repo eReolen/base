@@ -11,6 +11,6 @@
     'attributes' => array(
       'class' => 'more-link btn',
     ),
-    'query' => $button_query
+    'query' => $button_query,
   )); ?>
 </div>

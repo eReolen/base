@@ -1,10 +1,15 @@
 <?php
+
 /**
  * @file
  * Implementation of communicating with the Publizon API for loans.
  */
 
+/**
+ *
+ */
 class PublizonLoanClient extends PublizonClient {
+
   /**
    * Create a loan.
    *
@@ -158,4 +163,5 @@ class PublizonLoanClient extends PublizonClient {
     }
     return $status;
   }
+
 }

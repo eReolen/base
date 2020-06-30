@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Default implementation of ting_relation template file.

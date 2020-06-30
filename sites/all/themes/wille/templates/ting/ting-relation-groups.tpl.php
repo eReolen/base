@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @file
  * Render relation groups bare.
  */
 ?>

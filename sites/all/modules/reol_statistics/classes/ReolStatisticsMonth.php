@@ -10,7 +10,7 @@ class ReolStatisticsMonth {
   /**
    * Create ReolStatisticsMonth from int in YYYYMM format.
    */
-  static public function fromInt($int) {
+  public static function fromInt($int) {
     $year = substr((string) $int, 0, 4);
     $month = substr((string) $int, 4, 2);
 

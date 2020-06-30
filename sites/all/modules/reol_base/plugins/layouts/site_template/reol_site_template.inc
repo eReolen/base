@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * This file defines the site template layout for eReolen.

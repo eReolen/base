@@ -1,10 +1,14 @@
 <?php
+
 /**
  * @file
  * Implementation of the main communication object with the Publizon
  * web-service.
  */
 
+/**
+ *
+ */
 abstract class PublizonClient {
   protected $logger;
 
@@ -23,7 +27,9 @@ abstract class PublizonClient {
     'library_profile' => 'getlibraryinfo.asmx',
   );
 
-  // Holds the object instance (part of the singleton pattern).
+  /**
+   * Holds the object instance (part of the singleton pattern).
+   */
   private static $instances = array();
 
   /**
@@ -167,6 +173,7 @@ abstract class PublizonClient {
       'loan_status',
     );
   }
+
 }
 
 /**
@@ -178,6 +185,7 @@ abstract class PublizonClient {
  * TODO Find a better solution than passing message through t function.
  */
 class PublizonException extends Exception {
+
   /**
    * Create new constructor that ensure message is translated.
    */
@@ -185,6 +193,7 @@ class PublizonException extends Exception {
     // Make sure everything is assigned properly.
     parent::__construct($message, $code, $previous);
   }
+
 }
 
 /**

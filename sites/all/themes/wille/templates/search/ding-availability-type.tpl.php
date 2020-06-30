@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Template implementation for ding-availability-type.

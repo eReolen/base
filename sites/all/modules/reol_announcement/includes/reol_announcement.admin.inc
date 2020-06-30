@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Defines the administration interface for configuring announcements
+ * Defines the administration interface for configuring announcements.
  */
 
 /**

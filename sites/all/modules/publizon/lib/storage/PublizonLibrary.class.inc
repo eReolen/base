@@ -1,9 +1,13 @@
 <?php
+
 /**
  * @file
  * Contains the library storage class.
  */
 
+/**
+ *
+ */
 class PublizonLibrary extends Publizon {
   protected $properties = array(
     'maxEbookLoans' => NULL,

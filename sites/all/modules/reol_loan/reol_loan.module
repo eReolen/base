@@ -320,7 +320,7 @@ function reol_loan_form_user_admin_settings_alter(&$form, &$form_state, $form_id
     '#title' => t('Loan text'),
     '#format' => 'ding_wysiwyg',
     '#default_value' => isset($loan_text['value']) ? $loan_text['value'] : '',
-    '#description' => t('Text to display in the loan section of the user page.')
+    '#description' => t('Text to display in the loan section of the user page.'),
   );
 }
 
@@ -330,7 +330,7 @@ function reol_loan_form_user_admin_settings_alter(&$form, &$form_state, $form_id
  * Change the content of the loan panel pane on user pages.
  */
 function reol_loan_panels_pane_content_alter($content, $pane, $args, $contexts) {
-  if ($pane->type =='loans') {
+  if ($pane->type == 'loans') {
     if ($pane->subtype == 'loans') {
       if (!empty($content->content)) {
         if (isset(variable_get('ereol_loan_text')['value'])) {

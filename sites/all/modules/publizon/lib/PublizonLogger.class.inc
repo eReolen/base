@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Logger classes used to log information from the Publizon client.
@@ -19,7 +20,9 @@ abstract class PublizonLogger {
   const INFO = 'INFO';
   const DEBUG = 'DEBUG';
 
-  // Defines the different levels that a error message can have.
+  /**
+   * Defines the different levels that a error message can have.
+   */
   static public $levels = array(
     self::EMERGENCY,
     self::ALERT,
@@ -52,6 +55,7 @@ abstract class PublizonLogger {
    * Method that must be overridden by child classes.
    */
   abstract protected function dolog($message, $severity);
+
 }
 
 /**
@@ -59,6 +63,7 @@ abstract class PublizonLogger {
  * logger.
  */
 class PublizonWatchDogLogger extends PublizonLogger {
+
   /**
    * Actually log, and to watchdog.
    */
@@ -67,14 +72,17 @@ class PublizonWatchDogLogger extends PublizonLogger {
       constant('WATCHDOG_' . $severity),
       'http://' . $_SERVER["HTTP_HOST"] . request_uri());
   }
+
 }
 
 /**
  * Void logger class that sends the log message into the big void.
  */
 class PublizonVoidLogger extends PublizonLogger {
+
   /**
    * Log nothing.
    */
   public function doLog($message, $severity) {}
+
 }

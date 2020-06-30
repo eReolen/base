@@ -405,9 +405,9 @@ class ParagraphHelper {
    *
    * @return array
    *   The theme data.
+   *
    * @throws \TingClientException
    * @see https://docs.google.com/document/d/1lJ3VPAJf7DAbBWAQclRHfcltzZefUG3iGCec-z97KlA/edit?ts=5c4ef9d5#bookmark=id.a1elwnwq3nk4
-   *
    */
   public function getThemeData($node) {
     $view = $this->nodeHelper->getFieldValue($node, 'field_image_teaser', 'value') ? 'image' : 'covers';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Extend the site with information about titles hosted at overdrive.
@@ -98,7 +99,7 @@ function overdrive_ting_covers($entities) {
   foreach ($entities as $id => $entity) {
     // Check that the entity is an overdrive entity based on it's PID. We make this extra check at getting relations
     // for a entity may trigger extra requests to the data-well which is expensive. So lets limit that.
-    if (strpos($id, ':ODN') !== false) {
+    if (strpos($id, ':ODN') !== FALSE) {
       $uri = '';
       $relations = $entity->getRelations();
       foreach ($relations as $relation) {
@@ -125,7 +126,7 @@ function overdrive_ting_covers($entities) {
 function overdrive_ding_entity_buttons($type, $entity) {
   $buttons = array();
 
-  if (FALSE !== $entity && strpos($entity->getId(), ':ODN') !== false) {
+  if (FALSE !== $entity && strpos($entity->getId(), ':ODN') !== FALSE) {
     drupal_add_library('system', 'drupal.ajax');
 
     $classes = array('btn');
@@ -177,7 +178,7 @@ function overdrive_loan_redirect_ajax(TingEntity $entity) {
     }
   }
 
-  if (!(is_object($entity) && $entity instanceof TingEntity) || empty($uri) ) {
+  if (!(is_object($entity) && $entity instanceof TingEntity) || empty($uri)) {
     $close = reol_base_get_modal_close_button(t('OK'), $modal_id);
     $commands[] = ajax_command_ding_popup($modal_id, t('Error'), '<p>' . t('Unable to load information about the material.') . '</p>' . $close);
   }

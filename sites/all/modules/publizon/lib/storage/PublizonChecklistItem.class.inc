@@ -1,9 +1,13 @@
 <?php
+
 /**
  * @file
  * Contains the checklist item storage class.
  */
 
+/**
+ *
+ */
 class PublizonChecklistItem extends Publizon {
   protected $properties = array(
     'creationDateUtc' => NULL,
@@ -32,4 +36,5 @@ class PublizonChecklistItem extends Publizon {
     $this->title = (string) $item->title;
     $this->isbn = (string) $item->isbn;
   }
+
 }

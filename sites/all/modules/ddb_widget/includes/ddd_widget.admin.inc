@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Administration UI for the widget module.
@@ -14,7 +15,7 @@ function ddb_widget_settings_form($form, &$form_state) {
     '#tree' => TRUE,
   ];
 
-  $config =  variable_get('ddb_widget', [
+  $config = variable_get('ddb_widget', [
     'path' => [
       'visibility' => BLOCK_VISIBILITY_NOTLISTED,
       'pages' => '',
@@ -24,7 +25,6 @@ function ddb_widget_settings_form($form, &$form_state) {
     ],
     'script' => '',
   ]);
-
 
   // Script to inject.
   $form['ddb_widget']['script'] = array(
@@ -86,7 +86,6 @@ function ddb_widget_settings_form($form, &$form_state) {
     '#options' => $role_options,
     '#description' => t('Show this block only for the selected role(s). If you select no roles, the block will be visible to all users.'),
   ];
-
 
   return system_settings_form($form);
 }

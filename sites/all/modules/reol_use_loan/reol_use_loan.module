@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen use loan module feature.
@@ -47,7 +48,7 @@ function reol_use_loan_theme($existing, $type, $theme, $path) {
   return array(
     'reol_use_loan_html' => array(
       'variables' => array(
-        'vars' => NULL
+        'vars' => NULL,
       ),
       'path' => $path,
       'template' => 'templates/html',
@@ -132,7 +133,7 @@ function reol_use_loan_deliver_html_page($page_callback_result) {
 
     $variables['scripts'] = drupal_get_js('player', NULL, TRUE);
 
-    // Set page content
+    // Set page content.
     $variables['content'] = $page_callback_result;
 
     print theme('reol_use_loan_html', $variables);
@@ -288,7 +289,7 @@ function reol_use_loan_reader_renew_session($retailer_order) {
     }
 
     // Get the retailer id on the user.
-    $retailer_id = null;
+    $retailer_id = NULL;
     if (isset($_SESSION['ding_user']['user']['data']['retailer_id'])) {
       $retailer_id = $_SESSION['ding_user']['user']['data']['retailer_id'];
     }
@@ -426,6 +427,7 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
  *   FALSE on error.
  *
  * @return bool|mixed
+ *
  * @throws \DingProviderDoesntImplement
  * @throws \DingProviderNoProvider
  */
