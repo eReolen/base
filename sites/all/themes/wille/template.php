@@ -112,22 +112,25 @@ function wille_ting_collection_view_alter(&$build) {
  * Wraps the cover in a link to the material.
  */
 function wille_ting_object_cover($variables) {
-  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
-  $type = $variables['meta_for_labels']['type'];
-  $quota_explanation = t('This material is a !type and is not on your quota', ['!type' => $type]);
-  if (isset($variables['meta_for_labels']['on_quota']) && $variables['meta_for_labels']['on_quota']) {
-    $quota_explanation = t('This material is a !type and is on your quota', ['!type' => $type]);
-  }
-  $attributes['aria-label'] = $quota_explanation;
   $attributes = array(
     'class' => implode(' ', $variables['classes']),
   );
+  if (isset($variables['meta_for_labels']) && isset($variables['meta_for_labels']['type']) && isset($variables['meta_for_labels']['on_quota'])) {
+    $type = $variables['meta_for_labels']['type'];
+    $quota_explanation = t('This material is a !type and is not on your quota', ['!type' => $type]);
+    if (isset($variables['meta_for_labels']['on_quota']) && $variables['meta_for_labels']['on_quota']) {
+      $quota_explanation = t('This material is a !type and is on your quota', ['!type' => $type]);
+    }
+    $attributes['aria-label'] = $quota_explanation;
+  }
   foreach ($variables['data'] as $name => $value) {
     $attributes['data-' . $name] = $value;
   }
-
+  
   $cover = '<div ' . drupal_attributes($attributes) . '>' . $variables['image'] . '</div>';
+  
   // Add link if the id is not to a fake material.
+  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
   if (!reol_base_fake_id($ding_entity_id)) {
     $cover = l($cover, 'ting/collection/' . $ding_entity_id, array('html' => TRUE));
   }
