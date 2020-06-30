@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Defines the extra field for the ting entities and formatters for the fields.

@@ -1,10 +1,15 @@
 <?php
+
 /**
  * @file
  * Implementation of communicating with the Publizon API for checklists.
  */
 
+/**
+ *
+ */
 class PublizonChecklistClient extends PublizonClient {
+
   /**
    * Add a title to the users checklist.
    *
@@ -94,4 +99,5 @@ class PublizonChecklistClient extends PublizonClient {
     }
     return $checklist;
   }
+
 }

@@ -1,9 +1,13 @@
 <?php
+
 /**
  * @file
  * Contains the product storage classes.
  */
 
+/**
+ *
+ */
 class PublizonProduct extends Publizon {
   protected $properties = array(
     'coverImage' => NULL,
@@ -41,4 +45,5 @@ class PublizonProduct extends Publizon {
       $this->category = (string) $item->categories->attributes()->desc;
     }
   }
+
 }

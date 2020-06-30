@@ -1,10 +1,15 @@
 <?php
+
 /**
  * @file
  * Implementation of communicating with the Publizon API for products.
  */
 
+/**
+ *
+ */
 class PublizonProductClient extends PublizonClient {
+
   /**
    * Fetch XML representation for a product at publizon.
    *
@@ -52,4 +57,5 @@ class PublizonProductClient extends PublizonClient {
       return FALSE;
     }
   }
+
 }

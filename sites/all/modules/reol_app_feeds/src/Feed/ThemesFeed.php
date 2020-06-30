@@ -38,7 +38,7 @@ class ThemesFeed extends AbstractFeed {
       ->addMetaData('published_at', [
         'order_by' => [
           'direction' => 'DESC',
-        ]
+        ],
       ])
       ->range(0, $max_number_of_items);
     $result = $query->execute();

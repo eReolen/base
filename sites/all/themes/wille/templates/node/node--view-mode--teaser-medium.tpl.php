@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @file
+ */
+?>
 <div class="article article--teaser article--teaser--medium <?php print $classes; ?>">
   <?php if (!empty($content['field_breol_cover_image'])) :?>
     <?php print render($content['field_breol_cover_image']); ?>

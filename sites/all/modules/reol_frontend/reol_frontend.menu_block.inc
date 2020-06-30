@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * reol_frontend.menu_block.inc

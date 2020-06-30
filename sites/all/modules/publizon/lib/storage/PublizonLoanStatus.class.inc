@@ -1,9 +1,13 @@
 <?php
+
 /**
  * @file
  * Contains the loan status storage class.
  */
 
+/**
+ *
+ */
 class PublizonLoanStatus extends Publizon {
   protected $properties = array(
     'loanStatus' => NULL,
@@ -32,4 +36,5 @@ class PublizonLoanStatus extends Publizon {
     $this->onChecklist = ((string) $item->onchecklist) === 'true' ? TRUE : FALSE;
     $this->isbn = (string) $item->ebookid;
   }
+
 }

@@ -1,8 +1,11 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen latest feature.
  */
+
+use Ting\Search\TingSearchSort;
 
 /**
  * Implements hook_ctools_plugin_directory().
@@ -51,7 +54,7 @@ function reol_latest_get_latest_count($count = 5, $type = '') {
   }
   $count = $count > $res_count ? $res_count : $count;
 
-  return array_map(function($elem) {
+  return array_map(function ($elem) {
     return ding_entity_load($elem);
   }, array_rand($results, $count));
 }
@@ -73,7 +76,7 @@ function reol_latest_fetch_latest($query) {
     ->withFullTextQuery($query)
     ->withPage(1)
     ->withCount(variable_get('reol_latest_fetch_count', 50))
-    ->withSort('date', \Ting\Search\TingSearchSort::DIRECTION_DESCENDING);
+    ->withSort('date', TingSearchSort::DIRECTION_DESCENDING);
   $res = $query->execute();
 
   return $res->openSearchResul;
@@ -151,7 +154,7 @@ function reol_latest_keep_updated() {
   }
 
   // Return array of queries.
-  return array_map(function($elem) {
+  return array_map(function ($elem) {
     return $elem['query'];
   }, $queries);
 }

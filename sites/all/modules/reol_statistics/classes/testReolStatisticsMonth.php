@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 require 'ReolStatisticsMonth.php';
 
 $month = new ReolStatisticsMonth(2016, 9);

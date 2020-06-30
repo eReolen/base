@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * This file gets the current permissions of a user role, and displays

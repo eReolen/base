@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 $items = array(
   array(
     'nid' => '100',

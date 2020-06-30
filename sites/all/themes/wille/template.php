@@ -330,7 +330,7 @@ function _wille_alter_brightness($colourstr, $steps) {
 }
 
 /**
- * Implemnets hook_js_alter(),
+ * Implemnets hook_js_alter().
  *
  * Unload ding2 related javascript since it breaks width on search filter select.
  */

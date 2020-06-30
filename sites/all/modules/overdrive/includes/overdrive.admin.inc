@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Defines the administration interface for configuring overdrive
+ * Defines the administration interface for configuring overdrive.
  */
 
 /**
@@ -44,7 +45,7 @@ function overdrive_mappings_form($form, &$form_state) {
   $form['#attached'] = array(
     'css' => array(
       drupal_get_path('module', 'overdrive') . '/css/overdrive.admin.css',
-    )
+    ),
   );
 
   if (!empty($form_state['input']['container'])) {
@@ -71,7 +72,7 @@ function overdrive_mappings_form($form, &$form_state) {
     '#type' => 'container',
     '#attributes' => array(
       'class' => array(
-        'overdrive-mappings'
+        'overdrive-mappings',
       ),
     ),
   );
@@ -87,7 +88,7 @@ function overdrive_mappings_form($form, &$form_state) {
     '#submit' => array('overdrive_mappings_form_rebuild'),
     '#attributes' => array(
       'class' => array(
-        'btn-add-another'
+        'btn-add-another',
       ),
     ),
   );

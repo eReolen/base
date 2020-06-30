@@ -26,4 +26,5 @@ class ReolCategory extends Entity {
   public function targetPath() {
     return 'search/ting/' . $this->query;
   }
+
 }
