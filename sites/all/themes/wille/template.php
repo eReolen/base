@@ -126,9 +126,7 @@ function wille_ting_object_cover($variables) {
   foreach ($variables['data'] as $name => $value) {
     $attributes['data-' . $name] = $value;
   }
-  
   $cover = '<div ' . drupal_attributes($attributes) . '>' . $variables['image'] . '</div>';
-  
   // Add link if the id is not to a fake material.
   $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
   if (!reol_base_fake_id($ding_entity_id)) {
