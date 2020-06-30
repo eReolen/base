@@ -115,10 +115,10 @@ function wille_ting_object_cover($variables) {
   $attributes = array(
     'class' => implode(' ', $variables['classes']),
   );
-  if (isset($variables['meta_for_labels']) && isset($variables['meta_for_labels']['type']) && isset($variables['meta_for_labels']['on_quota'])) {
-    $type = $variables['meta_for_labels']['type'];
+  if (isset($variables['label_info']) && isset($variables['label_info']['type']) && isset($variables['label_info']['on_quota'])) {
+    $type = $variables['label_info']['type'];
     $quota_explanation = t('This material is a !type and is not on your quota', ['!type' => $type]);
-    if (isset($variables['meta_for_labels']['on_quota']) && $variables['meta_for_labels']['on_quota']) {
+    if (isset($variables['label_info']['on_quota']) && $variables['label_info']['on_quota']) {
       $quota_explanation = t('This material is a !type and is on your quota', ['!type' => $type]);
     }
     $attributes['aria-label'] = $quota_explanation;
@@ -149,7 +149,7 @@ function wille_preprocess_ting_object_cover(&$vars) {
         $type = reol_base_get_type_icon($entity->type);
         if ($type) {
           $vars['classes'] = array_merge($vars['classes'], _wille_type_icon_classes($type, $entity->reply->on_quota));
-          $vars['meta_for_labels'] = [
+          $vars['label_info'] = [
             'on_quota' => $entity->reply->on_quota,
             'type' => $entity->type,
           ];
