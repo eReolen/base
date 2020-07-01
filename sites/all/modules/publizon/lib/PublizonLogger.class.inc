@@ -6,7 +6,7 @@
  */
 
 /**
- * Logger class that is used to send logged messages to the system for later usage in debugging problems.
+ * Logger class: to send logged messages to the system for debugging.
  */
 abstract class PublizonLogger {
 

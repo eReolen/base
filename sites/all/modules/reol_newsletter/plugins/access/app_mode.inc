@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Plugin to provide access control based upon whether or not we are in app_mode.
+ * Plugin to provide access control based on whether or not we are in app_mode.
  */
 
 $plugin = array(

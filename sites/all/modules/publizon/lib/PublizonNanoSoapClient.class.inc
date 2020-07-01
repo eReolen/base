@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Defines the communication client to use with the Publizon client. It makes some overrides of the default NanoSOAPClient implementation.
+ * The communication client to use with the Publizon client.
  */
 
 /**

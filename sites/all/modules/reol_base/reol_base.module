@@ -178,7 +178,7 @@ function reol_base_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- * Implements hook_strongarm_import_value_alter()
+ * Implements hook_strongarm_import_value_alter().
  */
 function reol_base_strongarm_import_value_alter(&$value, $name) {
   if ('media_wysiwyg_default_render' == $name) {

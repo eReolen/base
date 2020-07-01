@@ -92,7 +92,7 @@ function wille_preprocess_node(&$variables, $hook) {
  *
  * TODO fix below deprecated tag.
  *
- * @deprecated in deprecation-version and is removed from removal-version . depreacated by
+ * @deprecated in deprecation-version and is removed from removal-version. depreacated by
  * pratchett_ting_collection_view_alter() when using that as base theme.
  * @see sites/all/themes/pratchett/template.php
  */
@@ -335,7 +335,7 @@ function _wille_alter_brightness($colourstr, $steps) {
 /**
  * Implemnets hook_js_alter().
  *
- * Unload ding2 related javascript since it breaks width on search filter select.
+ * Unload ding2 related js since it breaks width on search filter select.
  */
 function wille_js_alter(&$javascript) {
   unset($javascript['profiles/ding2/modules/ding_ting_frontend/js/select_autosize.js']);
