@@ -218,7 +218,7 @@ function reol_reservation_form_ding_reservation_reserve_form_callback($form, &$f
  * @return array
  *   Entity  buttons.
  */
-function reol_reservation_get_reserve_button($entity) {
+function reol_reservation_get_reserve_button(TingEntity $entity) {
   list($availability) = array_values(ding_availability_items(array($entity->localId)));
   $availability = _reol_loan_map_availability($availability, $entity->id);
 

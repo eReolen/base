@@ -6,9 +6,14 @@
  */
 
 /**
- *
+ * TODO doc comment is empty.
  */
 class PublizonProduct extends Publizon {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var array
+   */
   protected $properties = array(
     'coverImage' => NULL,
     'format' => NULL,

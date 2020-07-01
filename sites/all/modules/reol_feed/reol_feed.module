@@ -357,7 +357,7 @@ function reol_feed_convert_html($html) {
 /**
  * Access callback for newsletter feed.
  *
- * @param $node_type
+ * @param string $node_type
  *   The type of node to display a feed of.
  *
  * @return bool
@@ -376,11 +376,8 @@ function _reol_feed_json_node_access($node_type) {
 /**
  * Provide a json feed for newsletter.
  *
- * @param $node_type
+ * @param string $node_type
  *   The type of node to display a feed of.
- *
- * @return array
- *   An array of items to display in the feed.
  */
 function _reol_feed_json_node($node_type) {
   $base_url = $GLOBALS['base_url'];

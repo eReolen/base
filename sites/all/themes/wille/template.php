@@ -90,8 +90,11 @@ function wille_preprocess_node(&$variables, $hook) {
  * search results where the cover represents more than one material (likely of
  * different types).
  *
- * @deprecated by pratchett_ting_collection_view_alter() when using that as
- * base theme.
+ * TODO fix below deprecated tag.
+ *
+ * @deprecated in deprecation-version and is removed from removal-version . depreacated by
+ * pratchett_ting_collection_view_alter() when using that as base theme.
+ * @see sites/all/themes/pratchett/template.php
  */
 function wille_ting_collection_view_alter(&$build) {
   if (isset($build['ting_primary_object'])) {

@@ -2,17 +2,31 @@
 
 /**
  * @file
- * Implementation of the main communication object with the Publizon
- * web-service.
+ * The main communication object with the Publizon web-service.
  */
 
 /**
- *
+ * TODO doc comment is empty.
  */
 abstract class PublizonClient {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var logger
+   */
   protected $logger;
 
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var string
+   */
   protected $baseUrl = '';
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var array
+   */
   protected $endpoints = array(
     'product' => 'getproduct.asmx',
     'product_list' => 'getproductlist.asmx',
@@ -29,6 +43,8 @@ abstract class PublizonClient {
 
   /**
    * Holds the object instance (part of the singleton pattern).
+   *
+   * @var array
    */
   private static $instances = array();
 
@@ -78,7 +94,7 @@ abstract class PublizonClient {
    *   Index into the end-points array (defined in the top of the object).
    * @param string $action
    *   SOAP action to request.
-   * @param $retailer_id
+   * @param string $retailer_id
    *   Retailer id.
    * @param array $parameters
    *   The parameters to call the actions with. Also known as the content of the
@@ -94,7 +110,7 @@ abstract class PublizonClient {
    * @throws PublizonException
    *   If the response dose not have a 101 status.
    */
-  protected function call($endpoint, $action, $retailer_id, $parameters, $namespace) {
+  protected function call($endpoint, $action, $retailer_id, array $parameters, array $namespace) {
     // Get retailer information.
     $retailer = publizon_get_library($retailer_id);
 
@@ -177,8 +193,7 @@ abstract class PublizonClient {
 }
 
 /**
- * Custom Exception that ensures that the string given is checked and
- * translatable in the front ned.
+ * Custom exception so the frontend recieves a checked and translatable string.
  *
  * All other Exception class should use this as their base class.
  *

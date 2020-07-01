@@ -6,8 +6,7 @@
  */
 
 /**
- * Logger class that is used to send logged messages to the system for later
- * usage in debugging problems.
+ * Logger class that is used to send logged messages to the system for later usage in debugging problems.
  */
 abstract class PublizonLogger {
 
@@ -22,6 +21,8 @@ abstract class PublizonLogger {
 
   /**
    * Defines the different levels that a error message can have.
+   *
+   * @var array
    */
   static public $levels = array(
     self::EMERGENCY,
@@ -59,8 +60,7 @@ abstract class PublizonLogger {
 }
 
 /**
- * Watch dog logger that ensure that the log message is sent to Drupal's
- * logger.
+ * Watch dog logger that ensure that the log message is sent to Drupal's logger.
  */
 class PublizonWatchDogLogger extends PublizonLogger {
 

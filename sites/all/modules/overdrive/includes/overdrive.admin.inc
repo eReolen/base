@@ -16,7 +16,7 @@
  * @return array
  *   The finished form.
  */
-function overdrive_settings_form($form, &$form_state) {
+function overdrive_settings_form(array $form, array &$form_state) {
   $default = array(
     'value' => '',
     'format' => 'ding_wysiwyg',
@@ -112,15 +112,15 @@ function overdrive_mappings_form($form, &$form_state) {
 /**
  * Mappings form element construct helper.
  *
- * @param $i
+ * @param int $i
  *   The form index.
- * @param $default
+ * @param array $default
  *   The default values.
  *
  * @return array
  *   The form element.
  */
-function overdrive_mappings_form_element($i, $default) {
+function overdrive_mappings_form_element($i, array $default) {
   $form['wrapper'] = array(
     '#type' => 'container',
     '#attributes' => array(

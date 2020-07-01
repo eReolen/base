@@ -6,9 +6,14 @@
  */
 
 /**
- *
+ * TODO doc comment is empty.
  */
 class PublizonLoanStatus extends Publizon {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var array
+   */
   protected $properties = array(
     'loanStatus' => NULL,
     'onChecklist' => NULL,

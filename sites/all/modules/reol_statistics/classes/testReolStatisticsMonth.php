@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Test of ReolStatisticsMonth.php.
  */
 
 require 'ReolStatisticsMonth.php';

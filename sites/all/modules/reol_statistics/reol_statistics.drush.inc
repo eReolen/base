@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * TODO missing short description in doc comment.
  */
 
 /**
@@ -24,8 +25,7 @@ function reol_statistics_drush_command() {
 }
 
 /**
- * Drush command logic.
- * drush_[COMMAND_NAME]().
+ * Drush command logic. Command copy without dot: drush_[COMMAND_NAME]().
  */
 function drush_reol_statistics_crunch_isbn($month = NULL) {
   $month = new \DateTime(NULL === $month ? 'first day of this month' : $month);

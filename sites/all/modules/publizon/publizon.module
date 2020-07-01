@@ -182,9 +182,9 @@ function publizon_get_libraries($reset = FALSE) {
  * @param bool $reset
  *   If TRUE the static cache will be rebuild. Defaults to FALSE.
  *
- * @return array PublizonConfiguredLibrary
- *   Basic information about the library entered at the publizon administration
- *   interface.
+ * @return array
+ *   PublizonConfiguredLibrary. Basic information about the library entered at
+ *   the publizon administration interface.
  */
 function publizon_get_library($retailer_id, $reset = FALSE) {
   // This could be more effective, but it'll do for the moment being.
@@ -233,6 +233,7 @@ function publizon_get_libraries_list() {
  *   Municipality ID's for to return libraries for.
  *
  * @return array
+ *   A filtered array.
  */
 function publizon_filter_libraries_list(array $municipalities) {
   $filtered = array();
@@ -253,7 +254,7 @@ function publizon_filter_libraries_list(array $municipalities) {
  *
  * @param object $account
  *   The user object.
- * @param $reset
+ * @param bool $reset
  *   By-pass/reset cache.
  *
  * @return string
