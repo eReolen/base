@@ -221,7 +221,7 @@ function reol_loan_is_right_type(TingEntity $entity) {
  *
  * @param array $availability
  *   Availability received from provider.
- * @param $ding_entity_id
+ * @param string $ding_entity_id
  *   The Id of the entity to map availability for.
  *
  * @return int

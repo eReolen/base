@@ -2,7 +2,6 @@
 
 /**
  * @file
- * Latest.tpl.php
  * This template shows latest titles.
  */
 ?>

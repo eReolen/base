@@ -2,7 +2,6 @@
 
 /**
  * @file
- * Announcement.tpl.php
  * This template shows sites announcement.
  */
 ?>

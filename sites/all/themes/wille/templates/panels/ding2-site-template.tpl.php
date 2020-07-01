@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Todo missing short description in doc comment.
  */
 ?>
 <div id="page<?php print $css_id ? " $css_id" : ''; ?>" class="<?php print $classes; ?>">

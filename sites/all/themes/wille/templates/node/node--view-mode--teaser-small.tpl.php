@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Todo missing short description in doc comment.
  */
 ?>
 <div class="article article--teaser article--teaser--small <?php print $classes; ?>">

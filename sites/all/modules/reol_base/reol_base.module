@@ -1951,7 +1951,7 @@ function reol_base_get_series_data(TingEntity $entity) {
 }
 
 /**
- * Implements hook_form_search_block_form_alter().
+ * Implements hook_form_FORM_ID_alter().
  *
  * Change the max length of the search input form.
  */

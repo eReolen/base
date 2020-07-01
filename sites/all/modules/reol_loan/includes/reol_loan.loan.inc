@@ -2,8 +2,7 @@
 
 /**
  * @file
- * This file contains all the added functionality for making
- * loans possible in Ding.
+ * This file contains the added functionality for making loans possible in Ding.
  */
 
 /**
@@ -17,7 +16,7 @@
  * @return array
  *   The end form array.
  */
-function reol_loan_loan_form($form, &$form_state, $loanable) {
+function reol_loan_loan_form(array $form, array &$form_state, array $loanable) {
   // Save the loanable in form state.
   $form['loanable'] = array(
     '#type' => 'value',
@@ -68,7 +67,7 @@ function reol_loan_loan_form($form, &$form_state, $loanable) {
  * @param array $form_state
  *   The state of the form including values.
  */
-function reol_loan_loan_form_submit($form, &$form_state) {
+function reol_loan_loan_form_submit(array $form, array &$form_state) {
   try {
     // Only do something if user agrees.
     if ($form_state['triggering_element']['#name'] != 'no') {
@@ -113,7 +112,7 @@ function reol_loan_loan_form_submit($form, &$form_state) {
  *
  * @throws \DingProviderEnduserException
  */
-function reol_loan_loan_ajax($loanable, $form = array(), $form_state = array()) {
+function reol_loan_loan_ajax(TingEntity $loanable, $form = array(), $form_state = array()) {
   $commands = array();
 
   // If no form is defined, load confirmation form.
@@ -164,7 +163,7 @@ function reol_loan_loan_ajax($loanable, $form = array(), $form_state = array()) 
  * @return array
  *   Response array.
  */
-function reol_loan_loan_form_callback($form, &$form_state) {
+function reol_loan_loan_form_callback(array $form, array &$form_state) {
   return reol_base_entity_ajax_form('reol_loan', 'reol_loan_loan_ajax', $form_state['values']['loanable'], $form, $form_state);
 }
 
@@ -179,7 +178,7 @@ function reol_loan_loan_form_callback($form, &$form_state) {
  * @return array
  *   The built form array.
  */
-function reol_loan_loan_completed_form($form, &$form_state) {
+function reol_loan_loan_completed_form(array $form, array &$form_state) {
   // Extras for all submit buttons.
   $submit_extras = array(
     '#attributes' => array(
@@ -216,7 +215,7 @@ function reol_loan_loan_completed_form($form, &$form_state) {
  * @return array
  *   Response array.
  */
-function reol_loan_loan_completed_form_callback($form, &$form_state) {
+function reol_loan_loan_completed_form_callback(array $form, array &$form_state) {
   $response = array(
     '#type' => 'ajax',
     '#commands' => array(),

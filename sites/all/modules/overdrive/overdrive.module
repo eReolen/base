@@ -97,8 +97,10 @@ function overdrive_theme($existing, $type, $theme, $path) {
 function overdrive_ting_covers($entities) {
   $covers = array();
   foreach ($entities as $id => $entity) {
-    // Check that the entity is an overdrive entity based on it's PID. We make this extra check at getting relations
-    // for a entity may trigger extra requests to the data-well which is expensive. So lets limit that.
+    // Check that the entity is an overdrive entity based on it's PID.
+    // We make this extra check at getting relations for a entity may
+    // trigger extra requests to the data-well which is expensive.
+    // So lets limit that.
     if (strpos($id, ':ODN') !== FALSE) {
       $uri = '';
       $relations = $entity->getRelations();
@@ -255,6 +257,7 @@ function overdrive_trigger_find($search_string) {
  *   Search string from the user.
  *
  * @return string
+ *   TODO Description for the @return value is missing
  */
 function overdrive_search_mapping($search_string) {
   $str = '';

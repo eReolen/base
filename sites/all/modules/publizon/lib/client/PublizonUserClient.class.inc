@@ -20,6 +20,8 @@ class PublizonUserClient extends PublizonClient {
    *   User card_number/CPR/UNI•Login id also known as login id.
    * @param string $pincode
    *   The users pin code. Null for UNI•Login users.
+   * @param string $retailer_id
+   *   TODO Parameter $retailer_id is not described in comment.
    *
    * @return bool|string|null
    *   FALSE if the user is invalid, TRUE or their friendly card number

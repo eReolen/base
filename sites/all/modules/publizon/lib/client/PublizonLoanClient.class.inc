@@ -6,7 +6,7 @@
  */
 
 /**
- *
+ * TODO doc comment is empty.
  */
 class PublizonLoanClient extends PublizonClient {
 
@@ -63,7 +63,7 @@ class PublizonLoanClient extends PublizonClient {
   /**
    * Retrieves information about the user loans stored at Publizon.
    *
-   * @param $retailer_id
+   * @param string $retailer_id
    *   Retailer id.
    * @param string $card_number
    *   User card_number/CPR also known as login id.
@@ -140,7 +140,7 @@ class PublizonLoanClient extends PublizonClient {
    *
    * @throws PublizonException
    */
-  public function getProductLoanStatusList($retailer_id, $isbns, $card_number = NULL) {
+  public function getProductLoanStatusList($retailer_id, array $isbns, $card_number = NULL) {
     // Make request to the web-service for the status.
     $request = array(
       'pub:ebookids' => array(

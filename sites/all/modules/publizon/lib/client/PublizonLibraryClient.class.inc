@@ -6,7 +6,7 @@
  */
 
 /**
- *
+ * TODO doc comment is empty.
  */
 class PublizonLibraryClient extends PublizonClient {
 

@@ -4,7 +4,17 @@
  * Helper class for month handling.
  */
 class ReolStatisticsMonth {
+  /**
+   * TODO Missing short description in doc comments.
+   *
+   * @var string
+   */
   private $month;
+  /**
+   * TODO Missing short description in doc comments.
+   *
+   * @var string
+   */
   private $year;
 
   /**
