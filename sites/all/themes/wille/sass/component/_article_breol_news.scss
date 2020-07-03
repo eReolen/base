@@ -9,7 +9,7 @@
     margin-bottom: 40px;
 
     @include media($phone) {
-      height: 190px;
+      height: 190px !important;
       margin-bottom: 20px;
     }
 
@@ -46,6 +46,27 @@
 
       img {
         object-fit: cover;
+      }
+    }
+  }
+}
+
+// Hack the news carousel
+.paragraphs-item-article-carousel {
+  .ding-carousel-item {
+    @include media($phone) {
+      width: 100%;
+      padding: 0;
+    }
+  }
+  .article--breol-news {
+    &--teaser {
+      @include media($phone) {
+        height: 190px !important;
+        border-radius: 0;
+        h2 {
+          text-shadow: 0 0 2px rgba(0,0,0,.16);
+        }
       }
     }
   }
