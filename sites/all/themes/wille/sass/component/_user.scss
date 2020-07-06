@@ -46,7 +46,7 @@
       }
 
       &:before {
-        @include icon("lock");
+        @include icon('lock');
         margin-right: 5px;
         font-size: 28px;
         top: 5px;
@@ -320,8 +320,7 @@
   }
 }
 
-input.password-confirm,
-input.password-field {
+input.password-confirm, input.password-field {
   width: 99%;
   margin-bottom: 0;
 }
