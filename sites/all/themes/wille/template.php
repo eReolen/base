@@ -115,12 +115,12 @@ function wille_ting_object_cover($variables) {
   $attributes = array(
     'class' => implode(' ', $variables['classes']),
   );
-  if (isset($variables['label_info']) && isset($variables['label_info']['type']) && isset($variables['label_info']['on_quota'])) {
+
+  if (isset($variables['label_info']['type'], $variables['label_info']['on_quota'])) {
     $type = $variables['label_info']['type'];
-    $quota_explanation = t('This material is a !type and is not on your quota', ['!type' => $type]);
-    if (isset($variables['label_info']['on_quota']) && $variables['label_info']['on_quota']) {
-      $quota_explanation = t('This material is a !type and is on your quota', ['!type' => $type]);
-    }
+    $quota_explanation = $variables['label_info']['on_quota']
+                       ? t('This material is a !type and is on your quota', ['!type' => $type])
+                       : t('This material is a !type and is not on your quota', ['!type' => $type]);
     $attributes['aria-label'] = $quota_explanation;
   }
   foreach ($variables['data'] as $name => $value) {
