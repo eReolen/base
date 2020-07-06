@@ -15,7 +15,7 @@
   width: 100%;
 
   ul.menu {
-    width: calc-percentage(9, 12);
+    width: calc-percentage(9,12);
     float: left;
 
     @include media($tablet-p) {
@@ -29,7 +29,6 @@
 
       li {
         width: 20%;
-
         @include media($phone) {
           width: 100%;
         }
@@ -86,7 +85,7 @@
 
       .throbber {
         &::before {
-          @include icon("spinner");
+          @include icon('spinner');
         }
 
         position: absolute;
