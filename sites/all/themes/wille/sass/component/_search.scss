@@ -57,6 +57,7 @@
   font-size: 2.071em;
 
   h2 {
+
     color: $black-medium;
     font-family: $font-light;
     font-size: 28px;
@@ -71,11 +72,11 @@
 
 .field-name-ting-author {
   font-family: $font-light-italic;
-  color: $black-medium;
+   color: $black-medium;
   a {
     font-family: $font-light-italic;
     text-decoration: none;
-    color: $black-medium;
+     color: $black-medium;
   }
 }
 
@@ -166,10 +167,8 @@
     float: none;
   }
   margin: 22px 0 14px;
-  color: $black-medium;
-  font-family: $font-light;
-  text-decoration: none;
-  font-size: 28px;
+  /* .page-title { */
+/* } */
 }
 
 .pane-search-per-page,

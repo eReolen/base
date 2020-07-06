@@ -108,7 +108,6 @@
 /*  Loans and reservations.
     ------------------------------------------------------- */
 .material-item {
-  
   @extend .search-result;
   padding: 40px 0;
 
@@ -159,7 +158,6 @@
   }
 
   .menu {
-    
     @include outer-container;
 
     li {
