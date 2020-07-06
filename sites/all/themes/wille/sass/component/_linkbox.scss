@@ -5,7 +5,6 @@
   display: flex;
   height: 100%;
   min-height: 380px;
-  // padding: $mobile-margin;
   overflow: hidden;
 
   box-sizing: border-box;
@@ -38,7 +37,7 @@
   line-height: 120%;
 
   &::after {
-    content: ":";
+    content: ':';
   }
 }
 
@@ -58,7 +57,7 @@
 
   .two-elements--primary & {
     &::before {
-      @include icon("arrow-right-funny");
+      @include icon('arrow-right-funny');
 
       position: absolute;
       bottom: 20px;
