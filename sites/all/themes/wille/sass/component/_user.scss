@@ -300,6 +300,7 @@
 /*  Profile edit form.
     ------------------------------------------------------- */
 .pane-profile2-form {
+
   margin-top: 50px;
 
   .pane-title {
@@ -331,6 +332,7 @@ input.password-confirm, input.password-field {
 }
 
 .field-name-field-phone {
+
   input {
     padding: 15px 22px 15px 62px;
   }
@@ -356,6 +358,7 @@ input.password-confirm, input.password-field {
 }
 
 .page-user-bookmarks {
+
   .form-item-title {
     border-top: 1px solid $white-dark;
     border-bottom: 1px solid $white-dark;
@@ -416,6 +419,7 @@ input.password-confirm, input.password-field {
         margin-top: 20px;
       }
     }
+
   }
   .user-quota-info__section-inner {
     background-color: $gray;
@@ -484,6 +488,7 @@ input.password-confirm, input.password-field {
   margin-bottom: 40px;
   margin-top: 40px;
 }
+
 
 // Hide buttons on user page (/user/me/view)
 .page-user {
