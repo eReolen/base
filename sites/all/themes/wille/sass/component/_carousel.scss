@@ -88,7 +88,7 @@ $carousel-outer-padding: 0 30px;
       }
 
       &::after {
-        @include icon("arrow-right-funny");
+        @include icon('arrow-right-funny');
 
         position: relative;
         // Try to make the stem of the arrow line up with the text.
@@ -125,11 +125,11 @@ $carousel-outer-padding: 0 30px;
   }
 
   .slick-prev.slick-arrow {
-    background-image: url("../svg/arrow_left.svg");
+    background-image: url('../svg/arrow_left.svg');
     left: 5px;
   }
   .slick-next.slick-arrow {
-    background-image: url("../svg/arrow_right.svg");
+    background-image: url('../svg/arrow_right.svg');
     right: 5px;
   }
 }
@@ -170,11 +170,11 @@ $carousel-outer-padding: 0 30px;
   }
 
   .button-prev {
-    background-image: url("../svg/arrow_left.svg");
+    background-image: url('../svg/arrow_left.svg');
     left: 0;
   }
   .button-next {
-    background-image: url("../svg/arrow_right.svg");
+    background-image: url('../svg/arrow_right.svg');
     background-position-x: right;
     right: 0;
   }
@@ -187,7 +187,6 @@ $carousel-outer-padding: 0 30px;
   font-family: $font-regular;
   margin-top: 10px;
   margin-bottom: 5px;
-  // font-weight: bold;
   display: block;
 
   // One line - word wrap with ellipsis.
@@ -206,7 +205,7 @@ $carousel-outer-padding: 0 30px;
   img {
     width: 100%;
     height: auto;
-    background-image: url("../images/placeholder.png");
+    background-image: url('../images/placeholder.png');
     background-repeat: no-repeat;
     background-position: center center;
   }
@@ -281,7 +280,7 @@ $carousel-outer-padding: 0 30px;
 
     .field-type-ting-series {
       white-space: nowrap;
-      margin-left: 0.5em;
+      margin-left: .5em;
     }
 
     .field-type-ting-series {
@@ -289,7 +288,7 @@ $carousel-outer-padding: 0 30px;
 
       .material__series-number {
         &::before {
-          @include icon("stack-solid");
+          @include icon('stack-solid');
           font-size: 14pt;
           margin-right: 5px;
         }
@@ -297,7 +296,7 @@ $carousel-outer-padding: 0 30px;
 
       .material__series-number + .material__series-series {
         &::before {
-          content: " ";
+          content: ' – ';
         }
       }
     }
@@ -333,7 +332,7 @@ $carousel-outer-padding: 0 30px;
     height: 70px;
 
     &:hover {
-      opacity: 0.9;
+      opacity: .9;
     }
   }
 
@@ -381,7 +380,7 @@ $carousel-outer-padding: 0 30px;
     .article--breol-news--teaser,
     &.placeholder {
       // News images have a fixed size (1080x400).
-      padding-top: (400/1080) * 100%;
+      padding-top: (400/1080)*100%;
       padding-bottom: 0;
       height: auto;
     }
