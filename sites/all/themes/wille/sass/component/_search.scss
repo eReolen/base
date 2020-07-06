@@ -90,6 +90,7 @@
 .search-result--availability-link,
 .search-result--availability a {
   text-decoration: none;
+  font-size: 14pt;
   @include button($green);
   color: white;
   float: left;

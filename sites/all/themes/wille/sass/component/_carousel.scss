@@ -249,6 +249,7 @@ $carousel-outer-padding: 0 30px;
     // Override _search.scss.
     font-family: $font-light;
     font-size: 14pt;
+    line-height: normal;
     // One line - word wrap with ellipsis.
     @include word-wrap();
     max-width: 100%;
