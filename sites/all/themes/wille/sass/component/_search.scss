@@ -60,6 +60,7 @@
 
     color: $black-medium;
     font-family: $font-light;
+    margin: 0 0 10px;
     font-size: 28px;
 
     a {
@@ -114,6 +115,7 @@
   &.not-reservable &.unavailable {
     display: none;
   }
+
 }
 
 .js-search-results-grid-view {
@@ -167,8 +169,13 @@
     float: none;
   }
   margin: 22px 0 14px;
+
   /* .page-title { */
-/* } */
+    color: $black-medium;
+    font-family: $font-light;
+    text-decoration: none;
+    font-size: 28px;
+  /* } */
 }
 
 .pane-search-per-page,
@@ -252,15 +259,18 @@
   font-size: 20px;
 }
 
+
 /*  Facets
     ------------------------------------------------------- */
 .pane-breol-facetbrowser {
+
   display: inline-block;
   width: 100%;
   float: left;
   margin-bottom: 50px;
 
   fieldset {
+
     @include span-columns(3);
     position: relative;
     margin-top: 20px;
@@ -478,6 +488,7 @@
   }
 
   .container-inline {
+
     position: relative;
 
     &:before {
@@ -558,7 +569,9 @@
 /*  Search Grid View.
     ------------------------------------------------------- */
 .js-search-results-grid-view {
+
   .search-results {
+
     .list {
       display: flex;
       flex-wrap: wrap;
@@ -606,6 +619,7 @@
     }
 
     .field-name-ting-title {
+
       h2 {
         margin: 0;
       }
@@ -684,7 +698,7 @@
 
 // Show/hide search on tablet and mobile.
 .js-toggle-facets {
-  @include button($white-medium, false);
+  @include button($white-medium, false)
   display: none;
   color: #646464;
   border: 1px solid #d5d5d5;
