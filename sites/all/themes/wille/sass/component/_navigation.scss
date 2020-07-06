@@ -9,6 +9,7 @@
    ========================================================================== */
 
 .topbar {
+  
   // Layout.
   display: block;
   padding: 0;
@@ -75,7 +76,7 @@
 
     .ajax-progress-throbber {
       position: absolute;
-      top: 0;
+      top:0;
       left: 0;
       height: 100%;
       width: 100%;
@@ -127,7 +128,7 @@
       right: 0;
       overflow: hidden;
       top: 20px;
-      z-index: calc($z-index-menu - 1);
+      z-index: calc($z-index-menu -  1);
     }
 
     // Icons on menu items.
