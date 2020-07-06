@@ -108,6 +108,7 @@
 /*  Loans and reservations.
     ------------------------------------------------------- */
 .material-item {
+  
   @extend .search-result;
   padding: 40px 0;
 
@@ -158,6 +159,7 @@
   }
 
   .menu {
+    
     @include outer-container;
 
     li {
@@ -273,6 +275,7 @@
 
 .pane-loans,
 .pane-reservations {
+
   @include media($tablet-l) {
     margin-bottom: 50px;
     margin-top: 0;
@@ -322,8 +325,8 @@
 }
 
 input.password-confirm, input.password-field {
-  width: 99%;
-  margin-bottom: 0;
+    width: 99%;
+    margin-bottom: 0;
 }
 
 #edit-ding-user-fee-sms {
