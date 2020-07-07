@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Default theme implementation to display a file.
+ * Template for displaying a file.
  *
  * Available variables:
  * - $label: the (sanitized) file name of the file.
