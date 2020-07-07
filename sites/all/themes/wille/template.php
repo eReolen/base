@@ -225,15 +225,6 @@ function wille_preprocess_panels_pane(&$variables) {
   }
 }
 
-
-function wille_preprocess_file_entity(&$variables) {
-  if ($variables["filemime"] == "image/png"){
-    $variables["label"] = "";
-    $variables["file_url"] = "";
-  }
-  
-}
-
 /**
  * Preprocess ting_relations.
  */
