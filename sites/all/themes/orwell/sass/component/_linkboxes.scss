@@ -1,4 +1,4 @@
-@import 'bootstrap/bootstrap';
+@import "bootstrap/bootstrap";
 
 $linkbox__height--default: 125px;
 $linkbox__height--medium: 250px;
@@ -44,16 +44,15 @@ $linkbox__height--medium: 250px;
         max-height: $linkbox__height--medium / 3;
       }
     }
-
   }
 
   .linkbox__content {
     font-family: $font-regular;
     font-weight: bold;
-    font-size: .7em;
+    text-align: center;
 
     @include grid-media($medium) {
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
   }
 }

@@ -29,26 +29,26 @@ $color__geist--boxes-bg: #e2e2e2;
 $color__geist--material-list-bg: #e6e6e6;
 
 // Semantic naming.
-$page-bg:    $color__geist--grey8;
-$footer-bg:  $color__geist--grey1;
+$page-bg: $color__geist--grey8;
+$footer-bg: $color__geist--grey1;
 
-$color__font-gray--dark:   $color__geist--grey3;
-$color__font-gray:         $color__geist--grey4;
-$color__font-gray--light:  $color__geist--grey5;
+$color__font-gray--dark: $color__geist--grey2;
+$color__font-gray: $color__geist--grey4;
+$color__font-gray--light: $color__geist--grey6;
 
-$color__font--form-description:  $color__geist--green-dark;
+$color__font--form-description: $color__geist--green-dark;
 
-$color__icon--light:  $color__geist--grey6;
+$color__icon--light: $color__geist--grey6;
 
-$color__border-gray--light:  $color__geist--grey6;
-$color__border-gray:         $color__geist--hr;
-$color__border-gray--dark:   $color__geist--grey5;
+$color__border-gray--light: $color__geist--grey6;
+$color__border-gray: $color__geist--hr;
+$color__border-gray--dark: $color__geist--grey5;
 
 $color__material-list-bg: $color__geist--material-list-bg;
 $color__boxes-bg: $color__geist--boxes-bg;
 $color__facetbrowser-odd: $color__geist--grey7;
 
-$color__quota: $color__geist--blue;
+$color__quota: darken($color__geist--blue, 3%);
 
 // Freestyled colors for messages.
 $color__messages--status: #c5e8c5;
@@ -58,15 +58,19 @@ $color__messages--error: #ff7562;
 $color__link__default: $color__geist--red;
 
 // Not so semantic.
-$color__red:    $color__geist--red;
-$color__white:  #fff;
+$color__red: $color__geist--red;
+$color__white: #fff;
 
-$color__gray--lighter:  $color__geist--grey8;
-$color__gray--light:    $color__geist--grey6;
-$color__gray:           $color__geist--grey3;
-$color__gray--dark:     $color__geist--grey2;
+$color__gray--lighter: $color__geist--grey8;
+$color__gray--light: $color__geist--grey6;
+$color__gray: $color__geist--grey3;
+$color__gray--dark: $color__geist--grey2;
 
-$color__green:        $color__geist--green;
-$color__green--dark:  $color__geist--green-dark;
+$color__green: $color__geist--green;
+$color__green--dark: $color__geist--green-dark;
 
 $color__blue: $color__geist--blue;
+
+// Created to make text accessible with regards to contrast
+$color__blue--dark: darken($color__geist--blue, 3%);
+$color__button-green--dark: darken($color__geist--green, 21%);
