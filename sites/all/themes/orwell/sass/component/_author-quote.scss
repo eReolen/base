@@ -1,4 +1,4 @@
-@import 'bootstrap/bootstrap';
+@import "bootstrap/bootstrap";
 
 .author-quote {
   // To anchor the icons.
@@ -12,13 +12,12 @@
 
 .author-quote__wrapper {
   padding: $padding__default;
-  background-color: $color__blue;
+  background-color: $color__blue--dark;
   color: $color__white;
   height: 175px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-
 
   @include grid-media($small) {
     height: 230px;
@@ -32,7 +31,7 @@
   .author-quote__author {
     text-transform: uppercase;
     font-family: $font-semibold;
-    font-size: .8rem;
+    font-size: 0.8rem;
     margin-bottom: 1rem;
 
     @include grid-media($medium) {
@@ -55,10 +54,10 @@
 
   .author-quote__attribution {
     font-family: $font-regular;
-    font-size: .7rem;
+    font-size: 0.7rem;
 
     @include grid-media($medium) {
-      font-size: .8rem;
+      font-size: 0.8rem;
     }
 
     q {

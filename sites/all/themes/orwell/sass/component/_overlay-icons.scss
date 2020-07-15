@@ -7,11 +7,8 @@
 
 .overlay-icons {
   position: absolute;
-  width: 100%;
-  top: 1rem;
-  padding-right: 1rem;
-  text-align: right;
-  line-height: 2rem;
+  top: 2rem;
+  right: 1rem;
 
   .icon::before {
     @include icon;

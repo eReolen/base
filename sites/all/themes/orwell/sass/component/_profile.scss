@@ -1,4 +1,4 @@
-@import 'bootstrap/bootstrap';
+@import "bootstrap/bootstrap";
 
 // All user pages.
 .page-user {
@@ -14,7 +14,6 @@
         flex-basis: 75%;
         order: 2;
       }
-
     }
 
     .secondary-content {
@@ -30,9 +29,9 @@
     .secondary-content .panel-pane {
       margin: 0 1rem 2rem;
     }
-
   }
 
+  h1,
   h2,
   h3 {
     font-family: $font-light;
@@ -42,7 +41,6 @@
     @include grid-media($medium) {
       font-size: 2.1rem;
     }
-
   }
 
   .pane-content {
@@ -54,7 +52,6 @@
       color: $color__link__default;
     }
   }
-
 
   .pane-user-menu {
     li,
@@ -160,7 +157,7 @@
     margin: 20px 0;
   }
 
-  input[type=checkbox] + label {
+  input[type="checkbox"] + label {
     display: flex;
     align-items: center;
 
@@ -172,7 +169,7 @@
     }
   }
 
-  input[type=checkbox]:checked + label {
+  input[type="checkbox"]:checked + label {
     &::before {
       // Reset the checked background-color, it was overridden above.
       background-color: $color__green;
