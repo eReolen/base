@@ -1,4 +1,4 @@
-@import "bootstrap/bootstrap";
+@import 'bootstrap/bootstrap';
 
 .author-quote {
   // To anchor the icons.
@@ -19,6 +19,7 @@
   flex-flow: column nowrap;
   justify-content: space-between;
 
+
   @include grid-media($small) {
     height: 230px;
   }
@@ -31,7 +32,7 @@
   .author-quote__author {
     text-transform: uppercase;
     font-family: $font-semibold;
-    font-size: 0.8rem;
+    font-size: .8rem;
     margin-bottom: 1rem;
 
     @include grid-media($medium) {
@@ -54,10 +55,10 @@
 
   .author-quote__attribution {
     font-family: $font-regular;
-    font-size: 0.7rem;
+    font-size: .7rem;
 
     @include grid-media($medium) {
-      font-size: 0.8rem;
+      font-size: .8rem;
     }
 
     q {
