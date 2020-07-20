@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ruleset name="loop">
   <description>PHP CodeSniffer configuration for ereolen base</description>
-<!-- Lint our custom code -->
+
+  <!-- Lint our custom code -->
   <file>sites/all/modules/</file>
   <file>sites/all/themes/</file>
+
   <!-- Exclude contrib modules -->
   <exclude-pattern>sites/all/modules/contrib/</exclude-pattern>
+
   <!-- Exclude node modules -->
   <exclude-pattern>node_modules/</exclude-pattern>
+
   <!-- Exclude compiled code -->
   <exclude-pattern>sites/all/themes/*/css/</exclude-pattern>
+
   <!-- Exclude generated code -->
   <exclude-pattern>*\.features\.*</exclude-pattern>
   <exclude-pattern>*\.(field_group|strongarm|pages_default|views_default|rules_defaults|path_breadcrumbs)\.inc</exclude-pattern>
   <arg name="extensions" value="php,module,inc,install,test,profile,theme,info,txt,md,yml"/>
-  
+
   <!-- Show progress -->
   <arg value="p"/>
   <arg value="s"/>
   <config name="drupal_core_version" value="7"/>
+
   <rule ref="Drupal">
     <exclude name="Drupal.InfoFiles.AutoAddedKeys.Version"/>
     <exclude name="Drupal.InfoFiles.AutoAddedKeys.Project"/>
     <exclude name="Drupal.Files.TxtFileLineLength.TooLong"/>
+    <exclude name="Generic.CodeAnalysis.UselessOverridingMethod.Found"/>
   </rule>
 </ruleset>
