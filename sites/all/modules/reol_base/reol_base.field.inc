@@ -105,6 +105,7 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
           }
 
           $element[$delta] = array(
+            // phpcs:ignore
             '#markup' => t($pub_prod->format->name),
           );
         }

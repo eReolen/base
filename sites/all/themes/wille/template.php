@@ -92,8 +92,10 @@ function wille_preprocess_node(&$variables, $hook) {
  *
  * TODO fix below deprecated tag.
  *
+ * // phpcs:ignore
  * @deprecated in deprecation-version and is removed from removal-version. depreacated by
  * pratchett_ting_collection_view_alter() when using that as base theme.
+ * // phpcs:ignore
  * @see sites/all/themes/pratchett/template.php
  */
 function wille_ting_collection_view_alter(&$build) {

@@ -22,6 +22,7 @@ abstract class PublizonClient {
    * @var string
    */
   protected $baseUrl = '';
+
   /**
    * TODO missing member variable doc comment.
    *
@@ -193,7 +194,7 @@ abstract class PublizonClient {
 }
 
 /**
- * Custom exception so the frontend recieves a checked and translatable string.
+ * Custom exception so the frontend receives a checked and translatable string.
  *
  * All other Exception class should use this as their base class.
  *

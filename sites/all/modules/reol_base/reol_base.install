@@ -537,7 +537,7 @@ function reol_base_update_7149() {
  * Disable autologout module.
  */
 function reol_base_update_7150() {
-  // Prevent autologout when user are listening/reading online.
+  // Prevent autologout when user is listening/reading online.
   if (module_exists('autologout')) {
     module_disable(array('autologout'), FALSE);
   }

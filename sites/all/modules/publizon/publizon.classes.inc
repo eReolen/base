@@ -69,7 +69,8 @@ class PublizonDingProviderException extends DingProviderEnduserException {
   }
 
 }
-// phpcs:disable
+
+// phpcs:disable Drupal.NamingConventions.ValidVariableName.LowerCamelName
 /**
  * Represents a library.
  *
@@ -106,7 +107,6 @@ class PublizonConfiguredLibrary {
    * @var string
    */
   public $subscribed_users = '';
-// phpcs:enable
 
   /**
    * Create from array.
@@ -130,3 +130,4 @@ class PublizonConfiguredLibrary {
   }
 
 }
+// phpcs:enable

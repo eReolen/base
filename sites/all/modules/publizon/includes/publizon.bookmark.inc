@@ -74,7 +74,7 @@ function publizon_bookmark_create($account, $local_id) {
  *   The local id to delete bookmark for.
  *
  * @throws DingProviderAuthException
- * @throws PublizonDingProviderException *
+ * @throws PublizonDingProviderException
  */
 function publizon_bookmark_delete($account, $local_id) {
   // Throw exception if we're not logged in.

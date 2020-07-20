@@ -2,7 +2,11 @@
 
 /**
  * @file
- * Abstract class the holds function that are the same for the different Publizon classes that holds information fetched from the Publizon web-service.
+ * Abstract class for Publizon services.
+ *
+ * This class holds function that are the same for the different
+ * Publizon classes that holds information fetched from the Publizon
+ * web-service.
  */
 
 /**

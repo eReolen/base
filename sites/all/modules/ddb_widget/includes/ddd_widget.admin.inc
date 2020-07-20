@@ -66,12 +66,14 @@ function ddb_widget_settings_form($form, &$form_state) {
     '#type' => 'textarea',
     '#title' => '<span class="element-invisible">' . t('Pages') . '</span>',
     '#default_value' => $config['path']['pages'],
-    '#description' => t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.",
-    array(
-      '%blog' => 'blog',
-      '%blog-wildcard' => 'blog/*',
-      '%front' => '<front>',
-    )),
+    '#description' => t(
+      "Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.",
+      array(
+        '%blog' => 'blog',
+        '%blog-wildcard' => 'blog/*',
+        '%front' => '<front>',
+      )
+    ),
   ];
 
   // Per-role visibility.
