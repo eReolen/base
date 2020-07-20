@@ -155,7 +155,7 @@ $teaser-height--medium: 400px;
     line-height: 1.8rem;
     text-align: center;
     font-family: $font-light;
-    text-shadow: 0 0 6px rgba(0,0,0,0.78);
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
     flex: 0 0;
 
     .article--teaser--image & {
@@ -182,7 +182,7 @@ $teaser-height--medium: 400px;
     // Not displayed on mobile.
     display: none;
     margin: 0 0 2rem;
-    opacity: 0.5;
+    opacity: .5;
     font-family: $font-regular;
     line-height: 1.4rem;
 
@@ -215,7 +215,7 @@ $teaser-height--medium: 400px;
         right: 38%;
         bottom: 0;
         z-index: 2;
-        box-shadow: 11px -1px 28px -13px rgba(0,0,0,0.75);
+        box-shadow: 11px -1px 28px -13px rgba(0,0,0,.75);
 
         @include grid-media($medium) {
           // Switch to scaling by height rather than width.
@@ -223,7 +223,7 @@ $teaser-height--medium: 400px;
           max-height: 100%;
           right: auto;
           left: 38%;
-          box-shadow: -11px -1px 28px -13px rgba(0,0,0,0.75);
+          box-shadow: -11px -1px 28px -13px rgba(0,0,0,.75);
         }
       }
 
@@ -251,7 +251,7 @@ $teaser-height--medium: 400px;
     font-family: $font-semibold;
     font-weight: 700;
     text-transform: uppercase;
-    text-shadow: 0 0 6px rgba(0,0,0,0.78);
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
   }
 
   &__read-more {
@@ -259,7 +259,7 @@ $teaser-height--medium: 400px;
     position: relative;
     // Not displayed on mobile.
     display: none;
-    text-shadow: 0 0 6px rgba(0,0,0,0.78);
+    text-shadow: 0 0 6px rgba(0,0,0,.78);
 
     .article--teaser--image & {
       float: right;
