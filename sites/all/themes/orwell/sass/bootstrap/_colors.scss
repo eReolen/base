@@ -70,3 +70,7 @@ $color__green:        $color__geist--green;
 $color__green--dark:  $color__geist--green-dark;
 
 $color__blue: $color__geist--blue;
+
+// Created to make text accessible with regards to contrast
+$color__blue--dark: darken($color__geist--blue, 3%);
+$color__button-green--dark: darken($color__geist--green, 21%);
