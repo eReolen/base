@@ -1,4 +1,4 @@
-@import "bootstrap/bootstrap";
+@import 'bootstrap/bootstrap';
 
 .review {
   // Establish a positioning context for the type icons.
@@ -64,9 +64,9 @@
   h4 {
     text-transform: uppercase;
     font-family: $font-semibold;
-    margin-top: 0.2rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    margin-top: .2rem;
+    margin-bottom: .5rem;
+    font-size: .9rem;
 
     @include grid-media($medium) {
       font-size: 1rem;
@@ -75,7 +75,7 @@
 
   .review__subhead {
     font-family: $font-regular;
-    font-size: 0.7rem;
+    font-size: .7rem;
 
     @include grid-media($medium) {
       font-size: 1rem;
@@ -89,14 +89,14 @@
   .field-name-ting-title {
     font-family: $font-light;
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
   }
 
   .field-name-ting-author {
     font-family: $font-light;
-    font-size: 0.8rem;
+    font-size: .8rem;
     color: $color__font-gray--dark;
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
   }
 
   @include grid-media($medium) {
