@@ -17,7 +17,7 @@
 
   <!-- Exclude generated code -->
   <exclude-pattern>*\.features\.*</exclude-pattern>
-  <exclude-pattern>*\.(field_group|strongarm|pages_default|views_default|rules_defaults|path_breadcrumbs)\.inc</exclude-pattern>
+  <exclude-pattern>*\.(field_group|file_default_displays|strongarm|pages_default|panels_default|views_default|path_breadcrumbs)\.inc</exclude-pattern>
   <arg name="extensions" value="php,module,inc,install,test,profile,theme,info,txt,md,yml"/>
 
   <!-- Show progress -->
