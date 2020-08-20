@@ -1,0 +1,90 @@
+---
+on:
+  push:
+    branches-ignore:
+      - '*'
+    tags:
+      - '*'
+
+name: Deployment (prod)
+
+env:
+  BRANCH_NAME: master
+  SUBPATH_EREOLEN:  sites/all/modules/ereol
+  SUBPATH_GO:  sites/all/modules/breol
+
+jobs:
+  eReolen:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        server: [ ereolen-p08.dbc.dk, ereolen-p09.dbc.dk, ereolen-p10.dbc.dk ]
+    steps:
+      - name: Run deployment (eReolen)
+        uses: itk-dev/actions-remote-ssh@master
+        with:
+          command: |
+            cd ${{ secrets.APP_PATH_EREOLEN }}
+            git clean -d --force
+            git checkout ${{ env.BRANCH_NAME}}
+            git fetch
+            git reset origin/${{ env.BRANCH_NAME}} --hard
+            cd ${{ env.SUBPATH_EREOLEN }}
+            git clean -d --force
+            git checkout master
+            git fetch
+            git reset origin/${{ env.BRANCH_NAME}} --hard
+          host: ${{ matrix.server }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          cert: ${{ secrets.PUBLIC_KEY_CERT }}
+
+  eReolenGo:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        server: [ ereolen-p03.dbc.dk, ereolen-p06.dbc.dk ]
+    steps:
+      - name: Run deployment (eReolen)
+        uses: itk-dev/actions-remote-ssh@master
+        with:
+          command: |
+            cd ${{ secrets.APP_PATH_GO }}
+            git clean -d --force
+            git checkout ${{ env.BRANCH_NAME}}
+            git fetch
+            git reset origin/${{ env.BRANCH_NAME}} --hard
+            cd ${{ env.SUBPATH_GO }}
+            git clean -d --force
+            git checkout master
+            git fetch
+            git reset origin/${{ env.BRANCH_NAME}} --hard
+          host: ${{ matrix.server }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          cert: ${{ secrets.PUBLIC_KEY_CERT }}
+
+  cleanUp:
+    needs: [eReolen, eReolenGo]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        server: [ ereolen-p08.dbc.dk, ereolen-p03.dbc.dk]
+    steps:
+      - name: Set env app path ereolen
+        run: echo ::set-env name=SITE_PATH::APP_PATH_EREOLEN
+        if: matrix.server == 'ereolen-p08.dbc.dk'
+
+      - name: Set env app path go
+        run: echo ::set-env name=SITE_PATH::APP_PATH_GO
+        if: matrix.server == 'ereolen-p03.dbc.dk'
+
+      - name: Database and clean-up
+        uses: itk-dev/actions-remote-ssh@master
+        with:
+          command: |
+            cd ${{ secrets[env.SITE_PATH] }}
+            drush --yes updatedb
+            drush --yes features-revert-all
+            drush cache-clear all
+          host: ${{ matrix.server }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          cert: ${{ secrets.PUBLIC_KEY_CERT }}
