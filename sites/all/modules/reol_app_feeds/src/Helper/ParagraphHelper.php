@@ -240,6 +240,9 @@ class ParagraphHelper {
     $paragraphs = $this->getParagraphs($type, $paragraphIds);
     $data = array_values(array_map([$this, 'getParagraphData'], $paragraphs));
 
+    // Keep only array values.
+    $data = array_filter($data, 'is_array');
+
     // Make sure that all items are numeric arrays.
     foreach ($data as &$datum) {
       if (static::isAssoc($datum)) {
