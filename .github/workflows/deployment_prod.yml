@@ -1,8 +1,6 @@
 ---
 on:
   push:
-    branches-ignore:
-      - '*'
     tags:
       - '*'
 
@@ -44,7 +42,7 @@ jobs:
       matrix:
         server: [ ereolen-p03.dbc.dk, ereolen-p06.dbc.dk ]
     steps:
-      - name: Run deployment (eReolen)
+      - name: Run deployment (eReolen Go)
         uses: itk-dev/actions-remote-ssh@master
         with:
           command: |
