@@ -206,7 +206,9 @@ class NodeHelper {
    *   The identifier if any.
    */
   public function getTingIdentifierFromUrl($url) {
-    return preg_match('@/object/(?P<identifier>.+)$@', $url, $matches) ? urldecode($matches['identifier']) : NULL;
+    return preg_match('@/(?:collection|object)/(?P<identifier>.+)$@', $url, $matches)
+      ? urldecode($matches['identifier'])
+      : NULL;
   }
 
   /**
