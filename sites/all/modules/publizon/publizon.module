@@ -182,9 +182,9 @@ function publizon_get_libraries($reset = FALSE) {
  * @param bool $reset
  *   If TRUE the static cache will be rebuild. Defaults to FALSE.
  *
- * @return array PublizonConfiguredLibrary
- *   Basic information about the library entered at the publizon administration
- *   interface.
+ * @return array
+ *   PublizonConfiguredLibrary. Basic information about the library entered at
+ *   the publizon administration interface.
  */
 function publizon_get_library($retailer_id, $reset = FALSE) {
   // This could be more effective, but it'll do for the moment being.
@@ -233,6 +233,7 @@ function publizon_get_libraries_list() {
  *   Municipality ID's for to return libraries for.
  *
  * @return array
+ *   A filtered array.
  */
 function publizon_filter_libraries_list(array $municipalities) {
   $filtered = array();
@@ -253,7 +254,7 @@ function publizon_filter_libraries_list(array $municipalities) {
  *
  * @param object $account
  *   The user object.
- * @param $reset
+ * @param bool $reset
  *   By-pass/reset cache.
  *
  * @return string
@@ -302,7 +303,7 @@ function publizon_ting_covers($entities) {
   foreach ($entities as $id => $entity) {
     if (FALSE === $entity && reol_base_fake_id($id)) {
       $local_id = drupal_substr($id, strpos($id, ':') + 1);
-      $local_id =  REOL_BASE_LOCAL_ID_PREFIX . $local_id;
+      $local_id = REOL_BASE_LOCAL_ID_PREFIX . $local_id;
     }
     else {
       $local_id = $entity->localId;
@@ -329,7 +330,7 @@ function publizon_ting_covers($entities) {
  *   The state of the form.
  *
  * @return array
- *  Form array.
+ *   Form array.
  *
  * @see publizon_reservation_options()
  */
@@ -583,7 +584,7 @@ function publizon_form_ding_adgangsplatformen_admin_settings_form_alter(array &$
       '#type' => 'fieldset',
       '#title' => t('Publizon configuration'),
       '#tree' => FALSE,
-      '#weight' => -1
+      '#weight' => -1,
     );
 
     $form['publizon']['publizon_sso_client_id'] = array(

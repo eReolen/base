@@ -1,10 +1,19 @@
 <?php
+
 /**
  * @file
  * Contains the library storage class.
  */
 
+/**
+ * TODO doc comment is empty.
+ */
 class PublizonLibrary extends Publizon {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var array
+   */
   protected $properties = array(
     'maxEbookLoans' => NULL,
     'maxAudiobookLoans' => NULL,

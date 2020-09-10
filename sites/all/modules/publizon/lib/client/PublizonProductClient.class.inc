@@ -1,14 +1,21 @@
 <?php
+
 /**
  * @file
  * Implementation of communicating with the Publizon API for products.
  */
 
+/**
+ * TODO doc comment is empty.
+ */
 class PublizonProductClient extends PublizonClient {
+
   /**
    * Fetch XML representation for a product at publizon.
    *
    * @param string $isbn
+   *   Product id also know as ISBN number.
+   * @param bool $retailer_id
    *   Product id also know as ISBN number.
    *
    * @return PublizonProduct
@@ -52,4 +59,5 @@ class PublizonProductClient extends PublizonClient {
       return FALSE;
     }
   }
+
 }

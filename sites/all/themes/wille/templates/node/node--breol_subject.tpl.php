@@ -6,4 +6,3 @@
  */
 ?>
 <!-- This section is empty for now, because panels do the rest. -->
-

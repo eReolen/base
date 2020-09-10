@@ -4,13 +4,23 @@
  * Helper class for month handling.
  */
 class ReolStatisticsMonth {
+  /**
+   * TODO Missing short description in doc comments.
+   *
+   * @var string
+   */
   private $month;
+  /**
+   * TODO Missing short description in doc comments.
+   *
+   * @var string
+   */
   private $year;
 
   /**
    * Create ReolStatisticsMonth from int in YYYYMM format.
    */
-  static public function fromInt($int) {
+  public static function fromInt($int) {
     $year = substr((string) $int, 0, 4);
     $month = substr((string) $int, 4, 2);
 

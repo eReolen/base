@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Default template for overdrive information message.
@@ -15,4 +16,3 @@
     </a>
   </div>
 </div>
-

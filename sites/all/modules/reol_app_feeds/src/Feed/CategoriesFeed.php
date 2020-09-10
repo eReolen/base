@@ -19,6 +19,7 @@ class CategoriesFeed extends AbstractFeed {
    *
    * @return array
    *   The feed data.
+   *
    * @throws \TingClientException
    */
   public function getData() {

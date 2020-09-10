@@ -41,56 +41,55 @@
 
     .field-item::before {
       @include icon;
-      color: $color__font-gray;
+      color: $color__font-gray--dark;
       font-size: 12px;
-      margin-right: 0.2rem;
+      margin-right: .2rem;
       content: $icon__language;
     }
   }
 
-    // show dots at end of line.
+  // show dots at end of line.
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $color__font-gray--dark;
+
+  // Make language and series line up on one line.
+  .field-type-ting-details-language,
+  .field-type-ting-details-language div {
+    display: inline-block;
+  }
+
+  .field-type-ting-series,
+  .field-type-ting-series div {
+    display: inline;
+  }
+
+  .field-type-ting-series {
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: $color__font-gray;
+    margin-left: .5em;
+  }
 
-    // Make language and series line up on one line.
-    .field-type-ting-details-language,
-    .field-type-ting-details-language div {
-      display: inline-block;
-    }
+  .field-type-ting-series {
+    font-family: $font-light;
+    font-size: 14px;
+    margin-top: 4px;
 
-    .field-type-ting-series,
-    .field-type-ting-series div {
-      display: inline;
-    }
-
-    .field-type-ting-series {
-      white-space: nowrap;
-      margin-left: .5em;
-    }
-
-    .field-type-ting-series {
-      font-family: $font-light;
-      font-size: 14px;
-      margin-top: 4px;
-
-      .material__series-number {
-        &::before {
-          @include icon;
-          content: $icon__stack-solid;
-          font-size: 12px;
-          margin-right: 5px;
-        }
-      }
-
-      .material__series-number + .material__series-series {
-        &::before {
-          content: ' – ';
-        }
+    .material__series-number {
+      &::before {
+        @include icon;
+        content: $icon__stack-solid;
+        font-size: 12px;
+        margin-right: 5px;
       }
     }
 
+    .material__series-number + .material__series-series {
+      &::before {
+        content: " – ";
+      }
+    }
+  }
 
   @include grid-media($medium) {
     width: 186px;

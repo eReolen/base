@@ -90,7 +90,7 @@ $material--teaser__margin-bottom: 1.2rem;
       display: none;
     }
 
-    h2, a {
+    h1, a {
       text-decoration: none;
       font-family: $font-light;
       color: $color__font-gray;
@@ -265,7 +265,6 @@ $material--teaser__margin-bottom: 1.2rem;
     @include grid-media($small) {
       width: 50%;
       padding-left: 30px;
-
     }
     @include grid-media($medium) {
       width: 100%;
@@ -318,7 +317,6 @@ $material--teaser__margin-bottom: 1.2rem;
           font-size: 1.5rem;
         }
       }
-
 
       @include grid-media($small) {
         font-size: 1.5rem;
@@ -399,7 +397,7 @@ $material--teaser__margin-bottom: 1.2rem;
     }
 
     .field-items {
-      color: $color__font-gray;
+      color: $color__font-gray--dark;
 
       a {
         color: $color__link__default;

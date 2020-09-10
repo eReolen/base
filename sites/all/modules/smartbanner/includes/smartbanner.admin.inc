@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @file
  * Admin functionality for smartbanner.js.
@@ -129,7 +128,7 @@ function smartbanner_admin_form() {
         '#description' => t('Settings for !name', ['!name' => $name]),
         '#states' => [
           'visible' => [
-            ':input[name="smartbanner_settings[platforms][enabled_platforms]['.$key.']"]' => ['checked' => TRUE],
+            ':input[name="smartbanner_settings[platforms][enabled_platforms][' . $key . ']"]' => ['checked' => TRUE],
           ],
         ],
 
@@ -166,7 +165,9 @@ function smartbanner_admin_form() {
   return $result;
 }
 
-
+/**
+ * Form submit.
+ */
 function _smartbanner_settings_form_submit($form, &$form_state) {
   $clear_cache_url = url('admin/config/development/performance');
   drupal_set_message(
@@ -178,12 +179,14 @@ function _smartbanner_settings_form_submit($form, &$form_state) {
   );
 }
 
+/**
+ * Validates icon url.
+ */
 function _smartbanner_validate_icon_url($element, &$form_state, $form) {
   $value = $element['#value'];
   if (!valid_url($value, TRUE)) {
     if (valid_url($value)) {
       if (!file_exists($value)) {
-        // header('content-type: text/plain'); echo var_export(['public://'.$value, $value], true); die(__FILE__.':'.__LINE__.':'.__METHOD__);
         form_error($element, t('Please enter a valid path.'));
       }
     }
@@ -193,6 +196,9 @@ function _smartbanner_validate_icon_url($element, &$form_state, $form) {
   }
 }
 
+/**
+ * Validates app url.
+ */
 function _smartbanner_validate_app_url($element, &$form_state, $form) {
   if (!valid_url($element['#value'], TRUE)) {
     form_error($element, t('Please enter a valid url.'));

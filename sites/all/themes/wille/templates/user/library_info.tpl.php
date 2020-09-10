@@ -1,9 +1,9 @@
 <?php
+
 /**
  * @file
  * Template for user quota info.
  */
-
 ?>
 <h2 class="user-quota-title"><?php print('Status'); ?></h2>
 <div class="user-quota-info">

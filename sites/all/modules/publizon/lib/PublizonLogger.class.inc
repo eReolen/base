@@ -1,12 +1,12 @@
 <?php
+
 /**
  * @file
  * Logger classes used to log information from the Publizon client.
  */
 
 /**
- * Logger class that is used to send logged messages to the system for later
- * usage in debugging problems.
+ * Logger class: to send logged messages to the system for debugging.
  */
 abstract class PublizonLogger {
 
@@ -19,7 +19,11 @@ abstract class PublizonLogger {
   const INFO = 'INFO';
   const DEBUG = 'DEBUG';
 
-  // Defines the different levels that a error message can have.
+  /**
+   * Defines the different levels that a error message can have.
+   *
+   * @var array
+   */
   static public $levels = array(
     self::EMERGENCY,
     self::ALERT,
@@ -52,13 +56,14 @@ abstract class PublizonLogger {
    * Method that must be overridden by child classes.
    */
   abstract protected function dolog($message, $severity);
+
 }
 
 /**
- * Watch dog logger that ensure that the log message is sent to Drupal's
- * logger.
+ * Watch dog logger that ensure that the log message is sent to Drupal's logger.
  */
 class PublizonWatchDogLogger extends PublizonLogger {
+
   /**
    * Actually log, and to watchdog.
    */
@@ -67,14 +72,17 @@ class PublizonWatchDogLogger extends PublizonLogger {
       constant('WATCHDOG_' . $severity),
       'http://' . $_SERVER["HTTP_HOST"] . request_uri());
   }
+
 }
 
 /**
  * Void logger class that sends the log message into the big void.
  */
 class PublizonVoidLogger extends PublizonLogger {
+
   /**
    * Log nothing.
    */
   public function doLog($message, $severity) {}
+
 }

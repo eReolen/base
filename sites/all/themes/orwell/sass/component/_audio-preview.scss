@@ -65,7 +65,7 @@
   align-items: center;
 
   .audio-preview__time {
-    color: $color__gray;
+    color: $color__geist--grey5;
     flex: auto;
 
     @include grid-media($medium) {
@@ -86,8 +86,6 @@
     background: none;
     padding: .5rem;
     vertical-align: middle;
-    // float: right;
-    //flex-basis: 30%;
     flex: none;
 
     @include grid-media($medium) {
@@ -135,5 +133,4 @@
 
     background-color: $color__red;
   }
-
 }

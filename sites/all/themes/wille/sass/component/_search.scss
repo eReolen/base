@@ -92,6 +92,7 @@
 .search-result--availability-link,
 .search-result--availability a {
   text-decoration: none;
+  font-size: 14pt;
   @include button($green);
   color: white;
   float: left;
@@ -186,7 +187,6 @@
   .form-search-sort__hidden-labels {
     position: absolute;
     left: -9999px;
-    visibility: hidden;
   }
 
   @include media($tablet-l) {
