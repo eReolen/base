@@ -850,3 +850,10 @@ function reol_base_update_7170() {
     ->condition('name', 'reol_base', '=')
     ->execute();
 }
+
+/**
+ * Enable tiny png module.
+ */
+function reol_base_update_7171() {
+  module_enable(array('tinypng'));
+}
