@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Handles module install and uninstall
+ * Handles module install and uninstall.
  */
 
 /**
@@ -28,7 +29,7 @@ function overdrive_schema() {
         'description' => 'Query to append.',
         'type' => 'text',
         'not null' => TRUE,
-      )
+      ),
     ),
     'primary key' => array('tid'),
   );

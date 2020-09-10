@@ -90,8 +90,13 @@ function wille_preprocess_node(&$variables, $hook) {
  * search results where the cover represents more than one material (likely of
  * different types).
  *
- * @deprecated by pratchett_ting_collection_view_alter() when using that as
- * base theme.
+ * TODO fix below deprecated tag.
+ *
+ * // phpcs:ignore
+ * @deprecated in deprecation-version and is removed from removal-version. depreacated by
+ * pratchett_ting_collection_view_alter() when using that as base theme.
+ * // phpcs:ignore
+ * @see sites/all/themes/pratchett/template.php
  */
 function wille_ting_collection_view_alter(&$build) {
   if (isset($build['ting_primary_object'])) {
@@ -330,9 +335,9 @@ function _wille_alter_brightness($colourstr, $steps) {
 }
 
 /**
- * Implemnets hook_js_alter(),
+ * Implemnets hook_js_alter().
  *
- * Unload ding2 related javascript since it breaks width on search filter select.
+ * Unload ding2 related js since it breaks width on search filter select.
  */
 function wille_js_alter(&$javascript) {
   unset($javascript['profiles/ding2/modules/ding_ting_frontend/js/select_autosize.js']);

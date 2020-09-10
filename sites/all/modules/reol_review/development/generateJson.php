@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Todo missing short description in doc comment.
+ */
+
 $items = array(
   array(
     'nid' => '100',

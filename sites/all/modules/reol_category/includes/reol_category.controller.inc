@@ -9,6 +9,7 @@
  * Controller for ReolCategory objects.
  */
 class ReolCategoryController extends EntityAPIController {
+
   /**
    * Implements EntityAPIControllerInterface.
    *
@@ -38,4 +39,5 @@ class ReolCategoryController extends EntityAPIController {
     parent::save($entity, $transaction);
     menu_rebuild();
   }
+
 }

@@ -3,7 +3,6 @@
 /**
  * @file
  * Theme ting_collection_types field.
- *
  */
 ?>
 <div class="availability search-result--availability">

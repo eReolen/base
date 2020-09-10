@@ -128,7 +128,7 @@ class NodeHelper {
    * @return string[]|string|null
    *   The image url(s).
    */
-  public function getImage(array $value = null, $image_style_name = NULL) {
+  public function getImage(array $value = NULL, $image_style_name = NULL) {
     if (NULL === $value) {
       return NULL;
     }

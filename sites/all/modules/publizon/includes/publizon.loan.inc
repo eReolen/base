@@ -88,7 +88,6 @@ function publizon_loan_list($account, $reset = FALSE) {
  * @throws DingProviderAuthException
  *   Is thrown if user is not logged in.
  * @throws PublizonDingProviderException
- *
  */
 function publizon_loan_create($account, $local_id) {
   $retailer_id = publizon_get_retailer_id($account);

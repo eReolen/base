@@ -1,14 +1,33 @@
 <?php
+
 /**
  * @file
- * Implementation of the main communication object with the Publizon
- * web-service.
+ * The main communication object with the Publizon web-service.
  */
 
+/**
+ * TODO doc comment is empty.
+ */
 abstract class PublizonClient {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var logger
+   */
   protected $logger;
 
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var string
+   */
   protected $baseUrl = '';
+
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var array
+   */
   protected $endpoints = array(
     'product' => 'getproduct.asmx',
     'product_list' => 'getproductlist.asmx',
@@ -23,7 +42,11 @@ abstract class PublizonClient {
     'library_profile' => 'getlibraryinfo.asmx',
   );
 
-  // Holds the object instance (part of the singleton pattern).
+  /**
+   * Holds the object instance (part of the singleton pattern).
+   *
+   * @var array
+   */
   private static $instances = array();
 
   /**
@@ -72,7 +95,7 @@ abstract class PublizonClient {
    *   Index into the end-points array (defined in the top of the object).
    * @param string $action
    *   SOAP action to request.
-   * @param $retailer_id
+   * @param string $retailer_id
    *   Retailer id.
    * @param array $parameters
    *   The parameters to call the actions with. Also known as the content of the
@@ -88,7 +111,7 @@ abstract class PublizonClient {
    * @throws PublizonException
    *   If the response dose not have a 101 status.
    */
-  protected function call($endpoint, $action, $retailer_id, $parameters, $namespace) {
+  protected function call($endpoint, $action, $retailer_id, array $parameters, array $namespace) {
     // Get retailer information.
     $retailer = publizon_get_library($retailer_id);
 
@@ -167,17 +190,18 @@ abstract class PublizonClient {
       'loan_status',
     );
   }
+
 }
 
 /**
- * Custom Exception that ensures that the string given is checked and
- * translatable in the front ned.
+ * Custom exception so the frontend receives a checked and translatable string.
  *
  * All other Exception class should use this as their base class.
  *
  * TODO Find a better solution than passing message through t function.
  */
 class PublizonException extends Exception {
+
   /**
    * Create new constructor that ensure message is translated.
    */
@@ -185,6 +209,7 @@ class PublizonException extends Exception {
     // Make sure everything is assigned properly.
     parent::__construct($message, $code, $previous);
   }
+
 }
 
 /**

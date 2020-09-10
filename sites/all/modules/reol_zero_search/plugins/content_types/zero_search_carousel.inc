@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Carousel for search page with zero results.

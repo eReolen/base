@@ -1,8 +1,8 @@
 <?php
+
 /**
  * @file
- * This file gets the current permissions of a user role, and displays
- * them in a way that can be used in secure_permissions hook.
+ * Gets permissions of a user role for displaying by secure_permissions hook.
  */
 
 // The role id to get for.
