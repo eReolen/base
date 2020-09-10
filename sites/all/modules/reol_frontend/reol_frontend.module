@@ -85,22 +85,39 @@ function reol_frontend_form_search_block_form_alter(&$form, &$form_state, $form_
  * Returns HTML for overlay icons.
  */
 function theme_reol_overlay_icons($variables) {
-  $spans = '';
+  $icon_with_attributes = '';
 
-  if (!isset($variables['classes']) || !is_array($variables['classes'])) {
-    $variables['classes'] = array();
-  }
-  $variables['classes'][] = 'overlay-icons';
+  $quota_explanation = '';
+  $wrapper_attributes = [
+    'class' => 'overlay-icons'
+  ];
 
   foreach (array_filter($variables['icons']) as $icon) {
-    $spans .= '<span class="icon ' . $icon . '"></span>';
-  }
+    $icon_attributes = [
+      'class' => 'icon ' . $icon,
+    ];
 
-  if (!$spans) {
+    // If material-type is set, then it is of the type that has the material-icon and color-indication of quota
+    // $quota_explanation is for aria-label, so only "visible" for screen-readers.
+    if (isset($variables['material_type'])) {
+      $quota_explanation = t('This material is a !type and is on your quota', array('!type' => $variables['material_type']));
+    }
+    // If no_quota is set, then the string changes to not-on-your-quota.
+    if (isset($variables['no_quota']) && $variables['no_quota']) {
+      $wrapper_attributes['class'] .= ' no-quota';
+      $quota_explanation = t('This material is a !type and is not on your quota', array('!type' => $variables['material_type']));
+      $icon_attributes['class'] .= ' no-quota';
+    }
+    if ($quota_explanation) {
+      $icon_attributes['aria-label'] = $quota_explanation;
+    }
+    $icon_with_attributes .= '<span' . drupal_attributes($icon_attributes) . '></span>';
+  }
+  if (!$icon_with_attributes) {
     return '';
   }
 
-  return '<div class="' . implode(' ', $variables['classes']) . '">' . $spans . '</div>';
+  return '<div ' . drupal_attributes($wrapper_attributes) . '>' . $icon_with_attributes . '</div>';
 }
 
 /**
@@ -214,16 +231,15 @@ function reol_frontend_views_query_alter(&$view, &$query) {
  */
 function reol_frontend_ding_entity_icons(DingEntity $ding_entity) {
   if (!isset($ding_entity->reol_no_icons)) {
-    $classes = array();
     $icons = array();
-    if (!$ding_entity->reply->on_quota) {
-      $classes[] = 'no-quota';
-    }
-
     if (!isset($ding_entity->reol_no_type_icons)) {
       $icons[] = reol_base_get_type_icon($ding_entity->getType());
     }
-    return theme('reol_overlay_icons', array('icons' => $icons, 'classes' => $classes));
+    return theme('reol_overlay_icons', array(
+      'icons' => $icons,
+      'material_type' => $ding_entity->getType(),
+      'no_quota' => !$ding_entity->reply->on_quota,
+    ));
   }
   return '';
 }

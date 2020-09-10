@@ -124,6 +124,9 @@ function reol_lazy_load_images_theme_registry_alter(&$theme_registry) {
  */
 function theme_reol_base_image($variables) {
   $attributes = $variables['attributes'];
+  // Hide all <img from screen readers.
+  $attributes['aria-hidden'] = 'true';
+
   $styles = ['ereol_cover_base', 'breol_cover_base', 'reol_lazy_cover_podcast'];
 
   if (array_key_exists('style_name', $variables) && in_array($variables['style_name'], $styles)) {

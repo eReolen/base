@@ -9,7 +9,6 @@
    ========================================================================== */
 
 .topbar {
-
   // Layout.
   display: block;
   padding: 0;
@@ -116,6 +115,7 @@
       font-size: 1em;
       text-align: center;
       z-index: $z-index-menu;
+      font-family: $font-regular;
     }
 
     &:before {
