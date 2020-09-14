@@ -2,7 +2,7 @@ name = Pratchett
 description = eReol base theme.
 core = 7.x
 release = 7.x-1.x
-stylesheets[all][] = css/pratchett.main.css
+stylesheets[all][] = build/app.css
 
 ;-----------//Javascript.
-scripts[] = scripts/pratchett.main.js
+scripts[] = build/app.js
