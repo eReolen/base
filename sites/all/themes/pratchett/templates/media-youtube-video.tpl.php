@@ -21,6 +21,11 @@
 ?>
 
 <div class="<?php print $classes; ?> media-youtube-<?php print $id; ?>">
-  <div class="expand-parent-to expand-parent-to--16-9"></div>
-  <iframe class="media-youtube-player" <?php print $api_id_attribute; ?>" title="<?php print $title; ?>" src="<?php print $url; ?>" frameborder="0" allowfullscreen><?php print $alternative_content; ?></iframe>
+  <div class="expand-parent-to expand-parent-to--16-9" style="background: #c1c1c1;">
+    <span class="media-youtube-video--disabled">
+      <span><?php print t('To show this video you must allow marketing cookies.');?></span>
+      <a href="javascript:CookieConsent.renew()"><?php print t("Change cookie consent"); ?></a>
+    </span>
+  </div>
+  <iframe class="media-youtube-player"<?php print $api_id_attribute; ?>width="<?php print $width; ?>" height="<?php print $height; ?>" title="<?php print $title; ?>" data-category-consent="cookie_cat_marketing" data-consent-src="<?php print $url; ?>" src="" frameborder="0" allowfullscreen><?php print $alternative_content; ?></iframe>
 </div>
