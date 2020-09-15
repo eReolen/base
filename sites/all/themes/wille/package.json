@@ -1,7 +1,7 @@
 {
-  "name": "pratchett",
+  "name": "wille",
   "version": "1.0.0",
-  "description": "Package file for pratchett theme on eReolen",
+  "description": "Package file for wille theme on eReolen",
   "scripts": {
     "build": "encore production",
     "dev": "encore dev",

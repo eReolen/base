@@ -1,0 +1,71 @@
+@import '../bootstrap/bootstrap';
+
+.site-header {
+  background: white;
+}
+
+.topbar {
+  overflow: hidden;
+
+  @include grid-media($medium){
+    height: 80px;
+  }
+
+  .pane-main-menu {
+    width: 100%;
+  }
+}
+
+.topbar__inner {
+  position: relative;
+
+  @include grid-media($medium) {
+    @include content-wrapper;
+    height: 100%;
+  }
+}
+
+.branding {
+  height: 5rem;
+  top: 0;
+  left: 3.75rem;
+  // Ensure we overlap the following elements.
+  z-index: 1;
+
+  @include grid-media($medium) {
+    position: absolute;
+    width: 9%;
+    float: left;
+    height: 100%;
+  }
+}
+
+.branding__logo {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  img {
+    width: 100%;
+    max-width: 35vw;
+  }
+}
+
+.pane-reol-profile-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  @include grid-media($medium) {
+    left: auto;
+    right: 3.75rem;
+  }
+}
+
+#user-login-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+}

@@ -1,0 +1,524 @@
+@import '../bootstrap/bootstrap';
+
+$color__search-form: #d8d8d8;
+$item-height: 5rem;
+$icon-color: #9c9c9c;
+
+.pane-search-form {
+  height: $item-height;
+  margin-left: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  // Ensure that search form overlaps page content.
+  z-index: 1;
+
+  @include grid-media($medium) {
+    position: relative;
+    height: auto;
+    width: 100%;
+    top: auto;
+    right: auto;
+  }
+}
+
+.page-search .pane-page-tabs {
+  display: none;
+}
+
+.search-form {
+  font-family: $font-regular;
+  position: relative;
+
+  // scss-lint:disable IdSelector
+  #edit-search-type {
+    input {
+      display: none;
+    }
+
+    .form-item {
+      display: inline-block;
+      margin: 0 20px;
+      font-family: $font-regular;
+
+      label {
+        text-transform: uppercase;
+        cursor: pointer;
+        opacity: .5;
+        font-size: 1.3rem;
+      }
+
+      &.selected label {
+        opacity: 1;
+      }
+    }
+
+    @include grid-media($medium) {
+      .form-item {
+        margin: 0 .4rem;
+
+        label {
+          color: white;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .page-search & {
+    @include grid-media($medium) {
+      background-color: $color__red;
+    }
+  }
+
+  &__icon__wrapper {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: $item-height;
+    justify-content: center;
+
+    &::before {
+      @include icon;
+      position: relative;
+      top: -3px;
+      right: 3px;
+      color: $color__icon--light;
+      content: $icon__search;
+      font-size: 2rem;
+
+      @include grid-media($medium) {
+        color: $color__white;
+        font-size: 1.5rem;
+        position: relative;
+        top: 3px;
+      }
+    }
+
+    .open & {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 1;
+
+      @include grid-media($medium) {
+        height: 2rem;
+        left: calc(50% - 1rem);
+        position: relative;
+        width: 2rem;
+      }
+
+      &::before {
+        position: relative;
+        content: '\ea0f';
+        font-size: 1.5rem;
+        right: 17px;
+        top: 0;
+
+        @include grid-media($medium) {
+          position: relative;
+          font-size: 1rem;
+          top: 8px;
+          right: 0;
+        }
+      }
+
+      @include grid-media($medium) {
+        .page-search & {
+          display: none;
+        }
+      }
+    }
+
+    @include grid-media($medium) {
+      background: $color__red;
+      display: block;
+      height: 2rem;
+      text-align: center;
+    }
+  }
+
+  &__icon {
+    width: auto;
+
+  }
+
+  &__content {
+    background: $color__white;
+    display: none;
+    left: 0;
+    max-width: 100%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    // Default height.
+    height: $item-height;
+    align-items: center;
+
+    // On the search page, we display tabs too.
+    .page-search & {
+      height: $item-height + 3rem;
+    }
+
+    @include grid-media($medium) {
+      @include content-wrapper__large;
+    }
+
+    .open & {
+      display: block;
+
+      @include grid-media($medium) {
+        display: flex;
+      }
+    }
+
+    // For some reason the search form should look different on the
+    // search page.
+    .page-search & {
+      @include grid-media($medium) {
+        height: auto;
+        padding: 1.2rem;
+        background-color: $color__red;
+      }
+
+    }
+  }
+
+  .form-item-search-block-form {
+    flex: 1;
+
+    &::before {
+      @include icon;
+      content: $icon__search;
+      position: absolute;
+      color: $color__font-gray;
+      top: 27px;
+      left: 7px;
+      font-size: 1.5rem;
+
+      @include grid-media($medium) {
+        top: 21px;
+        color: $color__white;
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  &__input--text {
+    border: 0;
+    box-sizing: border-box;
+    color: $color__gray;
+    display: block;
+    font-family: $font-light;
+    font-size: 2rem;
+    height: $item-height;
+    padding: 0 3.5rem 0 3rem;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    @include grid-media($medium) {
+      padding: 0 1.875rem;
+    }
+
+    // Different look on the search page.
+    .page-search & {
+      @include grid-media($medium) {
+        height: auto;
+        background: $color__red;
+        color: $color__white;
+        font-size: 1.3rem;
+        font-family: $font-regular;
+
+        &::placeholder {
+          color: $color__white;
+        }
+      }
+    }
+  }
+
+  &__icon--close {
+    background: $color__red;
+    height: 2rem;
+    position: fixed;
+    right: 1rem;
+    width: 2rem;
+
+    @include grid-media($medium) {
+      right: auto;
+      left: calc(50% - 1rem);
+    }
+
+    &::before {
+      @include icon;
+      color: $color__white;
+      content: $icon__cross;
+      font-size: 1rem;
+      left: .5rem;
+      position: absolute;
+      top: .5rem;
+    }
+  }
+
+  @include grid-media($medium) {
+    border-top: 1px solid $color__search-form;
+  }
+}
+
+html.js input.form-autocomplete {
+  background-image: none;
+}
+
+// Search page.
+.page-search-ting {
+  .pane-page-content {
+    @extend .page-wrapper;
+    padding: 0 2rem;
+
+    // Add some margin to the empty result page. Yes, this is really
+    // the best selector I could come up with.
+    .pane-search-result .pane-content > ul {
+      @include text-paragraph;
+      line-height: 1rem;
+      margin: 3.5rem 0;
+    }
+  }
+
+  .panel-col-first {
+    @include grid-media($mobile-only) {
+      width: 100%;
+      background-color: rgba(250, 250, 250, .9);
+    }
+
+    @include grid-media($medium) {
+      padding-top: 3.5rem;
+      padding-bottom: 3.5rem;
+      float: left;
+      width: 300px;
+      border-right: 1px solid $color__border-gray;
+    }
+
+    @include grid-media($large) {
+      width: 410px;
+    }
+  }
+
+  .panel-col-last {
+    width: 100%;
+
+    @include grid-media($medium) {
+      width: auto;
+      padding-left: 3.5rem;
+      overflow: hidden;
+    }
+  }
+
+  .page-title {
+    @include title;
+    padding: 0 2rem;
+    background: $page-bg;
+    display: none;
+
+    @include grid-media($medium) {
+      display: block;
+    }
+  }
+}
+
+.arrangement-toggles {
+  // Move up over .facets-trigger-wrapper on mobile.
+  position: absolute;
+  top: 1rem;
+  flex-direction: row;
+  justify-content: flex-start;
+  display: flex;
+  background-color: transparent;
+
+
+  @include grid-media($medium) {
+    // Simply display inline on desktop.
+    position: relative;
+    top: 0;
+    margin: 0 2rem 1rem;
+  }
+
+  .arrangement-toggle {
+    // Reset
+    text-decoration: none;
+    // Align icon inside anchor tag
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    // Set button size
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 1.1rem;
+    cursor: pointer;
+    background-color: white;
+    // Transition
+    transition: background-color .12s $global__hover-easing;
+
+    &:hover {
+      background-color: $color__geist--grey6;
+    }
+
+    // distance between the two buttons
+    + .arrangement-toggle {
+      margin-left: .7rem;
+    }
+
+    &::before {
+      @include icon;
+      color: $color__geist--grey4;
+    }
+
+    &.toggle-active {
+      background-color: $color__geist--green;
+
+      &::before {
+        color: white;
+      }
+
+      &:hover {
+        background-color: $color__geist--green;
+      }
+    }
+
+    &.toggle-list {
+
+      &::before {
+        content: $icon__list-square;
+      }
+    }
+
+    &.toggle-grid {
+
+      &::before {
+        content: $icon__grid-dense;
+      }
+    }
+  }
+}
+
+.search-results {
+  padding: 2rem 0 0;
+
+  .pager {
+    padding: 3.75rem 0;
+  }
+
+  .material__metadata {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: $font-light;
+    font-size: 14px;
+    color: $color__font-gray;
+  }
+
+  .material__language {
+    display: inline-block;
+
+    &::before {
+      @include icon;
+      font-size: 12px;
+      content: $icon__language;
+    }
+  }
+
+  .material__number-in-series {
+    display: inline;
+    margin-left: .5em;
+
+    &::before {
+      @include icon;
+      font-size: 12px;
+      content: $icon__stack-solid;
+    }
+    .material__series-number {
+      padding-left: .5em;
+    }
+    .material__series-number + .material__series-series {
+      &::before {
+        content: ' – ';
+      }
+    }
+  }
+
+  &.grid-view {
+
+    .arrangement-toggles {
+      margin-bottom: 2rem;
+    }
+
+    .list {
+      display: flex;
+      justify-content: flex-start;
+      align-items: end;
+      flex-flow: wrap;
+      margin-left: -.75rem;
+      margin-right: -.75rem;
+      margin-top: -.75rem;
+    }
+
+    .search-result {
+
+      @include grid-media($xxsmall) {
+        width: 50%;
+        padding: .75rem;
+      }
+
+      @include grid-media($small) {
+        width: 33.3333%;
+        padding: .75rem;
+      }
+
+      .material {
+        border-bottom: 0;
+        margin-top: 0;
+        padding: 0;
+      }
+
+      .material__cover--teaser {
+        width: 100%;
+      }
+
+      .material__content {
+        padding-left: 0;
+        width: 100%;
+      }
+
+      // Keep in sync with .field-name-ting-title in _ting-object-compact.scss.
+      .material__title {
+        margin: 0;
+
+        h2 {
+          font-family: $font-regular;
+          font-size: 16px;
+          letter-spacing: .5px;
+          margin-top: 6px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 0;
+
+          a {
+            color: black;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .material__author {
+        font-family: $font-light;
+        font-size: 14px;
+        letter-spacing: .5px;
+        margin: 0;
+        margin-top: 10px;
+      }
+    }
+  }
+}

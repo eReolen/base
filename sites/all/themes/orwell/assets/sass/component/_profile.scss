@@ -1,0 +1,202 @@
+@import '../bootstrap/bootstrap';
+
+// All user pages.
+.page-user {
+  .layout-wrapper {
+    @include content-wrapper;
+    display: flex;
+    flex-wrap: wrap;
+
+    .primary-content {
+      flex-basis: 100%;
+
+      @include grid-media($medium) {
+        flex-basis: 75%;
+        order: 2;
+      }
+
+    }
+
+    .secondary-content {
+      flex-basis: 100%;
+
+      @include grid-media($medium) {
+        flex-basis: 25%;
+        order: 1;
+      }
+    }
+
+    .primary-content .panel-pane,
+    .secondary-content .panel-pane {
+      margin: 0 1rem 2rem;
+    }
+
+  }
+
+  h2,
+  h3 {
+    font-family: $font-light;
+    font-size: 1.5rem;
+    padding: 1rem 0;
+
+    @include grid-media($medium) {
+      font-size: 2.1rem;
+    }
+
+  }
+
+  .pane-content {
+    @include text-paragraph;
+  }
+
+  .pane-library-info .pane-content {
+    a {
+      color: $color__link__default;
+    }
+  }
+
+
+  .pane-user-menu {
+    li,
+    .pane-title {
+      font-family: $font-light;
+      font-size: 1.2rem;
+      padding: 1rem 0;
+      border-top: 1px solid $color__border-gray--light;
+    }
+
+    a {
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  // Checkbox functionality is currently disabled on the main page.
+  // Wasn't implemented in the previous version either. But as the
+  // user might end up on /user, we can't target it specifically, so
+  // we hide it on all user pages and show it on those where we need
+  // it.
+  .left-column .item-checkbox {
+    display: none;
+  }
+
+  .material-item {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+
+    @include grid-media($medium) {
+      flex-wrap: nowrap;
+    }
+
+    .left-column {
+      flex-basis: 100%;
+
+      @include grid-media($medium) {
+        flex-basis: 300px;
+        flex-grow: 0;
+      }
+    }
+
+    .right-column {
+      flex-basis: 100%;
+
+      @include grid-media($medium) {
+        flex-basis: 75%;
+        padding: 0 20px;
+      }
+    }
+
+    img {
+      // Equal width covers.
+      width: 100%;
+    }
+  }
+
+  h3 {
+    text-decoration: none;
+    font-family: $font-light;
+    color: $color__font-gray;
+    overflow-wrap: break-word;
+
+    a {
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .ting-cover-wrapper {
+    max-width: 300px;
+  }
+
+  .item-information {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 0;
+  }
+
+  .material-buttons {
+    display: flex;
+    bottom: 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .action-button {
+      @extend .btn;
+    }
+  }
+}
+
+// Edit profile.
+.pane-profile2-form {
+  @include form-default;
+}
+
+// Bookmarks page.
+.page-user-bookmarks {
+  @include form-default;
+
+  .select-all {
+    margin: 20px 0;
+  }
+
+  input[type=checkbox] + label {
+    display: flex;
+    align-items: center;
+
+    &::before {
+      // Add spacing towards text.
+      margin-right: 10px;
+      // Set background-color so it wont be transparent on the covers.
+      background-color: $page-bg;
+    }
+  }
+
+  input[type=checkbox]:checked + label {
+    &::before {
+      // Reset the checked background-color, it was overridden above.
+      background-color: $color__green;
+    }
+  }
+
+  .left-column {
+    position: relative;
+    display: flex;
+
+    .item-checkbox {
+      // Show material checkboxes on this page.
+      display: inline-block;
+
+      label {
+        // Hide labels on material-items.
+        font-size: 0;
+      }
+    }
+  }
+
+  .item-information-list {
+    a {
+      color: $color__link__default;
+    }
+  }
+}

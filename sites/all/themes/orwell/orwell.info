@@ -11,7 +11,8 @@ stylesheets[all][] = twocol_stacked.css
 stylesheets[all][] = search.css
 stylesheets[all][] = panels.css
 ; Kill ding_carousels theming (we got our own).
-stylesheets[all][] = ding_carousel.css
+stylesheets[all][] = build/app.css
 
 ;-----------//Javascript.
-scripts[] = scripts/orwell.main.js
+scripts[] = build/app.js
+

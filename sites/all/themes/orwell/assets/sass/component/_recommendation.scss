@@ -1,0 +1,64 @@
+@import '../bootstrap/bootstrap';
+
+.recommended-material a {
+  text-decoration: none;
+  color: black;
+}
+
+.recommended-material__wrapper {
+  padding: $padding__default;
+  background-color: $color__boxes-bg;
+  display: flex;
+  flex-flow: row nowrap;
+
+  @include grid-media($medium) {
+    padding: $padding__medium;
+  }
+
+  .ting-cover {
+    @include box-cover;
+  }
+}
+
+.recommended-material__details {
+  padding-left: $gutter__default;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  color: $color__font-gray--dark;
+  // IE10/11 fix. Container overflows if not limited.
+  width: 100%;
+
+  @include grid-media($medium) {
+    padding-left: $gutter__medium;
+  }
+
+  .field-name-field-rec-title {
+    text-transform: uppercase;
+    font-family: $font-semibold;
+    font-size: .8rem;
+    margin-top: .2rem;
+
+    @include grid-media($medium) {
+      font-size: 1rem;
+    }
+  }
+
+  .field-name-ting-title {
+    @include fadeout-box(1.1rem, 4, h2, $color__boxes-bg);
+    font-family: $font-light;
+    font-size: 1.1rem;
+    margin-bottom: .5rem;
+
+    @include grid-media($medium) {
+      @include fadeout-box(1.5rem, 3, h2, $color__boxes-bg);
+    }
+  }
+
+  .field-name-ting-author {
+    font-family: $font-light;
+    font-size: .8rem;
+    color: $color__font-gray;
+    margin-bottom: .5rem;
+  }
+}
