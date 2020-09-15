@@ -1,25 +1,28 @@
-# Wille
+# Theme for ereolen.dk
+Requires Orwell theme 
 
-Requirements:
- * npm - https://docs.npmjs.com/
+## Quick guide 
+The package.json file contains the versions of all the node packages you
+need. To install them run:
 
-### Install
-You need Gulp installed globally:
-
-```sh
-$ npm i -g gulp
 ```
-From the root of the Wille theme run the following:
-
-```sh
-$ npm install
-```
-When npm is done installing all packages, then run gulp, which will compile all
-sass to css.
-```sh
-$ gulp
+yarn install
 ```
 
- ### Coding
- Do all your theming in /wille/sass.
- Happy theming.
+Yarn commands for production and development Build
+for development:
+
+```
+yarn dev
+```
+
+Build for development and keep watching files:
+
+```
+yarn watch
+```
+
+Build for Production:
+```
+yarn build
+```

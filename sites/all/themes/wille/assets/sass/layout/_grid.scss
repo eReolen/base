@@ -1,7 +1,5 @@
-@import "bourbon";
-@import "neat";
-@import "base/vars";
-@import "base/mixins";
+@import "../base/vars";
+@import "../base/mixins";
 
 // Grid settings. Needs to be set before we bring in neat.
 $grid-columns: 12;
@@ -13,8 +11,6 @@ $gutter: 0em;
 // Debug.
 $visual-grid: false;
 $visual-grid-index: front;
-
-@import "neat";
 
 // Grid loop magic.
 @for $i from 1 through $grid-columns {

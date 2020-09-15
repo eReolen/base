@@ -1,6 +1,10 @@
 /**
  * Colors.
  */
+
+@import '~bourbon';
+$font_dir_path : '/assets/fonts';
+
 $red: rgb(213, 0, 73);
 $red-light: rgb(235, 0, 85);
 $red-medium: rgb(215, 0, 75);
@@ -53,12 +57,12 @@ $title-color: $black-medium;
  */
 
 // Base font.
-@include font-face("OpenSans Light", "../fonts/OpenSans-Light", $file-formats: woff ttf);
-@include font-face("OpenSans Light Italic", "../fonts/OpenSans-LightItalic", $file-formats: woff ttf);
-@include font-face("OpenSans Regular", "../fonts/OpenSans-Regular", $file-formats: woff ttf);
-@include font-face("OpenSans Regular Italic", "../fonts/OpenSans-RegularItalic", $file-formats: woff ttf);
-@include font-face("OpenSans Bold", "../fonts/OpenSans-Bold", $file-formats: woff ttf);
-@include font-face("OpenSans Bold Italic", "../fonts/OpenSans-BoldItalic", $file-formats: woff ttf);
+@include font-face("OpenSans Light", #{$font_dir_path}/OpenSans-Light, $file-formats: woff);
+@include font-face("OpenSans Light Italic", #{$font_dir_path}/OpenSans-LightItalic, $file-formats: woff);
+@include font-face("OpenSans Regular", #{$font_dir_path}/OpenSans-Regular, $file-formats: woff);
+@include font-face("OpenSans Regular Italic", #{$font_dir_path}/OpenSans-RegularItalic, $file-formats: woff);
+@include font-face("OpenSans Bold", #{$font_dir_path}/OpenSans-Bold, $file-formats: woff);
+@include font-face("OpenSans Bold Italic", #{$font_dir_path}/OpenSans-BoldItalic, $file-formats: woff);
 
 $fallbackFontFamily: Arial, Helvetica, Sans-Serif;
 $font-regular: 'OpenSans Regular', $fallbackFontFamily;
@@ -69,10 +73,10 @@ $font-bold: 'OpenSans Bold', $fallbackFontFamily;
 $font-bold-italic: 'OpenSans Bold Italic', $fallbackFontFamily;
 
 // Icon font.
-@include font-face("icomoon", "../fonts/icomoon", $file-formats: ttf woff svg eot);
+@include font-face("icomoon", #{$font_dir_path}/icomoon, $file-formats: woff);
 
 // Mikado font.
-@include font-face("Mikado", "../fonts/mikado", $file-formats: eot woff woff2 ttf);
+@include font-face("Mikado", #{$font_dir_path}/mikado, $file-formats: woff);
 
 $font-mikado: "Mikado";
 

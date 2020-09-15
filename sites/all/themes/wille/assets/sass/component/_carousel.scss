@@ -125,11 +125,11 @@ $carousel-outer-padding: 0 30px;
   }
 
   .slick-prev.slick-arrow {
-    background-image: url('../svg/arrow_left.svg');
+    background-image: url('../../../assets/svg/arrow_left.svg');
     left: 5px;
   }
   .slick-next.slick-arrow {
-    background-image: url('../svg/arrow_right.svg');
+    background-image: url('../../../assets/svg/arrow_right.svg');
     right: 5px;
   }
 }
@@ -170,11 +170,11 @@ $carousel-outer-padding: 0 30px;
   }
 
   .button-prev {
-    background-image: url('../svg/arrow_left.svg');
+    background-image: url('../../../assets/svg/arrow_left.svg');
     left: 0;
   }
   .button-next {
-    background-image: url('../svg/arrow_right.svg');
+    background-image: url('../../../assets/svg/arrow_right.svg');
     background-position-x: right;
     right: 0;
   }
@@ -213,7 +213,7 @@ $carousel-outer-padding: 0 30px;
   img {
     width: 100%;
     height: auto;
-    background-image: url('../images/placeholder.png');
+    background-image: url('../../../assets/images/placeholder.png');
     background-repeat: no-repeat;
     background-position: center center;
   }
@@ -336,12 +336,12 @@ $carousel-outer-padding: 0 30px;
   }
 
   .button-prev {
-    background-image: url('../svg/round_arrow_left.svg');
+    background-image: url('../../../assets/svg/round_arrow_left.svg');
     left: 0;
   }
 
   .button-next {
-    background-image: url('../svg/round_arrow_right.svg');
+    background-image: url('../../../assets/svg/round_arrow_right.svg');
     background-position-x: right;
     right: 0;
   }

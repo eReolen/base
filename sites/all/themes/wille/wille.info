@@ -3,8 +3,11 @@ name = Wille
 description = Theme for eReolen.dk for kids (eGO).
 core = 7.x
 release = 7.x-1.x
-stylesheets[all][] = css/wille.main.css
-stylesheets[print][] = css/wille.print.css
+stylesheets[all][] = build/app.css
+
+;-----------//Javascript.
+scripts[] = build/app.js
+
 
 ;-----------//Override.
 stylesheets[all][] = system.menus.css
@@ -13,9 +16,6 @@ stylesheets[all][] = search.css
 stylesheets[all][] = brin.styles.css
 stylesheets[all][] = ddbasic.styles.css
 stylesheets[all][] = ding_availability.css
-
-;-----------//Javascript.
-scripts[] = scripts/wille.main.js
 
 ;----------// Regions
 regions[header] = Header

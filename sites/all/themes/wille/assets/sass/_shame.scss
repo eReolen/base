@@ -1,3 +1,8 @@
+@import "~bourbon";
+@import "~bourbon-neat";
+@import "base/_vars";
+@import "base/_mixins";
+
 // TODO(ts) - temporary fix. Must be removed in pane.
 .node-type-breol-news {
   .main-content h2.pane-title {

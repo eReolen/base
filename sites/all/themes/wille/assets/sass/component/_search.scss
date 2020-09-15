@@ -312,7 +312,7 @@
       text-transform: uppercase;
       font-weight: normal;
       letter-spacing: 1px;
-      background: url(../images/select_arrow.png) transparent no-repeat 96% 18px;
+      background: url(../../../assets/images/select_arrow.png) transparent no-repeat 96% 18px;
       cursor: pointer;
 
       &:hover {
@@ -418,7 +418,7 @@
 
   &:before {
     content: " ";
-    background: url(../svg/camera.svg);
+    background: url(../../../assets/svg/camera.svg);
     background-size: 50px;
     background-repeat: no-repeat;
     background-position: 50%;
@@ -676,20 +676,20 @@
     background-repeat: no-repeat;
 
     &.list-view {
-      background-image: url("../images/list.png");
+      background-image: url("../../../assets/images/list.png");
 
       &.active,
       &:hover {
-        background-image: url("../images/list-inv.png");
+        background-image: url("../../../assets/images/list-inv.png");
       }
     }
 
     &.grid-view {
-      background-image: url("../images/grid.png");
+      background-image: url("../../../assets/images/grid.png");
 
       &.active,
       &:hover {
-        background-image: url("../images/grid-inv.png");
+        background-image: url("../../../assets/images/grid-inv.png");
       }
     }
   }
