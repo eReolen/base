@@ -127,7 +127,7 @@
       right: 0;
       overflow: hidden;
       top: 20px;
-      z-index: calc($z-index-menu -  1);
+      z-index: calc(#{$z-index-menu} -  1);
     }
 
     // Icons on menu items.

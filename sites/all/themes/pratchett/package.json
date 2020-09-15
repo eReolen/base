@@ -26,9 +26,7 @@
     "run-sequence": "^2.2.1",
     "sass-lint": "^1.7.0",
     "sass-loader": "^8.0.0",
-    "webpack-notifier": "^1.6.0"
-  },
-  "dependencies": {
+    "webpack-notifier": "^1.6.0",
     "core-js": "^3.6.5",
     "natives": "^1.1.6"
   }

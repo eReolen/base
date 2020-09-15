@@ -1,8 +1,8 @@
 {
+  "build/0.js": "/build/0.js",
   "build/app.css": "/build/app.css",
   "build/app.js": "/build/app.js",
   "build/runtime.js": "/build/runtime.js",
-  "build/vendors~app.js": "/build/vendors~app.js",
   "build/images/arrow_left.svg": "/build/images/arrow_left.e17771d1.svg",
   "build/images/arrow_right.svg": "/build/images/arrow_right.805214d3.svg",
   "build/images/camera.svg": "/build/images/camera.712d673b.svg",
