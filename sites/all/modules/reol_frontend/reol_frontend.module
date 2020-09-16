@@ -89,7 +89,7 @@ function theme_reol_overlay_icons($variables) {
 
   $quota_explanation = '';
   $wrapper_attributes = [
-    'class' => 'overlay-icons'
+    'class' => 'overlay-icons',
   ];
 
   foreach (array_filter($variables['icons']) as $icon) {
@@ -97,8 +97,9 @@ function theme_reol_overlay_icons($variables) {
       'class' => 'icon ' . $icon,
     ];
 
-    // If material-type is set, then it is of the type that has the material-icon and color-indication of quota
-    // $quota_explanation is for aria-label, so only "visible" for screen-readers.
+    // If material-type is set, then it is of the type that has the
+    // material-icon and color-indication of quota.  $quota_explanation is for
+    // aria-label, so only "visible" for screen-readers.
     if (isset($variables['material_type'])) {
       $quota_explanation = t('This material is a !type and is on your quota', array('!type' => $variables['material_type']));
     }
