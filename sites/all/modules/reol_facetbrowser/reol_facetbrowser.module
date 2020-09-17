@@ -11,6 +11,7 @@
 function reol_facetbrowser_form_ding_facetbrowser_form_alter(&$form, &$form_state) {
   if (isset($form['facet.type']['facet.type']['#options'])) {
     $groups = [
+      // Human readable name => real facet names.
       'Ebog' => [
         'ebog',
         'billedbog (net)',
@@ -32,12 +33,14 @@ function reol_facetbrowser_form_ding_facetbrowser_form_alter(&$form, &$form_stat
     $groupOptions = [];
     $search_term = preg_replace('@^search/ting/@', '', request_path());
     $search_query = drupal_get_query_parameters();
-    unset($search_query['group-facets']);
+    $activeGroupFacets = $search_query['facet-group-type'] ?? [];
     $search_string = $search_term . '?' . drupal_http_build_query($search_query);
+    $activeGroups = [];
 
     foreach ($groups as $name => $types) {
       $totalCount = 0;
       $groupFacets = [];
+      $isActive = FALSE;
       foreach ($types as $type) {
         if (isset($options[$type])) {
           if (preg_match('/(?P<count>\d+)/', strip_tags($options[$type]), $matches)) {
@@ -47,16 +50,27 @@ function reol_facetbrowser_form_ding_facetbrowser_form_alter(&$form, &$form_stat
           $groupFacets[] = $type;
           unset($options[$type]);
         }
+        if (in_array($type, $activeGroupFacets, TRUE)) {
+          $isActive = TRUE;
+        }
       }
       if (!empty($groupFacets)) {
-        $name .= ' [' . implode(', ', $groupFacets) . ']';
+        // $name .= ' [' . implode(', ', $groupFacets) . ']';
         $name .= ' (' . $totalCount . ')';
         $groupOptions[$name] = ting_field_search_link($name, $search_string, [],
-          ['query' => ['group-facets' => implode(',', $groupFacets)]]);
+          ['query' => ['facet-group-type' => $groupFacets]]);
+        if ($isActive) {
+          $activeGroups[] = $name;
+        }
       }
     }
 
-    // Merge group options with original (and unset) options.
+    $form['facet.type']['facet.type']['#default_value'] = array_merge(
+      $form['facet.type']['facet.type']['#default_value'],
+      $activeGroups
+    );
+
+    // Prepend group options to other options.
     $form['facet.type']['facet.type']['#options'] = array_merge($groupOptions, $options);
   }
 }
@@ -67,8 +81,8 @@ function reol_facetbrowser_form_ding_facetbrowser_form_alter(&$form, &$form_stat
 function reol_facetbrowser_opensearch_pre_execute($request) {
   $params = drupal_get_query_parameters();
 
-  if (isset($params['group-facets']) && $request instanceof TingClientSearchRequest) {
-    $groupFacets = preg_split('/,/', $params['group-facets'], NULL, PREG_SPLIT_NO_EMPTY);
+  if (isset($params['facet-group-type']) && $request instanceof TingClientSearchRequest) {
+    $groupFacets = $params['facet-group-type'];
     if (!empty($groupFacets)) {
       $query = $request->getQuery();
       if (!empty($query)) {
