@@ -15,6 +15,7 @@
     "autoprefixer": "^9.4.2",
     "bourbon": "^7.0.0",
     "browser-sync": "^2.18.13",
+    "copy-webpack-plugin": "^6.1.0",
     "core-js": "^3.6.5",
     "css-mqpacker": "^7.0.0",
     "del": "^3.0.0",

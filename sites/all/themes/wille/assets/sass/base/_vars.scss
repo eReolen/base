@@ -56,6 +56,50 @@ $title-color: $black-medium;
  * Fonts.
  */
 
+@font-face {
+  font-family: "OpenSans Light";
+  src:
+    url("../../fonts/OpenSans-Light.woff") format("woff"),
+    url("../../fonts/OpenSans-Light.ttf") format("ttf");
+}
+@font-face {
+  font-family: "OpenSans Light Italic";
+  src:
+    url("../../fonts/OpenSans-LightItalic.woff") format("woff"),
+    url("../../fonts/OpenSans-LightItalic.ttf") format("ttf");
+}
+@font-face {
+  font-family: "OpenSans Regular";
+  src:
+    url("../../fonts/OpenSans-Regular.woff") format("woff"),
+    url("../../fonts/OpenSans-Regular.ttf") format("ttf");
+}
+@font-face {
+  font-family: "OpenSans Bold";
+  src:
+    url("../../fonts/OpenSans-Bold.woff") format("woff"),
+    url("../../fonts/OpenSans-Bold.ttf") format("ttf");
+}
+@font-face {
+  font-family: "OpenSans Bold Italic";
+  src:
+    url("../../fonts/OpenSans-BoldItalic.woff") format("woff"),
+    url("../../fonts/OpenSans-BoldItalic.ttf") format("ttf");
+}
+@font-face {
+  font-family: "icomoon";
+  src:
+    url("../../fonts/icomoon.woff") format("woff"),
+    url("../../fonts/icomoon.ttf") format("ttf");
+}
+@font-face {
+  font-family: "Mikado";
+  src:
+    url("../../fonts/mikado.woff") format("woff"),
+    url("../../fonts/mikado.ttf") format("ttf");
+}
+
+/*
 // Base font.
 @include font-face("OpenSans Light", #{$font_dir_path}/OpenSans-Light, $file-formats: woff);
 @include font-face("OpenSans Light Italic", #{$font_dir_path}/OpenSans-LightItalic, $file-formats: woff);
@@ -63,6 +107,7 @@ $title-color: $black-medium;
 @include font-face("OpenSans Regular Italic", #{$font_dir_path}/OpenSans-RegularItalic, $file-formats: woff);
 @include font-face("OpenSans Bold", #{$font_dir_path}/OpenSans-Bold, $file-formats: woff);
 @include font-face("OpenSans Bold Italic", #{$font_dir_path}/OpenSans-BoldItalic, $file-formats: woff);
+*/
 
 $fallbackFontFamily: Arial, Helvetica, Sans-Serif;
 $font-regular: 'OpenSans Regular', $fallbackFontFamily;
@@ -73,10 +118,10 @@ $font-bold: 'OpenSans Bold', $fallbackFontFamily;
 $font-bold-italic: 'OpenSans Bold Italic', $fallbackFontFamily;
 
 // Icon font.
-@include font-face("icomoon", #{$font_dir_path}/icomoon, $file-formats: woff);
+// @include font-face("icomoon", #{$font_dir_path}/icomoon, $file-formats: woff);
 
 // Mikado font.
-@include font-face("Mikado", #{$font_dir_path}/mikado, $file-formats: woff);
+//@include font-face("Mikado", #{$font_dir_path}/mikado, $file-formats: woff);
 
 $font-mikado: "Mikado";
 

@@ -4,6 +4,7 @@ description = Theme for eReolen.dk for kids (eGO).
 core = 7.x
 release = 7.x-1.x
 stylesheets[all][] = build/app.css
+stylesheets[print][] = build/print.css
 
 ;-----------//Javascript.
 scripts[] = build/app.js
