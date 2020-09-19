@@ -559,6 +559,10 @@ function opensearch_search_sort_options() {
       'label' => t('Date (Ascending)'),
       'sort' => new TingSearchSort(TingSearchCommonFields::DATE, TingSearchSort::DIRECTION_ASCENDING),
     ],
+    'numberInSeries_ascending' => [
+      'label' => t('Number in series (Ascending)'),
+      'sort' => new TingSearchSort('numberInSeries_ascending'),
+    ],
   ];
 
   // Do not show sort-options specific for rank_frequency if
