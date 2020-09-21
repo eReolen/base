@@ -10,30 +10,17 @@
  */
 function reol_facetbrowser_form_ding_facetbrowser_form_alter(&$form, &$form_state) {
   if (isset($form['facet.type']['facet.type']['#options'])) {
-    $groups = [
-      // Human readable name => real facet names.
-      'Ebog' => [
-        'ebog',
-        'billedbog (net)',
-        'tegneserie (net)',
-        'graphic novel (net)',
-      ],
-      'Lydbog' => [
-        'lydbog (net)',
-        'lydbog (bånd)',
-        'lydbog (cd)',
-      ],
-      'Podcast' => [
-        'lyd (podcast)',
-        'lyd (net)',
-      ],
-    ];
+    $groups = _reol_facetbrowser_get_facet_groups('type');
+    if (empty($groups)) {
+      return;
+    }
 
     $options = $form['facet.type']['facet.type']['#options'];
     $groupOptions = [];
-    $search_term = preg_replace('@^search/ting/@', '', request_path());
     $search_query = drupal_get_query_parameters();
     $activeGroupFacets = $search_query['facet-group-type'] ?? [];
+    unset($search_query['facet-group-type']);
+    $search_term = preg_replace('@^search/ting/@', '', request_path());
     $search_string = $search_term . '?' . drupal_http_build_query($search_query);
     $activeGroups = [];
 
@@ -57,8 +44,12 @@ function reol_facetbrowser_form_ding_facetbrowser_form_alter(&$form, &$form_stat
       if (!empty($groupFacets)) {
         // $name .= ' [' . implode(', ', $groupFacets) . ']';
         $name .= ' (' . $totalCount . ')';
-        $groupOptions[$name] = ting_field_search_link($name, $search_string, [],
-          ['query' => ['facet-group-type' => $groupFacets]]);
+        $groupOptions[$name] = ting_field_search_link(
+          $name,
+          $search_string,
+          [],
+          ['query' => $isActive ? [] : ['facet-group-type' => $groupFacets]]
+        );
         if ($isActive) {
           $activeGroups[] = $name;
         }
@@ -96,4 +87,39 @@ function reol_facetbrowser_opensearch_pre_execute($request) {
       $request->setQuery($query);
     }
   }
+}
+
+/**
+ * Get facets groups.
+ *
+ * @param string $facet
+ *   The facet.
+ *
+ * @return null|array
+ *   The facet group if any.
+ */
+function _reol_facetbrowser_get_facet_groups($facet) {
+  switch ($facet) {
+    case 'type':
+      return [
+        // Human readable name => real facet names.
+        'Ebog' => [
+          'ebog',
+          'billedbog (net)',
+          'tegneserie (net)',
+          'graphic novel (net)',
+        ],
+        'Lydbog' => [
+          'lydbog (net)',
+          'lydbog (bånd)',
+          'lydbog (cd)',
+        ],
+        'Podcast' => [
+          'lyd (podcast)',
+          'lyd (net)',
+        ],
+      ];
+  }
+
+  return [];
 }
