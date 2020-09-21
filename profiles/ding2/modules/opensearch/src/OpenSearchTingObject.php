@@ -191,7 +191,6 @@ class OpenSearchTingObject implements TingObjectInterface {
       'dkdcplus:genre',
       'dkdcplus:DK5',
       'dkdcplus:DK5-Text',
-      'dkdcplus:DBCO',
       'dkdcplus:DBCN',
     ];
     $subjects = $this->filterRecordsExclude($this->getRecordLevel('dc:subject'), $search_only_fields);

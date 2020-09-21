@@ -1,0 +1,12 @@
+diff --git a/profiles/ding2/modules/opensearch/src/OpenSearchTingObject.php b/profiles/ding2/modules/opensearch/src/OpenSearchTingObject.php
+index 3ea7dccb..aa7a2b33 100644
+--- a/profiles/ding2/modules/opensearch/src/OpenSearchTingObject.php
++++ b/profiles/ding2/modules/opensearch/src/OpenSearchTingObject.php
+@@ -191,7 +191,6 @@ class OpenSearchTingObject implements TingObjectInterface {
+       'dkdcplus:genre',
+       'dkdcplus:DK5',
+       'dkdcplus:DK5-Text',
+-      'dkdcplus:DBCO',
+       'dkdcplus:DBCN',
+     ];
+     $subjects = $this->filterRecordsExclude($this->getRecordLevel('dc:subject'), $search_only_fields);
