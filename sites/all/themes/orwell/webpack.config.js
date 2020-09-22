@@ -11,9 +11,9 @@ Encore
 // directory where compiled assets will be stored
   .setOutputPath('build/')
   // public path used by the web server to access the output path
-  .setPublicPath('/build')
+  .setPublicPath('.')
   // only needed for CDN's or sub-directory deploy
-  //.setManifestKeyPrefix('build/')
+  .setManifestKeyPrefix('build/')
 
   /*
    * ENTRY CONFIG
@@ -25,10 +25,9 @@ Encore
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
   .addEntry('app', './assets/app.js')
-  //.addEntry('ckeditor', './components/03-molecules/wysiwyg/wysiwyg.js')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
-  .splitEntryChunks()
+  //.splitEntryChunks()
 
   // will require an extra script tag for runtime.js
   // but, you probably want this, unless you're building a single-page app
@@ -54,12 +53,15 @@ Encore
   })
 
   // enables Sass/SCSS support
-  .enableSassLoader()
+  .enableSassLoader(function(options) {
+    // https://github.com/sass/node-sass#options
+    options.sassOptions.includePaths = ['~'];
+  })
 
-
-  .addPlugin(new CopyWebpackPlugin({patterns: [
-      { from: './assets/fonts', to: 'fonts' }
-    ]}))
+  .addPlugin(new CopyWebpackPlugin({patterns : [{
+      from: 'assets/fonts/',
+      to: 'fonts/'
+    }]}))
 
   // uncomment if you use TypeScript
   //.enableTypeScriptLoader()

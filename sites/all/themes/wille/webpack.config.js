@@ -26,7 +26,6 @@ Encore
    */
   .addEntry('app', './assets/app.js')
   .addEntry('print', './assets/sass/wille.print.scss')
-  //.addEntry('ckeditor', './components/03-molecules/wysiwyg/wysiwyg.js')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   //.splitEntryChunks()
@@ -61,8 +60,8 @@ Encore
   })
 
   .addPlugin(new CopyWebpackPlugin({patterns : [{
-    from: 'assets/images/',
-    to: 'images/'
+    from: 'assets/fonts/',
+    to: 'fonts/'
   }]}))
 
   // uncomment if you use TypeScript

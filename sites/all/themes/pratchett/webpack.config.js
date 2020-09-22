@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -10,9 +11,9 @@ Encore
 // directory where compiled assets will be stored
   .setOutputPath('build/')
   // public path used by the web server to access the output path
-  .setPublicPath('/build')
+  .setPublicPath('.')
   // only needed for CDN's or sub-directory deploy
-  //.setManifestKeyPrefix('build/')
+  .setManifestKeyPrefix('build/')
 
   /*
    * ENTRY CONFIG
@@ -24,10 +25,9 @@ Encore
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
   .addEntry('app', './assets/app.js')
-  //.addEntry('ckeditor', './components/03-molecules/wysiwyg/wysiwyg.js')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
-  .splitEntryChunks()
+  //.splitEntryChunks()
 
   // will require an extra script tag for runtime.js
   // but, you probably want this, unless you're building a single-page app
@@ -53,7 +53,10 @@ Encore
   })
 
   // enables Sass/SCSS support
-  .enableSassLoader()
+  .enableSassLoader(function(options) {
+    // https://github.com/sass/node-sass#options
+    options.sassOptions.includePaths = ['~'];
+  })
 
   // uncomment if you use TypeScript
   //.enableTypeScriptLoader()
