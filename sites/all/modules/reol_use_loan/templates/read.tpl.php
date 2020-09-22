@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Default e-book reader template.

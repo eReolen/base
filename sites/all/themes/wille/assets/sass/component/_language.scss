@@ -5,7 +5,7 @@
   text-decoration: none;
   font-family: $font-light;
   font-size: 12px;
-  margin-top: 5px;
+  line-height: normal;
   &:before {
     @include icon('flag');
     margin-right: 5px;

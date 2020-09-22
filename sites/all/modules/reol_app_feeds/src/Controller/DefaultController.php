@@ -63,7 +63,7 @@ class DefaultController {
 
   /**
    * Get a query parameter by name.
-
+   *
    * @param string $name
    *   The parameter name.
    * @param mixed $defaultValue

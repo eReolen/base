@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Inserts the DDB widget into selected pages.
@@ -40,7 +41,7 @@ function ddb_widget_preprocess_html(&$variables) {
     ],
     'script' => [
       'code' => '',
-    ]
+    ],
   ]);
 
   // If a block has no roles associated, it is displayed for every role.

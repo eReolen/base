@@ -37,11 +37,12 @@
     </header>
   <?php endif; ?>
 
-  <div class="main-content">
+  <main class="main-content">
+    <a id="main-content" tabindex="-1"></a>
     <div class="main-content__inner">
       <?php print render($content['content']); ?>
     </div>
-  </div>
+  </main>
 
   <?php if (!empty($content['footer'])): ?>
     <footer class="footer">

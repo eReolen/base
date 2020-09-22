@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Defines the extra field for the ting entities and formatters for the fields.
@@ -104,6 +105,7 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
           }
 
           $element[$delta] = array(
+            // phpcs:ignore
             '#markup' => t($pub_prod->format->name),
           );
         }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Defines the administration interface for configuring announcements
+ * Defines the administration interface for configuring announcements.
  */
 
 /**
@@ -15,7 +16,7 @@
  * @return array
  *   The finished form.
  */
-function reol_announcement_settings_form($form, &$form_state) {
+function reol_announcement_settings_form(array $form, array &$form_state) {
   $form['reol_announcement_state'] = array(
     '#type' => 'radios',
     '#title' => t('Announcement state'),

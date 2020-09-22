@@ -124,8 +124,7 @@ function reol_base_menu_alter(&$items) {
   $items['user/%user/status']['access callback'] = FALSE;
   $items['user/%user/status-reservations-ready']['access callback'] = FALSE;
 
-
-  // Disable informedia and full text
+  // Disable informedia and full text.
   $items['ting/infomedia/%infomedia']['access callback'] = FALSE;
   $items['ting/object/infomedia/%']['access callback'] = FALSE;
 
@@ -179,7 +178,7 @@ function reol_base_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- * Implements hook_strongarm_import_value_alter()
+ * Implements hook_strongarm_import_value_alter().
  */
 function reol_base_strongarm_import_value_alter(&$value, $name) {
   if ('media_wysiwyg_default_render' == $name) {
@@ -438,7 +437,6 @@ function reol_base_image_default_styles() {
 
   return $styles;
 }
-
 
 /**
  * Implements hook_entity_load().
@@ -946,7 +944,7 @@ function reol_base_ding_entity_get_ids(array $isbns) {
     $mapping = array();
     foreach ($chunks as $isbn_chunk) {
       $results = ting_start_query()
-        ->withFullTextQuery('ib any "'. implode(" ", $isbn_chunk) .'"')
+        ->withFullTextQuery('ib any "' . implode(" ", $isbn_chunk) . '"')
         ->withCount(50)
         ->withPage(1)
         ->withFacets(array('facet.type'))
@@ -1641,7 +1639,6 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   }
 }
 
-
 /**
  * Implements hook_field_group_info_alter().
  */
@@ -1954,7 +1951,7 @@ function reol_base_get_series_data(TingEntity $entity) {
 }
 
 /**
- * Implements hook_form_search_block_form_alter().
+ * Implements hook_form_FORM_ID_alter().
  *
  * Change the max length of the search input form.
  */

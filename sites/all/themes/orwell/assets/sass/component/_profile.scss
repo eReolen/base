@@ -14,7 +14,6 @@
         flex-basis: 75%;
         order: 2;
       }
-
     }
 
     .secondary-content {
@@ -30,9 +29,9 @@
     .secondary-content .panel-pane {
       margin: 0 1rem 2rem;
     }
-
   }
 
+  h1,
   h2,
   h3 {
     font-family: $font-light;
@@ -42,7 +41,6 @@
     @include grid-media($medium) {
       font-size: 2.1rem;
     }
-
   }
 
   .pane-content {
@@ -54,7 +52,6 @@
       color: $color__link__default;
     }
   }
-
 
   .pane-user-menu {
     li,

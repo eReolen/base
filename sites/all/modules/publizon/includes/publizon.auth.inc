@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Implements functions used to log users into the system through SSO services.

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Code for the eReolen use loan module feature.
@@ -47,7 +48,7 @@ function reol_use_loan_theme($existing, $type, $theme, $path) {
   return array(
     'reol_use_loan_html' => array(
       'variables' => array(
-        'vars' => NULL
+        'vars' => NULL,
       ),
       'path' => $path,
       'template' => 'templates/html',
@@ -91,14 +92,14 @@ function reol_use_loan_ding_session_cache_defaults() {
 /**
  * Page deliver callback for publizon reader/player.
  *
- * The players form publizon has issues with the JavaScript form Drupal and DDB
- * CMS core. So this callback makes an minimal page to display the readers.
- *
- * @TODO: Added fav-icon rel headers to rendered page.
- *
- * @param $page_callback_result
+ * @param mixed $page_callback_result
  *   Page content as render array.
  *
+ *   The players form publizon has issues with the JavaScript form
+ *   Drupal and DDB CMS core. So this callback makes an minimal
+ *   page to display the readers.
+ *
+ * @TODO: Added fav-icon rel headers to rendered page.
  * @throws \Exception
  */
 function reol_use_loan_deliver_html_page($page_callback_result) {
@@ -132,7 +133,7 @@ function reol_use_loan_deliver_html_page($page_callback_result) {
 
     $variables['scripts'] = drupal_get_js('player', NULL, TRUE);
 
-    // Set page content
+    // Set page content.
     $variables['content'] = $page_callback_result;
 
     print theme('reol_use_loan_html', $variables);
@@ -143,7 +144,7 @@ function reol_use_loan_deliver_html_page($page_callback_result) {
 /**
  * Menu callback to display e-book reader.
  *
- * @param $id
+ * @param string $id
  *   Ting object entity id.
  *
  * @return array
@@ -219,7 +220,7 @@ function reol_use_loan_read($id) {
 /**
  * Menu callback to display audio-book reader.
  *
- * @param $id
+ * @param string $id
  *   Ting object entity id.
  *
  * @return array
@@ -261,7 +262,7 @@ function reol_use_loan_listen($id) {
  * Call the Publizon stream session API to get a session
  * for the reader.
  *
- * @param $retailer_order
+ * @param string $retailer_order
  *   Order id for the session to renew.
  */
 function reol_use_loan_reader_renew_session($retailer_order) {
@@ -288,7 +289,7 @@ function reol_use_loan_reader_renew_session($retailer_order) {
     }
 
     // Get the retailer id on the user.
-    $retailer_id = null;
+    $retailer_id = NULL;
     if (isset($_SESSION['ding_user']['user']['data']['retailer_id'])) {
       $retailer_id = $_SESSION['ding_user']['user']['data']['retailer_id'];
     }
@@ -425,7 +426,6 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
  *   Array containing retailer and internal order numbers.
  *   FALSE on error.
  *
- * @return bool|mixed
  * @throws \DingProviderDoesntImplement
  * @throws \DingProviderNoProvider
  */
@@ -449,7 +449,7 @@ function reol_use_loan_get_order($local_id) {
 /**
  * Deliver read/listen pages using ajax.
  *
- * @param $id
+ * @param string $id
  *   Ting object entity id.
  * @param string $type
  *   Either read or listen.
@@ -483,7 +483,7 @@ function reol_use_loan_use_loan_ajax($id, $type) {
 /**
  * Helper function get get local id for an given id.
  *
- * @param $id
+ * @param string $id
  *   Id for material.
  *
  * @return string

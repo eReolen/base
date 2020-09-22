@@ -9,8 +9,23 @@
  * Category entity.
  */
 class ReolCategory extends Entity {
+  /**
+   * TODO Missing short description in doc comments.
+   *
+   * @var string
+   */
   public $title;
+  /**
+   * TODO Missing short description in doc comments.
+   *
+   * @var string
+   */
   public $path;
+  /**
+   * TODO Missing short description in doc comments.
+   *
+   * @var string
+   */
   public $query;
 
   /**
@@ -26,4 +41,5 @@ class ReolCategory extends Entity {
   public function targetPath() {
     return 'search/ting/' . $this->query;
   }
+
 }

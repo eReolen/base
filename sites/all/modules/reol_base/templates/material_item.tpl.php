@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Material item template.

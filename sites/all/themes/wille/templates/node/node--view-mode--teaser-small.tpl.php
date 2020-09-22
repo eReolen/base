@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @file
+ * Todo missing short description in doc comment.
+ */
+?>
 <div class="article article--teaser article--teaser--small <?php print $classes; ?>">
   <?php if (!empty($content['field_breol_cover_image'])) :?>
     <?php print render($content['field_breol_cover_image']); ?>
@@ -9,7 +16,8 @@
   <div class="article--teaser__title">
     <?php print($teaser_title); ?>
   </div>
-  <div class="article--teaser__overlay" <?php if(!empty($rgba_background)) print $rgba_background; ?>></div>
+  <div class="article--teaser__overlay" <?php if(!empty($rgba_background)) {print $rgba_background;
+ } ?>></div>
   <div class="article--teaser__caption">
     <?php print($teaser_caption); ?>
   </div>

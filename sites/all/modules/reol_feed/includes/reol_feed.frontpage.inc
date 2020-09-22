@@ -63,7 +63,7 @@ function reol_feed_feeds_frontpage() {
  * @param callable $add_callback
  *   The callback for adding the item to feed.
  */
-function reol_feed_feeds_add_items($type, $e_feed, $a_feed, $add_callback) {
+function reol_feed_feeds_add_items($type, SimpleXMLElement $e_feed, SimpleXMLElement $a_feed, callable $add_callback) {
   $feed_item_count = variable_get('reol_feed_frontpage_item_count', 2);
   // Add item to feeds.
   $item_array = array(
@@ -97,7 +97,7 @@ function reol_feed_feeds_add_items($type, $e_feed, $a_feed, $add_callback) {
  * @param StdClass $node
  *   The news item object.
  */
-function reol_feed_feeds_add_news_item($feed, $source, $node) {
+function reol_feed_feeds_add_news_item(SimpleXMLElement $feed, $source, StdClass $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
@@ -160,7 +160,7 @@ function reol_feed_feeds_add_news_item($feed, $source, $node) {
  * @param StdClass $node
  *   The video object.
  */
-function reol_feed_feeds_add_video($feed, $source, $node) {
+function reol_feed_feeds_add_video(SimpleXMLElement $feed, $source, StdClass $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
@@ -197,7 +197,7 @@ function reol_feed_feeds_add_video($feed, $source, $node) {
  * @param StdClass $node
  *   The author portrait object.
  */
-function reol_feed_feeds_add_author_portrait($feed, $source, $node) {
+function reol_feed_feeds_add_author_portrait(SimpleXMLElement $feed, $source, StdClass $node) {
   $node_wrapper = entity_metadata_wrapper('node', $node);
 
   $item = $feed->addChild('item');
@@ -230,7 +230,7 @@ function reol_feed_feeds_add_author_portrait($feed, $source, $node) {
  * @param StdClass $review
  *   The review object.
  */
-function reol_feed_feeds_add_review($feed, $source, $review) {
+function reol_feed_feeds_add_review(SimpleXMLElement $feed, $source, StdClass $review) {
   $item = $feed->addChild('item');
 
   $item->guid = 'r_' . md5($review->link);

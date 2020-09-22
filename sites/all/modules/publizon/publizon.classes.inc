@@ -9,8 +9,23 @@
  * Publizon provider exception.
  */
 class PublizonDingProviderException extends DingProviderEnduserException {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var bool
+   */
   private $showBookmark;
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var bool
+   */
   private $showReserve;
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var exception
+   */
   private $exception;
 
   /**
@@ -21,7 +36,7 @@ class PublizonDingProviderException extends DingProviderEnduserException {
    * @throws PublizonDingProviderException
    *   The new exception.
    */
-  static public function convert(PublizonException $publizon_exception) {
+  public static function convert(PublizonException $publizon_exception) {
     $code = $publizon_exception->getCode();
     $message = publizon_get_message($code);
 
@@ -55,17 +70,42 @@ class PublizonDingProviderException extends DingProviderEnduserException {
 
 }
 
+// phpcs:disable Drupal.NamingConventions.ValidVariableName.LowerCamelName
 /**
  * Represents a library.
  *
  * Not called PublizonLibrary as that's already taken by the client.
  */
 class PublizonConfiguredLibrary {
-
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var string
+   */
   public $retailer_id = '';
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var string
+   */
   public $library_name = '';
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var string
+   */
   public $unilogin_id = '';
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var string
+   */
   public $retailer_key_code = '';
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var string
+   */
   public $subscribed_users = '';
 
   /**
@@ -90,3 +130,4 @@ class PublizonConfiguredLibrary {
   }
 
 }
+// phpcs:enable

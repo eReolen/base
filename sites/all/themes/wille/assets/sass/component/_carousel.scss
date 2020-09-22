@@ -82,7 +82,7 @@ $carousel-outer-padding: 0 30px;
       a {
         color: $black;
         font-family: $font-bold;
-        font-size: 14px;
+        font-size: 14pt;
         text-decoration: none;
         text-transform: uppercase;
       }
@@ -93,16 +93,16 @@ $carousel-outer-padding: 0 30px;
         position: relative;
         // Try to make the stem of the arrow line up with the text.
         top: 1px;
-        font-size: 15px;
+        font-size: 14pt;
       }
 
       @include media($tablet-l) {
         a {
-          font-size: 10px;
+          font-size: 14pt;
         }
 
         &::after {
-          font-size: 14px;
+          font-size: 14pt;
         }
       }
     }
@@ -191,10 +191,8 @@ $carousel-outer-padding: 0 30px;
   color: $title-color;
   text-decoration: none;
   font-family: $font-regular;
-  line-height: 20px;
   margin-top: 10px;
   margin-bottom: 5px;
-  font-weight: bold;
   display: block;
 
   // One line - word wrap with ellipsis.
@@ -241,29 +239,30 @@ $carousel-outer-padding: 0 30px;
     color: $title-color;
     text-decoration: none;
     font-family: $font-regular;
-    line-height: 20px;
-    margin-top: 10px;
-    margin-bottom: 5px;
     font-weight: bold;
     display: block;
-    // Reset h2 size.
-    font-size: 12px;
+    font-size: 14pt;
+    line-height: normal;
 
     // One line - word wrap with ellipsis.
     @include word-wrap();
+
+    max-width: 100%;
   }
 
-  .field-name-ting-author {
+  .field-name-ting-author div div {
     // Override _search.scss.
     font-family: $font-light;
-    font-size: 10px;
+    font-size: 14pt;
+    line-height: normal;
+    // One line - word wrap with ellipsis.
+    @include word-wrap();
+    max-width: 100%;
   }
 
   .ting-object.view-mode-compact {
-    // show dots at end of line.
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    // One line - word wrap with ellipsis.
+    @include word-wrap();
     color: $title-color;
 
     .material-carousel-colored & {
@@ -274,6 +273,10 @@ $carousel-outer-padding: 0 30px;
     .field-type-ting-details-language,
     .field-type-ting-details-language div {
       display: inline-block;
+      font-size: 14pt;
+      &:before {
+        font-size: 12pt;
+      }
     }
 
     .field-type-ting-series,
@@ -287,12 +290,12 @@ $carousel-outer-padding: 0 30px;
     }
 
     .field-type-ting-series {
-      font-size: 12px;
+      font-size: 14pt;
 
       .material__series-number {
         &::before {
           @include icon('stack-solid');
-          font-size: 12px;
+          font-size: 14pt;
           margin-right: 5px;
         }
       }
@@ -321,8 +324,12 @@ $carousel-outer-padding: 0 30px;
   }
 
   .field-name-ting-title h2,
-  .field-name-ting-author {
+  .field-name-ting-author div div {
     color: #fff;
+    line-height: normal;
+    margin: 0px;
+    @include word-wrap();
+    max-width: 100%;
   }
 
   .button-prev,
@@ -345,7 +352,6 @@ $carousel-outer-padding: 0 30px;
     background-position-x: right;
     right: 0;
   }
-
 }
 
 .paragraphs-item-article-carousel,

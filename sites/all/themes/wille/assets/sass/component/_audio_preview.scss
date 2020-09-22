@@ -44,6 +44,7 @@
   .audio-preview__header {
     font-family: $font-mikado;
     text-transform: uppercase;
+    font-size: 14pt;
   }
 
   .audio-preview__title {
@@ -52,6 +53,8 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-size: 14pt;
+    line-height: normal;
   }
 
   .audio-preview__button {

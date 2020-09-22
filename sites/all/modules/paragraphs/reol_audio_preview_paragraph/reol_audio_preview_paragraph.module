@@ -36,7 +36,7 @@ function reol_audio_preview_paragraph_preprocess_entity(&$variables) {
         list($isbn,) = $ting_entity->getIsbn();
         $variables['isbn'] = $isbn;
         $variables['cover'] = $build['ting_cover'];
-        $variables['author'] = check_plain(reol_audio_preview_getAuthor($ting_entity));
+        $variables['author'] = check_plain(reol_audio_preview_get_author($ting_entity));
         $variables['title'] = check_plain($ting_entity->getTitle());
       }
     }
@@ -46,12 +46,13 @@ function reol_audio_preview_paragraph_preprocess_entity(&$variables) {
 /**
  * Helper function to get author.
  *
- * @param $ting_entity
+ * @param TingEntity $ting_entity
  *   The entity to get author from.
  *
  * @return mixed
+ *   The author of the TingEntity.
  */
-function reol_audio_preview_getAuthor($ting_entity) {
+function reol_audio_preview_get_author(TingEntity $ting_entity) {
   $creators = $ting_entity->getCreators();
   if (!empty($creators)) {
     $author = array_shift($creators);

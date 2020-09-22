@@ -1,10 +1,15 @@
 <?php
+
 /**
  * @file
  * Implementation of communicating with the Publizon API for libraries.
  */
 
+/**
+ * TODO doc comment is empty.
+ */
 class PublizonLibraryClient extends PublizonClient {
+
   /**
    * Get basic information about a given library as registered at Publizon.
    *
@@ -30,4 +35,5 @@ class PublizonLibraryClient extends PublizonClient {
     $this->logger->log('The library profile with id (' . $retailer_id . ') did not return any data', 'WARNING');
     return FALSE;
   }
+
 }
