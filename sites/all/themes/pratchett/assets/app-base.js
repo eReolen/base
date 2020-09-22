@@ -1,5 +1,5 @@
 
-// assets/js/app.js
+// assets/js/app-base.js
 /*
  * Welcome to your app's main JavaScript file!
  *

@@ -21,10 +21,10 @@ Encore
    * Add 1 entry for each "page" of your app
    * (including one that's included on every page - e.g. "app")
    *
-   * Each entry will result in one JavaScript file (e.g. app.js)
+   * Each entry will result in one JavaScript file (e.g. app-base.js)
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
-  .addEntry('app', './assets/app.js')
+  .addEntry('app-base', './assets/app-base.js')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   //.splitEntryChunks()

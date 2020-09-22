@@ -1,12 +1,12 @@
 {
   "entrypoints": {
-    "app": {
+    "app-base": {
       "js": [
         "./runtime.js",
-        "./app.js"
+        "./app-base.js"
       ],
       "css": [
-        "./app.css"
+        "./app-base.css"
       ]
     }
   }
