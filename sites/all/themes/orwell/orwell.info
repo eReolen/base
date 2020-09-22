@@ -3,7 +3,6 @@ name = Orwell
 description = eReol theme.
 core = 7.x
 release = 7.x-1.x
-stylesheets[all][] = css/orwell.main.css
 stylesheets[all][] = system.menus.css
 stylesheets[all][] = system.theme.css
 stylesheets[all][] = field.css
