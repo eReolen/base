@@ -41,9 +41,18 @@ function itk_cookieinformation_preprocess_html_tag(&$vars) {
     // Add consent check to google analytics inline script.
     if (strpos($vars['element']['#value'], 'GoogleAnalyticsObject')) {
       $value = $vars['element']['#value'];
-      $vars['element']['#value'] = "window.addEventListener('CookieInformationConsentGiven', function (event) { 
-if (CookieInformation.getConsentGivenFor('cookie_cat_marketing')) {" . $value . "} 
+      $vars['element']['#value'] = "window.addEventListener('CookieInformationConsentGiven', function (event) {
+if (CookieInformation.getConsentGivenFor('cookie_cat_marketing')) {" . $value . "}
 }, false);";
+    }
+
+    // Add consent to webtrekk.
+    if (strpos($vars['element']['#attributes']['src'], 'cdn.wbtrk.net/js/geid.min.js') ||
+      strpos($vars['element']['#attributes']['src'], 'webtrekk')) {
+      $src = $vars['element']['#attributes']['src'];
+      $vars['element']['#attributes']['data-consent-src'] = $src;
+      $vars['element']['#attributes']['src'] = '';
+      $vars['element']['#attributes']['data-category-consent'] = 'cookie_cat_statistic';
     }
   }
 }
