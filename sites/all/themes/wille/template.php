@@ -90,8 +90,13 @@ function wille_preprocess_node(&$variables, $hook) {
  * search results where the cover represents more than one material (likely of
  * different types).
  *
- * @deprecated by pratchett_ting_collection_view_alter() when using that as
- * base theme.
+ * TODO fix below deprecated tag.
+ *
+ * // phpcs:ignore
+ * @deprecated in deprecation-version and is removed from removal-version. depreacated by
+ * pratchett_ting_collection_view_alter() when using that as base theme.
+ * // phpcs:ignore
+ * @see sites/all/themes/pratchett/template.php
  */
 function wille_ting_collection_view_alter(&$build) {
   if (isset($build['ting_primary_object'])) {
@@ -116,12 +121,17 @@ function wille_ting_object_cover($variables) {
     'class' => implode(' ', $variables['classes']),
   );
 
+  if (isset($variables['label_info']['type'], $variables['label_info']['on_quota'])) {
+    $type = $variables['label_info']['type'];
+    $quota_explanation = $variables['label_info']['on_quota']
+                       ? t('This material is a !type and is on your quota', ['!type' => $type])
+                       : t('This material is a !type and is not on your quota', ['!type' => $type]);
+    $attributes['aria-label'] = $quota_explanation;
+  }
   foreach ($variables['data'] as $name => $value) {
     $attributes['data-' . $name] = $value;
   }
-
   $cover = '<div ' . drupal_attributes($attributes) . '>' . $variables['image'] . '</div>';
-
   // Add link if the id is not to a fake material.
   $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
   if (!reol_base_fake_id($ding_entity_id)) {
@@ -144,6 +154,10 @@ function wille_preprocess_ting_object_cover(&$vars) {
         $type = reol_base_get_type_icon($entity->type);
         if ($type) {
           $vars['classes'] = array_merge($vars['classes'], _wille_type_icon_classes($type, $entity->reply->on_quota));
+          $vars['label_info'] = [
+            'on_quota' => $entity->reply->on_quota,
+            'type' => $entity->type,
+          ];
         }
       }
     }
@@ -193,6 +207,13 @@ function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 
   // Hide submit button.
   $form['actions']['#attributes']['class'][] = 'element-invisible';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function wille_form_ting_search_per_page_form_alter(&$form, &$form_state, $form_id) {
+  $form['size']['#title'] = t('Search results pr page');
 }
 
 /**
@@ -330,9 +351,9 @@ function _wille_alter_brightness($colourstr, $steps) {
 }
 
 /**
- * Implemnets hook_js_alter(),
+ * Implemnets hook_js_alter().
  *
- * Unload ding2 related javascript since it breaks width on search filter select.
+ * Unload ding2 related js since it breaks width on search filter select.
  */
 function wille_js_alter(&$javascript) {
   unset($javascript['profiles/ding2/modules/ding_ting_frontend/js/select_autosize.js']);

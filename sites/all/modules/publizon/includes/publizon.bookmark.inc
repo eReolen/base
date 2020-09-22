@@ -14,7 +14,6 @@
  * @return array
  *   Array of ISBN numbers of the bookmarks for the user.
  *
- *
  * @throws DingProviderAuthException
  */
 function publizon_bookmark_list($account) {
@@ -76,7 +75,6 @@ function publizon_bookmark_create($account, $local_id) {
  *
  * @throws DingProviderAuthException
  * @throws PublizonDingProviderException
-
  */
 function publizon_bookmark_delete($account, $local_id) {
   // Throw exception if we're not logged in.

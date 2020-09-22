@@ -1,10 +1,15 @@
 <?php
+
 /**
  * @file
  * Implementation of communicating with the Publizon API for reservations.
  */
 
+/**
+ * TODO doc comment is empty.
+ */
 class PublizonReservationClient extends PublizonClient {
+
   /**
    * Create a reservation.
    *
@@ -113,4 +118,5 @@ class PublizonReservationClient extends PublizonClient {
     $this->logger->log('Create reservation request returned no/invalid data (' . $isbn . ').', 'ERROR');
     throw new PublizonException('Create reservation request returned no/invalid data (' . $isbn . ').');
   }
+
 }

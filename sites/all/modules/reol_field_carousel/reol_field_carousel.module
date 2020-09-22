@@ -217,15 +217,15 @@ function reol_field_carousel_build_covers($render_method, $collections) {
     // entities when rendering "material". We handle "material" above as a
     // workaround.
     // case 'material':
-    //   $ding_entity_ids = array_map(function ($object) {
-    //     return $object->id;
-    //   }, $collections);
+    // $ding_entity_ids = array_map(function ($object) {
+    // return $object->id;
+    // }, $collections);
     //
-    //   $entities = ding_entity_load_multiple($ding_entity_ids);
-    //   foreach ($entities as $entity) {
-    //     $build[] = ting_object_view($entity, 'compact');
-    //   }
-    //   break;
+    // $entities = ding_entity_load_multiple($ding_entity_ids);
+    // foreach ($entities as $entity) {
+    // $build[] = ting_object_view($entity, 'compact');
+    // }
+    // break;
   }
 
   return $build;

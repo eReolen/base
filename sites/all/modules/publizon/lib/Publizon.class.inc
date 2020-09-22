@@ -1,15 +1,23 @@
 <?php
+
 /**
  * @file
- * This is a basic abstract class the holds function that are the same for the
- * different Publizon classes that holds information fetched from the Publizon
- * web-service
+ * Abstract class for Publizon services.
+ *
+ * This class holds function that are the same for the different
+ * Publizon classes that holds information fetched from the Publizon
+ * web-service.
  */
 
 /**
  * Abstract class that all Publizon storage class should extend.
  */
 abstract class Publizon {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var array
+   */
   protected $properties = array();
 
   /**
@@ -65,4 +73,5 @@ abstract class Publizon {
   public function __toString() {
     throw new RuntimeException('To string have not been implemented yet');
   }
+
 }

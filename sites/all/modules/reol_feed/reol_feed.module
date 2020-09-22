@@ -357,16 +357,17 @@ function reol_feed_convert_html($html) {
 /**
  * Access callback for newsletter feed.
  *
- * @param $node_type
+ * @param string $node_type
  *   The type of node to display a feed of.
+ *
  * @return bool
  *   Whether to grant access or not.
  */
 function _reol_feed_json_node_access($node_type) {
   $supported_node_types = array(
-    'article'
+    'article',
   );
-  if(!in_array($node_type, $supported_node_types)) {
+  if (!in_array($node_type, $supported_node_types)) {
     return FALSE;
   }
   return TRUE;
@@ -375,10 +376,8 @@ function _reol_feed_json_node_access($node_type) {
 /**
  * Provide a json feed for newsletter.
  *
- * @param $node_type
+ * @param string $node_type
  *   The type of node to display a feed of.
- * @return array
- *   An array of items to display in the feed.
  */
 function _reol_feed_json_node($node_type) {
   $base_url = $GLOBALS['base_url'];
@@ -406,7 +405,7 @@ function _reol_feed_json_node($node_type) {
           'Description' => !empty($wrapper->body->value()['safe_summary']) ? $wrapper->body->value()['safe_summary'] : '',
           'ProductImageUrl' => image_style_url('ding_campaign_p_100', $wrapper->field_ding_news_list_image->value()['uri']),
           'CategoryName' => $wrapper->field_article_type->label(),
-          'ProductUrl' => $base_url . '/' .drupal_get_path_alias('node/' . $value->nid),
+          'ProductUrl' => $base_url . '/' . drupal_get_path_alias('node/' . $value->nid),
           'BaseUrl' => $base_url,
         );
 

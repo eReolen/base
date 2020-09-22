@@ -1,5 +1,23 @@
 {
     "require": {
         "phan/phan": "^1.2"
+    },
+    "require-dev": {
+        "drupal/coder": "^8.3.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0"
+    },
+    "scripts": {
+        "coding-standards-check/phpcs": [
+            "phpcs --standard=phpcs.xml.dist"
+        ],
+        "coding-standards-check": [
+            "@coding-standards-check/phpcs"
+        ],
+        "coding-standards-apply/phpcs": [
+            "phpcbf --standard=phpcs.xml.dist"
+        ],
+        "coding-standards-apply": [
+            "@coding-standards-apply/phpcs"
+        ]
     }
 }

@@ -1,10 +1,19 @@
 <?php
+
 /**
  * @file
  * Contains the loan status storage class.
  */
 
+/**
+ * TODO doc comment is empty.
+ */
 class PublizonLoanStatus extends Publizon {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var array
+   */
   protected $properties = array(
     'loanStatus' => NULL,
     'onChecklist' => NULL,
@@ -32,4 +41,5 @@ class PublizonLoanStatus extends Publizon {
     $this->onChecklist = ((string) $item->onchecklist) === 'true' ? TRUE : FALSE;
     $this->isbn = (string) $item->ebookid;
   }
+
 }

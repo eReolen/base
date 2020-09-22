@@ -15,7 +15,7 @@
         <span class="article__byline__date">D. <?php print $created_formatted; ?></span>
         <span class="article__byline__author"><?php print $author->name; ?>, eReolen</span>
       </div>
-      <h2 class="article__title"><span class="highlight">Tema</span> / <?php print $title; ?></h2>
+      <h1 class="article__title"><span class="highlight">Tema</span> / <?php print $title; ?></h1>
       <div class="article__body text">
         <?php print render($content['body']); ?>
       </div>

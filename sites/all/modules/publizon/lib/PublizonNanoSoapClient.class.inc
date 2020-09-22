@@ -1,8 +1,8 @@
 <?php
+
 /**
  * @file
- * Defines the communication client to use with the Publizon client. It makes
- * some overrides of the default NanoSOAPClient implementation.
+ * The communication client to use with the Publizon client.
  */
 
 /**
@@ -21,7 +21,7 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
    * Make a SOAP request.
    *
    * Modified this version to new set a SOAP action header as publizon's service
-   * don't link that
+   * don't link that.
    *
    * @param string $action
    *   The method/action to be called.
@@ -33,7 +33,7 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
    * @return string
    *   The SOAP response.
    */
-  public function call($action, $parameters = array(), $soap11 = TRUE) {
+  public function call($action, array $parameters = array(), $soap11 = TRUE) {
     // Set content type and send the SOAP action as a header.
     $headers = array(
       'Content-Type: text/xml',
@@ -62,4 +62,5 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
     // Send the SOAP request to the server via CURL.
     return $this->curlRequest($this->endpoint, 'POST', $this->requestBodyString, $headers);
   }
+
 }

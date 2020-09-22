@@ -88,14 +88,14 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
     if ($data) {
       foreach ($data as $row) {
         $query = db_merge('reol_statistics_school')
-               ->key(
+          ->key(
                  array(
                    'month' => $row['month'],
                    'municipality_id' => $row['municipality_id'],
                    'school_id' => $row['school_id'],
                  )
                )
-               ->fields(
+          ->fields(
                  array(
                    'loans' => $row['loans'],
                    'school' => $row['school'],
@@ -159,8 +159,8 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
       // Get the total count of loans across schools for this period. We need it
       // for the percentage calculation.
       $query = db_select('reol_statistics_school', 's')
-             ->condition('s.month', array($col['from'], $col['to']), 'BETWEEN')
-             ->condition('s.municipality_id', $library->unilogin_id);
+        ->condition('s.month', array($col['from'], $col['to']), 'BETWEEN')
+        ->condition('s.municipality_id', $library->unilogin_id);
       $query->addExpression('SUM(s.loans)', 'loans');
 
       // This might return false if there's no loans in the period, but then
@@ -168,10 +168,10 @@ class ReolStatisticsSchool implements ReolStatisticsInterface, ReolStatisticsMun
       $total = $query->execute()->fetchField();
 
       $query = db_select('reol_statistics_school', 's')
-             ->condition('s.month', array($col['from'], $col['to']), 'BETWEEN')
-             ->condition('s.municipality_id', $library->unilogin_id)
-             ->fields('s', array('school'))
-             ->groupBy('school_id');
+        ->condition('s.month', array($col['from'], $col['to']), 'BETWEEN')
+        ->condition('s.municipality_id', $library->unilogin_id)
+        ->fields('s', array('school'))
+        ->groupBy('school_id');
       $query->addExpression('SUM(s.loans)', 'loans');
 
       foreach ($query->execute() as $row) {

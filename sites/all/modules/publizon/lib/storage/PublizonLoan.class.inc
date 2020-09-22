@@ -1,18 +1,24 @@
 <?php
+
 /**
  * @file
  * Contains the loans storage classes uses by PublizonUserLoans.
  */
 
 /**
- * Stores information about a given loan (storage class). This object should
- * only be create from inside PublizonUserLoans
+ * Stores information about a given loan (storage class).
  *
+ * This object should only be create from inside PublizonUserLoans.
  * The loan contains a PublizonProduct object with extened information about the
  * product if avaliable from Publizon. If not available its values will be empty
  * with the exception of the ISBN number.
  */
 class PublizonLoan extends Publizon {
+  /**
+   * TODO missing member variable doc comment.
+   *
+   * @var array
+   */
   protected $properties = array(
     'isbn' => NULL,
     'internal_order_number' => NULL,
@@ -108,4 +114,5 @@ class PublizonLoan extends Publizon {
     $this->publisher = (string) $item->book->publisher;
     $this->format = (int) $item->format->attributes()->id;
   }
+
 }

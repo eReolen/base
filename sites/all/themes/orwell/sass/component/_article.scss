@@ -28,7 +28,7 @@ $teaser-height--medium: 400px;
     width: 100%;
     overflow: hidden;
     font-family: $font-regular;
-    color: $color__font-gray;
+    color: $color__font-gray--dark;
     line-height: $line-height__default;
 
     &__date {
@@ -288,7 +288,6 @@ $teaser-height--medium: 400px;
   }
 
   &__info {
-
     .article--teaser--image & {
       padding: 0 2rem;
     }

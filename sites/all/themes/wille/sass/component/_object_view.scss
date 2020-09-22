@@ -67,7 +67,8 @@
 }
 
 .ting-object-related-item {
-  div, a {
+  div,
+  a {
     margin: 15px 0;
   }
 
@@ -101,7 +102,6 @@
 .pane-ting-ting-relation-anchors,
 .pane-ting-ting-collection-types,
 .ting-object-related-item {
-
   position: relative;
 
   h2 {
@@ -121,7 +121,6 @@
 }
 
 .field-type-ting-entities {
-
   > .field-items > .field-item {
     h2 {
       color: #646464;
@@ -190,7 +189,6 @@
 }
 
 .field-name-ding-entity-buttons {
-
   margin-top: 30px;
 
   .action-button {
@@ -201,7 +199,6 @@
 }
 
 .ting-object-collapsible-enabled {
-
   h2 {
     &:before {
       @include icon('arrow-right');

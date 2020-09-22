@@ -48,7 +48,7 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
 
     a {
       color: $white;
-      font-size: 1.143em;
+      font-size: 14pt;
     }
 
     // Desktop.
@@ -94,8 +94,8 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     border-bottom: 2px solid $footer-border-color;
     cursor: pointer;
 
-    font-family: $font-light;
-    font-size: 1.286em;
+    font-family: $font-regular;
+    font-size: 14pt;
     margin-bottom: 2.143em;
 
     &:before {
