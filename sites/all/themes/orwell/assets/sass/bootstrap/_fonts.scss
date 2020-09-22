@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "SourceSansProLight";
+  src:
+    url("../../fonts/sourcesanspro-light.woff") format("woff"),
+    url("../../fonts/sourcesanspro-light.ttf") format("ttf");
+}
+@font-face {
+  font-family: "SourceSansPro";
+  src:
+    url("../../fonts/sourcesanspro-regular.woff") format("woff"),
+    url("../../fonts/sourcesanspro-regular.ttf") format("ttf");
+}
+@font-face {
+  font-family: "SourceSansProSemiBold";
+  src:
+    url("../../fonts/sourcesanspro-semibold.woff") format("woff"),
+    url("../../fonts/sourcesanspro-semibold.ttf") format("ttf");
+}
+@font-face {
+  font-family: "FontAwesome";
+  src:
+    url("../../fonts/fontawesome-webfont.woff") format("woff"),
+    url("../../fonts/fontawesome-webfont.ttf") format("ttf");
+}
+@font-face {
+  font-family: "icomoon";
+  src:
+    url("../../fonts/icomoon.woff") format("woff"),
+    url("../../fonts/icomoon.ttf") format("ttf");
+}
+
+$font-light: 'SourceSansProLight', sans-serif;
+$font-regular: 'SourceSansPro', sans-serif;
+$font-semibold: 'SourceSansProSemiBold', sans-serif;
+$font-icon: 'icomoon';
+$font-fontawesome: 'FontAwesome';
+
+// Set a base font.
+body {
+  font-family: $font-regular;
+}

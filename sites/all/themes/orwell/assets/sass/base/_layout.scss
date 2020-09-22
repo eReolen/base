@@ -1,0 +1,16 @@
+@import '../bootstrap/bootstrap';
+
+.page-wrapper {
+  @include content-wrapper__large;
+}
+
+.content-wrapper {
+  @include content-wrapper;
+}
+
+.pane-node-content,
+.pane-page-content {
+  @include grid-media($medium) {
+    padding: 2rem 0 0;
+  }
+}

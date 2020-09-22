@@ -157,13 +157,13 @@ docker-compose run --rm drush [command]
 # Building themes
 
 ```sh
-docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && npm install"
-docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && node_modules/.bin/gulp sass"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn dev"
 ```
 
 ```sh
-docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && npm install"
-docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && node_modules/.bin/gulp sass"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn dev"
 ```
 
 ## Coding standards

@@ -1,17 +1,34 @@
 {
-  "name": "Pratchett",
-  "description": "ereolen theme",
+  "name": "pratchett",
+  "version": "1.0.0",
+  "description": "Package file for pratchett theme on eReolen",
   "scripts": {
-    "start": "npm install && gulp",
-    "postinstall": "find node_modules/ -name '*.info' -type f -delete"
+    "build": "encore production",
+    "dev": "encore dev",
+    "watch": "encore dev --watch"
   },
-  "version": "0.0.1",
+  "author": "Martin Yde Granath",
+  "license": "GPL",
+  "private": true,
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^4.0.0",
-    "gulp-notify": "^3.0.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.0",
-    "node-neat": "^2.0.0-beta.0"
+    "@symfony/webpack-encore": "^0.30.2",
+    "autoprefixer": "^9.4.2",
+    "browser-sync": "^2.18.13",
+    "copy-webpack-plugin": "^6.1.0",
+    "css-mqpacker": "^7.0.0",
+    "del": "^3.0.0",
+    "eslint": "^5.9.0",
+    "jquery": "^3.5.1",
+    "kss": "^3.0.0-beta.18",
+    "minimist": "^1.2.0",
+    "node-sass": "^4.14.1",
+    "node-sass-import-once": "^1.2.0",
+    "prismjs": "^1.8.1",
+    "run-sequence": "^2.2.1",
+    "sass-lint": "^1.7.0",
+    "sass-loader": "^8.0.0",
+    "webpack-notifier": "^1.6.0",
+    "core-js": "^3.6.5",
+    "natives": "^1.1.6"
   }
 }

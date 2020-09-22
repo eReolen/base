@@ -1,0 +1,38 @@
+@import "../base/vars";
+@import "../base/mixins";
+
+// Grid settings. Needs to be set before we bring in neat.
+$grid-columns: 12;
+$gutter: 0%;
+$max-width: 1180px;
+$column: 1em;
+$gutter: 0em;
+
+// Debug.
+$visual-grid: false;
+$visual-grid-index: front;
+
+// Grid loop magic.
+@for $i from 1 through $grid-columns {
+  .span-#{$i} {
+    @include span-columns($i);
+  }
+  .push-#{$i} {
+    @include shift($i);
+  }
+}
+
+@include media($tablet-l) {
+  [class*='span-'] {
+    @include span-columns(12);
+  }
+
+  [class*='push-'] {
+    @include shift(0);
+  }
+}
+
+// Plain and simple clear class.
+.clear {
+  clear: left;
+}

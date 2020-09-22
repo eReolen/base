@@ -3,7 +3,6 @@ name = Orwell
 description = eReol theme.
 core = 7.x
 release = 7.x-1.x
-stylesheets[all][] = css/orwell.main.css
 stylesheets[all][] = system.menus.css
 stylesheets[all][] = system.theme.css
 stylesheets[all][] = field.css
@@ -11,7 +10,8 @@ stylesheets[all][] = twocol_stacked.css
 stylesheets[all][] = search.css
 stylesheets[all][] = panels.css
 ; Kill ding_carousels theming (we got our own).
-stylesheets[all][] = ding_carousel.css
+stylesheets[all][] = build/app.css
 
 ;-----------//Javascript.
-scripts[] = scripts/orwell.main.js
+scripts[] = build/app.js
+
