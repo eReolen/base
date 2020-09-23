@@ -71,7 +71,7 @@ Android install prompt is not displayed (https://www.drupal.org/node/3047715)
 * Added `ding_test` module (ding_test.patch)
 
 # Docker
-This repository comes with an `docker-compose.yml` to run the stack in 
+This repository comes with an `docker-compose.yml` to run the stack in
 docker and a makefile to ease the usage. The setup exposes access to
 http (nginx and varnish) and mysql.
 
@@ -93,9 +93,9 @@ $databases['default']['default'] = array(
 
 The exposed ports can always be accessed by the address `0.0.0.0:PORT`.
 
-__Note__: the repositry contains a `.docker` folder that holds the nginx and varnish configuration. 
+__Note__: the repositry contains a `.docker` folder that holds the nginx and varnish configuration.
 
-## Commands 
+## Commands
 
 * Start up the container stack (nginx, php7.0, memcached and varnish)
 
@@ -158,12 +158,12 @@ docker-compose run --rm drush [command]
 
 ```sh
 docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn install"
-docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn dev"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn build"
 ```
 
 ```sh
 docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn install"
-docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn dev"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn build"
 ```
 
 ## Coding standards

@@ -3,7 +3,6 @@
  */
 
 @import '~bourbon';
-$font_dir_path : '/assets/fonts';
 
 $red: rgb(213, 0, 73);
 $red-light: rgb(235, 0, 85);
@@ -99,16 +98,6 @@ $title-color: $black-medium;
     url("../../fonts/mikado.ttf") format("ttf");
 }
 
-/*
-// Base font.
-@include font-face("OpenSans Light", #{$font_dir_path}/OpenSans-Light, $file-formats: woff);
-@include font-face("OpenSans Light Italic", #{$font_dir_path}/OpenSans-LightItalic, $file-formats: woff);
-@include font-face("OpenSans Regular", #{$font_dir_path}/OpenSans-Regular, $file-formats: woff);
-@include font-face("OpenSans Regular Italic", #{$font_dir_path}/OpenSans-RegularItalic, $file-formats: woff);
-@include font-face("OpenSans Bold", #{$font_dir_path}/OpenSans-Bold, $file-formats: woff);
-@include font-face("OpenSans Bold Italic", #{$font_dir_path}/OpenSans-BoldItalic, $file-formats: woff);
-*/
-
 $fallbackFontFamily: Arial, Helvetica, Sans-Serif;
 $font-regular: 'OpenSans Regular', $fallbackFontFamily;
 $font-regular-italic: 'OpenSans Regular Italic', $fallbackFontFamily;
@@ -116,13 +105,6 @@ $font-light: 'OpenSans Light';
 $font-light-italic: 'OpenSans Light Italic', $fallbackFontFamily;
 $font-bold: 'OpenSans Bold', $fallbackFontFamily;
 $font-bold-italic: 'OpenSans Bold Italic', $fallbackFontFamily;
-
-// Icon font.
-// @include font-face("icomoon", #{$font_dir_path}/icomoon, $file-formats: woff);
-
-// Mikado font.
-//@include font-face("Mikado", #{$font_dir_path}/mikado, $file-formats: woff);
-
 $font-mikado: "Mikado";
 
 // Base font vars.
