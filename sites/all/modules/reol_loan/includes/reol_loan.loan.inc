@@ -16,7 +16,7 @@
  * @return array
  *   The end form array.
  */
-function reol_loan_loan_form(array $form, array &$form_state, array $loanable) {
+function reol_loan_loan_form(array $form, array &$form_state, $loanable) {
   // Save the loanable in form state.
   $form['loanable'] = array(
     '#type' => 'value',
