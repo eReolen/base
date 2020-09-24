@@ -1,0 +1,151 @@
+@import "~bourbon";
+@import "~bourbon-neat";
+@import 'bootstrap/grid';
+@import 'bootstrap/mixins';
+@import 'bootstrap/colors';
+@import 'bootstrap/fonts';
+@import 'bootstrap/variables';
+
+
+.topbar {
+  .pane-search-form {
+    @include grid-media($medium){
+      order: 4;
+    }
+  }
+
+  #header {
+    @include grid-media($medium){
+      order: 1;
+    }
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+.pane-user-login {
+  @include form-default;
+  display: block;
+  width: 100%;
+  order: 4;
+  background: $page-bg;
+
+  .messages {
+    margin: 16px 0;
+  }
+}
+
+.ui-dialog form {
+  @include form-default;
+}
+
+// Used for testing
+.view-articles,
+.view-ereol-search {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+.ui-dialog {
+  border-radius: 0;
+  background-color: $color__white;
+  // Try to make it responsive.
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto;
+  top: 100px !important;
+  position: absolute !important;
+
+  // Fix the positioning of the close button.
+  .ui-dialog-titlebar .ui-dialog-titlebar-close {
+    top: 0;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .messages {
+    margin: 16px 0;
+  }
+}
+
+.ui-dialog-content {
+
+  a[data-modal-name="reol_bookmark"] {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+.ui-widget {
+  font-family: 'Oxygen', sans-serif;
+}
+
+div.messages {
+  @include content-wrapper;
+  padding: 2rem;
+  background-color: $color__white;
+  // Remove Drupal standard icon.
+  background-image: none;
+  font-family: $font-regular;
+  font-size: 1.2rem;
+  color: $color__font-gray--dark;
+  line-height: 1.8rem;
+  border: 1px solid $color__gray--light;
+  // Force long lines to break as to not mess up display on small
+  // screens.
+  word-wrap: break-word;
+
+  @include grid-media($medium) {
+    margin: 1rem auto;
+    padding: 2rem;
+  }
+
+  &.status {
+    background-color: $color__messages--status;
+  }
+
+  &.warning {
+    background-color: $color__messages--warning;
+  }
+
+  &.error {
+    background-color: $color__messages--error;
+  }
+
+  ul {
+    margin: 0;
+  }
+}
+
+.pane-page-tabs {
+  width: 100%;
+  display: block;
+  background-color: $color__blue;
+  text-align: center;
+
+  a {
+    color: $color__white;
+    text-decoration: none;
+    font-family: $font-semibold;
+    font-size: 1.1rem;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+
+    a {
+      display: inline-block;
+      padding: .5rem 1rem;
+    }
+  }
+}
+
+.icon-spinner:before {
+  display: none;
+}
