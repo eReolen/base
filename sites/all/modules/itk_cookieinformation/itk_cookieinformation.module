@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Add cookieinformation functionality.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function itk_cookieinformation_init() {
+  drupal_add_js('https://policy.app.cookieinformation.com/uc.js', array(
+    'type' => 'external',
+    'group' => JS_LIBRARY - 1000,
+    'every_page' => TRUE,
+    'scope' => 'header',
+    'weight' => -10000,
+  ));
+}
+
+/**
+ * Implements hook_preprocess_html_tag().
+ */
+function itk_cookieinformation_preprocess_html_tag(&$vars) {
+  // Change html tags to apply cookie information.
+  if ($vars['element']['#tag'] == 'script') {
+    // Add attributes to cookieinformation tag.
+    if (strpos($vars['element']['#attributes']['src'], 'policy.app.cookieinformation.com/uc.js')) {
+      $vars['element']['#attributes']['id'] = 'CookieConsent';
+      $vars['element']['#attributes']['data-culture'] = 'DA';
+    }
+
+    // Add consent check to google analytics.
+    if (strpos($vars['element']['#attributes']['src'], 'google_analytics/googleanalytics.js')) {
+      $src = $vars['element']['#attributes']['src'];
+      $vars['element']['#attributes']['data-consent-src'] = $src;
+      $vars['element']['#attributes']['src'] = '';
+      $vars['element']['#attributes']['data-category-consent'] = 'cookie_cat_marketing';
+    }
+
+    // Add consent check to google analytics inline script.
+    if (strpos($vars['element']['#value'], 'GoogleAnalyticsObject')) {
+      $value = $vars['element']['#value'];
+      $vars['element']['#value'] = "window.addEventListener('CookieInformationConsentGiven', function (event) {
+if (CookieInformation.getConsentGivenFor('cookie_cat_marketing')) {" . $value . "}
+}, false);";
+    }
+
+    // Add consent to webtrekk.
+    if (strpos($vars['element']['#attributes']['src'], 'cdn.wbtrk.net/js/geid.min.js') ||
+      strpos($vars['element']['#attributes']['src'], 'webtrekk')) {
+      $src = $vars['element']['#attributes']['src'];
+      $vars['element']['#attributes']['data-consent-src'] = $src;
+      $vars['element']['#attributes']['src'] = '';
+      $vars['element']['#attributes']['data-category-consent'] = 'cookie_cat_statistic';
+    }
+  }
+}

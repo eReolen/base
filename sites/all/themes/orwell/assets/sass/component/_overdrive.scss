@@ -1,0 +1,26 @@
+@import '../bootstrap/bootstrap';
+
+.overdrive-message {
+  @include content-wrapper;
+  padding: 1rem;
+
+  .actions {
+    margin-top: 2rem;
+  }
+
+  .action-button {
+    &:not(:last-child) {
+      @include grid-media($medium) {
+        margin-right: 2rem;
+      }
+
+      @include grid-media($large) {
+        margin-right: 2rem;
+      }
+    }
+
+    @include grid-media($mobile-only) {
+      display: block;
+    }
+  }
+}

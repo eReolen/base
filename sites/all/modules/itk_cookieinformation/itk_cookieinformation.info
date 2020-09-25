@@ -1,0 +1,4 @@
+name = ITK Cookie information
+description = Adds javascript for cookieinformation.com
+core = 7.x
+package = ITK Aarhus
