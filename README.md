@@ -69,6 +69,9 @@ Android install prompt is not displayed (https://www.drupal.org/node/3047715)
 * Allow ajax hook to be overwritten when using adgangsplatformen (ding_user_ajax_hook.patch)
 * Disable tracking of user under /user path (disable-user-tracking.patch)
 * Added `ding_test` module (ding_test.patch)
+* Search by number in series (opensearch-sort-by-numberInSeries.patch)
+* Don't exclude "dkdcplus:DBCO" subjects (opensearch-dkdcplus-DBCO.patch)
+* Update to image_resize_filter 1.16 (ding2-make-image_resize_filter.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in 
