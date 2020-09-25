@@ -857,3 +857,10 @@ function reol_base_update_7170() {
 function reol_base_update_7171() {
   module_enable(array('tinypng'));
 }
+
+/**
+ * Enable web_accessibility_statement module.
+ */
+function reol_base_update_7172() {
+  module_enable(array('web_accessibility_statement'));
+}

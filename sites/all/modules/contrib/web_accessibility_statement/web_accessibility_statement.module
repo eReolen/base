@@ -1,0 +1,31 @@
+<?php
+/**
+ * @file
+ * Hook functions for web accessibility statement module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function web_accessibility_statement_menu() {
+  $items = [];
+
+  $items['was'] = [
+    'title' => 'Redirect to accessibility report',
+    'access callback' => TRUE,
+    'page callback' => 'drupal_goto',
+    'page arguments' => [variable_get('web_accessibility_statement_url')],
+    'type' => MENU_CALLBACK,
+  ];
+
+  $items['admin/config/system/accessibilityadmin'] = [
+    'title' => 'Accessibility statement admin form',
+    'description' => 'Administration form for web accessibility statement.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['accessibility_admin_form'],
+    'access arguments' => ['administer site configuration'],
+    'file' => 'web_accessibility_statement.inc',
+  ];
+
+  return $items;
+}
