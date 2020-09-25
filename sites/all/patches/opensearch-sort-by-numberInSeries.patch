@@ -1,0 +1,15 @@
+diff --git a/profiles/ding2/modules/opensearch/includes/opensearch.search.inc b/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
+index b58e5f45..cb2da041 100644
+--- a/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
++++ b/profiles/ding2/modules/opensearch/includes/opensearch.search.inc
+@@ -559,6 +559,10 @@ function opensearch_search_sort_options() {
+       'label' => t('Date (Ascending)'),
+       'sort' => new TingSearchSort(TingSearchCommonFields::DATE, TingSearchSort::DIRECTION_ASCENDING),
+     ],
++    'numberInSeries_ascending' => [
++      'label' => t('Number in series (Ascending)'),
++      'sort' => new TingSearchSort('numberInSeries_ascending'),
++    ],
+   ];
+ 
+   // Do not show sort-options specific for rank_frequency if
