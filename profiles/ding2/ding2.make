@@ -160,7 +160,7 @@ projects[honeypot][subdir] = "contrib"
 projects[honeypot][version] = "1.25"
 
 projects[image_resize_filter][subdir] = "contrib"
-projects[image_resize_filter][version] = "1.14"
+projects[image_resize_filter][version] = "1.16"
 
 projects[job_scheduler][subdir] = "contrib"
 projects[job_scheduler][version] = "2.0-alpha3"
