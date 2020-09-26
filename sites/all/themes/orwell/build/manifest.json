@@ -1,7 +1,6 @@
 {
   "build/app.css": "./app.css",
   "build/app.js": "./app.js",
-  "build/runtime.js": "./runtime.js",
   "build/fonts/FontAwesome.otf": "./fonts/FontAwesome.otf",
   "build/fonts/SourceSansPro-Black.otf": "./fonts/SourceSansPro-Black.otf",
   "build/fonts/SourceSansPro-BlackIt.otf": "./fonts/SourceSansPro-BlackIt.otf",

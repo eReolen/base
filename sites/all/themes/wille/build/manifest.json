@@ -3,7 +3,6 @@
   "build/app.js": "./app.js",
   "build/print.css": "./print.css",
   "build/print.js": "./print.js",
-  "build/runtime.js": "./runtime.js",
   "build/fonts/OpenSans-Bold.ttf": "./fonts/OpenSans-Bold.ttf",
   "build/fonts/OpenSans-Bold.woff": "./fonts/OpenSans-Bold.woff",
   "build/fonts/OpenSans-BoldItalic.ttf": "./fonts/OpenSans-BoldItalic.ttf",
