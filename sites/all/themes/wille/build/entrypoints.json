@@ -1,21 +1,19 @@
 {
   "entrypoints": {
     "app": {
-      "js": [
-        "./runtime.js",
-        "./app.js"
-      ],
       "css": [
         "./app.css"
+      ],
+      "js": [
+        "./app.js"
       ]
     },
     "print": {
-      "js": [
-        "./runtime.js",
-        "./print.js"
-      ],
       "css": [
         "./print.css"
+      ],
+      "js": [
+        "./print.js"
       ]
     }
   }

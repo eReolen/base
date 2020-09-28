@@ -1,5 +1,4 @@
 {
   "build/app-base.css": "./app-base.css",
-  "build/app-base.js": "./app-base.js",
-  "build/runtime.js": "./runtime.js"
+  "build/app-base.js": "./app-base.js"
 }
