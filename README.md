@@ -71,6 +71,7 @@ Android install prompt is not displayed (https://www.drupal.org/node/3047715)
 * Added `ding_test` module (ding_test.patch)
 * Search by number in series (opensearch-sort-by-numberInSeries.patch)
 * Don't exclude "dkdcplus:DBCO" subjects (opensearch-dkdcplus-DBCO.patch)
+* Update to image_resize_filter 1.16 (ding2-make-image_resize_filter.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in
