@@ -1,0 +1,4 @@
+name = eReolen facet browser
+description = Hacking the facet browser
+core = 7.x
+package = eReolen shared
