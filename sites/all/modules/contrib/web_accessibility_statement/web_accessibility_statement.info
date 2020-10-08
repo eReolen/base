@@ -1,4 +1,4 @@
-name: Web accessibility statement
-description: Provides path for accessibility statement
+name = Web accessibility statement
+description = Provides path for accessibility statement
 core = 7.x
-package: ITK
+package = ITK
