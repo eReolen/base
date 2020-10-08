@@ -1,0 +1,96 @@
+@import '../bootstrap/bootstrap';
+
+.topbar .menu-name-main-menu {
+  a.user-login-link,
+  a.user-login-link:hover,
+  a.user-logged-in-link,
+  a.user-logged-in-link:hover {
+    font-size: 0;
+    color: transparent;
+    background: transparent;
+  }
+
+  li:last-child {
+    position: absolute;
+    top: 15px;
+
+    @include grid-media($medium) {
+      right: 35px;
+      top: 0;
+    }
+  }
+
+  .user-login-link {
+    &::before {
+      @include icon();
+      font-size: 28px;
+      color: $color__font-gray;
+      content: $icon__lock;
+      display: inline-block;
+      top: 10px;
+    }
+  }
+
+  .user-logged-in-link {
+    &::before {
+      @include icon();
+      font-size: 2rem;
+      color: $color__font-gray;
+      content: $icon__user;
+      display: inline-block;
+      top: 10px;
+    }
+  }
+}
+
+.notifications__count {
+  position: absolute;
+  background-color: $color__green;
+  padding: 4px;
+  color: $color__white;
+  border-radius: 50%;
+  font-size: 13px;
+  font-family: $font-semibold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 14px;
+  width: 14px;
+  margin-left: -10px;
+  top: 31px;
+
+  @include grid-media($medium) {
+    top: 19px;
+  }
+}
+
+// Hide buttons on user page (/user/me/view)
+.page-user {
+  // Bookmark ("Huskeliste") buttons.
+  .pane-loans a[id^="bookmark-"],
+  .pane-reservations a[id^="bookmark-"],
+  // "Delete all reservations" button.
+  .pane-reservations .actions-container .delete-all,
+  // General actions under "My reservations" (not yet available).
+  #ding-reservation-reservations-notready-form .actions-container,
+  // Checkboxes above items.
+  .pane-reservations .item-checkbox {
+    display: none;
+  }
+
+  // "Delete selected reservations" button.
+  .pane-reservations .delete-reservations.action-button {
+    [type="submit"] {
+      @include button();
+      width: auto;
+      border: none;
+      -webkit-appearance: none;
+    }
+  }
+
+  // "Select all reservations" checkbox.
+  .select-all.ready-for-pickup {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "itk-dev/web_accessibility_statement",
+    "type": "drupal-module",
+    "description": "Provides path for accessibility statement",
+    "keywords": [
+    ],
+    "minimum-stability": "dev"
+}
