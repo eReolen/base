@@ -1,22 +1,36 @@
 {
   "name": "wille",
   "version": "1.0.0",
-  "description": "Base theme for ereolen for kids",
+  "description": "Package file for wille theme on eReolen",
   "scripts": {
-    "start": "npm install && gulp",
-    "postinstall": "find node_modules/ -name '*.info' -type f -delete"
+    "build": "encore production",
+    "dev": "encore dev",
+    "watch": "encore dev --watch"
   },
+  "author": "Martin Yde Granath",
+  "license": "GPL",
+  "private": true,
   "devDependencies": {
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^6.0.0",
-    "gulp-jshint": "^2.1.0",
-    "gulp-notify": "^3.2.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.5",
-    "jshint": "^2.10.2",
-    "jshint-stylish": "^2.2.1",
+    "@symfony/webpack-encore": "^0.31.0",
+    "autoprefixer": "^9.4.2",
+    "bourbon": "^7.0.0",
+    "browser-sync": "^2.18.13",
+    "copy-webpack-plugin": "^6.1.0",
+    "core-js": "^3.6.5",
+    "css-mqpacker": "^7.0.0",
+    "del": "^3.0.0",
+    "eslint": "^5.9.0",
+    "jquery": "^3.5.1",
+    "kss": "^3.0.0-beta.18",
+    "minimist": "^1.2.0",
     "node-bourbon": "^4.2.8",
     "node-neat": "^1.7.2",
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.12.0",
+    "node-sass-import-once": "^1.2.0",
+    "prismjs": "^1.8.1",
+    "run-sequence": "^2.2.1",
+    "sass-lint": "^1.7.0",
+    "sass-loader": "^9.0.1",
+    "webpack-notifier": "^1.6.0"
   }
 }

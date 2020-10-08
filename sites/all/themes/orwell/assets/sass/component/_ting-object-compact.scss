@@ -1,0 +1,101 @@
+@import '../bootstrap/bootstrap';
+
+.ting-object.view-mode-compact {
+  width: 130px;
+  margin-bottom: 25px;
+
+  // See also grid view in _search.scss.
+  .field-name-ting-title {
+    font-family: $font-regular;
+    font-size: 16px;
+    letter-spacing: .5px;
+    margin-top: 6px;
+    h2 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  // Always hide rating widget.
+  .field-type-ding-entity-rating-action {
+    display: none;
+  }
+
+  .ting-cover img {
+    // Maintain aspect ratio on images.
+    height: auto;
+  }
+
+  .field-name-ting-author {
+    font-family: $font-light;
+    font-size: 14px;
+    letter-spacing: .5px;
+    margin-top: 10px;
+  }
+
+  .field-name-ting-details-language {
+    font-family: $font-light;
+    font-size: 14px;
+    margin-top: 4px;
+
+    .field-item::before {
+      @include icon;
+      color: $color__font-gray--dark;
+      font-size: 12px;
+      margin-right: .2rem;
+      content: $icon__language;
+    }
+  }
+
+  // show dots at end of line.
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $color__font-gray--dark;
+
+  // Make language and series line up on one line.
+  .field-type-ting-details-language,
+  .field-type-ting-details-language div {
+    display: inline-block;
+  }
+
+  .field-type-ting-series,
+  .field-type-ting-series div {
+    display: inline;
+  }
+
+  .field-type-ting-series {
+    white-space: nowrap;
+    margin-left: .5em;
+  }
+
+  .field-type-ting-series {
+    font-family: $font-light;
+    font-size: 14px;
+    margin-top: 4px;
+
+    .material__series-number {
+      &::before {
+        @include icon;
+        content: $icon__stack-solid;
+        font-size: 12px;
+        margin-right: 5px;
+      }
+    }
+
+    .material__series-number + .material__series-series {
+      &::before {
+        content: " – ";
+      }
+    }
+  }
+
+  @include grid-media($medium) {
+    width: 186px;
+  }
+
+  @include grid-media($large) {
+    width: 225px;
+  }
+}

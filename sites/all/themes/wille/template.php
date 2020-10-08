@@ -54,7 +54,7 @@ function wille_preprocess_html(&$variables) {
  * there are theming specific files and styles that shoudl be included.
  */
 function wille_preprocess_breol_news_page(&$variables, $hook) {
-  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
+  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/assets/svg/organic.svg");
   $variables['cover_attributes'] = array();
   if ($variables['image_file']) {
     $variables['cover_attributes']['style'] = 'background-image: url(' . file_create_url($variables['image_file']->uri) . ');';
@@ -220,7 +220,7 @@ function wille_form_ting_search_per_page_form_alter(&$form, &$form_state, $form_
  * Implements hook_preprocess_panels_pane().
  */
 function wille_preprocess_panels_pane(&$variables) {
-  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/svg/organic.svg");
+  $variables['organic_svg'] = file_get_contents(dirname(__FILE__) . "/assets/svg/organic.svg");
 
   if ($variables['pane']->type === 'user_menu') {
     // Hide logout menu tab.

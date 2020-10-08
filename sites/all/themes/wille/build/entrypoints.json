@@ -1,0 +1,20 @@
+{
+  "entrypoints": {
+    "app": {
+      "css": [
+        "./app.css"
+      ],
+      "js": [
+        "./app.js"
+      ]
+    },
+    "print": {
+      "css": [
+        "./print.css"
+      ],
+      "js": [
+        "./print.js"
+      ]
+    }
+  }
+}
