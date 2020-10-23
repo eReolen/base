@@ -1,0 +1,68 @@
+---
+on:
+  push:
+    branches:
+      - 'release'
+
+name: Deployment (stg)
+
+env:
+  BRANCH_NAME: release
+
+jobs:
+  rollout:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        site: [EREOLEN, GO]
+    steps:
+      - name: Set env site path ereolen
+        run: echo ::set-env name=SITE_PATH::APP_PATH_STG_${{ matrix.site }}
+
+      - name: Set env sub path ereolen
+        run: echo ::set-env name=SUBPATH::sites/all/modules/ereol
+        if: matrix.site == 'EREOLEN'
+
+      - name: Set env sub path go
+        run: echo ::set-env name=SUBPATH::sites/all/modules/breol
+        if: matrix.site == 'GO'
+
+      - name: Run deployment (eReolen)
+        uses: itk-dev/actions-remote-ssh@master
+        with:
+          command: |
+            cd ${{ secrets[env.SITE_PATH] }}
+            git clean -d --force
+            git checkout ${{ env.BRANCH_NAME}}
+            git fetch
+            git reset origin/${{ env.BRANCH_NAME}} --hard
+            cd ${{ env.SUBPATH }}
+            git clean -d --force
+            git checkout master
+            git fetch
+            git reset origin/${{ env.BRANCH_NAME}} --hard
+          host: ${{ secrets.HOST_DEV }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          cert: ${{ secrets.PUBLIC_KEY_CERT }}
+
+  cleanUp:
+    needs: rollout
+    runs-on: ubuntu-lastest
+    strategy:
+      matrix:
+        site: [EREOLEN, GO]
+    steps:
+      - name: Set env
+        run: echo ::set-env name=SITE_PATH::APP_PATH_STG_${{ matrix.site }}
+
+      - name: Database and clean-up
+        uses: itk-dev/actions-remote-ssh@master
+        with:
+          command: |
+            cd ${{ secrets[env.SITE_PATH] }}
+            drush --yes updatedb
+            drush --yes features-revert-all
+            drush cache-clear all
+          host: ${{ secrets.HOST_DEV }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          cert: ${{ secrets.PUBLIC_KEY_CERT }}
