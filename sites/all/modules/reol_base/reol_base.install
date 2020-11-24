@@ -864,3 +864,10 @@ function reol_base_update_7171() {
 function reol_base_update_7172() {
   module_enable(array('web_accessibility_statement'));
 }
+
+/**
+ * Enable elements module.
+ */
+function reol_base_update_7173() {
+  module_enable(array('elements'));
+}
