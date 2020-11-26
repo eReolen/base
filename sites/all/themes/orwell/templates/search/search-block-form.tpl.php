@@ -31,7 +31,7 @@
 ?>
 <div class="search-form js-search-form <?php print(arg(0) == 'search' ? 'open' : ''); ?>">
   <div class="search-form__icon__wrapper js-search-form-trigger">
-    <i class="search-form__icon"></i>
+    <span class="search-form__icon__wrapper__text"><?php print t('Search');?></span><i class="search-form__icon"></i>
   </div>
   <div class="search-form__content js-search-form-target">
     <!-- <i class="search-form__icon--close js-search-form-trigger-close"></i> -->
