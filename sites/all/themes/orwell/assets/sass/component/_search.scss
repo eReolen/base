@@ -111,6 +111,12 @@ $icon-color: #9c9c9c;
       }
     }
 
+    &__text {
+      color: $color__white;
+      font-size: 16px;
+      font-family: $font-semibold;
+    }
+
     .open & {
       position: fixed;
       top: 0;
@@ -144,6 +150,8 @@ $icon-color: #9c9c9c;
           display: none;
         }
       }
+
+
     }
 
     @include grid-media($medium) {
@@ -156,7 +164,6 @@ $icon-color: #9c9c9c;
 
   &__icon {
     width: auto;
-
   }
 
   &__content {
@@ -281,6 +288,13 @@ $icon-color: #9c9c9c;
   @include grid-media($medium) {
     border-top: 1px solid $color__search-form;
   }
+
+  &.open {
+    .search-form__icon__wrapper__text {
+      display: none;
+    }
+  }
+
 }
 
 html.js input.form-autocomplete {
