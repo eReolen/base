@@ -33,6 +33,7 @@
   "build/fonts/sourcesanspro-semibold.ttf": "./fonts/sourcesanspro-semibold.ttf",
   "build/fonts/sourcesanspro-semibold.woff": "./fonts/sourcesanspro-semibold.woff",
   "build/fonts/sourcesanspro-semibold.woff2": "./fonts/sourcesanspro-semibold.woff2",
+  "build/images/backspace-solid.svg": "./images/backspace-solid.108ad93c.svg",
   "build/images/placeholder.png": "./images/placeholder.d4d2193a.png",
   "build/images/white-arrow-right.svg": "./images/white-arrow-right.199cdd0b.svg"
 }

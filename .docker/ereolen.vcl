@@ -63,6 +63,7 @@ sub vcl_recv {
       req.url ~ "^/flag/" ||
       req.url ~ "/edit" ||
       req.url ~ "/ding_availability" ||
+      req.url ~ "/support-formular" ||
       req.url ~ "^/feeds") {
         return (pass);
   }
