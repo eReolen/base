@@ -23,6 +23,7 @@ function orwell_form_search_block_form_alter(&$form, &$form_state) {
   // HTML5 placeholder attribute.
   $form['search_block_form']['#attributes']['placeholder'] = t('Søg efter');
   $form['search_block_form']['#attributes']['class'][] = 'search-form__input--text';
+  $form['search_block_form']['#type'] = 'searchfield';
   // Hide submit button.
   $form['actions']['#attributes']['class'][] = 'element-invisible';
 }

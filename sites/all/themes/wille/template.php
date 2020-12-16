@@ -204,6 +204,7 @@ function wille_ting_view_alter(&$build) {
 function wille_form_search_block_form_alter(&$form, &$form_state, $form_id) {
   // HTML5 placeholder attribute.
   $form['search_block_form']['#attributes']['placeholder'] = t('Search among thousands of titles');
+  $form['search_block_form']['#type'] = 'searchfield';
 
   // Hide submit button.
   $form['actions']['#attributes']['class'][] = 'element-invisible';

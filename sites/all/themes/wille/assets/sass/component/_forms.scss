@@ -36,7 +36,9 @@ input::placeholder {
 input[type="text"],
 input[type="email"],
 input[type="submit"],
-input[type="password"] {
+input[type="password"],
+input[type="search"]
+ {
   text-decoration: none;
   border-radius: 6px;
   color: white;
