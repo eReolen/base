@@ -111,7 +111,7 @@ class MediaInternetYouTubeHandler extends MediaInternetBaseHandler {
     $uri = file_stream_wrapper_uri_normalize('youtube://' . $type . '/' . check_plain($id));
     $external_url = file_create_url($uri);
     $oembed_url = url('https://www.youtube.com/oembed', array('query' => array('url' => $external_url, 'format' => 'json')));
-    $response = drupal_http_request($oembed_url, array('method' => 'HEAD'));
+    $response = drupal_http_request($oembed_url, array('method' => 'GET'));
 
     if ($response->code == 401) {
       throw new MediaInternetValidationException('Embedding has been disabled for this YouTube video.');
