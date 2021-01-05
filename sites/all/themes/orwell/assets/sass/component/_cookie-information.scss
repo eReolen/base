@@ -1,0 +1,5 @@
+// Setting `visibility: invisible` on `input[type="checkbox"]`
+// (cf. _facets.scss) breaks the Cookie information checkboxes.
+#coi-banner-wrapper .coi-checkboxes .coi__checkbox {
+  visibility: inherit;
+}
