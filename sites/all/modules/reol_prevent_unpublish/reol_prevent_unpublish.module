@@ -61,9 +61,6 @@ function reol_prevent_unpublish_form_alter(&$form, &$form_state, $form_id) {
  */
 function _reol_prevent_unpublish_is_protected($nid) {
   $nids = array_map('trim', explode(',', variable_get('reol_prevent_unpublish_nid', '')));
-  if (in_array($nid, $nids)) {
-    return TRUE;
-  }
 
-  return FALSE;
+  return in_array($nid, $nids);
 }
