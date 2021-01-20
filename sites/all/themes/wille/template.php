@@ -135,7 +135,7 @@ function wille_ting_object_cover($variables) {
   // Add link if the id is not to a fake material.
   $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
   if (!reol_base_fake_id($ding_entity_id)) {
-    $cover = l($cover, 'ting/collection/' . $ding_entity_id, array('html' => TRUE));
+    $cover = l($cover, 'ting/object/' . $ding_entity_id, array('html' => TRUE));
   }
 
   return $cover;
