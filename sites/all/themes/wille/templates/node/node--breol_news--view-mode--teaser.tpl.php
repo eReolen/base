@@ -18,9 +18,4 @@
     </a>
   </div>
   <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-  <?php
-    $body = field_get_items('node', $node, 'body');
-    $teaser= $body[0]['safe_summary'];
-    print $teaser;
-  ?>
 </div>
