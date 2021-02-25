@@ -6,8 +6,10 @@
     margin-bottom: 40px;
 
     @include media($phone) {
-      height: 190px !important;
+      // height: 210px !important;
       margin-bottom: 20px;
+      margin-left: 20px;
+      margin-right: 20px;
     }
 
     h2 {
@@ -34,6 +36,10 @@
       img {
         object-fit: cover;
       }
+
+      @include media($phone) {
+        height: 210px;
+      }
     }
   }
 }
@@ -49,7 +55,7 @@
   .article--breol-news {
     &--teaser {
       @include media($phone) {
-        height: 190px !important;
+        // height: 210px !important;
         border-radius: 0;
         h2 {
           text-shadow: 0 0 2px rgba(0,0,0,.16);
