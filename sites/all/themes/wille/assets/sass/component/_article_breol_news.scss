@@ -1,6 +1,60 @@
+.article--breol_news {
+  padding: 50px 0;
+
+  &--page {
+    width: 100%;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &--title {
+    margin-bottom: 20px;
+    padding: 0 100px;
+    .title {
+      font-family: $font-bold;
+      color: $black;
+      font-size: 3em;
+    }
+    @include media($phone) {
+      padding: 0 20px;
+    }
+  }
+
+  &--image {
+    text-align: center;
+  }
+
+  &--content {
+    margin-top: 20px;
+    padding: 0 100px;
+
+    p, h3, h4 {
+      line-height: 1.5;
+    }
+
+    h3 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-size: 1.62em;
+      font-weight: bold;
+    }
+
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+
+    @include media($phone) {
+      padding: 0 20px;
+    }
+  }
+}
+
+
 .article--breol-news {
   padding: 0;
-
   &--teaser {
     position: relative;
     margin-bottom: 40px;
