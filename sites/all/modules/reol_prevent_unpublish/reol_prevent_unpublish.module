@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * Prevent selected node from being unpublished.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function reol_prevent_unpublish_menu() {
+  $items = [];
+
+  $items['admin/config/ereolen/prevent'] = array(
+    'title' => 'Prevent un-publish',
+    'description' => 'Control which nodes to protected.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reol_prevent_unpublish_settings_form'),
+    'access arguments' => array('administer content'),
+    'file' => 'includes/reol_prevent_unpublish.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_node_presave().
+ *
+ * Ensure no one can unpublish the nodes in any-way.
+ */
+function reol_prevent_unpublish_node_presave($node) {
+  if (0 === $node->status) {
+    if (_reol_prevent_unpublish_is_protected($node->nid)) {
+      // Nid is found in array, so publish it.
+      $node->status = 1;
+    }
+  }
+}
+
+/**
+ * Implements hook_node_load().
+ *
+ * Disabled the node unpublish checkbox in node edit form.
+ */
+function reol_prevent_unpublish_form_alter(&$form, &$form_state, $form_id) {
+  if (strpos($form_id, '_node_form') !== FALSE) {
+    if (isset($form['nid']['#value']) && _reol_prevent_unpublish_is_protected($form['nid']['#value'])) {
+      $form['options']['status']['#default_value'] = 1;
+      $form['options']['status']['#disabled'] = TRUE;
+    }
+  }
+}
+
+/**
+ * Check if the node is protected.
+ *
+ * @param $nid
+ *   The node id to check.
+ *
+ * @return bool
+ *   TRUE if protected else FALSE.
+ */
+function _reol_prevent_unpublish_is_protected($nid) {
+  $nids = array_map('trim', explode(',', variable_get('reol_prevent_unpublish_nid', '')));
+
+  return in_array($nid, $nids);
+}

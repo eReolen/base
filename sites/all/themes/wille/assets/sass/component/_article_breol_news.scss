@@ -1,42 +1,84 @@
+.article--breol_news {
+  padding: 50px 0;
+
+  &--page {
+    width: 100%;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &--title {
+    margin-bottom: 20px;
+    padding: 0 100px;
+    .title {
+      font-family: $font-bold;
+      color: $black;
+      font-size: 3em;
+    }
+    @include media($phone) {
+      padding: 0 20px;
+    }
+  }
+
+  &--image {
+    text-align: center;
+  }
+
+  &--content {
+    margin-top: 20px;
+    padding: 0 100px;
+
+    p, h3, h4 {
+      line-height: 1.5;
+    }
+
+    h3 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-size: 1.62em;
+      font-weight: bold;
+    }
+
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+
+    @include media($phone) {
+      padding: 0 20px;
+    }
+  }
+}
+
+
 .article--breol-news {
   padding: 0;
-
   &--teaser {
-    @include rounded-box();
     position: relative;
-    height: 380px;
-    overflow: hidden;
     margin-bottom: 40px;
 
     @include media($phone) {
-      height: 190px !important;
       margin-bottom: 20px;
+      margin-left: 20px;
+      margin-right: 20px;
     }
 
     h2 {
-      // Besides making it easy to position, changing the positioning
-      // from the default static also allows us to z-index this
-      // element above the following .content.
-      position: absolute;
-      z-index: 1;
-      left: 40px;
-      right: 40px;
-      bottom: 20px;
-
+      margin-top: 20px;
+      margin-bottom: 10px;
       a {
-        color: #fff;
+        color: $black;
         text-decoration: none;
       }
     }
 
     .content {
-      position: absolute;
-      top: 0;
-      left: 0;
+      @include rounded-box();
+      overflow: hidden;
       width: 100%;
-      height: 100%;
-      // Put behind title.
-      z-index: 0;
+      height: 380px;
 
       .field-name-field-breol-cover-image,
       .field-name-field-breol-cover-image * {
@@ -46,6 +88,10 @@
 
       img {
         object-fit: cover;
+      }
+
+      @include media($phone) {
+        height: 210px;
       }
     }
   }
@@ -62,7 +108,6 @@
   .article--breol-news {
     &--teaser {
       @include media($phone) {
-        height: 190px !important;
         border-radius: 0;
         h2 {
           text-shadow: 0 0 2px rgba(0,0,0,.16);
