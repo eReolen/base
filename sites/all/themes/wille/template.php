@@ -154,6 +154,55 @@ function wille_preprocess_ting_object_cover(&$vars) {
 }
 
 /**
+ * Template preprocessor for ting objects.
+ */
+function wille_preprocess_ting_object(&$variables) {
+  $variables['theme_hook_suggestions'][] = 'ting_object__' . $variables['elements']['#view_mode'];
+
+  // Add "also available" to material details.
+  $variables['also_available'] = '';
+
+  // Copied and adapted from ting_block_view().
+  if ($variables['elements']['#view_mode'] == 'full') {
+    // @todo The collection only contains a single element.
+    if ($collection = ting_collection_load($variables['object']->id)) {
+      $items = array();
+      foreach ($collection->types as $k => $type) {
+        if ($collection->types_count[$type] == 1) {
+          $uri = entity_uri('ting_object', $collection);
+          // Don't link to ourselves.
+          if (isset($uri['options']['entity']->entities[$k]->ding_entity_id) &&
+            $variables['object']->id == $uri['options']['entity']->entities[$k]->ding_entity_id) {
+            continue;
+          }
+          $uri['path'] = urldecode(url('ting/object/' . $uri['options']['entity']->entities[$k]->ding_entity_id));
+        }
+        else {
+          // This shouldn't happen on eReolen, but we're keeping this code
+          // anyway.
+          $uri = entity_uri('ting_collection', $collection);
+          $uri['options']['fragment'] = $type;
+          $uri['options']['attributes'] = array('class' => array('js-search-overlay'));
+        }
+
+        $items[] = l($type, $uri['path'], $uri['options']);
+      }
+
+      // Only display if there are more than on item.
+      if (count($items) > 0) {
+        $variables['also_available'] = array(
+          '#theme' => 'item_list',
+          '#items' => $items,
+        );
+
+        // Add search overlay trigger.
+        drupal_add_js(drupal_get_path('module', 'ting') . '/js/ting.js');
+      }
+    }
+  }
+}
+
+/**
  * Return classes for type icon.
  *
  * @return array

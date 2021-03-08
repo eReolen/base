@@ -248,3 +248,18 @@
     }
   }
 }
+
+.material {
+  &__also_available {
+    .item-list,
+    ul,
+    li {
+      list-style: none;
+      display: inline-block;
+    }
+
+    a {
+      color: $color__link__default;
+    }
+  }
+}
