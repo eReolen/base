@@ -253,13 +253,14 @@
   &__also_available {
     .item-list,
     ul,
-    li {
+    ul li {
       list-style: none;
       display: inline-block;
+      margin: 0;
     }
 
-    a {
-      color: $color__link__default;
+    ul {
+      margin-left: 0.25em;
     }
   }
 }
