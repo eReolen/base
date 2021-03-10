@@ -162,6 +162,19 @@ function reol_news_paragraph_ajax($entity_type, $entity_id, $field_name, $offset
     return $item['target_id'];
   }, $items);
 
+  // Make sure that we only show published nodes.
+  // @todo Can we do this more efficiently?
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->entityCondition('entity_id', $nids + [0]);
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    // We assume that array_intersect is stable, i.e. does not move elements
+    // around.
+    $nids = array_intersect($nids, array_keys($result['node']));
+  }
+
   $return['offset'] = count($nids) > $offset + 5 ? $offset + 5 : -1;
   $nids = array_slice($nids, $offset, 5);
 
