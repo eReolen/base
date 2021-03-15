@@ -442,8 +442,10 @@ class ParagraphHelper {
               $identifiers[] = $identifier;
             }
           }
-          // Only get identifiers from the first query.
-          break;
+          // Only get identifiers from the first non-empty query.
+          if (!empty($identifiers)) {
+            break;
+          }
         }
       }
     }
