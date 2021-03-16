@@ -230,7 +230,7 @@ class NodeHelper {
     }
     $values = $entity->{$field_name}[LANGUAGE_NONE];
     $nids = array_column($values, 'target_id');
-    $nodes = node_load_multiple($nids);
+    $nodes = node_load_multiple($nids, ['status' => NODE_PUBLISHED]);
 
     return $multiple ? $nodes : reset($nodes);
   }

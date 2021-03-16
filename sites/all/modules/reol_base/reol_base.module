@@ -1966,3 +1966,25 @@ function reol_base_form_search_block_form_alter(&$form, &$form_state, $form_id) 
   // Disable browser's built-in autocompletion.
   $form['search_block_form']['#attributes']['autocomplete'] = 'off';
 }
+
+/**
+ * Implements hook_query_alter().
+ *
+ * Allow modules to request order by node publication date.
+ */
+function reol_base_query_alter(QueryAlterableInterface $query) {
+  if ($query->hasTag('published_at')) {
+    $metadata = $query->getMetaData('published_at');
+    if (isset($metadata['order_by']['direction'])) {
+      $query->join(
+        'publication_date',
+        'publication_date',
+        'publication_date.nid = node.nid'
+      );
+      $query->orderBy(
+        'publication_date.published_at',
+        $metadata['order_by']['direction']
+      );
+    }
+  }
+}
