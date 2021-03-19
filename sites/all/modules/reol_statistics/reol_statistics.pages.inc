@@ -225,7 +225,7 @@ function _reol_statistics_get_final_year() {
 function _reol_statistics_is_valid_month(ReolStatisticsMonth $month) {
   $finalDate = new DateTime(sprintf('first day of January %d', _reol_statistics_get_final_year() + 1));
 
-  return $month->getEndDateTime() < $finalDate;
+  return $month->getEndDateTime() <= $finalDate;
 }
 
 /**
