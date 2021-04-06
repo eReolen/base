@@ -426,22 +426,27 @@ class ParagraphHelper {
       $image = !empty($node->field_breol_cover_image) ? $this->nodeHelper->getImage($node->field_breol_cover_image) : static::VALUE_NONE;
 
       // Get identifiers from carousel queries.
-      $carousels = $this->nodeHelper->getFieldValue($node, 'field_carousels', NULL, TRUE);
       $identifiers = [];
-      foreach ($carousels as $carousel) {
-        module_load_include('inc', 'opensearch', 'opensearch.client');
-        $result = opensearch_do_search($carousel['search']);
-        foreach ($result->collections as $collection) {
-          /** @var \TingCollection $collection */
-          /** @var \TingEntity $object */
-          $object = $collection->getPrimary_object();
-          $identifier = $object->getId();
-          if (!in_array($identifier, $identifiers)) {
-            $identifiers[] = $identifier;
+      $carousels = $this->nodeHelper->getFieldValue($node, 'field_carousels', NULL, TRUE);
+      if (is_array($carousels)) {
+        foreach ($carousels as $carousel) {
+          module_load_include('inc', 'opensearch', 'opensearch.client');
+          // Load at most 100 results.
+          $result = opensearch_do_search($carousel['search'], 1, 100);
+          foreach ($result->collections as $collection) {
+            /** @var \TingCollection $collection */
+            /** @var \TingEntity $object */
+            $object = $collection->getPrimary_object();
+            $identifier = $object->getId();
+            if (!in_array($identifier, $identifiers)) {
+              $identifiers[] = $identifier;
+            }
+          }
+          // Only get identifiers from the first non-empty query.
+          if (!empty($identifiers)) {
+            break;
           }
         }
-        // Only get identifiers from the first query.
-        break;
       }
     }
 
