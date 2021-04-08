@@ -431,8 +431,8 @@ class ParagraphHelper {
       if (is_array($carousels)) {
         foreach ($carousels as $carousel) {
           module_load_include('inc', 'opensearch', 'opensearch.client');
-          // Load at most 100 results.
-          $result = opensearch_do_search($carousel['search'], 1, 100);
+          // Load at most 25 results.
+          $result = opensearch_do_search($carousel['search'], 1, 25);
           foreach ($result->collections as $collection) {
             /** @var \TingCollection $collection */
             /** @var \TingEntity $object */
