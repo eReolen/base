@@ -64,6 +64,11 @@ class NodeHelper {
    */
   public function getTextFieldValue($entity, $field_name, $sub_field_name = NULL, $multiple = FALSE) {
     $values = $this->getFieldValue($entity, $field_name, $sub_field_name, TRUE);
+
+    if (NULL === $values) {
+      return NULL;
+    }
+
     $values = array_map([$this, 'getTextValue'], $values);
 
     return $multiple ? $values : reset($values);
