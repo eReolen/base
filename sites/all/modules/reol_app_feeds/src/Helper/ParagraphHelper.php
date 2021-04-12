@@ -419,6 +419,7 @@ class ParagraphHelper {
 
     $image = !empty($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, 'app_news_image') : static::VALUE_NONE;
     $identifiers = $this->nodeHelper->getTingIdentifiers($node, 'field_ding_news_materials');
+    $body = $this->nodeHelper->getBody($node);
 
     // Hack for eReolen Go!
     if ('breol_news' === $node->type) {
@@ -448,6 +449,8 @@ class ParagraphHelper {
           }
         }
       }
+
+      $body = $this->nodeHelper->getTextFieldValue($node, 'field_lead', NULL, FALSE);
     }
 
     return [
@@ -456,7 +459,7 @@ class ParagraphHelper {
       'title' => $this->getTitle($node->title),
       'view' => $view,
       'image' => $image,
-      'body' => $this->nodeHelper->getBody($node),
+      'body' => $body,
       'identifiers' => $identifiers,
     ];
   }
