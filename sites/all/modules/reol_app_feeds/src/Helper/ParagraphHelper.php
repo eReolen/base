@@ -738,7 +738,7 @@ class ParagraphHelper {
    *   The video source.
    */
   private function getVideoSource($url) {
-    if (preg_match('/(?P<source>youtube)/', $url, $matches)) {
+    if (preg_match('@^(?P<source>[^:]+)://@', $url, $matches)) {
       return $matches['source'];
     }
 
