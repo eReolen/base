@@ -408,7 +408,7 @@ Drupal.ajax.prototype.beforeSend = function (xmlhttprequest, options) {
 
   // Insert progressbar or throbber.
   if (this.progress.type == 'bar') {
-    var progressBar = new Drupal.progressBar('ajax-progress-' + this.element.id, eval(this.progress.update_callback), this.progress.method, eval(this.progress.error_callback));
+    var progressBar = new Drupal.progressBar('ajax-progress-' + this.element.id, $.noop, this.progress.method, $.noop);
     if (this.progress.message) {
       progressBar.setProgress(-1, this.progress.message);
     }
@@ -496,7 +496,9 @@ Drupal.ajax.prototype.getEffect = function (response) {
  * Handler for the form redirection error.
  */
 Drupal.ajax.prototype.error = function (xmlhttprequest, uri, customMessage) {
-  Drupal.displayAjaxError(Drupal.ajaxError(xmlhttprequest, uri, customMessage));
+  if (response.status != 0) {
+    Drupal.displayAjaxError(Drupal.ajaxError(xmlhttprequest, uri, customMessage));
+  }
   // Remove the progress element.
   if (this.progress.element) {
     $(this.progress.element).remove();
