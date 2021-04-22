@@ -274,6 +274,127 @@ function drupal_session_initialize() {
 }
 
 /**
+ * Check user agent string to detect browsers that are known to be problematic
+ * with a SameSite cookie attribute.
+ *
+ * Based on: https://www.chromium.org/updates/same-site/incompatible-clients
+ *
+ * @param string $samesite_value
+ *   The value that the SameSite cookie attribute would be set to.
+ *   Should be: "", "None", "Lax", or "Strict" (case-insensitive).
+ *
+ * @param string $ua (optional)
+ *   The user agent string. Will use the value from $_SERVER['HTTP_USER_AGENT']
+ *   if this is not provided.
+ *
+ * @return boolean
+ */
+function drupal_session_can_send_samesite_cookie_attribute($samesite_value, $ua = NULL) {
+  // If this value is empty, the site administrator chose to not use SameSite.
+  if (empty($samesite_value)) {
+    return FALSE;
+  }
+  if ($ua === NULL) {
+    $ua = $_SERVER['HTTP_USER_AGENT'];
+  }
+
+  // SameSite attribute of Lax or Strict is not a problem for these browsers.
+  if ((strcasecmp($samesite_value, 'lax') === 0) || (strcasecmp($samesite_value, 'strict') === 0)) {
+    return FALSE;
+  }
+
+  // iOS version 12
+  if (preg_match('/\(iP.+; CPU .*OS 12[_\d]*.*\) AppleWebKit\//', $ua)) {
+    return FALSE;
+  }
+
+  // Determine if a browser is Chrome (or Chromium) based.
+  $IsChromiumBased = function($ua) {
+    if (preg_match('/Chrom(e|ium)/', $ua)) {
+      return TRUE;
+    }
+    return FALSE;
+  };
+
+  // e.g. "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15";
+  $IsSafari = function($ua) use ($IsChromiumBased) {
+    if (preg_match('/Version\/.* Safari\//', $ua)) {
+      if ($IsChromiumBased($ua) === FALSE) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  };
+
+  // Determine if a user agent matches a particular Mac OS X version.
+  $IsMacOSXVersion = function($ua, $major_num, $minor_num) {
+    preg_match_all('/\(Macintosh;.*Mac OS X (\d+)_(\d+)[_\d]*.*\) AppleWebKit\//', $ua, $matches);
+    $matched_major = isset($matches[1][0]) ? intval($matches[1][0]) : '';
+    $matched_minor = isset($matches[2][0]) ? intval($matches[2][0]) : '';
+    // Using == instead of === to allow comparison of ints to numeric strings.
+    if (($major_num === $matched_major) && ($minor_num === $matched_minor)) {
+      return TRUE;
+    }
+    return FALSE;
+  };
+
+  // Mac OSX 10.14
+  if ($IsMacOSXVersion($ua, 10, 14)) {
+    // Safari
+    if ($IsSafari($ua)) {
+      return FALSE;
+    }
+    // Mac embedded browser
+    if (preg_match('/^Mozilla\/[\.\d]+ \(Macintosh;.*Mac OS X [_\d]+\) AppleWebKit\/[\.\d]+ \(KHTML, like Gecko\)$/', $ua)) {
+      return FALSE;
+    }
+  }
+
+  $IsIncompatibleChromiumBasedVersion = function($ua) {
+    preg_match_all('/Chrom[^ \/]+\/(\d+)[\.\d]*/', $ua, $matches);
+    // If we can't determine the version number, we can't know its incompatible.
+    if (empty($matches[1][0])) {
+      return FALSE;
+    }
+    $version_number = intval($matches[1][0]);
+    if (($version_number >= 51) && ($version_number <= 66)) {
+      return TRUE;
+    }
+    return FALSE;
+  };
+
+  $IsIncompatibleUCBrowser = function($ua) {
+    preg_match_all('/UCBrowser\/(\d+)\.(\d+)\.(\d+)[\.\d]*/', $ua, $matches);
+    // If this is not UCBrowser or the version number is an unexpected format.
+    if (empty($matches[0][0]) || empty($matches[1][0]) || empty($matches[2][0]) || empty($matches[3][0])) {
+      return FALSE;
+    }
+    $uc_version_string = $matches[1][0] . '.' . $matches[2][0] . '.' . $matches[3][0];
+    // Any UCBrowser version lower than 12.13.2 is an incompatible version.
+    if (version_compare($uc_version_string, '12.13.2') === -1) {
+      return TRUE;
+    }
+    return FALSE;
+  };
+
+  // e.g. "Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3396.99 Safari/537.36";
+  if ($IsChromiumBased($ua)) {
+    $is_incompatible = $IsIncompatibleChromiumBasedVersion($ua);
+    if ($is_incompatible) {
+      return FALSE;
+    }
+  }
+
+  // e.g. "Mozilla/5.0 (Linux; U; Android 8.0.0; en-US; SM-J400F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.108 UCBrowser/13.2.5.1300 Mobile Safari/537.36";
+  if ($IsIncompatibleUCBrowser($ua)) {
+    return FALSE;
+  }
+
+  // If we've made it to this point, the browser isn't known to be incompatible.
+  return TRUE;
+}
+
+/**
  * Starts a session forcefully, preserving already set session data.
  *
  * @ingroup php_wrappers
@@ -295,6 +416,24 @@ function drupal_session_start() {
       }
       else {
         session_set_cookie_params($params['lifetime'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+      }
+    }
+
+    // SameSite workaround to make browsers treat cookies consistently.
+    $params = session_get_cookie_params();
+    $params['samesite'] = empty($params['samesite']) ? variable_get('samesite_cookie_attribute_value', 'None') : $params['samesite'];
+    // Site admins are able to set samesite_cookie_attribute_value to an
+    // empty value if they actually want this cookie attribute not set.
+    if (drupal_session_can_send_samesite_cookie_attribute($params['samesite'])) {
+      if (PHP_VERSION_ID >= 70300) {
+        session_set_cookie_params($params);
+      }
+      else {
+        // If the path already has a workaround, leave it alone.
+        if (empty(preg_match('/;[\W]*samesite[\W]*=/i', $params['path']))) {
+          $params['path'] .= '; SameSite=' . $params['samesite'];
+          session_set_cookie_params($params['lifetime'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+        }
       }
     }
 
