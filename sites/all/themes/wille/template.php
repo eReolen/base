@@ -164,7 +164,6 @@ function wille_preprocess_ting_object(&$variables) {
 
   // Copied and adapted from ting_block_view().
   if ($variables['elements']['#view_mode'] == 'full') {
-    // @todo The collection only contains a single element.
     if ($collection = ting_collection_load($variables['object']->id)) {
       $items = array();
       foreach ($collection->types as $k => $type) {
