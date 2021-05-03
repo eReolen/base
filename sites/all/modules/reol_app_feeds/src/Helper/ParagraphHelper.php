@@ -739,7 +739,8 @@ class ParagraphHelper {
    */
   private function getVideoSource($url) {
     if (preg_match('@^(?P<source>[^:]+)://@', $url, $matches)) {
-      return $matches['source'];
+      // The app can only handle one source which is called "youtube".
+      return 'youtube';
     }
 
     return self::VALUE_NONE;
