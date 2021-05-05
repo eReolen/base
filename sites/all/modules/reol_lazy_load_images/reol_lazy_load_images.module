@@ -151,6 +151,12 @@ function theme_reol_base_image($variables) {
     }
   }
 
+  // @see https://act-rules.github.io/rules/c487ae
+  $label = $attributes['title'] ?? $attributes['alt'] ?? NULL;
+  if (NULL !== $label) {
+    $attributes['aria-label'] = $label;
+  }
+
   return '<img' . drupal_attributes($attributes) . ' />';
 }
 
