@@ -28,10 +28,6 @@
             <?php print t('Category'); ?>
           </div>
         <?php endif; ?>
-
-        <?php if(!empty($body)) : ?>
-          <?php print($body); ?>
-        <?php endif; ?>
       </div>
     </div>
   </div>
