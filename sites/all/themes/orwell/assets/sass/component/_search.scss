@@ -44,12 +44,11 @@ $icon-color: #9c9c9c;
       label {
         text-transform: uppercase;
         cursor: pointer;
-        opacity: .5;
         font-size: 1.3rem;
       }
 
       &.selected label {
-        opacity: 1;
+        text-decoration: underline;
       }
     }
 
@@ -350,6 +349,7 @@ html.js input.form-autocomplete {
     padding: 0 2rem;
     background: $page-bg;
     display: none;
+    color: $color__geist--grey2;
 
     @include grid-media($medium) {
       display: block;
