@@ -159,6 +159,7 @@ function wille_preprocess_ting_object_cover(&$vars) {
  * Template preprocessor for ting objects.
  */
 function wille_preprocess_ting_object(&$variables) {
+  $variables['bundle'] = $variables['elements']['#bundle'];
   $variables['theme_hook_suggestions'][] = 'ting_object__' . $variables['elements']['#view_mode'];
 
   // Add "also available" to material details.
