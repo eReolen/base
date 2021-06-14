@@ -999,7 +999,11 @@ function ting_search_submit($form, &$form_state) {
     $form_state['redirect'] = array(
       'search/' . $search_info['path'] . '/' . trim($keys),
       array(
-        'query' => array_merge($controls, array('filters' => $filters)),
+        // We use array_filter (and filter out empty filters) to make sure that
+        // the query is actually falsy in the call to url() when processing form
+        // state redirect (cf. drupal_redirect_form() which calls drupal_goto()
+        // that calls url()).
+        'query' => array_filter(array_merge($controls, array('filters' => $filters))),
       ),
     );
   }
