@@ -226,3 +226,16 @@
   display: inline-block;
   flex: none;
 }
+
+// Center slide if there is only one
+
+.ding-carousel {
+  ul.carousel.just-one-item {
+    justify-content: center;
+    li:first-child:nth-last-child(1) {
+      > div:first-of-type {
+        width: 1080px;
+      }
+    }
+  }
+}
