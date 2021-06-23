@@ -27,5 +27,5 @@
       <?php print($title); ?>
     </h2>
   <?php endif; ?>
-  <ul class="carousel"><?php print render($items); ?></ul>
+  <ul class="carousel<?php if (count($items) == "1"): ?> just-one-item<?php endif; ?>"><?php print render($items); ?></ul>
 </div>
