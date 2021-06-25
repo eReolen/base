@@ -229,11 +229,12 @@
 
 // Center slide if there is only one
 
-.ding-carousel {
-  ul.carousel.just-one-item {
+.ding-carousel.single-slide {
+  ul.carousel {
     justify-content: center;
-    li:first-child:nth-last-child(1) {
-      > div:first-of-type {
+
+    .ding-carousel-item > div {
+      @include grid-media($large) {
         width: 1080px;
       }
     }
