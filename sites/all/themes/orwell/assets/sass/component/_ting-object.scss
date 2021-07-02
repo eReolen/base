@@ -93,7 +93,7 @@ $material--teaser__margin-bottom: 1.2rem;
     h1, a {
       text-decoration: none;
       font-family: $font-light;
-      color: $color__geist--grey2;
+      color: $color__font-gray;
       overflow-wrap: break-word;
     }
     @include grid-media($small) {
