@@ -44,11 +44,12 @@ $icon-color: #9c9c9c;
       label {
         text-transform: uppercase;
         cursor: pointer;
+        opacity: .5;
         font-size: 1.3rem;
       }
 
       &.selected label {
-        text-decoration: underline;
+        opacity: 1;
       }
     }
 

@@ -24,7 +24,7 @@
 
   &__brand {
     background-color: $color__white;
-    color: $color__geist--grey2;
+    color: $color__red;
     font-family: $font-semibold;
     padding: 1rem 0;
     display: flex;
@@ -33,7 +33,6 @@
 
     &::before {
       @include icon;
-      color: $color__red;
       content: $icon__ereol-symbol;
       font-size: 2rem;
       margin-right: .5rem;
