@@ -122,9 +122,11 @@ function wille_ting_object_cover($variables) {
   }
   $cover = '<div ' . drupal_attributes($attributes) . '>' . $variables['image'] . '</div>';
   // Add link if the id is not to a fake material.
-  $ding_entity_id = $variables['elements']['#object']->ding_entity_id;
+  $ding_entity = $variables['object'];
+  $ding_entity_id = $ding_entity->ding_entity_id;
   if (!reol_base_fake_id($ding_entity_id)) {
-    $cover = l($cover, 'ting/object/' . $ding_entity_id, array('html' => TRUE));
+    $path = !empty($ding_entity->reol_no_type_icons) ? 'ting/collection/' : 'ting/object/';
+    $cover = l($cover, $path . $ding_entity_id, array('html' => TRUE));
   }
 
   return $cover;
@@ -157,6 +159,7 @@ function wille_preprocess_ting_object_cover(&$vars) {
  * Template preprocessor for ting objects.
  */
 function wille_preprocess_ting_object(&$variables) {
+  $variables['bundle'] = $variables['elements']['#bundle'];
   $variables['theme_hook_suggestions'][] = 'ting_object__' . $variables['elements']['#view_mode'];
 
   // Add "also available" to material details.

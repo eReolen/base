@@ -132,12 +132,17 @@
   }
 }
 
+.pane-ting-collection .view-mode-collection-list .field-items .field-item h2 {
+  margin-bottom: 0;
+}
+
 .group-material-details,
 .ting-object-related-item {
   margin-top: 50px;
 }
 
-.pane-ting-object {
+.pane-ting-object,
+.pane-ting-collection {
   margin: 60px 0 0;
   line-height: 20px;
   color: $title-color;
@@ -262,5 +267,7 @@
     ul {
       margin-left: 0.25em;
     }
+
+    margin: 20px 0;
   }
 }
