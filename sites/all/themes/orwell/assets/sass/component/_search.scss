@@ -350,6 +350,7 @@ html.js input.form-autocomplete {
     padding: 0 2rem;
     background: $page-bg;
     display: none;
+    color: $color__geist--grey2;
 
     @include grid-media($medium) {
       display: block;
