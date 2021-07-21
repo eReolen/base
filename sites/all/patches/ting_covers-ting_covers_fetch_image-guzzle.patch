@@ -1,0 +1,58 @@
+diff --git a/profiles/ding2/modules/ting_covers/ting_covers.module b/profiles/ding2/modules/ting_covers/ting_covers.module
+index 83e6c0c0..6cae4870 100644
+--- a/profiles/ding2/modules/ting_covers/ting_covers.module
++++ b/profiles/ding2/modules/ting_covers/ting_covers.module
+@@ -7,6 +7,9 @@
+  * for Ting objects and collections
+  */
+ 
++use GuzzleHttp\Client;
++use GuzzleHttp\RequestOptions;
++
+ // Default cache lifetime for covers (24 timer).
+ define('TING_COVERS_DEFAULT_CACHE_LIFETIME', 86400);
+ define('TING_COVERS_MAX_SIZE', 1200);
+@@ -235,13 +238,6 @@ function _ting_covers_get_file($id, $uri) {
+  * @see image_style_create_derivative()
+  */
+ function ting_covers_fetch_image($filename, $image_url) {
+-  $result = drupal_http_request($image_url);
+-
+-  // Bail if the HTTP request failed.
+-  if ($result->code != 200) {
+-    return FALSE;
+-  }
+-
+   // Get the folder for the final location of this preset.
+   $directory = dirname($filename);
+ 
+@@ -251,7 +247,28 @@ function ting_covers_fetch_image($filename, $image_url) {
+     return FALSE;
+   }
+ 
+-  $file = file_unmanaged_save_data($result->data, $filename, FILE_EXISTS_REPLACE);
++  // Using drupal_http_request to download the image will load the image data
++  // into memory and possibly exceed PHP's memory limit.
++  // Therefore we use Guzzle to download the image to a temporary file.
++  $temp_name = drupal_tempnam('temporary://', 'file');
++  $fp = fopen($temp_name, 'w');
++  $client = new Client();
++  try {
++    $response = $client->get($image_url, [
++      RequestOptions::SINK => $fp,
++    ]);
++  } catch (\Exception $exception) {
++    watchdog('ting_covers', 'Error downloading image (%url): %message', ['%url' => $image_url, '%message' => $exception->getMessage()], WATCHDOG_ERROR);
++    return FALSE;
++  }
++
++  // Bail if the HTTP request failed.
++  if (200 !== $response->getStatusCode()) {
++    return FALSE;
++  }
++
++  // Move the temporary file into place.
++  $file = file_unmanaged_move($temp_name, $filename, FILE_EXISTS_REPLACE);
+ 
+   if ($file) {
+     $realpath = drupal_realpath($filename);
