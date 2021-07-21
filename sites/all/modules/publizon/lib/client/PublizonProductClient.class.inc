@@ -53,7 +53,15 @@ class PublizonProductClient extends PublizonClient {
     try {
       $product = $this->getProduct($isbn);
 
-      return !empty($product->coverImage) ? $product->coverImage : FALSE;
+      return !empty($product->coverImage)
+        ? url($product->coverImage, [
+          'query' => array_filter([
+            // Request cover image no wider than the defined ting cover max size
+            // (defined in ting_covers.module).
+            'width' => defined('TING_COVERS_MAX_SIZE') ? TING_COVERS_MAX_SIZE : NULL
+          ]),
+        ])
+        : FALSE;
     }
     catch (Exception $e) {
       return FALSE;
