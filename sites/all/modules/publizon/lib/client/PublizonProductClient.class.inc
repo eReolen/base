@@ -56,9 +56,13 @@ class PublizonProductClient extends PublizonClient {
       return !empty($product->coverImage)
         ? url($product->coverImage, [
           'query' => array_filter([
-            // Request cover image no wider than the defined ting cover max size
-            // (defined in ting_covers.module).
-            'width' => defined('TING_COVERS_MAX_SIZE') ? TING_COVERS_MAX_SIZE : NULL
+            // Request cover image no higher than the defined ting cover max
+            // size (defined in ting_covers.module).
+            // The cover images will be scaled to fit inside a square box with
+            // height (and width) TING_COVERS_MAX_SIZE pixels, and since most
+            // book covers are higher than they are wide we limit the height for
+            // best performance.
+            'height' => defined('TING_COVERS_MAX_SIZE') ? TING_COVERS_MAX_SIZE : NULL
           ]),
         ])
         : FALSE;
