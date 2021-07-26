@@ -37,10 +37,21 @@ function reol_app_feeds_drush_command() {
  */
 function drush_reol_app_feeds_generate() {
   $all = drush_get_option('all', FALSE);
+  $verbose = drush_get_option('verbose', FALSE);
   $feeds = $all ? FeedHelper::$feedNames : func_get_args();
 
   $feedHelper = new FeedHelper();
   foreach ($feeds as $feed) {
-    $feedHelper->generate($feed);
+    $starttime = microtime(TRUE);
+    $result = $feedHelper->generate($feed);
+    $endtime = microtime(TRUE);
+    if ($verbose) {
+      drush_print(sprintf(
+        '%-24s %s (%s)',
+        $feed,
+        FALSE === $result ? '–' : sprintf('%12d bytes', $result),
+        sprintf('%.3f s', $endtime - $starttime)
+      ));
+    }
   }
 }
