@@ -432,15 +432,14 @@ class ParagraphHelper {
       if (is_array($carousels)) {
         foreach ($carousels as $carousel) {
           module_load_include('inc', 'opensearch', 'opensearch.client');
-          // Load at most 25 results.
-          $result = opensearch_do_search($carousel['search'], 1, 25);
-          foreach ($result->collections as $collection) {
-            /** @var \TingCollection $collection */
-            /** @var \TingEntity $object */
-            $object = $collection->getPrimary_object();
-            $identifier = $object->getId();
-            if (!in_array($identifier, $identifiers)) {
-              $identifiers[] = $identifier;
+          // Load at most 50 results.
+          $result = opensearch_do_search($carousel['search'], 1, 50, ['reply_only' => TRUE]);
+          if (isset($result->collections) && is_array($result->collections)) {
+            foreach ($result->collections as $collection) {
+              $identifier = $collection->objects[0]->id;
+              if (!in_array($identifier, $identifiers)) {
+                $identifiers[] = $identifier;
+              }
             }
           }
           // Only get identifiers from the first non-empty query.
