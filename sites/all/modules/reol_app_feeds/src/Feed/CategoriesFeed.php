@@ -50,15 +50,18 @@ class CategoriesFeed extends AbstractFeed {
             break;
 
           case ParagraphHelper::PARAGRAPH_MATERIAL_CAROUSEL:
-            // @TODO: Can we use entity_metadata_wrapper to get the list of carousels?
-            foreach ($paragraph->field_carousel[LANGUAGE_NONE] as $carousel) {
-              $query = trim($carousel['search']);
-              if (!empty($query)) {
-                $subcategories[] = [
-                  'title' => $carousel['title'],
-                  'type' => 'carousel',
-                  'query' => trim($carousel['search']),
-                ];
+            // @TODO: Can we use entity_metadata_wrapper to get the list of
+            // carousels?
+            if (isset($paragraph->field_carousel[LANGUAGE_NONE]) && is_array($paragraph->field_carousel[LANGUAGE_NONE])) {
+              foreach ($paragraph->field_carousel[LANGUAGE_NONE] as $carousel) {
+                $query = trim($carousel['search']);
+                if (!empty($query)) {
+                  $subcategories[] = [
+                    'title' => $carousel['title'],
+                    'type' => 'carousel',
+                    'query' => trim($carousel['search']),
+                  ];
+                }
               }
             }
             break;
