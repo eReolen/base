@@ -742,7 +742,9 @@ class ParagraphHelper {
     }
 
     $video = $this->nodeHelper->loadReferences($paragraph, 'field_video_node', FALSE);
-    $videoUrl = $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
+    // eReolen uses field_video; eReolen Go uses field_breol_video.
+    $videoUrl = $this->nodeHelper->getFieldValue($video, 'field_video', 'uri')
+      ?? $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
     $url = $this->nodeHelper->getFileUrl($videoUrl);
 
     $thumbnail = $this->getVideoThumbnail($url);
@@ -793,6 +795,19 @@ class ParagraphHelper {
             '!url' => $url,
             '!message' => $exception->getMessage(),
           ], WATCHDOG_ERROR);
+        }
+      }
+      elseif (preg_match('/youtube/', $url)) {
+        $parts = drupal_parse_url($url);
+        if (isset($parts['query']['v'])) {
+          // @see https://stackoverflow.com/a/2068371
+          $image_url = sprintf('https://img.youtube.com/vi/%s/maxresdefault.jpg', $parts['query']['v']);
+          $size = getimagesize($image_url);
+          $thumbnail = [
+            'url' => $image_url,
+            'width' => $size[0] ?? self::VALUE_NONE,
+            'height' => $size[1] ?? self::VALUE_NONE,
+          ];
         }
       }
 

@@ -194,6 +194,7 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
       '#markup' => implode('', [
         '<ul>',
         '<li>' . l(t('Frontpage'), '/app/feed/v2/frontpage') . '</li>',
+        '<li>' . l(t('Frontpage (v3)'), '/app/feed/v3/frontpage') . '</li>',
         '<li>' . l(t('Themes'), '/app/feed/v2/themes') . '</li>',
         '<li>' . l(t('Categories'), '/app/feed/v2/categories') . '</li>',
         '<li>' . l(t('Overdrive mapping'), '/app/feed/v2/overdrive/mapping') . '</li>',
