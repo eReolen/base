@@ -4,6 +4,7 @@ namespace Drupal\reol_app_feeds\Helper;
 
 use Drupal\reol_app_feeds\Feed\CategoriesFeed;
 use Drupal\reol_app_feeds\Feed\FrontPageFeed;
+use Drupal\reol_app_feeds\Feed\V3\FrontPageFeed as FrontPageFeedV3;
 use Drupal\reol_app_feeds\Feed\OverdriveMappingFeed;
 use Drupal\reol_app_feeds\Feed\ThemesFeed;
 
@@ -66,6 +67,7 @@ class FeedHelper {
 
     $feedClass = [
       'frontpage' => FrontPageFeed::class,
+      'v3/frontpage' => FrontPageFeedV3::class,
       'themes' => ThemesFeed::class,
       'categories' => CategoriesFeed::class,
       'overdrive/mapping' => OverdriveMappingFeed::class,

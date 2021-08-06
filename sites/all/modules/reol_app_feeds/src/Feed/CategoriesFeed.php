@@ -113,7 +113,7 @@ class CategoriesFeed extends AbstractFeed {
    * @return array
    *   The nodes.
    */
-  private function getNodes() {
+  protected function getNodes() {
     $group_name = 'reol_app_feeds_category';
     $field_name = 'page_ids';
     $pages = _reol_app_feeds_variable_get($group_name, $field_name, []);
