@@ -14,14 +14,18 @@ function reol_app_feeds_drush_command() {
   $commands['reol-app-feeds-generate'] = array(
     'description' => 'Generate app feeds.',
     'arguments' => [
-      'names' => 'One or more feed names (space-separated).' . PHP_EOL . 'Valid feed names: ' . implode(' ', FeedHelper::$feedNames),
+      'names' => 'One or more feed names (space-separated). Use --list to list all feed names.',
     ],
     'options' => [
       'all' => [
         'description' => 'Generate all feeds.',
       ],
+      'list' => [
+        'description' => 'List all feed names.',
+      ],
     ],
     'examples' => array(
+      'drush reol-app-feeds-generate --list' => 'List all feed names.',
       'drush reol-app-feeds-generate categories' => 'Generate categories feed.',
       'drush reol-app-feeds-generate categories frontpage' => 'Generate categories and frontpage feeds.',
       'drush reol-app-feeds-generate --all' => 'Generate all feeds.',
@@ -36,6 +40,13 @@ function reol_app_feeds_drush_command() {
  * Callback function for reol-app-feeds-generate command.
  */
 function drush_reol_app_feeds_generate() {
+  if (drush_get_option('list', FALSE)) {
+    foreach (FeedHelper::$feedNames as $name) {
+      drush_print($name);
+    }
+    return;
+  }
+
   $all = drush_get_option('all', FALSE);
   $verbose = drush_get_option('verbose', FALSE);
   $feeds = $all ? FeedHelper::$feedNames : func_get_args();
