@@ -67,6 +67,7 @@ class CategoriesFeed extends AbstractFeed {
             break;
 
           case ParagraphHelper::PARAGRAPH_TWO_ELEMENTS:
+          case ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE:
             $videoList = $this->paragraphHelper->getVideoList($paragraph);
             if (!empty($videoList)) {
               $subcategories[] = reset($videoList);

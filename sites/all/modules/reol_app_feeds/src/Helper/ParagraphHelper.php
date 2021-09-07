@@ -33,6 +33,8 @@ class ParagraphHelper {
   const PARAGRAPH_SPOTLIGHT_BOX = 'spotlight_box';
   // Video.
   const PARAGRAPH_VIDEO = 'video';
+  // Video bundle.
+  const PARAGRAPH_VIDEO_BUNDLE = 'video_bundle';
   // To elementer.
   const PARAGRAPH_TWO_ELEMENTS = 'two_elements';
 
@@ -699,6 +701,9 @@ class ParagraphHelper {
         $sub_paragraphs_field_name = 'field_two_elements_primary';
         $sub_paragraphs_video_field_name = 'field_breol_video';
         break;
+
+      case ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE:
+        return $this->getVideoBundleVideoList($paragraph);
     }
 
     if (isset($sub_paragraphs_field_name, $sub_paragraphs_video_field_name)) {
@@ -720,6 +725,81 @@ class ParagraphHelper {
     }
 
     return $list;
+  }
+
+  /**
+   * Get video list from video_bundle paragraph.
+   *
+   * @param \ParagraphsItemEntity $paragraph
+   *   The paragraph.
+   *
+   * @return array
+   *   The view list data.
+   */
+  private function getVideoBundleVideoList(\ParagraphsItemEntity $paragraph) {
+    if (ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE !== $paragraph->bundle()) {
+      return [];
+    }
+
+    $video = $this->nodeHelper->loadReferences($paragraph, 'field_video_node', FALSE);
+    $videoUrl = $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
+    $url = $this->nodeHelper->getFileUrl($videoUrl);
+
+    $thumbnail = $this->getVideoThumbnail($url);
+
+    return [
+      [
+        'guid' => $this->getGuid($paragraph),
+        'type' => $this->getType($paragraph),
+        'title' => $this->nodeHelper->getTextFieldValue($paragraph, 'field_video_title'),
+        'description' => $this->nodeHelper->getTextFieldValue($paragraph, 'field_video_description'),
+        'image' => self::VALUE_NONE,
+        'source' => $this->getVideoSource($url),
+        'url' => $url,
+        'thumbnail' => $thumbnail,
+      ],
+    ];
+  }
+
+  /**
+   * Get video thumbnail.
+   *
+   * @param string $url
+   *   The video url.
+   *
+   * @return array|string
+   *   The empty string or an array with keys url, width and height.
+   */
+  private function getVideoThumbnail($url) {
+    $thumbnails = &drupal_static(__FUNCTION__);
+
+    if (!isset($thumbnails[$url])) {
+      $thumbnail = self::VALUE_NONE;
+
+      if (preg_match('/videotool/', $url)) {
+        try {
+          $oembedUrl = 'https://www.videotool.dk/oembed/?' . http_build_query(['url' => $url]);
+          $client = new Client();
+          $response = $client->get($oembedUrl);
+          $xml = new \SimpleXMLElement((string) $response->getBody());
+          $thumbnail = [
+            'url' => (string) $xml->thumbnail_url,
+            'width' => (int) $xml->thumbnail_width,
+            'height' => (int) $xml->thumbnail_height,
+          ];
+        }
+        catch (\Exception $exception) {
+          watchdog('reol_app_feeds', 'Cannot get thumbnail for video url !url: !message', [
+            '!url' => $url,
+            '!message' => $exception->getMessage(),
+          ], WATCHDOG_ERROR);
+        }
+      }
+
+      $thumbnails[$url] = $thumbnail;
+    }
+
+    return $thumbnails[$url];
   }
 
   /**
@@ -903,6 +983,7 @@ class ParagraphHelper {
         return 'theme_list';
 
       case self::PARAGRAPH_VIDEO:
+      case self::PARAGRAPH_VIDEO_BUNDLE:
         return 'video';
     }
 
