@@ -1,10 +1,30 @@
 .paragraphs-item-video-bundle {
-  background-color: rgb(48, 116, 206);
-  color: #fff;
+  $color-dark: #000;
+  $color-light: #fff;
 
-  .ding-carousel h2.carousel__header {
-      color: #fff;
+  &.video-bundle-color-dark {
+    color: $color-dark;
+
+    .carousel-item-language, .field-name-ting-details-language .field-item,
+    .ding-carousel h2.carousel__header,
+    .ding-carousel-item .field-name-ting-title h2,
+    .field-name-ting-author {
+      color: $color-dark;
+    }
   }
+
+  &.video-bundle-color-light {
+    color: $color-light;
+
+    .carousel-item-language, .field-name-ting-details-language .field-item,
+    .ding-carousel h2.carousel__header,
+    .ding-carousel-item .field-name-ting-title h2,
+    .field-name-ting-author {
+      color: $color-light;
+    }
+  }
+
+  font-family: $font-regular;
 
   @include media($tablet-p) {
     margin-bottom: $mobile-margin;
@@ -15,6 +35,10 @@
 
   & > .content {
     @include outer-container;
+  }
+
+  .video_bundle__title {
+    padding: 40px 0 20px;
   }
 
   .video_bundle__video-wrapper {
@@ -29,7 +53,7 @@
   // @see https://css-tricks.com/fluid-width-video/#iframe-video-youtube-vimeo-etc
   .media-videotool-video {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
+    padding-bottom: 56.25%; // 16:9
     height: 0;
 
     iframe {
@@ -39,5 +63,9 @@
       width: 100%;
       height: 100%;
     }
+  }
+
+  .video_bundle__description {
+    margin: 1em 0;
   }
 }
