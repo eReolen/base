@@ -24,8 +24,8 @@
         <div class="video_bundle__description"><?php print $paragraphs_item_wrapper->field_video_description->value(); ?></div>
       <?php endif ?>
     </div>
-    <?php // @todo This will render another h2 header ?>
-    <div class="video_bundle__carousel material-carousel-colored">
+    <?php // @fixme This will render another h2 header ?>
+    <div class="video_bundle__carousel-wrapper material-carousel-colored">
       <?php
         // @see https://www.computerminds.co.uk/articles/rendering-drupal-7-fields-right-way
         $element = field_view_field('paragraphs_item', $paragraphs_item, 'field_carousel', 'embedded');
