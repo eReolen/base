@@ -226,3 +226,17 @@
   display: inline-block;
   flex: none;
 }
+
+// Center slide if there is only one
+
+.ding-carousel.single-slide {
+  ul.carousel {
+    justify-content: center;
+
+    .ding-carousel-item > div {
+      @include grid-media($large) {
+        width: 1080px;
+      }
+    }
+  }
+}
