@@ -21,7 +21,7 @@
 ?>
 
 <div class="<?php print $classes; ?> media-youtube-<?php print $id; ?>">
-  <div class="expand-parent-to expand-parent-to--16-9"">
+  <div class="expand-parent-to expand-parent-to--16-9">
     <span class="media-youtube-video--disabled">
       <span><?php print t('To show this video you must allow marketing cookies.');?></span>
       <a href="javascript:CookieConsent.renew()"><?php print t("Change cookie consent"); ?></a>
