@@ -65,25 +65,27 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
   }
 
   foreach ($frontpage_feed_pages as $nid => $data) {
-    $node = $inspiration_pages[$nid];
-    $form[$group_name][$field_name][$nid] = [
-      'name' => [
-        '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
-      ],
+    $node = $inspiration_pages[$nid] ?? NULL;
+    if (NULL !== $node) {
+      $form[$group_name][$field_name][$nid] = [
+        'name' => [
+          '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
+        ],
 
-      'included' => [
-        '#type' => 'checkbox',
-        '#default_value' => isset($data['included']) && 1 === $data['included'],
-      ],
+        'included' => [
+          '#type' => 'checkbox',
+          '#default_value' => isset($data['included']) && 1 === $data['included'],
+        ],
 
-      'weight' => [
-        '#type' => 'weight',
-        '#title' => t('Weight'),
-        '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
-        '#delta' => $max_weight,
-        '#title_display' => 'invisible',
-      ],
-    ];
+        'weight' => [
+          '#type' => 'weight',
+          '#title' => t('Weight'),
+          '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
+          '#delta' => $max_weight,
+          '#title_display' => 'invisible',
+        ],
+      ];
+    }
   }
 
   $form[$group_name]['link_button_text'] = [
@@ -141,25 +143,27 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
   }
 
   foreach ($category_feed_pages as $nid => $data) {
-    $node = $inspiration_pages[$nid];
-    $form[$group_name][$field_name][$nid] = [
-      'name' => [
-        '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
-      ],
+    $node = $inspiration_pages[$nid] ?? NULL;
+    if (NULL !== $node) {
+      $form[$group_name][$field_name][$nid] = [
+        'name' => [
+          '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
+        ],
 
-      'included' => [
-        '#type' => 'checkbox',
-        '#default_value' => isset($data['included']) && 1 === $data['included'],
-      ],
+        'included' => [
+          '#type' => 'checkbox',
+          '#default_value' => isset($data['included']) && 1 === $data['included'],
+        ],
 
-      'weight' => [
-        '#type' => 'weight',
-        '#title' => t('Weight'),
-        '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
-        '#delta' => $max_weight,
-        '#title_display' => 'invisible',
-      ],
-    ];
+        'weight' => [
+          '#type' => 'weight',
+          '#title' => t('Weight'),
+          '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
+          '#delta' => $max_weight,
+          '#title_display' => 'invisible',
+        ],
+      ];
+    }
   }
 
   $form[$group_name]['default_color'] = [
