@@ -28,8 +28,9 @@ class FrontPageFeed extends CategoriesFeed {
     $data = parent::getData();
 
     // Extract and merge subcategories
-    // $data = array_column($data, 'subcategories');
-    // $data = array_merge(...$data);.
+    $data = array_column($data, 'subcategories');
+    $data = array_merge(...$data);
+
     return $data;
   }
 
