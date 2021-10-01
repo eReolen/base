@@ -27,8 +27,8 @@ class FrontPageFeed extends FrontPageFeedV2 {
     foreach ($paragraphIds as $paragraphId) {
       $data[] = $this->getCarousels([$paragraphId]);
       $data[] = $this->getThemes([$paragraphId]);
-      $data[] = $this->getEditors([$paragraphId]);
       $data[] = $this->getVideos([$paragraphId]);
+      $data[] = $this->getEditors([$paragraphId]);
       $data[] = $this->getAudios([$paragraphId]);
     }
 
