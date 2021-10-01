@@ -3,33 +3,42 @@
 namespace Drupal\reol_app_feeds\Feed\V3;
 
 use Drupal\reol_app_feeds\Feed\FrontPageFeed as FrontPageFeedV2;
-use Drupal\reol_app_feeds\Feed\CategoriesFeed;
 
 /**
  * Class FrontPageFeed.
- *
- * Same structure as the category feed, but with other source pages.
  */
-class FrontPageFeed extends CategoriesFeed {
+class FrontPageFeed extends FrontPageFeedV2 {
 
   /**
-   * {@inheritdoc}
-   */
-  protected function getNodes() {
-    $ids = FrontPageFeedV2::getFrontPageIds();
-
-    return $this->nodeHelper->loadNodes($ids);
-  }
-
-  /**
-   * {@inheritdoc}
+   * Get front page feed data.
+   *
+   * FrontPageFeedV2 groups content by type, but in this extension we list
+   * elements in the order they appear in the included pages.
+   *
+   * @return array
+   *   The feed data.
    */
   public function getData() {
-    $data = parent::getData();
+    $frontPageIds = self::getFrontPageIds();
+    $paragraphIds = $this->paragraphHelper->getParagraphIds($frontPageIds, self::NODE_TYPE_INSPIRATION, TRUE);
 
-    // Extract and merge subcategories
-    $data = array_column($data, 'subcategories');
-    $data = array_merge(...$data);
+    $data = [];
+
+    foreach ($paragraphIds as $paragraphId) {
+      $data[] = $this->getCarousels([$paragraphId]);
+      $data[] = $this->getThemes([$paragraphId]);
+      $data[] = $this->getEditors([$paragraphId]);
+      $data[] = $this->getVideos([$paragraphId]);
+      $data[] = $this->getAudios([$paragraphId]);
+    }
+
+    // Remove empty lists.
+    $data = array_filter($data);
+
+    // Flatten data.
+    if (!empty($data)) {
+      $data = array_merge(...$data);
+    }
 
     return $data;
   }
