@@ -756,7 +756,7 @@ class ParagraphHelper {
         'title' => $this->nodeHelper->getTextFieldValue($paragraph, 'field_video_title'),
         'description' => $this->nodeHelper->getTextFieldValue($paragraph, 'field_video_description'),
         'image' => self::VALUE_NONE,
-        'source' => $this->getVideoSource($url),
+        'source' => $this->getVideoSource($videoUrl),
         'url' => $url,
         'thumbnail' => $thumbnail,
       ],
@@ -830,8 +830,7 @@ class ParagraphHelper {
    */
   private function getVideoSource($url) {
     if (preg_match('@^(?P<source>[^:]+)://@', $url, $matches)) {
-      // The app can only handle one source which is called "youtube".
-      return 'youtube';
+      return $matches['source'];
     }
 
     return self::VALUE_NONE;
