@@ -288,8 +288,11 @@ function reol_app_feeds_admin_form_validate(array $form, array &$form_state) {
   foreach ($draggable_group_names as $group_name) {
     $items = &$form_state['values'][$group_name]['page_ids'];
     foreach ($items as &$item) {
-      if (1 !== $item['included']) {
+      if (1 !== ($item['included'] ?? 0)) {
         $item['weight'] = 1000;
+      }
+      else {
+        $item['weight'] = min($item['weight'] ?? 999, 999);
       }
     }
 
