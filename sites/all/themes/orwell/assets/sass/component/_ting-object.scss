@@ -135,7 +135,7 @@ $material--teaser__margin-bottom: 1.2rem;
 
   &__abstract {
     @include text-paragraph;
-    padding-bottom: 40px;
+    // padding-bottom: 40px;
     @include grid-media($medium) {
       display: block;
     }
@@ -336,13 +336,15 @@ $material--teaser__margin-bottom: 1.2rem;
 
     .field-group-format-wrapper,
     .ting-relations__content {
-      padding: 2rem 0;
+      // padding: 2rem 0;
 
-      @include grid-media($medium) {
-        padding: 0;
-        float: right;
-        display: block !important;
-        width: percentage(2 / 3);
+      .ting-relations__title + & {
+        @include grid-media($medium) {
+          padding: 0;
+          float: right;
+          display: block !important;
+          width: percentage(2 / 3);
+        }
       }
     }
     .field-name-ting-reference-reverse .field-items{
@@ -364,7 +366,7 @@ $material--teaser__margin-bottom: 1.2rem;
     width: 100%;
     display: inline-block;
     clear: left;
-    padding: 1.5rem 0;
+    // padding: 1.5rem 0;
     border-top: 1px solid $color__border-gray;
     margin: 0;
 
@@ -388,6 +390,13 @@ $material--teaser__margin-bottom: 1.2rem;
       width: 50%;
       float: left;
       padding: 1rem .5rem 1rem 0;
+    }
+
+    &.text {
+      .field-items {
+        width: auto;
+        float: none;
+      }
     }
 
     .field-label {
