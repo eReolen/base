@@ -135,7 +135,6 @@ $material--teaser__margin-bottom: 1.2rem;
 
   &__abstract {
     @include text-paragraph;
-    // padding-bottom: 40px;
     @include grid-media($medium) {
       display: block;
     }
@@ -269,7 +268,6 @@ $material--teaser__margin-bottom: 1.2rem;
       width: 100%;
       clear: left;
       padding-left: 0;
-      //padding-right: 2.5rem;
       margin-bottom: 3.5rem;
       .field-item {
         display: flex;
@@ -336,8 +334,6 @@ $material--teaser__margin-bottom: 1.2rem;
 
     .field-group-format-wrapper,
     .ting-relations__content {
-      // padding: 2rem 0;
-
       .ting-relations__title + & {
         @include grid-media($medium) {
           padding: 0;
@@ -366,7 +362,6 @@ $material--teaser__margin-bottom: 1.2rem;
     width: 100%;
     display: inline-block;
     clear: left;
-    // padding: 1.5rem 0;
     border-top: 1px solid $color__border-gray;
     margin: 0;
 
