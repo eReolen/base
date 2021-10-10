@@ -1,0 +1,97 @@
+.paragraphs-item-category-list {
+  @include content-wrapper__large;
+  padding: 0;
+
+  .field-name-field-categories .field-items {
+    // @see https://coryrylan.com/blog/css-gap-space-with-flexbox
+    --item-category-list-gap: 1em;
+
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: calc(-1 * var(--item-category-list-gap)) 0 0 calc(-1 * var(--item-category-list-gap));
+    width: calc(100% + var(--item-category-list-gap));
+    // justify-content: space-between;
+
+    > div {
+      // div.field-item styles
+      width: 100%;
+      margin: var(--item-category-list-gap) 0 0 var(--item-category-list-gap);
+
+      // Show three items on a row on small displays.
+      @include grid-media($small) {
+        width: calc(100%/2 - var(--item-category-list-gap));
+      }
+
+      // Show three items on a row on medium displays.
+      @include grid-media($medium) {
+        width: calc(100%/3 - var(--item-category-list-gap));
+      }
+
+      > div {
+        background {
+          position: right;
+          repeat: no-repeat;
+        }
+
+        $item-padding: 1em;
+
+        a {
+          display: block;
+          text-decoration: none;
+          // color: #eee;
+          color: #111;
+          padding: {
+            top: $item-padding;
+            bottom: $item-padding;
+            left: $item-padding;
+            // Make room for arrow after text
+            right: 2 * $item-padding;
+          }
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+
+          position: relative;
+
+          &::after {
+            content: '›';
+            position: absolute;
+            right: $item-padding;
+          }
+        }
+      }
+    }
+  }
+
+  .secondary-items {
+    // https://css-tricks.com/using-css-transitions-auto-dimensions/#aa-technique-2-transform-scaley
+    > div:first-child {
+      overflow: hidden;
+      transition: height .25s ease-out;
+      height: auto;
+    }
+
+    .show-fewer-items {
+      display: none;
+    }
+
+    &.expanded {
+      > div:first-child {
+        /* height: 200px; */
+      }
+
+      .show-fewer-items {
+        display: initial;
+      }
+
+      .show-more-items {
+        display: none;
+      }
+    }
+
+    .buttons {
+      padding: 1em;
+      text-align: center;
+    }
+  }
+}
