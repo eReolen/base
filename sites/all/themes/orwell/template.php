@@ -325,6 +325,28 @@ function orwell_preprocess_entity(&$variables) {
         $variables['title'] = check_plain($link['title']);
       }
     }
+    elseif ($variables['paragraphs_item']->bundle() == 'category_list') {
+      // Split items into two lists, primary and secondary.
+      $max_number_of_primary_items = 6;
+      $variables['primary_items'] = array_filter(
+        $variables['content']['field_categories'],
+        static function ($key) use ($max_number_of_primary_items) {
+          return !is_integer($key) || (int)$key < $max_number_of_primary_items;
+        },
+        ARRAY_FILTER_USE_KEY
+      );
+      $secondary_items = array_filter(
+        $variables['content']['field_categories'],
+        static function ($key) use ($max_number_of_primary_items) {
+          return !is_integer($key) || (int)$key >= $max_number_of_primary_items;
+        },
+        ARRAY_FILTER_USE_KEY
+      );
+      // Pass secondary items to template only if they actually exist.
+      if (!empty(element_children($secondary_items))) {
+        $variables['secondary_items'] = $secondary_items;
+      }
+    }
   }
 }
 
