@@ -56,6 +56,18 @@
     }
   }
 
+  &.text {
+    // Render text in full width.
+    .field-items {
+      @include span-columns(12);
+    }
+
+    // Overwrite styling from _search.scss.
+    .field-name-ting-abstract {
+      max-width: initial;
+    }
+  }
+
   .field {
     margin: 15px 0;
   }
