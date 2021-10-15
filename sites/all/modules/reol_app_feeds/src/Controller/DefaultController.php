@@ -17,6 +17,13 @@ class DefaultController {
   }
 
   /**
+   * Render front page data (v3).
+   */
+  public function frontpageV3() {
+    return $this->deliver('v3/frontpage');
+  }
+
+  /**
    * Render themes data.
    */
   public function themes() {

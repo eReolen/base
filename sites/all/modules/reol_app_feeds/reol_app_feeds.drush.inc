@@ -51,6 +51,10 @@ function drush_reol_app_feeds_generate() {
   $verbose = drush_get_option('verbose', FALSE);
   $feeds = $all ? FeedHelper::$feedNames : func_get_args();
 
+  if (empty($feeds)) {
+    return drush_set_error('Please specify at least 1 feed name.');
+  }
+
   $feedHelper = new FeedHelper();
   foreach ($feeds as $feed) {
     $starttime = microtime(TRUE);
