@@ -184,9 +184,6 @@ function ding_user_authenticate(array $user_info) {
     // Check that a profile exists for the user and if not create one.
     _ding_user_create_profile2($account);
 
-    // Attempt to upgrade an existing anonymous consent storage to this user.
-    _ding_user_upgrade_anonymous_ecc_consent($account);
-
     if ($account->data['blocks']) {
       foreach ($account->data['blocks'] as $block_code) {
         drupal_set_message(ding_user_block_reason($block_code), 'warning');

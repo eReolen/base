@@ -74,7 +74,6 @@ function publizon_user_authenticate($name, $pass, array $values) {
 
     // Save cookie for publizon_user_form_alter().
     setcookie('ereolen_last_library', $values['retailer_id'], time() + 3600 * 24 * 180, '/');
-
   }
   else {
     throw new DingProviderUserAuthFailure();

@@ -49,7 +49,7 @@ class PublizonUserClient extends PublizonClient {
         $support_id = (string) $friendly_elements[0];
       }
     }
-    // On exception we are not logged in.
+    // On exception, we are not logged in.
     catch (PublizonException $e) {
       $this->logger->log($e->getMessage(), 'ERROR');
       return FALSE;
