@@ -81,20 +81,22 @@ class FrontPageFeed extends AbstractFeed {
    * @return array
    *   The themes data.
    */
-  protected function getThemes(array $paragraphIds) {
+  protected function getThemes(array $paragraphIds, bool $includeLatestNews = TRUE) {
     $themes = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ALIAS_THEME_LIST, $paragraphIds);
 
-    if (module_exists('breol_news')) {
-      $latestNews = $this->getLatestNews();
-    }
-    else {
-      $latestNews = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL,
+    if ($includeLatestNews) {
+      if (module_exists('breol_news')) {
+        $latestNews = $this->getLatestNews();
+      }
+      else {
+        $latestNews = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL,
         $paragraphIds);
-    }
+      }
 
-    // Prepend "Latest news".
-    if (!empty($latestNews)) {
-      $themes = array_merge($latestNews, $themes);
+      // Prepend "Latest news".
+      if (!empty($latestNews)) {
+        $themes = array_merge($latestNews, $themes);
+      }
     }
 
     return array_values(array_filter($themes, function ($theme) {
