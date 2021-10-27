@@ -341,12 +341,19 @@ class ParagraphHelper {
   private function getArticleCarousel(\ParagraphsItemEntity $paragraph) {
     $list = [];
     // Cf. ereol_article_get_articles().
+
     $query = new EntityFieldQuery();
     $count = _reol_app_feeds_variable_get('reol_app_feeds_frontpage', 'max_news_count', 6);
 
+    $bundle = 'article';
+    // Hack for eReolen Go!
+    if (module_exists('breol_news')) {
+      $bundle = 'breol_news';
+    }
+
     $entityType = NodeHelper::ENTITY_TYPE_NODE;
-    $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'article')
+    $query->entityCondition('entity_type', $entityType)
+      ->entityCondition('bundle', $bundle)
       ->propertyCondition('status', NODE_PUBLISHED)
       ->propertyOrderBy('created', 'DESC')
       ->range(0, $count);
