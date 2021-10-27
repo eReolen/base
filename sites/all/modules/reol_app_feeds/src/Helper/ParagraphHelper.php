@@ -749,15 +749,11 @@ class ParagraphHelper {
 
     $thumbnail = $this->getVideoThumbnail($url);
 
-    $query = self::VALUE_NONE;
-    $carousel = $this->getCarousel($paragraph);
-
-    if (!empty($carousel)) {
-      $first_carousel = reset($carousel);
-      if (isset($first_carousel['query'])) {
-        $query = $first_carousel['query'];
-      }
-    }
+    $carousels = array_map(static function (array $carousel) {
+      return array_filter($carousel, static function ($key) {
+        return in_array($key, ['title', 'query']);
+      }, ARRAY_FILTER_USE_KEY);
+    }, $this->getCarousel($paragraph));
 
     return [
       [
@@ -769,8 +765,7 @@ class ParagraphHelper {
         'source' => $this->getVideoSource($videoUrl),
         'url' => $url,
         'thumbnail' => $thumbnail,
-        'query' => $query,
-        'carousel' => $carousel,
+        'carousel' => reset($carousels) ?: self::VALUE_NONE,
       ],
     ];
   }
