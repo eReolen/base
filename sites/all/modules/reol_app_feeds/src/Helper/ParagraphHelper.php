@@ -749,6 +749,16 @@ class ParagraphHelper {
 
     $thumbnail = $this->getVideoThumbnail($url);
 
+    $query = self::VALUE_NONE;
+    $carousel = $this->getCarousel($paragraph);
+
+    if (!empty($carousel)) {
+      $first_carousel = reset($carousel);
+      if (isset($first_carousel['query'])) {
+        $query = $first_carousel['query'];
+      }
+    }
+
     return [
       [
         'guid' => $this->getGuid($paragraph),
@@ -759,6 +769,8 @@ class ParagraphHelper {
         'source' => $this->getVideoSource($videoUrl),
         'url' => $url,
         'thumbnail' => $thumbnail,
+        'query' => $query,
+        'carousel' => $carousel,
       ],
     ];
   }
