@@ -758,8 +758,10 @@ class ParagraphHelper {
 
     $carousels = array_map(static function (array $carousel) {
       return array_filter($carousel, static function ($key) {
-        return in_array($key, ['title', 'query']);
-      }, ARRAY_FILTER_USE_KEY);
+        return in_array($key, ['query', 'title']);
+      }, ARRAY_FILTER_USE_KEY) + [
+        'type' => 'carousel',
+      ];
     }, $this->getCarousel($paragraph));
 
     return [
@@ -772,7 +774,7 @@ class ParagraphHelper {
         'source' => $this->getVideoSource($videoUrl),
         'url' => $url,
         'thumbnail' => $thumbnail,
-        'carousel' => reset($carousels) ?: self::VALUE_NONE,
+        'content' => reset($carousels) ?: self::VALUE_NONE,
       ],
     ];
   }
