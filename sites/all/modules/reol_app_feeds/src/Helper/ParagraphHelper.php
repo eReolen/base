@@ -1011,8 +1011,10 @@ class ParagraphHelper {
         return 'theme_list';
 
       case self::PARAGRAPH_VIDEO:
-      case self::PARAGRAPH_VIDEO_BUNDLE:
         return 'video';
+
+      case self::PARAGRAPH_VIDEO_BUNDLE:
+        return 'video_bundle';
     }
 
     return NULL;
