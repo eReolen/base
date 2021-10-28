@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 .topbar .menu-name-main-menu {
   a.user-login-link,
@@ -8,16 +8,6 @@
     font-size: 0;
     color: transparent;
     background: transparent;
-  }
-
-  li:last-child {
-    position: absolute;
-    top: 15px;
-
-    @include grid-media($medium) {
-      right: 35px;
-      top: 0;
-    }
   }
 
   .user-login-link {
