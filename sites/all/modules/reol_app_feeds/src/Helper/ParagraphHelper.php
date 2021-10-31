@@ -344,11 +344,22 @@ class ParagraphHelper {
     $query = new EntityFieldQuery();
     $count = _reol_app_feeds_variable_get('reol_app_feeds_frontpage', 'max_news_count', 6);
 
+    $bundle = 'article';
+    // Hack for eReolen Go!
+    if (module_exists('breol_news')) {
+      $bundle = 'breol_news';
+    }
+
     $entityType = NodeHelper::ENTITY_TYPE_NODE;
-    $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'article')
+    $query->entityCondition('entity_type', $entityType)
+      ->entityCondition('bundle', $bundle)
       ->propertyCondition('status', NODE_PUBLISHED)
-      ->propertyOrderBy('created', 'DESC')
+      ->addTag('published_at')
+      ->addMetaData('published_at', [
+        'order_by' => [
+          'direction' => 'DESC',
+        ],
+      ])
       ->range(0, $count);
     $result = $query->execute();
     if (isset($result[$entityType])) {
