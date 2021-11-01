@@ -752,6 +752,9 @@ class ParagraphHelper {
     // eReolen uses field_video; eReolen Go uses field_breol_video.
     $videoUrl = $this->nodeHelper->getFieldValue($video, 'field_video', 'uri')
       ?? $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
+    // eReolen uses field_link_color; eReolen Go uses field_material_carousel_color.
+    $color = $this->nodeHelper->getFieldValue($paragraph, 'field_link_color', 'rgb')
+      ?? $this->nodeHelper->getFieldValue($paragraph, 'field_material_carousel_color', 'rgb');
     $url = $this->nodeHelper->getFileUrl($videoUrl);
 
     $thumbnail = $this->getVideoThumbnail($url);
@@ -775,6 +778,7 @@ class ParagraphHelper {
         'url' => $url,
         'thumbnail' => $thumbnail,
         'content' => reset($carousels) ?: self::VALUE_NONE,
+        'color' => $color ?: self::VALUE_NONE,
       ],
     ];
   }
