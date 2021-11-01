@@ -196,6 +196,11 @@ class FrontPageFeed extends AbstractFeed {
     ], $paragraphIds);
 
     foreach ($paragraphs as $paragraph) {
+      // Don't include video bundles in Front page feed v2.
+      if (self::class === get_class($this)
+        && ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE === $paragraph->bundle()) {
+        continue;
+      }
       $item = $this->paragraphHelper->getVideoList($paragraph);
       if (!empty($item)) {
         $list[] = $item;
