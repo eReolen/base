@@ -196,7 +196,10 @@ class FrontPageFeed extends AbstractFeed {
     ], $paragraphIds);
 
     foreach ($paragraphs as $paragraph) {
-      // Don't include video bundles in Front page feed v2.
+      // Don't include video bundle paragraphs in Front page feed v2
+      // (Drupal\reol_app_feeds\Feed\FrontPageFeed).
+      // Drupal\reol_app_feeds\Feed\V3\FrontPageFeed, which inherits this class,
+      // should include the video bundles.
       if (self::class === get_class($this)
         && ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE === $paragraph->bundle()) {
         continue;

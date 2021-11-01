@@ -759,6 +759,8 @@ class ParagraphHelper {
 
     $thumbnail = $this->getVideoThumbnail($url);
 
+    // Keep only `query` and `title` properties on carousels and add a `type`
+    // property.
     $carousels = array_map(static function (array $carousel) {
       return array_filter($carousel, static function ($key) {
         return in_array($key, ['query', 'title']);
