@@ -3,6 +3,7 @@
 namespace Drupal\reol_app_feeds\Feed\V3;
 
 use Drupal\reol_app_feeds\Feed\FrontPageFeed as FrontPageFeedV2;
+use Drupal\reol_app_feeds\Helper\ParagraphHelper;
 
 /**
  * Class FrontPageFeed.
@@ -26,10 +27,12 @@ class FrontPageFeed extends FrontPageFeedV2 {
 
     foreach ($paragraphIds as $paragraphId) {
       $data[] = $this->getCarousels([$paragraphId]);
-      $data[] = $this->getThemes([$paragraphId]);
+      $data[] = $this->getThemes([$paragraphId], FALSE);
       $data[] = $this->getVideos([$paragraphId]);
       $data[] = $this->getEditors([$paragraphId]);
       $data[] = $this->getAudios([$paragraphId]);
+      // "Latest news"
+      $data[] = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL, [$paragraphId]);
     }
 
     // Remove empty lists.

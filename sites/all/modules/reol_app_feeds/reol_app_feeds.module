@@ -16,8 +16,8 @@ function reol_app_feeds_menu() {
   $items = [];
 
   $items['admin/config/ereolen/reol_app_feeds'] = [
-    'title' => 'App feed settings (v2)',
-    'description' => 'Settings for the app feeds (v2)',
+    'title' => 'App feed settings (v2 & v3)',
+    'description' => 'Settings for the app feeds (v2 & v3)',
     'page callback' => 'drupal_get_form',
     'page arguments' => ['reol_app_feeds_admin_form'],
     'access arguments' => ['administer site configuration'],
