@@ -54,10 +54,11 @@
       </div>
     <?php endif; ?>
 
-    <div class="group-material-details field-group-div ting-object-collapsible-enabled text">
-      <h2><span><?php print t('Description from DBC'); ?></span></h2>
-      <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_abstract']); ?>
-    </div>
-
+    <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
+      <div class="group-material-details field-group-div ting-object-collapsible-enabled text">
+        <h2><span><?php print t('Description from DBC'); ?></span></h2>
+        <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_abstract']); ?>
+      </div>
+    <?php endif; ?>
   <?php endif; ?>
 </div>

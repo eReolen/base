@@ -291,6 +291,7 @@ $material--teaser__margin-bottom: 1.2rem;
     }
   }
 
+  &__abstract,
   &__details {
     > h2,
     .ting-relations__title h2,
@@ -332,17 +333,18 @@ $material--teaser__margin-bottom: 1.2rem;
       }
     }
 
-    .field-group-format-wrapper,
-    .ting-relations__content {
-      .ting-relations__title + & {
-        @include grid-media($medium) {
-          padding: 0;
-          float: right;
-          display: block !important;
-          width: percentage(2 / 3);
-        }
+    h2 + .field-group-format-wrapper,
+    h2 + .ting-relations__content,
+    .ting-relations__title + .field-group-format-wrapper,
+    .ting-relations__title + .ting-relations__content {
+      @include grid-media($medium) {
+        padding: 0;
+        float: right;
+        display: block !important;
+        width: percentage(2 / 3);
       }
     }
+
     .field-name-ting-reference-reverse .field-items{
       width: 100%;
     }
@@ -362,6 +364,7 @@ $material--teaser__margin-bottom: 1.2rem;
     width: 100%;
     display: inline-block;
     clear: left;
+    padding: 1.5rem 0;
     border-top: 1px solid $color__border-gray;
     margin: 0;
 
