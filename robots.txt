@@ -91,5 +91,3 @@ Disallow: /?q=user/password/
 Disallow: /?q=user/register/
 Disallow: /?q=user/login/
 Disallow: /?q=user/logout/
-# Content paths that should not be indexed on ereolengo.dk
-Disallow: /content/unilogin

@@ -4,11 +4,3 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
-
-sites/all/modules/breol/
-sites/all/modules/ereol/
-sites/all/modules/kreol/
-sites/all/themes/kreol/
-
-# Do not commit analyse tools
-vendor/
