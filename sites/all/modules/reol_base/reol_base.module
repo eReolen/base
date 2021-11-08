@@ -91,9 +91,11 @@ function reol_base_menu() {
  * Add use-ajax class to our login link.
  */
 function reol_base_preprocess_menu_link(&$variables) {
-  $element = &$variables['element'];
-  if (isset($element['#original_link']) && $element['#original_link']['router_path'] == 'login/nojs') {
-    $element['#localized_options']['attributes']['class'][] = 'use-ajax';
+  if (!module_exists('ding_adgangsplatformen') || module_exists('breol_base')) {
+    $element = &$variables['element'];
+    if (isset($element['#original_link']) && $element['#original_link']['router_path'] == 'login/nojs') {
+      $element['#localized_options']['attributes']['class'][] = 'use-ajax';
+    }
   }
 }
 
