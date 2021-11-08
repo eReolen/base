@@ -33,7 +33,6 @@ abstract class PublizonClient {
     'product_list' => 'getproductlist.asmx',
     'loan' => 'createloan.asmx',
     'reservation' => 'reservations.asmx',
-    'user' => 'validatelibraryuser.asmx',
     'libraray_list' => 'getlibrarylist.asmx',
     'library_user_order_list' => 'getlibraryuserorderlist.asmx',
     'removed_product_list' => 'getremovedproductlist.asmx',
@@ -132,7 +131,7 @@ abstract class PublizonClient {
 
     // Make the request.
     try {
-      $response = $client->call($ns[0] . ':' . $action, $parameters, in_array($endpoint, $this->getSoap11Endpoints()));
+      $response = $client->callExtended($ns[0] . ':' . $action, $parameters, in_array($endpoint, $this->getSoap11Endpoints()));
       // SimpleXML warns that xmlns is relative url, which it is not,
       // and SOAP 1.1 will not work with absolute. Disable the warnings.
       libxml_use_internal_errors(TRUE);

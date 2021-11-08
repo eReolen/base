@@ -8,7 +8,7 @@
 /**
  * Publizon settings form.
  *
- * Administration form for the configureation of the communication with
+ * Administration form for the configuration of the communication with
  * publizon.
  *
  * @param array $form

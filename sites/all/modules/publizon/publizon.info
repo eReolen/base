@@ -30,7 +30,6 @@ files[] = lib/PublizonNanoSoapClient.class.inc
 files[] = lib/Publizon.class.inc
 ; Client classes.
 files[] = lib/client/PublizonLoanClient.class.inc
-files[] = lib/client/PublizonUserClient.class.inc
 files[] = lib/client/PublizonReservationClient.class.inc
 files[] = lib/client/PublizonChecklistClient.class.inc
 files[] = lib/client/PublizonProductClient.class.inc

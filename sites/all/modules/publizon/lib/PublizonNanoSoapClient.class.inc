@@ -33,7 +33,7 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
    * @return string
    *   The SOAP response.
    */
-  public function call($action, array $parameters = array(), $soap11 = TRUE) {
+  public function callExtended($action, array $parameters = array(), $soap11 = TRUE) {
     // Set content type and send the SOAP action as a header.
     $headers = array(
       'Content-Type: text/xml',
