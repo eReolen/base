@@ -160,8 +160,9 @@ $menu-height__medium: 5rem;
     // Icons for menus
 
     // Inspiration
-    .iconmenu-inspiration,
-    .menu-mlid-3414 a {
+    .iconmenu-inspiration a,
+    .menu-mlid-3414 a // TODO: Remove this
+    {
       &:before {
         -webkit-mask: url(../../svg/iconmenu-inspiration.svg) no-repeat 50% 50%;
         mask: url(../../svg/iconmenu-inspiration.svg) no-repeat 50% 50%;
@@ -169,8 +170,9 @@ $menu-height__medium: 5rem;
     }
 
     // Help
-    .iconmenu-help,
-    .menu-mlid-3910 a {
+    .iconmenu-help a,
+    .menu-mlid-3910 a // TODO: Remove this
+    {
       &:before {
         -webkit-mask: url(../../svg/iconmenu-faq.svg) no-repeat 50% 50%;
         mask: url(../../svg/iconmenu-faq.svg) no-repeat 50% 50%;
@@ -178,8 +180,9 @@ $menu-height__medium: 5rem;
     }
 
     // E-books
-    .iconmenu-e-books,
-    .menu-mlid-3421 a {
+    .iconmenu-e-books a,
+    .menu-mlid-3421 a // TODO: Remove this
+    {
       &:before {
         -webkit-mask: url(../../svg/iconmenu-e-book.svg) no-repeat 50% 50%;
         mask: url(../../svg/iconmenu-e-book.svg) no-repeat 50% 50%;
@@ -187,8 +190,9 @@ $menu-height__medium: 5rem;
     }
 
     // Audiobooks
-    .iconmenu-audiobooks,
-    .menu-mlid-3422 a {
+    .iconmenu-audiobooks a,
+    .menu-mlid-3422 a // TODO: Remove this
+    {
       &:before {
         -webkit-mask: url(../../svg/iconmenu-audiobook.svg) no-repeat 50% 50%;
         mask: url(../../svg/iconmenu-audiobook.svg) no-repeat 50% 50%;
