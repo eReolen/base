@@ -39,6 +39,7 @@ abstract class PublizonClient {
     'loan_status' => 'getproductloanstatus.asmx',
     'checklist' => 'Checklists.asmx',
     'library_profile' => 'getlibraryinfo.asmx',
+    'get_friendly_cardnumber' => 'getfriendlycardnumber.asmx'
   );
 
   /**

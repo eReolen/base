@@ -16,17 +16,14 @@
  */
 function publizon_auth_single_sign_on($name, array $extra) {
   $lib = publizon_filter_libraries_list(array($extra['attributes']['municipality']));
-  $retailer_id = reset($lib)->retailer_id;
-  if (is_null($retailer_id)) {
+  if (empty($lib)) {
     throw new DingProviderUserAuthFailure('Unable to find retailer id');
   }
+  $retailer_id = reset($lib)->retailer_id;
 
-  /** @TODO Get $support_id somewhere */
-//  /** @var \PublizonLoanClient $client */
-//    $client = PublizonLoanClient::getClient();
-//    $orders = $client->getLibraryUserOrderList($retailer_id, $name);
-//  $support_id = $client->validateLibraryUser($name, NULL, $retailer_id);
-  $support_id = 'XR56KQ';
+  /** @var \PublizonUserClient $client */
+  $client = PublizonUserClient::getClient();
+  $support_id = $client->getSupportId($name, $retailer_id);
   if ($support_id) {
     $res = array(
       'success' => TRUE,
