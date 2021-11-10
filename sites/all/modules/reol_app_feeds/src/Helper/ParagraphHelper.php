@@ -341,12 +341,19 @@ class ParagraphHelper {
   private function getArticleCarousel(\ParagraphsItemEntity $paragraph) {
     $list = [];
     // Cf. ereol_article_get_articles().
+
     $query = new EntityFieldQuery();
     $count = _reol_app_feeds_variable_get('reol_app_feeds_frontpage', 'max_news_count', 6);
 
+    $bundle = 'article';
+    // Hack for eReolen Go!
+    if (module_exists('breol_news')) {
+      $bundle = 'breol_news';
+    }
+
     $entityType = NodeHelper::ENTITY_TYPE_NODE;
-    $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'article')
+    $query->entityCondition('entity_type', $entityType)
+      ->entityCondition('bundle', $bundle)
       ->propertyCondition('status', NODE_PUBLISHED)
       ->propertyOrderBy('created', 'DESC')
       ->range(0, $count);
@@ -745,9 +752,22 @@ class ParagraphHelper {
     // eReolen uses field_video; eReolen Go uses field_breol_video.
     $videoUrl = $this->nodeHelper->getFieldValue($video, 'field_video', 'uri')
       ?? $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
+    // eReolen uses field_link_color; eReolen Go uses field_material_carousel_color.
+    $color = $this->nodeHelper->getFieldValue($paragraph, 'field_link_color', 'rgb')
+      ?? $this->nodeHelper->getFieldValue($paragraph, 'field_material_carousel_color', 'rgb');
     $url = $this->nodeHelper->getFileUrl($videoUrl);
 
     $thumbnail = $this->getVideoThumbnail($url);
+
+    // Keep only `query` and `title` properties on carousels and add a `type`
+    // property.
+    $carousels = array_map(static function (array $carousel) {
+      return array_filter($carousel, static function ($key) {
+        return in_array($key, ['query', 'title']);
+      }, ARRAY_FILTER_USE_KEY) + [
+        'type' => 'carousel',
+      ];
+    }, $this->getCarousel($paragraph));
 
     return [
       [
@@ -759,6 +779,8 @@ class ParagraphHelper {
         'source' => $this->getVideoSource($videoUrl),
         'url' => $url,
         'thumbnail' => $thumbnail,
+        'content' => reset($carousels) ?: self::VALUE_NONE,
+        'color' => $color ?: self::VALUE_NONE,
       ],
     ];
   }
@@ -997,8 +1019,10 @@ class ParagraphHelper {
         return 'theme_list';
 
       case self::PARAGRAPH_VIDEO:
-      case self::PARAGRAPH_VIDEO_BUNDLE:
         return 'video';
+
+      case self::PARAGRAPH_VIDEO_BUNDLE:
+        return 'video_bundle';
     }
 
     return NULL;

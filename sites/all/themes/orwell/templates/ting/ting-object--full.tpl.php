@@ -38,18 +38,16 @@
 
         <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
 
-          <div class="detail">
-            <div class="material__details text">
-              <?php
-                unset($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']);
-                echo render($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']);
-              ?>
-            </div>
+          <div class="material__details text">
+            <?php
+              unset($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']);
+              echo render($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']);
+            ?>
           </div>
 
         <?php else: ?>
 
-          <div class="material__abstract text desktop-only">
+          <div class="material__abstract text">
             <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_abstract']); ?>
           </div>
 
@@ -71,16 +69,6 @@
       <div class="material__series mobile-only">
         <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_series']); ?>
       </div>
-      <div class="detail">
-        <div class="material__details text">
-          <div id="ting-object-ting-object-full-group-on-this-site" class="collapsible collapsed group-on-this-site field-group-div speed-fast effect-none">
-            <h2><span class="field-group-format-toggler"><?php print t('Description from DBC'); ?></span></h2>
-            <div class="field-group-format-wrapper text" style="display: none;">
-              <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_abstract']); ?>
-            </div>
-          </div>
-        </div>
-      </div>
       <?php if (!empty($content['group_ting_object_right_column']['group_material_details'])) : ?>
         <div class="detail">
           <div class="material__details js-collaps">
@@ -88,6 +76,25 @@
           </div>
         </div>
       <?php endif; ?>
+
+      <?php // Render abstract if not already rendered above ?>
+      <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
+        <div class="detail">
+          <div class="material__abstract text">
+            <div class="collapsible speed-fast effect-none fieldgroup-effects-processed collapsed">
+              <h2><span class="field-group-format-toggler">
+                <a class="field-group-format-title" href="#">
+                  <?php print t('Description from DBC'); ?></span>
+                </a>
+              </h2>
+              <div class="field-group-format-wrapper text">
+                <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_abstract']); ?>
+              </div>
+            </div>
+          </div>
+        </div>
+      <?php endif; ?>
+
       <?php if (!empty($content['group_ting_object_right_column']['group_on_this_site'])) : ?>
         <div class="detail">
           <div class="material__details js-collaps">
