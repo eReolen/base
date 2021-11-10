@@ -52,6 +52,19 @@ $menu-height__medium: 5rem;
     background-color: $color__white;
     color: $color__font-gray--dark;
 
+    // Fix position to bottom for an app like experience on mobile
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.16);
+
+    @include grid-media($medium) {
+      position: initial;
+      box-shadow: initial;
+    }
+
     ul {
       display: flex;
       justify-content: center;
@@ -70,22 +83,27 @@ $menu-height__medium: 5rem;
       }
     }
 
-    .menu-item_icon {
-      display: block;
-      height: 26px;
-      margin-bottom: 6px;
-
-      svg {
-        height: 100%;
-      }
-    }
-
     a {
       display: block;
       color: currentColor;
       font-size: 0.85rem;
       line-height: 1;
       margin: 12px 0;
+
+      // Icons
+      &:before {
+        content: "";
+        display: block;
+        height: 26px;
+        margin-bottom: 6px;
+        // We are using a mask for the icon to be
+        // able to change the color of the icon
+        // on `:hover` and when in active trail.
+        // The icon color i defined with the `background-color`
+        background-color: $color__font-gray--dark;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+      }
 
       &:after {
         content: "";
@@ -96,9 +114,9 @@ $menu-height__medium: 5rem;
         position: relative;
         left: calc(50% - 10px);
         margin-top: 6px;
-
         transition: width 0.1s ease-out, left 0.1s ease-out;
 
+        // Remove transitions for users wich prefers reduced motion
         @media (prefers-reduced-motion) {
           transition: none;
         }
@@ -107,8 +125,8 @@ $menu-height__medium: 5rem;
       &:hover {
         color: currentColor;
 
-        svg {
-          color: $color__red;
+        &:before {
+          background-color: $color__red;
         }
 
         &:after {
@@ -117,6 +135,7 @@ $menu-height__medium: 5rem;
           left: 0;
           transition: width 0.2s ease-in, left 0.2s ease-in;
 
+          // Remove transitions for users wich prefers reduced motion
           @media (prefers-reduced-motion) {
             transition: none;
           }
@@ -127,53 +146,57 @@ $menu-height__medium: 5rem;
     .active-trail a {
       color: currentColor;
 
-      svg {
-        color: $color__red;
-      }
-
+      &:before,
       &:after {
         background-color: $color__red;
       }
+
+      &:after {
+        width: 100%;
+        left: 0;
+      }
     }
-    // background-color: $color__red;
-    // text-align: center;
 
-    // @include grid-media($medium) {
-    //   background-color: $color__white;
-    // }
+    // Icons for menus
 
-    // ul {
-    //   display: flex;
-    //   justify-content: space-between;
+    // Inspiration
+    .iconmenu-inspiration,
+    .menu-mlid-3414 a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-inspiration.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-inspiration.svg) no-repeat 50% 50%;
+      }
+    }
 
-    //   @include grid-media($medium) {
-    //     margin: 0 $padding__default;
-    //     display: inline-block;
-    //   }
-    // }
+    // Help
+    .iconmenu-help,
+    .menu-mlid-3910 a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-faq.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-faq.svg) no-repeat 50% 50%;
+      }
+    }
 
-    // li {
-    //   @include grid-media($medium) {
-    //     padding: 0 1.5rem;
-    //   }
-    // }
+    // E-books
+    .iconmenu-e-books,
+    .menu-mlid-3421 a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-e-book.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-e-book.svg) no-repeat 50% 50%;
+      }
+    }
 
-    // a {
-    //   color: $color__white;
-    //   opacity: 0.7;
+    // Audiobooks
+    .iconmenu-audiobooks,
+    .menu-mlid-3422 a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-audiobook.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-audiobook.svg) no-repeat 50% 50%;
+      }
+    }
 
-    //   @include grid-media($medium) {
-    //     color: $color__font-gray--dark;
-    //   }
-
-    //   &:hover {
-    //     background: $page-bg;
-    //   }
-    // }
-
-    // .active-trail a {
-    //   opacity: 1;
-    // }
+    // Login
+    // Icon style is placed in `_user.scss`
   }
 
   // Submenu.

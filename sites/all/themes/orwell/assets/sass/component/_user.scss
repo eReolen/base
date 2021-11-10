@@ -1,34 +1,16 @@
 @import "../bootstrap/bootstrap";
 
 .topbar .menu-name-main-menu {
-  a.user-login-link,
-  a.user-login-link:hover,
-  a.user-logged-in-link,
-  a.user-logged-in-link:hover {
-    font-size: 0;
-    color: transparent;
-    background: transparent;
-  }
-
   .user-login-link {
-    &::before {
-      @include icon();
-      font-size: 28px;
-      color: $color__font-gray;
-      content: $icon__lock;
-      display: inline-block;
-      top: 10px;
+    &:before {
+      -webkit-mask: url(../../svg/iconmenu-userprofile.svg) no-repeat 50% 50%;
+      mask: url(../../svg/iconmenu-userprofile.svg) no-repeat 50% 50%;
     }
   }
 
   .user-logged-in-link {
-    &::before {
-      @include icon();
-      font-size: 2rem;
-      color: $color__font-gray;
-      content: $icon__user;
-      display: inline-block;
-      top: 10px;
+    &:before {
+      background-color: $color__green;
     }
   }
 }

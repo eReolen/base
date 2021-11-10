@@ -34,6 +34,11 @@
   "build/fonts/sourcesanspro-semibold.woff": "./fonts/sourcesanspro-semibold.woff",
   "build/fonts/sourcesanspro-semibold.woff2": "./fonts/sourcesanspro-semibold.woff2",
   "build/images/backspace-solid.svg": "./images/backspace-solid.108ad93c.svg",
+  "build/images/iconmenu-audiobook.svg": "./images/iconmenu-audiobook.c3cc4b05.svg",
+  "build/images/iconmenu-e-book.svg": "./images/iconmenu-e-book.6d754c83.svg",
+  "build/images/iconmenu-faq.svg": "./images/iconmenu-faq.7196ebcc.svg",
+  "build/images/iconmenu-inspiration.svg": "./images/iconmenu-inspiration.76e91efb.svg",
+  "build/images/iconmenu-userprofile.svg": "./images/iconmenu-userprofile.b607e8a6.svg",
   "build/images/placeholder.png": "./images/placeholder.d4d2193a.png",
   "build/images/white-arrow-right.svg": "./images/white-arrow-right.199cdd0b.svg"
 }
