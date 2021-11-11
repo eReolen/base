@@ -243,8 +243,8 @@ function publizon_filter_libraries_list(array $municipalities, string $type) {
   $field = $type . '_id';
   $libraries = publizon_get_libraries();
   foreach ($libraries as $library) {
-    if (!empty($library->unilogin_id) && in_array($library->$field, $municipalities)) {
-      $filtered[$library->unilogin_id] = $library;
+    if (!empty($library->$field) && in_array($library->$field, $municipalities)) {
+      $filtered[$library->$field] = $library;
     }
   }
 
