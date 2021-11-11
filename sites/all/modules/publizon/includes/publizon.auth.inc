@@ -15,7 +15,8 @@
  *   If authentication fails.
  */
 function publizon_auth_single_sign_on($name, array $extra) {
-  $lib = publizon_filter_libraries_list(array($extra['attributes']['municipality']));
+  $type = empty($extra['attributes']['municipality']) ? 'cpr' : 'municipality';
+  $lib = publizon_filter_libraries_list(array($extra['attributes'][$type]), $type);
   if (empty($lib)) {
     throw new DingProviderUserAuthFailure('Unable to find retailer id');
   }

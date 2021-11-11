@@ -27,7 +27,14 @@ function publizon_schema() {
         'default' => '',
       ),
       'unilogin_id' => array(
-        'description' => 'Unilogin id of  library.',
+        'description' => 'Unilogin id of library.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'municipality_id' => array(
+        'description' => 'municipality id.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -181,8 +188,18 @@ function publizon_update_7105() {
 }
 
 /**
- * Remove unused variable.
+ * Add municipality_id field to database.
  */
 function publizon_update_7106() {
+  $table = 'publizon_libraries';
+  $schema = drupal_get_schema_unprocessed('publizon', $table);
+  $field = 'municipality_id';
+  db_add_field($table, $field, $schema['fields'][$field]);
+}
+
+/**
+ * Remove unused variable.
+ */
+function publizon_update_7107() {
   variable_del('publizon_reader_stream_url');
 }

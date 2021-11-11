@@ -177,6 +177,13 @@ function publizon_settings_form(array $form, array &$form_state) {
       '#default_value' => $library->retailer_id,
     );
 
+    $form['publizon']['libraries']['l'][$i]['municipality_id'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Municipality ID'),
+      '#size' => 6,
+      '#default_value' => $library->municipality_id,
+    );
+
     $form['publizon']['libraries']['l'][$i]['unilogin_id'] = array(
       '#type' => 'textfield',
       '#title' => t('Unilogin ID'),

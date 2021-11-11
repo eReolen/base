@@ -232,14 +232,18 @@ function publizon_get_libraries_list() {
  * @param array $municipalities
  *   Municipality ID's for to return libraries for.
  *
+ * @param string $type
+ *   The type of mapping to use in the filtering.
+ *
  * @return array
  *   A filtered array.
  */
-function publizon_filter_libraries_list(array $municipalities) {
+function publizon_filter_libraries_list(array $municipalities, $type) {
   $filtered = array();
+  $field = 'cpr' === $type ? 'unilogin_id' : 'municipality_id';
   $libraries = publizon_get_libraries();
   foreach ($libraries as $library) {
-    if (!empty($library->unilogin_id) && in_array($library->unilogin_id, $municipalities)) {
+    if (!empty($library->unilogin_id) && in_array($library->$field, $municipalities)) {
       $filtered[$library->unilogin_id] = $library;
     }
   }
