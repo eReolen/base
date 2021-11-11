@@ -443,8 +443,10 @@ function ding_adgangsplatformen_logout_iframe() {
  */
 function ding_adgangsplatformen_user_logout() {
   global $user;
-  if (ding_user_is_provider_user($user)) {
-    ding_adgangsplatformen_logout(TRUE);
+  if (!ding_unilogin_authenticated($user)) {
+    if (ding_user_is_provider_user($user)) {
+      ding_adgangsplatformen_logout(TRUE);
+    }
   }
 }
 
