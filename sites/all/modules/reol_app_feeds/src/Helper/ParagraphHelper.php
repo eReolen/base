@@ -355,7 +355,12 @@ class ParagraphHelper {
     $query->entityCondition('entity_type', $entityType)
       ->entityCondition('bundle', $bundle)
       ->propertyCondition('status', NODE_PUBLISHED)
-      ->propertyOrderBy('created', 'DESC')
+      ->addTag('published_at')
+      ->addMetaData('published_at', [
+        'order_by' => [
+          'direction' => 'DESC',
+        ],
+      ])
       ->range(0, $count);
     $result = $query->execute();
     if (isset($result[$entityType])) {
