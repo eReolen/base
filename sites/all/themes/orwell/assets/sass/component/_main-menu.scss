@@ -101,8 +101,13 @@ $menu-height__medium: 5rem;
         // on `:hover` and when in active trail.
         // The icon color i defined with the `background-color`
         background-color: $color__font-gray--dark;
-        -webkit-mask-size: cover;
-        mask-size: cover;
+
+        // Add a default icon - Information
+        -webkit-mask: url(../../svg/iconmenu-info.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-info.svg) no-repeat 50% 50%;
+
+        // -webkit-mask-size: cover;
+        // mask-size: cover;
       }
 
       &:after {
@@ -159,10 +164,16 @@ $menu-height__medium: 5rem;
 
     // Icons for menus
 
+    // Home
+    .iconmenu-home a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-home.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-home.svg) no-repeat 50% 50%;
+      }
+    }
+
     // Inspiration
-    .iconmenu-inspiration a,
-    .menu-mlid-3414 a // TODO: Remove this
-    {
+    .iconmenu-inspiration a {
       &:before {
         -webkit-mask: url(../../svg/iconmenu-inspiration.svg) no-repeat 50% 50%;
         mask: url(../../svg/iconmenu-inspiration.svg) no-repeat 50% 50%;
@@ -170,9 +181,7 @@ $menu-height__medium: 5rem;
     }
 
     // Help
-    .iconmenu-help a,
-    .menu-mlid-3910 a // TODO: Remove this
-    {
+    .iconmenu-help a {
       &:before {
         -webkit-mask: url(../../svg/iconmenu-faq.svg) no-repeat 50% 50%;
         mask: url(../../svg/iconmenu-faq.svg) no-repeat 50% 50%;
@@ -180,9 +189,7 @@ $menu-height__medium: 5rem;
     }
 
     // E-books
-    .iconmenu-e-books a,
-    .menu-mlid-3421 a // TODO: Remove this
-    {
+    .iconmenu-e-books a {
       &:before {
         -webkit-mask: url(../../svg/iconmenu-e-book.svg) no-repeat 50% 50%;
         mask: url(../../svg/iconmenu-e-book.svg) no-repeat 50% 50%;
@@ -190,9 +197,7 @@ $menu-height__medium: 5rem;
     }
 
     // Audiobooks
-    .iconmenu-audiobooks a,
-    .menu-mlid-3422 a // TODO: Remove this
-    {
+    .iconmenu-audiobooks a {
       &:before {
         -webkit-mask: url(../../svg/iconmenu-audiobook.svg) no-repeat 50% 50%;
         mask: url(../../svg/iconmenu-audiobook.svg) no-repeat 50% 50%;
