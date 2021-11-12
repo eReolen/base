@@ -497,8 +497,21 @@ function reol_base_entity_load($entities, $type) {
  */
 function reol_base_wysiwyg_default_profiles_alter(&$profiles) {
   if (isset($profiles['ding_wysiwyg'])) {
-    // Remove Dings hardcoding of DDBasic theming.
-    unset($profiles['ding_wysiwyg']['settings']['css_path']);
+    // Append custom theme css to wysiwyg editor.
+    // The default styles.
+    $css_paths = ['profiles/ding2/libraries/ckeditor/contents.css'];
+    $themes = list_themes();
+    // Add styles from installed theme and its base theme (“pratchett”).
+    foreach (['pratchett', 'orwell', 'wille'] as $theme_name) {
+      if (isset($themes[$theme_name]) &&
+        ('pratchett' === $theme_name || 1 === $themes[$theme_name]->status)) {
+        $css_path = drupal_get_path('theme', $theme_name) . '/ckeditor/contents.css';
+        if (file_exists($css_path)) {
+          $css_paths[] = $css_path;
+        }
+      }
+    }
+    $profiles['ding_wysiwyg']['settings']['css_path'] = implode(',', $css_paths);
 
     // Limit block elements to the ones we style.
     $profiles['ding_wysiwyg']['settings']['block_formats'] = 'p,h3,h4';
