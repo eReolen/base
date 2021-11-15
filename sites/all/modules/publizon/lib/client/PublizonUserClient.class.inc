@@ -47,7 +47,7 @@ class PublizonUserClient extends PublizonClient {
 
     // If we end up here, we are logged in. Return support_id if it's not
     // empty.
-    return empty($support_id) ? TRUE : $support_id;
+    return empty($support_id) ? FALSE : $support_id;
   }
 
   /**
