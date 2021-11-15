@@ -871,29 +871,3 @@ function reol_base_update_7172() {
 function reol_base_update_7173() {
   module_enable(array('elements'));
 }
-
-/**
- * Enable Menu Attributes module.
- */
-function reol_base_update_7174() {
-  module_enable(array('menu_attributes'), TRUE);
-
-  // Add default classes to items in main-menu.
-  // Map from menu item title to css class name.
-  $default_classes = [
-    'forside' => 'iconmenu-home',
-    'e-bøger' => 'iconmenu-e-books',
-    'lydbøger' => 'iconmenu-audiobooks',
-    'inspiration' => 'iconmenu-inspiration',
-    'hjælp' => 'iconmenu-help',
-    'log ind' => 'iconmenu-login',
-  ];
-  $links = menu_load_links('main-menu');
-  foreach ($links as $link) {
-    $title = $link['link_title'];
-    if (isset($default_classes[$title])) {
-      $link['options']['item_attributes']['class'] = $default_classes[$title];
-      menu_link_save($link);
-    }
-  }
-}
