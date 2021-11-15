@@ -34,7 +34,6 @@ class PublizonUserClient extends PublizonClient {
       $response = $this->call('get_friendly_cardnumber', 'GetFriendlyCardnumber', $retailer_id, $arguments, array('pub' => 'http://pubhub.dk/'));
 
       // Extract friendly card number.
-      $xml = $response->asXML();
       $friendly_elements = $response->xpath('//data/FriendlyCardNumber');
       if (isset($friendly_elements[0])) {
         $support_id = (string) $friendly_elements[0];
