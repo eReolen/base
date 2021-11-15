@@ -9,7 +9,8 @@
   }
 
   .user-logged-in-link {
-    &:before {
+    &:before,
+    &:after {
       background-color: $color__green;
     }
   }
