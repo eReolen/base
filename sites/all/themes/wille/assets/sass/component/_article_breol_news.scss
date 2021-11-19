@@ -38,19 +38,23 @@
 
     h3 {
       margin-top: 30px;
-      margin-bottom: 15px;
+      margin-bottom: 5px;
       font-size: 1.62em;
       font-weight: bold;
     }
 
     h4 {
-      margin-top: 20px;
+      margin-top: 30px;
       margin-bottom: 5px;
       font-size: 1.3em;
     }
 
     @include media($phone) {
       padding: 0 20px;
+    }
+
+    &.article__lead {
+      margin-top: 30px;
     }
   }
 }
