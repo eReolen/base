@@ -695,8 +695,6 @@ class ParagraphHelper {
     return [
       'guid' => $this->getGuid($paragraph),
       'type' => $this->getType($paragraph),
-      // @todo Link to where?
-      'link' => 'category/category_guid',
       'title' => t('Blue titles', [], ['context' => 'reol_app_feeds']),
       'subtitle' => t('Titles with a blue icon does not count toward your loan quota and can always be borrowed', [], ['context' => 'reol_app_feeds']),
       'buttonText' => t('Show blue titles', [], ['context' => 'reol_app_feeds']),

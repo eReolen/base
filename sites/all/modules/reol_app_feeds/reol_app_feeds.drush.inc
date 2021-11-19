@@ -58,13 +58,18 @@ function drush_reol_app_feeds_generate() {
   $feedHelper = new FeedHelper();
   foreach ($feeds as $feed) {
     $starttime = microtime(TRUE);
-    $result = $feedHelper->generate($feed);
+    try {
+      $result = $feedHelper->generate($feed);
+      $message = FALSE === $result ? '–' : sprintf('%12d bytes', $result);
+    } catch (Exception $exception) {
+      $message = $exception->getMessage();
+    }
     $endtime = microtime(TRUE);
     if ($verbose) {
       drush_print(sprintf(
         '%-24s %s (%s)',
         $feed,
-        FALSE === $result ? '–' : sprintf('%12d bytes', $result),
+        $message,
         sprintf('%.3f s', $endtime - $starttime)
       ));
     }
