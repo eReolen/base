@@ -66,7 +66,7 @@ class FrontPageFeed extends AbstractFeed {
    * @return array
    *   The carousels data.
    */
-  private function getCarousels(array $paragraphIds) {
+  protected function getCarousels(array $paragraphIds) {
     return $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ALIAS_CAROUSEL, $paragraphIds);
   }
 
@@ -81,19 +81,22 @@ class FrontPageFeed extends AbstractFeed {
    * @return array
    *   The themes data.
    */
-  private function getThemes(array $paragraphIds) {
+  protected function getThemes(array $paragraphIds, bool $includeLatestNews = TRUE) {
     $themes = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ALIAS_THEME_LIST, $paragraphIds);
 
-    if (module_exists('breol_news')) {
-      $latestNews = $this->getLatestNews();
-    }
-    else {
-      $latestNews = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL, $paragraphIds);
-    }
+    if ($includeLatestNews) {
+      if (module_exists('breol_news')) {
+        $latestNews = $this->getLatestNews();
+      }
+      else {
+        $latestNews = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL,
+        $paragraphIds);
+      }
 
-    // Prepend "Latest news".
-    if (!empty($latestNews)) {
-      $themes = array_merge($latestNews, $themes);
+      // Prepend "Latest news".
+      if (!empty($latestNews)) {
+        $themes = array_merge($latestNews, $themes);
+      }
     }
 
     return array_values(array_filter($themes, function ($theme) {
@@ -142,7 +145,7 @@ class FrontPageFeed extends AbstractFeed {
    * @return array
    *   The reviews data.
    */
-  private function getReviews() {
+  protected function getReviews() {
     return $this->paragraphHelper->getReviewList(5);
   }
 
@@ -184,15 +187,23 @@ class FrontPageFeed extends AbstractFeed {
    * @return array
    *   The videos data.
    */
-  private function getVideos(array $paragraphIds) {
+  protected function getVideos(array $paragraphIds) {
     // Wrap all videos in a fake list element.
     $list = [];
     $paragraphs = $this->paragraphHelper->getParagraphs([
       ParagraphHelper::PARAGRAPH_SPOTLIGHT_BOX,
-      ParagraphHelper::PARAGRAPH_TWO_ELEMENTS,
+      ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE,
     ], $paragraphIds);
 
     foreach ($paragraphs as $paragraph) {
+      // Don't include video bundle paragraphs in Front page feed v2
+      // (Drupal\reol_app_feeds\Feed\FrontPageFeed).
+      // Drupal\reol_app_feeds\Feed\V3\FrontPageFeed, which inherits this class,
+      // should include the video bundles.
+      if (self::class === get_class($this)
+        && ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE === $paragraph->bundle()) {
+        continue;
+      }
       $item = $this->paragraphHelper->getVideoList($paragraph);
       if (!empty($item)) {
         $list[] = $item;
@@ -223,7 +234,7 @@ class FrontPageFeed extends AbstractFeed {
    * @return array
    *   The audio data.
    */
-  private function getAudios(array $paragraphIds) {
+  protected function getAudios(array $paragraphIds) {
     // Wrap all videos audio samples in a fake list element.
     $list = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ALIAS_AUDIO, $paragraphIds);
 

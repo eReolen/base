@@ -13,7 +13,9 @@
  */
 ?>
 <div <?php print $attributes?>>
-  <h4><?php print $title ?></h4>
+  <?php if (!empty($title)): ?>
+    <h4><?php print $title ?></h4>
+  <?php endif; ?>
   <?php if (isset($abstract)) :?>
     <div class="abstract"><?php print $abstract; ?></div>
   <?php endif; ?>

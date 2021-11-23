@@ -65,25 +65,27 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
   }
 
   foreach ($frontpage_feed_pages as $nid => $data) {
-    $node = $inspiration_pages[$nid];
-    $form[$group_name][$field_name][$nid] = [
-      'name' => [
-        '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
-      ],
+    $node = $inspiration_pages[$nid] ?? NULL;
+    if (NULL !== $node) {
+      $form[$group_name][$field_name][$nid] = [
+        'name' => [
+          '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
+        ],
 
-      'included' => [
-        '#type' => 'checkbox',
-        '#default_value' => isset($data['included']) && 1 === $data['included'],
-      ],
+        'included' => [
+          '#type' => 'checkbox',
+          '#default_value' => isset($data['included']) && 1 === $data['included'],
+        ],
 
-      'weight' => [
-        '#type' => 'weight',
-        '#title' => t('Weight'),
-        '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
-        '#delta' => $max_weight,
-        '#title_display' => 'invisible',
-      ],
-    ];
+        'weight' => [
+          '#type' => 'weight',
+          '#title' => t('Weight'),
+          '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
+          '#delta' => $max_weight,
+          '#title_display' => 'invisible',
+        ],
+      ];
+    }
   }
 
   $form[$group_name]['link_button_text'] = [
@@ -141,25 +143,27 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
   }
 
   foreach ($category_feed_pages as $nid => $data) {
-    $node = $inspiration_pages[$nid];
-    $form[$group_name][$field_name][$nid] = [
-      'name' => [
-        '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
-      ],
+    $node = $inspiration_pages[$nid] ?? NULL;
+    if (NULL !== $node) {
+      $form[$group_name][$field_name][$nid] = [
+        'name' => [
+          '#markup' => sprintf('%s (%d)', check_plain($node->title), $node->nid),
+        ],
 
-      'included' => [
-        '#type' => 'checkbox',
-        '#default_value' => isset($data['included']) && 1 === $data['included'],
-      ],
+        'included' => [
+          '#type' => 'checkbox',
+          '#default_value' => isset($data['included']) && 1 === $data['included'],
+        ],
 
-      'weight' => [
-        '#type' => 'weight',
-        '#title' => t('Weight'),
-        '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
-        '#delta' => $max_weight,
-        '#title_display' => 'invisible',
-      ],
-    ];
+        'weight' => [
+          '#type' => 'weight',
+          '#title' => t('Weight'),
+          '#default_value' => isset($data['weight']) ? $data['weight'] : $max_weight,
+          '#delta' => $max_weight,
+          '#title_display' => 'invisible',
+        ],
+      ];
+    }
   }
 
   $form[$group_name]['default_color'] = [
@@ -194,6 +198,7 @@ function reol_app_feeds_admin_form(array $form, array &$form_state) {
       '#markup' => implode('', [
         '<ul>',
         '<li>' . l(t('Frontpage'), '/app/feed/v2/frontpage') . '</li>',
+        '<li>' . l(t('Frontpage (v3)'), '/app/feed/v3/frontpage') . '</li>',
         '<li>' . l(t('Themes'), '/app/feed/v2/themes') . '</li>',
         '<li>' . l(t('Categories'), '/app/feed/v2/categories') . '</li>',
         '<li>' . l(t('Overdrive mapping'), '/app/feed/v2/overdrive/mapping') . '</li>',
@@ -283,8 +288,11 @@ function reol_app_feeds_admin_form_validate(array $form, array &$form_state) {
   foreach ($draggable_group_names as $group_name) {
     $items = &$form_state['values'][$group_name]['page_ids'];
     foreach ($items as &$item) {
-      if (1 !== $item['included']) {
+      if (1 !== ($item['included'] ?? 0)) {
         $item['weight'] = 1000;
+      }
+      else {
+        $item['weight'] = min($item['weight'] ?? 999, 999);
       }
     }
 

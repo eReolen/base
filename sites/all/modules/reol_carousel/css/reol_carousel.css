@@ -1,3 +1,4 @@
-.ding-carousel.single-slide [class^="button-"] {
-  display: none;
+/* Hide navigation buttons in single slide. */
+.ding-carousel.single-slide .carousel__header [class^="button-"] {
+  display: none !important;
 }

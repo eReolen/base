@@ -14,9 +14,11 @@
  */
 ?>
 <div class="ting-relations">
-  <div class="ting-relations__title">
-    <h2><?php print $title; ?>:</h2>
-  </div>
+  <?php if (!empty($title)): ?>
+    <div class="ting-relations__title">
+      <h2><?php print $title; ?>:</h2>
+    </div>
+  <?php endif; ?>
   <div class="ting-relations__content">
     <?php foreach ($relations as $relation) : ?>
       <?php print render($relation); ?>

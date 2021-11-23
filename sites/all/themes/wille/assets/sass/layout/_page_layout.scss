@@ -44,7 +44,7 @@ body:not(.node-type-inspiration) .main-content-wrapper__inner {
 }
 
 // Organic elements.
-.organic-element {
+.organic-element:not(:empty) {
   height: 35px;
   overflow: hidden;
   z-index: 2;

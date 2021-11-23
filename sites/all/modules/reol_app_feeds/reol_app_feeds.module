@@ -16,8 +16,8 @@ function reol_app_feeds_menu() {
   $items = [];
 
   $items['admin/config/ereolen/reol_app_feeds'] = [
-    'title' => 'App feed settings (v2)',
-    'description' => 'Settings for the app feeds (v2)',
+    'title' => 'App feed settings (v2 & v3)',
+    'description' => 'Settings for the app feeds (v2 & v3)',
     'page callback' => 'drupal_get_form',
     'page arguments' => ['reol_app_feeds_admin_form'],
     'access arguments' => ['administer site configuration'],
@@ -42,6 +42,11 @@ function reol_app_feeds_menu() {
 
   $items['app/feed/v2/overdrive/mapping'] = [
     'page callback' => 'reol_app_feeds_overdrive_mapping',
+    'access arguments' => ['access content'],
+  ];
+
+  $items['app/feed/v3/frontpage'] = [
+    'page callback' => 'reol_app_feeds_v3_frontpage',
     'access arguments' => ['access content'],
   ];
 
@@ -119,6 +124,14 @@ function theme_reol_app_feeds_frontpages_components($vars) {
 function reol_app_feeds_frontpage() {
   $controller = new DefaultController();
   $controller->frontpage();
+}
+
+/**
+ * Frontpage v3.
+ */
+function reol_app_feeds_v3_frontpage() {
+  $controller = new DefaultController();
+  $controller->frontpageV3();
 }
 
 /**
