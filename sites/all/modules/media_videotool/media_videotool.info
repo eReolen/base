@@ -1,0 +1,9 @@
+name = Media: VideoTool
+description = Provides VideoTool support for File Entity and the Media module.
+package = "Media"
+core = 7.x
+files[] = includes/MediaInternetVideoToolHandler.inc
+files[] = includes/MediaVideoToolStreamWrapper.inc
+files[] = includes/MediaVideoToolBrowser.inc
+dependencies[] = media
+dependencies[] = media_internet

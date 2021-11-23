@@ -135,7 +135,6 @@ $material--teaser__margin-bottom: 1.2rem;
 
   &__abstract {
     @include text-paragraph;
-    padding-bottom: 40px;
     @include grid-media($medium) {
       display: block;
     }
@@ -269,7 +268,6 @@ $material--teaser__margin-bottom: 1.2rem;
       width: 100%;
       clear: left;
       padding-left: 0;
-      //padding-right: 2.5rem;
       margin-bottom: 3.5rem;
       .field-item {
         display: flex;
@@ -293,6 +291,7 @@ $material--teaser__margin-bottom: 1.2rem;
     }
   }
 
+  &__abstract,
   &__details {
     > h2,
     .ting-relations__title h2,
@@ -334,10 +333,10 @@ $material--teaser__margin-bottom: 1.2rem;
       }
     }
 
-    .field-group-format-wrapper,
-    .ting-relations__content {
-      padding: 2rem 0;
-
+    h2 + .field-group-format-wrapper,
+    h2 + .ting-relations__content,
+    .ting-relations__title + .field-group-format-wrapper,
+    .ting-relations__title + .ting-relations__content {
       @include grid-media($medium) {
         padding: 0;
         float: right;
@@ -345,6 +344,7 @@ $material--teaser__margin-bottom: 1.2rem;
         width: percentage(2 / 3);
       }
     }
+
     .field-name-ting-reference-reverse .field-items{
       width: 100%;
     }
@@ -388,6 +388,13 @@ $material--teaser__margin-bottom: 1.2rem;
       width: 50%;
       float: left;
       padding: 1rem .5rem 1rem 0;
+    }
+
+    &.text {
+      .field-items {
+        width: auto;
+        float: none;
+      }
     }
 
     .field-label {

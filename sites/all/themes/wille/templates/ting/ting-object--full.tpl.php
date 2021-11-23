@@ -24,7 +24,16 @@
         <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_type']); ?>
         <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_title']); ?>
         <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_author']); ?>
-        <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_abstract']); ?>
+
+        <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
+          <?php
+            unset($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']);
+            echo render($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']);
+          ?>
+        <?php else: ?>
+          <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_abstract']); ?>
+        <?php endif; ?>
+
         <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_series']); ?>
         <?php if ($also_available): ?>
           <div class="material__also_available field field-label-inline clearfix">
@@ -44,9 +53,11 @@
         <?php echo render($content['group_ting_object_right_column']['group_material_details']); ?>
       </div>
     <?php endif; ?>
+
     <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
-      <div class="last ting-object-collapsible-enabled">
-        <?php echo render($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']); ?>
+      <div class="group-material-details field-group-div ting-object-collapsible-enabled text">
+        <h2><span><?php print t('Description from DBC'); ?></span></h2>
+        <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_abstract']); ?>
       </div>
     <?php endif; ?>
   <?php endif; ?>

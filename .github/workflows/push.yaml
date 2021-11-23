@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - develop
+name: Push
+jobs:
+  check-theme-assets:
+    name: Check theme assets are up to date
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup docker network
+        run: docker network create frontend
+
+      - name: Install build dependencies
+        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/orwell install
+
+      - name: Build eReolen theme (orwell)
+        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/orwell build
+
+      - name: Check for changes in built css
+        run: git diff --diff-filter=ACMRT --exit-code sites/all/themes/orwell/build
+
+      - name: Install build dependencies
+        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/wille install
+
+      - name: Build eReolen Go theme (wille)
+        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/wille build
+
+      - name: Check for changes in built css
+        run: git diff --diff-filter=ACMRT --exit-code sites/all/themes/wille/build

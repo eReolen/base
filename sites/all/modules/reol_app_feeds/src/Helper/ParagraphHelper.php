@@ -33,6 +33,8 @@ class ParagraphHelper {
   const PARAGRAPH_SPOTLIGHT_BOX = 'spotlight_box';
   // Video.
   const PARAGRAPH_VIDEO = 'video';
+  // Video bundle.
+  const PARAGRAPH_VIDEO_BUNDLE = 'video_bundle';
   // To elementer.
   const PARAGRAPH_TWO_ELEMENTS = 'two_elements';
 
@@ -339,14 +341,26 @@ class ParagraphHelper {
   private function getArticleCarousel(\ParagraphsItemEntity $paragraph) {
     $list = [];
     // Cf. ereol_article_get_articles().
+
     $query = new EntityFieldQuery();
     $count = _reol_app_feeds_variable_get('reol_app_feeds_frontpage', 'max_news_count', 6);
 
+    $bundle = 'article';
+    // Hack for eReolen Go!
+    if (module_exists('breol_news')) {
+      $bundle = 'breol_news';
+    }
+
     $entityType = NodeHelper::ENTITY_TYPE_NODE;
-    $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'article')
+    $query->entityCondition('entity_type', $entityType)
+      ->entityCondition('bundle', $bundle)
       ->propertyCondition('status', NODE_PUBLISHED)
-      ->propertyOrderBy('created', 'DESC')
+      ->addTag('published_at')
+      ->addMetaData('published_at', [
+        'order_by' => [
+          'direction' => 'DESC',
+        ],
+      ])
       ->range(0, $count);
     $result = $query->execute();
     if (isset($result[$entityType])) {
@@ -699,6 +713,9 @@ class ParagraphHelper {
         $sub_paragraphs_field_name = 'field_two_elements_primary';
         $sub_paragraphs_video_field_name = 'field_breol_video';
         break;
+
+      case ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE:
+        return $this->getVideoBundleVideoList($paragraph);
     }
 
     if (isset($sub_paragraphs_field_name, $sub_paragraphs_video_field_name)) {
@@ -723,6 +740,111 @@ class ParagraphHelper {
   }
 
   /**
+   * Get video list from video_bundle paragraph.
+   *
+   * @param \ParagraphsItemEntity $paragraph
+   *   The paragraph.
+   *
+   * @return array
+   *   The view list data.
+   */
+  private function getVideoBundleVideoList(\ParagraphsItemEntity $paragraph) {
+    if (ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE !== $paragraph->bundle()) {
+      return [];
+    }
+
+    $video = $this->nodeHelper->loadReferences($paragraph, 'field_video_node', FALSE);
+    // eReolen uses field_video; eReolen Go uses field_breol_video.
+    $videoUrl = $this->nodeHelper->getFieldValue($video, 'field_video', 'uri')
+      ?? $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
+    // eReolen uses field_link_color; eReolen Go uses field_material_carousel_color.
+    $color = $this->nodeHelper->getFieldValue($paragraph, 'field_link_color', 'rgb')
+      ?? $this->nodeHelper->getFieldValue($paragraph, 'field_material_carousel_color', 'rgb');
+    $url = $this->nodeHelper->getFileUrl($videoUrl);
+
+    $thumbnail = $this->getVideoThumbnail($url);
+
+    // Keep only `query` and `title` properties on carousels and add a `type`
+    // property.
+    $carousels = array_map(static function (array $carousel) {
+      return array_filter($carousel, static function ($key) {
+        return in_array($key, ['query', 'title']);
+      }, ARRAY_FILTER_USE_KEY) + [
+        'type' => 'carousel',
+      ];
+    }, $this->getCarousel($paragraph));
+
+    return [
+      [
+        'guid' => $this->getGuid($paragraph),
+        'type' => $this->getType($paragraph),
+        'title' => $this->nodeHelper->getTextFieldValue($paragraph, 'field_video_title'),
+        'description' => $this->nodeHelper->getTextFieldValue($paragraph, 'field_video_description'),
+        'image' => self::VALUE_NONE,
+        'source' => $this->getVideoSource($videoUrl),
+        'url' => $url,
+        'thumbnail' => $thumbnail,
+        'content' => reset($carousels) ?: self::VALUE_NONE,
+        'color' => $color ?: self::VALUE_NONE,
+      ],
+    ];
+  }
+
+  /**
+   * Get video thumbnail.
+   *
+   * @param string $url
+   *   The video url.
+   *
+   * @return array|string
+   *   The empty string or an array with keys url, width and height.
+   */
+  private function getVideoThumbnail($url) {
+    $thumbnails = &drupal_static(__FUNCTION__);
+
+    if (!isset($thumbnails[$url])) {
+      $thumbnail = self::VALUE_NONE;
+
+      if (preg_match('/videotool/', $url)) {
+        try {
+          $oembedUrl = 'https://www.videotool.dk/oembed/?' . http_build_query(['url' => $url]);
+          $client = new Client();
+          $response = $client->get($oembedUrl);
+          $xml = new \SimpleXMLElement((string) $response->getBody());
+          $thumbnail = [
+            'url' => (string) $xml->thumbnail_url,
+            'width' => (int) $xml->thumbnail_width,
+            'height' => (int) $xml->thumbnail_height,
+          ];
+        }
+        catch (\Exception $exception) {
+          watchdog('reol_app_feeds', 'Cannot get thumbnail for video url !url: !message', [
+            '!url' => $url,
+            '!message' => $exception->getMessage(),
+          ], WATCHDOG_ERROR);
+        }
+      }
+      elseif (preg_match('/youtube/', $url)) {
+        $parts = drupal_parse_url($url);
+        if (isset($parts['query']['v'])) {
+          // @see https://stackoverflow.com/a/2068371
+          $image_url = sprintf('https://img.youtube.com/vi/%s/maxresdefault.jpg', $parts['query']['v']);
+          $size = getimagesize($image_url);
+          $thumbnail = [
+            'url' => $image_url,
+            'width' => $size[0] ?? self::VALUE_NONE,
+            'height' => $size[1] ?? self::VALUE_NONE,
+          ];
+        }
+      }
+
+      $thumbnails[$url] = $thumbnail;
+    }
+
+    return $thumbnails[$url];
+  }
+
+  /**
    * Get video source.
    *
    * @param string $url
@@ -735,8 +857,7 @@ class ParagraphHelper {
    */
   private function getVideoSource($url) {
     if (preg_match('@^(?P<source>[^:]+)://@', $url, $matches)) {
-      // The app can only handle one source which is called "youtube".
-      return 'youtube';
+      return $matches['source'];
     }
 
     return self::VALUE_NONE;
@@ -904,6 +1025,9 @@ class ParagraphHelper {
 
       case self::PARAGRAPH_VIDEO:
         return 'video';
+
+      case self::PARAGRAPH_VIDEO_BUNDLE:
+        return 'video_bundle';
     }
 
     return NULL;

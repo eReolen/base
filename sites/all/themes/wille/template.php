@@ -300,16 +300,18 @@ function wille_preprocess_ting_relation(&$vars) {
     $build = array(
       'ting_fulltext' => array(
         '#theme' => 'ting_fulltext',
-        '#fields' => ting_fulltext_parse($fulltext, TRUE),
+        '#fields' => ting_fulltext_parse($fulltext),
       ),
     );
+    // Remove title from rendered text.
+    unset($build['ting_fulltext']['#fields']['title']);
     $vars['abstract'] = drupal_render($build);
 
     // Remove link to full text.
     unset($vars['fulltext_link']);
 
-    // Title is ugly per default, fix it.
-    $vars['title'] = t('Description from publisher');
+    // Remove title.
+    unset($vars['title']);
   }
 }
 

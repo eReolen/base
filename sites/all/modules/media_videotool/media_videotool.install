@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Media: VideoTool module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function media_videotool_install() {
+
+  return array();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function media_videotool_uninstall() {
+
+  drupal_load('module', 'media_videotool');
+
+  foreach (media_videotool_variable_default() as $variable => $value) {
+    media_videotool_variable_del($variable);
+  }
+  return array(array(
+    'success' => TRUE,
+    'query' => "Deleted all variables in the Media: VideoTool namespace.",
+  ),
+  );
+}
