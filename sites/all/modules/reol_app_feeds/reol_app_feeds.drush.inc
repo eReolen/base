@@ -61,7 +61,8 @@ function drush_reol_app_feeds_generate() {
     try {
       $result = $feedHelper->generate($feed);
       $message = FALSE === $result ? '–' : sprintf('%12d bytes', $result);
-    } catch (Exception $exception) {
+    }
+    catch (Exception $exception) {
       $message = $exception->getMessage();
     }
     $endtime = microtime(TRUE);
