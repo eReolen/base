@@ -37,6 +37,8 @@ class ParagraphHelper {
   const PARAGRAPH_VIDEO_BUNDLE = 'video_bundle';
   // To elementer.
   const PARAGRAPH_TWO_ELEMENTS = 'two_elements';
+  // To elementer.
+  const PARAGRAPH_BLUE_TITLES_INFO = 'blue_titles_info';
 
   // Paragraph aliases.
   const PARAGRAPH_ALIAS_AUDIO = self::PARAGRAPH_AUDIO_PREVIEW;
@@ -295,6 +297,9 @@ class ParagraphHelper {
 
       case self::PARAGRAPH_VIDEO:
         return $this->getVideo($paragraph);
+
+      case self::PARAGRAPH_BLUE_TITLES_INFO:
+        return $this->getBlueTitlesInfo($paragraph);
     }
 
     return NULL;
@@ -686,6 +691,16 @@ class ParagraphHelper {
     ];
   }
 
+  protected function getBlueTitlesInfo(\ParagraphsItemEntity $paragraph) {
+    return [
+      'guid' => $this->getGuid($paragraph),
+      'type' => $this->getType($paragraph),
+      'title' => t('Blue titles', [], ['context' => 'reol_app_feeds']),
+      'subtitle' => t('Titles with a blue icon does not count toward your loan quota and can always be borrowed', [], ['context' => 'reol_app_feeds']),
+      'buttonText' => t('Show blue titles', [], ['context' => 'reol_app_feeds']),
+    ];
+  }
+
   /**
    * Get video list data.
    *
@@ -1028,6 +1043,9 @@ class ParagraphHelper {
 
       case self::PARAGRAPH_VIDEO_BUNDLE:
         return 'video_bundle';
+
+      case self::PARAGRAPH_BLUE_TITLES_INFO:
+        return 'in_app_link';
     }
 
     return NULL;
