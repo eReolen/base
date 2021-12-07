@@ -192,6 +192,7 @@ class FrontPageFeed extends AbstractFeed {
     $list = [];
     $paragraphs = $this->paragraphHelper->getParagraphs([
       ParagraphHelper::PARAGRAPH_SPOTLIGHT_BOX,
+      ParagraphHelper::PARAGRAPH_TWO_ELEMENTS,
       ParagraphHelper::PARAGRAPH_VIDEO_BUNDLE,
     ], $paragraphIds);
 
