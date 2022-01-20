@@ -105,6 +105,27 @@ final class ApiClient {
   }
 
   /**
+   * Get one video by url and parameters.
+   *
+   * @param string $url
+   *   The Videotool video url.
+   * @param array $parameters
+   *   The parameters.
+   *
+   * @return null|array
+   *   A single video matching url and all parameters if found.
+   */
+  public function getVideoByUrl($url, array $parameters) {
+    if (preg_match('/media.videotool.dk.*[?&]vn=(?P<name>[^&]+)/', $url, $matches)) {
+      return $this->getVideoBy($parameters + [
+        'VideoName' => $matches['name'],
+      ]);
+    }
+
+    return NULL;
+  }
+
+  /**
    * Fetch data from Videotool API.
    *
    * @return null|array

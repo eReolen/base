@@ -820,29 +820,14 @@ class ParagraphHelper {
    * Get HLS url.
    */
   private function getHlsUrl($url) {
-    if (preg_match('/media.videotool.dk.*[?&]vn=(?P<name>[^&]+)/', $url, $matches)) {
-      $video = $this->getVideotoolClient()->getVideoBy([
-        'VideoName' => $matches['name'],
-        // Request hls url with maximum lifetime (31 days).
-        'HlsLifeTimeInSeconds' => 31 * 24 * 60 * 60,
-      ]);
+    if (preg_match('/videotool/', $url)) {
+      $video = $this->getVideotoolMetadata($url);
       if (isset($video['HlsURL'])) {
         return $video['HlsURL'];
       }
     }
 
     return self::VALUE_NONE;
-  }
-
-  /**
-   * Get Videotool API client.
-   */
-  private function getVideotoolClient(): VideotoolApiClient {
-    if (NULL === $this->videotoolClient) {
-      $this->videotoolClient = new VideotoolApiClient();
-    }
-
-    return $this->videotoolClient;
   }
 
   /**
@@ -859,24 +844,17 @@ class ParagraphHelper {
 
     if (!isset($thumbnails[$url])) {
       $thumbnail = self::VALUE_NONE;
-
       if (preg_match('/videotool/', $url)) {
-        try {
-          $oembedUrl = 'https://www.videotool.dk/oembed/?' . http_build_query(['url' => $url]);
-          $client = new Client();
-          $response = $client->get($oembedUrl);
-          $xml = new \SimpleXMLElement((string) $response->getBody());
+        $video = $this->getVideotoolMetadata($url);
+
+        if (isset($video['ThumbnailLargeURL'])) {
+          $image_url = $video['ThumbnailLargeURL'];
+          $size = getimagesize($image_url);
           $thumbnail = [
-            'url' => (string) $xml->thumbnail_url,
-            'width' => (int) $xml->thumbnail_width,
-            'height' => (int) $xml->thumbnail_height,
+            'url' => $image_url,
+            'width' => $size[0] ?? self::VALUE_NONE,
+            'height' => $size[1] ?? self::VALUE_NONE,
           ];
-        }
-        catch (\Exception $exception) {
-          watchdog('reol_app_feeds', 'Cannot get thumbnail for video url !url: !message', [
-            '!url' => $url,
-            '!message' => $exception->getMessage(),
-          ], WATCHDOG_ERROR);
         }
       }
       elseif (preg_match('/youtube/', $url)) {
@@ -897,6 +875,43 @@ class ParagraphHelper {
     }
 
     return $thumbnails[$url];
+  }
+
+  /**
+   * Get Videotool video metadata.
+   *
+   * @param string $url
+   *   The Videotool video url.
+   *
+   * @return null|array
+   *   The video metadata if found.
+   */
+  private function getVideotoolMetadata($url) {
+    $videos = &drupal_static(__FUNCTION__);
+
+    if (!isset($videos[$url])) {
+      // Request hls and thumbnail url with maximum lifetime (31 days).
+      $lifeTime = 31 * 24 * 60 * 60;
+      $video = $this->getVideotoolClient()->getVideoByUrl($url, [
+        'ThumbLifeTimeInSeconds' => $lifeTime,
+        'HlsLifeTimeInSeconds' => $lifeTime,
+      ]);
+
+      $videos[$url] = $video;
+    }
+
+    return $videos[$url];
+  }
+
+  /**
+   * Get Videotool API client.
+   */
+  private function getVideotoolClient(): VideotoolApiClient {
+    if (NULL === $this->videotoolClient) {
+      $this->videotoolClient = new VideotoolApiClient();
+    }
+
+    return $this->videotoolClient;
   }
 
   /**
