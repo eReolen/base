@@ -3,6 +3,7 @@ description = App feeds for eReolen and eReolen Go
 core = 7.x
 package = eReolen shared
 dependencies[] = image
+dependencies[] = media_videotool
 dependencies[] = overdrive
 dependencies[] = publication_date
 dependencies[] = reol_base

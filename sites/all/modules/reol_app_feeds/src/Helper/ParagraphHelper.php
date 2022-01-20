@@ -2,6 +2,7 @@
 
 namespace Drupal\reol_app_feeds\Helper;
 
+use Drupal\media_videotool\ApiClient as VideotoolApiClient;
 use EntityFieldQuery;
 use GuzzleHttp\Client;
 
@@ -59,6 +60,13 @@ class ParagraphHelper {
    * @var \Drupal\reol_app_feeds\Helper\NodeHelper
    */
   protected $nodeHelper;
+
+  /**
+   * The Videotool API client.
+   *
+   * @var \Drupal\media_videotool\ApiClient
+   */
+  private $videotoolClient;
 
   /**
    * Constructor.
@@ -739,6 +747,7 @@ class ParagraphHelper {
       $list = array_values(array_map(function (\ParagraphsItemEntity $subParagraph) use ($sub_paragraphs_video_field_name) {
         $video = $this->nodeHelper->loadReferences($subParagraph, 'field_video_node', FALSE);
         $url = $this->nodeHelper->getFieldValue($video, $sub_paragraphs_video_field_name, 'uri');
+        $hlsUrl = $this->getHlsUrl($url);
 
         return [
           'guid' => $this->getGuid($subParagraph),
@@ -747,6 +756,7 @@ class ParagraphHelper {
           'image' => self::VALUE_NONE,
           'source' => $this->getVideoSource($url),
           'url' => $this->nodeHelper->getFileUrl($url),
+          'hls_url' => $hlsUrl,
         ];
       }, $subParagraphs));
     }
@@ -776,7 +786,7 @@ class ParagraphHelper {
     $color = $this->nodeHelper->getFieldValue($paragraph, 'field_link_color', 'rgb')
       ?? $this->nodeHelper->getFieldValue($paragraph, 'field_material_carousel_color', 'rgb');
     $url = $this->nodeHelper->getFileUrl($videoUrl);
-
+    $hlsUrl = $this->getHlsUrl($url);
     $thumbnail = $this->getVideoThumbnail($url);
 
     // Keep only `query` and `title` properties on carousels and add a `type`
@@ -798,11 +808,41 @@ class ParagraphHelper {
         'image' => self::VALUE_NONE,
         'source' => $this->getVideoSource($videoUrl),
         'url' => $url,
+        'hls_url' => $hlsUrl,
         'thumbnail' => $thumbnail,
         'content' => reset($carousels) ?: self::VALUE_NONE,
         'color' => $color ?: self::VALUE_NONE,
       ],
     ];
+  }
+
+  /**
+   * Get HLS url.
+   */
+  private function getHlsUrl($url) {
+    if (preg_match('/media.videotool.dk.*[?&]vn=(?P<name>[^&]+)/', $url, $matches)) {
+      $video = $this->getVideotoolClient()->getVideoBy([
+        'VideoName' => $matches['name'],
+        // Request hls url with maximum lifetime (31 days).
+        'HlsLifeTimeInSeconds' => 31 * 24 * 60 * 60,
+      ]);
+      if (isset($video['HlsURL'])) {
+        return $video['HlsURL'];
+      }
+    }
+
+    return self::VALUE_NONE;
+  }
+
+  /**
+   * Get Videotool API client.
+   */
+  private function getVideotoolClient(): VideotoolApiClient {
+    if (NULL === $this->videotoolClient) {
+      $this->videotoolClient = new VideotoolApiClient();
+    }
+
+    return $this->videotoolClient;
   }
 
   /**
