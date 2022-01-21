@@ -7,3 +7,4 @@ files[] = includes/MediaVideoToolStreamWrapper.inc
 files[] = includes/MediaVideoToolBrowser.inc
 dependencies[] = media
 dependencies[] = media_internet
+dependencies[] = xautoload
