@@ -756,7 +756,7 @@ class ParagraphHelper {
           'image' => self::VALUE_NONE,
           'source' => $this->getVideoSource($url),
           'url' => $this->nodeHelper->getFileUrl($url),
-          'hls_url' => $hlsUrl,
+          'hlsUrl' => $hlsUrl,
         ];
       }, $subParagraphs));
     }
@@ -808,7 +808,7 @@ class ParagraphHelper {
         'image' => self::VALUE_NONE,
         'source' => $this->getVideoSource($videoUrl),
         'url' => $url,
-        'hls_url' => $hlsUrl,
+        'hlsUrl' => $hlsUrl,
         'thumbnail' => $thumbnail,
         'content' => reset($carousels) ?: self::VALUE_NONE,
         'color' => $color ?: self::VALUE_NONE,
