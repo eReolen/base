@@ -5,7 +5,7 @@
  * Media_videotool/media_videotool.module.
  *
  * Media: VideoTool provides a stream wrapper and formatters for videos provided
- * by VideoTool, available at http://videotool.dk/.
+ * by VideoTool, available at https://videotool.dk/.
  */
 
 // A registry of variable_get defaults.
