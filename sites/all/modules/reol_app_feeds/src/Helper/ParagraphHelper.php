@@ -789,15 +789,10 @@ class ParagraphHelper {
     $hlsUrl = $this->getHlsUrl($url);
     $thumbnail = $this->getVideoThumbnail($url);
 
-    // Keep only `query` and `title` properties on carousels and add a `type`
-    // property.
-    $carousels = array_map(static function (array $carousel) {
-      return array_filter($carousel, static function ($key) {
-        return in_array($key, ['query', 'title']);
-      }, ARRAY_FILTER_USE_KEY) + [
-        'type' => 'carousel',
-      ];
-    }, $this->getCarousel($paragraph));
+    $content = [
+      'title' => $this->nodeHelper->getFieldValue($paragraph, 'field_promoted_materials_title', 'value') ?? self::VALUE_NONE,
+      'query' => $this->nodeHelper->getFieldValue($paragraph, 'field_search_string', 'value') ?? self::VALUE_NONE,
+    ];
 
     return [
       [
@@ -810,7 +805,7 @@ class ParagraphHelper {
         'url' => $url,
         'hlsUrl' => $hlsUrl,
         'thumbnail' => $thumbnail,
-        'content' => reset($carousels) ?: self::VALUE_NONE,
+        'content' => $content,
         'color' => $color ?: self::VALUE_NONE,
       ],
     ];
