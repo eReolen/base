@@ -185,6 +185,23 @@ function orwell_preprocess_node(&$variables) {
           return theme('image_style', $variables);
         }, ting_covers_get(array_values($ids)));
       }
+
+      $wrapper = entity_metadata_wrapper('node', $node);
+      $variables['promoted_materials_covers'] = array_map(function ($file) {
+        $variables = array(
+          'style_name' => 'ereol_article_covers',
+          'path' => $file,
+        );
+        return theme('image_style', $variables);
+      }, ting_covers_get($wrapper->get('field_promoted_materials')->value()));
+
+      $background_color = $wrapper->get('field_background_color')->value()['rgb'] ?? NULL;
+      if (NULL !== $background_color) {
+        $variables['background_color'] = $background_color;
+        $variables['background_contrast_color'] = reol_base_get_contrast_color($background_color);
+      }
+
+      $variables['subject'] = $wrapper->get('field_subject')->value()->name ?? NULL;
     }
   }
 }
