@@ -20,12 +20,18 @@
         </button>
       </div>
     </div>
-    <div class="article--teaser__right">
-      <div class="article--teaser__covers">
-        <?php foreach ($covers as $cover): ?>
-          <?php print($cover); ?>
-        <?php endforeach; ?>
-      </div>
+
+    <div class="article--teaser__right <?php print '#000000' === ($background_contrast_color ?? NULL) ? 'color-dark' : 'color-light' ?>" style="background-color: <?php print $background_color ?? 'none' ?>">
+      <?php if (isset($subject)): ?>
+        <div class="subject"><?php print $subject; ?></div>
+      <?php endif ?>
+      <?php if (isset($promoted_materials_covers)): ?>
+        <div class="article--teaser__covers">
+          <?php foreach ($promoted_materials_covers as $cover): ?>
+            <?php print($cover); ?>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
     </div>
   <?php if (!empty($node_url)): ?>
   </a>
