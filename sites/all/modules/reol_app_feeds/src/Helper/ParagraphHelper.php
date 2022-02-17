@@ -706,6 +706,7 @@ class ParagraphHelper {
       'title' => t('Blue titles', [], ['context' => 'reol_app_feeds']),
       'subtitle' => t('Titles with a blue icon does not count toward your loan quota and can always be borrowed', [], ['context' => 'reol_app_feeds']),
       'buttonText' => t('Show blue titles', [], ['context' => 'reol_app_feeds']),
+      'link' => 'category/blue_titles',
     ];
   }
 
