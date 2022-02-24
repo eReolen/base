@@ -34,13 +34,6 @@
   "build/fonts/sourcesanspro-semibold.woff": "./fonts/sourcesanspro-semibold.woff",
   "build/fonts/sourcesanspro-semibold.woff2": "./fonts/sourcesanspro-semibold.woff2",
   "build/images/backspace-solid.svg": "./images/backspace-solid.108ad93c.svg",
-  "build/images/iconmenu-audiobook.svg": "./images/iconmenu-audiobook.61c00eff.svg",
-  "build/images/iconmenu-e-book.svg": "./images/iconmenu-e-book.71055684.svg",
-  "build/images/iconmenu-faq.svg": "./images/iconmenu-faq.54a08cde.svg",
-  "build/images/iconmenu-home.svg": "./images/iconmenu-home.bea02ee0.svg",
-  "build/images/iconmenu-info.svg": "./images/iconmenu-info.99d90d75.svg",
-  "build/images/iconmenu-inspiration.svg": "./images/iconmenu-inspiration.76e91efb.svg",
-  "build/images/iconmenu-userprofile.svg": "./images/iconmenu-userprofile.3372e113.svg",
   "build/images/placeholder.png": "./images/placeholder.d4d2193a.png",
   "build/images/white-arrow-right.svg": "./images/white-arrow-right.199cdd0b.svg"
 }
