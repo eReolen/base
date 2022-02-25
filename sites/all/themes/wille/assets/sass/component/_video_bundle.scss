@@ -101,6 +101,7 @@
     color: inherit;
     white-space: nowrap;
 
+    /* Arrow icon */
     &:after {
       content: "\e91b";
       font-family: "icomoon";
@@ -112,10 +113,11 @@
     }
 
     &:hover {
-      color: revert;
+      color: inherit;
     }
   }
 
+  /* Show books as centereed grid */
   .field-name-field-promoted-materials > .field-items {
     display: grid;
     grid-template-columns: repeat(auto-fit, 205px);
@@ -132,7 +134,7 @@
   }
 
   /*
-  * Make some adjustments to the material item view
+  * Make some adjustments to the ting-object view
   */
   .ting-object {
     padding: 0;
