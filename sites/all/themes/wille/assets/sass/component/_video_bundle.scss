@@ -1,77 +1,65 @@
 .paragraphs-item-video-bundle {
-  $color-dark: #111;
-  $color-light: #eee;
+  --color-dark: #111;
+  --color-light: #eee;
+  --text-color: var(--color-light); /* Set base color in a variable */
+  --spacer: 16px;
 
   &.video-bundle-color-dark {
-    color: $color-dark;
-
-    .carousel-item-language,
-    .field-name-ting-details-language .field-item,
-    .ding-carousel h2.carousel__header,
-    .ding-carousel-item .field-name-ting-title h2,
-    .ding-carousel-item .field-name-ting-author div div,
-    .material-carousel-colored
-      .ding-carousel-item
-      .ting-object.view-mode-compact {
-      color: $color-dark;
-    }
+    /* Change base color in variable, if dark is preffered */
+    --text-color: var(--color-dark);
   }
 
-  &.video-bundle-color-light {
-    color: $color-light;
-
-    .carousel-item-language,
-    .field-name-ting-details-language .field-item,
-    .ding-carousel h2.carousel__header,
-    .ding-carousel-item .field-name-ting-title h2,
-    .ding-carousel-item .field-name-ting-author div div,
-    .material-carousel-colored
-      .ding-carousel-item
-      .ting-object.view-mode-compact {
-      color: $color-light;
-    }
-  }
-
+  color: var(--text-color); /* Apply basecolor from variable to text */
   font-family: $font-regular;
+  margin: 60px auto;
+  padding: var(--spacer);
+  max-width: 980px; /* Width of carousel on desktop */
+  border-radius: var(--spacer); /* Rounded corners on desktop */
 
-  @include media($tablet-p) {
-    margin-bottom: $mobile-margin;
+  @include media($phone) {
+    margin: 30px 0;
+    border-radius: 0;
   }
 
-  margin: 0;
-  margin-bottom: $mobile-margin * 2;
-
-  & > .content {
-    @include outer-container;
+  /* Specific color overrides on material */
+  .material__title,
+  .material__title a,
+  .material__author,
+  .material__author a,
+  .material__language,
+  .material__language a {
+    color: var(--text-color);
+    font-family: $font-regular;
   }
 
+  /* Title */
   .video_bundle__title {
     padding: 40px 0 20px;
+    color: var(--text-color);
   }
 
+  /* Title and video placement */
   .video_bundle__video-wrapper {
-    // Match padding of .ding-carousel (cf. _carousel.scss).
-    padding: 0 100px;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 
-    @include media($tablet-l) {
-      padding: 0 20px;
+  .video_bundle__video {
+    position: relative; // Keep .expand-parent-to in place.
+    margin: var(--spacer);
+    @include media($phone) {
+      margin: var(--spacer) 0;
     }
   }
 
-  .video_bundle__carousel-wrapper {
-    margin-top: 20px;
-  }
-
-  .ding-carousel .carousel__header {
-    padding: 0;
-  }
-
+  /* Strech iframed video to container */
   // @see https://css-tricks.com/fluid-width-video/#iframe-video-youtube-vimeo-etc
   .media-videotool-video,
   .media-youtube-video {
     position: relative;
     padding-bottom: 56.25%; // 16:9
     height: 0;
+    border-radius: revert;
 
     iframe {
       position: absolute;
@@ -82,7 +70,109 @@
     }
   }
 
-  .video_bundle__description {
-    margin: 1em 0;
+  .video_bundle__title,
+  .video_bundle__description,
+  .video_bundle__promoted-materials-wrapper {
+    padding: 0;
+    margin: var(--spacer);
+    @include media($tablet-l) {
+      margin: var(--spacer) 0;
+    }
+  }
+
+  .video_bundle__promoted-materials-header {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding: var(--spacer) 0;
+    font-size: calc(calc(20 / 16) * 1rem);
+  }
+
+  .video_bundle__promoted-materials-title {
+    margin-bottom: var(--spacer);
+    font-size: inherit;
+  }
+
+  .video_bundle__promoted-materials-see-more a {
+    font-size: inherit;
+    font-family: "OpenSans Bold", Arial, Helvetica, Sans-Serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: inherit;
+    white-space: nowrap;
+
+    &:after {
+      content: "\e91b";
+      font-family: "icomoon";
+      position: relative;
+      top: 1px;
+      color: inherit;
+      font-size: inherit;
+      margin-left: calc(var(--spacer) * 0.5);
+    }
+
+    &:hover {
+      color: revert;
+    }
+  }
+
+  .field-name-field-promoted-materials > .field-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 205px);
+    @include media($phone) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    gap: calc(var(--spacer) * 2);
+    justify-content: center;
+  }
+
+  .field-name-field-promoted-materials .field-item {
+    padding: 0;
+    margin: 0;
+  }
+
+  /*
+  * Make some adjustments to the material item view
+  */
+  .ting-object {
+    padding: 0;
+    border: 0;
+    color: var(--text-color);
+
+    .field-name-ting-cover {
+      width: 100%;
+      aspect-ratio: 240 / 375;
+    }
+
+    .field-name-ting-cover img {
+      height: auto;
+      object-fit: cover;
+      object-position: center;
+
+      @include media($tablet-l) {
+        max-height: 375px;
+      }
+    }
+
+    .group-material-details, /* Hide details from view */
+    .field-name-ting-abstract, /* Hide abstract from view */
+    .field-name-ting-details-subjects, /* Hide subjects from view */
+    .field-name-ting-type {
+      /* Hide type from view */
+      display: none;
+    }
+
+    .field-name-ting-title h2,
+    .field-name-ting-title h2 a,
+    .field-name-ting-author,
+    .field-name-ting-author a {
+      font-family: $font-regular;
+      font-size: calc(calc(16 / 16) * 1rem);
+      color: inherit;
+    }
+    .field-name-ting-author,
+    .field-name-ting-author a {
+      font-size: calc(calc(14 / 16) * 1rem);
+    }
   }
 }
