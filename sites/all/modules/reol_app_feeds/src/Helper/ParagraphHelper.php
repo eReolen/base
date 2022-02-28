@@ -811,7 +811,7 @@ class ParagraphHelper {
         'url' => $url,
         'hlsUrl' => $hlsUrl,
         'thumbnail' => $thumbnail,
-        'content' => reset($carousels) ?: self::VALUE_NONE,
+        'content' => reset($carousels) ?: NULL,
         'color' => $color ?: self::VALUE_NONE,
       ],
     ];
