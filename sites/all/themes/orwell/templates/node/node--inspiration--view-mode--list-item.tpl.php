@@ -90,12 +90,13 @@
   }
   if ($background_image_uri = ($node_wrapper->get('field_app_feed_image')->value()['uri'] ?? NULL)) {
     if ($background_image_url = file_create_url($background_image_uri)) {
-      $css_declarations[] = "background-image: url('$background_image_url')";
+      $css_declarations[] = "";
     }
   }
 
   $style = implode('; ', $css_declarations);
 ?>
 <div class="<?php print $classes; ?> list-item" style="<?php print $style ?>">
+  <img src="<?php print $background_image_url; ?>" alt="" aria-visible="false" class="category-list-item-image">
   <a href="<?php print $node_url; ?>"><?php print $title; ?></a>
 </div>

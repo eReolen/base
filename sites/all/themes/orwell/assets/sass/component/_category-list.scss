@@ -1,63 +1,63 @@
 .paragraphs-item-category-list {
+  --item-category-list-spacing: 16px;
+  --text-color: white;
+
+  margin-top: calc(var(--item-category-list-spacing) * 2);
+  @include grid-media($medium) {
+    margin-top: 0;
+  }
+
   @include content-wrapper__large;
   padding: 0;
 
   .field-name-field-categories .field-items {
-    // @see https://coryrylan.com/blog/css-gap-space-with-flexbox
-    --item-category-list-gap: 1em;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--item-category-list-spacing);
 
-    display: inline-flex;
-    flex-wrap: wrap;
-    margin: calc(-1 * var(--item-category-list-gap)) 0 0 calc(-1 * var(--item-category-list-gap));
-    width: calc(100% + var(--item-category-list-gap));
-    // justify-content: space-between;
+    @include grid-media($medium) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
 
+    /* div.field-item styles */
     > div {
-      // div.field-item styles
       width: 100%;
-      margin: var(--item-category-list-gap) 0 0 var(--item-category-list-gap);
+    }
 
-      // Show three items on a row on small displays.
-      @include grid-media($small) {
-        width: calc(100%/2 - var(--item-category-list-gap));
+    /* List item styles */
+    .list-item {
+      color: var(--text-color);
+      overflow: hidden;
+      position: relative;
+
+      .category-list-item-image {
+        position: absolute;
+        top: -65%;
+        right: -15%;
+        height: 260%;
+        width: auto;
+        max-width: revert;
+        opacity: 0.5;
+        transform: rotate(30deg);
       }
 
-      // Show three items on a row on medium displays.
-      @include grid-media($medium) {
-        width: calc(100%/3 - var(--item-category-list-gap));
-      }
+      a {
+        font-size: calc(calc(20 / 16) * 1rem); /* 20px font-size */
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        padding: calc(var(--item-category-list-spacing) * 1.75);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
 
-      > div {
-        background {
-          position: right;
-          repeat: no-repeat;
-        }
-
-        $item-padding: 1em;
-
-        a {
-          display: block;
-          text-decoration: none;
-          // color: #eee;
-          color: #111;
-          padding: {
-            top: $item-padding;
-            bottom: $item-padding;
-            left: $item-padding;
-            // Make room for arrow after text
-            right: 2 * $item-padding;
-          }
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-
-          position: relative;
-
-          &::after {
-            content: '›';
-            position: absolute;
-            right: $item-padding;
-          }
+        &::after {
+          content: "›";
+          position: absolute;
+          top: var(--item-category-list-spacing);
+          right: calc(var(--item-category-list-spacing) * 1.75);
+          font-size: calc(calc(40 / 16) * 1rem); /* 24px font-size */
         }
       }
     }
@@ -65,9 +65,13 @@
 
   .secondary-items {
     // https://css-tricks.com/using-css-transitions-auto-dimensions/#aa-technique-2-transform-scaley
-    > div:first-child {
+    .content {
+      margin-top: var(--item-category-list-spacing);
       overflow: hidden;
-      transition: height .25s ease-out;
+      transition: height 0.25s ease-out;
+      @media (prefers-reduced-motion) {
+        transition: none;
+      }
       height: auto;
     }
 
@@ -90,8 +94,20 @@
     }
 
     .buttons {
-      padding: 1em;
+      margin-top: var(--item-category-list-spacing);
       text-align: center;
+
+      button {
+        padding: var(--item-category-list-spacing);
+        border: 1px solid $color__geist--grey3;
+        color: $color__geist--grey3;
+        width: fit-content;
+        border-radius: 0;
+        background-color: transparent;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 400;
+      }
     }
   }
 }
