@@ -130,20 +130,4 @@
       });
     },
   };
-
-  /**
-   * Toggle show/hide more content on material abstract.
-   */
-  $(function () {
-    $(".material__abstract").each(function () {
-      var $minHeight = 140;
-      if ($(this).height() > $minHeight) {
-        $(this).addClass("showmore");
-      }
-    });
-
-    $(".material__abstract.showmore").on("click", function () {
-      $(this).toggleClass("visible");
-    });
-  });
 })(jQuery);

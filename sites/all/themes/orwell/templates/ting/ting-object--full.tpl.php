@@ -24,41 +24,42 @@
         <div class="material__buttons material__buttons--desktop mobile-only">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_a']['ding_entity_buttons']); ?>
         </div>
+
         <div class="material__buttons desktop-only">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_a']['ding_entity_buttons']); ?>
         </div>
       </div>
+
       <div class="material__content">
         <div class="material__title">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_title']); ?>
         </div>
+
         <div class="material__author">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_meta']['ting_author']); ?>
         </div>
 
         <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
-
           <div class="material__details text">
             <?php
               unset($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']);
               echo render($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']);
             ?>
           </div>
-
         <?php else: ?>
-
           <div class="material__abstract text">
             <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_abstract']); ?>
           </div>
-
         <?php endif; ?>
 
         <div class="material__subjects text">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_subjects']); ?>
         </div>
+
         <div class="material__series material__series--desktop desktop-only">
           <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_series']); ?>
         </div>
+
         <?php if ($also_available): ?>
           <div class="material__also_available material__buttons--desktop">
             <span class="material__also_available_label"><?php print t('Also available as'); ?>: </span>
@@ -66,9 +67,11 @@
           </div>
         <?php endif; ?>
       </div>
+
       <div class="material__series mobile-only">
         <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_series']); ?>
       </div>
+
       <?php if (!empty($content['group_ting_object_right_column']['group_material_details'])) : ?>
         <div class="detail">
           <div class="material__details js-collaps">
@@ -80,14 +83,12 @@
       <?php // Render abstract if not already rendered above ?>
       <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
         <div class="detail">
-          <div class="material__abstract text">
-            <div class="collapsible speed-fast effect-none fieldgroup-effects-processed collapsed">
-              <h2><span class="field-group-format-toggler">
-                <a class="field-group-format-title" href="#">
-                  <?php print t('Description from DBC'); ?></span>
-                </a>
+          <div class="material__details text js-collaps">
+            <div class="ting_abstract material__abstract">
+              <h2>
+                <?php print t('Description from DBC'); ?>
               </h2>
-              <div class="field-group-format-wrapper text">
+              <div class="ting-relations__content">
                 <?php echo render($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_abstract']); ?>
               </div>
             </div>
@@ -102,6 +103,7 @@
           </div>
         </div>
       <?php endif; ?>
+
       <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasReview'])) : ?>
         <div class="detail">
           <div class="material__details text js-collaps">
@@ -109,6 +111,7 @@
           </div>
         </div>
       <?php endif; ?>
+
     </div>
   </div>
 <?php endif; ?>
