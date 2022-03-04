@@ -195,6 +195,19 @@
   };
 
   /**
+   * Detect and remove empty paragraphs
+   */
+  Drupal.behaviors.removeEmptyParagraphs = {
+    attach: function (context, settings) {
+      $(".ting-object-description p").each(function () {
+        if ($.trim($(this).text()) == "" && $(this).children().length == 0) {
+          $(this).hide();
+        }
+      });
+    },
+  };
+
+  /**
    * Add grid view option.
    */
   Drupal.behaviors.gridView = {
