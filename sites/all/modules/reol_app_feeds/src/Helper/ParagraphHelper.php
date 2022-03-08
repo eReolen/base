@@ -2,6 +2,7 @@
 
 namespace Drupal\reol_app_feeds\Helper;
 
+use Drupal\media_videotool\ApiClient as VideotoolApiClient;
 use EntityFieldQuery;
 use GuzzleHttp\Client;
 
@@ -37,6 +38,8 @@ class ParagraphHelper {
   const PARAGRAPH_VIDEO_BUNDLE = 'video_bundle';
   // To elementer.
   const PARAGRAPH_TWO_ELEMENTS = 'two_elements';
+  // To elementer.
+  const PARAGRAPH_BLUE_TITLES_INFO = 'blue_titles_info';
 
   // Paragraph aliases.
   const PARAGRAPH_ALIAS_AUDIO = self::PARAGRAPH_AUDIO_PREVIEW;
@@ -57,6 +60,13 @@ class ParagraphHelper {
    * @var \Drupal\reol_app_feeds\Helper\NodeHelper
    */
   protected $nodeHelper;
+
+  /**
+   * The Videotool API client.
+   *
+   * @var \Drupal\media_videotool\ApiClient
+   */
+  private $videotoolClient;
 
   /**
    * Constructor.
@@ -295,6 +305,9 @@ class ParagraphHelper {
 
       case self::PARAGRAPH_VIDEO:
         return $this->getVideo($paragraph);
+
+      case self::PARAGRAPH_BLUE_TITLES_INFO:
+        return $this->getBlueTitlesInfo($paragraph);
     }
 
     return NULL;
@@ -686,6 +699,17 @@ class ParagraphHelper {
     ];
   }
 
+  protected function getBlueTitlesInfo(\ParagraphsItemEntity $paragraph) {
+    return [
+      'guid' => $this->getGuid($paragraph),
+      'type' => $this->getType($paragraph),
+      'title' => t('Blue titles', [], ['context' => 'reol_app_feeds']),
+      'subtitle' => t('Titles with a blue icon does not count toward your loan quota and can always be borrowed', [], ['context' => 'reol_app_feeds']),
+      'buttonText' => t('Show blue titles', [], ['context' => 'reol_app_feeds']),
+      'link' => 'category/blue_titles',
+    ];
+  }
+
   /**
    * Get video list data.
    *
@@ -724,6 +748,7 @@ class ParagraphHelper {
       $list = array_values(array_map(function (\ParagraphsItemEntity $subParagraph) use ($sub_paragraphs_video_field_name) {
         $video = $this->nodeHelper->loadReferences($subParagraph, 'field_video_node', FALSE);
         $url = $this->nodeHelper->getFieldValue($video, $sub_paragraphs_video_field_name, 'uri');
+        $hlsUrl = $this->getHlsUrl($url);
 
         return [
           'guid' => $this->getGuid($subParagraph),
@@ -732,6 +757,7 @@ class ParagraphHelper {
           'image' => self::VALUE_NONE,
           'source' => $this->getVideoSource($url),
           'url' => $this->nodeHelper->getFileUrl($url),
+          'hlsUrl' => $hlsUrl,
         ];
       }, $subParagraphs));
     }
@@ -761,7 +787,7 @@ class ParagraphHelper {
     $color = $this->nodeHelper->getFieldValue($paragraph, 'field_link_color', 'rgb')
       ?? $this->nodeHelper->getFieldValue($paragraph, 'field_material_carousel_color', 'rgb');
     $url = $this->nodeHelper->getFileUrl($videoUrl);
-
+    $hlsUrl = $this->getHlsUrl($url);
     $thumbnail = $this->getVideoThumbnail($url);
 
     // Keep only `query` and `title` properties on carousels and add a `type`
@@ -783,11 +809,26 @@ class ParagraphHelper {
         'image' => self::VALUE_NONE,
         'source' => $this->getVideoSource($videoUrl),
         'url' => $url,
+        'hlsUrl' => $hlsUrl,
         'thumbnail' => $thumbnail,
         'content' => reset($carousels) ?: self::VALUE_NONE,
         'color' => $color ?: self::VALUE_NONE,
       ],
     ];
+  }
+
+  /**
+   * Get HLS url.
+   */
+  private function getHlsUrl($url) {
+    if (preg_match('/videotool/', $url)) {
+      $video = $this->getVideotoolMetadata($url);
+      if (isset($video['HlsURL'])) {
+        return $video['HlsURL'];
+      }
+    }
+
+    return self::VALUE_NONE;
   }
 
   /**
@@ -804,24 +845,17 @@ class ParagraphHelper {
 
     if (!isset($thumbnails[$url])) {
       $thumbnail = self::VALUE_NONE;
-
       if (preg_match('/videotool/', $url)) {
-        try {
-          $oembedUrl = 'https://www.videotool.dk/oembed/?' . http_build_query(['url' => $url]);
-          $client = new Client();
-          $response = $client->get($oembedUrl);
-          $xml = new \SimpleXMLElement((string) $response->getBody());
+        $video = $this->getVideotoolMetadata($url);
+
+        if (isset($video['ThumbnailLargeURL'])) {
+          $image_url = $video['ThumbnailLargeURL'];
+          $size = getimagesize($image_url);
           $thumbnail = [
-            'url' => (string) $xml->thumbnail_url,
-            'width' => (int) $xml->thumbnail_width,
-            'height' => (int) $xml->thumbnail_height,
+            'url' => $image_url,
+            'width' => $size[0] ?? self::VALUE_NONE,
+            'height' => $size[1] ?? self::VALUE_NONE,
           ];
-        }
-        catch (\Exception $exception) {
-          watchdog('reol_app_feeds', 'Cannot get thumbnail for video url !url: !message', [
-            '!url' => $url,
-            '!message' => $exception->getMessage(),
-          ], WATCHDOG_ERROR);
         }
       }
       elseif (preg_match('/youtube/', $url)) {
@@ -842,6 +876,43 @@ class ParagraphHelper {
     }
 
     return $thumbnails[$url];
+  }
+
+  /**
+   * Get Videotool video metadata.
+   *
+   * @param string $url
+   *   The Videotool video url.
+   *
+   * @return null|array
+   *   The video metadata if found.
+   */
+  private function getVideotoolMetadata($url) {
+    $videos = &drupal_static(__FUNCTION__);
+
+    if (!isset($videos[$url])) {
+      // Request hls and thumbnail url with maximum lifetime (31 days).
+      $lifeTime = 31 * 24 * 60 * 60;
+      $video = $this->getVideotoolClient()->getVideoByUrl($url, [
+        'ThumbLifeTimeInSeconds' => $lifeTime,
+        'HlsLifeTimeInSeconds' => $lifeTime,
+      ]);
+
+      $videos[$url] = $video;
+    }
+
+    return $videos[$url];
+  }
+
+  /**
+   * Get Videotool API client.
+   */
+  private function getVideotoolClient(): VideotoolApiClient {
+    if (NULL === $this->videotoolClient) {
+      $this->videotoolClient = new VideotoolApiClient();
+    }
+
+    return $this->videotoolClient;
   }
 
   /**
@@ -1028,6 +1099,9 @@ class ParagraphHelper {
 
       case self::PARAGRAPH_VIDEO_BUNDLE:
         return 'video_bundle';
+
+      case self::PARAGRAPH_BLUE_TITLES_INFO:
+        return 'in_app_link';
     }
 
     return NULL;

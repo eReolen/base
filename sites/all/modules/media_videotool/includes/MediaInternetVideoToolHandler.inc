@@ -24,7 +24,7 @@ class MediaInternetVideoToolHandler extends MediaInternetBaseHandler {
    *   True if the id a valid. Otherwise false.
    */
   public static function validId($id) {
-    $url = 'http://www.videotool.dk/oembed?url=http%3A//media.videotool.dk/%3Fvn%3D' . $id;
+    $url = 'https://www.videotool.dk/oembed?url=https%3A//media.videotool.dk/%3Fvn%3D' . $id;
 
     $response = drupal_http_request($url, array('method' => 'HEAD'));
     if ($response->code != 200) {
@@ -79,7 +79,7 @@ class MediaInternetVideoToolHandler extends MediaInternetBaseHandler {
   // phpcs:disable Drupal.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
 
   /**
-   * Returns information about the media. See http://www.oembed.com/.
+   * Returns information about the media. See https://www.oembed.com/.
    *
    * @return array|null
    *   If oEmbed information is available, an array containing 'title', 'type',
@@ -92,7 +92,7 @@ class MediaInternetVideoToolHandler extends MediaInternetBaseHandler {
     $uri = $this->parse($this->embedCode);
     $external_url = file_create_url($uri);
 
-    $oembed_url = url('http://www.videotool.dk/oembed', array(
+    $oembed_url = url('https://www.videotool.dk/oembed', array(
       'query' => array(
         'url' => $external_url,
         'format' => 'json',

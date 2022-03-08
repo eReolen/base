@@ -20,11 +20,11 @@ class MediaVideoToolStreamWrapper extends MediaReadOnlyStreamWrapper {
   /**
    * Overrides $base_url defined in MediaReadOnlyStreamWrapper.
    */
-  protected $base_url = 'http://media.videotool.dk/';
+  protected $base_url = 'https://media.videotool.dk/';
   // phpcs:enable
 
   /**
-   * Returns a url in the format "http://media.videotool.dk/?vn=qsPQN4MiTeE".
+   * Returns a url in the format "https://media.videotool.dk/?vn=qsPQN4MiTeE".
    *
    * Overrides interpolateUrl() defined in MediaReadOnlyStreamWrapper.
    * This is an exact copy of the function in MediaReadOnlyStreamWrapper,
