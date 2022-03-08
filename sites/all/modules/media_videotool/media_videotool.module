@@ -5,7 +5,7 @@
  * Media_videotool/media_videotool.module.
  *
  * Media: VideoTool provides a stream wrapper and formatters for videos provided
- * by VideoTool, available at http://videotool.dk/.
+ * by VideoTool, available at https://videotool.dk/.
  */
 
 // A registry of variable_get defaults.
@@ -382,4 +382,23 @@ function media_videotool_valid_id($id, $refresh = FALSE) {
   $ids[$id] = ($response->code == 200);
   cache_set('media_videotool:id:' . $id, $ids[$id], 'cache_media_xml', media_variable_get('xml_cache_expire', 3600));
   return $ids[$id];
+}
+
+/**
+ * Implements hook_menu().
+ */
+function media_videotool_menu() {
+  $items = [];
+
+  $items['admin/config/ereolen/media_videotool'] = [
+    'title' => 'VideoTool settings',
+    'description' => 'Settings for VideoTool',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['media_videotool_admin_form'],
+    'access arguments' => ['administer site configuration'],
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/media_videotool.admin.inc',
+  ];
+
+  return $items;
 }

@@ -21,6 +21,7 @@
     @include span-columns(2);
 
     .ting-cover {
+      margin-top: 22px;
       overflow: hidden;
     }
   }
@@ -118,6 +119,8 @@
 
   h2 {
     @extend %ting-object-main-title;
+    line-height: 1.25;
+    margin-top: 0;
 
     a {
       color: $title-color;
@@ -125,7 +128,7 @@
     }
 
     @include media($phone) {
-      line-height: 30px;
+      line-height: 1.5;
       font-size: 17px;
       padding-bottom: 10px;
     }
@@ -159,6 +162,10 @@
   line-height: 20px;
   color: $title-color;
   font-family: $font-light;
+
+  @include media($phone) {
+    margin: 0;
+  }
 }
 
 .ting-object-related-item {
@@ -218,7 +225,7 @@
 .ting-object-collapsible-enabled {
   h2 {
     &:before {
-      @include icon('arrow-right');
+      @include icon("arrow-right");
       position: absolute;
       right: 30px;
       font-size: 16px;

@@ -33,6 +33,8 @@ class FrontPageFeed extends FrontPageFeedV2 {
       $data[] = $this->getAudios([$paragraphId]);
       // "Latest news"
       $data[] = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ARTICLE_CAROUSEL, [$paragraphId]);
+      $data[] = $this->getBlueTitlesInfo([$paragraphId]);
+      $data[] = $this->getReviewsData([$paragraphId]);
     }
 
     // Remove empty lists.
@@ -44,6 +46,18 @@ class FrontPageFeed extends FrontPageFeedV2 {
     }
 
     return $data;
+  }
+
+  private function getBlueTitlesInfo(array $paragraphIds): array
+  {
+    return $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_BLUE_TITLES_INFO, $paragraphIds);
+  }
+
+  private function getReviewsData(array $paragraphIds): array
+  {
+    $paragraphs = $this->paragraphHelper->getParagraphs(ParagraphHelper::PARAGRAPH_REVIEW, $paragraphIds);
+
+    return count($paragraphs) > 0 ? $this->paragraphHelper->getReviewList(5) : [];
   }
 
 }
