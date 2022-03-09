@@ -170,7 +170,65 @@ docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn in
 docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn build"
 ```
 
-## Coding standards
+## Theme coding standards
+
+We use [Prettier](https://prettier.io/) to check theme coding standards.
+
+Run
+
+```sh
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/pratchett/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/pratchett/ && yarn coding-standards-check"
+
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn coding-standards-check"
+
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn coding-standards-check"
+```
+
+to check the coding standards.
+
+Run
+
+```sh
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/pratchett/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/pratchett/ && yarn coding-standards-apply"
+
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn coding-standards-apply"
+
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn coding-standards-apply"
+```
+
+to apply the coding standards.
+
+## GitHub Actions
+
+We use [GitHub Actions](https://github.com/features/actions) to check theme
+coding standards whenever a pull request is made.
+
+Before making a pull request you can run the GitHub Actions locally to check for
+any problems:
+
+[Install `act`](https://github.com/nektos/act#installation) and run
+
+```sh
+act -P ubuntu-latest=shivammathur/node:focal pull_request
+```
+
+(cf. <https://github.com/shivammathur/setup-php#local-testing-setup>).
+
+Use `act pull_request --list` to list all jobs in GitHub Actions and use
+
+```sh
+act -P ubuntu-latest=shivammathur/node:focal pull_request --job assets-coding-standards-wille
+```
+
+say, to run just a single job.
+
+# Coding standards
 
 All code must adhere to [the Drupal Coding
 Standards](https://www.drupal.org/docs/develop/standards).
