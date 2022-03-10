@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 .pager {
   display: flex;
@@ -38,7 +38,7 @@
 
     &::before {
       @include icon;
-      font-size: .9rem;
+      font-size: 0.9rem;
       color: $color__gray;
       border: 1px solid $color__border-gray--light;
       padding: 1rem;

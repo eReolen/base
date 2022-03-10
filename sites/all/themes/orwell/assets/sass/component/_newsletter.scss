@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 // Newsletter element
 form.mailchimp-signup-subscribe-form {
@@ -24,7 +24,7 @@ form.mailchimp-signup-subscribe-form {
       font-family: $font-semibold;
       font-size: 1rem;
       color: $color__gray;
-      margin-bottom: .8rem;
+      margin-bottom: 0.8rem;
     }
 
     h2 {
@@ -36,7 +36,6 @@ form.mailchimp-signup-subscribe-form {
   }
 
   .form-item {
-
     label[for] {
       display: none;
     }
@@ -77,7 +76,7 @@ form.mailchimp-signup-subscribe-form {
       background-color: $color__geist--grey5;
       // Using a background SVG because we can't use ::before on input
       // elements, and changing it to button is way too difficult.
-      background-image: url('../../svg/white-arrow-right.svg');
+      background-image: url("../../svg/white-arrow-right.svg");
       background-size: 1rem;
       background-position: center;
       background-repeat: no-repeat;
@@ -89,7 +88,6 @@ form.mailchimp-signup-subscribe-form {
 // Newsletter form used in app
 body.page-nyhedsbrev-app,
 body.page-nyhedsbrev-web {
-
   .pane-page-content {
     padding: 0 2rem;
     margin-bottom: 4rem;
@@ -116,7 +114,6 @@ body.page-nyhedsbrev-web {
   }
 
   form.mailchimp-signup-subscribe-form {
-
     .form-actions {
       position: relative;
       bottom: auto;

@@ -1,7 +1,6 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 .text {
-
   font-family: $font-regular;
 
   p {
@@ -44,7 +43,7 @@
     color: $color__font-gray;
 
     li::before {
-      content: '\2014';
+      content: "\2014";
       margin-right: 1rem;
     }
   }

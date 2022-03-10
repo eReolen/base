@@ -1,21 +1,20 @@
 @import "~bourbon";
 @import "~bourbon-neat";
-@import 'bootstrap/grid';
-@import 'bootstrap/mixins';
-@import 'bootstrap/colors';
-@import 'bootstrap/fonts';
-@import 'bootstrap/variables';
-
+@import "bootstrap/grid";
+@import "bootstrap/mixins";
+@import "bootstrap/colors";
+@import "bootstrap/fonts";
+@import "bootstrap/variables";
 
 .topbar {
   .pane-search-form {
-    @include grid-media($medium){
+    @include grid-media($medium) {
       order: 4;
     }
   }
 
   #header {
-    @include grid-media($medium){
+    @include grid-media($medium) {
       order: 1;
     }
   }
@@ -49,7 +48,6 @@ img {
   margin: 0 auto;
 }
 
-
 .ui-dialog {
   border-radius: 0;
   background-color: $color__white;
@@ -74,7 +72,6 @@ img {
 }
 
 .ui-dialog-content {
-
   a[data-modal-name="reol_bookmark"] {
     display: inline-block;
     width: auto;
@@ -82,7 +79,7 @@ img {
 }
 
 .ui-widget {
-  font-family: 'Oxygen', sans-serif;
+  font-family: "Oxygen", sans-serif;
 }
 
 div.messages {
@@ -141,7 +138,7 @@ div.messages {
 
     a {
       display: inline-block;
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
     }
   }
 }

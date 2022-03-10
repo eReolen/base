@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 .ting-object.view-mode-compact {
   width: 130px;
@@ -8,7 +8,7 @@
   .field-name-ting-title {
     font-family: $font-regular;
     font-size: 16px;
-    letter-spacing: .5px;
+    letter-spacing: 0.5px;
     margin-top: 6px;
     h2 {
       white-space: nowrap;
@@ -30,7 +30,7 @@
   .field-name-ting-author {
     font-family: $font-light;
     font-size: 14px;
-    letter-spacing: .5px;
+    letter-spacing: 0.5px;
     margin-top: 10px;
   }
 
@@ -43,7 +43,7 @@
       @include icon;
       color: $color__font-gray--dark;
       font-size: 12px;
-      margin-right: .2rem;
+      margin-right: 0.2rem;
       content: $icon__language;
     }
   }
@@ -67,7 +67,7 @@
 
   .field-type-ting-series {
     white-space: nowrap;
-    margin-left: .5em;
+    margin-left: 0.5em;
   }
 
   .field-type-ting-series {
