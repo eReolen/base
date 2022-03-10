@@ -37,7 +37,7 @@
     // Leave room for the play button.
     margin-left: 65px;
     // Add a bit of spacing to the top.
-    padding-top: .2rem;
+    padding-top: 0.2rem;
     line-height: 1.2rem;
   }
 
@@ -49,7 +49,7 @@
 
   .audio-preview__title {
     font-weight: bold;
-    font-size: .8rem;
+    font-size: 0.8rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -60,7 +60,7 @@
   .audio-preview__button {
     position: absolute;
     background-color: transparent;
-    background-image: url('../../../assets/svg/round_play_button.svg');
+    background-image: url("../../../assets/svg/round_play_button.svg");
     background-size: contain;
     background-repeat: no-repeat;
     padding: 0;
@@ -74,7 +74,7 @@
     outline: 0;
 
     &.playing {
-      background-image: url('../../../assets/svg/round_pause_button.svg');
+      background-image: url("../../../assets/svg/round_pause_button.svg");
     }
   }
 
@@ -97,6 +97,5 @@
 
       background-color: #fff;
     }
-
   }
 }

@@ -1,5 +1,4 @@
 .news-page {
-
   &__overlay {
     @extend .article__cover__overlay;
     background: rgba(235, 235, 235, 0.5);
@@ -11,7 +10,6 @@
 }
 
 .news-page__cover {
-
   @extend .article__cover;
 
   justify-content: space-around;
