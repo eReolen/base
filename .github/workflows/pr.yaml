@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['10', '16']
+        node: ['10']
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['10', '16']
+        node: ['10']
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['10', '16']
+        node: ['10']
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
