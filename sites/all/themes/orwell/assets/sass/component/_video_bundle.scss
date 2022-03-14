@@ -5,11 +5,14 @@
   &.video-bundle-color-dark {
     color: $color-dark;
 
-    .carousel-item-language, .field-name-ting-details-language .field-item,
+    .carousel-item-language,
+    .field-name-ting-details-language .field-item,
     .ding-carousel h2.carousel__header,
     .ding-carousel-item .field-name-ting-title h2,
     .ding-carousel-item .field-name-ting-author div div,
-    .material-carousel-colored .ding-carousel-item .ting-object.view-mode-compact {
+    .material-carousel-colored
+      .ding-carousel-item
+      .ting-object.view-mode-compact {
       color: $color-dark;
     }
   }
@@ -17,11 +20,14 @@
   &.video-bundle-color-light {
     color: $color-light;
 
-    .carousel-item-language, .field-name-ting-details-language .field-item,
+    .carousel-item-language,
+    .field-name-ting-details-language .field-item,
     .ding-carousel h2.carousel__header,
     .ding-carousel-item .field-name-ting-title h2,
     .ding-carousel-item .field-name-ting-author div div,
-    .material-carousel-colored .ding-carousel-item .ting-object.view-mode-compact {
+    .material-carousel-colored
+      .ding-carousel-item
+      .ting-object.view-mode-compact {
       color: $color-light;
     }
   }

@@ -5,7 +5,9 @@
   "scripts": {
     "build": "encore production",
     "dev": "encore dev",
-    "watch": "encore dev --watch"
+    "watch": "encore dev --watch",
+    "coding-standards-check": "prettier --check assets/",
+    "coding-standards-apply": "prettier --write assets/"
   },
   "author": "Martin Yde Granath",
   "license": "GPL",
@@ -27,6 +29,7 @@
     "node-neat": "^1.7.2",
     "node-sass": "^4.12.0",
     "node-sass-import-once": "^1.2.0",
+    "prettier": "2.5.1",
     "prismjs": "^1.8.1",
     "run-sequence": "^2.2.1",
     "sass-lint": "^1.7.0",

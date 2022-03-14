@@ -21,7 +21,7 @@
   // Adjusted so videos will fit.
   max-width: 730px;
   max-height: 90%;
-  box-shadow: 0 0 33px 0 rgba(0, 0, 0, .3);
+  box-shadow: 0 0 33px 0 rgba(0, 0, 0, 0.3);
   padding: 25px 30px;
   text-align: center;
   overflow-y: auto;
@@ -61,7 +61,6 @@
     top: 30px !important;
   }
 
-
   @include media($phone) {
     // On mobile we go full screen.
     top: 0px !important;
@@ -91,23 +90,24 @@
       .media-youtube-video {
         position: relative;
         // This is 16:9.
-      	padding-bottom: 56.25%;
-      	padding-top: 25px;
-      	height: 0;
-
+        padding-bottom: 56.25%;
+        padding-top: 25px;
+        height: 0;
       }
 
       iframe {
         position: absolute;
-      	top: 0;
-      	left: 0;
-      	width: 100%;
-      	height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
     }
   }
 
-  &, .ui-widget-header, .ui-dialog-content {
+  &,
+  .ui-widget-header,
+  .ui-dialog-content {
     color: $title-color;
     font-family: $font-light;
 
@@ -176,11 +176,11 @@
         right: 15px;
       }
     }
- }
+  }
 
   .ui-icon-closethick {
     &::before {
-      @include icon('close-b');
+      @include icon("close-b");
     }
 
     // Resetting.
@@ -194,14 +194,13 @@
 }
 
 .ui-widget-overlay {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .ui-dialog-is-open {
-
   @include media($phone) {
     overflow: hidden !important;
-    position: fixed !important;;
+    position: fixed !important;
   }
 }
 

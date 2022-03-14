@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 .site-header {
   background: white;
@@ -7,7 +7,7 @@
 .topbar {
   overflow: hidden;
 
-  @include grid-media($medium){
+  @include grid-media($medium) {
     height: 80px;
   }
 

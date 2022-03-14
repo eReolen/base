@@ -38,7 +38,7 @@
   line-height: 120%;
 
   &::after {
-    content: ':';
+    content: ":";
   }
 }
 
@@ -57,7 +57,7 @@
 
   .two-elements--primary & {
     &::before {
-      @include icon('arrow-right-funny');
+      @include icon("arrow-right-funny");
 
       position: absolute;
       bottom: 0;

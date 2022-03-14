@@ -1,4 +1,4 @@
-input[type=checkbox],
+input[type="checkbox"],
 .radio-custom {
   width: 0;
   height: 0;
@@ -7,8 +7,8 @@ input[type=checkbox],
   position: absolute;
 }
 
-input[type=checkbox],
-input[type=checkbox] + label::before,
+input[type="checkbox"],
+input[type="checkbox"] + label::before,
 .radio-custom,
 .radio-custom-label {
   display: inline-block;
@@ -16,29 +16,28 @@ input[type=checkbox] + label::before,
   cursor: pointer;
 }
 
-input[type=checkbox] + label::before,
+input[type="checkbox"] + label::before,
 .radio-custom-label {
   position: relative;
 }
 
-input[type=checkbox] + label::before,
+input[type="checkbox"] + label::before,
 .radio-custom + .radio-custom-label::before {
-  content: '';
+  content: "";
   background: transparent;
   border: 1px solid $color__border-gray--dark;
   width: 1.5rem;
   height: 1.5rem;
   text-align: center;
-  font-size: .7rem;
+  font-size: 0.7rem;
   border-radius: 50%;
   line-height: 1.5rem;
   position: absolute;
   left: 0;
-  top: -.1rem;
+  top: -0.1rem;
 }
 
 .form-type-checkbox {
-
   label.option {
     display: flex;
     align-items: center;
@@ -50,7 +49,6 @@ input[type=checkbox] + label::before,
 }
 
 .form-type-textfield {
-
   .field-prefix {
     position: absolute;
     z-index: 2;
@@ -66,8 +64,7 @@ input[type=checkbox] + label::before,
 }
 
 .form-checkboxes {
-
-  input[type=checkbox] + label::before,
+  input[type="checkbox"] + label::before,
   .radio-custom + .radio-custom-label::before {
     left: auto;
     right: 0;
@@ -79,7 +76,7 @@ input[type=checkbox] + label::before,
   }
 }
 
-input[type=checkbox]:checked + label::before {
+input[type="checkbox"]:checked + label::before {
   @include icon;
   content: $icon__check;
   background-color: $color__green;
@@ -96,7 +93,7 @@ input[type=checkbox]:checked + label::before {
   color: #bbb;
 }
 
-input[type=checkbox]:focus + label,
+input[type="checkbox"]:focus + label,
 .radio-custom:focus + .radio-custom-label {
   // Focus style.
   outline: 1px solid #ddd;
@@ -140,7 +137,7 @@ fieldset {
   padding: 2rem;
   border-bottom: 1px solid $color__border-gray;
   background-color: $page-bg;
-  margin-top: -.5rem;
+  margin-top: -0.5rem;
 
   @include grid-media($medium) {
     &:nth-child(odd) {
@@ -220,14 +217,15 @@ fieldset {
   }
 }
 
-
 // Align last expand with the ones above
-.pane-ding-facetbrowser  {
-  .expand-more, .expand-less {
+.pane-ding-facetbrowser {
+  .expand-more,
+  .expand-less {
     padding-right: 2rem;
     color: $color__geist--grey3;
   }
-  fieldset .expand-more, fieldset .expand-less {
+  fieldset .expand-more,
+  fieldset .expand-less {
     padding-right: 0;
   }
 }

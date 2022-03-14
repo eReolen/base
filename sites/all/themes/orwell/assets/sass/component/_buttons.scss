@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 .btn {
   @include button;
@@ -23,13 +23,12 @@
   }
 }
 
-
 .btn--loan {
   &::before {
     @include icon;
     content: $icon__chevron-right;
     position: absolute;
-    right: .5rem;
+    right: 0.5rem;
   }
 }
 
@@ -42,7 +41,7 @@
     @include icon;
     content: $icon__eye;
     position: absolute;
-    right: .5rem;
+    right: 0.5rem;
     font-size: 2rem;
   }
 }

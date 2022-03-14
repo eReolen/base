@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 .audio-preview {
   padding: $padding__default;
@@ -38,7 +38,7 @@
   }
 
   .audio-preview__title {
-    @include fadeout-box(.8rem, 3, div, $color__gray--dark);
+    @include fadeout-box(0.8rem, 3, div, $color__gray--dark);
     text-transform: uppercase;
     font-family: $font-semibold;
 
@@ -49,7 +49,7 @@
 
   .audio-preview__author {
     font-family: $font-regular;
-    font-size: .8rem;
+    font-size: 0.8rem;
     margin-top: 1rem;
   }
 }
@@ -58,7 +58,7 @@
   font-family: $font-semibold;
   // To contain the button.
   // position: relative;
-  font-size: .8rem;
+  font-size: 0.8rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -84,7 +84,7 @@
     border: 1px solid $color__font-gray;
     border-radius: 50%;
     background: none;
-    padding: .5rem;
+    padding: 0.5rem;
     vertical-align: middle;
     flex: none;
 
@@ -94,7 +94,7 @@
       padding: 6px;
       width: 1.7rem;
       height: 1.7rem;
-      border-radius: .85rem;
+      border-radius: 0.85rem;
     }
 
     &::before {
@@ -106,7 +106,7 @@
       content: $icon__play;
 
       @include grid-media($medium) {
-        font-size: .8rem;
+        font-size: 0.8rem;
       }
     }
 

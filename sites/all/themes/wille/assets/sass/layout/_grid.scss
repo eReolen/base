@@ -24,11 +24,11 @@ $visual-grid-index: front;
 }
 
 @include media($tablet-l) {
-  [class*='span-'] {
+  [class*="span-"] {
     @include span-columns(12);
   }
 
-  [class*='push-'] {
+  [class*="push-"] {
     @include shift(0);
   }
 }

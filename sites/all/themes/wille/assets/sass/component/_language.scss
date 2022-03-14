@@ -1,13 +1,13 @@
 // Add language and icon below cover
 .carousel-item-language,
-.field-name-ting-details-language .field-item{
+.field-name-ting-details-language .field-item {
   color: $title-color;
   text-decoration: none;
   font-family: $font-light;
   font-size: 12px;
   line-height: normal;
   &:before {
-    @include icon('flag');
+    @include icon("flag");
     margin-right: 5px;
     font-size: 10px;
   }
