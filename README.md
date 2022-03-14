@@ -161,6 +161,11 @@ docker-compose run --rm drush [command]
 # Building themes
 
 ```sh
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/pratchett/ && yarn install"
+docker-compose run --rm node bash -c "cd /app/sites/all/themes/pratchett/ && yarn build"
+```
+
+```sh
 docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn install"
 docker-compose run --rm node bash -c "cd /app/sites/all/themes/orwell/ && yarn build"
 ```
