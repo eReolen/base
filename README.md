@@ -209,25 +209,6 @@ to apply the coding standards.
 We use [GitHub Actions](https://github.com/features/actions) to check theme
 coding standards whenever a pull request is made.
 
-Before making a pull request you can run the GitHub Actions locally to check for
-any problems:
-
-[Install `act`](https://github.com/nektos/act#installation) and run
-
-```sh
-act -P ubuntu-latest=shivammathur/node:focal pull_request
-```
-
-(cf. <https://github.com/shivammathur/setup-php#local-testing-setup>).
-
-Use `act pull_request --list` to list all jobs in GitHub Actions and use
-
-```sh
-act -P ubuntu-latest=shivammathur/node:focal pull_request --job assets-coding-standards-wille
-```
-
-say, to run just a single job.
-
 # Coding standards
 
 All code must adhere to [the Drupal Coding
