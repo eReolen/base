@@ -49,44 +49,170 @@ $menu-height__medium: 5rem;
 
   // Top level menu.
   &.menu-level-1 {
-    background-color: $color__red;
-    text-align: center;
+    background-color: $color__white;
+    color: $color__font-gray--dark;
+
+    // Fix position to bottom for an app like experience on mobile
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.16);
 
     @include grid-media($medium) {
-      background-color: $color__white;
+      position: initial;
+      box-shadow: initial;
     }
 
     ul {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
 
       @include grid-media($medium) {
-        margin: 0 $padding__default;
-        display: inline-block;
+        justify-content: end;
       }
     }
 
     li {
-      @include grid-media($medium) {
-        padding: 0 1.5rem;
+      text-align: center;
+      margin-right: 24px;
+
+      &:last-of-type {
+        margin-right: 0;
       }
     }
 
     a {
-      color: $color__white;
-      opacity: 0.7;
+      display: block;
+      color: currentColor;
+      font-size: 0.85rem;
+      line-height: 1;
+      margin: 12px 0;
 
-      @include grid-media($medium) {
-        color: $color__font-gray--dark;
+      // Icons
+      &:before {
+        content: "";
+        display: block;
+        height: 26px;
+        margin-bottom: 6px;
+        // We are using a mask for the icon to be
+        // able to change the color of the icon
+        // on `:hover` and when in active trail.
+        // The icon color i defined with the `background-color`
+        background-color: $color__font-gray--dark;
+
+        // Add a default icon - Information
+        -webkit-mask: url(../../svg/iconmenu-info.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-info.svg) no-repeat 50% 50%;
+
+        // -webkit-mask-size: cover;
+        // mask-size: cover;
+      }
+
+      &:after {
+        content: "";
+        background-color: $color__font-gray--dark;
+        display: block;
+        width: 20px;
+        height: 2px;
+        position: relative;
+        left: calc(50% - 10px);
+        margin-top: 6px;
+        transition: width 0.1s ease-out, left 0.1s ease-out;
+
+        // Remove transitions for users wich prefers reduced motion
+        @media (prefers-reduced-motion) {
+          transition: none;
+        }
       }
 
       &:hover {
-        background: $page-bg;
+        color: currentColor;
+
+        &:before {
+          background-color: $color__red;
+        }
+
+        &:after {
+          background-color: $color__red;
+          width: 100%;
+          left: 0;
+          transition: width 0.2s ease-in, left 0.2s ease-in;
+
+          // Remove transitions for users wich prefers reduced motion
+          @media (prefers-reduced-motion) {
+            transition: none;
+          }
+        }
       }
     }
 
     .active-trail a {
-      opacity: 1;
+      color: currentColor;
+
+      &:before,
+      &:after {
+        background-color: $color__red;
+      }
+
+      &:after {
+        width: 100%;
+        left: 0;
+      }
+    }
+
+    // Icons for menus
+
+    // Home
+    .iconmenu-home a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-home.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-home.svg) no-repeat 50% 50%;
+      }
+    }
+
+    // Inspiration
+    .iconmenu-inspiration a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-inspiration.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-inspiration.svg) no-repeat 50% 50%;
+      }
+    }
+
+    // Help
+    .iconmenu-help a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-faq.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-faq.svg) no-repeat 50% 50%;
+      }
+    }
+
+    // E-books
+    .iconmenu-e-books a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-e-book.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-e-book.svg) no-repeat 50% 50%;
+      }
+    }
+
+    // Audiobooks
+    .iconmenu-audiobooks a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-audiobook.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-audiobook.svg) no-repeat 50% 50%;
+      }
+    }
+
+    // Login
+    // Login icon style is placed in `_user.scss` this i for "Min side" that is shown when logged in.
+
+    // Profile
+    .iconmenu-userprofile a {
+      &:before {
+        -webkit-mask: url(../../svg/iconmenu-userprofile.svg) no-repeat 50% 50%;
+        mask: url(../../svg/iconmenu-userprofile.svg) no-repeat 50% 50%;
+      }
     }
   }
 
