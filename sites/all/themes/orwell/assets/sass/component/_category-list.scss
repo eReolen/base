@@ -12,11 +12,13 @@
 
   .field-name-field-categories .field-items {
     display: grid;
-    grid-template-columns: 1fr;
+    // @see https://css-tricks.com/preventing-a-grid-blowout/
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--item-category-list-spacing);
 
     @include grid-media($medium) {
-      grid-template-columns: 1fr 1fr 1fr;
+      // @see https://css-tricks.com/preventing-a-grid-blowout/
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     /* div.field-item styles */
