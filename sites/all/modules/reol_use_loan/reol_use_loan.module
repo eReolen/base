@@ -410,6 +410,9 @@ function reol_use_loan_ding_entity_buttons($type, $entity) {
       // Create the button.
       $return = reol_base_get_entity_button($text, $link, $html_id . $entity->id, $classes);
 
+      // Make sure that our button is displayed before the ones from reol_bookmark_ding_entity_buttons().
+      $return['#weight'] = -1000;
+
       return array($return);
     }
   }
