@@ -38,7 +38,7 @@
       </div>
 
       <?php if (isset($promoted_materials_covers)): ?>
-        <div class="article--teaser__promoted-materials">
+        <div class="article--teaser__promoted-materials <?php if(count($promoted_materials_covers) == 1 ): ?>single<?php endif; ?>">
           <?php foreach ($promoted_materials_covers as $cover): ?>
             <?php print($cover); ?>
           <?php endforeach; ?>
