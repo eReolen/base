@@ -2051,3 +2051,29 @@ function reol_base_get_contrast_color($hex_color) {
     return '#FFFFFF';
   }
 }
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function reol_base_module_implements_alter(&$implementations, $hook) {
+  if ('ding_entity_buttons' === $hook) {
+    // Make sure that buttons come in the required order (by moving hook
+    // implementations to end of list in the required order).
+    $order = [
+      // "Loan"
+      'reol_loan',
+      // "Try"
+      'reol_use_loan',
+      // "Bookmark"
+      'reol_bookmark',
+    ];
+
+    foreach ($order as $key) {
+      if (isset($implementations[$key])) {
+        $item = $implementations[$key];
+        unset($implementations[$key]);
+        $implementations[$key] = $item;
+      }
+    }
+  }
+}
