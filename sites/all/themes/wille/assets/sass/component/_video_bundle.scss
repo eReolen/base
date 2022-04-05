@@ -36,6 +36,12 @@
   .video_bundle__title {
     padding: 40px 0 20px;
     color: var(--text-color);
+    font-size: calc(calc(40 / 16) * 1rem);
+  }
+
+  /* Description */
+  .video_bundle__description {
+    font-size: calc(calc(21 / 16) * 1rem);
   }
 
   /* Title and video placement */
