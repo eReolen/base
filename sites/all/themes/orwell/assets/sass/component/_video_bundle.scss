@@ -112,7 +112,7 @@
     }
   }
 
-  .field-name-field-promoted-materials > .field-items {
+  .field-name-field-video-bundle-materials > .field-items {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     @include grid-media($small) {
@@ -121,8 +121,8 @@
     gap: calc(var(--spacer) * 2);
   }
 
-  .field-name-field-promoted-materials .field-item,
-  .field-name-field-promoted-materials .material__content {
+  .field-name-field-video-bundle-materials .field-item,
+  .field-name-field-video-bundle-materials .material__content {
     padding: 0;
     margin: 0;
   }
