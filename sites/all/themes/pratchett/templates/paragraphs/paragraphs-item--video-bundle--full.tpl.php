@@ -23,7 +23,7 @@
       <?php endif ?>
     </div>
 
-    <?php if (!empty($content['field_promoted_materials'])): ?>
+    <?php if (!empty($content['field_video_bundle_materials'])): ?>
       <div class="video_bundle__promoted-materials-wrapper">
         <div class="video_bundle__promoted-materials-header">
           <?php if (!empty($paragraphs_item_wrapper->field_promoted_materials_title->value())): ?>
@@ -40,7 +40,7 @@
         </div>
 
         <div class="video_bundle__promoted-materials-body">
-          <?php print render($content['field_promoted_materials']); ?>
+          <?php print render($content['field_video_bundle_materials']); ?>
         </div>
       </div>
     <?php endif ?>
