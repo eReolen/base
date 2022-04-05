@@ -121,9 +121,11 @@
     position: absolute;
     top: 70px;
     right: var(--spacerX2);
+    width: 155px; /* Fixed width needed to avoid stacking the images in Safari */
     @include grid-media($medium) {
       top: 120px;
       text-align: center;
+      width: 300px;
     }
   }
 
