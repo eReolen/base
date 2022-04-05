@@ -37,9 +37,20 @@
 
   /* Title */
   .video_bundle__title {
-    padding: 40px 0 20px;
     @include base-header;
+    padding: 40px 0 20px;
     color: var(--text-color);
+    font-size: calc(calc(42 / 16) * 1rem);
+    line-height: 1.15;
+  }
+
+  /* Video description */
+  .video_bundle__description {
+    font-family: $font-regular;
+    color: var(--text-color);
+    font-size: calc(calc(18 / 16) * 1rem);
+    font-weight: 400;
+    line-height: 1.25;
   }
 
   /* Title and video placement */
