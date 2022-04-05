@@ -28,11 +28,11 @@
     <?php if (!empty($content['field_video_bundle_materials'])): ?>
       <div class="video_bundle__promoted-materials-wrapper">
         <div class="video_bundle__promoted-materials-header">
-          <?php if (!empty($paragraphs_item_wrapper->field_promoted_materials_title->value())): ?>
-            <div class="video_bundle__promoted-materials-title">
+          <div class="video_bundle__promoted-materials-title">
+            <?php if (!empty($paragraphs_item_wrapper->field_promoted_materials_title->value())): ?>
               <?php print $paragraphs_item_wrapper->field_promoted_materials_title->value(); ?>
-            </div>
-          <?php endif ?>
+            <?php endif ?>
+          </div>
           <?php if (!empty($paragraphs_item_wrapper->field_search_string->value())): ?>
             <div class="video_bundle__promoted-materials-see-more">
               <?php $search_url = '/search/ting/'.rawurlencode($paragraphs_item_wrapper->field_search_string->value()); ?>
