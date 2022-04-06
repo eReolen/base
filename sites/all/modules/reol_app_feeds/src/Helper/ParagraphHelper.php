@@ -440,7 +440,7 @@ class ParagraphHelper {
    * @see https://docs.google.com/document/d/1lJ3VPAJf7DAbBWAQclRHfcltzZefUG3iGCec-z97KlA/edit?ts=5c4ef9d5#bookmark=id.a1elwnwq3nk4
    */
   public function getThemeData($node) {
-    $view = $this->nodeHelper->getFieldValue($node, 'field_image_teaser', 'value') ? 'image' : 'covers';
+    $view = 'image';
     $contentType = $this->nodeHelper->getFieldValue($node, 'field_article_type', 'value');
     $type = $this->nodeHelper->getThemeType($contentType);
 
@@ -450,7 +450,6 @@ class ParagraphHelper {
 
     // Hack for eReolen Go!
     if ('breol_news' === $node->type) {
-      $view = 'image';
       $image = !empty($node->field_breol_cover_image) ? $this->nodeHelper->getImage($node->field_breol_cover_image) : static::VALUE_NONE;
 
       // Get identifiers from carousel queries.
