@@ -17,6 +17,7 @@
   --spacer: 12px;
   --spacerX2: calc(var(--spacer) * 2);
   --spacerX3: calc(var(--spacer) * 3);
+  --color-gray-200: hsl(0, 0%, 88%);
 
   --shadow-color: 0deg 0% 0%;
   --shadow-elevation-low: 0.3px 0.5px 0.6px hsl(var(--shadow-color) / 0.07),
@@ -62,7 +63,8 @@
 
   .article--teaser__cover {
     grid-area: cover;
-    max-height: var(--height);
+    height: var(--height);
+    background-color: var(--color-gray-200);
   }
 
   .article--teaser__cover img {
@@ -72,9 +74,9 @@
   }
 
   .article--teaser__subject {
+    background-color: var(--color-gray-200);
     grid-area: subject;
     max-height: var(--height);
-
     text-align: right;
     text-transform: uppercase;
     color: var(--text-color-light);

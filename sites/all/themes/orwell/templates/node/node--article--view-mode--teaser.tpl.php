@@ -7,9 +7,11 @@
 ?>
 <div class="article--teaser__wrapper" >
 
-  <div class="article--teaser__background-image">
-    <?php print render($content['field_ding_news_list_image']); ?>
-  </div>
+  <?php if (isset($content['field_ding_news_list_image'])): ?>
+    <div class="article--teaser__background-image">
+      <?php print render($content['field_ding_news_list_image']); ?>
+    </div>
+  <?php endif; ?>
 
   <?php if (!empty($node_url)): ?>
   <a href="<?php print $node_url; ?>">
