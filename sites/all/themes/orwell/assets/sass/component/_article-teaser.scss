@@ -117,6 +117,22 @@
     background: none;
     border: 1px solid var(--text-color-dark);
     padding: var(--spacer) var(--spacerX2);
+    cursor: pointer;
+    transition: background 0.2s ease-in;
+
+    @media (prefers-reduced-motion) {
+      transition: none;
+    }
+
+    &:hover {
+      background: var(--text-color-dark);
+      color: var(--text-color-light);
+      transition: background 0.4s ease-out;
+
+      @media (prefers-reduced-motion) {
+        transition: none;
+      }
+    }
   }
 
   .article--teaser__promoted-materials {
