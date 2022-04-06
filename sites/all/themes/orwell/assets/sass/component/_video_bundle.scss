@@ -14,7 +14,7 @@
   margin: 60px 0;
   padding: 0 0 var(--spacer) 0;
   @include grid-media($medium) {
-    padding: 60px var(--spacer);
+    padding: 60px var(--spacer) 30px var(--spacer);
   }
 
   /* Specific color overrides on material */
@@ -37,9 +37,20 @@
 
   /* Title */
   .video_bundle__title {
-    padding: 40px 0 20px;
     @include base-header;
+    padding: 40px 0 20px;
     color: var(--text-color);
+    font-size: calc(calc(42 / 16) * 1rem);
+    line-height: 1.15;
+  }
+
+  /* Video description */
+  .video_bundle__description {
+    font-family: $font-regular;
+    color: var(--text-color);
+    font-size: calc(calc(18 / 16) * 1rem);
+    font-weight: 400;
+    line-height: 1.25;
   }
 
   /* Title and video placement */
@@ -93,11 +104,8 @@
   .video_bundle__promoted-materials-header {
     display: flex;
     justify-content: space-between;
-    align-content: center;
-    padding: var(--spacer) 0;
-  }
-
-  .video_bundle__promoted-materials-title {
+    align-items: center;
+    margin-top: calc(var(--spacer) * 2);
     margin-bottom: var(--spacer);
   }
 
@@ -106,6 +114,8 @@
     background-color: transparent;
     border: 1px solid #fff;
     text-decoration: none;
+    display: block;
+    margin-top: 0;
 
     &:hover {
       background-color: hsla(0, 0, 100, 0.1);
@@ -132,12 +142,12 @@
   */
   .material {
     padding: 0;
+    margin: 0;
     border: 0;
   }
 
   .material__cover--teaser {
     width: 100%;
-    aspect-ratio: 240 / 375;
   }
 
   .material__cover--teaser img {
