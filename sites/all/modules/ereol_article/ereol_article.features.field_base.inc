@@ -37,6 +37,28 @@ function ereol_article_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_background_color'.
+  $field_bases['field_background_color'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_background_color',
+    'indexes' => array(
+      'rgb' => array(
+        0 => 'rgb',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'color_field',
+    'settings' => array(
+      'default_colors' => '#336381, #41798C, #68766D, #4E7B7C, #8B646B, #485B66, #68737D, #404040',
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'color_field_rgb',
+  );
+
   // Exported field_base: 'field_ding_news_list_image'.
   $field_bases['field_ding_news_list_image'] = array(
     'active' => 1,
@@ -107,6 +129,55 @@ function ereol_article_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_boolean',
+  );
+
+  // Exported field_base: 'field_promoted_materials'.
+  $field_bases['field_promoted_materials'] = array(
+    'active' => 1,
+    'cardinality' => 2,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_promoted_materials',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'field_subject'.
+  $field_bases['field_subject'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_subject',
+    'indexes' => array(
+      'tid' => array(
+        0 => 'tid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'taxonomy',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'article_subject',
+          'parent' => 0,
+        ),
+      ),
+      'profile2_private' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'taxonomy_term_reference',
   );
 
   return $field_bases;

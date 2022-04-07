@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 $material--teaser__margin-bottom: 1.2rem;
 
@@ -25,7 +25,7 @@ $material--teaser__margin-bottom: 1.2rem;
     // Placeholder until cover loads.
     .ting-cover {
       min-height: 100px;
-      background-image: url('../../images/placeholder.png');
+      background-image: url("../../images/placeholder.png");
       background-repeat: no-repeat;
       background-position: center center;
     }
@@ -90,7 +90,8 @@ $material--teaser__margin-bottom: 1.2rem;
       display: none;
     }
 
-    h1, a {
+    h1,
+    a {
       text-decoration: none;
       font-family: $font-light;
       color: $color__font-gray;
@@ -138,44 +139,6 @@ $material--teaser__margin-bottom: 1.2rem;
     @include grid-media($medium) {
       display: block;
     }
-    position: relative;
-    .field {
-      max-height: 147px;
-      overflow: hidden;
-      transition: max-height .3s cubic-bezier(0, 1, 0, 1);
-    }
-    &.showmore {
-      &:before {
-        content: "";
-        height: 30px;
-        width: 100%;
-        border-top: 1px solid #dcdcdc;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        cursor: pointer;
-      }
-      &:after {
-        @include icon;
-        content: $icon__chevron-down;
-        position: absolute;
-        right: calc(50% - 12px);
-        bottom: 0;
-        font-size: 1.5rem;
-        width: 24px;
-        cursor: pointer;
-      }
-      &.visible {
-        .field {
-          max-height: 100%;
-          overflow: visible;
-          transition: max-height .5s ease-out;
-        }
-        &:after {
-          content: $icon__chevron-up;
-        }
-      }
-    }
   }
 
   &__subjects {
@@ -204,7 +167,7 @@ $material--teaser__margin-bottom: 1.2rem;
   }
 
   &__rating {
-    margin: .3rem 0 $material--teaser__margin-bottom;
+    margin: 0.3rem 0 $material--teaser__margin-bottom;
   }
 
   &__series {
@@ -214,7 +177,7 @@ $material--teaser__margin-bottom: 1.2rem;
     color: $color__font-gray;
     clear: left;
     line-height: $line-height__small;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
 
     @include grid-media($medium) {
       width: 100%;
@@ -345,7 +308,7 @@ $material--teaser__margin-bottom: 1.2rem;
       }
     }
 
-    .field-name-ting-reference-reverse .field-items{
+    .field-name-ting-reference-reverse .field-items {
       width: 100%;
     }
   }
@@ -371,7 +334,7 @@ $material--teaser__margin-bottom: 1.2rem;
     .article--search-result {
       float: left;
       width: 100%;
-      margin: .5rem 0;
+      margin: 0.5rem 0;
 
       @include grid-media($medium) {
         margin: 1.5rem 0 2rem;
@@ -387,7 +350,7 @@ $material--teaser__margin-bottom: 1.2rem;
     .field-items {
       width: 50%;
       float: left;
-      padding: 1rem .5rem 1rem 0;
+      padding: 1rem 0.5rem 1rem 0;
     }
 
     &.text {

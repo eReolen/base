@@ -55,7 +55,7 @@
       height: auto;
       width: 100%;
       margin: 0 auto;
-      transition: all .3s ease-out;
+      transition: all 0.3s ease-out;
     }
 
     .is-desktop &:nth-child(odd):hover {
@@ -66,7 +66,7 @@
 
     .is-desktop &:nth-child(even):hover {
       img {
-        animation: shake .5s ease-in-out;
+        animation: shake 0.5s ease-in-out;
       }
     }
   }

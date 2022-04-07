@@ -1,0 +1,121 @@
+on: pull_request
+name: Review
+jobs:
+  assets-coding-standards-pratchett:
+    name: Check assets coding standards (pratchett)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['16']
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: |
+          yarn --cwd sites/all/themes/pratchett/ install
+          yarn --cwd sites/all/themes/pratchett/ coding-standards-check
+
+  assets-coding-standards-orwell:
+    name: Check assets coding standards (orwell)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['16']
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: |
+          yarn --cwd sites/all/themes/orwell/ install
+          yarn --cwd sites/all/themes/orwell/ coding-standards-check
+
+  assets-coding-standards-wille:
+    name: Check assets coding standards (wille)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['16']
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: |
+          yarn --cwd sites/all/themes/wille/ install
+          yarn --cwd sites/all/themes/wille/ coding-standards-check
+
+  # Copied from push.yaml
+  check-theme-assets:
+    name: Check theme assets are up to date
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup docker network
+        run: docker network create frontend
+
+      - name: Install build dependencies
+        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/orwell install
+
+      - name: Build eReolen theme (orwell)
+        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/orwell build
+
+      - name: Check for changes in built css
+        run: git diff --diff-filter=ACMRT --exit-code sites/all/themes/orwell/build
+
+      - name: Install build dependencies
+        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/wille install
+
+      - name: Build eReolen Go theme (wille)
+        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/wille build
+
+      - name: Check for changes in built css
+        run: git diff --diff-filter=ACMRT --exit-code sites/all/themes/wille/build

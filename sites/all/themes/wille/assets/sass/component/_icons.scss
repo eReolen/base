@@ -9,6 +9,7 @@
   }
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"],
+[class*=" icon-"] {
   @extend %icon;
 }

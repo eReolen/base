@@ -32,7 +32,9 @@
     font-family: $font-regular;
     color: $black;
 
-    p, h3, h4 {
+    p,
+    h3,
+    h4 {
       line-height: 1.5;
     }
 
@@ -58,7 +60,6 @@
     }
   }
 }
-
 
 .article--breol-news {
   padding: 0;
@@ -117,7 +118,7 @@
       @include media($phone) {
         border-radius: 0;
         h2 {
-          text-shadow: 0 0 2px rgba(0,0,0,.16);
+          text-shadow: 0 0 2px rgba(0, 0, 0, 0.16);
         }
       }
     }

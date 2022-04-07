@@ -246,6 +246,13 @@ function reol_bookmark_ding_entity_buttons($type, $entity) {
       }
     }
   }
+
+  // Make sure that our buttons are displayed after the ones from
+  // reol_use_loan_ding_entity_buttons().
+  foreach ($buttons as &$button) {
+    $button['#weight'] = 3;
+  }
+
   return $buttons;
 }
 

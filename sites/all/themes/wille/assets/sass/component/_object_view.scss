@@ -1,292 +1,176 @@
-/**
- * Quick and dirty theming of object view.
- */
-.ting-object-left {
-  @include span-columns(3);
-  overflow: hidden;
-}
+.ting-object.view-mode-full {
+  --spacer: 12px;
+  --spacerX2: calc(var(--spacer) * 2);
+  --color-grey-300: #c8c8c8;
+  --color-grey-700: #646464;
 
-.ting-object-right {
-  @include shift(1);
-  @include span-columns(8);
-
-  // TODO(ts) - resolve this.
-  .field-name-ting-type {
-    display: none;
-  }
-}
-
-.ting-object-left {
-  @include media($phone) {
-    @include span-columns(2);
-
-    .ting-cover {
-      margin-top: 22px;
-      overflow: hidden;
-    }
-  }
-}
-
-.ting-object-right {
-  @include media($phone) {
-    @include span-columns(10);
-    margin: 0;
-    padding-left: 15px;
-  }
-}
-
-.group-material-details,
-.ting-object-related-item {
-  @include span-columns(12);
-
-  // Items.
-  .field-label {
-    @include span-columns(3);
+  .ting-object-wrapper {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    grid-template-areas:
+      "left right"
+      "bottom bottom";
+    gap: var(--spacerX2);
+    margin: var(--spacerX2) 0;
 
     @include media($phone) {
-      @include span-columns(12);
-      font-family: $font-bold;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "left"
+        "right"
+        "bottom";
     }
   }
 
-  .field-items {
-    @include span-columns(9);
+  .ting-object-col-1,
+  .ting-object-col-2,
+  .ting-object-bottom {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacer);
+    margin-top: var(--spacer);
+  }
 
+  .ting-object-col-1 {
+    grid-area: left;
+  }
+
+  .ting-object-col-2 {
+    grid-area: right;
+  }
+
+  .ting-object-bottom {
+    grid-area: bottom;
+  }
+
+  .ting-object-cover .type-icon:after {
     @include media($phone) {
-      @include span-columns(12);
+      right: var(--spacer);
+      bottom: var(--spacer);
+      height: 40px;
+      width: 40px;
+      font-size: 20px;
     }
   }
 
-  &.text {
-    // Render text in full width.
-    .field-items {
-      @include span-columns(12);
-    }
-
-    // Overwrite styling from _search.scss.
-    .field-name-ting-abstract {
-      max-width: initial;
-    }
+  .ting-object-buttons a.action-button {
+    width: 100%;
   }
 
-  .field {
-    margin: 15px 0;
+  .ting-object-type {
+    display: none; /* TODO: Hidden? Maby because we only operate with online books?*/
   }
 
-  .ting-material-detail {
-    // Some spacing in multi-item details.
-    margin-right: 15px;
-  }
-}
-
-.ting-object-related-item {
-  div,
-  a {
-    margin: 15px 0;
-  }
-
-  a {
-    font-family: $font-regular;
-    color: $red;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.material-item {
-  clear: both;
-}
-
-.material-item,
-.panel-pane {
-  @include clearfix;
-}
-
-.ting-object {
-  @include span-columns(12);
-}
-
-.group-material-details,
-.ting-object.view-mode-full,
-.pane-ting-ting-object-types,
-.pane-ting-ting-relation-anchors,
-.pane-ting-ting-collection-types,
-.ting-object-related-item {
-  position: relative;
-
-  h2 {
-    @extend %ting-object-main-title;
+  .ting-object-title h2 {
     line-height: 1.25;
-    margin-top: 0;
+  }
 
-    a {
-      color: $title-color;
-      font-weight: normal;
-    }
+  .ting-object-author {
+    border-top: 1px solid var(--color-grey-300);
+  }
 
-    @include media($phone) {
-      line-height: 1.5;
-      font-size: 17px;
-      padding-bottom: 10px;
+  .ting-object-description {
+    margin-top: var(--spacer);
+
+    p {
+      font-size: calc(calc(16 / 16) * 1rem); /* 16px font-size */
     }
   }
-}
 
-.field-type-ting-entities {
-  > .field-items > .field-item {
+  .ting-object-subjects {
+    display: flex;
+    color: var(--color-grey-700);
+    column-gap: var(--spacer);
+
+    .field-name-ting-subjects {
+      .field-item {
+        display: flex;
+        column-gap: var(--spacer);
+        row-gap: var(--spacer);
+        flex-wrap: wrap;
+      }
+
+      a {
+        font-family: $font-regular;
+        color: $red;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .ting-object-details {
+    .collapsible-content-wrapper {
+      margin: var(--spacer) 0;
+      display: flex;
+      flex-direction: column;
+
+      > .field {
+        display: grid;
+        grid-template-columns: 4fr 8fr;
+        column-gap: var(--spacerX2);
+        padding: var(--spacer) 0;
+      }
+
+      .field-name-ting-details-language .field-item {
+        color: revert;
+        font-family: revert;
+        font-size: revert;
+        line-height: revert;
+
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .ting-object-collapsible-enabled {
     h2 {
-      color: #646464;
+      position: relative;
+      font-size: calc(calc(24 / 16) * 1rem); /* 24px font-size */
+      color: var(--color-grey-700);
       font-family: "OpenSans Light";
-      text-decoration: none;
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-  }
-}
-
-.pane-ting-collection .view-mode-collection-list .field-items .field-item h2 {
-  margin-bottom: 0;
-}
-
-.group-material-details,
-.ting-object-related-item {
-  margin-top: 50px;
-}
-
-.pane-ting-object,
-.pane-ting-collection {
-  margin: 60px 0 0;
-  line-height: 20px;
-  color: $title-color;
-  font-family: $font-light;
-
-  @include media($phone) {
-    margin: 0;
-  }
-}
-
-.ting-object-related-item {
-  margin: 30px 0 0;
-}
-
-.pane-ting-ting-object-types,
-.pane-ting-ting-collection-types {
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  a {
-    text-decoration: none;
-    color: $title-color;
-
-    &:hover {
-      color: $green;
-    }
-  }
-
-  .item-list ul li {
-    margin: 15px 0;
-    padding: 0;
-  }
-}
-
-.field-name-ting-subjects {
-  a {
-    font-family: $font-regular;
-    color: $red;
-    text-decoration: none;
-    margin-right: 1em;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.view-mode-collection-list {
-  margin-bottom: 50px;
-}
-
-.field-name-ding-entity-buttons {
-  margin-top: 30px;
-
-  .action-button {
-    @include media($phone) {
-      @include button-phone();
-    }
-  }
-}
-
-.ting-object-collapsible-enabled {
-  h2 {
-    &:before {
-      @include icon("arrow-right");
-      position: absolute;
-      right: 30px;
-      font-size: 16px;
-      top: 28px;
-      opacity: 0.7;
-      transition: all 300ms ease-out;
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
-    }
-  }
-
-  &.open {
-    h2 {
-      &:before {
-        transform: rotate(0deg);
-        transition: all 300ms ease-out;
-      }
-    }
-  }
-}
-
-.pane-ting-ting-object-types {
-  margin-bottom: 150px;
-}
-
-.js-online {
-  @include media($phone) {
-    a {
-      font-size: 12px;
-      padding: 8px;
-      display: block;
-      float: none;
-      max-width: 100%;
-      min-width: 1%;
-      width: 100%;
-      line-height: 16px;
-      text-align: center;
-      min-width: 1px;
-      width: 100%;
-
-      &:before {
-        content: " ";
-      }
-    }
-  }
-}
-
-.material {
-  &__also_available {
-    .item-list,
-    ul,
-    ul li {
-      list-style: none;
-      display: inline-block;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--color-grey-300);
       margin: 0;
+      line-height: 1.25;
+      cursor: pointer;
+
+      a {
+        color: inherit;
+        font-weight: normal;
+      }
+
+      @include media($phone) {
+        line-height: 1.5;
+        font-size: 17px;
+        padding-bottom: 10px;
+      }
+
+      &:before {
+        @include icon("arrow-right");
+        position: absolute;
+        right: 30px;
+        font-size: 16px;
+        top: 28px;
+        opacity: 0.7;
+        transition: all 300ms ease-out;
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
     }
 
-    ul {
-      margin-left: 0.25em;
+    &.open {
+      h2 {
+        &:before {
+          transform: rotate(0deg);
+          transition: all 300ms ease-out;
+        }
+      }
     }
-
-    margin: 20px 0;
   }
 }

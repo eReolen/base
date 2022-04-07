@@ -133,7 +133,7 @@ services:
       - "1025"
       - "8025"
   node:
-    image: node:10
+    image: node:16
     networks:
       - app
     volumes:

@@ -21,13 +21,11 @@
   @include span-columns(12);
 
   .tabs {
-
     li {
       float: left;
       padding: 10px 20px;
       margin: 0 5px;
       background: $brown-light;
-
     }
   }
 }
@@ -47,7 +45,6 @@
 // Titles in general. TODO(ts) - theme it right, but
 // this point it is to eraly to tell this should be general.
 .pane-node-content {
-
   > .pane-title {
     @include outer-container;
 
@@ -82,7 +79,7 @@
 
 .reader__back-button {
   &::before {
-    @include icon('arrow-left-funny');
+    @include icon("arrow-left-funny");
   }
 
   position: absolute;

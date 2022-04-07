@@ -1,8 +1,7 @@
 // Global.
-$footer-border-color: rgb(226, 77, 128);//#e24d80
+$footer-border-color: rgb(226, 77, 128); //#e24d80
 
 .footer {
-
   background-color: $red;
 
   color: $white;
@@ -67,7 +66,8 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     }
   }
 
-  [class^="attachment-"], [class*=" attachment-"] {
+  [class^="attachment-"],
+  [class*=" attachment-"] {
     // Todo(ts) - maybe this should be handled by the global columns
     // in the grid, but that is not taking effect right now, so this will do,
     // but we leave the todo as a reminder.
@@ -99,26 +99,24 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     margin-bottom: 2.143em;
 
     &:before {
-      @include icon('arrow-right');
+      @include icon("arrow-right");
       float: right;
-      transform: rotate(.25turn);
-      transition: all .3s ease-out;
+      transform: rotate(0.25turn);
+      transition: all 0.3s ease-out;
       @include media($tablet-l) {
         transform: rotate(0turn);
       }
     }
 
     &.closed {
-
       &:before {
         transform: rotate(0turn);
       }
     }
 
     &.open {
-
       &:before {
-        transform: rotate(.25turn);
+        transform: rotate(0.25turn);
       }
     }
   }
@@ -131,7 +129,6 @@ $footer-border-color: rgb(226, 77, 128);//#e24d80
     margin: 0;
     margin-bottom: 2.143em;
   }
-
 }
 
 // Responsive.

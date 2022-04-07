@@ -19,7 +19,7 @@
   // Adjusted so videos will fit.
   max-width: 730px;
   max-height: 90%;
-  box-shadow: 0 0 33px 0 rgba(0, 0, 0, .3);
+  box-shadow: 0 0 33px 0 rgba(0, 0, 0, 0.3);
   padding: 25px 30px;
   text-align: center;
   overflow-y: auto;
@@ -98,7 +98,7 @@
         right: 15px;
       }
     }
- }
+  }
 
   .ui-icon-closethick {
     // Resetting.
@@ -120,7 +120,7 @@
 }
 
 .ui-widget-overlay {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 // Specific dialogs.

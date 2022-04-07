@@ -2,7 +2,7 @@
   height: 100px;
   background: $red;
 
-   @include media($tablet-l) {
+  @include media($tablet-l) {
     height: auto;
     width: 100%;
   }
@@ -10,7 +10,7 @@
 
 .logo {
   // Relative to main menu.
-  width: calc-percentage(3,12);
+  width: calc-percentage(3, 12);
   float: left;
 
   line-height: 100px;
