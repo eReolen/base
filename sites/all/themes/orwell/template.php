@@ -185,6 +185,23 @@ function orwell_preprocess_node(&$variables) {
           return theme('image_style', $variables);
         }, ting_covers_get(array_values($ids)));
       }
+
+      $wrapper = entity_metadata_wrapper('node', $node);
+      $variables['promoted_materials_covers'] = array_map(function ($file) {
+        $variables = array(
+          'style_name' => 'ereol_article_covers',
+          'path' => $file,
+        );
+        return theme('image_style', $variables);
+      }, ting_covers_get($wrapper->get('field_promoted_materials')->value()));
+
+      $background_color = $wrapper->get('field_background_color')->value()['rgb'] ?? NULL;
+      if (NULL !== $background_color) {
+        $variables['background_color'] = $background_color;
+        $variables['background_contrast_color'] = reol_base_get_contrast_color($background_color);
+      }
+
+      $variables['subject'] = $wrapper->get('field_subject')->value()->name ?? NULL;
     }
   }
 }
@@ -306,6 +323,28 @@ function orwell_preprocess_entity(&$variables) {
       }
       if (isset($link['title'])) {
         $variables['title'] = check_plain($link['title']);
+      }
+    }
+    elseif ($variables['paragraphs_item']->bundle() == 'category_list') {
+      // Split items into two lists, primary and secondary.
+      $max_number_of_primary_items = 6;
+      $variables['primary_items'] = array_filter(
+        $variables['content']['field_categories'],
+        static function ($key) use ($max_number_of_primary_items) {
+          return !is_integer($key) || (int)$key < $max_number_of_primary_items;
+        },
+        ARRAY_FILTER_USE_KEY
+      );
+      $secondary_items = array_filter(
+        $variables['content']['field_categories'],
+        static function ($key) use ($max_number_of_primary_items) {
+          return !is_integer($key) || (int)$key >= $max_number_of_primary_items;
+        },
+        ARRAY_FILTER_USE_KEY
+      );
+      // Pass secondary items to template only if they actually exist.
+      if (!empty(element_children($secondary_items))) {
+        $variables['secondary_items'] = $secondary_items;
       }
     }
   }

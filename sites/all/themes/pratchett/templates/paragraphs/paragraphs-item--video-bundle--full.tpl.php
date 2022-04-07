@@ -22,11 +22,27 @@
         <div class="video_bundle__description"><?php print $paragraphs_item_wrapper->field_video_description->value(); ?></div>
       <?php endif ?>
     </div>
-    <?php // @fixme This will render another h2 header ?>
-    <div class="video_bundle__carousel-wrapper material-carousel-colored">
-      <?php
-        print render($content['field_carousel']);
-      ?>
-    </div>
+
+    <?php if (!empty($content['field_video_bundle_materials'])): ?>
+      <div class="video_bundle__promoted-materials-wrapper">
+        <div class="video_bundle__promoted-materials-header">
+          <div class="video_bundle__promoted-materials-title">
+            <?php if (!empty($paragraphs_item_wrapper->field_promoted_materials_title->value())): ?>
+              <?php print $paragraphs_item_wrapper->field_promoted_materials_title->value(); ?>
+            <?php endif ?>
+          </div>
+          <?php if (!empty($paragraphs_item_wrapper->field_search_string->value())): ?>
+            <div class="video_bundle__promoted-materials-see-more">
+              <?php $search_url = '/search/ting/'.rawurlencode($paragraphs_item_wrapper->field_search_string->value()); ?>
+              <a href="<?php print $search_url ?>"><?php print t('See more') ?></a>
+            </div>
+          <?php endif ?>
+        </div>
+
+        <div class="video_bundle__promoted-materials-body">
+          <?php print render($content['field_video_bundle_materials']); ?>
+        </div>
+      </div>
+    <?php endif ?>
   </div>
 </div>

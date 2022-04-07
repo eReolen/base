@@ -164,6 +164,13 @@ function reol_loan_ding_entity_buttons($type, $entity) {
       }
     }
   }
+
+  // Make sure that our buttons are displayed before the ones from
+  // reol_use_loan_ding_entity_buttons().
+  foreach ($buttons as &$button) {
+    $button['#weight'] = 1;
+  }
+
   return $buttons;
 }
 

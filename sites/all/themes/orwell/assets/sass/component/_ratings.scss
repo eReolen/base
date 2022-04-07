@@ -1,11 +1,11 @@
-@import '../bootstrap/bootstrap';
+@import "../bootstrap/bootstrap";
 
 .fa-star-o {
-  color: rgba(0, 0, 0, .2);
+  color: rgba(0, 0, 0, 0.2);
   font-size: 1.1rem;
 
   &::before {
-    content: '\f005';
+    content: "\f005";
   }
 
   &.active {
@@ -14,5 +14,5 @@
 }
 
 .star {
-  margin-right: .3rem;
+  margin-right: 0.3rem;
 }

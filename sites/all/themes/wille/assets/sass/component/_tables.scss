@@ -1,5 +1,5 @@
 table {
-  width:100%;
+  width: 100%;
   border: 1px solid $black-light;
   margin: 50px 0;
 
@@ -29,7 +29,7 @@ td {
   vertical-align: baseline;
   border: inherit;
 
-  &:nth-child(2n+0) {
+  &:nth-child(2n + 0) {
     background: #e7e6e6;
   }
 }
@@ -44,10 +44,8 @@ th {
 }
 
 thead {
-
   th {
     font-size: 16px;
-
   }
   border: inherit;
 }

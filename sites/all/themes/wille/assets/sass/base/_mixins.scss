@@ -1,5 +1,5 @@
 // Typo.
-@mixin heading($size){
+@mixin heading($size) {
   font-size: $size;
   font-weight: 400;
   margin: 0 0 20px 0;
@@ -7,7 +7,7 @@
 }
 
 // Button.
-@mixin button($color, $useIcon: true){
+@mixin button($color, $useIcon: true) {
   text-decoration: none;
   background: $color;
   border-radius: 10px;
@@ -25,23 +25,21 @@
   }
 
   @if $useIcon == true {
-
     padding: 15px 47px 15px 22px;
 
     &:before {
-      @include icon('arrow-right-funny');
+      @include icon("arrow-right-funny");
       float: right;
       right: 15px;
       position: absolute;
     }
-  }
-  @else {
+  } @else {
     padding: 15px 22px;
   }
 }
 
 // Typo.
-@mixin reHeight($columns, $total){
+@mixin reHeight($columns, $total) {
   $percentage: calc-percentage($columns, $total);
   padding-bottom: $percentage / 2;
   height: 0;
@@ -51,12 +49,12 @@
 // wrongly encoded when we just wanted the strings.
 // This hack function helps with that.
 // More info here: https://github.com/sass/sass/issues/659
-@function icon-encode($character){
-  @return unquote('\'') + unquote(str-insert($character, '\\', 1)) + unquote('\'');
+@function icon-encode($character) {
+  @return unquote("'") + unquote(str-insert($character, "\\", 1)) + unquote("'");
 }
 
 // Mixin for including icons.
-@mixin icon($icon){
+@mixin icon($icon) {
   @extend %icon;
 
   //content: unquote(map-get($ego_icons, $icon));
