@@ -6,6 +6,8 @@
 @import "../bootstrap/bootstrap";
 
 /* Carousel with article teasers  */
+// An .article__other-articles element is placed at the bottom of all article pages.
+.article__other-articles,
 .paragraphs-item-article-carousel,
 .paragraphs-item-picked-article-carousel {
   --width: 1049px;
