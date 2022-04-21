@@ -152,23 +152,27 @@
 
   .article--teaser__promoted-materials img:nth-child(1) {
     max-height: 150px;
+    max-width: 120px;
     position: relative;
     z-index: 2;
     margin-right: calc(var(--spacerX2) * -1);
     box-shadow: var(--shadow-elevation-high);
     @include grid-media($medium) {
       max-height: 250px;
+      max-width: 200px;
     }
   }
 
   .article--teaser__promoted-materials img:nth-child(2) {
     max-height: 100px;
+    max-width: 70px;
     position: relative;
     z-index: 1;
     margin-bottom: var(--spacer);
     box-shadow: var(--shadow-elevation-medium);
     @include grid-media($medium) {
       max-height: 180px;
+      max-width: 120px;
       margin-bottom: var(--spacerX2);
     }
   }
