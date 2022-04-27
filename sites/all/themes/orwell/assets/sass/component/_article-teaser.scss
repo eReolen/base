@@ -6,8 +6,9 @@
 @import "../bootstrap/bootstrap";
 
 /* Carousel with article teasers  */
-// An .article__other-articles element is placed at the bottom of all article pages.
-.article__other-articles,
+
+.article__other-articles, // An .article__other-articles element is placed at the bottom of all article pages.
+.view-articles, // An .view-articles wraps the articles on the se all page
 .paragraphs-item-article-carousel,
 .paragraphs-item-picked-article-carousel {
   --width: 1049px;
@@ -57,6 +58,10 @@
       grid-template-columns: auto var(--subject-col-width);
       width: var(--width);
     }
+  }
+
+  .article--teaser__wrapper {
+    position: relative;
   }
 
   .article--teaser__wrapper a {
