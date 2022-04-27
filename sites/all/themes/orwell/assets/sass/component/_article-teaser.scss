@@ -209,7 +209,8 @@
     position: relative;
   }
 
-  li:not(.swiper-slide-active) {
+  li:not(.swiper-slide-active),
+  li:not(.pager-*) {
     opacity: 0.2;
     transition: opacity 0.2s ease-out;
 
