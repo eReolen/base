@@ -6,8 +6,9 @@
 @import "../bootstrap/bootstrap";
 
 /* Carousel with article teasers  */
-// An .article__other-articles element is placed at the bottom of all article pages.
-.article__other-articles,
+
+.article__other-articles, // An .article__other-articles element is placed at the bottom of all article pages.
+.view-articles, // An .view-articles wraps the articles on the se all page
 .paragraphs-item-article-carousel,
 .paragraphs-item-picked-article-carousel {
   --width: 1049px;
@@ -57,6 +58,10 @@
       grid-template-columns: auto var(--subject-col-width);
       width: var(--width);
     }
+  }
+
+  .article--teaser__wrapper {
+    position: relative;
   }
 
   .article--teaser__wrapper a {
@@ -152,23 +157,27 @@
 
   .article--teaser__promoted-materials img:nth-child(1) {
     max-height: 150px;
+    max-width: 120px;
     position: relative;
     z-index: 2;
     margin-right: calc(var(--spacerX2) * -1);
     box-shadow: var(--shadow-elevation-high);
     @include grid-media($medium) {
       max-height: 250px;
+      max-width: 200px;
     }
   }
 
   .article--teaser__promoted-materials img:nth-child(2) {
     max-height: 100px;
+    max-width: 70px;
     position: relative;
     z-index: 1;
     margin-bottom: var(--spacer);
     box-shadow: var(--shadow-elevation-medium);
     @include grid-media($medium) {
       max-height: 180px;
+      max-width: 120px;
       margin-bottom: var(--spacerX2);
     }
   }
@@ -200,7 +209,7 @@
     position: relative;
   }
 
-  li:not(.swiper-slide-active) {
+  li:not(.swiper-slide-active):not([class*="pager-"]) {
     opacity: 0.2;
     transition: opacity 0.2s ease-out;
 
