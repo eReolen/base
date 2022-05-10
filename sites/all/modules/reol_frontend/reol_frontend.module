@@ -347,3 +347,24 @@ function reol_frontend_drupal_goto_alter(&$path, &$options) {
     unset($options['fragment']);
   }
 }
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Removes audienceCategory ("alder") facet options containing "«number» aar"
+ * which are duplicates of the ones containing "«number» år".
+ *
+ * See https://jira.itkdev.dk/browse/ER-1349 for details.
+ */
+function reol_frontend_form_ding_facetbrowser_form_alter(&$form, &$form_state) {
+  if (isset($form['facet.audienceCategory']['facet.audienceCategory']['#options'])) {
+    // Remove all options containing a number followed by whitespace and the
+    // word "aar" (ignoring case).
+    $form['facet.audienceCategory']['facet.audienceCategory']['#options'] = array_filter(
+      $form['facet.audienceCategory']['facet.audienceCategory']['#options'],
+      static function ($option) {
+        return !preg_match('/\d+\s+aar\b/i', $option);
+      }
+    );
+  }
+}
