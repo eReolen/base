@@ -789,9 +789,18 @@ class ParagraphHelper {
     $hlsUrl = $this->getHlsUrl($url);
     $thumbnail = $this->getVideoThumbnail($url);
 
+    $query = $this->nodeHelper->getFieldValue($paragraph, 'field_search_string', 'value') ?? self::VALUE_NONE;
+    if (empty(trim($query))) {
+      // Build query from promoted materials.
+      $identifiers = $this->nodeHelper->getTingIdentifiers($paragraph, 'field_video_bundle_materials');
+      if (count($identifiers) > 0) {
+        $query = implode(' OR ', $identifiers);
+      }
+    }
+
     $content = [
       'title' => $this->nodeHelper->getFieldValue($paragraph, 'field_promoted_materials_title', 'value') ?? self::VALUE_NONE,
-      'query' => $this->nodeHelper->getFieldValue($paragraph, 'field_search_string', 'value') ?? self::VALUE_NONE,
+      'query' => $query,
     ];
 
     return [
