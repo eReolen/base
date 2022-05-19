@@ -89,6 +89,10 @@
     color: var(--text-color-light);
     padding: var(--spacerX2);
     font-weight: 600;
+
+    &.color-dark {
+      color: var(--text-color-dark);
+    }
   }
 
   .article--teaser__title {
