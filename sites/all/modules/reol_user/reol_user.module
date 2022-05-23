@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Helpers to handler users.
+ */
+
+define('REOL_USER_ACESSS_ERROR', 'publizon/denied');
+
+/**
+ * Implements hook_menu().
+ */
+function reol_user_menu() {
+  $items = array();
+
+  $items[REOL_USER_ACESSS_ERROR] = array(
+    'title' => 'Publizon access denied',
+    'page callback' => 'reol_user_access_error',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function reol_user_theme($existing, $type, $theme, $path) {
+  return array(
+    'reol_use_access_error' => array(
+      'variables' => array(
+        'message' => NULL,
+      ),
+      'path' => $path,
+      'template' => 'templates/access-error',
+    ),
+  );
+}
+
+/**
+ * Menu callback to display message.
+ */
+function reol_user_access_error() {
+  return array(
+    '#theme' => 'reol_use_access_error',
+    '#message' => t('You are logged in to the libraries single sign on system, but unfortunately you do not have access to eReolen. Contact your library. <br /><br /> <strong>IMPORTANT</strong>: Close the browser completely to be logged out of single sign on.'),
+  );
+}

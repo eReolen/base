@@ -532,8 +532,8 @@ function ding_adgangsplatformen_callback() {
         else {
           // This can happen if the user is not synced correctly between the
           // local library system (FBS) and CURL at DBC. Then in some special
-          // cases you can login at adgangsplatformen, but the not the local
-          // library system (have happened with "fake" test users in the library
+          // cases you can login at adgangsplatformen, but not the local library
+          // system (have happened with "fake" test users in the library
           // system).
           drupal_set_message(t('Login into the local library system failed and you have been signed out. Places try again or contact your local library.'));
 
@@ -696,6 +696,9 @@ function _ding_adgangsplatformen_provider_login(array $user_info) {
 
       $success = TRUE;
     }
+  }
+  catch (PublizonAuthFailureException $exception) {
+    drupal_goto(REOL_USER_ACESSS_ERROR);
   }
   catch (Exception $exception) {
     // Exception thrown, log error and carry on.

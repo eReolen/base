@@ -871,3 +871,10 @@ function reol_base_update_7172() {
 function reol_base_update_7173() {
   module_enable(array('elements'));
 }
+
+/**
+ * Enable Reol user module.
+ */
+function reol_base_update_7174() {
+  module_enable(array('reol_user'));
+}

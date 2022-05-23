@@ -42,3 +42,5 @@ files[] = lib/storage/PublizonLoanStatus.class.inc
 files[] = lib/storage/PublizonChecklistItem.class.inc
 files[] = lib/storage/PublizonProduct.class.inc
 files[] = lib/storage/PublizonLibrary.class.inc
+; Exceptions
+files[] = exceptions/PublizonAuthFailureException.inc
