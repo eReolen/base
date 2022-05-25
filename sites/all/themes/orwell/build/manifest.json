@@ -30,6 +30,7 @@
   "build/fonts/sourcesanspro-semibold.woff2": "./fonts/sourcesanspro-semibold.woff2",
   "build/fonts/sourcesanspro-regular.woff2": "./fonts/sourcesanspro-regular.woff2",
   "build/fonts/sourcesanspro-light.woff2": "./fonts/sourcesanspro-light.woff2",
+  "build/images/eReolen-Red.svg": "./images/eReolen-Red.24055171.svg",
   "build/fonts/icomoon.eot": "./fonts/icomoon.eot",
   "build/fonts/icomoon.woff": "./fonts/icomoon.woff",
   "build/fonts/icomoon.ttf": "./fonts/icomoon.ttf",
@@ -42,6 +43,5 @@
   "build/images/iconmenu-audiobook.svg": "./images/iconmenu-audiobook.61c00eff.svg",
   "build/images/iconmenu-userprofile.svg": "./images/iconmenu-userprofile.3372e113.svg",
   "build/images/iconmenu-info.svg": "./images/iconmenu-info.99d90d75.svg",
-  "build/images/iconmenu-home.svg": "./images/iconmenu-home.bea02ee0.svg",
-  "build/images/eReolen-Red.svg": "./images/eReolen-Red.24055171.svg"
+  "build/images/iconmenu-home.svg": "./images/iconmenu-home.bea02ee0.svg"
 }
