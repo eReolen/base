@@ -34,3 +34,17 @@
 .ui-dialog form#user-login .form-actions {
   text-align: left;
 }
+
+.user-login-form {
+  &::after {
+    content: "";
+    margin-top: 36px;
+    display: inline-block;
+    background-image: url("../../svg/eReolenGo-Red.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 48px;
+    width: 100%;
+  }
+}
