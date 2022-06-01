@@ -52,7 +52,7 @@ function ereol_article_field_default_field_bases() {
     'locked' => 0,
     'module' => 'color_field',
     'settings' => array(
-      'default_colors' => '#336381, #41798C, #68766D, #4E7B7C, #8B646B, #485B66, #68737D, #404040',
+      'default_colors' => '#336381, #41798C, #68766D, #4E7B7C, #8B646B, #485B66, #68737D, #404040, #F0F0F0',
       'profile2_private' => FALSE,
     ),
     'translatable' => 0,
