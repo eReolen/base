@@ -5,51 +5,38 @@
 }
 
 .topbar {
-  overflow: hidden;
-
-  @include grid-media($medium) {
-    height: 80px;
-  }
-
   .pane-main-menu {
     width: 100%;
   }
 }
 
 .topbar__inner {
-  position: relative;
+  display: flex;
+  justify-content: space-between;
 
   @include grid-media($medium) {
     @include content-wrapper;
-    height: 100%;
   }
 }
 
 .branding {
-  height: 5rem;
-  top: 0;
-  left: 3.75rem;
-  // Ensure we overlap the following elements.
-  z-index: 1;
+  padding: 12px;
 
   @include grid-media($medium) {
-    position: absolute;
-    width: 9%;
-    float: left;
-    height: 100%;
+    padding: 12px 0;
+    max-height: 70px;
   }
 }
 
 .branding__logo {
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  display: inline-block;
 
   img {
-    width: 100%;
-    max-width: 35vw;
+    height: 100%;
+
+    @include grid-media($medium) {
+      max-height: 70px;
+    }
   }
 }
 
@@ -64,8 +51,16 @@
   }
 }
 
-#user-login-form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2rem;
+.user-login-form {
+  &::after {
+    content: "";
+    margin-top: 36px;
+    display: inline-block;
+    background-image: url("../../svg/eReolen-Red.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 48px;
+    width: 100%;
+  }
 }

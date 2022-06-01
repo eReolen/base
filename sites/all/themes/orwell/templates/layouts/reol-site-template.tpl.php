@@ -47,7 +47,11 @@
   <?php if (!empty($content['footer'])): ?>
     <footer class="footer">
       <div class="footer__brand">
-        Bibliotekernes e-bøger og netlydbøger
+
+          <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo" class="branding__logo">
+            <img src="/<?php print path_to_theme(); ?>/assets/svg/eReolen-Red.svg" alt="<?php print t('Home'); ?>" />
+          </a>
+
       </div>
       <div class="footer__inner">
         <?php print render($content['footer']); ?>
