@@ -29,15 +29,15 @@ $z-index-cover-base: 1;
       margin: 20px 0;
     }
 
-    p {
+    p,
+    li {
       color: #5a5a5a;
-      line-height: 155%;
+      line-height: 1.5;
       font-size: 1.1em;
-      margin-bottom: 32px;
     }
 
-    li {
-      line-height: 155%;
+    p {
+      margin-bottom: 32px;
     }
 
     a {
