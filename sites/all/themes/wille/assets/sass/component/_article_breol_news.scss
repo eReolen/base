@@ -65,7 +65,7 @@
   padding: 0;
   &--teaser {
     position: relative;
-    margin-bottom: 40px;
+    padding-bottom: 0;
 
     @include media($phone) {
       margin-bottom: 20px;
