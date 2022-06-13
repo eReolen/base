@@ -21,11 +21,25 @@
       </div>
     </div>
   </div>
-  <div class="article__materials">
-    <div class="content-wrapper">
-      <?php print render($content['field_ding_news_materials']); ?>
+
+  <?php $rendered_content = render($content['field_ding_news_materials']); ?>
+  <?php if (!empty($rendered_content)): ?>
+    <div class="article__materials">
+      <div class="content-wrapper">
+        <?php print $rendered_content; ?>
+      </div>
     </div>
-  </div>
+  <?php endif ?>
+
+  <?php $rendered_content = render($content['field_carousel']); ?>
+  <?php if (!empty($rendered_content)): ?>
+    <div class="article__carousel">
+      <div class="content-wrapper">
+        <?php print $rendered_content; ?>
+      </div>
+    </div>
+  <?php endif ?>
+
   <div class="article__other-articles">
     <?php print render($other_articles); ?>
   </div>
