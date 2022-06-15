@@ -1,0 +1,42 @@
+.banner-wrapper {
+  --color-dark: #4a4a4a; // Use gray color provided by eReolen editors. Contrast is ok with current colorpalette.
+  --color-light: #eee;
+
+  color: var(--color-dark);
+
+  &.text-color-light {
+    color: var(--color-light);
+  }
+
+  .banner {
+    padding: 60px 15px;
+
+    background: {
+      repeat: no-repeat;
+      position: right;
+      size: contain;
+    }
+    max-width: 1180px;
+    font-family: $font-mikado;
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    // Align title vertically.
+    display: flex;
+    align-items: center;
+
+    .title {
+      font-size: 2.857em;
+
+      @include media($phone) {
+        font-size: 1.429em;
+      }
+
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
