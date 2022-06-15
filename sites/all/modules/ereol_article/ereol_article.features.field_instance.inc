@@ -370,7 +370,7 @@ function ereol_article_field_default_field_instances() {
     'bundle' => 'article',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Enter FAUST numbers of promoted materials.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -506,7 +506,6 @@ function ereol_article_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Background color');
   t('Body');
-  t('Enter FAUST numbers of promoted materials.');
   t('Entity type');
   t('List image');
   t('Materials');
