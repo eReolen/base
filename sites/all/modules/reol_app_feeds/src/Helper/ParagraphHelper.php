@@ -784,7 +784,7 @@ class ParagraphHelper {
       ?? $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
     // eReolen uses field_link_color; eReolen Go uses field_material_carousel_color.
     $color = $this->nodeHelper->getFieldValue($paragraph, 'field_link_color', 'rgb')
-      ?? $this->nodeHelper->getFieldValue($paragraph, 'field_material_carousel_color', 'rgb');
+      ?? $this->nodeHelper->getFieldValue($paragraph, 'field_video_bundle_color', 'rgb');
     $url = $this->nodeHelper->getFileUrl($videoUrl);
     $hlsUrl = $this->getHlsUrl($url);
     $thumbnail = $this->getVideoThumbnail($url);
