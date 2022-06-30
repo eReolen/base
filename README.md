@@ -22,6 +22,9 @@ Fix shortcut_set_save when set does not exist (https://www.drupal.org/node/11757
 Add search_get_info() in search.module should include an _alter hook (https://www.drupal.org/node/1911276).
 * https://www.drupal.org/files/search-info-alter-1911276--D7-16.patch
 
+Seven theme fieldset-legend not clickable in Chrome 103.0.5060.53
+* https://www.drupal.org/project/drupal/issues/3292211
+
 ### Contrib patches
 
 Add alter to strong-arm variables. Note this patch is part of the next release of the module.
