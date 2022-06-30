@@ -1,0 +1,12 @@
+diff --git a/themes/seven/style.css b/themes/seven/style.css
+index c52d661d09..c01f92afe1 100644
+--- a/themes/seven/style.css
++++ b/themes/seven/style.css
+@@ -564,6 +564,7 @@ fieldset .fieldset-legend {
+   padding-left: 15px; /* LTR */
+   position: absolute;
+   text-transform: uppercase;
++  z-index: 1;
+ }
+ fieldset .fieldset-wrapper {
+   padding: 0 13px 13px 15px; /* LTR */
