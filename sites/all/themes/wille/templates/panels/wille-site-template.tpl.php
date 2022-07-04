@@ -50,6 +50,22 @@
 
   <div class="organic-element organic-element--content"></div>
 
+  <?php // @see ../cover-image.tpl.php ?>
+  <?php $node = 'node' === arg(0) ? node_load(arg(1)) : NULL ?>
+  <?php if (!$is_front && 'inspiration' === $node->type ?? NULL): ?>
+    <?php $wrapper = entity_metadata_wrapper('node', $node);
+    $color = $wrapper->field_app_feed_color->value()['rgb'] ?? 'none';
+    $image = $wrapper->field_app_feed_image->value();
+    $image_url = isset($image['uri']) ? sprintf('url(%s)', file_create_url($image['uri'])) : 'none';
+    $text_color = 'none' !== $color && '#000000' === reol_base_get_contrast_color($color) ? 'text-color-dark' : 'text-color-light';
+    ?>
+    <div class="banner-wrapper banner-wrapper--<?php print $node->type; ?> <?php print $text_color; ?>" style="background-color: <?php print $color; ?>">
+      <div class="banner banner--<?php print $node->type?>" style="background-image: <?php print $image_url; ?>">
+        <h2 class="title"><?php print $node->title; ?></h2>
+      </div>
+    </div>
+  <?php endif ?>
+
   <div class="main-content-wrapper">
     <div class="main-content-wrapper__inner">
       <?php print render($content['content']); ?>
