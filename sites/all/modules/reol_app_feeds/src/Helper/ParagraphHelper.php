@@ -444,34 +444,25 @@ class ParagraphHelper {
     $contentType = $this->nodeHelper->getFieldValue($node, 'field_article_type', 'value');
     $type = $this->nodeHelper->getThemeType($contentType);
 
+    $identifiers = [];
     $image = !empty($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, 'app_news_image') : static::VALUE_NONE;
-    $identifiers = $this->nodeHelper->getTingIdentifiers($node, 'field_ding_news_materials');
     $body = $this->nodeHelper->getBody($node);
+
+    if (module_exists('reol_base')) {
+      // On eReolen we get identifiers from materials or carousels.
+      $identifiers = $this->nodeHelper->getTingIdentifiers($node, 'field_ding_news_materials');
+
+      if (empty($identifiers)) {
+        $identifiers = $this->getIdentifiersFromCarousels($node, 'field_carousel');
+      }
+    }
 
     // Hack for eReolen Go!
     if ('breol_news' === $node->type) {
       $image = !empty($node->field_breol_cover_image) ? $this->nodeHelper->getImage($node->field_breol_cover_image) : static::VALUE_NONE;
 
       // Get identifiers from carousel queries.
-      $identifiers = [];
-      $carousels = $this->nodeHelper->getFieldValue($node, 'field_carousels', NULL, TRUE);
-      if (is_array($carousels)) {
-        foreach ($carousels as $carousel) {
-          module_load_include('inc', 'opensearch', 'opensearch.client');
-          // Load at most 50 results.
-          $result = opensearch_do_search($carousel['search'], 1, 50, ['reply_only' => TRUE]);
-          foreach ($result->collections as $collection) {
-            $identifier = $collection->objects[0]->id;
-            if (!in_array($identifier, $identifiers)) {
-              $identifiers[] = $identifier;
-            }
-          }
-          // Only get identifiers from the first non-empty query.
-          if (!empty($identifiers)) {
-            break;
-          }
-        }
-      }
+      $identifiers = $this->getIdentifiersFromCarousels($node, 'field_carousels');
 
       $body = $this->nodeHelper->getTextFieldValue($node, 'field_lead', NULL, FALSE);
     }
@@ -485,6 +476,44 @@ class ParagraphHelper {
       'body' => $body,
       'identifiers' => $identifiers,
     ];
+  }
+
+  /**
+   * Get identifiers from carousels by executing the query.
+   *
+   * Only identifiers from the first non-empty query are returned.
+   *
+   * @param object $node
+   *   The node.
+   * @param string $field_name
+   *   The field name.
+   *
+   * @return array
+   *   The list of identifiers.
+   */
+  private function getIdentifiersFromCarousels($node, $field_name) {
+    $identifiers = [];
+
+    $carousels = $this->nodeHelper->getFieldValue($node, $field_name, NULL, TRUE);
+    if (is_array($carousels)) {
+      foreach ($carousels as $carousel) {
+        module_load_include('inc', 'opensearch', 'opensearch.client');
+        // Load at most 50 results.
+        $result = opensearch_do_search($carousel['search'], 1, 50, ['reply_only' => TRUE]);
+        foreach ($result->collections as $collection) {
+          $identifier = $collection->objects[0]->id;
+          if (!in_array($identifier, $identifiers)) {
+            $identifiers[] = $identifier;
+          }
+        }
+        // Only get identifiers from the first non-empty query.
+        if (!empty($identifiers)) {
+          break;
+        }
+      }
+    }
+
+    return $identifiers;
   }
 
   /**
@@ -784,7 +813,7 @@ class ParagraphHelper {
       ?? $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
     // eReolen uses field_link_color; eReolen Go uses field_material_carousel_color.
     $color = $this->nodeHelper->getFieldValue($paragraph, 'field_link_color', 'rgb')
-      ?? $this->nodeHelper->getFieldValue($paragraph, 'field_material_carousel_color', 'rgb');
+      ?? $this->nodeHelper->getFieldValue($paragraph, 'field_video_bundle_color', 'rgb');
     $url = $this->nodeHelper->getFileUrl($videoUrl);
     $hlsUrl = $this->getHlsUrl($url);
     $thumbnail = $this->getVideoThumbnail($url);

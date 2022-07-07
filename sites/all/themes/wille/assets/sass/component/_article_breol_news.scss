@@ -34,7 +34,8 @@
 
     p,
     h3,
-    h4 {
+    h4,
+    li {
       line-height: 1.5;
     }
 
@@ -65,7 +66,7 @@
   padding: 0;
   &--teaser {
     position: relative;
-    margin-bottom: 40px;
+    padding-bottom: 0;
 
     @include media($phone) {
       margin-bottom: 20px;

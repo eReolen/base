@@ -153,7 +153,59 @@ function ereol_article_field_default_field_instances() {
       'module' => 'color_field',
       'settings' => array(),
       'type' => 'color_field_default_widget',
-      'weight' => 13,
+      'weight' => 14,
+    ),
+  );
+
+  // Exported field_instance: 'node-article-field_carousel'.
+  $field_instances['node-article-field_carousel'] = array(
+    'bundle' => 'article',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'reol_field_carousel',
+        'settings' => array(
+          'render_method' => 'material',
+          'search_link' => 1,
+        ),
+        'type' => 'reol_field_carousel_notabs',
+        'weight' => 16,
+      ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_carousel',
+    'label' => 'Carousel',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'reol_field_carousel',
+      'settings' => array(),
+      'type' => 'reol_field_carousel_widget',
+      'weight' => 11,
     ),
   );
 
@@ -370,7 +422,7 @@ function ereol_article_field_default_field_instances() {
     'bundle' => 'article',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Enter FAUST numbers of promoted materials.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -407,7 +459,7 @@ function ereol_article_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 15,
     ),
   );
 
@@ -506,7 +558,7 @@ function ereol_article_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Background color');
   t('Body');
-  t('Enter FAUST numbers of promoted materials.');
+  t('Carousel');
   t('Entity type');
   t('List image');
   t('Materials');
