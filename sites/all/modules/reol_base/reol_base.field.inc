@@ -114,8 +114,18 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
       case 'reol_base_audiobook_reader':
         // Only add on audiobooks.
         if (reol_base_get_type_name($entity->type) == 'audiobook' && !empty($entity->reply->record['dc:contributor']['dkdcplus:dkind'])) {
+          $items = $entity->reply->record['dc:contributor']['dkdcplus:dkind'];
+          // @todo When/if DDF figures out how to search for a narrator we
+          // should map the names to a search link, i.e.
+          //
+          // $items = array_map(
+          //   static function ($value) {
+          //     return l($value, 'search/ting/phrase.narrator="' . $value . '"');
+          //   },
+          //   $entity->reply->record['dc:contributor']['dkdcplus:dkind']
+          // );
           $element[$delta] = array(
-            '#markup' => $entity->reply->record['dc:contributor']['dkdcplus:dkind'][0],
+            '#markup' => implode(', ', $items),
           );
         }
         break;
