@@ -110,11 +110,15 @@ function reol_bookmark_bookmark($id, $remove = FALSE) {
  *   The user to get bookmarks for.
  * @param bool $reset
  *   If TRUE cache is reset (default: FALSE).
+ * @param bool $check_availability
+ *   If TRUE the availabilty in the well is checked for each bookmark (default:
+ *   FALSE). For performance reasons we skip the check if the list of bookmarks
+ *   is very long.
  *
  * @return array
  *   Array of bookmarks from provider.
  */
-function reol_bookmark_get_bookmarks($account, $reset = FALSE) {
+function reol_bookmark_get_bookmarks($account, $reset = FALSE, $check_availability = FALSE) {
   // First look in static for bookmarks.
   $bookmarks = &drupal_static(__FUNCTION__, NULL);
 
@@ -128,8 +132,14 @@ function reol_bookmark_get_bookmarks($account, $reset = FALSE) {
     if (is_null($bookmarks) || $reset) {
       try {
         $bookmarks = ding_provider_invoke('bookmark', 'list', $account);
-        // Filter out bookmarks that's not available in the well.
-        if ($bookmarks) {
+
+        // Filter out bookmarks that's not available in the well if requested.
+        // For performance reasons we skip the check if the list of bookmarks is
+        // very long.
+        if (count($bookmarks) > 100) {
+          $check_availability = FALSE;
+        }
+        if ($bookmarks && $check_availability) {
           $mapping = reol_base_ding_entity_get_ids($bookmarks);
           $bookmarks = array_intersect(array_keys($mapping), $bookmarks);
         }
