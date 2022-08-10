@@ -10,7 +10,10 @@
       elementId: 'reader-container',
       sessionKeyUrl: '/reol_use_loan/reader/session/renew/{0}',
       imageBasePath: imagesUrl + '/images/' + readerVersion + '/',
-      notesEnabled: false
+      notesEnabled: false,
+      streamPackageBaseUri: url + '/',
+      streamingServiceBaseUri: url + '/publicstreaming/v3/',
+      sampleStreamingServiceBaseUri: url + '/samplestreaming/v3/',
     };
 
     var isbn = document.getElementById('reader-container').getAttribute('data-isbn');
