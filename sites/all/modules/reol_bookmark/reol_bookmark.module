@@ -6,6 +6,14 @@
  */
 
 /**
+ * Limit for when to skip checking for availability of bookmarked items in the
+ * data well.
+ *
+ * @see reol_bookmark_get_bookmarks().
+ */
+define('REOL_BOOKMARK_AVAILABILITY_CHECK_LIMIT', 100);
+
+/**
  * Implements hook_menu().
  */
 function reol_bookmark_menu() {
@@ -111,14 +119,14 @@ function reol_bookmark_bookmark($id, $remove = FALSE) {
  * @param bool $reset
  *   If TRUE cache is reset (default: FALSE).
  * @param bool $check_availability
- *   If TRUE the availabilty in the well is checked for each bookmark (default:
- *   FALSE). For performance reasons we skip the check if the list of bookmarks
- *   is very long.
+ *   If TRUE (the default value) the availability in the well is checked for
+ *   each bookmark. For performance reasons we skip the check if the list of
+ *   bookmarks is very long (cf. REOL_BOOKMARK_AVAILABILITY_CHECK_LIMIT).
  *
  * @return array
  *   Array of bookmarks from provider.
  */
-function reol_bookmark_get_bookmarks($account, $reset = FALSE, $check_availability = FALSE) {
+function reol_bookmark_get_bookmarks($account, $reset = FALSE, $check_availability = TRUE) {
   // First look in static for bookmarks.
   $bookmarks = &drupal_static(__FUNCTION__, NULL);
 
@@ -136,7 +144,7 @@ function reol_bookmark_get_bookmarks($account, $reset = FALSE, $check_availabili
         // Filter out bookmarks that's not available in the well if requested.
         // For performance reasons we skip the check if the list of bookmarks is
         // very long.
-        if (count($bookmarks) > 100) {
+        if (count($bookmarks) > REOL_BOOKMARK_AVAILABILITY_CHECK_LIMIT) {
           $check_availability = FALSE;
         }
         if ($bookmarks && $check_availability) {
