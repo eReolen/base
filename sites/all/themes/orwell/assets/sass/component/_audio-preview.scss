@@ -38,12 +38,12 @@
   }
 
   .audio-preview__title {
-    @include fadeout-box(0.8rem, 3, div, $color__gray--dark);
+    @include fadeout-box(0.8rem, 3, div);
     text-transform: uppercase;
     font-family: $font-semibold;
 
     @include grid-media($medium) {
-      @include fadeout-box(1rem, 3, div, $color__gray--dark);
+      @include fadeout-box(1rem, 5, div);
     }
   }
 
