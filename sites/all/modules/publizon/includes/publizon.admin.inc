@@ -79,11 +79,35 @@ function publizon_settings_form(array $form, array &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['publizon']['settings']['publizon_reader_order_id_field'] = array(
+    '#type' => 'select',
+    '#options' => array(
+      'retailer_order_number' => 'Retailer order number',
+      'internal_order_number' => 'Internal order number',
+    ),
+    '#title' => t('Order id field'),
+    '#description' => t('The field to use for order id in the reader.'),
+    '#default_value' => variable_get('publizon_reader_order_id_field'),
+    '#required' => TRUE,
+  );
+
   $form['publizon']['settings']['publizon_reader_version'] = array(
     '#type' => 'textfield',
     '#title' => t('Reader version'),
     '#description' => t('The version of the Publizon reader to use.'),
-    '#default_value' => variable_get('publizon_reader_version', '1.5.0'),
+    '#default_value' => variable_get('publizon_reader_version', '2.1.0'),
+    '#required' => TRUE,
+  );
+
+  $form['publizon']['settings']['publizon_reader_environment'] = array(
+    '#type' => 'select',
+    '#options' => array(
+      'live' => 'live',
+      'qa' => 'qa',
+    ),
+    '#title' => t('Reader environment'),
+    '#description' => t('The environment of the Publizon reader to use.'),
+    '#default_value' => variable_get('publizon_reader_environment', 'live'),
     '#required' => TRUE,
   );
 
