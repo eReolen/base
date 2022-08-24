@@ -111,6 +111,30 @@ function publizon_settings_form(array $form, array &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['publizon']['settings']['publizon_reader_search_enabled'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Search enabled'),
+    '#default_value' => variable_get('publizon_reader_search_enabled', FALSE),
+  );
+
+  $form['publizon']['settings']['publizon_reader_annotations_enabled'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Annotations enabled'),
+    '#default_value' => variable_get('publizon_reader_annotations_enabled', FALSE),
+  );
+
+  $form['publizon']['settings']['publizon_reader_content_selection_enabled'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Content selection enabled'),
+    '#default_value' => variable_get('publizon_reader_content_selection_enabled', FALSE),
+  );
+
+  $form['publizon']['settings']['publizon_reader_mouse_swipe_navigation_enabled'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Mouse swipe navigation enabled'),
+    '#default_value' => variable_get('publizon_reader_mouse_swipe_navigation_enabled', FALSE),
+  );
+
   $form['publizon']['settings']['publizon_logging'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable logging'),

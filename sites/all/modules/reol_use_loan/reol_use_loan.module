@@ -58,6 +58,10 @@ function reol_use_loan_theme($existing, $type, $theme, $path) {
         'reader_url' => NULL,
         'reader_version' => NULL,
         'reader_environment' => NULL,
+        'reader_search_enabled' => NULL,
+        'reader_annotations_enabled' => NULL,
+        'reader_content_selection_enabled' => NULL,
+        'reader_mouse_swipe_navigation_enabled' => NULL,
         'order_number' => NULL,
         'isbn' => NULL,
       ),
@@ -169,6 +173,10 @@ function reol_use_loan_read($id) {
   $render['#reader_url'] = rtrim($reader_url, '/');
   $render['#reader_version'] = $reader_version;
   $render['#reader_environment'] = variable_get('publizon_reader_environment', 'live');
+  $render['#reader_search_enabled'] = variable_get('publizon_reader_search_enabled', FALSE);
+  $render['#reader_annotations_enabled'] = variable_get('publizon_reader_annotations_enabled', FALSE);
+  $render['#reader_content_selection_enabled'] = variable_get('publizon_reader_content_selection_enabled', FALSE);
+  $render['#reader_mouse_swipe_navigation_enabled'] = variable_get('publizon_reader_mouse_swipe_navigation_enabled', FALSE);
   if (!$order) {
     // There is no order, start reader in preview mode with an ISBN.
     $render['#isbn'] = reol_base_get_isbn($local_id);
