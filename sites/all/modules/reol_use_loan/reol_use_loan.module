@@ -133,7 +133,7 @@ function reol_use_loan_deliver_html_page($page_callback_result) {
     $variables['head'] = drupal_get_html_head();
     $variables['head_title'] = drupal_get_title();
     $variables['language'] = $language;
-    $variables['styles'] = drupal_get_css(NULL, TRUE);
+    $variables['styles'] = drupal_get_css(NULL, FALSE);
 
     $variables['scripts'] = drupal_get_js('player', NULL, TRUE);
 
@@ -488,4 +488,20 @@ function _reol_use_load_get_local_id($id) {
   }
 
   return $local_id;
+}
+
+/**
+ * Implements hook_css_alter().
+ */
+function reol_use_loan_css_alter(&$css) {
+  // Remove all CSS not related to the web reader on the reader page.
+  if (preg_match('@^ting/object/[^/]+/read$@', current_path())) {
+    $css = array_filter(
+      $css,
+      static function ($path) {
+        return preg_match('@(reol_use_loan|reader.pubhub.dk)@', $path);
+      },
+      ARRAY_FILTER_USE_KEY
+    );
+  }
 }
