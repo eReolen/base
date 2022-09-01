@@ -250,7 +250,7 @@
   }
 }
 
-@mixin fadeout-box($font-size, $lines, $sub-element, $color) {
+@mixin fadeout-box($font-size, $lines, $sub-element) {
   font-size: $font-size;
   overflow: hidden;
   position: relative;
@@ -260,24 +260,6 @@
     max-height: $font-size * $lines;
     // Shift everything up a bit to avoid clipping descenders.
     padding-bottom: 0.1rem;
-
-    // Position a fading ::after at the top of the last line. As it's
-    // positioned absolute, it doesn't affect the size of it's parent.
-    // If there's not enough lines to warrant a fade, it wont cover any.
-    &::after {
-      content: "";
-      text-align: right;
-      position: absolute;
-      top: $font-size * ($lines - 1);
-      right: 0;
-      width: 100%;
-      height: $font-size;
-      background: linear-gradient(
-        to bottom,
-        rgba($color, 0),
-        rgba($color, 1) 50%
-      );
-    }
   }
 }
 
