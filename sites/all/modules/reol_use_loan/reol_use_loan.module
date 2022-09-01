@@ -55,11 +55,15 @@ function reol_use_loan_theme($existing, $type, $theme, $path) {
     ),
     'reol_use_loan_read' => array(
       'variables' => array(
-        'retailer_order_number' => NULL,
-        'isbn' => NULL,
+        'reader_url' => NULL,
         'reader_version' => NULL,
-        'publizon_reader_stream_url' => NULL,
-        'publizon_reader_url' => NULL,
+        'reader_environment' => NULL,
+        'reader_search_enabled' => NULL,
+        'reader_annotations_enabled' => NULL,
+        'reader_content_selection_enabled' => NULL,
+        'reader_mouse_swipe_navigation_enabled' => NULL,
+        'order_number' => NULL,
+        'isbn' => NULL,
       ),
       'path' => $path,
       'template' => 'templates/read',
@@ -129,7 +133,7 @@ function reol_use_loan_deliver_html_page($page_callback_result) {
     $variables['head'] = drupal_get_html_head();
     $variables['head_title'] = drupal_get_title();
     $variables['language'] = $language;
-    $variables['styles'] = drupal_get_css(NULL, TRUE);
+    $variables['styles'] = drupal_get_css(NULL, FALSE);
 
     $variables['scripts'] = drupal_get_js('player', NULL, TRUE);
 
@@ -164,54 +168,33 @@ function reol_use_loan_read($id) {
   $render = array(
     '#theme' => 'reol_use_loan_read',
   );
-
+  $reader_url = variable_get('publizon_reader_url', '//reader.pubhub.dk/');
+  $reader_version = variable_get('publizon_reader_version', '2.1.0');
+  $render['#reader_url'] = rtrim($reader_url, '/');
+  $render['#reader_version'] = $reader_version;
+  $render['#reader_environment'] = variable_get('publizon_reader_environment', 'live');
+  $render['#reader_search_enabled'] = variable_get('publizon_reader_search_enabled', FALSE);
+  $render['#reader_annotations_enabled'] = variable_get('publizon_reader_annotations_enabled', FALSE);
+  $render['#reader_content_selection_enabled'] = variable_get('publizon_reader_content_selection_enabled', FALSE);
+  $render['#reader_mouse_swipe_navigation_enabled'] = variable_get('publizon_reader_mouse_swipe_navigation_enabled', FALSE);
   if (!$order) {
+    // There is no order, start reader in preview mode with an ISBN.
     $render['#isbn'] = reol_base_get_isbn($local_id);
   }
   else {
-    // There is no order, start reader in preview mode.
-    $render['#retailer_order_number'] = $order['retailer_order_number'];
+    $order_number_field = variable_get('publizon_reader_order_id_field', 'retailer_order_number');
+    $render['#order_number'] = $order[$order_number_field];
   }
 
-  $reader_version = variable_get('publizon_reader_version', '1.6.0');
-  $publizon_reader_url = variable_get('publizon_reader_url', '');
-  $module_url = drupal_get_path('module', 'reol_use_loan');
-  $js_publizon_url = $publizon_reader_url . '/scripts/reader-' . $reader_version . '/js?' . time();
-
-  $render['#reader_version'] = $reader_version;
-  $render['#publizon_reader_stream_url'] = variable_get('publizon_reader_stream_url', '');
-  $render['#publizon_reader_url'] = $publizon_reader_url;
-
-  // Add dependencies.
-  drupal_add_css($publizon_reader_url . '/scripts/reader-' . $reader_version . '/css', array(
-    'type' => 'external',
-    'scope' => 'player',
-    'cache' => FALSE,
-    'preprocess' => FALSE,
-  ));
-
-  // As jQuery update module is installed adding jQuery is a little tricky.
-  $jquery = drupal_get_library('system', 'jquery');
-  $jquery = reset($jquery['js']);
-  drupal_add_js($jquery['data'], array(
-    'type' => 'file',
-    'scope' => 'player',
-  ));
-
-  drupal_add_js($js_publizon_url, array(
-    'type' => 'external',
-    'scope' => 'player',
-    'cache' => FALSE,
-    'preprocess' => FALSE,
-  ));
-  drupal_add_css($module_url . '/css/reader.css', array(
-    'type' => 'file',
-    'scope' => 'player',
-  ));
-  drupal_add_js($module_url . '/js/reader_standalone.js', array(
-    'type' => 'file',
-    'scope' => 'player',
-  ));
+  drupal_add_css(drupal_get_path('module', 'reol_use_loan') . '/css/reader.css');
+  $css_paths = array(
+    '/css/chunk-vendors.css',
+    '/css/app.css',
+  );
+  foreach ($css_paths as $css_path) {
+    $css_url = '//reader.pubhub.dk/'.$reader_version.$css_path;
+    drupal_add_css($css_url, array('type' => 'external'));
+  }
   drupal_set_title($product->title . ' | ' . variable_get('site_name', ''));
 
   return $render;
@@ -505,4 +488,20 @@ function _reol_use_load_get_local_id($id) {
   }
 
   return $local_id;
+}
+
+/**
+ * Implements hook_css_alter().
+ */
+function reol_use_loan_css_alter(&$css) {
+  // Remove all CSS not related to the web reader on the reader page.
+  if (preg_match('@^ting/object/[^/]+/read$@', current_path())) {
+    $css = array_filter(
+      $css,
+      static function ($path) {
+        return preg_match('@(reol_use_loan|reader.pubhub.dk)@', $path);
+      },
+      ARRAY_FILTER_USE_KEY
+    );
+  }
 }
