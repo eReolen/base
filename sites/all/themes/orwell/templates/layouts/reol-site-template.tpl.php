@@ -56,6 +56,18 @@
       <div class="footer__inner">
         <?php print render($content['footer']); ?>
       </div>
+
+      <div class="footer__ddf">
+
+          <a href="<?php print t('https://detdigitalefolkebibliotek.dk'); ?>" title="<?php print t('The Digital Public Library'); ?>" id="ddf-logo">
+            <img src="/<?php print path_to_theme(); ?>/assets/svg/DetDigitaleFolkebibliotek_logo_RGB_neg.svg" alt="<?php print t('The Digital Public Library'); ?>" />
+          </a>
+          <p>
+            <?php print t('eReolen is a part of The Digital Public Library'); ?><br/>
+            <a href="<?php print t('https://detdigitalefolkebibliotek.dk'); ?>"><?php print t('Read more at detdigitalefolkebibliotek.dk'); ?></a>
+          </p>
+
+      </div>
     </footer>
   <?php endif; ?>
 

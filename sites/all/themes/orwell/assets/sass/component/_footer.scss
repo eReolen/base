@@ -30,6 +30,19 @@
     place-content: center;
   }
 
+  &__ddf {
+    padding: 48px 0;
+    display: flex;
+    place-content: center;
+    column-gap: 48px;
+    p {
+      line-height: 1.25;
+    }
+    a {
+      color: inherit;
+    }
+  }
+
   .menu {
     a {
       text-transform: none;
