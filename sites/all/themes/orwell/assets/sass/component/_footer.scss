@@ -35,15 +35,26 @@
   }
 
   &__ddf {
-    padding: 48px 0;
+    --spacing: calc(12px * 4);
+    padding-top: calc(var(--spacing) * 2);
+    padding-right: 0;
+    padding-bottom: calc(var(--spacing) * 3);
+    padding-left: 0;
     display: flex;
     place-content: center;
-    column-gap: 48px;
+    flex-direction: column;
+    row-gap: calc(var(--spacing) * 0.5);
+    text-align: center;
     p {
       line-height: 1.25;
     }
     a {
       color: inherit;
+    }
+
+    @include grid-media($medium) {
+      flex-direction: row;
+      column-gap: var(--spacing);
     }
   }
 
