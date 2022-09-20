@@ -48,6 +48,8 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
   }
 
   $variables = array(
+    'ebook_loans' => $loans_by_type['ebog'] ?? 0,
+    'audiobook_loans' => $loans_by_type['lydbog (net)'] ?? 0,
     // Quotas.
     'max_ebook_loans' => $library->maxEbookLoans,
     'max_audiobook_loans' => $library->maxAudiobookLoans,
