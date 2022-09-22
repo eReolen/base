@@ -81,7 +81,7 @@
       <?php endif; ?>
 
       <?php // Render abstract if not already rendered above ?>
-      <?php if (!empty($content['group_ting_object_right_column']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
+      <?php if (!empty($content['group_ting_object_right_column']['group_ting_object_right_c']['ting_abstract'])) : ?>
         <div class="detail">
           <div class="material__details text js-collaps">
             <div class="ting_abstract material__abstract">
