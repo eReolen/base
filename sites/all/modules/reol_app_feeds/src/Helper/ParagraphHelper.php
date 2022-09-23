@@ -447,6 +447,7 @@ class ParagraphHelper {
     $identifiers = [];
     $image = !empty($node->field_ding_news_list_image) ? $this->nodeHelper->getImage($node->field_ding_news_list_image, 'app_news_image') : static::VALUE_NONE;
     $body = $this->nodeHelper->getBody($node);
+    $lead = '';
 
     if (module_exists('reol_base')) {
       // On eReolen we get identifiers from materials or carousels.
@@ -464,7 +465,7 @@ class ParagraphHelper {
       // Get identifiers from carousel queries.
       $identifiers = $this->getIdentifiersFromCarousels($node, 'field_carousels');
 
-      $body = $this->nodeHelper->getTextFieldValue($node, 'field_lead', NULL, FALSE);
+      $lead = $this->nodeHelper->getTextFieldValue($node, 'field_lead', NULL, FALSE);
     }
 
     return [
@@ -473,6 +474,7 @@ class ParagraphHelper {
       'title' => $this->getTitle($node->title),
       'view' => $view,
       'image' => $image,
+      'lead' => $lead,
       'body' => $body,
       'identifiers' => $identifiers,
     ];
