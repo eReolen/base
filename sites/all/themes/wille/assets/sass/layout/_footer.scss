@@ -20,6 +20,36 @@ $footer-border-color: rgb(226, 77, 128); //#e24d80
     padding-top: 60px;
   }
 
+  &__ddf {
+    --spacing: calc(12px * 4);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: var(--spacing);
+    width: clamp(0px, 1180px, 98%);
+    padding-top: calc(var(--spacing) * 1.5);
+    padding-right: 0;
+    padding-bottom: calc(var(--spacing) * 0.5);
+    padding-left: 0;
+    display: flex;
+    place-content: center;
+    column-gap: var(--spacing);
+    border-top: 2px solid #e24d80;
+    p {
+      line-height: 1.25;
+    }
+    a {
+      color: inherit;
+    }
+
+    @include media($phone) {
+      flex-direction: column;
+      row-gap: calc(var(--spacing) * 0.5);
+      text-align: center;
+      border-top: 0;
+      padding-top: 0;
+    }
+  }
+
   .menu {
     a {
       text-transform: none;

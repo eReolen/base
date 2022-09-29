@@ -19,6 +19,7 @@ dependencies[] = menu_block
 dependencies[] = options
 dependencies[] = page_manager
 dependencies[] = panels
+dependencies[] = publizon
 dependencies[] = pm_existing_pages
 dependencies[] = ting_infomedia
 dependencies[] = views
