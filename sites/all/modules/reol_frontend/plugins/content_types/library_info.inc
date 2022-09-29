@@ -37,7 +37,19 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
   );
   $extra_link = url('search/ting/*', array('query' => $query));
 
+  // Build information on current number of loans by material type.
+  global $user;
+  require_once drupal_get_path('module', 'publizon').'/includes/publizon.loan.inc';
+  $loans = publizon_loan_list($user);
+
+  $loans_by_type = [];
+  foreach ($loans as $loan) {
+    $loans_by_type[$loan->publizon_type] = ($loans_by_type[$loan->publizon_type] ?? 0) + 1;
+  }
+
   $variables = array(
+    'ebook_loans' => $loans_by_type['ebog'] ?? 0,
+    'audiobook_loans' => $loans_by_type['lydbog (net)'] ?? 0,
     // Quotas.
     'max_ebook_loans' => $library->maxEbookLoans,
     'max_audiobook_loans' => $library->maxAudiobookLoans,
@@ -45,8 +57,14 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
     'max_audiobook_reservations' => $library->maxAudiobookReservations,
     'extra_link' => $extra_link,
     // Legacy texts.
-    'max_ebook_loans_text' => t('You are allowed to loan @loans e-books simultaneously.', array('@loans' => $library->maxEbookLoans)),
-    'max_audiobook_loans_text' => t('You are allowed to loan @loans audiobooks simultaneously.', array('@loans' => $library->maxAudiobookLoans)),
+    'max_ebook_loans_text' => t('You have loaned @number_of_loans out of @max_number_of_loans e-books.', array(
+      '@number_of_loans' => $loans_by_type['ebog'] ?? 0,
+      '@max_number_of_loans' => $library->maxEbookLoans,
+    )),
+    'max_audiobook_loans_text' => t('You have loaned @number_of_loans out of @max_number_of_loans audiobooks.', array(
+      '@number_of_loans' => $loans_by_type['lydbog (net)'] ?? 0,
+      '@max_number_of_loans' => $library->maxAudiobookLoans,
+    )),
     'max_reservations_text' => t('You are allowed to reserve @reservations titles simultaneously.', array('@reservations' => $library->maxEbookReservations)),
     'extra_info_text' => t('<a href="@url">Titles exempt from quotas.</a>', array('@url' => $extra_link)),
   );

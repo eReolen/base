@@ -213,7 +213,7 @@
   Drupal.behaviors.gridView = {
     attach: function (context, settings) {
       $(".pane-panels-mini.pane-search").viewPicker(
-        ".pane-ting-search-sort-form"
+        ".pane-search-result-count"
       );
     },
   };
