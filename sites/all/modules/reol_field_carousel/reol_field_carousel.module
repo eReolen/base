@@ -179,6 +179,13 @@ function reol_field_carousel_field_widget_info() {
 
 /**
  * Implements hook_field_widget_form().
+ *
+ * We want to require both “title” and “search” for a carousel item, but we
+ * cannot use `#require` because we're inside an “unlimited” list and this would
+ * prevent use from removing an item (by clearing both “title” and “search”) or
+ * leave an empty item at the end of the list. Therefore we use
+ * `#element_validate` to perform the validation (and states for a little
+ * niceness).
  */
 function reol_field_carousel_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
   $element['title'] = array(
