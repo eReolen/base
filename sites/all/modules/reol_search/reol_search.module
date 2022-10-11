@@ -76,10 +76,14 @@ function reol_search_form_search_block_form_alter(&$form, &$form_state) {
 function reol_search_opensearch_pre_execute($request) {
   $search_term = preg_replace('@^search/ting/@', '', request_path());
 
-  // Sort by number in series if search for a specific series.
-  if (FALSE !== stripos($search_term, 'phrase.titleSeries') && empty(drupal_get_query_parameters()['sort'])) {
-    if ($request instanceof TingClientSearchRequest) {
+  if ($request instanceof TingClientSearchRequest) {
+    // Sort by number in series if searching for a specific series.
+    if (false !== stripos($search_term, 'phrase.titleSeries') && empty(drupal_get_query_parameters()['sort'])) {
       $request->setSort('numberInSeries_ascending');
     }
+
+    // We want collections with a single manifestation (cf.
+    // https://github.com/DBCDK/OpenSearch-webservice/wiki/OpenSearch-Web-Service#work-structure)
+    $request->setCollectionType('manifestation');
   }
 }
