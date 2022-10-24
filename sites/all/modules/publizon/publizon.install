@@ -188,18 +188,18 @@ function publizon_update_7105() {
 }
 
 /**
- * Add municipality_id field to database.
+ * Remove unused variable.
  */
 function publizon_update_7106() {
+  variable_del('publizon_reader_stream_url');
+}
+
+/**
+ * Add municipality_id field to database.
+ */
+function publizon_update_7107() {
   $table = 'publizon_libraries';
   $schema = drupal_get_schema_unprocessed('publizon', $table);
   $field = 'municipality_id';
   db_add_field($table, $field, $schema['fields'][$field]);
-}
-
-/**
- * Remove unused variable.
- */
-function publizon_update_7107() {
-  variable_del('publizon_reader_stream_url');
 }
