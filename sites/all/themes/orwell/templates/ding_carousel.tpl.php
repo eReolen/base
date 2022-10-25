@@ -17,15 +17,16 @@
   data-path="<?php print $path; ?>"
   data-settings="<?php print htmlentities(json_encode($slick_settings)); ?>"
   >
-  <?php if (!empty($title)): ?>
-    <h2 class="carousel__header">
-      <?php if (!empty($carousel['#more_link'])): ?>
-        <span class="carousel__more-link">
-          <?php print($carousel['#more_link']); ?>
-        </span>
-      <?php endif; ?>
-      <?php print($title); ?>
-    </h2>
-  <?php endif; ?>
+  <h2 class="carousel__header">
+    <?php if (!empty($carousel['#more_link'])): ?>
+      <span class="carousel__more-link">
+        <?php print($carousel['#more_link']); ?>
+      </span>
+    <?php endif; ?>
+    <?php
+      // A hack for handling carousel with empty title.
+      print $title ?: '&nbsp';
+    ?>
+  </h2>
   <ul class="carousel"><?php print render($items); ?></ul>
 </div>
