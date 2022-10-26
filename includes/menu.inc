@@ -461,9 +461,9 @@ function menu_get_item($path = NULL, $router_item = NULL) {
     $router_items[$path] = $router_item;
   }
   if (!isset($router_items[$path])) {
-    // Rebuild if the menu masks are missing, which occurs rarely, likely due
-    // to a race condition of multiple rebuilds.
-    if (!variable_get('menu_masks', array())) {
+    // Rebuild if we know it's needed, or if the menu masks are missing which
+    // occurs rarely, likely due to a race condition of multiple rebuilds.
+    if (variable_get('menu_rebuild_needed', FALSE) || !variable_get('menu_masks', array())) {
       if (_menu_check_rebuild()) {
         menu_rebuild();
       }
@@ -519,10 +519,6 @@ function menu_execute_active_handler($path = NULL, $deliver = TRUE) {
 
   // Only continue if the site status is not set.
   if ($page_callback_result == MENU_SITE_ONLINE) {
-    // Perform a menu rebuild if one was requested.
-    if (variable_get('menu_rebuild_needed', FALSE)) {
-      menu_rebuild();
-    }
     if ($router_item = menu_get_item($path)) {
       if ($router_item['access']) {
         if ($router_item['include_file']) {
@@ -1504,13 +1500,25 @@ function menu_tree_check_access(&$tree, $node_links = array()) {
     $nids = array_keys($node_links);
     $select = db_select('node', 'n');
     $select->addField('n', 'nid');
-    $select->condition('n.status', 1);
+    // When a menu administrator who we know has permission to see unpublished
+    // nodes is administering the menu, included the unpublished nodes in the
+    // tree, with a special flag so that the Menu module can label them.
+    // Otherwise, exclude these nodes from the tree.
+    if (!empty($GLOBALS['menu_admin']) && user_access('bypass node access')) {
+      $select->addField('n', 'status');
+    }
+    else {
+      $select->condition('n.status', 1);
+    }
     $select->condition('n.nid', $nids, 'IN');
     $select->addTag('node_access');
-    $nids = $select->execute()->fetchCol();
-    foreach ($nids as $nid) {
-      foreach ($node_links[$nid] as $mlid => $link) {
-        $node_links[$nid][$mlid]['access'] = TRUE;
+    $node_objects = $select->execute()->fetchAll();
+    foreach ($node_objects as $node_object) {
+      foreach ($node_links[$node_object->nid] as $mlid => $link) {
+        $node_links[$node_object->nid][$mlid]['access'] = TRUE;
+        if (isset($node_object->status)) {
+          $node_links[$node_object->nid][$mlid]['node_unpublished'] = !$node_object->status;
+        }
       }
     }
   }
@@ -1872,7 +1880,7 @@ function menu_navigation_links($menu_name, $level = 0) {
   $router_item = menu_get_item();
   $links = array();
   foreach ($tree as $item) {
-    if (!$item['link']['hidden']) {
+    if ($item['link']['access'] && !$item['link']['hidden']) {
       $class = '';
       $l = $item['link']['localized_options'];
       $l['href'] = $item['link']['href'];
@@ -2891,11 +2899,9 @@ function _menu_link_build($item) {
 function _menu_navigation_links_rebuild($menu) {
   // Add normal and suggested items as links.
   $menu_links = array();
-  $default_menu_link_paths = array();
   foreach ($menu as $path => $item) {
     if ($item['_visible']) {
       $menu_links[$path] = $item;
-      $default_menu_link_paths[] = $path;
       $sort[$path] = $item['_number_parts'];
     }
   }
@@ -2971,10 +2977,10 @@ function _menu_navigation_links_rebuild($menu) {
         ->execute();
     }
   }
-  // Find any item that is no longer visible.
+  // Find any item whose router path does not exist any more.
   $result = db_select('menu_links')
     ->fields('menu_links')
-    ->condition('router_path', $default_menu_link_paths, 'NOT IN')
+    ->condition('router_path', $paths, 'NOT IN')
     ->condition('external', 0)
     ->condition('updated', 0)
     ->condition('customized', 0)
@@ -3197,7 +3203,7 @@ function menu_link_save(&$item, $existing_item = array(), $parent_candidates = a
         'external' => $item['external'],
         'has_children' => $item['has_children'],
         'expanded' => $item['expanded'],
-        'weight' => $item['weight'],
+        'weight' => (int) $item['weight'],
         'module' => $item['module'],
         'link_title' => $item['link_title'],
         'options' => serialize($item['options']),
@@ -3261,7 +3267,7 @@ function menu_link_save(&$item, $existing_item = array(), $parent_candidates = a
         'external' => $item['external'],
         'has_children' => $item['has_children'],
         'expanded' => $item['expanded'],
-        'weight' => $item['weight'],
+        'weight' => (int) $item['weight'],
         'depth' => $item['depth'],
         'p1' => $item['p1'],
         'p2' => $item['p2'],
@@ -3900,7 +3906,7 @@ function _menu_router_save($menu, $masks) {
       'type' => $item['type'],
       'description' => $item['description'],
       'position' => $item['position'],
-      'weight' => $item['weight'],
+      'weight' => (int) $item['weight'],
       'include_file' => $item['include file'],
     ));
 

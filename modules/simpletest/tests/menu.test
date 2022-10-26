@@ -1740,32 +1740,39 @@ class MenuTrailTestCase extends MenuWebTestCase {
 }
 
 /**
- * Tests menu changes.
+ * Tests value integrity.
  */
-class MenuChangeTestCase extends MenuWebTestCase {
+class MenuDataIntegrityTestCase extends MenuWebTestCase {
+
   public static function getInfo() {
     return array(
-      'name' => 'Menu changes',
-      'description' => 'Tests that menu links are updated on menu rebuild.',
+      'name' => 'Menu item array integrity',
+      'description' => 'Tests the values passed on to menu items array.',
       'group' => 'Menu',
     );
   }
 
-  function setUp() {
-    parent::setUp('menu_test');
+  /**
+   * Tests for null/casting weight parameter.
+   */
+  public function testNullMenuWeight() {
+    $base_options = array(
+      'link_title' => 'Menu link test',
+      'module' => 'menu_test',
+      'menu_name' => 'menu_test',
+      'weight' => NULL,
+      'link_path' => 'menu-test/parent',
+    );
+
+    try {
+      menu_link_save($base_options);
+    }
+    catch (PDOException $exception) {
+      $this->fail('Menu weight is not being cast properly.');
+      return;
+    }
+
+    $this->pass('Menu weight is being cast properly.');
   }
 
-  function testMenuChangeTypeTestCase() {
-    // Check that the test menu item exists.
-    $sql = "SELECT type FROM {menu_links}, {menu_router} WHERE {menu_links}.router_path = {menu_router}.path AND {menu_links}.router_path = 'menu-test/changes'";
-    $type = db_query($sql)->fetchField();
-    $this->assertEqual($type, MENU_NORMAL_ITEM, t('Menu item exists and is type MENU_NORMAL_ITEM.'));
-
-    // Change item type to MENU_CALLBACK and rebuild menu.
-    menu_test_change_menu_type('callback');
-    menu_rebuild();
-
-    $result = db_query($sql)->rowCount();
-    $this->assertEqual($result, 0, t('Menu item no longer exists in menu_links table after menu_rebuild.'));
-  }
 }
