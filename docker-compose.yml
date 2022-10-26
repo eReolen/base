@@ -23,7 +23,7 @@ services:
       - .:/app:delegated
 
   phpfpm:
-    image: itkdev/php7.0-fpm:latest
+    image: itkdev/php7.4-fpm:latest
     networks:
       - app
     environment:
