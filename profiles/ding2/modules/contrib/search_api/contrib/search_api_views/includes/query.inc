@@ -135,7 +135,9 @@ class SearchApiViewsQuery extends views_plugin_query {
    *   The order to sort items in - either 'ASC' or 'DESC'. Defaults to 'ASC'.
    */
   public function add_selector_orderby($selector, $order = 'ASC') {
-    $this->query->sort($selector, $order);
+    if (!$this->errors) {
+      $this->query->sort($selector, $order);
+    }
   }
 
   /**
@@ -195,6 +197,10 @@ class SearchApiViewsQuery extends views_plugin_query {
       'parse_mode' => array(
         'default' => 'terms',
       ),
+      'preserve_facet_query_args' => array(
+        'default' => FALSE,
+        'bool' => TRUE,
+      ),
     );
   }
 
@@ -213,7 +219,7 @@ class SearchApiViewsQuery extends views_plugin_query {
       '#default_value' => $this->options['search_api_bypass_access'],
     );
 
-    if ($this->index->getEntityType()) {
+    if ($this->index && $this->index->getEntityType()) {
       $form['entity_access'] = array(
         '#type' => 'checkbox',
         '#title' => t('Additional access checks on result entities'),
@@ -240,6 +246,14 @@ class SearchApiViewsQuery extends views_plugin_query {
           '#states' => $states,
         );
       }
+    }
+    if (module_exists('facetapi')) {
+      $form['preserve_facet_query_args'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Preserve facets while using filters'),
+        '#description' => t('By default, changing an exposed filter would reset all selected facets. This option allows you to prevent this behavior.'),
+        '#default_value' => $this->options['preserve_facet_query_args'],
+      );
     }
   }
 
@@ -305,11 +319,11 @@ class SearchApiViewsQuery extends views_plugin_query {
       $this->query->setOption('search_api_bypass_access', TRUE);
     }
 
-    // If the View and the Panel conspire to provide an overridden path then
-    // pass that through as the base path.
-    if (!empty($this->view->override_path) && strpos(current_path(), $this->view->override_path) !== 0) {
-      $this->query->setOption('search_api_base_path', $this->view->override_path);
-    }
+    // Store the Views base path.
+    $this->query->setOption('search_api_base_path', $this->view->get_path());
+
+    // Save query information for Views UI.
+    $view->build_info['query'] = (string) $this->query;
   }
 
   /**
@@ -344,13 +358,15 @@ class SearchApiViewsQuery extends views_plugin_query {
     // FALSE.
     $skip_result_count = $this->query->getOption('skip result count', TRUE);
     if ($skip_result_count) {
-      $skip_result_count = !$this->pager->use_count_query() && empty($view->get_total_rows);
+      $skip_result_count = !$this->pager || (!$this->pager->use_count_query() && empty($view->get_total_rows));
       $this->query->setOption('skip result count', $skip_result_count);
     }
 
     try {
       // Trigger pager pre_execute().
-      $this->pager->pre_execute($this->query);
+      if ($this->pager) {
+        $this->pager->pre_execute($this->query);
+      }
 
       // Views passes sometimes NULL and sometimes the integer 0 for "All" in a
       // pager. If set to 0 items, a string "0" is passed. Therefore, we unset
@@ -385,7 +401,9 @@ class SearchApiViewsQuery extends views_plugin_query {
       $view->execute_time = microtime(TRUE) - $start;
 
       // Trigger pager post_execute().
-      $this->pager->post_execute($view->result);
+      if ($this->pager) {
+        $this->pager->post_execute($view->result);
+      }
     }
     catch (Exception $e) {
       $this->errors[] = $e->getMessage();
