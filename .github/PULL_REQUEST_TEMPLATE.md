@@ -12,12 +12,10 @@ If your change affects the user interface you should include a screenshot of the
 
 #### Checklist
 
-- [ ] My code is covered by test cases.
-- [ ] My code passes our test (all our tests).
 - [ ] My code passes our static analysis suite.
 - [ ] My code passes our continuous integration process.
 
-If your code does not pass all the requirements on the checklist you have to add a comment explaining why this change 
+If your code does not pass all the requirements on the checklist you have to add a comment explaining why this change
 should be exempt from the list.
 
 #### Additional comments or questions
