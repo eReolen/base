@@ -52,7 +52,7 @@
 
   <?php // @see ../cover-image.tpl.php ?>
   <?php $node = 'node' === arg(0) ? node_load(arg(1)) : NULL ?>
-  <?php if (!$is_front && 'inspiration' === $node->type ?? NULL): ?>
+  <?php if (!$is_front && is_object($node) && 'inspiration' === $node->type): ?>
     <?php $wrapper = entity_metadata_wrapper('node', $node);
     $color = $wrapper->field_app_feed_color->value()['rgb'] ?? 'none';
     $image = $wrapper->field_app_feed_image->value();

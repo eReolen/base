@@ -57,7 +57,7 @@ function ereol_article_preprocess_node(&$variables) {
       '#offset' => 0,
       '#items' => array(),
       '#placeholder' => array(
-        '#theme' => 'reol_news_paragraph_placeholder',
+        '#theme' => 'ereol_article_placeholder',
       ),
       '#placeholders' => 5,
     );

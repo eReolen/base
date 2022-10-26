@@ -1,7 +1,8 @@
 {
     "require": {
         "phan/phan": "^1.2",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "ext-dom": "*"
     },
     "require-dev": {
         "drupal/coder": "^8.3.1",
