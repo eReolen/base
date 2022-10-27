@@ -873,7 +873,7 @@ function reol_base_update_7173() {
 }
 
 /**
- * Enable tiny png module.
+ * Remove tiny png module.
  */
 function reol_base_update_7174() {
   ding2_remove_module(array('tinypng'));
