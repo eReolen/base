@@ -548,6 +548,9 @@ function orwell_user_login(&$vars) {
     $element['login_wrapper']['pass'] = $element['pass'];
     unset($element['login_wrapper']['pass']['#description']);
     $element['login_wrapper']['actions'] = $element['actions'];
+
+    // Remove single sign on options as editors are not providers.
+    unset($element['adgangsplatformen-wrapper']);
   }
 
   unset($vars['element']['name']);

@@ -91,11 +91,9 @@ function reol_base_menu() {
  * Add use-ajax class to our login link.
  */
 function reol_base_preprocess_menu_link(&$variables) {
-  if (!module_exists('ding_adgangsplatformen') || module_exists('breol_base')) {
-    $element = &$variables['element'];
-    if (isset($element['#original_link']) && $element['#original_link']['router_path'] == 'login/nojs') {
-      $element['#localized_options']['attributes']['class'][] = 'use-ajax';
-    }
+  $element = &$variables['element'];
+  if (isset($element['#original_link']) && $element['#original_link']['router_path'] == 'login/nojs') {
+    $element['#localized_options']['attributes']['class'][] = 'use-ajax';
   }
 }
 
@@ -117,7 +115,6 @@ function reol_base_menu_alter(&$items) {
   $items['user']['access callback'] = 'user_is_logged_in';
 
   // Remove menu callback from user menu.
-  $items['user/%user/status']['access callback'] = FALSE;
   $items['user/%user/status-debts']['access callback'] = FALSE;
   $items['user/%user/status-loans']['access callback'] = FALSE;
   $items['user/%user/status-loans-overdue']['access callback'] = FALSE;
@@ -151,6 +148,10 @@ function reol_base_ding_user_frontend_build_menu_alter(&$menu) {
  */
 function reol_base_init() {
   drupal_add_library('system', 'drupal.ajax', TRUE);
+
+  if (module_exists('ding_adgangsplatformen')) {
+    drupal_add_js(drupal_get_path('module', 'reol_base') . '/js/reol_base_adgangsplatformen.js', 'file');
+  }
 }
 
 /**
@@ -175,6 +176,37 @@ function reol_base_form_alter(&$form, &$form_state, $form_id) {
     case 'ding_loan_loans_form':
     case 'ding_reservation_reservations_notready_form':
       $form['actions_container']['#access'] = FALSE;
+      break;
+
+    case 'ding_adgangsplatformen_admin_settings_form':
+      $default = variable_get('ding_adgangsplatformen_notifications', [
+        'text' => [
+          'value' => '',
+          'format' => 'ding_wysiwyg'
+        ]
+      ]);
+
+      $form['ding_adgangsplatformen_notifications'] = [
+        '#type' => 'fieldset',
+        '#title' => t('Notifications'),
+        '#weight' => -10,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE
+      ];
+
+      $form['ding_adgangsplatformen_notifications']['text'] = [
+        '#type' => 'text_format',
+        '#title' => t('Loan text'),
+        '#format' => $default['text']['format'],
+        '#rows' => 15,
+        '#default_value' => $default['text']['value'],
+        '#description' => t('Text to display in the user login box about adgangsplatformen.'),
+      ];
+
+      // No need to show secrets to everyone editing the page.
+      $form['ding_adgangsplatformen_settings']['#collapsible'] = TRUE;
+      $form['ding_adgangsplatformen_settings']['#collapsed'] = TRUE;
+
       break;
   }
 }
@@ -1022,7 +1054,7 @@ function reol_base_login_ajax() {
 
   ctools_add_js('ajax-responder');
 
-  // Check if the logged in user is a library user.
+  // Check if the logged-in user is a library user.
   if (!user_is_logged_in()) {
     $commands[] = ajax_command_ding_user_authenticate('');
   }
@@ -1032,6 +1064,25 @@ function reol_base_login_ajax() {
   }
 
   return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Implements hook_ajax_login_command().
+ *
+ * This is a hack to get around the fact that we need adgangsplatformen to
+ * hijack ajax login url's, but on eReolenGo we need the normal login to be
+ * shown first to give the option to use uni-login or adgangsplatformen. This
+ * hook is part of the ding_user SSO solution from DDB Core - a little mis-used
+ * here.
+ */
+function reol_base_ajax_login_command($path) {
+  if (module_exists('ding_adgangsplatformen')) {
+    $form_state = array();
+    $form = drupal_build_form('user_login', $form_state);
+    $login_form = drupal_render($form);
+
+    return ajax_command_ding_popup('ding_user', t('Login'), $login_form, array('resubmit' => TRUE));
+  }
 }
 
 /**
@@ -1049,7 +1100,7 @@ function reol_base_login_ajax() {
  *   The entity.
  *
  * @return bool
- *   Whether or not check did go through.
+ *   Whether check did go through.
  */
 function reol_base_check_entity_ajax_form($modal_id, array &$commands, $entity) {
   global $user;

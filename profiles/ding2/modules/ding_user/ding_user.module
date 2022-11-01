@@ -936,14 +936,8 @@ function ajax_command_ding_user_authenticate($extra_data, $redirect_uri = '') {
     foreach ($modules as $module) {
       // This is patch for eReolen Go that uses that fact the last called hook
       // can override the other hooks as the command only stores the last
-      // returned array from the hooks. This is used to ensure that (on go)
-      // adgangsplatformen don't hijack the login ajax popup with the two SSO
-      // login options. In DDB CMS and on eReolen there is only on SSO and here
-      // we what the default behaviour. But when ding_adgangsplatformen is
-      // disabled on eRolen go the hook in breol_base will return null and set
-      // the $command to NULL. Which then will make an JS error stopping th
-      // efault login popup. So this check and the check in line #890 below
-      // ensure default non SSO behaviour.
+      // returned array from the hooks. Remember that module weight here is very
+      // important fot which module wins.
       $cmd = module_invoke($module, $hook, $redirect_uri);
       if (is_array($cmd)) {
         $command = $cmd;
