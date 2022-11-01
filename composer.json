@@ -1,5 +1,6 @@
 {
     "require": {
+        "php": "7.0",
         "phan/phan": "^1.2"
     },
     "require-dev": {

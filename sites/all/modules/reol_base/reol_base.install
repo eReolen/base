@@ -237,7 +237,7 @@ function reol_base_ding_entity_fields() {
  * Register ding entity fields.
  */
 function reol_base_update_7117() {
-  ding_entity_modules_enabled(array('reol_base'));
+  module_enable(array('reol_base'));
 }
 
 /**
@@ -877,4 +877,16 @@ function reol_base_update_7173() {
  */
 function reol_base_update_7174() {
   module_enable(array('reol_user'));
+}
+
+/**
+ * Update module weight to ensure hooks runs last.
+ *
+ * This is importen for the login popup to be shown.
+ */
+function reol_base_update_7175() {
+  db_update('system')
+    ->fields(array('weight' => 10000))
+    ->condition('name', 'reol_base', '=')
+    ->execute();
 }

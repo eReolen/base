@@ -1,0 +1,51 @@
+#user-login {
+  fieldset {
+    border: 2px solid $color__border-gray--light;
+    padding: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .adgangsplatformen-wrapper {
+    a {
+      text-decoration: none;
+      background: $color__link__default;
+      border-radius: 10px;
+      color: white;
+      min-width: 250px;
+      display: inline-block;
+      text-transform: uppercase;
+      position: relative;
+      cursor: pointer;
+      line-height: 1em;
+
+      &:hover {
+        background: lighten($color__link__default, 3);
+      }
+
+      padding: 15px 22px;
+
+      text-align: center;
+      margin: 0.5em 0;
+    }
+  }
+
+  .fieldset-description {
+    font-size: 20px;
+    padding-bottom: 15px;
+  }
+
+  .adgangsplatformen-notification-text {
+    a {
+      color: $color__blue;
+    }
+
+    ul {
+      text-align: left;
+    }
+  }
+}
+
+.ui-dialog form#user-login .form-actions {
+  text-align: left;
+}

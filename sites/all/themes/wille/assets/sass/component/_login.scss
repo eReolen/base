@@ -30,6 +30,16 @@
     font-size: 20px;
     padding-bottom: 15px;
   }
+
+  .adgangsplatformen-notification-text {
+    a {
+      color: $blue-dark;
+    }
+
+    ul {
+      text-align: left;
+    }
+  }
 }
 
 .ui-dialog form#user-login .form-actions {

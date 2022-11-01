@@ -22,7 +22,7 @@ use League\OAuth2\Client\Provider\GenericProvider;
  *
  * Also added ctools JS need to do ajax redirect commends.
  *
- * We don't known which pages this will happen on, so we add the script to every
+ * We don't know which pages this will happen on, so we add the script to every
  * page.
  */
 function ding_adgangsplatformen_page_build() {

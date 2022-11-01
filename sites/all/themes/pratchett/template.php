@@ -109,7 +109,7 @@ function pratchett_ting_object_cover($variables) {
 /**
  * Implements hook_preprocess_menu_link().
  *
- *  Add destination to login link when using SSO authentication.
+ * Add destination to login link when using SSO authentication.
  */
 function pratchett_preprocess_menu_link(&$variables) {
   if (module_exists('ding_adgangsplatformen')) {
