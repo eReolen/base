@@ -890,3 +890,10 @@ function reol_base_update_7175() {
     ->condition('name', 'reol_base', '=')
     ->execute();
 }
+
+/**
+ * Remove reol_user module.
+ */
+function reol_base_update_7176() {
+  reol_base_remove_module('reol_user');
+}

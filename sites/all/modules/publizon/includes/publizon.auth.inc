@@ -11,14 +11,14 @@
  * @oaram string $uuid
  *   Unique id for the person that's should be generated credentials for.
  *
- * @throws \PublizonAuthFailureException
+ * @throws DingProviderUserAuthFailure
  *   If authentication fails.
  */
 function publizon_auth_single_sign_on($name, array $extra) {
   $type = empty($extra['attributes']['municipality']) ? 'unilogin' : 'municipality';
   $lib = publizon_filter_libraries_list(array($extra['attributes'][$type]), $type);
   if (empty($lib)) {
-    throw new PublizonAuthFailureException('Unable to find retailer id');
+    throw new DingProviderUserAuthFailure('Unable to find retailer id');
   }
   $retailer_id = reset($lib)->retailer_id;
 
@@ -48,7 +48,7 @@ function publizon_auth_single_sign_on($name, array $extra) {
     setcookie('ereolen_last_library', $retailer_id, time() + 3600 * 24 * 180, '/');
   }
   else {
-    throw new PublizonAuthFailureException(t('Failed to get support id for user.'));
+    throw new DingProviderUserAuthFailure();
   }
 
   return $res;

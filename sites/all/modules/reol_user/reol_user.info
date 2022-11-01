@@ -1,5 +1,0 @@
-name = eReolen user
-description = eReolen user helpers
-core = 7.x
-package = eReolen shared
-;dependencies[] =
