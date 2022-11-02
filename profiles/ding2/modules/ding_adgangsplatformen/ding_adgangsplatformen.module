@@ -342,7 +342,7 @@ function ding_adgangsplatformen_logout($regen_session = FALSE) {
 
   $logout_options = [
     'singlelogout' => $singleLogout,
-    'redirect_uri' => $base_url,
+    //'redirect_uri' => $base_url,
     'token' => $token,
   ];
 
@@ -386,7 +386,7 @@ function ding_adgangsplatformen_logout($regen_session = FALSE) {
     drupal_session_regenerate();
   }
 
-  // We known that we will stop the process and this module has the highest
+  // We know that we will stop the process and this module has the highest
   // weight, so we will kill the session before redirect.
   session_destroy();
 
