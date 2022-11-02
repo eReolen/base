@@ -897,3 +897,15 @@ function reol_base_update_7175() {
 function reol_base_update_7176() {
   reol_base_remove_module('reol_user');
 }
+
+/**
+ * Added default text to log in box.
+ */
+function reol_base_update_7177() {
+  variable_set('ding_adgangsplatformen_notifications', [
+    'text' => [
+      'value' => '<p><strong>Bemærk!</strong></p><p>Hvis du oplever at blive logget ud, lige efter at du er logget ind, kan det være fordi dit bibliotek ikke er tilmeldt eReolens tjenester.</p><p>Læs mere om <a href="/faq/log-ind">problemer ved log ind</a> i vores FAQ</p>',
+      'format' => 'ding_wysiwyg'
+    ]
+  ]);
+}
