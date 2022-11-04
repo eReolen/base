@@ -233,6 +233,11 @@ div.messages {
   width: 100%;
 }
 
+#edit-adgangsplatformen-wrapper .form-type-checkbox {
+  display: inline-block;
+  margin-top: var(--spacing);
+}
+
 @media screen and (min-width: 480px) {
   #edit-adgangsplatformen-wrapper .fieldset-description {
     flex-direction: row;

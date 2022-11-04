@@ -1077,6 +1077,21 @@ function reol_base_login_ajax() {
  */
 function reol_base_ajax_login_command($path) {
   if (module_exists('ding_adgangsplatformen')) {
+    // Check if cookie have been set and make redirect, if it has, else send
+    // display login popup.
+    if (isset($_COOKIE['ssopupop'])) {
+      // Javascript needed to do the redirect is loaded in the init hook.
+      ctools_include('ajax');
+
+      // Get authentication url and set the path to be redirected back to.
+      $url = ding_adgangsplatformen_generate_login_url($path);
+
+      // Store the ajax callback url that triggered the ajax auth redirect.
+      $_SESSION['oauth2ajax'] = request_path() . '?' . drupal_http_build_query(drupal_get_query_parameters());
+
+      return ctools_ajax_command_redirect($url);
+    }
+
     $form_state = array();
     $form = drupal_build_form('user_login', $form_state);
     $login_form = drupal_render($form);
