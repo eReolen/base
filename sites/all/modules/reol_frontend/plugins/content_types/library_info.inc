@@ -42,22 +42,14 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
   require_once drupal_get_path('module', 'publizon').'/includes/publizon.loan.inc';
   $loans = publizon_loan_list($user);
 
-  // Load loaned entities indexed by object id.
-  $loaned_entities = [];
-  foreach (ding_entity_load_multiple(array_keys($loans)) as $entity) {
-    $loaned_entities[$entity->reply->openSearchObject->id] = $entity;
-  }
-
-  $quota_loans_by_type = [];
-  foreach ($loans as $id => $loan) {
-    if ($loaned_entities[$id]->reply->on_quota ?? FALSE) {
-      $quota_loans_by_type[$loan->publizon_type] = ($quota_loans_by_type[$loan->publizon_type] ?? 0) + 1;
-    }
+  $loans_by_type = [];
+  foreach ($loans as $loan) {
+    $loans_by_type[$loan->publizon_type] = ($loans_by_type[$loan->publizon_type] ?? 0) + 1;
   }
 
   $variables = array(
-    'ebook_loans' => $quota_loans_by_type['ebog'] ?? 0,
-    'audiobook_loans' => $quota_loans_by_type['lydbog (net)'] ?? 0,
+    'ebook_loans' => $loans_by_type['ebog'] ?? 0,
+    'audiobook_loans' => $loans_by_type['lydbog (net)'] ?? 0,
     // Quotas.
     'max_ebook_loans' => $library->maxEbookLoans,
     'max_audiobook_loans' => $library->maxAudiobookLoans,
@@ -66,11 +58,11 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
     'extra_link' => $extra_link,
     // Legacy texts.
     'max_ebook_loans_text' => t('You have loaned @number_of_loans out of @max_number_of_loans e-books.', array(
-      '@number_of_loans' => $quota_loans_by_type['ebog'] ?? 0,
+      '@number_of_loans' => $loans_by_type['ebog'] ?? 0,
       '@max_number_of_loans' => $library->maxEbookLoans,
     )),
     'max_audiobook_loans_text' => t('You have loaned @number_of_loans out of @max_number_of_loans audiobooks.', array(
-      '@number_of_loans' => $quota_loans_by_type['lydbog (net)'] ?? 0,
+      '@number_of_loans' => $loans_by_type['lydbog (net)'] ?? 0,
       '@max_number_of_loans' => $library->maxAudiobookLoans,
     )),
     'max_reservations_text' => t('You are allowed to reserve @reservations titles simultaneously.', array('@reservations' => $library->maxEbookReservations)),
