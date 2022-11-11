@@ -7,27 +7,41 @@ jobs:
   check-theme-assets:
     name: Check theme assets are up to date
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['16']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup docker network
-        run: docker network create frontend
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install build dependencies (pratchett)
+        run: yarn --cwd sites/all/themes/pratchett install
+
+      - name: Build shared theme (pratchett)
+        run: yarn --cwd sites/all/themes/pratchett build
+
+      - name: Check for changes in built css
+        run: git diff --diff-filter=ACMRT --exit-code sites/all/themes/pratchett/build
 
       - name: Install build dependencies
-        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/orwell install
+        run: yarn --cwd sites/all/themes/orwell install
 
       - name: Build eReolen theme (orwell)
-        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/orwell build
+        run: yarn --cwd sites/all/themes/orwell build
 
       - name: Check for changes in built css
         run: git diff --diff-filter=ACMRT --exit-code sites/all/themes/orwell/build
 
       - name: Install build dependencies
-        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/wille install
+        run: yarn --cwd sites/all/themes/wille install
 
       - name: Build eReolen Go theme (wille)
-        run: docker-compose run --rm node yarn --cwd /app/sites/all/themes/wille build
+        run: yarn --cwd sites/all/themes/wille build
 
       - name: Check for changes in built css
         run: git diff --diff-filter=ACMRT --exit-code sites/all/themes/wille/build
