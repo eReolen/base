@@ -179,6 +179,13 @@ function reol_field_carousel_field_widget_info() {
 
 /**
  * Implements hook_field_widget_form().
+ *
+ * We want to require both “title” and “search” for a carousel item, but we
+ * cannot use `#require` because we're inside an “unlimited” list and this would
+ * prevent use from removing an item (by clearing both “title” and “search”) or
+ * leave an empty item at the end of the list. Therefore we use
+ * `#element_validate` to perform the validation (and states for a little
+ * niceness).
  */
 function reol_field_carousel_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
   $element['title'] = array(
@@ -187,6 +194,12 @@ function reol_field_carousel_field_widget_form(&$form, &$form_state, $field, $in
     '#default_value' => isset($items[$delta]['title']) ? $items[$delta]['title'] : NULL,
     // As defined in the schema.
     '#maxlength' => 255,
+    '#states' => array(
+       'required' => array(
+         ':input[name="field_inspiration_paragraphs[und][0][field_carousel][und]['.$delta.'][search]"]' => array('!value' => ''),
+       ),
+    ),
+    '#element_validate' => array('reol_field_carousel_field_widget_form_validate'),
   );
 
   $element['search'] = array(
@@ -195,9 +208,42 @@ function reol_field_carousel_field_widget_form(&$form, &$form_state, $field, $in
     '#default_value' => isset($items[$delta]['search']) ? $items[$delta]['search'] : NULL,
     '#cols' => 60,
     '#rows' => 5,
+    '#states' => array(
+       'required' => array(
+         ':input[name="field_inspiration_paragraphs[und][0][field_carousel][und]['.$delta.'][title]"]' => array('!value' => ''),
+       ),
+    ),
+    '#element_validate' => array('reol_field_carousel_field_widget_form_validate'),
   );
 
   return $element;
+}
+
+/**
+ * Validation function for carousel widget.
+ *
+ * @params array $element
+ *   The element.
+ * @params array $form_state
+ *   The form state.
+ */
+function reol_field_carousel_field_widget_form_validate(array $element, array &$form_state) {
+  $widget_values = drupal_array_get_nested_value($form_state['values'], array_slice($element['#parents'], 0, -1));
+  $widget_values = array_map('trim', $widget_values);
+  $field_name = $element['#parents'][count($element['#parents'])-1];
+
+  // Require non-empty title when search is set.
+  if ('title' === $field_name) {
+    if (empty($widget_values['title']) && !empty($widget_values['search'])) {
+      form_error($element, t('Carusol title is required.'));
+    }
+  }
+  // Require non-empty search when title is set.
+  elseif ('search' === $field_name) {
+    if (empty($widget_values['search']) && !empty($widget_values['title'])) {
+      form_error($element, t('Carusol search is required.'));
+    }
+  }
 }
 
 /**
