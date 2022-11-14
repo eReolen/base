@@ -28,7 +28,7 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
    * @param array $parameters
    *   The parameters to send with the SOAP request.
    * @param bool $soap11
-   *   Whether or not the endpoint is SOAP 1.1.
+   *   Whether the endpoint is SOAP 1.1.
    *
    * @return string
    *   The SOAP response.

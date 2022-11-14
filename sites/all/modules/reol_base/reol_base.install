@@ -873,9 +873,16 @@ function reol_base_update_7173() {
 }
 
 /**
- * Enable Reol user module.
+ * Remove tiny png module.
  */
 function reol_base_update_7174() {
+  ding2_remove_module(array('tinypng'));
+}
+
+/**
+ * Enable Reol user module.
+ */
+function reol_base_update_7175() {
   module_enable(array('reol_user'));
 }
 
@@ -884,7 +891,7 @@ function reol_base_update_7174() {
  *
  * This is importen for the login popup to be shown.
  */
-function reol_base_update_7175() {
+function reol_base_update_7176() {
   db_update('system')
     ->fields(array('weight' => 10000))
     ->condition('name', 'reol_base', '=')
@@ -894,14 +901,14 @@ function reol_base_update_7175() {
 /**
  * Remove reol_user module.
  */
-function reol_base_update_7176() {
+function reol_base_update_7177() {
   reol_base_remove_module('reol_user');
 }
 
 /**
  * Added default text to log in box.
  */
-function reol_base_update_7177() {
+function reol_base_update_7178() {
   variable_set('ding_adgangsplatformen_notifications', [
     'text' => [
       'value' => '<p><strong>Bemærk!</strong></p><p>Hvis du oplever at blive logget ud, lige efter at du er logget ind, kan det være fordi dit bibliotek ikke er tilmeldt eReolens tjenester.</p><p>Læs mere om <a href="/faq/log-ind">problemer ved log ind</a> i vores FAQ</p>',
@@ -909,3 +916,5 @@ function reol_base_update_7177() {
     ]
   ]);
 }
+
+
