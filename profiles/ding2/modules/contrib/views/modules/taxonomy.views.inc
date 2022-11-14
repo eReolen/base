@@ -467,6 +467,10 @@ function taxonomy_field_views_data_views_data_alter(&$data, $field) {
     $entity_info = entity_get_info($entity_type);
     $pseudo_field_name = 'reverse_' . $field['field_name'] . '_' . $entity_type;
 
+    if (is_null($entity_info)) {
+      return;
+    }
+
     list($label, $all_labels) = field_views_field_label($field['field_name']);
     $entity = $entity_info['label'];
     if ($entity == t('Node')) {

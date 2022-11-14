@@ -11,7 +11,7 @@
 function pratchett_js_alter(&$javascript) {
   // Override script from ding_availability.
   $avail_js = drupal_get_path('module', 'ding_availability') . '/js/ding_availability_labels.js';
-  $new_aval_js = drupal_get_path('theme', 'pratchett') . '/scripts/ding_availability_labels.js';
+  $new_aval_js = drupal_get_path('theme', 'pratchett') . '/assets/scripts/ding_availability_labels.js';
   if (isset($javascript[$avail_js])) {
     $javascript[$avail_js]['data'] = $new_aval_js;
     $types = array();

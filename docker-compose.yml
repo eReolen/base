@@ -23,21 +23,21 @@ services:
       - .:/app:delegated
 
   phpfpm:
-    image: itkdev/php7.0-fpm:latest
+    image: itkdev/php7.4-fpm:latest
     networks:
       - app
     environment:
-      - PHP_XDEBUG=${PHP_XDEBUG:-0}
-      - PHP_XDEBUG_REMOTE_AUTOSTART=${PHP_XDEBUG_REMOTE_AUTOSTART:-0}
-      - PHP_XDEBUG_REMOTE_HOST=${PHP_XDEBUG_REMOTE_HOST:-0.0.0.0}
-      - PHP_XDEBUG_REMOTE_CONNECT_BACK=${PHP_XDEBUG_REMOTE_CONNECT_BACK:-0}
-      - PHP_MAIL=1
-      - PHP_MAX_EXECUTION_TIME=120
-      - PHP_MEMORY_LIMIT=512M
-      - PHP_IDE_CONFIG=serverName=localhost
+      - XDEBUG_MODE=${XDEBUG_MODE:-off}
+      - XDEBUG_SESSION=${XDEBUG_SESSION:-0}
+      - PHP_MAX_EXECUTION_TIME=30
+      - PHP_MEMORY_LIMIT=256M
+      # - PHP_MAIL=1 # Uncomment to enable mailhog.
       - DOCKER_HOST_DOMAIN=${COMPOSE_DOMAIN}
+      - COMPOSER_VERSION=1
+      - PHP_IDE_CONFIG=serverName=localhost
     depends_on:
       - mariadb
+      - memcached
     volumes:
       - .:/app:delegated
 

@@ -871,3 +871,10 @@ function reol_base_update_7172() {
 function reol_base_update_7173() {
   module_enable(array('elements'));
 }
+
+/**
+ * Remove tiny png module.
+ */
+function reol_base_update_7174() {
+  ding2_remove_module(array('tinypng'));
+}

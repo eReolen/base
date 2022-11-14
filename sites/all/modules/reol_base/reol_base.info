@@ -14,7 +14,6 @@ dependencies[] = reol_search
 dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = ting_material_details
-dependencies[] = tinypng
 dependencies[] = virtual_field
 explanation = Field type(s) in use - see <a href="/admin/reports/fields">Field list</a>
 features[ctools][] = strongarm:strongarm:1
@@ -34,6 +33,4 @@ features[variable][] = ting_cache_lifetime
 features[variable][] = ting_online_types
 features[variable][] = ting_openlist_wsdl
 features[variable][] = ting_reservable_sources
-features[variable][] = tinypng_api_key
-features[variable][] = tinypng_fallback_toolkit
 required = 1
