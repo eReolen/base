@@ -101,7 +101,7 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
           $pub_prod = publizon_load($entity->localId);
           // If not on publizon, do nothing.
           if (!$pub_prod) {
-            continue;
+            break;
           }
 
           $element[$delta] = array(
@@ -134,10 +134,10 @@ function reol_base_field_formatter_view($entity_type, $entity, $field, $instance
         $pub_prod = publizon_load($entity->localId);
         // If not on publizon, do nothing.
         if (!$pub_prod) {
-          continue;
+          break;
         }
         if (empty($pub_prod->category)) {
-          continue;
+          break;
         }
         $element[$delta] = array(
           '#markup' => $pub_prod->category,

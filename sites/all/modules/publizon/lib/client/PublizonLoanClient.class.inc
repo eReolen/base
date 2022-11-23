@@ -84,7 +84,7 @@ class PublizonLoanClient extends PublizonClient {
     $data = $response->xpath('//data/orderitem');
     $loans = array();
     if (isset($data[0])) {
-      while (list(, $loan) = each($data)) {
+      foreach ($data as $loan) {
         $loans[] = new PublizonLoan($loan);
       }
     }
@@ -100,7 +100,7 @@ class PublizonLoanClient extends PublizonClient {
    * @param string $card_number
    *   The users card number/CPR also known as login id.
    * @param string $isbn
-   *   ISBN number on the product.
+   *   ISBN on the product.
    *
    * @return PublizonLoan|bool
    *   Returns the loan, or FALSE if no loan exists.
@@ -117,7 +117,7 @@ class PublizonLoanClient extends PublizonClient {
     // Check if any data was returned.
     $data = $response->xpath('//data/orderitem');
     if (isset($data[0])) {
-      while (list(, $loan) = each($data)) {
+      foreach ($data as $loan) {
         return new PublizonLoan($loan);
       }
     }
@@ -131,7 +131,7 @@ class PublizonLoanClient extends PublizonClient {
    * @param string $retailer_id
    *   The id of the retailer to get status for.
    * @param array $isbns
-   *   ISBN numbers on the products.
+   *   ISBNs on the products.
    * @param string $card_number
    *   The users card number/CPR also known as login id.
    *
