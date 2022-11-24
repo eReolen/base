@@ -19,7 +19,7 @@ class PublizonReservation extends Publizon {
    *
    * @var array
    */
-  protected $properties = array(
+  protected array $properties = array(
     'bookId' => NULL,
     'isbn' => NULL,
     'createdUtc' => NULL,
