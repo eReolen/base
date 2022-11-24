@@ -1,0 +1,19 @@
+diff --git a/memcache.inc b/memcache.inc
+index 1c81def..cb16a96 100644
+--- a/memcache.inc
++++ b/memcache.inc
+@@ -121,6 +121,14 @@ class MemCacheDrupal implements DrupalCacheInterface {
+    *   Whether the item is valid.
+    */
+   protected function valid($cid, &$cache) {
++	if (is_string($cache)) {
++      try {
++        $cache = @unserialize($cache);
++      }
++      catch (\Exception $e) {
++        $cache = NULL;
++      }
++    }
+     if ($cache) {
+       // Legacy support
+       if (!isset($cache->expire)) {

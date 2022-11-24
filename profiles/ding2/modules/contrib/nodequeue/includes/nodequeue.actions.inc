@@ -6,32 +6,6 @@
  */
 
 /**
- * Implements hook_action_info().
- */
-function nodequeue_action_info() {
-  return array(
-    'nodequeue_add_action' => array(
-      'type' => 'node',
-      'label' => t('Add to Nodequeues'),
-      'configurable' => TRUE,
-      'triggers' => array(
-        'node_presave',
-        'node_insert',
-        'node_update',
-      ),
-    ),
-    'nodequeue_remove_action' => array(
-      'type' => 'node',
-      'label' => t('Remove from Nodequeues'),
-      'configurable' => TRUE,
-      'triggers' => array(
-        'node_delete',
-      ),
-    ),
-  );
-}
-
-/**
  * Configuration form for Add to Nodequeues action.
  */
 function nodequeue_add_action_form($context) {
@@ -102,7 +76,10 @@ function nodequeue_add_action($node, $context) {
 /**
  * Old-style action to add a node to a queue.
  */
-function action_nodequeue_add($op, $edit = array(), $node) {
+function action_nodequeue_add($op, $edit, $node) {
+  if (empty($edit)) {
+    $edit = array();
+  }
   switch ($op) {
     case 'metadata':
       return array(
@@ -234,7 +211,10 @@ function nodequeue_remove_action($node, $context) {
 /**
  * Old-style action to remove a node from a queue.
  */
-function action_nodequeue_remove($op, $edit = array(), $node) {
+function action_nodequeue_remove($op, $edit, $node) {
+  if (empty($edit)) {
+    $edit = array();
+  }
   switch ($op) {
     case 'metadata':
       return array(
