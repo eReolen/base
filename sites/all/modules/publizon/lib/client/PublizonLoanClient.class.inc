@@ -21,7 +21,7 @@ class PublizonLoanClient extends PublizonClient {
    *   The id of the retailer to loan for.
    * @param string $card_number
    *   The users card number/CPR also known as login id.
-   * @param string $pincode
+   * @param ?string $pincode
    *   The users login pin code.
    * @param string $isbn
    *   ISBN on the product.
@@ -34,7 +34,7 @@ class PublizonLoanClient extends PublizonClient {
    * @throws \PublizonConnectionException
    * @throws \PublizonException
    */
-  public function createLoan(string $retailer_id, string $card_number, string $pincode, string $isbn, string $institution_id = NULL): array {
+  public function createLoan(string $retailer_id, string $card_number, ?string $pincode, string $isbn, string $institution_id = NULL): array {
     // Call the webservice, throwing exception on failure.
     $response = $this->call('loan', 'CreateLoan', $retailer_id, array(
       'pub:ebookid' => $isbn,

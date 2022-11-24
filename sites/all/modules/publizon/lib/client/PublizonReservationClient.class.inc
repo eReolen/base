@@ -17,7 +17,7 @@ class PublizonReservationClient extends PublizonClient {
    *   The id of the retailer to reserve for.
    * @param string $card_number
    *   The users card number/CPR also known as login id.
-   * @param string $pincode
+   * @param ?string $pincode
    *   The users login pin code.
    * @param string $isbn
    *   ISBN on the product.
@@ -32,7 +32,7 @@ class PublizonReservationClient extends PublizonClient {
    * @throws \PublizonConnectionException
    * @throws \PublizonException
    */
-  public function createReservation(string $retailer_id, string $card_number, string $pincode, string $isbn, string $email = '', string $phone = ''): bool {
+  public function createReservation(string $retailer_id, string $card_number, ?string $pincode, string $isbn, string $email = '', string $phone = ''): bool {
     // Call the webservice, throwing exception on failure.
     $response = $this->call('reservation', 'Create', $retailer_id, array(
       'pub:ebookid' => $isbn,
