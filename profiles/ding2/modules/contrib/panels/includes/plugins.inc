@@ -2,7 +2,6 @@
 
 /**
  * @file
- *
  * Contains helper code for plugins and contexts.
  */
 
@@ -41,7 +40,7 @@ function panels_get_regions($layout, $display) {
  *   The cached content, or FALSE to indicate no cached content exists.
  */
 function panels_get_cached_content($display, $args, $context, $pane = NULL) {
-  // Never use cache on a POST
+  // Never use cache on a POST.
   if (!empty($_POST)) {
     return FALSE;
   }
@@ -59,7 +58,7 @@ function panels_get_cached_content($display, $args, $context, $pane = NULL) {
     return FALSE;
   }
 
-  // restore it.
+  // Restore it.
   $cache->restore();
   return $cache;
 }
@@ -68,7 +67,7 @@ function panels_get_cached_content($display, $args, $context, $pane = NULL) {
  * Store cached content for a given display and possibly pane.
  */
 function panels_set_cached_content($cache, $display, $args, $context, $pane = NULL) {
-  // Never use cache on a POST
+  // Never use cache on a POST.
   if (!empty($_POST)) {
     return FALSE;
   }
@@ -82,7 +81,7 @@ function panels_set_cached_content($cache, $display, $args, $context, $pane = NU
 
   $conf = $pane ? $pane->cache['settings'] : $display->cache['settings'];
 
-  // snapshot it.
+  // Snapshot it.
   $cache->cache();
   return $function($conf, $cache, $display, $args, $context, $pane);
 }
@@ -116,10 +115,10 @@ function panels_clear_cached_content($display) {
  */
 class panels_cache_object {
   var $content = '';
-  var $head = NULL;
-  var $css = NULL;
-  var $js = NULL;
-  var $tokens = NULL;
+  var $head = array();
+  var $css = array();
+  var $js = array();
+  var $tokens = array();
   var $ready = FALSE;
 
   /**
@@ -154,8 +153,8 @@ class panels_cache_object {
 
     $this->ready = TRUE;
 
-    // Simple replacement for head
-    $this->head = str_replace($this->head, '', drupal_add_html_head());
+    // Simple replacement for head.
+    $this->head = array_diff_key(drupal_add_html_head(), $this->head);
 
     // Slightly less simple for CSS:
     $css = drupal_add_css();
@@ -221,7 +220,9 @@ class panels_cache_object {
    */
   function restore() {
     if (!empty($this->head)) {
-      drupal_add_html_head($this->head);
+      foreach ($this->head as $key => $data) {
+        drupal_add_html_head($data, $key);
+      }
     }
     if (!empty($this->css)) {
       foreach ($this->css as $args) {
@@ -248,6 +249,7 @@ class panels_cache_object {
       }
     }
   }
+
 }
 
 /**
@@ -412,7 +414,7 @@ function panels_get_renderer_handler($plugin, &$display) {
  * Choose a renderer for a display based on a render pipeline setting.
  */
 function panels_get_renderer($pipeline_name, &$display) {
-  // Load the pipeline
+  // Load the pipeline.
   ctools_include('export');
   $pipeline = ctools_export_crud_load('panels_renderer_pipeline', $pipeline_name);
 
@@ -443,7 +445,7 @@ function panels_get_renderer($pipeline_name, &$display) {
     return $renderer;
   }
 
-  // Fall through. If no renderer is selected, use the standard renderer
+  // Fall through. If no renderer is selected, use the standard renderer.
   return panels_get_renderer_handler('standard', $display);
 }
 
@@ -454,9 +456,9 @@ function panels_get_renderer($pipeline_name, &$display) {
  */
 function _panels_renderer_pipeline_sort($a, $b) {
   if ($a->weight == $b->weight) {
-      if ($a->admin_title == $b->admin_title) {
-        return 0;
-      }
+    if ($a->admin_title == $b->admin_title) {
+      return 0;
+    }
     return ($a->admin_title < $b->admin_title) ? -1 : 1;
   }
   return ($a->weight < $b->weight) ? -1 : 1;
@@ -476,6 +478,31 @@ function panels_get_renderer_pipelines($sort = TRUE) {
   }
 
   return $pipelines;
+}
+
+/**
+ * Fetch metadata on a specific panels_storage plugin.
+ *
+ * @param $storage
+ *   Name of a panel_storage plugin.
+ *
+ * @return
+ *   An array with information about the requested panels_storage plugin
+ */
+function panels_get_panels_storage_plugin($storage) {
+  ctools_include('plugins');
+  return ctools_get_plugins('panels', 'panels_storage', $storage);
+}
+
+/**
+ * Fetch metadata for all panels_storage plugins.
+ *
+ * @return
+ *   An array of arrays with information about all available panels_storage plugins.
+ */
+function panels_get_panels_storage_plugins() {
+  ctools_include('plugins');
+  return ctools_get_plugins('panels', 'panels_storage');
 }
 
 /**
