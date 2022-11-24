@@ -1,0 +1,14 @@
+diff --git a/entitycache.module b/entitycache.module
+index 1ba5998..8c4c7f5 100644
+--- a/entitycache.module
++++ b/entitycache.module
+@@ -273,7 +273,7 @@ function entitycache_entity_insert($entity, $type) {
+   if (!empty($info['entity cache']) && empty($entity->migrate)) {
+     // file_field_insert() no longer exists. Don't take this out
+     // just yet though because other modules might also misbehave.
+-    // cache_clear_all($id, 'cache_entity_' . $type);
++    cache_clear_all($id, 'cache_entity_' . $type);
+   }
+ }
+ 
+

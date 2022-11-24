@@ -1,0 +1,13 @@
+diff --git a/includes/entitycache.entitycachecontrollerhelper.inc b/includes/entitycache.entitycachecontrollerhelper.inc
+index f441695..fb3e138 100644
+--- a/includes/entitycache.entitycachecontrollerhelper.inc
++++ b/includes/entitycache.entitycachecontrollerhelper.inc
+@@ -72,7 +72,7 @@ class EntityCacheControllerHelper extends DrupalDefaultEntityController {
+     // were passed. The $ids array is reduced as items are loaded from cache,
+     // and we need to know if it's empty for this reason to avoid querying the
+     // database when all requested entities are loaded from cache.
+-    $passed_ids = !empty($ids) ? array_flip($ids) : FALSE;
++    $passed_ids = !empty($ids) ? array_flip(array_filter($ids, 'strlen')) : FALSE;
+ 
+     // Use an entity field query to transform the list of conditions into
+     // the set of entity IDs which the conditions admit, then re-enter this
