@@ -19,7 +19,7 @@ class PublizonLoan extends Publizon {
    *
    * @var array
    */
-  protected $properties = array(
+  protected array $properties = array(
     'isbn' => NULL,
     'internal_order_number' => NULL,
     'retailer_order_number' => NULL,

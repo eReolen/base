@@ -32,7 +32,7 @@ function og_menu_config_form($form, &$form_state) {
     '#type' => 'checkbox',
     '#title' => t('Limit available menus to provided context'),
     '#default_value' => variable_get('og_menu_context_limit', FALSE),
-    '#description' => t('If enabled, instead of loading all available menus on node creation or editing, og menu will only load menus associated with the current context. On sites with a lot of (group) menus this can greatly improve page performance.'),
+    '#description' => t('If enabled, instead of loading all available menus on node creation or editing, og menu will only load menus associated with the current context. On sites with a lot of (group) menus this can greatly improve page performance. Note that this requires the group context to be set when creating content, usually done with url parameters.'),
   );
 
   $form['performance']['og_menu_assignment'] = array(
@@ -50,7 +50,7 @@ function og_menu_config_form($form, &$form_state) {
   // Automatic menu creation.
   $form['auto'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Automatic menu creation'),
+    '#title' => t('Menu creation'),
   );
 
   $form['auto']['og_menu_create_by_default'] = array(
@@ -65,11 +65,6 @@ function og_menu_config_form($form, &$form_state) {
     '#title' => t('Hide "Enable menu for this group"'),
     '#default_value' => variable_get('og_menu_hide_create_option', FALSE),
     '#description' => t('If enabled, "Enable menu for this group" will be hidden in the node edit form.'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name=og_menu_create_by_default]' => array('checked' => TRUE),
-      ),
-    ),
   );
 
   // Visibility setting to hide OG Menus on selected pages.

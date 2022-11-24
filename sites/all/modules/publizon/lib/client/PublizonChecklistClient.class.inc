@@ -11,18 +11,18 @@
 class PublizonChecklistClient extends PublizonClient {
 
   /**
-   * Add a title to the users checklist.
+   * Add a title to the user's checklist.
    *
    * @param string $retailer_id
    *   The id of the retailer to add to checklist for.
    * @param string $card_number
-   *   The card number whos checklist to add to.
+   *   The card number whose checklist to add to.
    * @param string $isbn
    *   The ISBN-number of the title.
    *
    * @throws PublizonException
    */
-  public function addChecklistItem($retailer_id, $card_number, $isbn) {
+  public function addChecklistItem(string $retailer_id, string $card_number, string $isbn): bool {
     // Call the webservice, throwing exception on failure.
     $response = $this->call('checklist', 'AddCheckListItem', $retailer_id, array(
       'pub:cardnumber' => $card_number,
@@ -41,18 +41,18 @@ class PublizonChecklistClient extends PublizonClient {
   }
 
   /**
-   * Delete a title from the users checklist.
+   * Delete a title from the user's checklist.
    *
    * @param string $retailer_id
    *   The id of the retailer to delete from checklist for.
    * @param string $card_number
-   *   The card number whos checklist to delete from.
+   *   The card number whose checklist to delete from.
    * @param string $isbn
    *   The ISBN-number of the title.
    *
    * @throws PublizonException
    */
-  public function deleteChecklistItem($retailer_id, $card_number, $isbn) {
+  public function deleteChecklistItem(string $retailer_id, string $card_number, string $isbn): bool {
     // Call the webservice, throwing exception on failure.
     $response = $this->call('checklist', 'DeleteCheckListItem', $retailer_id, array(
       'pub:cardnumber' => $card_number,
@@ -71,19 +71,19 @@ class PublizonChecklistClient extends PublizonClient {
   }
 
   /**
-   * Get a users checklist.
+   * Get a user's checklist.
    *
    * @param string $retailer_id
    *   The id of the retailer to add to checklist for.
    * @param string $card_number
-   *   The card number whos checklist to add to.
+   *   The card number whose checklist to add to.
    *
    * @return array
    *   Array of PublizonChecklistItem objects.
    *
    * @throws PublizonException
    */
-  public function getChecklist($retailer_id, $card_number) {
+  public function getChecklist(string $retailer_id, string $card_number): array {
     // Call the webservice, throwing exception on failure.
     $response = $this->call('checklist', 'GetCheckList', $retailer_id, array(
       'pub:cardnumber' => $card_number,

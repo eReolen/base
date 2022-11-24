@@ -24,7 +24,7 @@ abstract class PublizonLogger {
    *
    * @var array
    */
-  static public $levels = array(
+  static public array $levels = array(
     self::EMERGENCY,
     self::ALERT,
     self::CRITICAL,
@@ -45,7 +45,7 @@ abstract class PublizonLogger {
    *
    * @throws Exception
    */
-  public function log($message, $severity = self::INFO) {
+  public function log(string $message, string $severity = self::INFO) {
     if (!in_array($severity, self::$levels)) {
       throw new Exception('Unsupported severity: ' . $severity);
     }

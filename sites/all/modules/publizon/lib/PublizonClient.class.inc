@@ -28,7 +28,7 @@ abstract class PublizonClient {
    *
    * @var array
    */
-  protected $endpoints = array(
+  protected array $endpoints = array(
     'product' => 'getproduct.asmx',
     'product_list' => 'getproductlist.asmx',
     'loan' => 'createloan.asmx',
@@ -47,7 +47,7 @@ abstract class PublizonClient {
    *
    * @var array
    */
-  private static $instances = array();
+  private static array $instances = array();
 
   /**
    * Get the singleton client.
@@ -109,9 +109,9 @@ abstract class PublizonClient {
    * @throws PublizonConnectionException
    *   If the connection fails.
    * @throws PublizonException
-   *   If the response dose not have a 101 status.
+   *   If the response does not have a 101 status.
    */
-  protected function call($endpoint, $action, $retailer_id, array $parameters, array $namespace) {
+  protected function call(string $endpoint, string $action, string $retailer_id, array $parameters, array $namespace) {
     // Get retailer information.
     $retailer = publizon_get_library($retailer_id);
 
