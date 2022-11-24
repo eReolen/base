@@ -18,7 +18,7 @@ abstract class Publizon {
    *
    * @var array
    */
-  protected $properties = array();
+  protected array $properties = array();
 
   /**
    * Implements PHP magic __get function.

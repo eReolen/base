@@ -878,3 +878,10 @@ function reol_base_update_7173() {
 function reol_base_update_7174() {
   ding2_remove_module(array('tinypng'));
 }
+
+/**
+ * Remove system status module.
+ */
+function reol_base_update_7175() {
+  ding2_remove_module(array('system_status'));
+}

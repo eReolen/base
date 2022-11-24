@@ -11,14 +11,14 @@
 class PublizonUserClient extends PublizonClient {
 
   /**
-   * Validata a library user.
+   * Validate a library user.
    *
    * Validates that a given user is allowed to login to the publizon
    * web-service.
    *
    * @param string $card_number
    *   User card_number/CPR/UNI•Login id also known as login id.
-   * @param string $pincode
+   * @param ?string $pincode
    *   The users pin code. Null for UNI•Login users.
    * @param string $retailer_id
    *   TODO Parameter $retailer_id is not described in comment.
@@ -29,7 +29,7 @@ class PublizonUserClient extends PublizonClient {
    *
    * @throws \Exception
    */
-  public function validateLibraryUser($card_number, $pincode, $retailer_id) {
+  public function validateLibraryUser(string $card_number, ?string $pincode, string $retailer_id) {
     $arguments = array(
       'pub:cardnumber' => $card_number,
     );
@@ -49,7 +49,7 @@ class PublizonUserClient extends PublizonClient {
         $support_id = (string) $friendly_elements[0];
       }
     }
-    // On exception we are not logged in.
+    // On exception, we are not logged in.
     catch (PublizonException $e) {
       $this->logger->log($e->getMessage(), 'ERROR');
       return FALSE;

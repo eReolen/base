@@ -14,7 +14,7 @@ class PublizonLoanStatus extends Publizon {
    *
    * @var array
    */
-  protected $properties = array(
+  protected array $properties = array(
     'loanStatus' => NULL,
     'onChecklist' => NULL,
     'isbn' => NULL,

@@ -1,0 +1,41 @@
+From b9b98651d01622bc9e1cecd8dfa30aa3bb50d5d1 Mon Sep 17 00:00:00 2001
+From: pc-wurm <pc-wurm@1274938.no-reply.drupal.org>
+Date: Mon, 23 Nov 2015 11:43:03 +0000
+Subject: [PATCH] Issue #2441965 by pc-wurm, lord_of_freaks, joelpittet,
+ DuaelFr, vijaycs85: Broken updates due to Classes living in .module files
+
+---
+ entitycache.module | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/entitycache.module b/entitycache.module
+index 66366e0..bd4c648 100644
+--- a/entitycache.module
++++ b/entitycache.module
+@@ -212,3 +212,23 @@ function entitycache_user_logout($account) {
+ function entitycache_user_login(&$edit, $account) {
+   cache_clear_all($account->uid, 'cache_entity_user');
+ }
++
++/**
++ * Workaround for update 7.x-1.3 and later breaking existing sites, since the
++ * class autoloader cannot find the classes previously defined in this file but
++ * now are moved into individual files under 'includes' folder.
++ *
++ * @see https://www.drupal.org/node/2441965#comment-10558568
++ */
++if (!class_exists('EntityCacheControllerHelper')) {
++  require_once __DIR__ . '/includes/entitycache.entitycachecontrollerhelper.inc';
++}
++if (!class_exists('EntityCacheDefaultEntityController')) {
++  require_once __DIR__ . '/includes/entitycache.defaultentitycontroller.inc';
++}
++if (!class_exists('EntityCacheNodeController')) {
++  require_once __DIR__ . '/includes/entitycache.node.inc';
++}
++if (!class_exists('EntityCacheUserController')) {
++  require_once __DIR__ . '/includes/entitycache.user.inc';
++}
+-- 
+GitLab
+

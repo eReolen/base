@@ -13,7 +13,7 @@ class PublizonLibraryClient extends PublizonClient {
   /**
    * Get basic information about a given library as registered at Publizon.
    *
-   * @param string $retailer_id
+   * @param string|null $retailer_id
    *   The library's ID at Publizon.
    *
    * @return PublizonLibrary|bool
@@ -22,7 +22,7 @@ class PublizonLibraryClient extends PublizonClient {
    * @throws \PublizonConnectionException
    * @throws \PublizonException
    */
-  public function getLibraryProfile($retailer_id = NULL) {
+  public function getLibraryProfile(string $retailer_id = NULL) {
     // Make the web-service call.
     $response = $this->call('library_profile', 'GetLibraryProfile', $retailer_id, array(), array('pub' => 'http://pubhub.dk/'));
 
