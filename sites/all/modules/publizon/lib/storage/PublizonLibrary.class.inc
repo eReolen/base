@@ -14,7 +14,7 @@ class PublizonLibrary extends Publizon {
    *
    * @var array
    */
-  protected $properties = array(
+  protected array $properties = array(
     'maxEbookLoans' => NULL,
     'maxAudiobookLoans' => NULL,
     'maxEbookReservations' => NULL,
@@ -32,7 +32,7 @@ class PublizonLibrary extends Publizon {
   }
 
   /**
-   * Parse a XML library from publizon into the object.
+   * Parse an XML library from publizon into the object.
    *
    * @param SimpleXMLElement $item
    *   Publizon XML representation of a library.

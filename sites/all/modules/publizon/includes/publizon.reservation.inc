@@ -66,30 +66,33 @@ function publizon_reservation_list($account, $get_type = '', $reset = FALSE) {
         }
 
         $ting_entity = ding_entity_load($ding_id);
-        $id = $ting_entity->localId;
-        $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
-        $data = array(
-          'order_id' => $id,
-          'ding_entity_id' => $ding_id,
-          'ready_for_pickup' => $reservation->status == 2,
-          'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
-          // To avoid warnings, we have to set this, even though we remove
-          // it later.
-          'expiry' => date('Y-m-d H:i:s', 0),
-          'renewable' => FALSE,
-          'reservation_type' => $type,
-          'display_name' => $reservation->title,
-        );
+        if ($ting_entity) {
+          $id = $ting_entity->localId;
+          $type = $reservation->status == 2 ? DING_RESERVATION_READY : DING_RESERVATION_NOT_READY;
+          $data = array(
+            'order_id' => $id,
+            'ding_entity_id' => $ding_id,
+            'ready_for_pickup' => $reservation->status == 2,
+            'created' => date('Y-m-d H:i:s', $reservation->createdUtc),
+            // To avoid warnings, we have to set this, even though we remove
+            // it later.
+            'expiry' => date('Y-m-d H:i:s', 0),
+            'renewable' => FALSE,
+            'reservation_type' => $type,
+            'display_name' => $reservation->title,
+          );
 
-        // If reservation is ready, add pickup date.
-        if ($type == DING_RESERVATION_READY) {
-          $data['pickup_date'] = date('Y-m-d H:i:s', $reservation->expireUtc);
+          // If reservation is ready, add pickup date.
+          if ($type == DING_RESERVATION_READY) {
+            $data['pickup_date'] = date('Y-m-d H:i:s', $reservation->expireUtc);
+          }
+
+          $results[$type][$id] = new DingProviderReservation($id, $data);
+          if ($reservation->expectedRedeemDateUtc) {
+            $results[$type][$id]->expected_date = date('Y-m-d H:i:s', $reservation->expectedRedeemDateUtc);
+          }
         }
 
-        $results[$type][$id] = new DingProviderReservation($id, $data);
-        if ($reservation->expectedRedeemDateUtc) {
-          $results[$type][$id]->expected_date = date('Y-m-d H:i:s', $reservation->expectedRedeemDateUtc);
-        }
       }
 
       // Store the reservations into ding session cache.

@@ -14,7 +14,7 @@ class PublizonProduct extends Publizon {
    *
    * @var array
    */
-  protected $properties = array(
+  protected array $properties = array(
     'coverImage' => NULL,
     'format' => NULL,
     'category' => NULL,
