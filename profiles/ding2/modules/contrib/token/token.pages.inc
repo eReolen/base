@@ -199,7 +199,7 @@ function _token_token_tree_format_row($token, array $token_info, $is_group = FAL
   $row = $defaults;
   $row['id'] = _token_clean_css_identifier($token);
   $row['data']['name'] = $token_info['name'];
-  $row['data']['description'] = $token_info['description'];
+  $row['data']['description'] = isset($token_info['description']) ? $token_info['description'] : '';
 
   if ($is_group) {
     // This is a token type/group.
@@ -207,6 +207,7 @@ function _token_token_tree_format_row($token, array $token_info, $is_group = FAL
   }
   else {
     // This is a token.
+    $row['data']['token'] = array();
     $row['data']['token']['data'] = $token;
     $row['data']['token']['class'][] = 'token-key';
     if (isset($token_info['value'])) {
@@ -291,79 +292,4 @@ function token_flush_cache_callback() {
   token_clear_cache();
   drupal_set_message(t('Token registry caches cleared.'));
   drupal_goto();
-}
-
-function token_autocomplete() {
-  $args = func_get_args();
-  $string = implode('/', $args);
-
-  $token_info = token_info();
-
-  preg_match_all('/\[([^\s\]:]*):?([^\s\]]*)?\]?/', $string, $matches);
-  $types = $matches[1];
-  $tokens = $matches[2];
-
-  foreach ($types as $index => $type) {
-    if (!empty($tokens[$index]) || isset($token_info['types'][$type])) {
-      token_autocomplete_token($type, $tokens[$index]);
-    }
-    else {
-      token_autocomplete_type($type);
-    }
-  }
-
-}
-
-function token_autocomplete_type($string = '') {
-  $token_info = token_info();
-  $types = $token_info['types'];
-  $matches = array();
-
-  foreach ($types as $type => $info) {
-    if (!$string || strpos($type, $string) === 0) {
-      $type_key = "[{$type}:";
-      $matches[$type_key] = levenshtein($type, $string);
-    }
-  }
-
-  if ($string) {
-    asort($matches);
-  }
-  else {
-    ksort($matches);
-  }
-
-  $matches = drupal_map_assoc(array_keys($matches));
-  drupal_json_output($matches);
-}
-
-function token_autocomplete_token($token_type) {
-  $args = func_get_args();
-  array_shift($args);
-  $string = trim(implode('/', $args));
-  $string = substr($string, strrpos($string, '['));
-
-  $token_type = $token_type['type'];
-  $matches = array();
-
-  if (!drupal_strlen($string)) {
-    $matches["[{$token_type}:"] = 0;
-  }
-  else {
-    $depth = max(1, substr_count($string, ':'));
-    $tree = token_build_tree($token_type, array('flat' => TRUE, 'depth' => $depth));
-    foreach (array_keys($tree) as $token) {
-      if (strpos($token, $string) === 0) {
-        $matches[$token] = levenshtein($token, $string);
-        if (isset($tree[$token]['children'])) {
-          $token = rtrim($token, ':]') . ':';
-          $matches[$token] = levenshtein($token, $string);
-        }
-      }
-    }
-  }
-
-  asort($matches);
-  $matches = drupal_map_assoc(array_keys($matches));
-  drupal_json_output($matches);
 }
