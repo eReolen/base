@@ -14,7 +14,7 @@ class PublizonChecklistItem extends Publizon {
    *
    * @var array
    */
-  protected $properties = array(
+  protected array $properties = array(
     'creationDateUtc' => NULL,
     'title' => NULL,
     'isbn' => NULL,

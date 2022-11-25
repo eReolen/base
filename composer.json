@@ -4,7 +4,9 @@
         "phan/phan": "^1.2",
         "ext-curl": "*",
         "ext-dom": "*",
-        "ext-soap": "*"
+        "ext-soap": "*",
+        "ext-simplexml": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "drupal/coder": "^8.3.1",

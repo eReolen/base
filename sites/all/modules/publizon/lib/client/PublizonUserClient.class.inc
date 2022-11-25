@@ -57,7 +57,7 @@ class PublizonUserClient extends PublizonClient {
    *
    * @param string $card_number
    *   User card_number/CPR/UNI•Login id also known as login id.
-   * @param string $pincode
+   * @param ?string $pincode
    *   The users pin code. Null for UNI•Login users.
    * @param string $retailer_id
    *   The retailer's id.
@@ -70,7 +70,7 @@ class PublizonUserClient extends PublizonClient {
    *
    * @deprecated removed in publizon API version 2.6.
    */
-  public function validateLibraryUser($card_number, $pincode, $retailer_id) {
+  public function validateLibraryUser(string $card_number, ?string $pincode, string $retailer_id) {
     $arguments = array(
       'pub:cardnumber' => $card_number,
     );

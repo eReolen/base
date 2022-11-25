@@ -21,11 +21,11 @@ class PublizonLoanClient extends PublizonClient {
    *   The id of the retailer to loan for.
    * @param string $card_number
    *   The users card number/CPR also known as login id.
-   * @param string $pincode
+   * @param ?string $pincode
    *   The users login pin code.
    * @param string $isbn
-   *   ISBN number on the product.
-   * @param null|string $institution_id
+   *   ISBN on the product.
+   * @param string|null $institution_id
    *   The user's institution id.
    *
    * @return array
@@ -34,7 +34,7 @@ class PublizonLoanClient extends PublizonClient {
    * @throws \PublizonConnectionException
    * @throws \PublizonException
    */
-  public function createLoan($retailer_id, $card_number, $pincode, $isbn, $institution_id = NULL) {
+  public function createLoan(string $retailer_id, string $card_number, ?string $pincode, string $isbn, string $institution_id = NULL): array {
     // Call the webservice, throwing exception on failure.
     $response = $this->call('loan', 'CreateLoan', $retailer_id, array(
       'pub:ebookid' => $isbn,
@@ -74,7 +74,7 @@ class PublizonLoanClient extends PublizonClient {
    * @throws \PublizonConnectionException
    * @throws \PublizonException
    */
-  public function getLibraryUserOrderList($retailer_id, $card_number) {
+  public function getLibraryUserOrderList(string $retailer_id, string $card_number): array {
     // Make request to the web-service for the loans.
     $response = $this->call('library_user_order_list', 'GetLibraryUserOrderList', $retailer_id, array(
       'pub:cardnumber' => $card_number,
@@ -107,7 +107,7 @@ class PublizonLoanClient extends PublizonClient {
    *
    * @throws PublizonException
    */
-  public function getLibraryUserOrder($retailer_id, $card_number, $isbn) {
+  public function getLibraryUserOrder(string $retailer_id, string $card_number, string $isbn) {
     // Make request to the web-service for the loans.
     $response = $this->call('library_user_order_list', 'GetLibraryUserOrder', $retailer_id, array(
       'pub:cardnumber' => $card_number,
@@ -132,7 +132,7 @@ class PublizonLoanClient extends PublizonClient {
    *   The id of the retailer to get status for.
    * @param array $isbns
    *   ISBNs on the products.
-   * @param string $card_number
+   * @param string|null $card_number
    *   The users card number/CPR also known as login id.
    *
    * @return array
@@ -140,7 +140,7 @@ class PublizonLoanClient extends PublizonClient {
    *
    * @throws PublizonException
    */
-  public function getProductLoanStatusList($retailer_id, array $isbns, $card_number = NULL) {
+  public function getProductLoanStatusList(string $retailer_id, array $isbns, string $card_number = NULL): array {
     // Make request to the web-service for the status.
     $request = array(
       'pub:ebookids' => array(

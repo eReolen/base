@@ -256,7 +256,8 @@ function _reol_loan_map_availability(array $availability, $ding_entity_id) {
       $reservations = ding_provider_invoke('reservation', 'list', $user);
       if (!empty($reservations['not_ready_for_pickup'])) {
         foreach ($reservations['not_ready_for_pickup'] as $reservation) {
-          if ($reservation->getEntity()->id == $ding_entity_id) {
+          $entity = $reservation->getEntity();
+          if (false !== $entity && $reservation->getEntity()->id == $ding_entity_id) {
             return REOL_LOAN_STATUS_RESERVED;
           }
         }

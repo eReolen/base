@@ -32,8 +32,10 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
    *
    * @return string
    *   The SOAP response.
+   *
+   * @throws \NanoSOAPcURLException
    */
-  public function callExtended($action, array $parameters = array(), $soap11 = TRUE) {
+  public function callExtended($action, array $parameters = array(), bool $soap11 = TRUE): string {
     // Set content type and send the SOAP action as a header.
     $headers = array(
       'Content-Type: text/xml',
@@ -41,11 +43,11 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
 
     // For SOAP 1.1 we need to include SOAPAction header.
     if ($soap11) {
-      list($action_ns, $action_txt) = explode(':', $action, 2);
+      [$action_ns, $action_txt] = explode(':', $action, 2);
       $headers[] = 'SOAPAction: ' . trim($this->namespaces[$action_ns], '/') . '/' . $action_txt;
     }
 
-    // Make a DOM document from the envelope and get the Body tag so we
+    // Make a DOM document from the envelope and get the Body tag, so we
     // can add our request data to it.
     $this->doc = new DOMDocument();
     $this->doc->loadXML($this->generateSOAPenvelope());
