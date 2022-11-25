@@ -94,20 +94,25 @@ function overdrive_theme($existing, $type, $theme, $path) {
  *
  * Get covers for overdrive titles form the data-well relations.
  */
-function overdrive_ting_covers($entities) {
+function overdrive_ting_covers($entities): array {
   $covers = array();
   foreach ($entities as $id => $entity) {
-    // Check that the entity is an overdrive entity based on it's PID.
-    // We make this extra check at getting relations for a entity may
+    // Check that the entity is an overdrive entity based on its PID.
+    // We make this extra check at getting relations for an entity may
     // trigger extra requests to the data-well which is expensive.
     // So lets limit that.
     if (strpos($id, ':ODN') !== FALSE) {
-      $uri = '';
-      $relations = $entity->getRelations();
-      foreach ($relations as $relation) {
-        if ($relation->getType() === 'dbcaddi:hasCover') {
-          $uri = $relation->getURI();
-          break;
+      // In some special cases the entity from the array have not been loaded
+      // and is a bool that is FALSE. This will make `getRelations` below throw
+      // an exception.
+      if ($entity) {
+        $uri = '';
+        $relations = $entity->getRelations();
+        foreach ($relations as $relation) {
+          if ($relation->getType() === 'dbcaddi:hasCover') {
+            $uri = $relation->getURI();
+            break;
+          }
         }
       }
 
@@ -125,7 +130,7 @@ function overdrive_ting_covers($entities) {
  *
  * Add read/listen buttons on entity view page for audiobook or ebook.
  */
-function overdrive_ding_entity_buttons($type, $entity) {
+function overdrive_ding_entity_buttons($type, $entity): array {
   $buttons = array();
 
   if (FALSE !== $entity && strpos($entity->getId(), ':ODN') !== FALSE) {
@@ -259,7 +264,7 @@ function overdrive_trigger_find($search_string) {
  * @return string
  *   TODO Description for the @return value is missing
  */
-function overdrive_search_mapping($search_string) {
+function overdrive_search_mapping($search_string): string {
   $str = '';
 
   $triggers = overdrive_trigger_find($search_string);
