@@ -885,3 +885,10 @@ function reol_base_update_7174() {
 function reol_base_update_7175() {
   ding2_remove_module(array('system_status'));
 }
+
+/**
+ * Enable translation_helpers module (needed by flag module).
+ */
+function reol_base_update_7176() {
+  module_enable(array('translation_helpers'), TRUE);
+}
