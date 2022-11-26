@@ -47,7 +47,7 @@
   <?php if (!empty($content['footer'])): ?>
     <footer class="footer">
       <div class="footer__brand">
-        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo" class="branding__logo">
+        <a href="/" title="<?php print t('Home'); ?>" rel="home" id="logo" class="branding__logo">
           <img src="/<?php print path_to_theme(); ?>/assets/svg/eReolen-Red.svg" alt="<?php print t('Home'); ?>" />
         </a>
       </div>
