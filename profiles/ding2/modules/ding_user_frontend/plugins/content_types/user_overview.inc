@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * User overview with links to user pages.
@@ -39,10 +40,12 @@ function ding_user_frontend_user_overview_content_type_render($subtype, $conf, $
     $uri = entity_uri('user', $account);
 
     // Fines.
-    $count = count(ding_provider_invoke('debt', 'list', $account));
+    $count = ding_debt_count($account);
+
     if ($count > 0) {
       $class = 'fines';
-    } else {
+    }
+    else {
       $class = 'default';
     }
     $list[DING_USER_FRONTEND_LIST_DEPTS] = array(
@@ -64,7 +67,7 @@ function ding_user_frontend_user_overview_content_type_render($subtype, $conf, $
     if ($overdues > 0) {
       $list[DING_USER_FRONTEND_LIST_LOANS_OVERDUE] = array(
         'data' =>
-        '<a href="' . url($uri['path'] . '/status-loans') . '" class="signature-label"><span class="icon"></span>' . t('Loans overdue') . '</a>' . '<span class="label warn">' . $overdues . '</span>',
+        '<a href="' . url($uri['path'] . '/status-loans-overdue') . '" class="signature-label"><span class="icon"></span>' . t('Loans overdue') . '</a>' . '<span class="label warn">' . $overdues . '</span>',
         'class' => array('warn'),
       );
     }

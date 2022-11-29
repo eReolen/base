@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Set the default value to "None", unless core has something different set.
+ * The core variable is named "samesite_cookie_value".
+ *
+ * @see _drupal_samesite_cookie() in bootstrap.inc.
+ */
+function samesite_cookie_install() {
+  $default = variable_get('samesite_cookie_value');
+  if ($default !== NULL) {
+    variable_set('samesite_cookie_old_value', $default);
+  }
+  else {
+    $default = 'None';
+    $params = session_get_cookie_params();
+    if (isset($params['samesite'])) {
+      $default = $params['samesite'];
+    }
+  }
+  variable_set('samesite_cookie_override_value', $default);
+  variable_del('samesite_cookie_value');
+  variable_set('samesite_cookie_enable_legacy_browser_workaround', '1');
+}
+
+/**
+ * Clean up variables. If core variable had something different set, restore it.
+ */
+function samesite_cookie_uninstall() {
+  variable_del('samesite_cookie_override_value');
+  $old_value = variable_get('samesite_cookie_old_value');
+  if ($old_value !== NULL) {
+    variable_set('samesite_cookie_value', $old_value);
+  }
+  variable_del('samesite_cookie_old_value');
+  variable_del('samesite_cookie_enable_legacy_browser_workaround');
+}

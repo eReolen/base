@@ -15,12 +15,16 @@
  *   If authentication fails.
  */
 function publizon_auth_single_sign_on($name, array $extra) {
-  $client = PublizonUserClient::getClient();
-
-  $lib = publizon_filter_libraries_list(array($extra['attributes']['municipality']));
+  $type = empty($extra['attributes']['municipality']) ? 'unilogin' : 'municipality';
+  $lib = publizon_filter_libraries_list(array($extra['attributes'][$type]), $type);
+  if (empty($lib)) {
+    throw new DingProviderUserAuthFailure('Unable to find retailer id');
+  }
   $retailer_id = reset($lib)->retailer_id;
 
-  $support_id = $client->validateLibraryUser($name, NULL, $retailer_id);
+  /** @var \PublizonUserClient $client */
+  $client = PublizonUserClient::getClient();
+  $support_id = $client->getSupportId($name, $retailer_id);
   if ($support_id) {
     $res = array(
       'success' => TRUE,

@@ -117,3 +117,70 @@
 .icon-spinner:before {
   display: none;
 }
+
+#edit-adgangsplatformen-wrapper {
+  --spacing: 24px;
+  --font-color: hsl(0, 0%, 5%);
+}
+
+#user-login fieldset {
+  text-align: left;
+}
+
+#edit-adgangsplatformen-wrapper .fieldset-description {
+  display: flex;
+  column-gap: var(--spacing);
+  line-height: var(--spacing);
+}
+
+#edit-adgangsplatformen-wrapper .fieldset-description::before {
+  background-image: url('../svg/adgangsplatformen.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: calc(var(--spacing) * 2);
+  width: 6%;
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text {
+  line-height: 1.25;
+  text-align: left;
+  color: var(--font-color);
+  margin-top: var(--spacing);
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text p {
+  margin-bottom: calc(var(--spacing) * 0.25);
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text ul {
+  margin: calc(var(--spacing) * 0.5);
+  list-style: disc;
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text ul li {
+  padding-bottom: calc(var(--spacing) * 0.5);
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text strong {
+  font-weight: bold;
+}
+
+#user-login:after {
+  background-image: url(../svg/eReolenGo-Red.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: 48px;
+  margin-top: 36px;
+  width: 100%;
+}
+
+@media screen and (min-width: 480px) {
+  #edit-adgangsplatformen-wrapper .fieldset-description {
+    line-height: calc(var(--spacing) * 2);
+  }
+}

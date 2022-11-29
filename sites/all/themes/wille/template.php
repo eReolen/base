@@ -353,22 +353,27 @@ function wille_field($variables) {
 function wille_user_login(&$vars) {
   $element = &$vars['element'];
 
-  if (module_exists('ding_user_form')) {
+  // Add form sign in when user access the form directly by URL.
+  if ($element['#action'] === '/user/login') {
     // Move login information into new wrapper.
     $element['login_wrapper'] = array(
       '#type' => 'fieldset',
-      '#description' => t('Log in with CPR or borrower number'),
+      '#description' => t('Log in as editor'),
     );
-    $element['login_wrapper']['name'] = $element['user_login_container']['name'];
-    $element['login_wrapper']['pass'] = $element['user_login_container']['pass'];
-    $element['login_wrapper']['retailer_id'] = $element['user_login_container']['retailer_id'];
-    $element['login_wrapper']['actions'] = $element['user_login_container']['actions'];
+    $element['login_wrapper']['name'] = $element['name'];
+    unset($element['login_wrapper']['name']['#description']);
+    $element['login_wrapper']['pass'] = $element['pass'];
+    unset($element['login_wrapper']['pass']['#description']);
+    $element['login_wrapper']['actions'] = $element['actions'];
+
+    // Remove single sign on options as editors are not providers.
+    unset($element['unilogin_wrapper']);
+    unset($element['adgangsplatformen-wrapper']);
   }
 
   unset($vars['element']['name']);
   unset($vars['element']['pass']);
   unset($vars['element']['actions']['submit']);
-  unset($vars['element']['user_login_container']);
 
   return drupal_render_children($vars['element']);
 }

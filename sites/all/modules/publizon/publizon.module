@@ -232,15 +232,19 @@ function publizon_get_libraries_list() {
  * @param array $municipalities
  *   Municipality ID's for to return libraries for.
  *
+ * @param string $type
+ *   The type of mapping to use in the filtering.
+ *
  * @return array
  *   A filtered array.
  */
-function publizon_filter_libraries_list(array $municipalities) {
+function publizon_filter_libraries_list(array $municipalities, string $type) {
   $filtered = array();
+  $field = $type . '_id';
   $libraries = publizon_get_libraries();
   foreach ($libraries as $library) {
-    if (!empty($library->unilogin_id) && in_array($library->unilogin_id, $municipalities)) {
-      $filtered[$library->unilogin_id] = $library;
+    if (!empty($library->$field) && in_array($library->$field, $municipalities)) {
+      $filtered[$library->$field] = $library;
     }
   }
 
@@ -573,39 +577,6 @@ function publizon_client_library_load($library_id) {
   }
 
   return $libraries[$library_id];
-}
-
-/**
- * Implements hook_form_ding_adgangsplatformen_admin_settings_form_alter().
- */
-function publizon_form_ding_adgangsplatformen_admin_settings_form_alter(array &$form, array &$form_state) {
-  if (module_exists('ding_adgangsplatformen')) {
-    $form['publizon'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Publizon configuration'),
-      '#tree' => FALSE,
-      '#weight' => -1,
-    );
-
-    $form['publizon']['publizon_sso_client_id'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Publizon SSO client ID'),
-      '#description' => t('The client ID to send to publizon, for single sign on (SSO) users.'),
-      '#default_value' => variable_get('publizon_sso_client_id', ''),
-      '#required' => TRUE,
-    );
-  }
-}
-
-/**
- * Implements hook_publizon_client_id_alter().
- *
- * Change Publizon client id for SSO users.
- */
-function publizon_publizon_client_id_alter(&$client_id) {
-  if (module_exists('ding_adgangsplatformen') && isset($_SESSION['oauth2token'])) {
-    $client_id = variable_get('publizon_sso_client_id', '');
-  }
 }
 
 /**
