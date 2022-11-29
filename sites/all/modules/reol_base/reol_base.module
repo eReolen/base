@@ -123,6 +123,9 @@ function reol_base_menu_alter(&$items) {
   $items['user/%user/status']['access callback'] = FALSE;
   $items['user/%user/status-reservations-ready']['access callback'] = FALSE;
 
+  $items['user/%user/followed-searches']['access callback'] = FALSE;
+  $items['user/%user/checklist']['access callback'] = FALSE;
+
   // Disable informedia and full text.
   $items['ting/infomedia/%infomedia']['access callback'] = FALSE;
   $items['ting/object/infomedia/%']['access callback'] = FALSE;
