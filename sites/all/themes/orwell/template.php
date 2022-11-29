@@ -6,6 +6,20 @@
  */
 
 /**
+ * Implements hook_theme().
+ *
+ * Needed in order to theme user login.
+ */
+function orwell_theme() {
+  return array(
+    'user_login' => array(
+      'function' => 'orwell_user_login',
+      'render element' => 'element',
+    ),
+  );
+}
+
+/**
  * Implements THEME_panels_default_style_render_region().
  *
  * Remove panel seprator markup from panels.
@@ -514,4 +528,34 @@ function orwell_ting_search_pager($variables) {
         ),
       ));
   }
+}
+
+/**
+ * Theme user login form.
+ */
+function orwell_user_login(&$vars) {
+  $element = &$vars['element'];
+
+  // Add form sign in when user access the form directly by URL.
+  if ($element['#action'] === '/user/login') {
+    // Move login information into new wrapper.
+    $element['login_wrapper'] = array(
+      '#type' => 'fieldset',
+      '#description' => t('Log in as editor'),
+    );
+    $element['login_wrapper']['name'] = $element['name'];
+    unset($element['login_wrapper']['name']['#description']);
+    $element['login_wrapper']['pass'] = $element['pass'];
+    unset($element['login_wrapper']['pass']['#description']);
+    $element['login_wrapper']['actions'] = $element['actions'];
+
+    // Remove single sign on options as editors are not providers.
+    unset($element['adgangsplatformen-wrapper']);
+  }
+
+  unset($vars['element']['name']);
+  unset($vars['element']['pass']);
+  unset($vars['element']['actions']['submit']);
+
+  return drupal_render_children($vars['element']);
 }

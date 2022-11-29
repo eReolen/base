@@ -146,3 +146,104 @@ div.messages {
 .icon-spinner:before {
   display: none;
 }
+
+#edit-adgangsplatformen-wrapper {
+  --spacing: 24px;
+  --border-color: hsl(0, 0%, 95%);
+  --font-color: hsl(0, 0%, 5%);
+}
+
+#edit-adgangsplatformen-wrapper.form-wrapper{
+  border: 0;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+#edit-adgangsplatformen-wrapper .fieldset-description::before {
+  background-image: url('../svg/adgangsplatformen.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: calc(var(--spacing) * 2);
+  width: 6%;
+}
+
+#edit-adgangsplatformen-wrapper .fieldset-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  column-gap: var(--spacing);
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing);
+  padding: var(--spacing) 0 0 0;
+}
+#edit-adgangsplatformen-wrapper .fieldset-description p {
+  line-height: calc(var(--spacing) * 2);
+  color: var(--font-color);
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-wrapper {
+  margin: calc(var(--spacing) * 0.5) 0;
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text {
+  padding-bottom: var(--spacing);
+  border-bottom: 1px solid var(--border-color);
+  line-height: 1.25;
+  text-align: left;
+  color: var(--font-color);
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text ul {
+  margin: calc(var(--spacing) * 0.5);
+  list-style: disc;
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text ul li {
+  padding-bottom: calc(var(--spacing) * 0.5);
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-notification-text strong {
+  font-weight: bold;
+}
+
+#edit-adgangsplatformen-wrapper .adgangsplatformen-button {
+  background-color: #95b978;
+  border-radius: 2px;
+  color: #fff;
+  font-family: SourceSansProSemiBold,sans-serif;
+  line-height: 1em;
+  margin-top: 1rem;
+  padding: 15px 22px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+#edit-adgangsplatformen-wrapper::after {
+  background-image: url('../svg/eReolen-Red.svg');
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: calc(var(--spacing) * 2);
+  margin-top: var(--spacing);
+  width: 100%;
+}
+
+#edit-adgangsplatformen-wrapper .form-type-checkbox {
+  display: inline-block;
+  margin-top: var(--spacing);
+}
+
+@media screen and (min-width: 480px) {
+  #edit-adgangsplatformen-wrapper .fieldset-description {
+    flex-direction: row;
+    justify-content: center;
+  }
+  #edit-adgangsplatformen-wrapper .adgangsplatformen-wrapper {
+    margin: var(--spacing) 0;
+  }
+}

@@ -1,0 +1,13 @@
+name = SameSite Cookie settings
+description = Customize SameSite cookie attribute from Drupal Admin. Avoid sending Samesite=None cookie attribute to legacy browsers.
+core = 7.x
+version = 7.x-1.x
+package = Administration
+configure = admin/config/system/samesite
+dependencies[] = system (>=7.79)
+
+; Information added by Drupal.org packaging script on 2021-04-09
+version = "7.x-1.0-rc1"
+core = "7.x"
+project = "samesite_cookie"
+datestamp = "1617985122"

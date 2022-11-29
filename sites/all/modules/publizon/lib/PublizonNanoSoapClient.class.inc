@@ -35,7 +35,7 @@ class PublizonNanoSOAPClient extends NanoSOAPClient {
    *
    * @throws \NanoSOAPcURLException
    */
-  public function call($action, $parameters = array(), bool $soap11 = TRUE): string {
+  public function callExtended($action, array $parameters = array(), bool $soap11 = TRUE): string {
     // Set content type and send the SOAP action as a header.
     $headers = array(
       'Content-Type: text/xml',

@@ -414,19 +414,10 @@ function simpletest_script_run_one_test($test_id, $test_class) {
 
     simpletest_classloader_register();
 
-    if (strpos($test_class, '::') > 0) {
-      list($class_name, $method) = explode('::', $test_class, 2);
-      $methods = array($method);
-    }
-    else {
-      $class_name = $test_class;
-      // Use empty array to run all the test methods.
-      $methods = array();
-    }
-    $test = new $class_name($test_id);
+    $test = new $test_class($test_id);
     $test->useSetupInstallationCache = !empty($args['cache']);
     $test->useSetupModulesCache = !empty($args['cache-modules']);
-    $test->run($methods);
+    $test->run();
     $info = $test->getInfo();
 
     $had_fails = (isset($test->results['#fail']) && $test->results['#fail'] > 0);

@@ -1,0 +1,175 @@
+<?php
+
+/**
+ * Implements hook_boot().
+ */
+function samesite_cookie_boot() {
+  samesite_cookie_intervene();
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function samesite_cookie_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'boot') {
+    // Ensure that samesite_cookie_boot() happens before the session is started.
+    $group = array();
+    $group['samesite_cookie'] = $implementations['samesite_cookie'];
+    unset($implementations['samesite_cookie']);
+    $implementations = array_merge($group, $implementations);
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function samesite_cookie_menu() {
+  $items = array();
+  $items['admin/config/system/samesite'] = array(
+    'title' => 'SameSite Cookie Attribute Settings',
+    'description' => t('Choose the value that Drupal sends to web browsers, as well as whether to use a workaround for legacy browsers.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('samesite_cookie_admin_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'samesite_cookie.admin.inc',
+  );
+  return $items;
+}
+
+function samesite_cookie_intervene() {
+  $override = variable_get('samesite_cookie_override_value', 'None');
+  if (empty($override)) {
+    $GLOBALS['conf']['samesite_cookie_value'] = FALSE;
+    return;
+  }
+  $params = session_get_cookie_params();
+  $params['samesite'] = $override;
+  $can_send_attribute = _samesite_cookie_can_send_cookie_attribute($params);
+  if ($can_send_attribute) {
+    $GLOBALS['conf']['samesite_cookie_value'] = $override;
+  }
+  else if ($override == 'None') {
+    $GLOBALS['conf']['samesite_cookie_value'] = FALSE;
+  }
+}
+
+/**
+ * Check user agent string to detect browsers that are known to be problematic
+ * with a SameSite cookie attribute.
+ *
+ * Based on: https://www.chromium.org/updates/same-site/incompatible-clients
+ *
+ * @param array $params
+ *   Cookie parameters such as returned by session_get_cookie_params(). This
+ *   should include a samesite value (even on PHP < 7.3), if applicable.
+ *
+ * @param string $ua (optional)
+ *   The user agent string. Will use the value from $_SERVER['HTTP_USER_AGENT']
+ *   if this is not provided.
+ *
+ * @return boolean
+ */
+function _samesite_cookie_can_send_cookie_attribute($params, $ua = NULL) {
+  // If this value is empty, the site administrator chose to not use SameSite.
+  if (empty($params['samesite'])) {
+    return FALSE;
+  }
+  // SameSite attribute of Lax or Strict is not a problem for these browsers.
+  if ((strcasecmp($params['samesite'], 'lax') === 0) || (strcasecmp($params['samesite'], 'strict') === 0)) {
+    return TRUE;
+  }
+  $enable_legacy_browser_workaround = variable_get('samesite_cookie_enable_legacy_browser_workaround');
+  if ($ua === NULL) {
+    $ua = $_SERVER['HTTP_USER_AGENT'];
+  }
+
+  // iOS version 12
+  if (preg_match('/\(iP.+; CPU .*OS 12[_\d]*.*\) AppleWebKit\//', $ua)) {
+    return FALSE;
+  }
+
+  // Determine if a browser is Chrome (or Chromium) based.
+  $IsChromiumBased = function($ua) {
+    if (preg_match('/Chrom(e|ium)/', $ua)) {
+      return TRUE;
+    }
+    return FALSE;
+  };
+
+  //EX:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15";
+  $IsSafari = function($ua) use ($IsChromiumBased) {
+    if (preg_match('/Version\/.* Safari\//', $ua)) {
+      if ($IsChromiumBased($ua) === FALSE) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  };
+
+  // Determine if a user agent matches a particular Mac OS X version.
+  $IsMacOSXVersion = function($ua, $major_num, $minor_num) {
+    preg_match_all('/\(Macintosh;.*Mac OS X (\d+)_(\d+)[_\d]*.*\) AppleWebKit\//', $ua, $matches);
+    $matched_major = isset($matches[1][0]) ? intval($matches[1][0]) : '';
+    $matched_minor = isset($matches[2][0]) ? intval($matches[2][0]) : '';
+    // Using == instead of === to allow comparison of ints to numeric strings.
+    if (($major_num === $matched_major) && ($minor_num === $matched_minor)) {
+      return TRUE;
+    }
+    return FALSE;
+  };
+
+  // Mac OSX 10.14
+  if ($IsMacOSXVersion($ua, 10, 14)) {
+    // Safari
+    if ($IsSafari($ua)) {
+      return FALSE;
+    }
+    // Mac embedded browser
+    if (preg_match('/^Mozilla\/[\.\d]+ \(Macintosh;.*Mac OS X [_\d]+\) AppleWebKit\/[\.\d]+ \(KHTML, like Gecko\)$/', $ua)) {
+      return FALSE;
+    }
+  }
+
+  $IsIncompatibleChromiumBasedVersion = function($ua) {
+    preg_match_all('/Chrom[^ \/]+\/(\d+)[\.\d]*/', $ua, $matches);
+    // If we can't determine the version number, we can't know its incompatible.
+    if (empty($matches[1][0])) {
+      return FALSE;
+    }
+    $version_number = intval($matches[1][0]);
+    if (($version_number >= 51) && ($version_number <= 66)) {
+      return TRUE;
+    }
+    return FALSE;
+  };
+
+  $IsIncompatibleUCBrowser = function($ua) {
+    preg_match_all('/UCBrowser\/(\d+)\.(\d+)\.(\d+)[\.\d]*/', $ua, $matches);
+    // If this is not UCBrowser or the version number is an unexpected format.
+    if (empty($matches[0][0]) || empty($matches[1][0]) || empty($matches[2][0]) || empty($matches[3][0])) {
+      return FALSE;
+    }
+    $uc_version_string = $matches[1][0] . '.' . $matches[2][0] . '.' . $matches[3][0];
+    // Any UCBrowser version lower than 12.13.2 is an incompatible version.
+    if (version_compare($uc_version_string, '12.13.2') === -1) {
+      return TRUE;
+    }
+    return FALSE;
+  };
+
+  //EX:"Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3396.99 Safari/537.36";
+  if ($IsChromiumBased($ua)) {
+    $is_incompatible = $IsIncompatibleChromiumBasedVersion($ua);
+    if ($is_incompatible) {
+      return FALSE;
+    }
+  }
+
+  //EX:"Mozilla/5.0 (Linux; U; Android 8.0.0; en-US; SM-J400F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.108 UCBrowser/13.2.5.1300 Mobile Safari/537.36";
+  if ($IsIncompatibleUCBrowser($ua)) {
+    return FALSE;
+  }
+
+  // If we've made it to this point, the browser isn't known to be incompatible.
+  return TRUE;
+}

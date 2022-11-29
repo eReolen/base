@@ -9,23 +9,9 @@
  * Publizon provider exception.
  */
 class PublizonDingProviderException extends DingProviderEnduserException {
-  /**
-   * TODO missing member variable doc comment.
-   *
-   * @var bool
-   */
+
   private $showBookmark;
-  /**
-   * TODO missing member variable doc comment.
-   *
-   * @var bool
-   */
   private $showReserve;
-  /**
-   * TODO missing member variable doc comment.
-   *
-   * @var exception
-   */
   private $exception;
 
   /**
@@ -78,29 +64,40 @@ class PublizonDingProviderException extends DingProviderEnduserException {
  */
 class PublizonConfiguredLibrary {
   /**
-   * TODO missing member variable doc comment.
+   * Publizon retailer id.
    *
    * @var string
    */
   public $retailer_id = '';
+
   /**
-   * TODO missing member variable doc comment.
+   * Name of the library.
    *
    * @var string
    */
   public $library_name = '';
+
   /**
-   * TODO missing member variable doc comment.
+   * Uni-login id to map to retailer id.
    *
    * @var string
    */
   public $unilogin_id = '';
+
   /**
-   * TODO missing member variable doc comment.
+   * Municipality id to map to retailer id (adgangsplatformen).
+   *
+   * @var string
+   */
+  public $municipality_id = '';
+
+  /**
+   * Publizon library retailer key code.
    *
    * @var string
    */
   public $retailer_key_code = '';
+
   /**
    * TODO missing member variable doc comment.
    *
@@ -110,6 +107,8 @@ class PublizonConfiguredLibrary {
 
   /**
    * Create from array.
+   *
+   * @return PublizonConfiguredLibrary
    */
   public static function fromArray($array) {
     $lib = new self();
@@ -124,6 +123,8 @@ class PublizonConfiguredLibrary {
 
   /**
    * Convert to array.
+   *
+   * @return array
    */
   public function toArray() {
     return get_object_vars($this);

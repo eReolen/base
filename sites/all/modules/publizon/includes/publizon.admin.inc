@@ -8,7 +8,7 @@
 /**
  * Publizon settings form.
  *
- * Administration form for the configureation of the communication with
+ * Administration form for the configuration of the communication with
  * publizon.
  *
  * @param array $form
@@ -175,6 +175,13 @@ function publizon_settings_form(array $form, array &$form_state) {
       '#size' => 6,
       '#disabled' => empty($library->retailer_id) ? FALSE : TRUE,
       '#default_value' => $library->retailer_id,
+    );
+
+    $form['publizon']['libraries']['l'][$i]['municipality_id'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Municipality ID'),
+      '#size' => 6,
+      '#default_value' => $library->municipality_id,
     );
 
     $form['publizon']['libraries']['l'][$i]['unilogin_id'] = array(
