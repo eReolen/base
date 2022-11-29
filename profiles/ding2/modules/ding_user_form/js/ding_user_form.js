@@ -24,27 +24,15 @@
         }
       }
 
-      /**
-       * Attach open login events.
-       */
-      Drupal.behaviors.open_login = {
-        attach: function(context, settings) {
-          $('a.open-login', context).bind('click', function (evt) {
-            evt.preventDefault();
-            openLogin();
-          });
-        }
-      };
-
-      $('a.js-topbar-link-user', context).on('click', function(evt) {
-        evt.preventDefault();
+      $('a.js-topbar-link-user,a.open-login', context).one('click', function (event) {
+        event.preventDefault();
         openLogin();
       });
 
-      $('.close-user-login', context).on('click', function(evt) {
+      $('.close-user-login', context).one('click', function (event) {
         var body = $('body');
 
-        evt.preventDefault();
+        event.preventDefault();
         body.removeClass('pane-login-is-open');
         body.removeClass('overlay-is-active');
       });

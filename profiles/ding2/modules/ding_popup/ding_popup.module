@@ -5,7 +5,7 @@
  * Common popup functionality for Ding!
  */
 
-/* Attached scripts is handled via jquery AJAX call from jQuery.ajaxTransport, 
+/* Attached scripts is handled via jquery AJAX call from jQuery.ajaxTransport,
    where async is set to false, and will trigger a warning in Gecko 30.0;
    For now, add javascripts in module.info */
 
@@ -37,9 +37,10 @@ function ajax_command_ding_popup($name, $title, $html, $options = array()) {
 /**
  * Ajax command to close a popup.
  */
-function ajax_command_ding_popup_close($name) {
+function ajax_command_ding_popup_close($name, $refresh = FALSE) {
   return array(
     'command' => 'ding_popup_close',
     'name' => $name,
+    'refresh' => $refresh,
   );
 }

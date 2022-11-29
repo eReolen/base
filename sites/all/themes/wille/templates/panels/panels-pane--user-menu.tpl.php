@@ -19,18 +19,19 @@
  */
 ?>
 <div class="<?php print $classes; ?>" <?php print $id; ?> <?php print $attributes; ?>>
-
-  <div class="user-banner">
-    <div class="user-banner__content">
-      <?php print $welcome_text_part_1; ?><span>,<br/></span>
-      <?php print $welcome_text_part_2; ?>
+  <?php if (user_is_logged_in()): ?>
+    <div class="user-banner">
+      <div class="user-banner__content">
+        <?php print $welcome_text_part_1; ?><span>,<br/></span>
+        <?php print $welcome_text_part_2; ?>
+      </div>
+      <div class="user-banner__logout">
+        <a href="/user/logout" class="__link"><?php print(t('Logout')); ?></a>
+      </div>
+      <div class="user-banner__bg"></div>
+      <div class="user-banner__overlay"></div>
     </div>
-    <div class="user-banner__logout">
-      <a href="/user/logout" class="__link"><?php print(t('Logout')); ?></a>
-    </div>
-    <div class="user-banner__bg"></div>
-    <div class="user-banner__overlay"></div>
-  </div>
+  <?php endif; ?>
 
   <div class="organic-element organic-element--user">
     <?php print $organic_svg ?>

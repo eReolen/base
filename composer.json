@@ -1,5 +1,6 @@
 {
     "require": {
+        "php": "7.4",
         "phan/phan": "^1.2",
         "ext-curl": "*",
         "ext-dom": "*",
