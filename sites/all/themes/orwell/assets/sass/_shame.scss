@@ -153,7 +153,7 @@ div.messages {
   --font-color: hsl(0, 0%, 5%);
 }
 
-#edit-adgangsplatformen-wrapper.form-wrapper{
+#edit-adgangsplatformen-wrapper.form-wrapper {
   border: 0;
   background-color: white;
   margin: 0;
@@ -161,7 +161,7 @@ div.messages {
 }
 
 #edit-adgangsplatformen-wrapper .fieldset-description::before {
-  background-image: url('../svg/adgangsplatformen.svg');
+  background-image: url("../svg/adgangsplatformen.svg");
   background-repeat: no-repeat;
   background-size: contain;
   content: "";
@@ -213,7 +213,7 @@ div.messages {
   background-color: #95b978;
   border-radius: 2px;
   color: #fff;
-  font-family: SourceSansProSemiBold,sans-serif;
+  font-family: SourceSansProSemiBold, sans-serif;
   line-height: 1em;
   margin-top: 1rem;
   padding: 15px 22px;
@@ -222,7 +222,7 @@ div.messages {
 }
 
 #edit-adgangsplatformen-wrapper::after {
-  background-image: url('../svg/eReolen-Red.svg');
+  background-image: url("../svg/eReolen-Red.svg");
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: contain;
