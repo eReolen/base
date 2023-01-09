@@ -222,6 +222,15 @@ function publizon_settings_form(array $form, array &$form_state) {
     $i++;
   }
 
+  $municipality_aliases = variable_get('publizon_municipality_aliases', array());
+
+  $form['publizon']['municipality_aliases'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Municipality aliases'),
+    '#description' => t("Format: <code>«municipality id»: «alias id»</code>; one pr. line, e.g. <pre>451: 87\n42: 123</pre>"),
+    '#default_value' => _publizon_admin_serialize_municipality_aliases($municipality_aliases),
+  );
+
   // Add messages fieldset.
   $form['publizon']['error_messages'] = array(
     '#type' => 'fieldset',
@@ -503,6 +512,9 @@ function publizon_settings_form_submit(array $form, array &$form_state) {
 
   variable_set('publizon_error_messages', $error_messages);
 
+  $municipality_aliases = _publizon_admin_deserialize_municipality_aliases($form_state['values']['publizon']['municipality_aliases']);
+  variable_set('publizon_municipality_aliases', $municipality_aliases);
+
   drupal_set_message(t('The configuration options have been saved.'));
 }
 
@@ -567,4 +579,65 @@ function publizon_admin_settings_form_submit(array $form, array &$form_state) {
       )
     )
   );
+}
+
+/**
+ * Serialize municipality aliases.
+ *
+ * Example:
+ *
+ *   [
+ *     87 => 42,
+ *    123 => 256,
+ *   ]
+ *
+ * is serialized as
+ *
+ *   87: 42
+ *   123: 256
+ *
+ * @param array $aliases
+ *   The aliases (map from id to alias).
+ *
+ * @return string
+ *   The serialized aliases.
+ */
+function _publizon_admin_serialize_municipality_aliases(array $aliases) {
+  $items = [];
+
+  foreach ($aliases as $id => $alias) {
+    $items[] = sprintf('%s: %s', $id, $alias);
+  }
+
+  return implode(PHP_EOL, $items);
+}
+
+/**
+ * Deserialize municipality aliases.
+ *
+ * Example:
+ *
+ *   87: 42
+ *   123: 256
+ *   87: 23
+ *
+ * (note duplicated key 87) is deserialized as
+ *
+ *   [
+ *     87 => 23,
+ *    123 => 256,
+ *   ]
+ *
+ * @param string $serialized
+ *   The serialized aliases.
+ *
+ * @return array
+ *   The deserialized aliases.
+ */
+function _publizon_admin_deserialize_municipality_aliases(string $serialized) {
+  if (preg_match_all('/^\s*(?<id>\d+)\s*:\s*(?<alias>\d+)\s*$/m', $serialized, $matches)) {
+    return array_combine($matches['id'], $matches['alias']);
+  }
+
+  return [];
 }
