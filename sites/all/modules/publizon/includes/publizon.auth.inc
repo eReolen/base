@@ -16,6 +16,12 @@
  */
 function publizon_auth_single_sign_on($name, array $extra) {
   $type = empty($extra['attributes']['municipality']) ? 'unilogin' : 'municipality';
+
+  $municipality_aliases = variable_get('publizon_municipality_aliases', []);
+  if ('municipality' === $type && isset($municipality_aliases[$extra['attributes'][$type]])) {
+    $extra['attributes'][$type] = $municipality_aliases[$extra['attributes'][$type]];
+  }
+
   $lib = publizon_filter_libraries_list(array($extra['attributes'][$type]), $type);
   if (empty($lib)) {
     throw new DingProviderUserAuthFailure('Unable to find retailer id');
