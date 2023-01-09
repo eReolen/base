@@ -10,8 +10,6 @@ Please include a short description of the suggested change and the reasoning beh
 
 If your change affects the user interface you should include a screenshot of the result with the pull request.
 
-<<<<<<< HEAD
-=======
 #### Checklist
 
 - [ ] My code passes our static analysis suite.
@@ -20,7 +18,6 @@ If your change affects the user interface you should include a screenshot of the
 If your code does not pass all the requirements on the checklist you have to add a comment explaining why this change
 should be exempt from the list.
 
->>>>>>> develop
 #### Additional comments or questions
 
 If you have any further comments or questions for the reviewer please add them here.

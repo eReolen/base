@@ -47,6 +47,25 @@ function library_info_content_type_render($subtype, $conf, $panel_args, $context
     $loans_by_type[$loan->publizon_type] = ($loans_by_type[$loan->publizon_type] ?? 0) + 1;
   }
 
+  // On eReolen we can check for loans on quota by loading ding entities.
+  if (module_exists('ereol_base')) {
+    // Load loaned entities indexed by object id.
+    $loaned_entities = [];
+    foreach (ding_entity_load_multiple(array_keys($loans)) as $entity) {
+      $loaned_entities[$entity->reply->openSearchObject->id] = $entity;
+    }
+
+    $quota_loans_by_type = [];
+    foreach ($loans as $id => $loan) {
+      if ($loaned_entities[$id]->reply->on_quota ?? FALSE) {
+        $quota_loans_by_type[$loan->publizon_type] = ($quota_loans_by_type[$loan->publizon_type] ?? 0) + 1;
+      }
+    }
+
+    // Use the quota loans data instead of the real loans.
+    $loans_by_type = $quota_loans_by_type;
+  }
+
   $variables = array(
     'ebook_loans' => $loans_by_type['ebog'] ?? 0,
     'audiobook_loans' => $loans_by_type['lydbog (net)'] ?? 0,
