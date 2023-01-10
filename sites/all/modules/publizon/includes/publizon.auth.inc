@@ -46,6 +46,7 @@ function publizon_auth_single_sign_on($name, array $extra) {
           // Transfer retailer id to save on the user.
           'retailer_id' => $retailer_id,
           'support_id' => is_string($support_id) ? $support_id : '',
+          'tags' => $extra['attributes']['userPrivilege'] ?? array(),
         ),
       ),
     );

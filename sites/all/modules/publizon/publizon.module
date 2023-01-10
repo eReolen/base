@@ -596,3 +596,20 @@ function publizon_form_alter(&$form, &$form_state, $form_id) {
     }
   }
 }
+
+/**
+ * Get user data from publizon from login.
+ *
+ * @return mixed
+ *   The user data collected.
+ */
+function publizon_get_user_data(): array {
+  if (isset($_SESSION['ding_user'])) {
+    // User has not timed out by auto logout module so return credentials.
+    return $_SESSION['ding_user']['user']['data'];
+  }
+
+  // Return empty array to support already logged-in users when this code is
+  // released.
+  return array();
+}

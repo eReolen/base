@@ -25,6 +25,8 @@ class PublizonReservationClient extends PublizonClient {
    *   Optional email to send notification to when title is available.
    * @param string $phone
    *   Optional phone number to send notification to when title is available.
+   * @param array $institution_tags
+   *   Tags from login
    *
    * @return bool
    *   TRUE on success.
@@ -32,7 +34,7 @@ class PublizonReservationClient extends PublizonClient {
    * @throws \PublizonConnectionException
    * @throws \PublizonException
    */
-  public function createReservation(string $retailer_id, string $card_number, ?string $pincode, string $isbn, string $email = '', string $phone = ''): bool {
+  public function createReservation(string $retailer_id, string $card_number, ?string $pincode, string $isbn, string $email = '', string $phone = '', array $institution_tags = array()): bool {
     // Call the webservice, throwing exception on failure.
     $response = $this->call('reservation', 'Create', $retailer_id, array(
       'pub:ebookid' => $isbn,
@@ -40,6 +42,7 @@ class PublizonReservationClient extends PublizonClient {
       'pub:pincode' => $pincode,
       'pub:email' => $email,
       'pub:phonenumber' => $phone,
+      'pub:institutionTags' => $institution_tags,
     ), array('pub' => 'http://pubhub.dk/'));
 
     // Parse returned data.
