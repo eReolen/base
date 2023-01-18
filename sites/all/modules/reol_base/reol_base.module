@@ -804,6 +804,11 @@ function _reol_base_get_types() {
         'base' => 'audiobook',
         'ext_name' => 'lyd (net)',
       ),
+      // Handle “e-bog” as “ebook”.
+      'e-bog' => array(
+        'base' => 'ebook',
+        'ext_name' => 'e-bog',
+      ),
     );
 
     $types = $base_types;
