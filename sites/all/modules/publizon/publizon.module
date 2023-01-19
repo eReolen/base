@@ -516,7 +516,7 @@ function publizon_get_message($code) {
  *   The product.
  */
 function publizon_load($local_id) {
-  $products = &drupal_static(__FUNCTION__) || array();
+  $products = &drupal_static(__FUNCTION__, array()) ;
   // If product is not in cache, get it.
   if (!isset($products[$local_id])) {
     // Try getting from db cache.
@@ -550,33 +550,24 @@ function publizon_load($local_id) {
  *   The library.
  */
 function publizon_client_library_load($library_id) {
-  $libraries = &drupal_static(__FUNCTION__, array());
+  $library = ding_session_cache_get('publizon', 'library');
 
   // If library is not in cache, get it.
-  if (empty($libraries[$library_id])) {
-    // Try getting from db cache. Libraries varies by client_id.
-    $cid = 'publizon_libraries:' . $library_id . '' . publizon_get_client_id();
-    $cache = cache_get($cid);
-    if ($cache && REQUEST_TIME < $cache->expire) {
-      $libraries[$library_id] = $cache->data;
+  if (FALSE === $library) {
+    // Try to get library from Publizon.
+    try {
+      $client = PublizonLibraryClient::getClient();
+      $library = $client->getLibraryProfile($library_id);
     }
-    else {
-      // Try to get library from Publizon.
-      try {
-        $client = PublizonLibraryClient::getClient();
-        $libraries[$library_id] = $client->getLibraryProfile($library_id);
-      }
-      catch (Exception $e) {
-        $libraries[$library_id] = FALSE;
-      }
+    catch (Exception $e) {
+      $library = FALSE;
+    }
 
-      // Save in db cache.
-      $expire = variable_get('publizon_client_library_expire', 24 * 60 * 60);
-      cache_set($cid, $libraries[$library_id], 'cache', REQUEST_TIME + $expire);
-    }
+    // Save in db cache.
+    ding_session_cache_set('publizon', 'library', $library);
   }
 
-  return $libraries[$library_id];
+  return $library;
 }
 
 /**
