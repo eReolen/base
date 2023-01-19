@@ -557,7 +557,13 @@ function publizon_client_library_load($library_id) {
     // Try to get library from Publizon.
     try {
       $client = PublizonLibraryClient::getClient();
-      $library = $client->getLibraryProfile($library_id);
+
+      // Check if institution tags exists (to prevent users already logged-in
+      // missing this object. We have this extra check).
+      $user_data = publizon_get_user_data();
+      $tags = $user_data['tags'] ?? array();
+
+      $library = $client->getLibraryProfile($library_id, $tags);
     }
     catch (Exception $e) {
       $library = FALSE;
@@ -596,7 +602,6 @@ function publizon_form_alter(&$form, &$form_state, $form_id) {
  */
 function publizon_get_user_data(): array {
   if (isset($_SESSION['ding_user'])) {
-    // User has not timed out by auto logout module so return credentials.
     return $_SESSION['ding_user']['user']['data'];
   }
 
