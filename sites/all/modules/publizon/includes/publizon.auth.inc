@@ -32,10 +32,9 @@ function publizon_auth_single_sign_on($name, array $extra) {
   $client = PublizonUserClient::getClient();
   $support_id = $client->getSupportId($name, $retailer_id);
   if ($support_id) {
-    // If only one tag is set at adgangsplatformen this is a string, so convert
+    // If only one tag is set at adgangsplatformen this is a string, so cast
     // to array if that's the case.
-    $tags = $extra['attributes']['userPrivilege'] ?? array();
-    $tags = is_array($tags) ? $tags : array($tags);
+    $tags = (array) $extra['attributes']['userPrivilege'];
 
     $res = array(
       'success' => TRUE,
