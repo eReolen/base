@@ -42,7 +42,9 @@ class PublizonReservationClient extends PublizonClient {
       'pub:pincode' => $pincode,
       'pub:email' => $email,
       'pub:phonenumber' => $phone,
-      'pub:institutionTags' => $institution_tags,
+      'pub:institutionTags' => array(
+        'pub:string' => $institution_tags
+      ),
     ), array('pub' => 'http://pubhub.dk/'));
 
     // Parse returned data.

@@ -45,7 +45,9 @@ class PublizonLoanClient extends PublizonClient {
       'pub:institutionid' => $institution_id,
       'pub:format' => '',
       'pub:mobipocketid' => '',
-      'pub:institutionTags' => $institution_tags,
+      'pub:institutionTags' => array(
+        'pub:string' => $institution_tags
+      ),
     ), array('pub' => 'pubhub.dk'));
 
     // Parse returned data.
