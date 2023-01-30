@@ -255,6 +255,7 @@ function ding_adgangsplatformen_get_configuration() {
     'urlLogout' => 'https://login.bib.dk/logout/',
     'singleLogout' => TRUE,
     'automaticallyAgency' => TRUE,
+    'agencytype' => TRUE,
     'singleLogoutOrigin' => 'https://login.bib.dk/',
     'revoke' => 'https://login.bib.dk/oauth/revoke',
   ];
@@ -294,6 +295,11 @@ function ding_adgangsplatformen_generate_login_url($destination = '') {
   // Check if an identity provider have been set in the request.
   if (!empty($_REQUEST['idp'])) {
     $authorization_url .= '&idp=' . $_REQUEST['idp'];
+  }
+
+  // Filter on agency type (only show "folkebibliotekeren).
+  if ($configuration['agencytype']) {
+    $authorization_url .= '&agencytype=folk';
   }
 
   // Add agency to the URL.
