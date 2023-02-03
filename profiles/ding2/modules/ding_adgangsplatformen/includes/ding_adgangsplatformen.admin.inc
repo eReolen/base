@@ -92,6 +92,13 @@ function ding_adgangsplatformen_admin_settings_form($form, &$form_state) {
     '#default_value' => $default['automaticallyAgency'],
   );
 
+  $form['ding_adgangsplatformen_settings']['agencytype'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Only show "folkebiblioteker" in library selection dropdown (agencytype=folk)'),
+    '#return_value' => TRUE,
+    '#default_value' => $default['agencytype'] ?? TRUE,
+  );
+
   $form['ding_adgangsplatformen_settings']['singleLogoutOrigin'] = array(
     '#type' => 'textfield',
     '#title' => t('Iframe url'),
