@@ -27,6 +27,8 @@ class PublizonLoanClient extends PublizonClient {
    *   ISBN on the product.
    * @param string|null $institution_id
    *   The user's institution id.
+   * @param array $institution_tags
+   *   Tags from login
    *
    * @return array
    *   Array containing the retailer and internal order numbers.
@@ -34,7 +36,7 @@ class PublizonLoanClient extends PublizonClient {
    * @throws \PublizonConnectionException
    * @throws \PublizonException
    */
-  public function createLoan(string $retailer_id, string $card_number, ?string $pincode, string $isbn, string $institution_id = NULL): array {
+  public function createLoan(string $retailer_id, string $card_number, ?string $pincode, string $isbn, string $institution_id = NULL, array $institution_tags = array()): array {
     // Call the webservice, throwing exception on failure.
     $response = $this->call('loan', 'CreateLoan', $retailer_id, array(
       'pub:ebookid' => $isbn,
@@ -43,6 +45,9 @@ class PublizonLoanClient extends PublizonClient {
       'pub:institutionid' => $institution_id,
       'pub:format' => '',
       'pub:mobipocketid' => '',
+      'pub:institutionTags' => array(
+        'pub:string' => $institution_tags
+      ),
     ), array('pub' => 'pubhub.dk'));
 
     // Parse returned data.

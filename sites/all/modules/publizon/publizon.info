@@ -4,6 +4,7 @@ core = 7.x
 package = eReolen shared
 dependencies[] = ctools
 dependencies[] = ding_provider
+dependencies[] = ding_session_cache
 dependencies[] = email
 dependencies[] = entity
 dependencies[] = features

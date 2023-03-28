@@ -20,7 +20,7 @@
  *
  * @throws DingProviderAuthException
  */
-function publizon_reservation_list($account, $get_type = '', $reset = FALSE) {
+function publizon_reservation_list($account, $get_type = '', bool $reset = FALSE) {
   $results = &drupal_static(__FUNCTION__, NULL);
 
   if (is_null($results) || $reset) {
@@ -120,7 +120,7 @@ function publizon_reservation_list($account, $get_type = '', $reset = FALSE) {
  */
 function publizon_reservation_create($account, $local_id, array $options) {
   $isbn = reol_base_get_isbn($local_id);
-  // If we do not have an ISBN number, we cannot reserve anything.
+  // If we do not have an ISBN, we cannot reserve anything.
   if (!$isbn) {
     throw new DingProviderReservationNotAvailable();
   }
@@ -149,9 +149,14 @@ function publizon_reservation_create($account, $local_id, array $options) {
 
     // This will throw exception if not logged in.
     $creds = ding_user_get_creds();
+    $user_data = publizon_get_user_data();
+
+    // Check if institution tags exists (to prevent users already logged-in
+    // missing this object. We have this extra check).
+    $tags = $user_data['tags'] ?? array();
 
     // This will throw exception if reservation does not go through.
-    $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $isbn, $email, $phone);
+    $client->createReservation($retailer_id, $creds['name'], $creds['pass'], $isbn, $email, $phone, $tags);
 
     // Clear ding session cache.
     if (module_exists('ding_session_cache')) {
