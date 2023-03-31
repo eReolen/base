@@ -109,6 +109,7 @@
   }
 
   &.placeholder {
+    // TODO https://jira.itkdev.dk/browse/ER-1360 This is too much on small displays.
     min-height: 336px;
     min-width: 225px;
 

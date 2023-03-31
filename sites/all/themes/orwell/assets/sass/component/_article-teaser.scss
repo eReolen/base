@@ -202,6 +202,7 @@
       2 * var(--carousel-width) - var(--spacerX3)
     ); // Set a maximum fixed width a bit less than the with of 2 slides, since we will otherwise scroll 2 slides at a time when navigating. This because of the default behaviour of the book-cover carousels.
     margin: 0 auto;
+    // TODO https://jira.itkdev.dk/browse/ER-1360 The vertical padding may be a bit too much on small displays.
     padding: 36px 0;
     overflow: hidden;
 
