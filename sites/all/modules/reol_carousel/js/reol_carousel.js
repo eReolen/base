@@ -303,6 +303,7 @@
         var swiper = new Swiper(this, {
           speed: 400,
           slidesPerView: 'auto',
+          spaceBetween: 40,
           wrapperClass: 'carousel',
           slideClass: 'ding-carousel-item',
           freeMode: true,
@@ -311,6 +312,12 @@
           navigation: {
             nextEl: '.button-next',
             prevEl: '.button-prev'
+          },
+          breakpoints: {
+            // when window width is =< 783px (grid-media($medium))
+            783: {
+              spaceBetween: 20
+            },
           },
           init: false
         });

@@ -160,20 +160,7 @@
 .article__other-articles {
   .ding-carousel-item {
     width: 100vw;
-    padding-right: 0;
-
-    @include grid-media($medium) {
-      width: auto;
-      padding-right: 40px;
-    }
-
-    @include grid-media($large) {
-      padding-right: 60px;
-    }
-
-    &:last-child {
-      padding-right: 0;
-    }
+    max-width: min-content;
   }
 
   // Show dots.
@@ -224,15 +211,15 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  gap: 20px;
+  // gap: 20px;
 
-  @include grid-media($medium) {
-    gap: 40px;
-  }
+  // @include grid-media($medium) {
+  //   gap: 40px;
+  // }
 
-  @include grid-media($large) {
-    gap: 60px;
-  }
+  // @include grid-media($large) {
+  //   gap: 60px;
+  // }
 }
 
 // Center slide if there is only one
