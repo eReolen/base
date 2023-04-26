@@ -1,7 +1,6 @@
 @import "../bootstrap/bootstrap";
 
 .ting-object.view-mode-compact {
-
   // See also grid view in _search.scss.
   .field-name-ting-title {
     font-family: $font-regular;
@@ -76,7 +75,6 @@
     @include grid-media($medium) {
       max-width: 128px;
     }
-
 
     .material__series-number {
       &::before {

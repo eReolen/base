@@ -1,13 +1,10 @@
 @import "../bootstrap/bootstrap";
 
-
-
 .ding-carousel {
   --cover_max-height: 180px;
   --cover_max-height_grid-medium: 270px;
   --cover_max-width: var(--cover_max-height);
   --cover_max-width_grid-medium: var(--cover_max-height_grid-medium);
-
 
   @include content-wrapper;
   position: relative;
