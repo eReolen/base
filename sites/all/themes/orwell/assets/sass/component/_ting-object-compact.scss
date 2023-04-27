@@ -33,9 +33,9 @@
     margin-top: 10px;
     max-width: 120px;
 
-      @include grid-media($medium) {
-        max-width: 180px;
-      }
+    @include grid-media($medium) {
+      max-width: 180px;
+    }
   }
 
   .field-name-ting-details-language {
