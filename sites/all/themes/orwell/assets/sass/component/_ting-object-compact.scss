@@ -3,20 +3,20 @@
 .ting-object.view-mode-compact {
   // See also grid view in _search.scss.
   .field-name-ting-title h2 {
-      font-family: $font-regular;
-      color: $color__font-gray--dark;
-      font-size: 16px;
-      line-height: 1.1;
-      letter-spacing: 0.5px;
-      margin-top: 6px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 120px;
+    font-family: $font-regular;
+    color: $color__font-gray--dark;
+    font-size: 16px;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+    margin-top: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
 
-      @include grid-media($medium) {
-        max-width: 180px;
-      }
+    @include grid-media($medium) {
+      max-width: 180px;
+    }
   }
 
   // Always hide rating widget.
