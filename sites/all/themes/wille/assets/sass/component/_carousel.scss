@@ -18,15 +18,14 @@ $carousel-outer-padding: 0 30px;
   z-index: 1;
 }
 
-// TODO: Check if this is in use
-// .ding-carousel__background {
-//   position: absolute;
-//   z-index: -1;
-//   top: 0;
-//   bottom: 0;
-//   left: -9999px;
-//   right: -9999px;
-// }
+.ding-carousel__background {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: -9999px;
+  right: -9999px;
+}
 
 .ding-carousel {
   --cover_max-height: 180px;
@@ -130,7 +129,6 @@ $carousel-outer-padding: 0 30px;
         &:before {
           font-size: 12pt;
         }
-
       }
 
       .field-type-ting-series {
@@ -140,7 +138,6 @@ $carousel-outer-padding: 0 30px;
         font-size: var(--item-font-size);
 
         .field-items {
-
           * {
             display: inline-block;
           }
@@ -373,8 +370,6 @@ $carousel-outer-padding: 0 30px;
   }
 
   .ding-carousel-item {
-    // Make room for rounded corners on .article--breol-news--teaser
-    // padding: 0 20px;
     max-width: 100vw;
     width: 90%;
 
