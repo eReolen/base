@@ -76,6 +76,7 @@ Android install prompt is not displayed (https://www.drupal.org/node/3047715)
 * Don't exclude "dkdcplus:DBCO" subjects (opensearch-dkdcplus-DBCO.patch)
 * Update to image_resize_filter 1.16 (ding2-make-image_resize_filter.patch)
 * Disallow: /content/unilogin in robots.txt (robots-content-unilogin.patch)
+* Do not redirect from `/ting/collection` to `/ting/object` when collection contains only a single element (do_not_redirect_from_collection_to_object.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in
