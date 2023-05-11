@@ -295,6 +295,19 @@ function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &
   unset($form['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value']['#default_value']);
   unset($form['profile_provider_publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email']['#default_value']);
 
+  // Use states to show confirm fields only when needed.
+  $form['profile_provider_publizon']['field_phone_confirm']['#states'] = array(
+    'visible' => array(
+      ':input[name="profile_provider_publizon[field_phone][und][0][value]"]' => array('empty' => FALSE),
+    ),
+  );
+
+  $form['profile_provider_publizon']['field_email_confirm']['#states'] = array(
+    'visible' => array(
+      ':input[name="profile_provider_publizon[field_email][und][0][email]"]' => array('empty' => FALSE),
+    ),
+  );
+
   $form['#validate'][] = '_reol_frontend_profile2_validate';
 }
 
