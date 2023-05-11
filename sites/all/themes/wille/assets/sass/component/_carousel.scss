@@ -74,7 +74,10 @@ $carousel-outer-padding: 0 30px;
   }
 
   @include media($phone) {
+    --item-font-size: 12pt;
     margin-bottom: $mobile-margin;
+    margin-left: $mobile-margin;
+    margin-right: $mobile-margin;
     padding-bottom: $mobile-margin;
   }
 
@@ -102,6 +105,7 @@ $carousel-outer-padding: 0 30px;
 
     .ting-cover img {
       width: auto;
+      min-width: 115px;
       height: var(--cover_max-height_grid-medium);
 
       @include media($phone) {
@@ -166,6 +170,10 @@ $carousel-outer-padding: 0 30px;
             content: ". ";
           }
         }
+
+        @include media($phone) {
+          display: none;
+        }
       }
 
       .field-name-ting-author {
@@ -196,13 +204,8 @@ $carousel-outer-padding: 0 30px;
     padding: ($mobile-margin * 2) 0 $mobile-margin;
 
     @include media($phone) {
-      padding: $mobile-margin 0;
-      margin: 0 $mobile-margin;
-    }
-
-    @include media($tablet-l) {
-      padding-left: $mobile-margin;
-      padding-right: $mobile-margin;
+      padding: 0;
+      margin: $mobile-margin 0;
     }
 
     .carousel__more-link {
