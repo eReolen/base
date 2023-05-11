@@ -310,7 +310,7 @@ function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &
  */
 function _reol_frontend_profile2_validate(array $form, array &$form_state) {
   $phone_value = trim($form_state['values']['profile_provider_publizon']['field_phone'][LANGUAGE_NONE][0]['value'] ?? '');
-  if (NULL !== $phone_value) {
+  if (!empty($phone_value)) {
     $phone_value_confirm = trim($form_state['values']['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value'] ?? '');
     if ($phone_value_confirm !== $phone_value) {
       form_set_error('profile_provider_publizon][field_phone_confirm', t('Please confirm your phone number'));
