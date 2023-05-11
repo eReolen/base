@@ -147,10 +147,7 @@ $carousel-outer-padding: 0 30px;
 
           .material__series-series {
             @include word-wrap();
-            max-width: 77px;
-            @include media($phone) {
-              max-width: 80px;
-            }
+            max-width: 57px;
           }
         }
 
