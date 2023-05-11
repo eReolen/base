@@ -3,150 +3,44 @@
   display: none !important;
 }
 
+// SCSS Variabels
+$carousel-outer-padding: 0 30px;
+
 .pane-carousel {
   max-width: 1180px;
   margin-left: auto;
   margin-right: auto;
 }
 
-$carousel-outer-padding: 0 30px;
-
+// Paragraphs wrapper
 .ding-carousel__wrapper {
   position: relative;
   z-index: 1;
 }
 
-.ding-carousel__background {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: -9999px;
-  right: -9999px;
-}
+// TODO: Check if this is in use
+// .ding-carousel__background {
+//   position: absolute;
+//   z-index: -1;
+//   top: 0;
+//   bottom: 0;
+//   left: -9999px;
+//   right: -9999px;
+// }
 
 .ding-carousel {
+  --cover_max-height: 180px;
+  --cover_max-height_grid-medium: 270px;
+  --cover_max-width: var(--cover_max-height);
+  --cover_max-width_grid-medium: var(--cover_max-height_grid-medium);
+  --item-font-size: 14pt;
+
   color: #fff;
-
-  ul {
-    display: flex;
-    vertical-align: top;
-    position: relative;
-    height: auto;
-    // margin-bottom: $mobile-margin;
-    padding: $carousel-outer-padding;
-
-    @include media($phone) {
-      padding: 0;
-      margin-bottom: 0;
-    }
-  }
-
-  li {
-    display: inline-block;
-    flex: none;
-    margin: 0;
-    width: 20%;
-    min-width: 200px;
-    box-sizing: border-box;
-    padding-left: $mobile-margin;
-  }
-
-  .carousel {
-    @include media($screen) {
-      margin-left: -$mobile-margin;
-    }
-  }
-
-  .carousel-wrapper {
-    overflow: hidden;
-  }
-
-  .carousel__header {
-    padding: ($mobile-margin * 2) 0 $mobile-margin;
-
-    @include media($phone) {
-      padding: $mobile-margin 0;
-      margin: 0 $mobile-margin;
-    }
-
-    @include media($tablet-l) {
-      padding-left: $mobile-margin;
-      padding-right: $mobile-margin;
-    }
-
-    .carousel__more-link {
-      display: block;
-      float: right;
-
-      a {
-        color: $black;
-        font-family: $font-bold;
-        font-size: 14pt;
-        text-decoration: none;
-        text-transform: uppercase;
-      }
-
-      &::after {
-        @include icon("arrow-right-funny");
-
-        position: relative;
-        // Try to make the stem of the arrow line up with the text.
-        top: 1px;
-        font-size: 14pt;
-      }
-
-      @include media($tablet-l) {
-        a {
-          font-size: 14pt;
-        }
-
-        &::after {
-          font-size: 14pt;
-        }
-      }
-    }
-  }
-}
-
-// Old slick carousel.
-.ting-search-carousel {
-  .slick-arrow {
-    background-repeat: no-repeat;
-    display: block;
-    height: 16px;
-    // IE renders the SVG at the right size, but centered, which makes the
-    // left/right positioning in the following classes not appear to work if
-    // the real size of the element is much larger.
-    width: 16px;
-    top: 40%;
-    margin: auto;
-    cursor: pointer;
-  }
-
-  .slick-prev.slick-arrow {
-    background-image: url("../../../assets/svg/arrow_left.svg");
-    left: 5px;
-  }
-  .slick-next.slick-arrow {
-    background-image: url("../../../assets/svg/arrow_right.svg");
-    right: 5px;
-  }
-}
-
-// New Swiper carousel.
-.ding-carousel {
-  // Leave room for the buttons.
-  padding: 0 100px;
+  padding: 0 100px; // Leave room for the buttons.
   overflow: hidden;
-
-  @include media($tablet-l) {
-    padding: 0;
-  }
-
   position: relative;
 
-  ul {
+  @include media($tablet-l) {
     padding: 0;
   }
 
@@ -183,41 +77,222 @@ $carousel-outer-padding: 0 30px;
     margin-bottom: $mobile-margin;
     padding-bottom: $mobile-margin;
   }
-}
 
-// Carousel item rendered as carousel_item
-.carousel-item-title {
-  color: $title-color;
-  text-decoration: none;
-  font-family: $font-regular;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  display: block;
-
-  // One line - word wrap with ellipsis.
-  @include word-wrap();
-}
-
-.carousel-item-creator {
-  display: block;
-  text-decoration: none;
-  color: $title-color;
-  margin-bottom: 5px;
-  @include word-wrap();
-}
-
-.carousel-item-image {
-  img {
-    width: 100%;
+  ul {
+    display: flex;
+    vertical-align: top;
+    position: relative;
     height: auto;
-    background-image: url("../../../assets/images/placeholder.png");
-    background-repeat: no-repeat;
-    background-position: center center;
+    list-style: none;
+    padding: 0;
+
+    @include media($phone) {
+      padding: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &-item {
+    flex: 1 0 auto;
+    max-width: var(--cover_max-width_grid-medium);
+
+    @include media($phone) {
+      max-width: var(--cover_max-width);
+    }
+
+    .ting-cover img {
+      width: auto;
+      height: var(--cover_max-height_grid-medium);
+
+      @include media($phone) {
+        height: var(--cover_max-height);
+      }
+    }
+
+    .ting-object.view-mode-compact {
+      // One line - word wrap with ellipsis.
+      color: $title-color;
+
+      .material-carousel-colored & {
+        color: $white;
+      }
+
+      // Make language and series line up on one line.
+      .field-type-ting-details-language,
+      .field-type-ting-details-language div {
+        display: inline-block;
+        font-size: var(--item-font-size);
+        vertical-align: top;
+        &:before {
+          font-size: 12pt;
+        }
+
+      }
+
+      .field-type-ting-series {
+        margin-left: 8px;
+        margin-top: 4px;
+        display: inline-block;
+        font-size: var(--item-font-size);
+
+        .field-items {
+
+          * {
+            display: inline-block;
+          }
+
+          .material__series-series {
+            @include word-wrap();
+            max-width: 77px;
+            @include media($phone) {
+              max-width: 80px;
+            }
+          }
+        }
+
+        .material__series-number {
+          vertical-align: top;
+
+          &::before {
+            @include icon("stack-solid");
+            font-size: var(--item-font-size);
+            margin-right: 5px;
+            vertical-align: top;
+          }
+        }
+
+        .material__series-number + .material__series-series {
+          &::before {
+            content: ". ";
+          }
+        }
+      }
+
+      .field-name-ting-author {
+        display: inline-block;
+        text-decoration: none;
+        color: $title-color;
+        font-size: var(--item-font-size);
+        line-height: 1.3;
+        font-family: $font-light;
+        margin-bottom: 5px;
+
+        .field-item {
+          @include word-wrap();
+          max-width: 175px;
+          @include media($phone) {
+            max-width: 120px;
+          }
+        }
+      }
+    }
+  }
+
+  .carousel-wrapper {
+    overflow: hidden;
+  }
+
+  .carousel__header {
+    padding: ($mobile-margin * 2) 0 $mobile-margin;
+
+    @include media($phone) {
+      padding: $mobile-margin 0;
+      margin: 0 $mobile-margin;
+    }
+
+    @include media($tablet-l) {
+      padding-left: $mobile-margin;
+      padding-right: $mobile-margin;
+    }
+
+    .carousel__more-link {
+      display: block;
+      float: right;
+
+      a {
+        color: $black;
+        font-family: $font-bold;
+        font-size: var(--item-font-size);
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      &::after {
+        @include icon("arrow-right-funny");
+
+        position: relative;
+        // Try to make the stem of the arrow line up with the text.
+        top: 1px;
+        font-size: var(--item-font-size);
+      }
+
+      @include media($tablet-l) {
+        a {
+          font-size: var(--item-font-size);
+        }
+
+        &::after {
+          font-size: var(--item-font-size);
+        }
+      }
+    }
+  }
+
+  // Carousel item rendered as carousel_item
+  .carousel-item-title,
+  .field-name-ting-title h2 {
+    color: $title-color;
+    text-decoration: none;
+    font-family: $font-regular;
+    font-size: var(--item-font-size);
+    line-height: 1.3;
+    margin: 0;
+    display: inline-block;
+    @include word-wrap();
+    max-width: 175px;
+    @include media($phone) {
+      max-width: 120px;
+    }
+  }
+
+  .carousel-item-image {
+    img {
+      width: 100%;
+      height: auto;
+      background-image: url("../../../assets/images/placeholder.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+  }
+
+  .carousel-item-link {
+    text-decoration: none;
   }
 }
 
-.carousel-item-link {
-  text-decoration: none;
+// Old slick carousel.
+.ting-search-carousel {
+  .slick-arrow {
+    background-repeat: no-repeat;
+    display: block;
+    height: 16px;
+    // IE renders the SVG at the right size, but centered, which makes the
+    // left/right positioning in the following classes not appear to work if
+    // the real size of the element is much larger.
+    width: 16px;
+    top: 40%;
+    margin: auto;
+    cursor: pointer;
+  }
+
+  .slick-prev.slick-arrow {
+    background-image: url("../../../assets/svg/arrow_left.svg");
+    left: 5px;
+  }
+  .slick-next.slick-arrow {
+    background-image: url("../../../assets/svg/arrow_right.svg");
+    right: 5px;
+  }
 }
 
 // Carousel items rendered as entity. Excessive selector in order to
@@ -229,81 +304,6 @@ $carousel-outer-padding: 0 30px;
 
     @include media($tablet-l) {
       font-size: 1.429em;
-    }
-  }
-}
-
-.ding-carousel-item {
-  .field-name-ting-title h2 {
-    color: $title-color;
-    text-decoration: none;
-    font-family: $font-regular;
-    font-weight: bold;
-    display: block;
-    font-size: 14pt;
-    line-height: normal;
-
-    // One line - word wrap with ellipsis.
-    @include word-wrap();
-
-    max-width: 100%;
-  }
-
-  .field-name-ting-author div div {
-    // Override _search.scss.
-    font-family: $font-light;
-    font-size: 14pt;
-    line-height: normal;
-    // One line - word wrap with ellipsis.
-    @include word-wrap();
-    max-width: 100%;
-  }
-
-  .ting-object.view-mode-compact {
-    // One line - word wrap with ellipsis.
-    @include word-wrap();
-    color: $title-color;
-
-    .material-carousel-colored & {
-      color: $white;
-    }
-
-    // Make language and series line up on one line.
-    .field-type-ting-details-language,
-    .field-type-ting-details-language div {
-      display: inline-block;
-      font-size: 14pt;
-      &:before {
-        font-size: 12pt;
-      }
-    }
-
-    .field-type-ting-series,
-    .field-type-ting-series div {
-      display: inline;
-    }
-
-    .field-type-ting-series {
-      white-space: nowrap;
-      margin-left: 0.5em;
-    }
-
-    .field-type-ting-series {
-      font-size: 14pt;
-
-      .material__series-number {
-        &::before {
-          @include icon("stack-solid");
-          font-size: 14pt;
-          margin-right: 5px;
-        }
-      }
-
-      .material__series-number + .material__series-series {
-        &::before {
-          content: " – ";
-        }
-      }
     }
   }
 }
@@ -325,10 +325,6 @@ $carousel-outer-padding: 0 30px;
   .field-name-ting-title h2,
   .field-name-ting-author div div {
     color: #fff;
-    line-height: normal;
-    margin: 0px;
-    @include word-wrap();
-    max-width: 100%;
   }
 
   .button-prev,
@@ -378,7 +374,7 @@ $carousel-outer-padding: 0 30px;
 
   .ding-carousel-item {
     // Make room for rounded corners on .article--breol-news--teaser
-    padding: 0 20px;
+    // padding: 0 20px;
     max-width: 100vw;
     width: 90%;
 
