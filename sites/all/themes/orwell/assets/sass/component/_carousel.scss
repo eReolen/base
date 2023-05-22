@@ -109,8 +109,12 @@
   }
 
   &.placeholder {
-    min-height: 336px;
-    min-width: 225px;
+    min-height: 279px;
+    min-width: 150px;
+    @include grid-media($medium) {
+      min-height: 336px;
+      min-width: 225px;
+    }
 
     .icon-spinner {
       position: relative;
