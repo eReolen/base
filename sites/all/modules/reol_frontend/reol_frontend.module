@@ -281,6 +281,62 @@ function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &
 
   // Hide sms fee.
   $form['ding_user_fee_sms']['#access'] = FALSE;
+
+  // Add message about confirming values right under “Support id”.
+  $message = variable_get('ereol_profile_confirm_message');
+  if (!empty($message['value'])) {
+    $form['ereol_profile_confirm_message'] = array(
+      '#markup' => '<div class="profile-confirm-message">' . $message['value'] . '</div>',
+      '#weight' => -49,
+    );
+  }
+
+  // Unset default values to force user to confirm values when saving.
+  unset($form['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value']['#default_value']);
+  unset($form['profile_provider_publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email']['#default_value']);
+
+  // Use states to show confirm fields only when needed.
+  $form['profile_provider_publizon']['field_phone_confirm']['#states'] = array(
+    'visible' => array(
+      ':input[name="profile_provider_publizon[field_phone][und][0][value]"]' => array('empty' => FALSE),
+    ),
+  );
+
+  $form['profile_provider_publizon']['field_email_confirm']['#states'] = array(
+    'visible' => array(
+      ':input[name="profile_provider_publizon[field_email][und][0][email]"]' => array('empty' => FALSE),
+    ),
+  );
+
+  $form['#validate'][] = '_reol_frontend_profile2_validate';
+}
+
+/**
+ * Validation function for profile2_edit_provider_publizon form.
+ *
+ * Validates that phone and email are confirmed if set.
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The form state.
+ */
+function _reol_frontend_profile2_validate(array $form, array &$form_state) {
+  $phone_value = trim($form_state['values']['profile_provider_publizon']['field_phone'][LANGUAGE_NONE][0]['value'] ?? '');
+  if (!empty($phone_value)) {
+    $phone_value_confirm = trim($form_state['values']['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value'] ?? '');
+    if ($phone_value_confirm !== $phone_value) {
+      form_set_error('profile_provider_publizon][field_phone_confirm', t('Please confirm your phone number'));
+    }
+  }
+
+  $email_value = trim($form_state['values']['profile_provider_publizon']['field_email'][LANGUAGE_NONE][0]['email'] ?? '');
+  if (!empty($email_value)) {
+    $email_value_confirm = trim($form_state['values']['profile_provider_publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email'] ?? '');
+    if ($email_value_confirm !== $email_value) {
+      form_set_error('profile_provider_publizon][field_email_confirm', t('Please confirm your email address'));
+    }
+  }
 }
 
 /**
