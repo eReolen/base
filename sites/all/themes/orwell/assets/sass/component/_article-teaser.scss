@@ -51,12 +51,13 @@
     isolation: isolate;
     color: var(--text-color-dark);
     max-width: 100vw;
-    margin: 0 0 var(--spacerX3) 0;
+    margin: 0;
 
     @include grid-media($medium) {
       --height: 330px;
       grid-template-columns: auto var(--subject-col-width);
       width: var(--width);
+      margin: 0 0 var(--spacerX3) 0;
     }
   }
 
@@ -113,6 +114,15 @@
     line-height: 1.3;
     @include grid-media($medium) {
       padding: 0 var(--spacerX3);
+    }
+  }
+  .article--teaser__body p {
+    @include grid-media($small) {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      white-space: pre-wrap;
     }
   }
 
@@ -202,7 +212,7 @@
       2 * var(--carousel-width) - var(--spacerX3)
     ); // Set a maximum fixed width a bit less than the with of 2 slides, since we will otherwise scroll 2 slides at a time when navigating. This because of the default behaviour of the book-cover carousels.
     margin: 0 auto;
-    padding: 0px 0 36px 0;
+    padding: 0;
     overflow: hidden;
 
     .carousel {
