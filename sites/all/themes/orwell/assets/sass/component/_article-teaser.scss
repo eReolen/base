@@ -117,12 +117,17 @@
     }
   }
   .article--teaser__body p {
-    @include grid-media($small) {
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-      white-space: pre-wrap;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    white-space: pre-wrap;
+    @include grid-media($medium) {
+      overflow: initial;
+      display: initial;
+      -webkit-box-orient: initial;
+      -webkit-line-clamp: initial;
+      white-space: initial;
     }
   }
 
