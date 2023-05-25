@@ -77,7 +77,7 @@
     text-overflow: ellipsis;
 
     @include grid-media($medium) {
-      max-width: 128px;
+      max-width: 92px;
     }
 
     .material__series-number {
