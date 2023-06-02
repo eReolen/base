@@ -194,7 +194,6 @@
     }
     running = true;
     var swiper = queue.shift();
-
     $.ajax({
       type: 'get',
       url: Drupal.settings.basePath + $(swiper.el).data('path') + '/' + $(swiper.el).data('offset'),
@@ -230,7 +229,7 @@
           (tab.data('offset') > -1 &&
           // Use .75 to make it trigger when scrolling to the end when the
           // coursel only has 5 elements as it will have when initially loaded.
-          this.progress > 0.75)) {
+          this.progress > 0.60)) {
         // Disable updates while updating.
         tab.data('updating', true);
         // Add to queue.
@@ -255,13 +254,15 @@
     // mode.
     if (slideWidth > (carouselWidth * 0.8)) {
       this.params.freeModeSticky = true;
+      this.params.slidesPerGroup = 1;
     }
     else {
       // Else we calculate how many slides to scroll with the arrows.
       // This will set it to low if the page was loaded at a small
       // mobile width, and resized afterwards, but it's an edge case
       // we're living with.
-      this.params.slidesPerGroup = Math.floor(carouselWidth / slideWidth);
+      this.params.slidesPerGroup = Math.floor(carouselWidth / slideWidth) < 4 ? Math.floor(carouselWidth / slideWidth) : 4 ;
+      //this.params.slidesPerGroup = 3;
       // Apparently swiper needs to be updated for this to take effect.
       this.update();
     }
@@ -304,7 +305,9 @@
           speed: 400,
           slidesPerView: 'auto',
           spaceBetween: 40,
-          slidesPerGroupAuto: true,
+          // slidesPerGroupAuto: true,
+          // observeParents: true,
+          observer: true,
           centerInsufficientSlides: true,
           slidesOffsetAfter: 200,
           wrapperClass: 'carousel',
@@ -325,6 +328,7 @@
           init: false
         });
         swiper.on('init', init_handler);
+        swiper.on('init', update_handler);
         swiper.on('slideChange', update_handler);
         swiper.init();
       });

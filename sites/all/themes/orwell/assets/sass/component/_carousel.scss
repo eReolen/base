@@ -2,7 +2,7 @@
 
 .ding-carousel {
   --cover_max-height: 180px;
-  --cover_max-height_grid-medium: 270px;
+  --cover_max-height_grid-medium: 240px;
   --cover_max-width: var(--cover_max-height);
   --cover_max-width_grid-medium: var(--cover_max-height_grid-medium);
 
@@ -121,11 +121,10 @@
 // Placeholder
 .ding-carousel-item {
   &.placeholder {
-    min-height: 279px;
-    min-width: 150px;
+    max-height: 236px;
+    width: auto;
     @include grid-media($medium) {
-      min-height: 336px;
-      min-width: 225px;
+      max-height: 296px;
     }
 
     .icon-spinner {
