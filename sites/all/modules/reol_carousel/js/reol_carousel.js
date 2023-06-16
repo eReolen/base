@@ -250,8 +250,8 @@
     var carouselWidth = $(this.el).width();
     var slideWidth = $(this.slides[0]).outerWidth();
 
-    // If the first slide is more than 80% of the carousel width, enable sticky
-    // mode.
+    // If the first slide is more than 80% of the carousel width enable sticky
+    // mode and slide only one item at the time.
     if (slideWidth > (carouselWidth * 0.8)) {
       this.params.freeModeSticky = true;
       this.params.slidesPerGroup = 1;
@@ -261,8 +261,8 @@
       // This will set it to low if the page was loaded at a small
       // mobile width, and resized afterwards, but it's an edge case
       // we're living with.
-      this.params.slidesPerGroup = Math.floor(carouselWidth / slideWidth) < 4 ? Math.floor(carouselWidth / slideWidth) : 4 ;
-      //this.params.slidesPerGroup = 3;
+      this.params.slidesPerGroup = Math.floor(carouselWidth / slideWidth) < 3 ? Math.floor(carouselWidth / slideWidth) : 3;
+      // this.params.slidesPerGroup = 3;
       // Apparently swiper needs to be updated for this to take effect.
       this.update();
     }
@@ -312,7 +312,7 @@
           slidesOffsetAfter: 200,
           wrapperClass: 'carousel',
           slideClass: 'ding-carousel-item',
-          freeMode: true,
+          freeMode: false,
           freeModeMinimumVelocity: 0.0002,
           freeModeMomentumRatio: 0.5,
           navigation: {
