@@ -227,7 +227,7 @@
       // If its the first batch or we're near the end.
       if (tab.data('offset') === 0 ||
           (tab.data('offset') > -1 &&
-          // Use .75 to make it trigger when scrolling to the end when the
+          // Use .60 to make it trigger when scrolling to the end when the
           // coursel only has 5 elements as it will have when initially loaded.
           this.progress > 0.60)) {
         // Disable updates while updating.
@@ -261,8 +261,8 @@
       // This will set it to low if the page was loaded at a small
       // mobile width, and resized afterwards, but it's an edge case
       // we're living with.
-      this.params.slidesPerGroup = Math.floor(carouselWidth / slideWidth) < 3 ? Math.floor(carouselWidth / slideWidth) : 3;
-      // this.params.slidesPerGroup = 3;
+      this.params.slidesPerGroup = Math.min(Math.floor(carouselWidth / slideWidth), 3);
+
       // Apparently swiper needs to be updated for this to take effect.
       this.update();
     }
