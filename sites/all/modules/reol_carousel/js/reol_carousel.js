@@ -194,7 +194,6 @@
     }
     running = true;
     var swiper = queue.shift();
-
     $.ajax({
       type: 'get',
       url: Drupal.settings.basePath + $(swiper.el).data('path') + '/' + $(swiper.el).data('offset'),
@@ -228,9 +227,9 @@
       // If its the first batch or we're near the end.
       if (tab.data('offset') === 0 ||
           (tab.data('offset') > -1 &&
-          // Use .75 to make it trigger when scrolling to the end when the
+          // Use .60 to make it trigger when scrolling to the end when the
           // coursel only has 5 elements as it will have when initially loaded.
-          this.progress > 0.75)) {
+          this.progress > 0.60)) {
         // Disable updates while updating.
         tab.data('updating', true);
         // Add to queue.
@@ -251,17 +250,19 @@
     var carouselWidth = $(this.el).width();
     var slideWidth = $(this.slides[0]).outerWidth();
 
-    // If the first slide is more than 80% of the carousel width, enable sticky
-    // mode.
+    // If the first slide is more than 80% of the carousel width enable sticky
+    // mode and slide only one item at the time.
     if (slideWidth > (carouselWidth * 0.8)) {
       this.params.freeModeSticky = true;
+      this.params.slidesPerGroup = 1;
     }
     else {
       // Else we calculate how many slides to scroll with the arrows.
       // This will set it to low if the page was loaded at a small
       // mobile width, and resized afterwards, but it's an edge case
       // we're living with.
-      this.params.slidesPerGroup = Math.floor(carouselWidth / slideWidth);
+      this.params.slidesPerGroup = Math.min(Math.floor(carouselWidth / slideWidth), 3);
+
       // Apparently swiper needs to be updated for this to take effect.
       this.update();
     }
@@ -304,12 +305,14 @@
           speed: 400,
           slidesPerView: 'auto',
           spaceBetween: 40,
-          slidesPerGroupAuto: true,
+          // slidesPerGroupAuto: true,
+          // observeParents: true,
+          observer: true,
           centerInsufficientSlides: true,
           slidesOffsetAfter: 200,
           wrapperClass: 'carousel',
           slideClass: 'ding-carousel-item',
-          freeMode: true,
+          freeMode: false,
           freeModeMinimumVelocity: 0.0002,
           freeModeMomentumRatio: 0.5,
           navigation: {
@@ -325,6 +328,7 @@
           init: false
         });
         swiper.on('init', init_handler);
+        swiper.on('init', update_handler);
         swiper.on('slideChange', update_handler);
         swiper.init();
       });

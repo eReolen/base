@@ -2,12 +2,20 @@
 
 .ding-carousel {
   --cover_max-height: 180px;
-  --cover_max-height_grid-medium: 270px;
+  --cover_max-height_grid-medium: 240px;
   --cover_max-width: var(--cover_max-height);
   --cover_max-width_grid-medium: var(--cover_max-height_grid-medium);
 
-  @include content-wrapper;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1080px;
+  padding-left: $padding__default;
+  padding-right: $padding__default;
   position: relative;
+
+  @include grid-media($medium) {
+    padding: 0;
+  }
 
   &-item {
     flex: 1 0 auto;
@@ -121,11 +129,10 @@
 // Placeholder
 .ding-carousel-item {
   &.placeholder {
-    min-height: 279px;
-    min-width: 150px;
+    max-height: var(--cover_max-height);
+    width: auto;
     @include grid-media($medium) {
-      min-height: 336px;
-      min-width: 225px;
+      max-height: var(--cover_max-height_grid-medium);
     }
 
     .icon-spinner {
