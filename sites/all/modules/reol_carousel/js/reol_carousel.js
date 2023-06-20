@@ -322,7 +322,11 @@
           breakpoints: {
             // when window width is =< 783px (grid-media($medium))
             783: {
-              spaceBetween: 20
+              spaceBetween: 20,
+              slidesPerGroup: 1,
+              freeMode: true,
+              freeModeMinimumVelocity: 0.0002,
+              freeModeMomentumRatio: 0.5,
             },
           },
           init: false
