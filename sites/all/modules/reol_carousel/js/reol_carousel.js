@@ -227,9 +227,9 @@
       // If its the first batch or we're near the end.
       if (tab.data('offset') === 0 ||
           (tab.data('offset') > -1 &&
-          // Use .60 to make it trigger when scrolling to the end when the
+          // Use .75 to make it trigger when scrolling to the end when the
           // coursel only has 5 elements as it will have when initially loaded.
-          this.progress > 0.60)) {
+          this.progress > 0.75)) {
         // Disable updates while updating.
         tab.data('updating', true);
         // Add to queue.
@@ -305,9 +305,6 @@
           speed: 400,
           slidesPerView: 'auto',
           spaceBetween: 40,
-          // slidesPerGroupAuto: true,
-          // observeParents: true,
-          observer: true,
           centerInsufficientSlides: true,
           slidesOffsetAfter: 200,
           wrapperClass: 'carousel',
@@ -322,13 +319,16 @@
           breakpoints: {
             // when window width is =< 783px (grid-media($medium))
             783: {
-              spaceBetween: 20
+              spaceBetween: 20,
+              slidesPerGroup: 1,
+              freeMode: true,
+              freeModeMinimumVelocity: 0.0002,
+              freeModeMomentumRatio: 0.5,
             },
           },
           init: false
         });
         swiper.on('init', init_handler);
-        swiper.on('init', update_handler);
         swiper.on('slideChange', update_handler);
         swiper.init();
       });
