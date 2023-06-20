@@ -305,9 +305,6 @@
           speed: 400,
           slidesPerView: 'auto',
           spaceBetween: 40,
-          // slidesPerGroupAuto: true,
-          // observeParents: true,
-          observer: true,
           centerInsufficientSlides: true,
           slidesOffsetAfter: 200,
           wrapperClass: 'carousel',
@@ -332,7 +329,6 @@
           init: false
         });
         swiper.on('init', init_handler);
-        swiper.on('init', update_handler);
         swiper.on('slideChange', update_handler);
         swiper.init();
       });
