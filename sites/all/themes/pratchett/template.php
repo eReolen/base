@@ -131,3 +131,20 @@ function pratchett_preprocess_menu_link(&$variables) {
     }
   }
 }
+
+/**
+ * Wrapper for truncate_utf8 to handle newlines in text.
+ */
+function pratchett_truncate_utf8($string, $max_length, $wordsafe = FALSE, $add_ellipsis = FALSE, $min_wordsafe_length = 1) {
+  // Replace newlines in text with placeholder.
+  $newline_placeholder = '[[newline]]';
+  $string = preg_replace('/(\r\n|\r|\n)+/', $newline_placeholder, $string);
+  $number_of_newlines = substr_count($string, $newline_placeholder);
+  // Adjust max length to account for newline placeholders.
+  $max_length += $number_of_newlines*strlen($newline_placeholder);
+
+  $truncated = truncate_utf8($string, $max_length, $wordsafe, $add_ellipsis, $min_wordsafe_length);
+
+  // Return result with real newlines.
+  return str_replace($newline_placeholder, PHP_EOL, $truncated);
+}
