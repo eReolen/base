@@ -12,3 +12,8 @@ sites/all/themes/kreol/
 
 # Do not commit analyse tools
 vendor/
+
+# Ignore .env.local
+.env.local
+
+.DS_store
