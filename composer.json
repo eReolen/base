@@ -1,13 +1,14 @@
 {
     "require": {
-        "php": "7.4",
+        "php": "^7.4",
         "phan/phan": "^1.2",
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-soap": "*",
         "ext-simplexml": "*",
         "ext-libxml": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "drush/drush": "^8"
     },
     "require-dev": {
         "drupal/coder": "^8.3.1",

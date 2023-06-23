@@ -1,6 +1,26 @@
 ereolen.dk and ereolengo.dk
 ===========================
 
+## Development
+
+```sh
+itkdev-docker-compose up --detach
+itkdev-docker-compose composer install
+itkdev-docker-compose drush --uri=$(itkdev-docker-compose url) user:login
+```
+
+Pull a database:
+
+```sh
+itkdev-docker-compose sync:db
+# Disable Varnish locally
+itkdev-docker-compose drush --yes pm:disable varnish
+itkdev-docker-compose drush --yes cache:clear all
+itkdev-docker-compose drush --uri=$(itkdev-docker-compose url) user:login
+```
+
+--------------------------------------------------------------------------------
+
 Ereolen.dk anno 2015 based on DDB CMS
 
 ## Patches
