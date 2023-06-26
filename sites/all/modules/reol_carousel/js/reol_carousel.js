@@ -202,7 +202,15 @@
         // Remove placeholders.
         $(swiper.el).find('.ding-carousel-item.placeholder').remove();
         if (data.content) {
-          swiper.appendSlide(data.content);
+          // Add li elements in content as slides (cf. https://swiperjs.com/swiper-api#method-swiper-appendSlide)
+          var slides = data.content
+              // Remove HTML comments.
+              .replace(/<!--(.|\n)*?-->/g, '')
+              // Remove leading (and trailing) whitespace.
+              .trim()
+              // Split into slides
+              .split(/(?=<li)/)
+          swiper.appendSlide(slides);
           if (swiper.slides.length === 1) {
             $(swiper.el).addClass('single-slide')
           }
