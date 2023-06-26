@@ -286,11 +286,6 @@
       $('.ding-carousel', context).each(function () {
         var carousel = $(this);
 
-        // var settings = {};
-        // if (typeof $(this).data('settings') === 'object') {
-        //   settings = $(this).data('settings');
-        // }
-
         // Add prev/next buttons to header, if one is present, or
         // simply the container..
         var header = carousel.find('.carousel__header');
@@ -305,8 +300,6 @@
 
         var swiper = new Swiper(this, {
           speed: 400,
-          //observer: true,
-          //rewind: true,
           slidesPerView: 'auto',
           slidesPerGroup: 1,
           spaceBetween: 20,
