@@ -222,6 +222,7 @@
    * Event handler for progressively loading more covers.
    */
   var update_handler = function () {
+    console.debug("update_handler");
     var tab = $(this.el);
 
     if (!tab.data('updating')) {
@@ -249,25 +250,26 @@
    * widths of the carousel and first slide.
    */
   var init_handler = function () {
+    console.debug("init_handler");
     var carouselWidth = $(this.el).width();
     var slideWidth = $(this.slides[0]).outerWidth();
 
     // If the first slide is more than 80% of the carousel width enable sticky
     // mode and slide only one item at the time.
-    // if (slideWidth > (carouselWidth * 0.8)) {
-    //   this.params.freeModeSticky = true;
-    //   this.params.slidesPerGroup = 1;
-    // }
-    // else {
-    //   // Else we calculate how many slides to scroll with the arrows.
-    //   // This will set it to low if the page was loaded at a small
-    //   // mobile width, and resized afterwards, but it's an edge case
-    //   // we're living with.
-    //   this.params.slidesPerGroup = Math.min(Math.floor(carouselWidth / slideWidth), 3);
+    if (slideWidth > (carouselWidth * 0.8)) {
+      this.params.freeModeSticky = true;
+      this.params.slidesPerGroup = 1;
+    }
+    else {
+      // Else we calculate how many slides to scroll with the arrows.
+      // This will set it to low if the page was loaded at a small
+      // mobile width, and resized afterwards, but it's an edge case
+      // we're living with.
+      this.params.slidesPerGroup = Math.min(Math.floor(carouselWidth / slideWidth), 3);
 
-    //   // Apparently swiper needs to be updated for this to take effect. https://swiperjs.com/swiper-api#method-swiper-update
-    //   this.update();
-    // }
+      // Apparently swiper needs to be updated for this to take effect. https://swiperjs.com/swiper-api#method-swiper-update
+      this.update();
+    }
 
     if ($(this.el).hasClass('add-wrapper')) {
       $('.carousel', this.el).wrap('<div class="carousel-wrapper"></div>');
@@ -323,8 +325,8 @@
           },
           init: false
         });
-        //swiper.on('init', init_handler);
-        //swiper.on('slideChange', update_handler);
+        swiper.on('init', init_handler);
+        swiper.on('slideChange', update_handler);
         swiper.init();
       });
 
