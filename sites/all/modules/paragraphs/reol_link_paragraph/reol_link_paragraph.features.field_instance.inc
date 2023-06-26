@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * reol_link_paragraph.features.field_instance.inc
@@ -20,7 +21,9 @@ function reol_link_paragraph_field_default_field_instances() {
       'default' => array(
         'label' => 'hidden',
         'module' => 'link',
-        'settings' => array(),
+        'settings' => array(
+          'custom_title' => '',
+        ),
         'type' => 'link_default',
         'weight' => 0,
       ),
@@ -36,6 +39,7 @@ function reol_link_paragraph_field_default_field_instances() {
     'label' => 'Link',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -43,12 +47,14 @@ function reol_link_paragraph_field_default_field_instances() {
         'target' => 'default',
         'title' => '',
       ),
+      'convert_aliases' => 0,
       'display' => array(
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 0,
       'rel_remove' => 'default',
       'title' => 'optional',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 255,
       'title_value' => '',
       'url' => 0,
@@ -208,7 +214,7 @@ function reol_link_paragraph_field_default_field_instances() {
     ),
     'entity_type' => 'paragraphs_item',
     'field_name' => 'field_link_text',
-    'label' => 'Tekst til app',
+    'label' => 'Knap-tekst til app',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -229,8 +235,8 @@ function reol_link_paragraph_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Farve');
   t('Grafik');
+  t('Knap-tekst til app');
   t('Link');
-  t('Tekst til app');
   t('Vises kun i app\'en.');
 
   return $field_instances;
