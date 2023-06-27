@@ -3,7 +3,6 @@
 namespace Drupal\reol_app_feeds\Helper;
 
 use Drupal\media_videotool\ApiClient as VideotoolApiClient;
-use EntityFieldQuery;
 use GuzzleHttp\Client;
 
 /**
@@ -220,7 +219,7 @@ class ParagraphHelper {
     $paragraphs = [];
 
     $entity_type = NodeHelper::ENTITY_TYPE_PARAGRAPH;
-    $query = new EntityFieldQuery();
+    $query = new \EntityFieldQuery();
     $query->entityCondition('entity_type', $entity_type)
       ->entityCondition('bundle', $types, 'IN')
       ->entityCondition('entity_id', $paragraphIds ?: [0], 'IN');
@@ -354,15 +353,10 @@ class ParagraphHelper {
   private function getArticleCarousel(\ParagraphsItemEntity $paragraph) {
     $list = [];
     // Cf. ereol_article_get_articles().
-
-    $query = new EntityFieldQuery();
+    $query = new \EntityFieldQuery();
     $count = _reol_app_feeds_variable_get('reol_app_feeds_frontpage', 'max_news_count', 6);
 
-    $bundle = 'article';
-    // Hack for eReolen Go!
-    if (module_exists('breol_news')) {
-      $bundle = 'breol_news';
-    }
+    $bundle = self::isBreol() ? 'article' : 'breol_news';
 
     $entityType = NodeHelper::ENTITY_TYPE_NODE;
     $query->entityCondition('entity_type', $entityType)
@@ -406,7 +400,7 @@ class ParagraphHelper {
     // Note: We may get more data than actually needed, but due to non-trivial
     // filtering on "identifiers" (see below) we have to load all items.
     //
-    // @TODO: Can we improve this so we don't have to load all items and throw
+    // @todo Can we improve this so we don't have to load all items and throw
     // away some of them?
     $items = $this->nodeHelper->loadReferences($paragraph, 'field_picked_articles') ?? [];
 
@@ -437,6 +431,7 @@ class ParagraphHelper {
    *   The theme data.
    *
    * @throws \TingClientException
+   *
    * @see https://docs.google.com/document/d/1lJ3VPAJf7DAbBWAQclRHfcltzZefUG3iGCec-z97KlA/edit?ts=5c4ef9d5#bookmark=id.a1elwnwq3nk4
    */
   public function getThemeData($node) {
@@ -592,7 +587,7 @@ class ParagraphHelper {
     $list = [];
     if ($reviews = reol_review_get_random_reviews(NULL, $count)) {
       foreach ($reviews as $review) {
-        // @var \TingEntity $ting
+        /** @var \TingEntity $ting */
         $ting = $review->ting_entity;
         $creator = $ting->getCreators() ? implode(', ', $ting->getCreators()) : self::VALUE_NONE;
 
@@ -727,6 +722,9 @@ class ParagraphHelper {
     ];
   }
 
+  /**
+   * Get blue titles info.
+   */
   protected function getBlueTitlesInfo(\ParagraphsItemEntity $paragraph) {
     return [
       'guid' => $this->getGuid($paragraph),
@@ -794,6 +792,74 @@ class ParagraphHelper {
   }
 
   /**
+   * Get link boxes.
+   */
+  public function getLinkBoxes(\ParagraphsItemEntity $paragraph) {
+    $data = [];
+
+    switch ($paragraph->bundle()) {
+      // eReolen.
+      case self::PARAGRAPH_SPOTLIGHT_BOX:
+        /** @var \ParagraphsItemEntity[] $subParagraphs */
+        $subParagraphs = $paragraph->wrapper()->field_spotlight_row_2->value();
+        foreach ($subParagraphs as $subParagraph) {
+          if ($subParagraph instanceof \ParagraphsItemEntity
+            && 'linkbox' === $subParagraph->bundle()
+          ) {
+            $wrapper = $subParagraph->wrapper();
+            $show_on = $wrapper->field_show_on->value();
+            if (in_array('app', $show_on, TRUE)) {
+              $link = $wrapper->field_link->value();
+              $data[] = [
+                'guid' => $subParagraph->identifier(),
+                'type' => 'link_box',
+                'title' => $link['title'],
+                'link' => $link['url'],
+                'button' => $wrapper->field_link_text->value() ?? ParagraphHelper::VALUE_NONE,
+                'image' => $this->nodeHelper->getImage($wrapper->field_link_gfx->value()) ?? ParagraphHelper::VALUE_NONE,
+                'color' => $wrapper->field_link_color->value()['rgb'] ?? ParagraphHelper::VALUE_NONE,
+              ];
+            }
+          }
+        }
+        break;
+
+      case self::PARAGRAPH_TWO_ELEMENTS:
+        // field_two_elements_primary is a single paragraph.
+        $subParagraphFields = [
+          'field_two_elements_primary',
+          'field_two_elements_secondary',
+        ];
+        foreach ($subParagraphFields as $subParagraphField) {
+          /** @var \ParagraphsItemEntity[] $subParagraphs */
+          $subParagraphs = [$paragraph->wrapper()->{$subParagraphField}->value()];
+          foreach ($subParagraphs as $subParagraph) {
+            if ($subParagraph instanceof \ParagraphsItemEntity
+            && 'breol_linkbox' === $subParagraph->bundle()) {
+              $wrapper = $subParagraph->wrapper();
+              $show_on = $wrapper->field_show_on->value();
+              if (in_array('app', $show_on, TRUE)) {
+                $link = $wrapper->field_breol_linkbox_link->value();
+                $data[] = [
+                  'guid' => $subParagraph->identifier(),
+                  'type' => 'link_box',
+                  'title' => $link['title'],
+                  'link' => $link['url'],
+                  'button' => $wrapper->field_breol_linkbox_app_text->value() ?? ParagraphHelper::VALUE_NONE,
+                  'image' => $this->nodeHelper->getImage($wrapper->field_breol_linkbox_image->value()) ?? ParagraphHelper::VALUE_NONE,
+                  'color' => $wrapper->field_breol_linkbox_color->value()['rgb'] ?? ParagraphHelper::VALUE_NONE,
+                ];
+              }
+            }
+          }
+        }
+        break;
+    }
+
+    return $data;
+  }
+
+  /**
    * Get video list from video_bundle paragraph.
    *
    * @param \ParagraphsItemEntity $paragraph
@@ -811,7 +877,8 @@ class ParagraphHelper {
     // eReolen uses field_video; eReolen Go uses field_breol_video.
     $videoUrl = $this->nodeHelper->getFieldValue($video, 'field_video', 'uri')
       ?? $this->nodeHelper->getFieldValue($video, 'field_breol_video', 'uri');
-    // eReolen uses field_link_color; eReolen Go uses field_material_carousel_color.
+    // eReolen uses field_link_color;
+    // eReolen Go uses field_material_carousel_color.
     $color = $this->nodeHelper->getFieldValue($paragraph, 'field_link_color', 'rgb')
       ?? $this->nodeHelper->getFieldValue($paragraph, 'field_video_bundle_color', 'rgb');
     $url = $this->nodeHelper->getFileUrl($videoUrl);
@@ -1253,6 +1320,20 @@ class ParagraphHelper {
     }
     ksort($arr);
     return array_keys($arr) !== range(0, count($arr) - 1);
+  }
+
+  /**
+   * Check if this is eReolen GO.
+   */
+  public static function isBreol(): bool {
+    return module_exists('breol_news');
+  }
+
+  /**
+   * Check if this is eReolen no GO.
+   */
+  public static function isEreol(): bool {
+    return !self::isBreol();
   }
 
 }
