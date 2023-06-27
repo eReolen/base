@@ -57,3 +57,20 @@ function reol_link_paragraph_preprocess_entity(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_paragraphs_item_access().
+ */
+function reol_link_paragraph_paragraphs_item_access($entity, $op, $account) {
+  if ($entity instanceof ParagraphsItemEntity
+    && 'linkbox' === $entity->bundle()
+    && 'view' === $op) {
+    $wrapper = $entity->wrapper();
+    $show_on = $wrapper->field_show_on->value();
+    if (!in_array('web', $show_on, TRUE)) {
+      return PARAGRAPHS_ITEM_ACCESS_DENY;
+    }
+  }
+
+  return PARAGRAPHS_ITEM_ACCESS_IGNORE;
+}
