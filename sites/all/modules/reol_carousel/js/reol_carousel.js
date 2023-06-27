@@ -248,7 +248,6 @@
     }
     // Run queue.
     update();
-    //this.update();
   };
 
   /**
