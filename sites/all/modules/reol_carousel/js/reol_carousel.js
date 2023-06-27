@@ -231,7 +231,6 @@
    * Event handler for progressively loading more covers.
    */
   var update_handler = function () {
-    console.debug("update_handler");
     var tab = $(this.el);
 
     if (!tab.data('updating')) {
@@ -259,7 +258,6 @@
    * widths of the carousel and first slide.
    */
   var init_handler = function () {
-    console.debug("init_handler");
     var carouselWidth = $(this.el).width();
     var slideWidth = $(this.slides[0]).outerWidth();
 
