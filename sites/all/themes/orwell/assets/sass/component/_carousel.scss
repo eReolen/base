@@ -18,7 +18,7 @@
   }
 
   &-item {
-    flex: 1 0 auto;
+    flex: 0 0 auto;
 
     @include grid-media($medium) {
       max-width: var(--cover_max-width_grid-medium);
@@ -58,6 +58,10 @@
       color: $color__gray;
       font-size: 0.75rem;
       text-indent: 0;
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.5;
     }
   }
 

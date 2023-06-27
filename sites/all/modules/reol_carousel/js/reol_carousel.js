@@ -202,7 +202,16 @@
         // Remove placeholders.
         $(swiper.el).find('.ding-carousel-item.placeholder').remove();
         if (data.content) {
-          swiper.appendSlide(data.content);
+          // Add slide elements in content as individual slides (cf.
+          // https://swiperjs.com/swiper-api#method-swiper-appendSlide)
+          // Parse HTML content and put it into wrapper element.
+          $('<div/>')
+            .append($.parseHTML(data.content))
+            // Find the slides.
+            .find('.'+swiper.params.slideClass)
+            // Append each slide to the carousel.
+            .each((index, slide) => swiper.appendSlide(slide))
+
           if (swiper.slides.length === 1) {
             $(swiper.el).addClass('single-slide')
           }
@@ -215,6 +224,7 @@
         update();
       }
     });
+
   };
 
   /**
@@ -263,7 +273,7 @@
       // we're living with.
       this.params.slidesPerGroup = Math.min(Math.floor(carouselWidth / slideWidth), 3);
 
-      // Apparently swiper needs to be updated for this to take effect.
+      // Apparently swiper needs to be updated for this to take effect. https://swiperjs.com/swiper-api#method-swiper-update
       this.update();
     }
 
@@ -284,11 +294,6 @@
       $('.ding-carousel', context).each(function () {
         var carousel = $(this);
 
-        var settings = {};
-        if (typeof $(this).data('settings') === 'object') {
-          settings = $(this).data('settings');
-        }
-
         // Add prev/next buttons to header, if one is present, or
         // simply the container..
         var header = carousel.find('.carousel__header');
@@ -304,12 +309,12 @@
         var swiper = new Swiper(this, {
           speed: 400,
           slidesPerView: 'auto',
-          spaceBetween: 40,
+          slidesPerGroup: 1,
+          spaceBetween: 20,
           centerInsufficientSlides: true,
-          slidesOffsetAfter: 200,
           wrapperClass: 'carousel',
           slideClass: 'ding-carousel-item',
-          freeMode: false,
+          freeMode: true,
           freeModeMinimumVelocity: 0.0002,
           freeModeMomentumRatio: 0.5,
           navigation: {
@@ -317,13 +322,11 @@
             prevEl: '.button-prev'
           },
           breakpoints: {
-            // when window width is =< 783px (grid-media($medium))
+            // grid-media($medium)
             783: {
-              spaceBetween: 20,
-              slidesPerGroup: 1,
-              freeMode: true,
-              freeModeMinimumVelocity: 0.0002,
-              freeModeMomentumRatio: 0.5,
+              spaceBetween: 40,
+              slidesPerGroup: 3,
+              freeMode: false,
             },
           },
           init: false

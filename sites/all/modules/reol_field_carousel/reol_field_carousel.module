@@ -151,7 +151,7 @@ function reol_field_carousel_field_formatter_view($entity_type, $entity, $field,
           '#path' => $ajax_path,
           '#items' => $covers,
           '#offset' => $chunk['next_offset'],
-          '#placeholders' => $chunk['next_offset'] > -1 ? TING_SEARCH_CAROUSEL_CHUNK_SIZE + 1 : TING_SEARCH_CAROUSEL_CHUNK_SIZE,
+          '#placeholders' => min(count($chunk['entities']), $chunk['next_offset'] > -1 ? TING_SEARCH_CAROUSEL_CHUNK_SIZE + 1 : TING_SEARCH_CAROUSEL_CHUNK_SIZE),
         );
 
         if ($search_link) {
