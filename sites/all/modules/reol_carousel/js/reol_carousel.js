@@ -202,12 +202,15 @@
         // Remove placeholders.
         $(swiper.el).find('.ding-carousel-item.placeholder').remove();
         if (data.content) {
-          // Add li elements in content as slides (cf. https://swiperjs.com/swiper-api#method-swiper-appendSlide)
-          $.parseHTML(data.content).forEach(node => {
-            if ('LI' === node.nodeName) {
-              swiper.appendSlide(node)
-            }
-          })
+          // Add slide elements in content as individual slides (cf.
+          // https://swiperjs.com/swiper-api#method-swiper-appendSlide)
+          // Parse HTML content and put it into wrapper element.
+          $('<div/>')
+            .append($.parseHTML(data.content))
+            // Find the slides.
+            .find('.'+swiper.params.slideClass)
+            // Append each slide to the carousel.
+            .each((index, slide) => swiper.appendSlide(slide))
 
           if (swiper.slides.length === 1) {
             $(swiper.el).addClass('single-slide')
