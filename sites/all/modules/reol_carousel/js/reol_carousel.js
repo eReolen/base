@@ -310,13 +310,16 @@
           speed: 400,
           slidesPerView: 'auto',
           slidesPerGroup: 1,
-          spaceBetween: 20,
+          spaceBetween: 20, // This is used to calculate width in sites/all/themes/wille/assets/sass/component/_subject.scss
           centerInsufficientSlides: true,
           wrapperClass: 'carousel',
           slideClass: 'ding-carousel-item',
-          freeMode: true,
-          freeModeMinimumVelocity: 0.0002,
-          freeModeMomentumRatio: 0.5,
+          freeMode: {
+            enabled: true,
+            sticky: true,
+            MinimumVelocity: 0.02,
+            MomentumRatio: 0.5,
+          },
           navigation: {
             nextEl: '.button-next',
             prevEl: '.button-prev'
@@ -324,9 +327,11 @@
           breakpoints: {
             // grid-media($medium)
             783: {
-              spaceBetween: 40,
+              spaceBetween: 40, // This size is used to calculate width in sites/all/themes/wille/assets/sass/component/_subject.scss
               slidesPerGroup: 3,
-              freeMode: false,
+              freeMode: {
+                enabled: false,
+              },
             },
           },
           init: false
