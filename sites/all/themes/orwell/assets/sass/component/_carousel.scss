@@ -1,8 +1,38 @@
 @import "../bootstrap/bootstrap";
 
 .ding-carousel {
-  @include content-wrapper;
+  --cover_max-height: 180px;
+  --cover_max-height_grid-medium: 240px;
+  --cover_max-width: var(--cover_max-height);
+  --cover_max-width_grid-medium: var(--cover_max-height_grid-medium);
+
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1080px;
+  padding-left: $padding__default;
+  padding-right: $padding__default;
   position: relative;
+
+  @include grid-media($medium) {
+    padding: 0;
+  }
+
+  &-item {
+    flex: 0 0 auto;
+
+    @include grid-media($medium) {
+      max-width: var(--cover_max-width_grid-medium);
+    }
+
+    .ting-cover img {
+      width: auto;
+      height: var(--cover_max-height);
+
+      @include grid-media($medium) {
+        height: var(--cover_max-height_grid-medium);
+      }
+    }
+  }
 
   .button-prev,
   .button-next {
@@ -28,6 +58,10 @@
       color: $color__gray;
       font-size: 0.75rem;
       text-indent: 0;
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.5;
     }
   }
 
@@ -96,21 +130,14 @@
   }
 }
 
-// Spacing between carousel items.
+// Placeholder
 .ding-carousel-item {
-  padding-right: 20px;
-
-  @include grid-media($medium) {
-    padding-right: 40px;
-  }
-
-  @include grid-media($large) {
-    padding-right: 60px;
-  }
-
   &.placeholder {
-    min-height: 336px;
-    min-width: 225px;
+    max-height: var(--cover_max-height);
+    width: auto;
+    @include grid-media($medium) {
+      max-height: var(--cover_max-height_grid-medium);
+    }
 
     .icon-spinner {
       position: relative;
@@ -132,11 +159,6 @@
       }
     }
   }
-
-  // Remove it from the last.
-  &:last-child {
-    padding-right: 0;
-  }
 }
 
 // Paragraph specific tweaks.
@@ -145,19 +167,9 @@
 .article__other-articles {
   .ding-carousel-item {
     width: 100vw;
-    padding-right: 0;
 
     @include grid-media($medium) {
-      width: auto;
-      padding-right: 40px;
-    }
-
-    @include grid-media($large) {
-      padding-right: 60px;
-    }
-
-    &:last-child {
-      padding-right: 0;
+      max-width: 100% !important;
     }
   }
 
@@ -197,7 +209,7 @@
   }
 }
 
-// The following has been taken from ding_carousel.css. This avoils load jumping.
+// The following has been taken from ding_carousel.css. This avoids load jumping.
 .ding-carousel {
   // Hide the overflow of the extra wide ul below.
   overflow: hidden;
@@ -211,13 +223,7 @@
   list-style: none;
 }
 
-.ding-carousel li {
-  display: inline-block;
-  flex: none;
-}
-
 // Center slide if there is only one
-
 .ding-carousel.single-slide {
   ul.carousel {
     justify-content: center;

@@ -1,6 +1,26 @@
 ereolen.dk and ereolengo.dk
 ===========================
 
+## Development
+
+```sh
+itkdev-docker-compose up --detach
+itkdev-docker-compose composer install
+itkdev-docker-compose drush --uri=$(itkdev-docker-compose url) user:login
+```
+
+Pull a database:
+
+```sh
+itkdev-docker-compose sync:db
+# Disable Varnish locally
+itkdev-docker-compose drush --yes pm:disable varnish
+itkdev-docker-compose drush --yes cache:clear all
+itkdev-docker-compose drush --uri=$(itkdev-docker-compose url) user:login
+```
+
+--------------------------------------------------------------------------------
+
 Ereolen.dk anno 2015 based on DDB CMS
 
 ## Patches
@@ -76,6 +96,7 @@ Android install prompt is not displayed (https://www.drupal.org/node/3047715)
 * Don't exclude "dkdcplus:DBCO" subjects (opensearch-dkdcplus-DBCO.patch)
 * Update to image_resize_filter 1.16 (ding2-make-image_resize_filter.patch)
 * Disallow: /content/unilogin in robots.txt (robots-content-unilogin.patch)
+* Do not redirect from `/ting/collection` to `/ting/object` when collection contains only a single element (do_not_redirect_from_collection_to_object.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in

@@ -19,9 +19,13 @@ dependencies[] = ting_covers
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[field_base][] = field_email
+features[field_base][] = field_email_confirm
 features[field_base][] = field_phone
+features[field_base][] = field_phone_confirm
 features[field_instance][] = profile2-provider_publizon-field_email
+features[field_instance][] = profile2-provider_publizon-field_email_confirm
 features[field_instance][] = profile2-provider_publizon-field_phone
+features[field_instance][] = profile2-provider_publizon-field_phone_confirm
 features[profile2_type][] = provider_publizon
 features[variable][] = ting_reservable_types
 files[] = publizon.classes.inc
@@ -29,19 +33,16 @@ files[] = lib/PublizonClient.class.inc
 files[] = lib/PublizonLogger.class.inc
 files[] = lib/PublizonNanoSoapClient.class.inc
 files[] = lib/Publizon.class.inc
-; Client classes.
 files[] = lib/client/PublizonLoanClient.class.inc
 files[] = lib/client/PublizonReservationClient.class.inc
 files[] = lib/client/PublizonChecklistClient.class.inc
 files[] = lib/client/PublizonProductClient.class.inc
 files[] = lib/client/PublizonLibraryClient.class.inc
 files[] = lib/client/PublizonUserClient.class.inc
-; Storage classes.
 files[] = lib/storage/PublizonLoan.class.inc
 files[] = lib/storage/PublizonReservation.class.inc
 files[] = lib/storage/PublizonLoanStatus.class.inc
 files[] = lib/storage/PublizonChecklistItem.class.inc
 files[] = lib/storage/PublizonProduct.class.inc
 files[] = lib/storage/PublizonLibrary.class.inc
-; Exceptions
 files[] = exceptions/PublizonAuthFailureException.inc
