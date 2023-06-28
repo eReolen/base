@@ -1,19 +1,21 @@
 @import "../bootstrap/bootstrap";
 
 .ting-object.view-mode-compact {
-  width: 130px;
-  margin-bottom: 25px;
-
   // See also grid view in _search.scss.
-  .field-name-ting-title {
+  .field-name-ting-title h2 {
     font-family: $font-regular;
+    color: $color__font-gray--dark;
     font-size: 16px;
+    line-height: 1.1;
     letter-spacing: 0.5px;
     margin-top: 6px;
-    h2 {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+
+    @include grid-media($medium) {
+      max-width: 156px;
     }
   }
 
@@ -22,20 +24,22 @@
     display: none;
   }
 
-  .ting-cover img {
-    // Maintain aspect ratio on images.
-    height: auto;
-  }
-
   .field-name-ting-author {
     font-family: $font-light;
+    color: $color__font-gray--dark;
     font-size: 14px;
     letter-spacing: 0.5px;
     margin-top: 10px;
+    max-width: 120px;
+
+    @include grid-media($medium) {
+      max-width: 156px;
+    }
   }
 
   .field-name-ting-details-language {
     font-family: $font-light;
+    color: $color__font-gray--dark;
     font-size: 14px;
     margin-top: 4px;
 
@@ -48,16 +52,11 @@
     }
   }
 
-  // show dots at end of line.
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: $color__font-gray--dark;
-
   // Make language and series line up on one line.
   .field-type-ting-details-language,
   .field-type-ting-details-language div {
     display: inline-block;
+    vertical-align: top;
   }
 
   .field-type-ting-series,
@@ -66,19 +65,26 @@
   }
 
   .field-type-ting-series {
-    white-space: nowrap;
-    margin-left: 0.5em;
-  }
-
-  .field-type-ting-series {
     font-family: $font-light;
+    color: $color__font-gray--dark;
     font-size: 14px;
     margin-top: 4px;
+    margin-left: 0.5em;
+    max-width: 68px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include grid-media($medium) {
+      max-width: 90px;
+    }
 
     .material__series-number {
       &::before {
         @include icon;
         content: $icon__stack-solid;
+        color: $color__font-gray--dark;
         font-size: 12px;
         margin-right: 5px;
       }
@@ -89,13 +95,5 @@
         content: " – ";
       }
     }
-  }
-
-  @include grid-media($medium) {
-    width: 186px;
-  }
-
-  @include grid-media($large) {
-    width: 225px;
   }
 }

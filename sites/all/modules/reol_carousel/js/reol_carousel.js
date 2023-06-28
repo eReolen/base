@@ -194,7 +194,6 @@
     }
     running = true;
     var swiper = queue.shift();
-
     $.ajax({
       type: 'get',
       url: Drupal.settings.basePath + $(swiper.el).data('path') + '/' + $(swiper.el).data('offset'),
@@ -203,7 +202,16 @@
         // Remove placeholders.
         $(swiper.el).find('.ding-carousel-item.placeholder').remove();
         if (data.content) {
-          swiper.appendSlide(data.content);
+          // Add slide elements in content as individual slides (cf.
+          // https://swiperjs.com/swiper-api#method-swiper-appendSlide)
+          // Parse HTML content and put it into wrapper element.
+          $('<div/>')
+            .append($.parseHTML(data.content))
+            // Find the slides.
+            .find('.'+swiper.params.slideClass)
+            // Append each slide to the carousel.
+            .each((index, slide) => swiper.appendSlide(slide))
+
           if (swiper.slides.length === 1) {
             $(swiper.el).addClass('single-slide')
           }
@@ -216,6 +224,7 @@
         update();
       }
     });
+
   };
 
   /**
@@ -251,18 +260,20 @@
     var carouselWidth = $(this.el).width();
     var slideWidth = $(this.slides[0]).outerWidth();
 
-    // If the first slide is more than 80% of the carousel width, enable sticky
-    // mode.
+    // If the first slide is more than 80% of the carousel width enable sticky
+    // mode and slide only one item at the time.
     if (slideWidth > (carouselWidth * 0.8)) {
       this.params.freeModeSticky = true;
+      this.params.slidesPerGroup = 1;
     }
     else {
       // Else we calculate how many slides to scroll with the arrows.
       // This will set it to low if the page was loaded at a small
       // mobile width, and resized afterwards, but it's an edge case
       // we're living with.
-      this.params.slidesPerGroup = Math.floor(carouselWidth / slideWidth);
-      // Apparently swiper needs to be updated for this to take effect.
+      this.params.slidesPerGroup = Math.min(Math.floor(carouselWidth / slideWidth), 3);
+
+      // Apparently swiper needs to be updated for this to take effect. https://swiperjs.com/swiper-api#method-swiper-update
       this.update();
     }
 
@@ -283,11 +294,6 @@
       $('.ding-carousel', context).each(function () {
         var carousel = $(this);
 
-        var settings = {};
-        if (typeof $(this).data('settings') === 'object') {
-          settings = $(this).data('settings');
-        }
-
         // Add prev/next buttons to header, if one is present, or
         // simply the container..
         var header = carousel.find('.carousel__header');
@@ -303,6 +309,9 @@
         var swiper = new Swiper(this, {
           speed: 400,
           slidesPerView: 'auto',
+          slidesPerGroup: 1,
+          spaceBetween: 20,
+          centerInsufficientSlides: true,
           wrapperClass: 'carousel',
           slideClass: 'ding-carousel-item',
           freeMode: true,
@@ -311,6 +320,14 @@
           navigation: {
             nextEl: '.button-next',
             prevEl: '.button-prev'
+          },
+          breakpoints: {
+            // grid-media($medium)
+            783: {
+              spaceBetween: 40,
+              slidesPerGroup: 3,
+              freeMode: false,
+            },
           },
           init: false
         });

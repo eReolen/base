@@ -1,0 +1,6 @@
+services:
+  mariadb:
+    # @see https://symfony.com/doc/current/setup/symfony_server.html#docker-integration
+    labels:
+      com.symfony.server.service-prefix: 'DATABASE'
+
