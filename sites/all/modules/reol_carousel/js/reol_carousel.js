@@ -257,6 +257,8 @@
    * widths of the carousel and first slide.
    */
   var init_handler = function () {
+
+    var gridMediumBreakpoint = 783; // grid-media($medium)
     var carouselWidth = $(this.el).width();
     var slideWidth = $(this.slides[0]).outerWidth();
 
@@ -267,11 +269,14 @@
       this.params.slidesPerGroup = 1;
     }
     else {
-      // Else we calculate how many slides to scroll with the arrows.
-      // This will set it to low if the page was loaded at a small
-      // mobile width, and resized afterwards, but it's an edge case
-      // we're living with.
-      //this.params.slidesPerGroup = Math.min(Math.floor(carouselWidth / slideWidth), 3);
+      // Scroll only one item on mobile
+      if (carouselWidth < gridMediumBreakpoint ) {
+        this.params.slidesPerGroup = 1;
+      }
+      // Scroll up to 3 items on larger screens
+      else {
+        this.params.slidesPerGroup = Math.min(Math.floor(carouselWidth / slideWidth), 3);
+      }
 
       // Apparently swiper needs to be updated for this to take effect. https://swiperjs.com/swiper-api#method-swiper-update
       this.update();
