@@ -26,18 +26,20 @@
 
   .ding-carousel-item {
     margin: 0;
-    width: 25%;
+    width: calc(
+      25% - 40px
+    ); // Calc width without margin that swiper adds. 40px is the spacing set in swiper conf.(sites/all/modules/reol_carousel/js/reol_carousel.js - spaceBetween: 40)
     height: auto;
     min-width: auto;
-    padding-left: $mobile-margin * 2;
 
     @include media($phone) {
-      width: 50%;
+      width: calc(
+        50% - 20px
+      ); // Calc width without margin that swiper adds. 20px is the spacing set in swiper conf.(sites/all/modules/reol_carousel/js/reol_carousel.js - spaceBetween: 20)
     }
   }
 
   .carousel {
-    margin-left: -$mobile-margin * 2;
     margin-bottom: 0;
   }
 
