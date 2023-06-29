@@ -317,8 +317,8 @@
           freeMode: {
             enabled: true,
             sticky: true,
-            MinimumVelocity: 0.02,
-            MomentumRatio: 0.5,
+            minimumVelocity: 0.02,
+            momentumRatio: 0.15,
           },
           navigation: {
             nextEl: '.button-next',
