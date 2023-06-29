@@ -313,6 +313,7 @@
 
         var swiper = new Swiper(this, {
           speed: 400,
+          observer: true,
           slidesPerView: 'auto',
           slidesPerGroup: 1,
           spaceBetween: 20, // This is used to calculate width in sites/all/themes/wille/assets/sass/component/_subject.scss
