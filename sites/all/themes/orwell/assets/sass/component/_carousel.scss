@@ -234,6 +234,8 @@
     }
 
     .ding-carousel-item > div {
+      margin: 0 auto;
+
       @include grid-media($large) {
         width: 1080px;
       }
