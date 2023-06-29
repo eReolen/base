@@ -226,7 +226,12 @@
 // Center slide if there is only one
 .ding-carousel.single-slide {
   ul.carousel {
-    justify-content: center;
+    justify-content: start;
+    max-width: initial;
+
+    .article--teaser--image {
+      background: none;
+    }
 
     .ding-carousel-item > div {
       @include grid-media($large) {
