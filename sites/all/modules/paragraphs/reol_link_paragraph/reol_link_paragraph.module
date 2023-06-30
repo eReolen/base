@@ -60,6 +60,8 @@ function reol_link_paragraph_preprocess_entity(&$variables) {
 
 /**
  * Implements hook_paragraphs_item_access().
+ *
+ * Hide non-web link boxes from web.
  */
 function reol_link_paragraph_paragraphs_item_access($entity, $op, $account) {
   if ($entity instanceof ParagraphsItemEntity
