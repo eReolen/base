@@ -36,12 +36,13 @@ function reol_link_paragraph_field_default_field_instances() {
     ),
     'entity_type' => 'paragraphs_item',
     'field_name' => 'field_link',
-    'label' => 'Link',
-    'required' => 0,
+    'label' => 'Call to action',
+    'required' => 1,
     'settings' => array(
       'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
+        'configurable_class' => 0,
         'configurable_title' => 0,
         'rel' => '',
         'target' => 'default',
@@ -53,8 +54,9 @@ function reol_link_paragraph_field_default_field_instances() {
       ),
       'enable_tokens' => 0,
       'rel_remove' => 'default',
-      'title' => 'optional',
-      'title_label_use_field_label' => FALSE,
+      'title' => 'required',
+      'title_allowed_values' => '',
+      'title_label_use_field_label' => 1,
       'title_maxlength' => 255,
       'title_value' => '',
       'url' => 0,
@@ -272,10 +274,10 @@ function reol_link_paragraph_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Call to action');
   t('Farve');
   t('Grafik');
   t('Knap-tekst til app');
-  t('Link');
   t('Vis på');
   t('Vises kun i app\'en.');
 
