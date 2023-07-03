@@ -59,6 +59,9 @@ Check for jQuery differences regarding prop() vs attr().
 Android install prompt is not displayed (https://www.drupal.org/node/3047715)
 * https://www.drupal.org/files/issues/2019-06-25/appbanners-android-fix-d7-3047715-9.patch
 
+Paragraphs: [PHP 7.2] count() on non-countable (https://www.drupal.org/project/paragraphs/issues/3010938)
+* https://www.drupal.org/files/issues/2018-11-26/paragraphs-count-php71-3010938-3.patch
+
 ### Ding2 patches
 
 * Change BPI node type to use (bpi-change-node-type.patch)
