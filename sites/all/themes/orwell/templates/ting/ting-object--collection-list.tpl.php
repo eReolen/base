@@ -25,10 +25,7 @@
     </div>
     <div class="material__abstract">
       <?php if (!empty($content['group_ting_right_col_collection']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
-        <?php
-          unset($content['group_ting_right_col_collection']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']);
-          $description = trim(strip_tags(render($content['group_ting_right_col_collection']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])));
-        ?>
+        <?php unset($content['group_ting_right_col_collection']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']); ?>
         <div class="material__description-from-publisher"><?php echo render($content['group_ting_right_col_collection']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']); ?></div>
       <?php else: ?>
         <?php echo render($content['group_ting_right_col_collection']['ting_abstract']); ?>

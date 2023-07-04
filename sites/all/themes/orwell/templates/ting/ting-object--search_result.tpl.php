@@ -41,15 +41,15 @@ unset($content['group_ting_right_col_search']);
       </div>
 
       <div class="material__abstract">
-        <?php if (!empty($content['group_ting_object_teaser_right']['group_info']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])) : ?>
-          <?php
-            unset($content['group_ting_object_teaser_right']['group_info']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']);
-            $description = trim(strip_tags(render($content['group_ting_object_teaser_right']['group_info']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])));
-          ?>
-          <div class="material__description-from-publisher"><?php echo pratchett_truncate_utf8($description, 350, TRUE, TRUE) ?></div>
+        <?php if (!empty($content['group_ting_object_teaser_right']['group_info']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])): ?>
+          <?php unset($content['group_ting_object_teaser_right']['group_info']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']); ?>
+          <div class="material__description-from-publisher">
+            <?php echo render($content['group_ting_object_teaser_right']['group_info']['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']); ?>
+          </div>
         <?php else: ?>
           <?php echo render($content['group_ting_object_teaser_right']['group_info']['ting_abstract']); ?>
         <?php endif; ?>
       </div>
+    </div>
   </div>
 <?php endif; ?>
