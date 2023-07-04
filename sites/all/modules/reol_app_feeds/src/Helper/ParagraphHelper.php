@@ -800,37 +800,44 @@ class ParagraphHelper {
     switch ($paragraph->bundle()) {
       // eReolen.
       case self::PARAGRAPH_SPOTLIGHT_BOX:
-        /** @var \ParagraphsItemEntity[] $subParagraphs */
-        $subParagraphs = $paragraph->wrapper()->field_spotlight_row_2->value();
-        foreach ($subParagraphs as $subParagraph) {
-          if ($subParagraph instanceof \ParagraphsItemEntity
-            && 'linkbox' === $subParagraph->bundle()
-          ) {
-            $wrapper = $subParagraph->wrapper();
-            $show_on = $wrapper->field_show_on->value();
-            if (in_array('app', $show_on, TRUE)) {
-              $link = $wrapper->field_link->value();
-              $data[] = [
-                'guid' => $subParagraph->identifier(),
-                'type' => 'link_box',
-                'button' => $link['title'],
-                'link' => $link['url'],
-                'title' => $wrapper->field_link_text->value() ?? ParagraphHelper::VALUE_NONE,
-                'image' => $this->nodeHelper->getImage($wrapper->field_link_gfx->value()) ?? ParagraphHelper::VALUE_NONE,
-                'color' => $wrapper->field_link_color->value()['rgb'] ?? ParagraphHelper::VALUE_NONE,
-              ];
+        $subParagraphFields = [
+          'field_spotlight_row_2',
+          'field_spotlight_row_3',
+        ];
+        foreach ($subParagraphFields as $subParagraphField) {
+          /** @var \ParagraphsItemEntity[] $subParagraphs */
+          $subParagraphs = $paragraph->wrapper()->{$subParagraphField}->value();
+          foreach ($subParagraphs as $subParagraph) {
+            if ($subParagraph instanceof \ParagraphsItemEntity
+              && 'linkbox' === $subParagraph->bundle()
+            ) {
+              $wrapper = $subParagraph->wrapper();
+              $show_on = $wrapper->field_show_on->value();
+              if (in_array('app', $show_on, TRUE)) {
+                $link = $wrapper->field_link->value();
+                $data[] = [
+                  'guid' => $subParagraph->identifier(),
+                  'type' => 'link_box',
+                  'title' => $link['title'],
+                  'link' => $link['url'],
+                  'button' => $wrapper->field_link_text->value() ?? ParagraphHelper::VALUE_NONE,
+                  'image' => $this->nodeHelper->getImage($wrapper->field_link_gfx->value()) ?? ParagraphHelper::VALUE_NONE,
+                  'color' => $wrapper->field_link_color->value()['rgb'] ?? ParagraphHelper::VALUE_NONE,
+                ];
+              }
             }
           }
         }
         break;
 
       case self::PARAGRAPH_TWO_ELEMENTS:
-        // field_two_elements_primary is a single paragraph.
         $subParagraphFields = [
           'field_two_elements_primary',
           'field_two_elements_secondary',
         ];
         foreach ($subParagraphFields as $subParagraphField) {
+          // Each field contains only a single paragraph and for convenience we
+          // put it into an array.
           /** @var \ParagraphsItemEntity[] $subParagraphs */
           $subParagraphs = [$paragraph->wrapper()->{$subParagraphField}->value()];
           foreach ($subParagraphs as $subParagraph) {
