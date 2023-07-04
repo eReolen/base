@@ -818,9 +818,9 @@ class ParagraphHelper {
                 $data[] = [
                   'guid' => $subParagraph->identifier(),
                   'type' => 'link_box',
-                  'title' => $link['title'],
+                  'button' => $link['title'],
                   'link' => $link['url'],
-                  'button' => $wrapper->field_link_text->value() ?? ParagraphHelper::VALUE_NONE,
+                  'title' => $wrapper->field_link_text->value() ?? ParagraphHelper::VALUE_NONE,
                   'image' => $this->nodeHelper->getImage($wrapper->field_link_gfx->value()) ?? ParagraphHelper::VALUE_NONE,
                   'color' => $wrapper->field_link_color->value()['rgb'] ?? ParagraphHelper::VALUE_NONE,
                 ];
