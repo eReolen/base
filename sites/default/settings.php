@@ -26,6 +26,13 @@ $drupal_hash_salt = '';
 // Set Drupal not to check for HTTP connectivity.
 $conf['drupal_http_request_fails'] = FALSE;
 
+// https://drupal.stackexchange.com/questions/24087/file-scan-directory-takes-about-10-seconds-to-execute
+// https://modulesunraveled.com/drupal-8-composer-and-configuration-management/configuring-settingsphp-and-settingslocalphp
+$conf['file_scan_ignore_directories'] = [
+  'vendor',
+  'node_modules',
+];
+
 if (file_exists(__DIR__ . '/settings.local.php')) {
   require_once __DIR__ . '/settings.local.php';
 }

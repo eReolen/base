@@ -471,6 +471,15 @@ html.js input.form-autocomplete {
     }
   }
 
+  // Remove abstract margin added in _relations.scss
+  .ting-relations .abstract {
+    margin: 0;
+  }
+
+  .material__abstract {
+    @include line-clamp($lines: $abstract-max-lines);
+  }
+
   &.grid-view {
     .arrangement-toggles {
       margin-bottom: 2rem;
@@ -539,6 +548,10 @@ html.js input.form-autocomplete {
         letter-spacing: 0.5px;
         margin: 0;
         margin-top: 10px;
+      }
+
+      .material__abstract {
+        display: none;
       }
     }
   }
