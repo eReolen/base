@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * reol_link_paragraph.features.field_instance.inc
@@ -20,7 +21,9 @@ function reol_link_paragraph_field_default_field_instances() {
       'default' => array(
         'label' => 'hidden',
         'module' => 'link',
-        'settings' => array(),
+        'settings' => array(
+          'custom_title' => '',
+        ),
         'type' => 'link_default',
         'weight' => 0,
       ),
@@ -33,22 +36,27 @@ function reol_link_paragraph_field_default_field_instances() {
     ),
     'entity_type' => 'paragraphs_item',
     'field_name' => 'field_link',
-    'label' => 'Link',
-    'required' => 0,
+    'label' => 'Call to action',
+    'required' => 1,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
+        'configurable_class' => 0,
         'configurable_title' => 0,
         'rel' => '',
         'target' => 'default',
         'title' => '',
       ),
+      'convert_aliases' => 0,
       'display' => array(
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 0,
       'rel_remove' => 'default',
-      'title' => 'optional',
+      'title' => 'required',
+      'title_allowed_values' => '',
+      'title_label_use_field_label' => 1,
       'title_maxlength' => 255,
       'title_value' => '',
       'url' => 0,
@@ -194,9 +202,8 @@ function reol_link_paragraph_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 3,
       ),
       'paragraphs_editor_preview' => array(
@@ -225,12 +232,53 @@ function reol_link_paragraph_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'paragraphs_item-linkbox-field_show_on'.
+  $field_instances['paragraphs_item-linkbox-field_show_on'] = array(
+    'bundle' => 'linkbox',
+    'default_value' => array(
+      0 => array(
+        'value' => 'web',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
+      ),
+      'paragraphs_editor_preview' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'paragraphs_item',
+    'field_name' => 'field_show_on',
+    'label' => 'Vis på',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 6,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
+  t('Call to action');
   t('Farve');
   t('Grafik');
-  t('Link');
   t('Tekst til app');
+  t('Vis på');
   t('Vises kun i app\'en.');
 
   return $field_instances;
