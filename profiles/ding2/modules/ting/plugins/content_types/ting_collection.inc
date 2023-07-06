@@ -21,6 +21,11 @@ function ting_collection_content_type_render($subtype, $conf, $args, $context) {
   $block = new stdClass();
   $object = isset($context->data) ? ($context->data) : NULL;
   if ($object instanceOf TingCollection) {
+    if (count($object->getEntities()) < 2) {
+      $uri = entity_uri('ting_object', $object);
+      drupal_goto($uri['path'], $uri['options']);
+    }
+
     // Add search overlay trigger.
     drupal_add_js(drupal_get_path('module', 'ting') . '/js/ting.js');
 
