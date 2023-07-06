@@ -365,6 +365,12 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
   );
   $form['publizon']['field_phone']['#weight'] = 10;
 
+  // Add phone confirm field.
+  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone_confirm', $profile, $form, $form_state);
+  $form['publizon']['field_phone_confirm']['#states'] = $form['publizon']['field_phone']['#states'];
+  $form['publizon']['field_phone_confirm']['#weight'] = $form['publizon']['field_phone']['#weight'] + 1;
+  $form['publizon']['field_phone_confirm']['#attributes']['autocomplete'] = 'off';
+
   // Add email field.
   $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $form, $form_state);
   $form['publizon']['email_notification'] = array(
@@ -380,6 +386,12 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
     ),
   );
   $form['publizon']['field_email']['#weight'] = 30;
+
+  // Add phone confirm field.
+  $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email_confirm', $profile, $form, $form_state);
+  $form['publizon']['field_email_confirm']['#states'] = $form['publizon']['field_email']['#states'];
+  $form['publizon']['field_email_confirm']['#weight'] = $form['publizon']['field_email']['#weight'] + 1;
+  $form['publizon']['field_email_confirm']['#attributes']['autocomplete'] = 'off';
 
   $form['publizon']['#weight'] = 0;
 
@@ -415,6 +427,10 @@ function publizon_form_ding_reservation_reserve_form_validate(array $form, array
       $element = $form['publizon']['field_phone'];
       form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
     }
+    elseif ($wrapper->field_phone->value() !== $wrapper->field_phone_confirm->value()) {
+      $element = $form['publizon']['field_phone_confirm'];
+      form_error($element, t('Please confirm your phone number'));
+    }
   }
   else {
     // Do not validate phone if it is not selected.
@@ -427,6 +443,10 @@ function publizon_form_ding_reservation_reserve_form_validate(array $form, array
       // The field is not required, so we check here.
       $element = $form['publizon']['field_email'];
       form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
+    }
+    elseif ($wrapper->field_email->value() !== $wrapper->field_email_confirm->value()) {
+      $element = $form['publizon']['field_email_confirm'];
+      form_error($element, t('Please confirm your email address'));
     }
   }
   else {

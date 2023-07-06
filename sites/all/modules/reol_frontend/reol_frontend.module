@@ -291,9 +291,9 @@ function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &
     );
   }
 
-  // Unset default values to force user to confirm values when saving.
-  unset($form['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value']['#default_value']);
-  unset($form['profile_provider_publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email']['#default_value']);
+  // Disable autocompletion of confirm values.
+  $form['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value']['#attributes']['autocomplete'] = 'off';
+  $form['profile_provider_publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email']['#attributes']['autocomplete'] = 'off';
 
   // Use states to show confirm fields only when needed.
   $form['profile_provider_publizon']['field_phone_confirm']['#states'] = array(
