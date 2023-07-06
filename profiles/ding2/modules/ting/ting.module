@@ -441,6 +441,10 @@ function ting_object_page_view($object) {
  * Page callback: Display a ting collection.
  */
 function ting_collection_page_view($object) {
+  if (count($object->getEntities()) < 2) {
+    $uri = entity_uri('ting_object', $object);
+    drupal_goto($uri['path'], $uri['options']);
+  }
   return ting_collection_view($object);
 }
 
