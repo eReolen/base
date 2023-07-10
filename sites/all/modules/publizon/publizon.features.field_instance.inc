@@ -82,7 +82,7 @@ function publizon_field_default_field_instances() {
     'bundle' => 'provider_publizon',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter a Danish 8 digit phone number',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -163,6 +163,7 @@ function publizon_field_default_field_instances() {
   t('Confirm your phone number');
   t('Email');
   t('Email (confirm)');
+  t('Enter a Danish 8 digit phone number');
   t('Phone');
   t('Phone (confirm)');
 
