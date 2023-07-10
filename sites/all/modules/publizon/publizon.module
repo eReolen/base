@@ -369,7 +369,7 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
   $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone_confirm', $profile, $form, $form_state);
   $form['publizon']['field_phone_confirm']['#states'] = $form['publizon']['field_phone']['#states'];
   $form['publizon']['field_phone_confirm']['#weight'] = $form['publizon']['field_phone']['#weight'] + 1;
-  $form['publizon']['field_phone_confirm']['#attributes']['autocomplete'] = 'off';
+  $form['publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value']['#attributes']['autocomplete'] = 'off';
 
   // Add email field.
   $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email', $profile, $form, $form_state);
@@ -391,7 +391,7 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
   $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email_confirm', $profile, $form, $form_state);
   $form['publizon']['field_email_confirm']['#states'] = $form['publizon']['field_email']['#states'];
   $form['publizon']['field_email_confirm']['#weight'] = $form['publizon']['field_email']['#weight'] + 1;
-  $form['publizon']['field_email_confirm']['#attributes']['autocomplete'] = 'off';
+  $form['publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email']['#attributes']['autocomplete'] = 'off';
 
   $form['publizon']['#weight'] = 0;
 
