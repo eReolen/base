@@ -350,13 +350,21 @@ function reol_loan_panels_pane_content_alter($content, $pane, $args, $contexts) 
   if ($pane->type == 'loans') {
     if ($pane->subtype == 'loans') {
       if (!empty($content->content)) {
-        if (isset(variable_get('ereol_loan_text')['value'])) {
+        $loan_text = variable_get('ereol_loan_text');
+        if (!empty($loan_text['value'])) {
           // Add text to top of loan block.
           $content->content = array(
             'ereol_loan_text' => array(
-              '#markup' => '<div>' . variable_get('ereol_loan_text')['value'] . '</div>',
+              '#prefix' => '<div>',
+              '#markup' => $loan_text['value'],
+              '#suffix' => '</div>',
             ),
-          ) + $content->content;
+            'content' => array(
+              '#prefix' => '<div>',
+              '#markup' => render($content->content),
+              '#suffix' => '</div>',
+            ),
+          );
         }
       }
     }
