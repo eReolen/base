@@ -45,6 +45,9 @@ Add search_get_info() in search.module should include an _alter hook (https://ww
 Seven theme fieldset-legend not clickable in Chrome 103.0.5060.53
 * https://www.drupal.org/project/drupal/issues/3292211
 
+Field labels are not translated in number validation
+* <sites/all/patches/number.patch>
+
 ### Contrib patches
 
 Add alter to strong-arm variables. Note this patch is part of the next release of the module.
