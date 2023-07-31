@@ -297,7 +297,7 @@ function orwell_preprocess_ting_relation(&$vars) {
     $build = array(
       'ting_fulltext' => array(
         '#theme' => 'ting_fulltext',
-        '#fields' => ting_fulltext_parse($fulltext),
+        '#fields' => ting_fulltext_parse($fulltext, TRUE),
       ),
     );
     // Remove title from rendered text.
