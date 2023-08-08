@@ -349,6 +349,15 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
 
   $form['publizon']['#tree'] = TRUE;
 
+  $message = variable_get('ereol_reservation_text');
+  if (isset($message['value'])) {
+    $form['publizon']['message'] = array(
+      '#markup' => $message['value'],
+      '#prefix' => '<div class="reservation-message">',
+      '#suffix' => '</div>',
+    );
+  }
+
   // Add phone field.
   $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_phone', $profile, $form, $form_state);
   $form['publizon']['phone_notification'] = array(
