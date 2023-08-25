@@ -59,6 +59,6 @@
   <?php print $page; ?>
   <?php print $scripts; ?>
   <?php print $page_bottom; ?>
-  <script src="/sites/all/themes/wille/overlay/overlay.js"></script>
+  <script src="<?php print drupal_get_path('theme', 'wille') . '/overlay/overlay.js'; ?>"></script>
 </body>
 </html>
