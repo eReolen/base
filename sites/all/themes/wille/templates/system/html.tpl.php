@@ -59,5 +59,6 @@
   <?php print $page; ?>
   <?php print $scripts; ?>
   <?php print $page_bottom; ?>
+  <script src="/sites/all/themes/wille/overlay/overlay.js"></script>
 </body>
 </html>
