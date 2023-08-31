@@ -508,6 +508,12 @@ function publizon_form_ding_reservation_reserve_form_submit(array $form, array &
       $profile->$field = $values[$field];
       $changed = TRUE;
     }
+
+    $field_confirm = $field.'_confirm';
+    if (isset($values[$field_confirm]) && $profile->$field_confirm != $values[$field_confirm]) {
+      $profile->$field_confirm = $values[$field_confirm];
+      $changed = TRUE;
+    }
   }
 
   // Save if we have changes.
