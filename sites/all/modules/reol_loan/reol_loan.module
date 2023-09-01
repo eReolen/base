@@ -331,6 +331,15 @@ function reol_loan_form_user_admin_settings_alter(&$form, &$form_state, $form_id
     '#description' => t('Text to display in the loan section of the user page.'),
   );
 
+  $reservation_text = variable_get('ereol_reservation_text');
+  $form['ereol_user']['ereol_reservation_text'] = array(
+    '#type' => 'text_format',
+    '#title' => t('Reservation text'),
+    '#format' => 'ding_wysiwyg',
+    '#default_value' => $reservation_text['value'] ?? '',
+    '#description' => t('Text to display in the reservation page.'),
+  );
+
   $message = variable_get('ereol_profile_confirm_message');
   $form['ereol_user']['ereol_profile_confirm_message'] = array(
     '#type' => 'text_format',

@@ -3,4 +3,12 @@ div.error {
   color: white;
   line-height: 24px;
   font-family: $font-regular;
+
+  // Prevent centered messages in dialogs (cf. styling of .ui-dialog)
+  text-align: left;
+
+  // Make emphasized field names readable.
+  em {
+    color: inherit !important;
+  }
 }
