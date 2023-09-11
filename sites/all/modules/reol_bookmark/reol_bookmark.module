@@ -149,7 +149,8 @@ function reol_bookmark_get_bookmarks($account, $reset = FALSE, $check_availabili
         }
         if ($bookmarks && $check_availability) {
           $mapping = reol_base_ding_entity_get_ids($bookmarks);
-          $bookmarks = array_intersect(array_keys($mapping), $bookmarks);
+          // Filter out non-available items keeping bookmarks order.
+          $bookmarks = array_filter($bookmarks, static fn($value) => isset($mapping[$value]));
         }
       }
       catch (Exception $e) {

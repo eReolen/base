@@ -52,6 +52,9 @@ function reol_bookmark_bookmarks_form($form, &$form_state, $bookmarks) {
   $bookmarks = array_slice($bookmarks, $page * $per_page, $per_page);
   $ting_objects = ding_entity_load_multiple(reol_base_ding_entity_get_ids($bookmarks));
 
+  // Sort ting objects by order of bookmarks (ISBNs).
+  uasort($ting_objects, static fn (TingEntity $a, TingEntity $b) => array_search($a->getIsbn()[0] ?? NULL, $bookmarks) <=> array_search($b->getIsbn()[0] ?? NULL, $bookmarks));
+
   foreach ($ting_objects as $ting_object) {
     // Create title that links to the object.
     $uri = entity_uri('ting_object', $ting_object);
