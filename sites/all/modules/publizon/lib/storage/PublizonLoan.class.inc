@@ -12,6 +12,8 @@
  * The loan contains a PublizonProduct object with extened information about the
  * product if avaliable from Publizon. If not available its values will be empty
  * with the exception of the ISBN number.
+ *
+ * @property bool on_quota.
  */
 class PublizonLoan extends Publizon {
   /**
@@ -30,6 +32,7 @@ class PublizonLoan extends Publizon {
     'authors' => NULL,
     'publisher' => NULL,
     'format' => NULL,
+    'on_quota' => NULL,
   );
 
   /**
@@ -113,6 +116,7 @@ class PublizonLoan extends Publizon {
     $this->authors = $authors;
     $this->publisher = (string) $item->book->publisher;
     $this->format = (int) $item->format->attributes()->id;
+    $this->on_quota = 'true' !== (string) $item->issubscriptionloan;
   }
 
 }

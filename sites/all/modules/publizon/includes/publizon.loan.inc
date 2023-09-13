@@ -65,6 +65,7 @@ function publizon_loan_list($account, $reset = FALSE) {
         ));
 
         $results[$id]->publizon_type = reol_base_get_ting_type(reol_base_get_type_from_format($loan->format));
+        $results[$id]->publizon_on_quota = $loan->on_quota;
       }
 
       // Store the loans into ding session cache.
