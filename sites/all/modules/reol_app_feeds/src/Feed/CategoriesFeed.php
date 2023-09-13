@@ -72,6 +72,14 @@ class CategoriesFeed extends AbstractFeed {
             if (!empty($videoList)) {
               $subcategories[] = reset($videoList);
             }
+
+            if (ParagraphHelper::PARAGRAPH_TWO_ELEMENTS === $paragraph->bundle()) {
+              $subcategories = array_merge($subcategories, $this->paragraphHelper->getLinkBoxes($paragraph));
+            }
+            break;
+
+          case ParagraphHelper::PARAGRAPH_SPOTLIGHT_BOX:
+            $subcategories = array_merge($subcategories, $this->paragraphHelper->getLinkBoxes($paragraph));
             break;
         }
       }

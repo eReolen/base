@@ -291,9 +291,9 @@ function reol_frontend_form_profile2_edit_provider_publizon_form_alter(&$form, &
     );
   }
 
-  // Unset default values to force user to confirm values when saving.
-  unset($form['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value']['#default_value']);
-  unset($form['profile_provider_publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email']['#default_value']);
+  // Disable autocompletion of confirm values.
+  $form['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value']['#attributes']['autocomplete'] = 'off';
+  $form['profile_provider_publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email']['#attributes']['autocomplete'] = 'off';
 
   // Use states to show confirm fields only when needed.
   $form['profile_provider_publizon']['field_phone_confirm']['#states'] = array(
@@ -329,6 +329,10 @@ function _reol_frontend_profile2_validate(array $form, array &$form_state) {
       form_set_error('profile_provider_publizon][field_phone_confirm', t('Please confirm your phone number'));
     }
   }
+  else {
+    // Clear confirm value if no value set.
+    $form_state['values']['profile_provider_publizon']['field_phone_confirm'][LANGUAGE_NONE][0]['value'] = '';
+  }
 
   $email_value = trim($form_state['values']['profile_provider_publizon']['field_email'][LANGUAGE_NONE][0]['email'] ?? '');
   if (!empty($email_value)) {
@@ -336,6 +340,10 @@ function _reol_frontend_profile2_validate(array $form, array &$form_state) {
     if ($email_value_confirm !== $email_value) {
       form_set_error('profile_provider_publizon][field_email_confirm', t('Please confirm your email address'));
     }
+  }
+  else {
+    // Clear confirm value if no value set.
+    $form_state['values']['profile_provider_publizon']['field_email_confirm'][LANGUAGE_NONE][0]['email'] = '';
   }
 }
 
