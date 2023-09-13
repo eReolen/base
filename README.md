@@ -45,6 +45,9 @@ Add search_get_info() in search.module should include an _alter hook (https://ww
 Seven theme fieldset-legend not clickable in Chrome 103.0.5060.53
 * https://www.drupal.org/project/drupal/issues/3292211
 
+Field labels are not translated in number validation
+* <sites/all/patches/number.patch>
+
 ### Contrib patches
 
 Add alter to strong-arm variables. Note this patch is part of the next release of the module.
@@ -58,6 +61,9 @@ Check for jQuery differences regarding prop() vs attr().
 
 Android install prompt is not displayed (https://www.drupal.org/node/3047715)
 * https://www.drupal.org/files/issues/2019-06-25/appbanners-android-fix-d7-3047715-9.patch
+
+Paragraphs: [PHP 7.2] count() on non-countable (https://www.drupal.org/project/paragraphs/issues/3010938)
+* https://www.drupal.org/files/issues/2018-11-26/paragraphs-count-php71-3010938-3.patch
 
 ### Ding2 patches
 

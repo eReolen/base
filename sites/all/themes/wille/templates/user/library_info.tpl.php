@@ -12,18 +12,16 @@
       <p><?php print t('You have loaned'); ?><p>
       <ul>
         <li class="loans-left">
-          <div class="loans-left__amount" style="font-size: 2.2rem">
+          <div class="loans-left__amount">
             <?php print $ebook_loans; ?>
-            <span style="font-size: 45%; display: block"><?php print t('out of @max_loans', ['@max_loans' => $max_ebook_loans]); ?></span>
           </div>
           <div class="loans-left__type">
             <?php print t('E-books'); ?>
           </div>
         </li>
         <li class="loans-left">
-          <div class="loans-left__amount" style="font-size: 2.2rem">
+          <div class="loans-left__amount">
             <?php print $audiobook_loans; ?>
-            <span style="font-size: 45%; display: block"><?php print t('out of @max_loans', ['@max_loans' => $max_audiobook_loans]); ?></span>
           </div>
           <div class="loans-left__type">
             <?php print t('Audiobooks'); ?>

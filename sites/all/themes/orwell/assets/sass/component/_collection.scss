@@ -6,4 +6,8 @@
   .content-wrapper--material > .field > .field-items > .field-item > h2 {
     @include page-header;
   }
+
+  .material__abstract {
+    @include line-clamp($lines: $abstract-max-lines);
+  }
 }

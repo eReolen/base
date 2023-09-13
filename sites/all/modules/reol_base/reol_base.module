@@ -1660,6 +1660,14 @@ function reol_base_field_default_field_instances_alter(&$fields) {
   // Pull relations a bit up in material view.
   if (isset($fields['ting_object-ting_object-ting_relations'])) {
     $fields['ting_object-ting_object-ting_relations']['display']['default']['weight'] = 5;
+
+    $fields['ting_object-ting_object-ting_relations']['display']['collection_list']['weight'] = 9;
+    $fields['ting_object-ting_object-ting_relations']['display']['collection_list']['label'] = 'hidden';
+    $fields['ting_object-ting_object-ting_relations']['display']['collection_list']['type'] = 'ting_relations_default';
+
+    $fields['ting_object-ting_object-ting_relations']['display']['search_result']['weight'] = 22;
+    $fields['ting_object-ting_object-ting_relations']['display']['search_result']['label'] = 'hidden';
+    $fields['ting_object-ting_object-ting_relations']['display']['search_result']['type'] = 'ting_relations_default';
   }
 
   // Always link to object rather than collection.
@@ -1762,6 +1770,16 @@ function reol_base_field_group_info_alter(&$groups) {
   // Remove rating.
   if (isset($groups['group_rating|ting_object|ting_object|teaser'])) {
     $groups['group_rating|ting_object|ting_object|teaser']->data['children'] = array();
+  }
+
+  // Add Ting relations to collection list.
+  if (isset($groups['group_ting_right_col_collection|ting_object|ting_object|collection_list'])) {
+    $groups['group_ting_right_col_collection|ting_object|ting_object|collection_list']->data['children'][] = 'ting_relations';
+  }
+
+  // Add Ting relations to search result.
+  if (isset($groups['group_info|ting_object|ting_object|search_result'])) {
+    $groups['group_info|ting_object|ting_object|search_result']->data['children'][] = 'ting_relations';
   }
 }
 

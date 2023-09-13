@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for reol_link_paragraph module.
+ */
+
+/**
+ * Set default “Show on” on link box paragraphs.
+ */
+function reol_link_paragraph_update_7001() {
+  $entity_type = 'paragraphs_item';
+  $query = (new EntityFieldQuery())
+    ->entityCondition('entity_type', $entity_type)
+    ->entityCondition('bundle', 'linkbox');
+
+  $result = $query->execute();
+  if (isset($result[$entity_type])) {
+    $paragraphs = paragraphs_item_load_multiple(array_keys($result[$entity_type]));
+    foreach ($paragraphs as $paragraph) {
+      $wrapper = $paragraph->wrapper();
+      $wrapper->field_show_on->set(['web']);
+      $wrapper->save();
+    }
+  }
+}

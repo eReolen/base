@@ -4,3 +4,11 @@ services:
     labels:
       com.symfony.server.service-prefix: 'DATABASE'
 
+  node:
+    image: node:16
+    profiles:
+      - dev
+    networks:
+      - app
+    volumes:
+      - .:/app
