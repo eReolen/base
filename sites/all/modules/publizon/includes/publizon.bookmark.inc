@@ -26,6 +26,9 @@ function publizon_bookmark_list($account) {
   $client = PublizonChecklistClient::getClient();
   $checklist = $client->getChecklist($retailer_id, $creds['name']);
 
+  // Sort descending by creation date, i.e. newest first.
+  usort($checklist, static fn (PublizonChecklistItem $a, PublizonChecklistItem $b) => $b->creationDateUtc <=> $a->creationDateUtc);
+
   $isbns = array();
   foreach ($checklist as $item) {
     $isbns[] = $item->isbn;
