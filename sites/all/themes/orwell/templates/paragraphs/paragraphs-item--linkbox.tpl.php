@@ -7,7 +7,7 @@
 ?>
 <div class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php if (isset($href)): ?>
-    <a href='<?php print $href; ?>'>
+    <a href='<?php print $href; ?>' <?php print $link_attributes; ?>>
   <?php endif; ?>
   <div class="linkbox__container">
     <?php if (isset($image)): ?>

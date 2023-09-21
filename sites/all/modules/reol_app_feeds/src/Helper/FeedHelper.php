@@ -86,7 +86,7 @@ class FeedHelper {
 
     $file = drupal_realpath($filepath);
 
-    return file_put_contents($file, json_encode($data));
+    return file_put_contents($file, json_encode($data, JSON_UNESCAPED_UNICODE));
   }
 
   /**

@@ -6,7 +6,7 @@
  */
 ?>
 
-<a href="<?php print $href ?>" class="<?php print $classes; ?>"<?php print $attributes; ?>>
+<a href="<?php print $href ?>" class="<?php print $classes; ?>"<?php print $attributes; ?> <?php print $link_attributes; ?>>
   <div class="linkbox__content"<?php print $content_attributes; ?> <?php print $attributes; ?>>
     <?php if (!empty($header)): ?>
       <h3 class="linkbox__header"><?php print $header; ?></h3>
