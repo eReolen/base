@@ -59,6 +59,9 @@
   <?php print $page; ?>
   <?php print $scripts; ?>
   <?php print $page_bottom; ?>
-  <script src="<?php print drupal_get_path('theme', 'wille') . '/overlay/overlay.js?2'; ?>"></script>
+
+  <!-- Orla campaign overlay visible on frontpage -->
+  <script src="<?php if(drupal_is_front_page()) print drupal_get_path('theme', 'wille') . '/overlay/overlay.js?2'; ?>"></script>
+
 </body>
 </html>
