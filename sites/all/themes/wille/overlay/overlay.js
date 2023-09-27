@@ -50,6 +50,7 @@
     videoTag.style.right = "20px";
     videoTag.style.position = "absolute";
     videoTag.style.cursor = "pointer";
+    videoTag.style.pointerEvents = "auto";
 
     // Create animated div
     const animatedDiv = document.createElement("div");
@@ -65,7 +66,7 @@
       videoTag.style.maxHeight = "450px";
       videoTag.style.bottom = "-20px";
 
-      animatedDiv.style.animation = `${animationName} 7s linear infinite`;
+      animatedDiv.style.animation = `${animationName} 13s linear infinite`;
       const styleSheet = document.createElement("style");
       styleSheet.innerText = `
           @-webkit-keyframes ${animationName} {
@@ -106,6 +107,7 @@
     closeButton.style.bottom = "15px";
     closeButton.style.right = "20px";
     closeButton.style.borderRadius = "50%";
+    closeButton.style.pointerEvents = "auto";
 
     // Add event listener to the close button to remove the parentDiv
     closeButton.addEventListener("click", function () {
@@ -121,6 +123,7 @@
     parentDiv.style.zIndex = "10000";
     parentDiv.style.left = "0";
     parentDiv.style.top = "0";
+    parentDiv.style.pointerEvents = "none";
 
     parentDiv.appendChild(animatedDiv);
     parentDiv.appendChild(closeButton);
