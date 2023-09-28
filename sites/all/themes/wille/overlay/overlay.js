@@ -20,9 +20,9 @@
 
     let getVideo = chosenVideo[randomIndex];
 
+    const styleSheet2 = document.createElement("style");
     // Create video element
     const videoTag = document.createElement("video");
-
     // Set video properties
     videoTag.autoplay = true;
     videoTag.muted = true;
@@ -45,7 +45,6 @@
     // Load the video
     videoTag.load();
     videoTag.style.height = "fit-content";
-    videoTag.style.maxHeight = "550px";
     videoTag.style.bottom = "20px";
     videoTag.style.right = "20px";
     videoTag.style.position = "absolute";
@@ -63,23 +62,58 @@
     // Add animation to the animatedDiv
     const animationName = "moveRightToLeft";
     if (getVideo.animate) {
-      videoTag.style.maxHeight = "450px";
       videoTag.style.bottom = "-20px";
 
-      animatedDiv.style.animation = `${animationName} 13s linear infinite`;
-      const styleSheet = document.createElement("style");
-      styleSheet.innerText = `
-          @-webkit-keyframes ${animationName} {
-              0% { -webkit-transform: translateX(100%); transform: translateX(100%); }
-              100% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+      styleSheet2.innerText = `
+        @-webkit-keyframes ${animationName} {
+            0% { -webkit-transform: translateX(100%); transform: translateX(100%); }
+            100% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+        }
+        @keyframes ${animationName} {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .animated-div {
+          animation: ${animationName} 13s linear infinite;
+        }
+
+        .video-tag {
+          max-height: 450px;
+        }
+
+        /* Media query for mobile view */
+        @media (max-width: 768px) {
+          .video-tag {
+            max-height: 300px;
           }
-          @keyframes ${animationName} {
-              0% { transform: translateX(100%); }
-              100% { transform: translateX(-100%); }
+          .animated-div {
+            animation: ${animationName} 7s linear infinite;  /* Adjusted animation speed for mobile */
           }
-          `;
-      document.head.appendChild(styleSheet);
+        }
+      `;
+    } else {
+      styleSheet2.innerText = `
+      .video-tag {
+        height: fit-content;
+        max-height: 550px;
+        bottom: 20px;
+        right: 20px;
+        position: absolute;
+        cursor: pointer;
+        pointer-events: auto;
+      }
+      /* Media query for mobile view */
+      @media (max-width: 768px) {
+        .video-tag {
+          max-height: 360px;
+        }
+      }
+    `;
     }
+    videoTag.classList.add("video-tag");
+    animatedDiv.classList.add("animated-div");
+    document.head.appendChild(styleSheet2);
 
     videoTag.oncanplaythrough = function () {
       videoTag.play();
