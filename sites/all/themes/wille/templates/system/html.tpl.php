@@ -60,9 +60,16 @@
   <?php print $scripts; ?>
   <?php print $page_bottom; ?>
 
-  <!-- Orla campaign overlay visible on frontpage -->
-  <?php if ($is_front) { ?>
-    <script src="<?php print drupal_get_path('theme', 'wille') . '/overlay/overlay.js?2'; ?>"></script>
+  <?php
+    $alias = drupal_get_path_alias(current_path());
+    $urls = array(
+      'inspiration/orlaprisen',
+    );
+    $patterns = implode("\n", $urls);
+    if ($is_front || drupal_match_path($alias, $patterns)) {
+      ?>
+    <!-- Orla campaign overlay visible on frontpage and /inspiration/orlaprisen -->
+    <script type="text/javascript" src="/<?php print drupal_get_path('theme', 'wille') . '/overlay/overlay.js?3'; ?>"></script>
   <?php } ?>
 
 

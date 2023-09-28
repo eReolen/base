@@ -5,13 +5,13 @@
 
     const chosenVideo = [
       {
-        videoPathMov: "sites/all/themes/wille/overlay/videos/orla/orla.mov",
-        videoPathWebm: "sites/all/themes/wille/overlay/videos/orla/orla.webm",
+        videoPathMov: "/sites/all/themes/wille/overlay/videos/orla/orla.mov",
+        videoPathWebm: "/sites/all/themes/wille/overlay/videos/orla/orla.webm",
         animate: false,
       },
       {
-        videoPathMov: "sites/all/themes/wille/overlay/videos/pig/pig.mov",
-        videoPathWebm: "sites/all/themes/wille/overlay/videos/pig/pig.webm",
+        videoPathMov: "/sites/all/themes/wille/overlay/videos/pig/pig.mov",
+        videoPathWebm: "/sites/all/themes/wille/overlay/videos/pig/pig.webm",
         animate: true,
       },
     ];
