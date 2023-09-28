@@ -85,7 +85,7 @@ class FrontPageFeed extends AbstractFeed {
     $themes = $this->paragraphHelper->getParagraphsData(ParagraphHelper::PARAGRAPH_ALIAS_THEME_LIST, $paragraphIds);
 
     if ($includeLatestNews) {
-      if (module_exists('breol_news')) {
+      if (ParagraphHelper::isBreol()) {
         $latestNews = $this->getLatestNews();
       }
       else {

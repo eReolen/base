@@ -356,7 +356,7 @@ class ParagraphHelper {
     $query = new \EntityFieldQuery();
     $count = _reol_app_feeds_variable_get('reol_app_feeds_frontpage', 'max_news_count', 6);
 
-    $bundle = self::isBreol() ? 'article' : 'breol_news';
+    $bundle = self::isBreol() ? 'breol_news' : 'article';
 
     $entityType = NodeHelper::ENTITY_TYPE_NODE;
     $query->entityCondition('entity_type', $entityType)
