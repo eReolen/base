@@ -59,5 +59,19 @@
   <?php print $page; ?>
   <?php print $scripts; ?>
   <?php print $page_bottom; ?>
+
+  <?php
+    // Orla campaign overlay visible on frontpage and /inspiration/orlaprisen
+    $orla_overlay = theme_get_setting('wille_orla_overlay');
+    $orla_overlay_urls = theme_get_setting('wille_orla_overlay_urls');
+    $urls = explode(',', $orla_overlay_urls);
+    $urls = array_map('trim', $urls); // Remove leading and trailing whitespace
+    $urls = array_filter($urls); // Remove empty elements
+
+    if ($orla_overlay && in_array(current_path(), $urls)) {
+  ?>
+    <script type="text/javascript" src="/<?php print drupal_get_path('theme', 'wille') . '/overlay/overlay.js?3'; ?>"></script>
+  <?php } ?>
+
 </body>
 </html>
