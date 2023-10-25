@@ -1,0 +1,15 @@
+diff --git a/profiles/ding2/modules/ding_webtrekk/ding_webtrekk.module b/profiles/ding2/modules/ding_webtrekk/ding_webtrekk.module
+index cc0a5b520..890e4198e 100644
+--- a/profiles/ding2/modules/ding_webtrekk/ding_webtrekk.module
++++ b/profiles/ding2/modules/ding_webtrekk/ding_webtrekk.module
+@@ -79,7 +79,9 @@ function ding_webtrekk_page_alter(&$page) {
+     // Note that this separation of logged in users might be problematic if some
+     // pages are also cached for authenticated users.
+     if (module_exists('ding_adgangsplatformen') && ding_user_is_logged_in_with_sso()) {
+-      $params['p_isloggedin'] = 'Adgangsplatformen';
++      $params['p_isloggedin'] = (module_exists('ding_unilogin') && ding_unilogin_get_user_data())
++        ? 'Unilogin'
++        : 'Adgangsplatformen';
+     }
+     // Fallback to cpr+pin if none the modules we know about was used to log in.
+     else {
