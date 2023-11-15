@@ -35,6 +35,7 @@
   </div>
   <div class="search-form__content js-search-form-target">
     <!-- <i class="search-form__icon--close js-search-form-trigger-close"></i> -->
-    <?php print $search_form; ?>
+    <?php print $search['search_block_form']; ?>
+    <?php print $search['hidden']; ?>
   </div>
 </div>
