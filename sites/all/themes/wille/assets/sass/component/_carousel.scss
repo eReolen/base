@@ -116,9 +116,9 @@ $carousel-outer-padding: 0 30px;
       // One line - word wrap with ellipsis.
       color: $title-color;
 
-      .material-carousel-colored & {
-        color: $white;
-      }
+      // .material-carousel-colored & {
+      //   color: $white;
+      // }
 
       // Make language and series line up on one line.
       .field-type-ting-details-language,
@@ -311,18 +311,18 @@ $carousel-outer-padding: 0 30px;
   padding-top: 0;
   padding-bottom: $mobile-margin;
 
-  h2.carousel__header {
-    color: #fff;
+  // h2.carousel__header {
+  //   color: #fff;
 
-    .carousel__more-link a {
-      color: #fff;
-    }
-  }
+  //   .carousel__more-link a {
+  //     color: #fff;
+  //   }
+  // }
 
-  .field-name-ting-title h2,
-  .field-name-ting-author div div {
-    color: #fff;
-  }
+  // .field-name-ting-title h2,
+  // .field-name-ting-author div div {
+  //   color: #fff;
+  // }
 
   .button-prev,
   .button-next {
