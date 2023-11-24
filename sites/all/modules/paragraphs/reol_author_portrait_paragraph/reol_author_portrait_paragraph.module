@@ -23,7 +23,10 @@ function reol_author_portrait_paragraph_preprocess_entity(&$variables) {
 
       $link = $author_portrait->field_link->value();
       if (isset($link['url'])) {
-        $variables['href'] = $link['url'];
+        $variables['href'] = url($link['url'], array(
+          'query' => $link['query'] ?? NULL,
+          'fragment' => $link['fragment'] ?? NULL,
+        ));
       }
 
       $color = $wrapper->field_portrait_color->value();
