@@ -102,6 +102,7 @@ Paragraphs: [PHP 7.2] count() on non-countable (https://www.drupal.org/project/p
 * Don't exclude "dkdcplus:DBCO" subjects (opensearch-dkdcplus-DBCO.patch)
 * Update to image_resize_filter 1.16 (ding2-make-image_resize_filter.patch)
 * Disallow: /content/unilogin in robots.txt (robots-content-unilogin.patch)
+* Track login type: (ding_webtrekk-login-type-tracking.patch)
 
 # Docker
 This repository comes with an `docker-compose.yml` to run the stack in
