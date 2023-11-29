@@ -369,7 +369,7 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
   // Only show this field when the 'phone_notification' checkbox is enabled.
   $form['publizon']['field_phone']['#states'] = array(
     'visible' => array(
-      ':input[name="publizon[phone_notification]"]' => array('checked' => FALSE),
+      ':input[name="publizon[phone_notification]"]' => array('checked' => TRUE),
     ),
   );
   $form['publizon']['field_phone']['#weight'] = 10;
@@ -391,7 +391,7 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
   // Only show this field when the 'email_notification' checkbox is enabled.
   $form['publizon']['field_email']['#states'] = array(
     'visible' => array(
-      ':input[name="publizon[email_notification]"]' => array('checked' => FALSE),
+      ':input[name="publizon[email_notification]"]' => array('checked' => TRUE),
     ),
   );
   $form['publizon']['field_email']['#weight'] = 30;
