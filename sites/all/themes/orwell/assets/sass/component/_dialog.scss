@@ -24,6 +24,14 @@
   text-align: center;
   overflow-y: auto;
 
+  background-color: $color__white;
+  color: $color__gray--dark;
+
+  a {
+    color: $color__red;
+    text-align: center;
+  }
+
   &.try-ebook,
   &.try-audiobook {
     // Ensure that the frame will fit.
@@ -43,13 +51,6 @@
     font-family: $font-light;
   }
 
-  a {
-    & {
-      color: $color__white;
-      text-align: center;
-    }
-  }
-
   form {
     text-align: left;
 
@@ -62,11 +63,14 @@
 
   .action-button {
     @include button;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .ui-corner-all {
     border: 0;
-    background: #fff;
     border-radius: 5px;
   }
 
@@ -75,13 +79,11 @@
     padding: 0;
     font-family: $font-regular;
     text-transform: uppercase;
+    background: none; // Removes default background from jquery ui
 
     .ui-dialog-title {
       width: auto;
       float: none;
-    }
-
-    .ui-dialog-title {
       display: block;
     }
 
@@ -92,6 +94,7 @@
       font-size: 10px;
       padding: 0;
       margin: 0;
+      background: none; // Removes default background from jquery ui
 
       @include grid-media($medium) {
         top: 0;

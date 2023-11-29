@@ -25,6 +25,13 @@
   padding: 25px 30px;
   text-align: center;
   overflow-y: auto;
+  background-color: $white;
+  color: $black;
+
+  a {
+    color: $red-dark;
+    text-align: center;
+  }
 
   &.try-ebook,
   &.try-audiobook {
@@ -116,13 +123,6 @@
     }
   }
 
-  a {
-    & {
-      color: white;
-      text-align: center;
-    }
-  }
-
   form {
     text-align: left;
 
@@ -135,15 +135,18 @@
     margin-top: 50px;
     float: none;
     background: $red;
+    color: $white;
 
     &:before {
-      color: white;
+      color: $white;
+    }
+    &:hover {
+      background: $red-dark;
     }
   }
 
   .ui-corner-all {
     border: 0;
-    background: #fff;
     border-radius: 5px;
   }
 
@@ -151,6 +154,7 @@
     // Resetting.
     margin: 0;
     padding: 0;
+    background: none; // Removes default background from jquery ui
     .ui-dialog-title {
       width: auto;
       float: none;
@@ -170,6 +174,7 @@
       position: absolute;
       font-size: 10px;
       opacity: 0.6;
+      background: none; // Removes default background from jquery ui
 
       @include media($phone) {
         top: 15px;
