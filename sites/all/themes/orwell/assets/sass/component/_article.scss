@@ -113,6 +113,10 @@ $teaser-height--medium: 400px;
     @include grid-media($medium) {
       padding: 2rem 0;
     }
+
+    .material__abstract {
+      @include line-clamp($lines: $abstract-max-lines);
+    }
   }
 }
 
