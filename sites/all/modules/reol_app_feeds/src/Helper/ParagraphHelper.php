@@ -1307,7 +1307,13 @@ class ParagraphHelper {
    *   The content with html entities decoded.
    */
   public function getContent($content) {
-    return html_entity_decode($content);
+    $content = html_entity_decode($content);
+    // Apparently, html_entity_decode (in PHP 7.4) doesn't decode numeric entities, e.g. &#039;
+    // @see https://stackoverflow.com/q/9587751/2502647
+    $content = preg_replace_callback('/&#x([0-9a-f]+);/i', function ($match) { return $this->chr_utf8(hexdec($match[1])); }, $content);
+    $content = preg_replace_callback('/&#([0-9]+);/', function ($match) { return $this->chr_utf8($match[1]); }, $content);
+
+    return $content;
   }
 
   /**
@@ -1341,6 +1347,24 @@ class ParagraphHelper {
    */
   public static function isEreol(): bool {
     return !self::isBreol();
+  }
+
+  // @see https://stackoverflow.com/q/9587751/2502647
+  private function chr_utf8($num) {
+    if ($num < 128) {
+      return chr($num);
+    }
+    if ($num < 2048) {
+      return chr(($num >> 6) + 192) . chr(($num & 63) + 128);
+    }
+    if ($num < 65536) {
+      return chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+    }
+    if ($num < 2097152) {
+      return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
+    }
+
+    return '';
   }
 
 }
