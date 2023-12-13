@@ -1668,6 +1668,11 @@ function reol_base_field_default_field_instances_alter(&$fields) {
     $fields['ting_object-ting_object-ting_relations']['display']['search_result']['weight'] = 22;
     $fields['ting_object-ting_object-ting_relations']['display']['search_result']['label'] = 'hidden';
     $fields['ting_object-ting_object-ting_relations']['display']['search_result']['type'] = 'ting_relations_default';
+
+    // Add Ting relations to teaser display.
+    $fields['ting_object-ting_object-ting_relations']['display']['teaser']['weight'] = 3;
+    $fields['ting_object-ting_object-ting_relations']['display']['teaser']['label'] = 'hidden';
+    $fields['ting_object-ting_object-ting_relations']['display']['teaser']['type'] = 'ting_relations_default';
   }
 
   // Always link to object rather than collection.
