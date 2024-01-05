@@ -396,6 +396,15 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
   );
   $form['publizon']['field_email']['#weight'] = 30;
 
+  // Show submit button only if phone or email notification is visible.
+  $form['submit']['#states'] = array(
+    'visible' => array(
+      [$form['publizon']['field_phone']['#states']['visible']],
+      'or',
+      [$form['publizon']['field_email']['#states']['visible']],
+    ),
+  );
+
   // Add phone confirm field.
   $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email_confirm', $profile, $form, $form_state);
   $form['publizon']['field_email_confirm']['#states'] = $form['publizon']['field_email']['#states'];
