@@ -28,7 +28,12 @@
         <?php echo $object->getLanguage() ?>
       </div>
       <div class="material__abstract">
-        <?php echo render($content['group_text']['ting_abstract']); ?>
+        <?php if (!empty($content['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher'])): ?>
+          <?php unset($content['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']['#title']); ?>
+          <?php echo render($content['ting_relations']['#groups']['dbcaddi:hasDescriptionFromPublisher']); ?>
+        <?php else: ?>
+          <?php echo render($content['group_text']['ting_abstract']); ?>
+        <?php endif ?>
       </div>
       <div class="material__subjects">
         <?php echo render($content['group_text']['group_inner']['ting_details_subjects']); ?>

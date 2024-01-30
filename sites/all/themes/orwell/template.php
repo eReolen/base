@@ -329,7 +329,10 @@ function orwell_preprocess_entity(&$variables) {
       $variables['icons'] = '';
       $link = $wrapper->field_link->value();
       if (isset($link['url'])) {
-        $variables['href'] = $link['url'];
+        $variables['href'] = url($link['url'], array(
+          'query' => $link['query'] ?? NULL,
+          'fragment' => $link['fragment'] ?? NULL,
+        ));
 
         if (!preg_match('{^' . preg_quote($GLOBALS['base_url']) . '}', $link['url'])) {
           $variables['icons'] = theme('reol_overlay_icons', array('icons' => array('link')));
