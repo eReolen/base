@@ -363,7 +363,7 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
   $form['publizon']['phone_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('Send notification to my phone'),
-    '#default_value' => TRUE,
+    '#default_value' => FALSE,
     '#weight' => 0,
   );
   // Only show this field when the 'phone_notification' checkbox is enabled.
@@ -385,7 +385,7 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
   $form['publizon']['email_notification'] = array(
     '#type' => 'checkbox',
     '#title' => t('Send notification to my email'),
-    '#default_value' => TRUE,
+    '#default_value' => FALSE,
     '#weight' => 20,
   );
   // Only show this field when the 'email_notification' checkbox is enabled.
@@ -395,6 +395,15 @@ function publizon_form_ding_reservation_reserve_form_alter(array &$form, array &
     ),
   );
   $form['publizon']['field_email']['#weight'] = 30;
+
+  // Show submit button only if phone or email notification is visible.
+  $form['submit']['#states'] = array(
+    'visible' => array(
+      [$form['publizon']['field_phone']['#states']['visible']],
+      'or',
+      [$form['publizon']['field_email']['#states']['visible']],
+    ),
+  );
 
   // Add phone confirm field.
   $form['publizon'] += reol_base_get_field_form('profile2', 'provider_publizon', 'field_email_confirm', $profile, $form, $form_state);

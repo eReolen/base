@@ -32,7 +32,10 @@ function reol_link_paragraph_preprocess_entity(&$variables) {
       $variables['icons'] = '';
       $link = $wrapper->field_link->value();
       if (isset($link['url'])) {
-        $variables['href'] = $link['url'];
+        $variables['href'] = url($link['url'], array(
+          'query' => $link['query'] ?? NULL,
+          'fragment' => $link['fragment'] ?? NULL,
+        ));
         $variables['link_attributes'] =  drupal_attributes($link['attributes'] ?? []);
 
         if (!preg_match('{^' . preg_quote($GLOBALS['base_url']) . '}', $link['url'])) {
