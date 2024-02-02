@@ -114,10 +114,10 @@ $carousel-outer-padding: 0 30px;
 
     .ting-object.view-mode-compact {
       // One line - word wrap with ellipsis.
-      color: black;
+      color: $title-color;
 
       .material-carousel-colored & {
-        color: black;
+        color: $white;
       }
 
       // Make language and series line up on one line.
@@ -312,16 +312,16 @@ $carousel-outer-padding: 0 30px;
   padding-bottom: $mobile-margin;
 
   h2.carousel__header {
-    color: black;
+    color: #fff;
 
     .carousel__more-link a {
-      color: black;
+      color: #fff;
     }
   }
 
   .field-name-ting-title h2,
   .field-name-ting-author div div {
-    color: black;
+    color: #fff;
   }
 
   .button-prev,
