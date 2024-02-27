@@ -194,9 +194,11 @@
     }
     running = true;
     var swiper = queue.shift();
+    var url = new URL($(swiper.el).data('path'), location.href)
+    url.pathname += '/' + $(swiper.el).data('offset')
     $.ajax({
       type: 'get',
-      url: Drupal.settings.basePath + $(swiper.el).data('path') + '/' + $(swiper.el).data('offset'),
+      url: url.toString(),
       dataType: 'json',
       success: function (data) {
         // Remove placeholders.

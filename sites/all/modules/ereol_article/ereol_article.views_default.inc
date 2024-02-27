@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ereol_article.views_default.inc
@@ -60,7 +61,7 @@ function ereol_article_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -84,17 +85,25 @@ function ereol_article_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
-  $handler->display->display_options['exposed_form']['options']['autosubmit'] = TRUE;
   $handler->display->display_options['exposed_form']['options']['bef'] = array(
     'general' => array(
+      'input_required' => 0,
+      'text_input_required' => array(
+        'text_input_required' => array(
+          'value' => 'Vælg et filter og klik på Anvend for at se resultater',
+          'format' => 'ding_wysiwyg',
+        ),
+      ),
       'allow_secondary' => 0,
       'secondary_label' => 'Avancerede indstillinger',
+      'secondary_collapse_override' => '0',
     ),
-    'field_reol_entity_type_value' => array(
-      'bef_format' => 'bef_links',
+    'field_article_type_value' => array(
+      'bef_format' => 'bef_hidden',
       'more_options' => array(
         'bef_select_all_none' => FALSE,
         'bef_collapsible' => 0,
+        'autosubmit' => 0,
         'is_secondary' => 0,
         'any_label' => '',
         'bef_filter_description' => '',
@@ -108,9 +117,27 @@ function ereol_article_views_default_views() {
         ),
       ),
     ),
+    'field_subject_tid' => array(
+      'bef_format' => 'bef_hidden',
+      'more_options' => array(
+        'bef_select_all_none' => 0,
+        'bef_collapsible' => 0,
+        'autosubmit' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+            1 => 'vocabulary',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
   );
-  $handler->display->display_options['exposed_form']['options']['input_required'] = 0;
-  $handler->display->display_options['exposed_form']['options']['text_input_required_format'] = 'ding_wysiwyg';
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Header: Global: Unfiltered text */
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
@@ -119,7 +146,7 @@ function ereol_article_views_default_views() {
   $handler->display->display_options['header']['area_text_custom']['content'] = 'Nyheder';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -134,6 +161,35 @@ function ereol_article_views_default_views() {
     'article' => 'article',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Type (field_article_type) */
+  $handler->display->display_options['filters']['field_article_type_value']['id'] = 'field_article_type_value';
+  $handler->display->display_options['filters']['field_article_type_value']['table'] = 'field_data_field_article_type';
+  $handler->display->display_options['filters']['field_article_type_value']['field'] = 'field_article_type_value';
+  $handler->display->display_options['filters']['field_article_type_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_article_type_value']['expose']['operator_id'] = 'field_article_type_value_op';
+  $handler->display->display_options['filters']['field_article_type_value']['expose']['label'] = 'Type';
+  $handler->display->display_options['filters']['field_article_type_value']['expose']['operator'] = 'field_article_type_value_op';
+  $handler->display->display_options['filters']['field_article_type_value']['expose']['identifier'] = 'type';
+  $handler->display->display_options['filters']['field_article_type_value']['expose']['remember_roles'] = array(
+    2 => '2',
+  );
+  /* Filter criterion: Content: Subject (field_subject) */
+  $handler->display->display_options['filters']['field_subject_tid']['id'] = 'field_subject_tid';
+  $handler->display->display_options['filters']['field_subject_tid']['table'] = 'field_data_field_subject';
+  $handler->display->display_options['filters']['field_subject_tid']['field'] = 'field_subject_tid';
+  $handler->display->display_options['filters']['field_subject_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_subject_tid']['expose']['operator_id'] = 'field_subject_tid_op';
+  $handler->display->display_options['filters']['field_subject_tid']['expose']['label'] = 'Subject';
+  $handler->display->display_options['filters']['field_subject_tid']['expose']['operator'] = 'field_subject_tid_op';
+  $handler->display->display_options['filters']['field_subject_tid']['expose']['identifier'] = 'subjects';
+  $handler->display->display_options['filters']['field_subject_tid']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_subject_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+  );
+  $handler->display->display_options['filters']['field_subject_tid']['reduce_duplicates'] = TRUE;
+  $handler->display->display_options['filters']['field_subject_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_subject_tid']['vocabulary'] = 'article_subject';
+  $handler->display->display_options['filters']['field_subject_tid']['error_message'] = FALSE;
   $handler->display->display_options['path'] = 'articles';
   $translatables['articles'] = array(
     t('Master'),
@@ -153,8 +209,11 @@ function ereol_article_views_default_views() {
     t('sidste »'),
     t('Side'),
     t('more'),
-    t('Select any filter and click on Apply to see results'),
+    t('Vælg et filter og klik på Anvend for at se resultater'),
+    t('Avancerede indstillinger'),
     t('Nyheder'),
+    t('Type'),
+    t('Subject'),
   );
   $export['articles'] = $view;
 

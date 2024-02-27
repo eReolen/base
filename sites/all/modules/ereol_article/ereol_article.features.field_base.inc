@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ereol_article.features.field_base.inc
@@ -29,6 +30,11 @@ function ereol_article_field_default_field_bases() {
         'article' => 'Artikel',
         'author_portrait' => 'Forfatterportræt',
         'news' => 'Nyhed',
+        'youth_review' => 'Ungeanmeldelse',
+        'behind_the_scenes' => 'Bag om eReolen',
+        'editor_pick' => 'Redaktionen anbefaler',
+        'something_similar' => 'Noget, der ligner',
+        'interview' => 'Interview',
       ),
       'allowed_values_function' => '',
       'profile2_private' => FALSE,
@@ -156,7 +162,7 @@ function ereol_article_field_default_field_bases() {
   // Exported field_base: 'field_subject'.
   $field_bases['field_subject'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_subject',
