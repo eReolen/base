@@ -6,21 +6,20 @@
 
   .actions {
     margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    align-items: center;
+    @include grid-media($medium) {
+      row-gap: 0;
+      column-gap: 2rem;
+      justify-content: center;
+      flex-direction: row;
+    }
   }
 
   .action-button {
-    &:not(:last-child) {
-      @include grid-media($medium) {
-        margin-right: 2rem;
-      }
-
-      @include grid-media($large) {
-        margin-right: 2rem;
-      }
-    }
-
-    @include grid-media($mobile-only) {
-      display: block;
-    }
+    margin: 0;
+    text-decoration: none;
   }
 }
