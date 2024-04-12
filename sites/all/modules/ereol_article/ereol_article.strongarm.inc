@@ -76,16 +76,16 @@ function ereol_article_strongarm() {
       ),
       'form' => array(
         'flag' => array(
-          'weight' => '7',
-        ),
-        'metatags' => array(
-          'weight' => '12',
-        ),
-        'path' => array(
           'weight' => '8',
         ),
-        'redirect' => array(
+        'metatags' => array(
+          'weight' => '13',
+        ),
+        'path' => array(
           'weight' => '9',
+        ),
+        'redirect' => array(
+          'weight' => '10',
         ),
         'title' => array(
           'weight' => '0',
