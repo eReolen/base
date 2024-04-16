@@ -45,22 +45,15 @@ function ereol_article_preprocess_node(&$variables) {
 
   if ($node->type == 'article' && $variables['view_mode'] == 'full') {
     $wrapper = entity_metadata_wrapper('node', $node);
-    // Exclude this article from articles in carousel.
     $params = array(
       'query' => array(
+        // Exclude this article from articles in carousel.
         'exclude' => $node->nid,
-      ),
-    );
-
-    // Filter carousel articles on type and subjects ONLY if this article has
-    // subjects (as per request from eReolen).
-    $subjects = array_column($wrapper->field_subject->value() ?? [], 'tid');
-    if (!empty($subjects)) {
-      $params['query'] += array(
+        // Filter carousel articles on type and subjects.
         'type' => $wrapper->field_article_type->value() ?? NULL,
         'subjects' => $subjects,
-      );
-    }
+      ),
+    );
 
     $ajax_path = url(sprintf('news/ajax/%s', 5), $params);
 
