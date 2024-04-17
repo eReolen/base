@@ -90,12 +90,12 @@ function ereol_article_views_default_views() {
       'input_required' => 0,
       'text_input_required' => array(
         'text_input_required' => array(
-          'value' => 'Vælg et filter og klik på Anvend for at se resultater',
+          'value' => 'Select any filter and click on Apply to see results',
           'format' => 'ding_wysiwyg',
         ),
       ),
       'allow_secondary' => 0,
-      'secondary_label' => 'Avancerede indstillinger',
+      'secondary_label' => 'Advanced settings',
       'secondary_collapse_override' => '0',
     ),
     'field_article_type_value' => array(
@@ -209,8 +209,8 @@ function ereol_article_views_default_views() {
     t('sidste »'),
     t('Side'),
     t('more'),
-    t('Vælg et filter og klik på Anvend for at se resultater'),
-    t('Avancerede indstillinger'),
+    t('Select any filter and click on Apply to see results'),
+    t('Advanced settings'),
     t('Nyheder'),
     t('Type'),
     t('Subject'),
