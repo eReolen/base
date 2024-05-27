@@ -194,7 +194,7 @@
     }
     running = true;
     var swiper = queue.shift();
-    var url = new URL($(swiper.el).data('path'), location.href)
+    var url = new URL($(swiper.el).data('path'), location.protocol + '//' + location.host + Drupal.settings.basePath)
     url.pathname += '/' + $(swiper.el).data('offset')
     $.ajax({
       type: 'get',
