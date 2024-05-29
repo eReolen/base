@@ -45,14 +45,17 @@ function ereol_article_preprocess_node(&$variables) {
 
   if ($node->type == 'article' && $variables['view_mode'] == 'full') {
     $wrapper = entity_metadata_wrapper('node', $node);
+    $subjects = array_column($wrapper->field_subject->value() ?? [], 'tid');
     $params = array(
-      'query' => array(
+      // array_filter is used to make sure that we get only non-empty values in
+      // the query.
+      'query' => array_filter(array(
         // Exclude this article from articles in carousel.
         'exclude' => $node->nid,
         // Filter carousel articles on type and subjects.
         'type' => $wrapper->field_article_type->value() ?? NULL,
         'subjects' => $subjects,
-      ),
+      )),
     );
 
     $ajax_path = url(sprintf('news/ajax/%s', 5), $params);
@@ -154,7 +157,7 @@ function ereol_article_get_articles($count, $offset = 0) {
       $filteredQuery->fieldCondition('field_article_type', 'value',
         $params['type']);
     }
-    if (isset($params['subjects'])) {
+    if (!empty($params['subjects'])) {
       $filteredQuery->fieldCondition('field_subject', 'tid', (array) $params['subjects'], 'IN');
     }
     $result = $filteredQuery->execute();
