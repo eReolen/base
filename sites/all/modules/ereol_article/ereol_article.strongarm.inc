@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ereol_article.strongarm.inc
@@ -64,9 +65,36 @@ function ereol_article_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__article';
   $strongarm->value = array(
+    'extra_fields' => array(
+      'display' => array(
+        'ding_serendipity_info' => array(
+          'teaser' => array(
+            'visible' => FALSE,
+            'weight' => '2',
+          ),
+        ),
+      ),
+      'form' => array(
+        'flag' => array(
+          'weight' => '8',
+        ),
+        'metatags' => array(
+          'weight' => '13',
+        ),
+        'path' => array(
+          'weight' => '9',
+        ),
+        'redirect' => array(
+          'weight' => '10',
+        ),
+        'title' => array(
+          'weight' => '0',
+        ),
+      ),
+    ),
     'view_modes' => array(
-      'teaser' => array(
-        'custom_settings' => TRUE,
+      'diff_standard' => array(
+        'custom_settings' => FALSE,
       ),
       'full' => array(
         'custom_settings' => FALSE,
@@ -80,38 +108,11 @@ function ereol_article_strongarm() {
       'search_result' => array(
         'custom_settings' => TRUE,
       ),
-      'diff_standard' => array(
-        'custom_settings' => FALSE,
+      'teaser' => array(
+        'custom_settings' => TRUE,
       ),
       'token' => array(
         'custom_settings' => FALSE,
-      ),
-    ),
-    'extra_fields' => array(
-      'form' => array(
-        'flag' => array(
-          'weight' => '7',
-        ),
-        'title' => array(
-          'weight' => '0',
-        ),
-        'path' => array(
-          'weight' => '8',
-        ),
-        'redirect' => array(
-          'weight' => '9',
-        ),
-        'metatags' => array(
-          'weight' => '12',
-        ),
-      ),
-      'display' => array(
-        'ding_serendipity_info' => array(
-          'teaser' => array(
-            'weight' => '2',
-            'visible' => FALSE,
-          ),
-        ),
       ),
     ),
   );

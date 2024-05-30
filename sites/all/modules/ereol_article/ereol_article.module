@@ -44,15 +44,26 @@ function ereol_article_preprocess_node(&$variables) {
   $node = $variables['node'];
 
   if ($node->type == 'article' && $variables['view_mode'] == 'full') {
-    $ajax_path = sprintf(
-      'news/ajax/%s',
-      5
+    $wrapper = entity_metadata_wrapper('node', $node);
+    $subjects = array_column($wrapper->field_subject->value() ?? [], 'tid');
+    $params = array(
+      // array_filter is used to make sure that we get only non-empty values in
+      // the query.
+      'query' => array_filter(array(
+        // Exclude this article from articles in carousel.
+        'exclude' => $node->nid,
+        // Filter carousel articles on type and subjects.
+        'type' => $wrapper->field_article_type->value() ?? NULL,
+        'subjects' => $subjects,
+      )),
     );
+
+    $ajax_path = url(sprintf('news/ajax/%s', 5), $params);
 
     $variables['other_articles'] = array(
       '#type' => 'ding_carousel',
       '#title' => t('More articles'),
-      '#more_link' => l(t('All articles'), 'articles'),
+      '#more_link' => l(t('All articles'), 'articles', $params),
       '#path' => $ajax_path,
       '#offset' => 0,
       '#items' => array(),
@@ -134,7 +145,32 @@ function ereol_article_get_articles($count, $offset = 0) {
     ])
     ->range($offset, $count + 1);
 
-  $result = $query->execute();
+  $params = drupal_get_query_parameters();
+  if (isset($params['exclude'])) {
+    $query->propertyCondition('nid', (array) $params['exclude'], 'NOT IN');
+  }
+
+  if ('article' === $bundle) {
+    // Build a filtered query to see if it returns any results.
+    $filteredQuery = clone $query;
+    if (isset($params['type'])) {
+      $filteredQuery->fieldCondition('field_article_type', 'value',
+        $params['type']);
+    }
+    if (!empty($params['subjects'])) {
+      $filteredQuery->fieldCondition('field_subject', 'tid', (array) $params['subjects'], 'IN');
+    }
+    $result = $filteredQuery->execute();
+
+    // If filtered query returns no results, fall back to unfiltered query,
+    // but only on first page of results.
+    if (0 === $offset && !isset($result['node'])) {
+      $result = $query->execute();
+    }
+  } else {
+    $result = $query->execute();
+  }
+
   if (isset($result['node'])) {
     $nids = array_keys($result['node']);
     if (count($nids) > $count) {
@@ -152,6 +188,15 @@ function ereol_article_get_articles($count, $offset = 0) {
   }
 
   return array($more, $articles);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function ereol_article_form_alter(&$form, &$form_state, $form_id) {
+  if ('article_node_form' === $form_id) {
+    drupal_add_css(drupal_get_path('module', 'ereol_article') . '/assets/admin.css');
+  }
 }
 
 /**
