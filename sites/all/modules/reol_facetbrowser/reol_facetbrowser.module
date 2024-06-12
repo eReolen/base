@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * @file
+ * Hooks and hacks.
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function reol_facetbrowser_form_ding_facetbrowser_form_alter(&$form, &$form_state) {
+  if (isset($form['facet.type']['facet.type']['#options'])) {
+    $groups = _reol_facetbrowser_get_facet_groups('type');
+    if (empty($groups)) {
+      return;
+    }
+
+    $options = $form['facet.type']['facet.type']['#options'];
+    $groupOptions = [];
+    $search_query = drupal_get_query_parameters();
+    $activeGroupFacets = $search_query['facet-group-type'] ?? [];
+    unset($search_query['facet-group-type']);
+    $search_term = preg_replace('@^search/ting/@', '', request_path());
+    $search_string = $search_term . '?' . drupal_http_build_query($search_query);
+    $activeGroups = [];
+
+    foreach ($groups as $name => $types) {
+      $totalCount = 0;
+      $groupFacets = [];
+      $isActive = FALSE;
+      foreach ($types as $type) {
+        if (isset($options[$type])) {
+          if (preg_match('/(?P<count>\d+)/', strip_tags($options[$type]), $matches)) {
+            $totalCount += (int) $matches['count'];
+          }
+
+          $groupFacets[] = $type;
+          unset($options[$type]);
+        }
+        if (in_array($type, $activeGroupFacets, TRUE)) {
+          $isActive = TRUE;
+        }
+      }
+      if (!empty($groupFacets)) {
+        // $name .= ' [' . implode(', ', $groupFacets) . ']';
+        $name .= ' (' . $totalCount . ')';
+        $groupOptions[$name] = ting_field_search_link(
+          $name,
+          $search_string,
+          [],
+          ['query' => $isActive ? [] : ['facet-group-type' => $groupFacets]]
+        );
+        if ($isActive) {
+          $activeGroups[] = $name;
+        }
+      }
+    }
+
+    $form['facet.type']['facet.type']['#default_value'] = array_merge(
+      $form['facet.type']['facet.type']['#default_value'],
+      $activeGroups
+    );
+
+    // Prepend group options to other options.
+    $form['facet.type']['facet.type']['#options'] = array_merge($groupOptions, $options);
+  }
+}
+
+/**
+ * Implements hook_opensearch_pre_execute().
+ */
+function reol_facetbrowser_opensearch_pre_execute($request) {
+  $params = drupal_get_query_parameters();
+
+  if (isset($params['facet-group-type']) && $request instanceof TingClientSearchRequest) {
+    $groupFacets = $params['facet-group-type'];
+    if (!empty($groupFacets)) {
+      $query = $request->getQuery();
+      if (!empty($query)) {
+        $query .= ' and ';
+      }
+      $query .= '('
+        . implode(' or ', array_map(static function ($type) {
+          return 'term.type="' . $type . '"';
+        }, $groupFacets))
+        . ')';
+      $request->setQuery($query);
+    }
+  }
+}
+
+/**
+ * Get facets groups.
+ *
+ * @param string $facet
+ *   The facet.
+ *
+ * @return null|array
+ *   The facet group if any.
+ */
+function _reol_facetbrowser_get_facet_groups($facet) {
+  switch ($facet) {
+    case 'type':
+      return [
+        // Human readable name => real facet names.
+        'Ebog' => [
+          'ebog',
+          'billedbog (net)',
+          'tegneserie (net)',
+          'graphic novel (net)',
+        ],
+        'Lydbog' => [
+          'lydbog (net)',
+          'lydbog (bånd)',
+          'lydbog (cd)',
+        ],
+        'Podcast' => [
+          'lyd (podcast)',
+          'lyd (net)',
+        ],
+      ];
+  }
+
+  return [];
+}
