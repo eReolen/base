@@ -11,6 +11,9 @@
 .view-articles, // An .view-articles wraps the articles on the se all page
 .paragraphs-item-article-carousel,
 .paragraphs-item-picked-article-carousel {
+  max-width: 2000px;
+  margin: 0 auto;
+
   --width: 1049px;
   --subject-col-width: 236px;
   --carousel-width: 1080px;
