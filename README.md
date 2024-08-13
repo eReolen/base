@@ -1,5 +1,4 @@
-ereolen.dk and ereolengo.dk
-===========================
+# ereolen.dk and ereolengo.dk
 
 ## Development
 
@@ -25,45 +24,54 @@ Ereolen.dk anno 2015 based on DDB CMS
 
 ## Patches
 
-The project is base on DDB Core (https://github.com/ding2/ding2) with some changes
+The project is base on DDB Core (<https://github.com/ding2/ding2>) with some changes
 which is tracked by patches in _sites/all/patches_.
 
 ### Drupal core patches
 
-* https://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch
-* https://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch
-* https://drupal.org/files/issues/translate_role_names-2205581-1.patch
-* https://raw.githubusercontent.com/ding2/ding2/master/patches/drupal_core.robots.txt.ding2.patch
-* https://www.drupal.org/files/issues/programatically_added-1079628-29-d7.patch
+* <https://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch>
+* <https://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch>
+* <https://drupal.org/files/issues/translate_role_names-2205581-1.patch>
+* <https://raw.githubusercontent.com/ding2/ding2/master/patches/drupal_core.robots.txt.ding2.patch>
+* <https://www.drupal.org/files/issues/programatically_added-1079628-29-d7.patch>
 
-Fix shortcut_set_save when set does not exist (https://www.drupal.org/node/1175700).
-* https://www.drupal.org/files/fix-shortcut-set-save-1175700-10.patch
+Fix shortcut_set_save when set does not exist (<https://www.drupal.org/node/1175700>).
 
-Add search_get_info() in search.module should include an _alter hook (https://www.drupal.org/node/1911276).
-* https://www.drupal.org/files/search-info-alter-1911276--D7-16.patch
+* <https://www.drupal.org/files/fix-shortcut-set-save-1175700-10.patch>
+
+Add search_get_info() in search.module should include an _alter hook (<https://www.drupal.org/node/1911276>).
+
+* <https://www.drupal.org/files/search-info-alter-1911276--D7-16.patch>
 
 Seven theme fieldset-legend not clickable in Chrome 103.0.5060.53
-* https://www.drupal.org/project/drupal/issues/3292211
+
+* <https://www.drupal.org/project/drupal/issues/3292211>
 
 Field labels are not translated in number validation
+
 * <sites/all/patches/number.patch>
 
 ### Contrib patches
 
 Add alter to strong-arm variables. Note this patch is part of the next release of the module.
-* https://www.drupal.org/files/issues/2018-05-22/strongarm-2076543-import-export-value-alter-hooks-11.patch
 
-Handle translated roles https://www.drupal.org/node/1744274
-* https://www.drupal.org/files/secure_permissions-duplicate_role_exception-1744274-4.patch
+* <https://www.drupal.org/files/issues/2018-05-22/strongarm-2076543-import-export-value-alter-hooks-11.patch>
+
+Handle translated roles <https://www.drupal.org/node/1744274>
+
+* <https://www.drupal.org/files/secure_permissions-duplicate_role_exception-1744274-4.patch>
 
 Check for jQuery differences regarding prop() vs attr().
-* https://git.drupalcode.org/project/ctools/commit/18385421a277097d8a92672808f656cc7470b69d.patch
 
-Android install prompt is not displayed (https://www.drupal.org/node/3047715)
-* https://www.drupal.org/files/issues/2019-06-25/appbanners-android-fix-d7-3047715-9.patch
+* <https://git.drupalcode.org/project/ctools/commit/18385421a277097d8a92672808f656cc7470b69d.patch>
 
-Paragraphs: [PHP 7.2] count() on non-countable (https://www.drupal.org/project/paragraphs/issues/3010938)
-* https://www.drupal.org/files/issues/2018-11-26/paragraphs-count-php71-3010938-3.patch
+Android install prompt is not displayed (<https://www.drupal.org/node/3047715>)
+
+* <https://www.drupal.org/files/issues/2019-06-25/appbanners-android-fix-d7-3047715-9.patch>
+
+Paragraphs: [PHP 7.2] count() on non-countable (<https://www.drupal.org/project/paragraphs/issues/3010938>)
+
+* <https://www.drupal.org/files/issues/2018-11-26/paragraphs-count-php71-3010938-3.patch>
 
 ### Ding2 patches
 
@@ -104,7 +112,8 @@ Paragraphs: [PHP 7.2] count() on non-countable (https://www.drupal.org/project/p
 * Disallow: /content/unilogin in robots.txt (robots-content-unilogin.patch)
 * Track login type: (ding_webtrekk-login-type-tracking.patch)
 
-# Docker
+## Docker
+
 This repository comes with an `docker-compose.yml` to run the stack in
 docker and a makefile to ease the usage. The setup exposes access to
 http (nginx and varnish) and mysql.
@@ -129,14 +138,16 @@ The exposed ports can always be accessed by the address `0.0.0.0:PORT`.
 
 __Note__: the repositry contains a `.docker` folder that holds the nginx and varnish configuration.
 
-## Commands
+### Commands
 
 * Start up the container stack (nginx, php7.0, memcached and varnish)
 
 ```sh
 make up
 ```
+
 or
+
 ```sh
 docker-compose -p ereolen up -d
 ```
@@ -146,7 +157,9 @@ docker-compose -p ereolen up -d
 ```sh
 make open
 ```
+
 or
+
 ```sh
 docker-compose -p ereolen port varnishd 80
 ```
@@ -156,7 +169,9 @@ docker-compose -p ereolen port varnishd 80
 ```sh
 make stop
 ```
+
 or
+
 ```sh
 docker-compose -p ereolen stop
 ```
@@ -166,7 +181,9 @@ docker-compose -p ereolen stop
 ```sh
 make clean
 ```
+
 or
+
 ```sh
 docker-compose -p ereolen rm
 ```
@@ -176,7 +193,9 @@ docker-compose -p ereolen rm
 ```sh
 make mysql
 ```
+
 or
+
 ```sh
 docker-compose -p ereolen port mariadb 3306
 ```
@@ -187,8 +206,7 @@ docker-compose -p ereolen port mariadb 3306
 docker-compose run --rm drush [command]
 ```
 
-
-# Building themes
+## Building themes
 
 ```sh
 docker-compose run --rm node bash -c "cd /app/sites/all/themes/pratchett/ && yarn install"
@@ -205,7 +223,7 @@ docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn in
 docker-compose run --rm node bash -c "cd /app/sites/all/themes/wille/ && yarn build"
 ```
 
-## Theme coding standards
+### Theme coding standards
 
 We use [Prettier](https://prettier.io/) to check theme coding standards.
 
@@ -244,7 +262,7 @@ to apply the coding standards.
 We use [GitHub Actions](https://github.com/features/actions) to check theme
 coding standards whenever a pull request is made.
 
-# Coding standards
+## Coding standards
 
 All code must adhere to [the Drupal Coding
 Standards](https://www.drupal.org/docs/develop/standards).
@@ -263,4 +281,11 @@ Apply the coding standards:
 
 ```sh
 docker compose run --rm phpfpm composer coding-standards-apply
+```
+
+### Markdown
+
+``` sh
+docker run --rm --volume "$(pwd)":/md peterdavehello/markdownlint markdownlint *.md --fix
+docker run --rm --volume "$(pwd)":/md peterdavehello/markdownlint markdownlint *.md
 ```
