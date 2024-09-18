@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* [PR-352](https://github.com/eReolen/base/pull/352)
+  2261: Update orlaprisen overlay assets
 * [PR-351](https://github.com/eReolen/base/pull/351)
   1953: Fixed Overdrive button
 
