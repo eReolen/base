@@ -4,6 +4,8 @@ server {
 
     root ${NGINX_WEB_ROOT};
 
+    client_max_body_size ${NGINX_MAX_BODY_SIZE};
+
     location = /favicon.ico {
         log_not_found off;
         access_log off;

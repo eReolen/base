@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ereol_article.features.field_instance.inc
@@ -30,6 +31,12 @@ function ereol_article_field_default_field_instances() {
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 1,
+      ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'hidden',
@@ -67,7 +74,7 @@ function ereol_article_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -84,6 +91,12 @@ function ereol_article_field_default_field_instances() {
         'settings' => array(),
         'type' => 'list_default',
         'weight' => 10,
+      ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -127,6 +140,12 @@ function ereol_article_field_default_field_instances() {
         'settings' => array(),
         'type' => 'color_field_default_formatter',
         'weight' => 12,
+      ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -205,7 +224,7 @@ function ereol_article_field_default_field_instances() {
       'module' => 'reol_field_carousel',
       'settings' => array(),
       'type' => 'reol_field_carousel_widget',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -230,6 +249,12 @@ function ereol_article_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 7,
+      ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'hidden',
@@ -334,6 +359,12 @@ function ereol_article_field_default_field_instances() {
         'type' => 'ting_reference_default',
         'weight' => 2,
       ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'search_result' => array(
         'label' => 'hidden',
         'settings' => array(),
@@ -359,7 +390,7 @@ function ereol_article_field_default_field_instances() {
       'module' => 'ting_reference',
       'settings' => array(),
       'type' => 'ting_reference_advanced',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -385,6 +416,12 @@ function ereol_article_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 5,
+      ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -413,7 +450,7 @@ function ereol_article_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 3,
+      'weight' => 6,
     ),
   );
 
@@ -430,6 +467,12 @@ function ereol_article_field_default_field_instances() {
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 15,
+      ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -482,6 +525,12 @@ function ereol_article_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 6,
       ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
@@ -525,6 +574,12 @@ function ereol_article_field_default_field_instances() {
         'type' => 'taxonomy_term_reference_link',
         'weight' => 13,
       ),
+      'list_item' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
@@ -548,9 +603,12 @@ function ereol_article_field_default_field_instances() {
     'widget' => array(
       'active' => 1,
       'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 12,
+      'settings' => array(
+        'autocomplete_path' => 'taxonomy/autocomplete',
+        'size' => 60,
+      ),
+      'type' => 'options_buttons',
+      'weight' => 2,
     ),
   );
 
