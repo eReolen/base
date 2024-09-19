@@ -145,6 +145,7 @@ function overdrive_ding_entity_buttons($type, $entity): array {
         break;
 
       case "audiobook":
+      case "podcast":
         $text = t('Listen', array(), array('context' => 'overdrive'));
         $html_id = 'listen-' . $entity->id;
         break;
