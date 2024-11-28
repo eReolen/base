@@ -41,10 +41,6 @@ Allow retrieving the untranslated versions of built-in role names (<https://www.
 
 * <https://drupal.org/files/issues/translate_role_names-2205581-1.patch>
 
-Ding2 robots
-
-* <https://raw.githubusercontent.com/ding2/ding2/master/patches/drupal_core.robots.txt.ding2.patch>
-
 Programatically added Menu link is not removed after removing the code. (<https://www.drupal.org/node/1079628>)
 
 * <https://www.drupal.org/files/issues/programatically_added-1079628-29-d7.patch>

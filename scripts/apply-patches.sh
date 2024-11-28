@@ -12,8 +12,6 @@ core_patches=(
   "https://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch"
   # @see https://www.drupal.org/node/2205581 (does not apply cleanly)
   "https://drupal.org/files/issues/translate_role_names-2205581-1.patch"
-  # (does not apply)
-  # "https://raw.githubusercontent.com/ding2/ding2/master/patches/drupal_core.robots.txt.ding2.patch"
   # @see https://www.drupal.org/node/1079628 (does not apply cleanly)
   "https://www.drupal.org/files/issues/programatically_added-1079628-29-d7.patch"
   # @see https://www.drupal.org/node/1175700 (applies cleanly)
