@@ -92,5 +92,6 @@ Disallow: /?q=user/register/
 Disallow: /?q=user/login/
 Disallow: /?q=user/logout/
 # Ding2 specific paths
+Disallow: /gatewayf/
 Disallow: /adgangsplatformen/
 Disallow: /content/unilogin

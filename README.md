@@ -29,10 +29,24 @@ which is tracked by patches in _sites/all/patches_.
 
 ### Drupal core patches
 
+Easy to trigger multiple menu rebuilds per page … (<https://www.drupal.org/node/1232346>)
+
 * <https://drupal.org/files/issues/menu-get-item-rebuild-1232346-45.patch>
+
+Drupal alerts "An AJAX HTTP request terminated abnormally" during normal site operation … (<https://www.drupal.org/node/1232416>)
+
 * <https://www.drupal.org/files/issues/1232416-autocomplete-for-drupal7x53.patch>
+
+Allow retrieving the untranslated versions of built-in role names (<https://www.drupal.org/node/2205581>)
+
 * <https://drupal.org/files/issues/translate_role_names-2205581-1.patch>
+
+Ding2 robots
+
 * <https://raw.githubusercontent.com/ding2/ding2/master/patches/drupal_core.robots.txt.ding2.patch>
+
+Programatically added Menu link is not removed after removing the code. (<https://www.drupal.org/node/1079628>)
+
 * <https://www.drupal.org/files/issues/programatically_added-1079628-29-d7.patch>
 
 Fix shortcut_set_save when set does not exist (<https://www.drupal.org/node/1175700>).
@@ -43,9 +57,9 @@ Add search_get_info() in search.module should include an _alter hook (<https://w
 
 * <https://www.drupal.org/files/search-info-alter-1911276--D7-16.patch>
 
-Seven theme fieldset-legend not clickable in Chrome 103.0.5060.53
+Seven theme fieldset-legend not clickable in Chrome 103.0.5060.53 (<https://www.drupal.org/project/drupal/issues/3292211>)
 
-* <https://www.drupal.org/project/drupal/issues/3292211>
+* <https://www.drupal.org/files/issues/2022-06-23/update_fieldset-legend__collapsable-3292211-3.patch>
 
 Field labels are not translated in number validation
 
