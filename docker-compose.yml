@@ -52,10 +52,13 @@ services:
     depends_on:
       - phpfpm
     ports:
-      - '8080'
+      # https://ecostack.dev/posts/nginx-self-signed-https-docker-compose/
+      - '3000:8080'
     volumes:
       - ./.docker/templates:/etc/nginx/templates:ro
       - .:/app
+      # https://ecostack.dev/posts/nginx-self-signed-https-docker-compose/
+      - ./certs:/etc/nginx/certs
     environment:
       NGINX_FPM_SERVICE: ${COMPOSE_PROJECT_NAME}-phpfpm-1:9000
       NGINX_WEB_ROOT: /app
