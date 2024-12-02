@@ -176,6 +176,10 @@ function _image_field_resolution_validate($element, &$form_state) {
         form_error($element[$dimension], t('Height and width values must be numeric.'));
         return;
       }
+      if (intval($value) < 0) {
+        form_error($element[$dimension], t('Height and width values must be positive numbers.'));
+        return;
+      }
       if (intval($value) == 0) {
         form_error($element[$dimension], t('Both a height and width value must be specified in the !name field.', array('!name' => $element['#title'])));
         return;
@@ -343,6 +347,7 @@ function image_field_widget_form(&$form, &$form_state, $field, $instance, $langc
     $extensions = isset($elements[$delta]['#upload_validators']['file_validate_extensions'][0]) ? $elements[$delta]['#upload_validators']['file_validate_extensions'][0] : implode(' ', $supported_extensions);
     $extensions = array_intersect(explode(' ', $extensions), $supported_extensions);
     $elements[$delta]['#upload_validators']['file_validate_extensions'][0] = implode(' ', $extensions);
+    $elements[$delta]['#upload_validators']['file_validate_is_image'] = array();
 
     // Add all extra functionality provided by the image widget.
     $elements[$delta]['#process'][] = 'image_field_widget_process';

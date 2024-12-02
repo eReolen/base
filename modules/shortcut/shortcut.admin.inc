@@ -206,11 +206,18 @@ function shortcut_set_admin() {
  * @see shortcut_set_add_form_submit()
  */
 function shortcut_set_add_form($form, &$form_state) {
-  $form['new'] = array(
+  $form['title'] = array(
     '#type' => 'textfield',
     '#title' => t('Set name'),
     '#description' => t('The new set is created by copying items from your default shortcut set.'),
     '#required' => TRUE,
+  );
+  $form['set_name'] = array(
+    '#type' => 'machine_name',
+    '#machine_name' => array(
+      'exists' => 'shortcut_set_name_exists',
+      'source' => array('title'),
+    ),
   );
 
   $form['actions'] = array('#type' => 'actions');
@@ -227,8 +234,12 @@ function shortcut_set_add_form($form, &$form_state) {
  */
 function shortcut_set_add_form_validate($form, &$form_state) {
   // Check to prevent a duplicate title.
-  if (shortcut_set_title_exists($form_state['values']['new'])) {
-    form_set_error('new', t('The shortcut set %name already exists. Choose another name.', array('%name' => $form_state['values']['new'])));
+  if (shortcut_set_title_exists($form_state['values']['title'])) {
+    form_set_error('title', t('The shortcut set %name already exists. Choose another name.', array('%name' => $form_state['values']['title'])));
+  }
+  // Check to prevent a conflict with an existing custom menu.
+  if (menu_load($form_state['values']['set_name'])) {
+    form_set_error('set_name', t('A menu %name already exists. Choose another machine name.'), array('%name' => $form_state['values']['set_name']));
   }
 }
 
@@ -239,7 +250,8 @@ function shortcut_set_add_form_submit($form, &$form_state) {
   // Save a new shortcut set with links copied from the user's default set.
   $default_set = shortcut_default_set();
   $set = (object) array(
-    'title' => $form_state['values']['new'],
+    'set_name' => $form_state['values']['set_name'],
+    'title' => $form_state['values']['title'],
     'links' => menu_links_clone($default_set->links),
   );
   shortcut_set_save($set);

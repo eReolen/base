@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* [PR-354](https://github.com/eReolen/base/pull/354)
+  Upgraded to Drupal 7.102 and (re-)applied patches
 * [PR-353](https://github.com/eReolen/base/pull/353)
   Cachebust overlay assets
 * [PR-352](https://github.com/eReolen/base/pull/352)

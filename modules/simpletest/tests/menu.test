@@ -1042,6 +1042,9 @@ class MenuTreeOutputTestCase extends DrupalWebTestCase {
  * Menu breadcrumbs related tests.
  */
 class MenuBreadcrumbTestCase extends MenuWebTestCase {
+  protected $admin_user;
+  protected $web_user;
+
   public static function getInfo() {
     return array(
       'name' => 'Breadcrumbs',
@@ -1537,6 +1540,8 @@ class MenuBreadcrumbTestCase extends MenuWebTestCase {
  * Tests active menu trails.
  */
 class MenuTrailTestCase extends MenuWebTestCase {
+  protected $admin_user;
+
   public static function getInfo() {
     return array(
       'name' => 'Active trail',
@@ -1775,35 +1780,4 @@ class MenuDataIntegrityTestCase extends MenuWebTestCase {
     $this->pass('Menu weight is being cast properly.');
   }
 
-}
-
-/**
- * Tests menu changes.
- */
-class MenuChangeTestCase extends MenuWebTestCase {
-  public static function getInfo() {
-    return array(
-      'name' => 'Menu changes',
-      'description' => 'Tests that menu links are updated on menu rebuild.',
-      'group' => 'Menu',
-    );
-  }
-
-  function setUp() {
-    parent::setUp('menu_test');
-  }
-
-  function testMenuChangeTypeTestCase() {
-    // Check that the test menu item exists.
-    $sql = "SELECT type FROM {menu_links}, {menu_router} WHERE {menu_links}.router_path = {menu_router}.path AND {menu_links}.router_path = 'menu-test/changes'";
-    $type = db_query($sql)->fetchField();
-    $this->assertEqual($type, MENU_NORMAL_ITEM, t('Menu item exists and is type MENU_NORMAL_ITEM.'));
-
-    // Change item type to MENU_CALLBACK and rebuild menu.
-    menu_test_change_menu_type('callback');
-    menu_rebuild();
-
-    $result = db_query($sql)->rowCount();
-    $this->assertEqual($result, 0, t('Menu item no longer exists in menu_links table after menu_rebuild.'));
-  }
 }
