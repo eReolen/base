@@ -39,3 +39,29 @@ open $(docker compose exec phpfpm vendor/bin/drush --uri="https://0.0.0.0:3000" 
 ``` shell
 PHP_XDEBUG_MODE=debug PHP_XDEBUG_WITH_REQUEST=yes docker compose up
 ```
+
+<details>
+<summary>Database cleanup</summary>
+
+``` shell name=database-clean-up
+for table in users users_roles; do
+  sql="DELETE FROM $table WHERE uid > 1;"
+  echo $sql
+  docker compose exec phpfpm vendor/bin/drush sql:query "$sql"
+done
+
+for table in node; do
+  sql="UPDATE $table SET uid = 1;"
+  echo $sql
+  docker compose exec phpfpm vendor/bin/drush sql:query "$sql"
+done
+
+for table in authmap profile realname field_data_field_phone field_data_field_phone_confirm field_revision_field_phone field_revision_field_phone_confirm field_data_field_email field_data_field_email_confirm field_revision_field_email field_revision_field_email_confirm; do
+  sql="TRUNCATE $table;"
+  echo $sql
+  docker compose exec phpfpm vendor/bin/drush sql:query "$sql"
+done
+
+docker compose exec phpfpm vendor/bin/drush sql:dump --structure-tables-list="cache,cache_*,history,search_*,sessions,watchdog,reol_statistics_*" > ereolengo.sql
+```
+</details>
