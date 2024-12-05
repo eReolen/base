@@ -26,6 +26,7 @@ Start the show:
 
 ``` shell name=site-reset
 docker compose pull
+docker network create frontend
 docker compose up --detach
 docker compose exec phpfpm composer install
 # Load database
