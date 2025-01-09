@@ -331,9 +331,8 @@ function shortcut_set_load($set_name) {
  * @param $shortcut_set
  *   An object containing the following properties:
  *   - 'title': The title of the shortcut set.
- *   - 'set_name': (optional) The internal name of the shortcut set. If
- *     omitted, a new shortcut set will be created, and the 'set_name' property
- *     will be added to the passed-in object.
+ *   - 'set_name': (optional) The machine name of the shortcut set. If not
+ *     provided a unique machine name will be automatically generated.
  *   - 'links': (optional) An array of menu links to save for the shortcut set.
  *     Each link is an array containing at least the following keys (which will
  *     be expanded to fill in other default values after the shortcut set is
@@ -350,11 +349,15 @@ function shortcut_set_load($set_name) {
  */
 function shortcut_set_save(&$shortcut_set) {
   // First save the shortcut set itself.
-  if (isset($shortcut_set->set_name)) {
+  $is_new = !isset($shortcut_set->set_name) || !shortcut_set_name_exists($shortcut_set->set_name);
+
+  if (!$is_new) {
     $return = drupal_write_record('shortcut_set', $shortcut_set, 'set_name');
   }
   else {
-    $shortcut_set->set_name = shortcut_set_get_unique_name();
+    if (!isset($shortcut_set->set_name)) {
+      $shortcut_set->set_name = shortcut_set_get_unique_name();
+    }
     $return = drupal_write_record('shortcut_set', $shortcut_set);
   }
   // If links were provided for the set, save them.
@@ -590,14 +593,26 @@ function shortcut_sets() {
 /**
  * Check to see if a shortcut set with the given title already exists.
  *
- * @param $title
+ * @param string $title
  *   Human-readable name of the shortcut set to check.
  *
- * @return
+ * @return bool
  *   TRUE if a shortcut set with that title exists; FALSE otherwise.
  */
 function shortcut_set_title_exists($title) {
   return (bool) db_query_range('SELECT 1 FROM {shortcut_set} WHERE title = :title', 0, 1, array(':title' => $title))->fetchField();
+}
+/**
+ * Check to see if a shortcut set with the given set name already exists.
+ *
+ * @param string $set_name
+ *   Machine name of the shortcut set to check.
+ *
+ * @return bool
+ *   TRUE if a shortcut set with that set name exists; FALSE otherwise.
+ */
+function shortcut_set_name_exists($set_name) {
+  return (bool) db_query_range('SELECT 1 FROM {shortcut_set} WHERE set_name = :name', 0, 1, array(':name' => $set_name))->fetchField();
 }
 
 /**

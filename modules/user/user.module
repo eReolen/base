@@ -694,6 +694,11 @@ function user_validate_picture(&$form, &$form_state) {
     'file_validate_is_image' => array(),
     'file_validate_image_resolution' => array(variable_get('user_picture_dimensions', '85x85')),
     'file_validate_size' => array((int) variable_get('user_picture_file_size', '30') * 1024),
+    // file_validate_is_image() uses the image toolkit to validate whether the
+    // file is a valid image type, so set file_validate_extensions to an empty
+    // array in order to signal to file_save_upload() that there is no need to
+    // validate the upload against a default list of file extensions.
+    'file_validate_extensions' => array(),
   );
 
   // Save the file as a temporary file.
@@ -1278,7 +1283,12 @@ function user_account_form_validate($form, &$form_state) {
     elseif ((bool) db_select('users')->fields('users', array('uid'))->condition('uid', $account->uid, '<>')->condition('mail', db_like($form_state['values']['mail']), 'LIKE')->range(0, 1)->execute()->fetchField()) {
       // Format error message dependent on whether the user is logged in or not.
       if ($GLOBALS['user']->uid) {
-        form_set_error('mail', t('The e-mail address %email is already taken.', array('%email' => $form_state['values']['mail'])));
+        // Do not fail the validation if user has not changed e-mail address.
+        // This means that multiple accounts with the same e-mail address exist
+        // and the logged-in user is one of them.
+        if ((isset($account->mail) && $account->mail != $mail) || !isset($account->mail)) {
+          form_set_error('mail', t('The e-mail address %email is already taken.', array('%email' => $form_state['values']['mail'])));
+        }
       }
       else {
         form_set_error('mail', t('The e-mail address %email is already registered. <a href="@password">Have you forgotten your password?</a>', array('%email' => $form_state['values']['mail'], '@password' => url('user/password'))));
@@ -2242,11 +2252,7 @@ function user_login_final_validate($form, &$form_state) {
       drupal_add_http_header('Status', '403 Forbidden');
     }
     else {
-      // Use $form_state['input']['name'] here to guarantee that we send
-      // exactly what the user typed in. $form_state['values']['name'] may have
-      // been modified by validation handlers that ran earlier than this one.
-      $query = isset($form_state['input']['name']) ? array('name' => $form_state['input']['name']) : array();
-      form_set_error('name', t('Sorry, unrecognized username or password. <a href="@password">Have you forgotten your password?</a>', array('@password' => url('user/password', array('query' => $query)))));
+      form_set_error('name', t('Sorry, unrecognized username or password. <a href="@password">Have you forgotten your password?</a>', array('@password' => url('user/password'))));
       watchdog('user', 'Login attempt failed for %user.', array('%user' => $form_state['values']['name']));
     }
   }
@@ -2311,12 +2317,12 @@ function user_authenticate($name, $password) {
  * The function records a watchdog message about the new session, saves the
  * login timestamp, calls hook_user_login(), and generates a new session.
  *
- * @param array $edit
- *   The array of form values submitted by the user.
+ * @param array $form_state
+ *   A keyed array containing the current state of the login form.
  *
  * @see hook_user_login()
  */
-function user_login_finalize(&$edit = array()) {
+function user_login_finalize(&$form_state = array()) {
   global $user;
   watchdog('user', 'Session opened for %name.', array('%name' => $user->name));
   // Update the user table timestamp noting user has logged in.
@@ -2328,11 +2334,12 @@ function user_login_finalize(&$edit = array()) {
     ->execute();
 
   // Regenerate the session ID to prevent against session fixation attacks.
-  // This is called before hook_user in case one of those functions fails
-  // or incorrectly does a redirect which would leave the old session in place.
+  // This is called before hook_user_login() in case one of those functions
+  // fails or incorrectly does a redirect which would leave the old session in
+  // place.
   drupal_session_regenerate();
 
-  user_module_invoke('login', $edit, $user);
+  user_module_invoke('login', $form_state, $user);
 }
 
 /**
@@ -2393,7 +2400,7 @@ function user_external_login_register($name, $module) {
  */
 function user_pass_reset_url($account) {
   $timestamp = REQUEST_TIME;
-  return url("user/reset/$account->uid/$timestamp/" . user_pass_rehash($account->pass, $timestamp, $account->login, $account->uid), array('absolute' => TRUE));
+  return url("user/reset/$account->uid/$timestamp/" . user_pass_rehash($account->pass, $timestamp, $account->login, $account->uid, $account->mail), array('absolute' => TRUE));
 }
 
 /**
@@ -2415,7 +2422,7 @@ function user_pass_reset_url($account) {
  */
 function user_cancel_url($account) {
   $timestamp = REQUEST_TIME;
-  return url("user/$account->uid/cancel/confirm/$timestamp/" . user_pass_rehash($account->pass, $timestamp, $account->login, $account->uid), array('absolute' => TRUE));
+  return url("user/$account->uid/cancel/confirm/$timestamp/" . user_pass_rehash($account->pass, $timestamp, $account->login, $account->uid, $account->mail), array('absolute' => TRUE));
 }
 
 /**
@@ -2437,11 +2444,13 @@ function user_cancel_url($account) {
  *   The UNIX timestamp of the user's last login.
  * @param int $uid
  *   The user ID of the user account.
+ * @param string $mail
+ *   The e-mail address of the user.
  *
  * @return
  *   A string that is safe for use in URLs and SQL statements.
  */
-function user_pass_rehash($password, $timestamp, $login, $uid) {
+function user_pass_rehash($password, $timestamp, $login, $uid, $mail = '') {
   // Backwards compatibility: Try to determine a $uid if one was not passed.
   // (Since $uid is a required parameter to this function, a PHP warning will
   // be generated if it's not provided, which is an indication that the calling
@@ -2461,7 +2470,14 @@ function user_pass_rehash($password, $timestamp, $login, $uid) {
     }
   }
 
-  return drupal_hmac_base64($timestamp . $login . $uid, drupal_get_hash_salt() . $password);
+  // Backwards compatibility: If the $mail parameter is not provided, load it
+  // from the user object.
+  if (empty($mail)) {
+    $account = user_load($uid);
+    $mail = $account->mail;
+  }
+
+  return drupal_hmac_base64($timestamp . ':' . $login . ':' . $uid . ':' . $mail, drupal_get_hash_salt() . $password);
 }
 
 /**
@@ -3745,6 +3761,12 @@ function user_action_info() {
       'configurable' => FALSE,
       'triggers' => array('any'),
     ),
+    'user_unblock_user_action' => array(
+      'label' => t('Unblock current user'),
+      'type' => 'user',
+      'configurable' => FALSE,
+      'triggers' => array('any'),
+     ),
   );
 }
 
@@ -3776,6 +3798,43 @@ function user_block_user_action(&$entity, $context = array()) {
   $account = user_load($uid);
   $account = user_save($account, array('status' => 0));
   watchdog('action', 'Blocked user %name.', array('%name' => $account->name));
+}
+
+/**
+ * Unblocks a specific user or the current user, if one is not specified.
+ *
+ * @param $entity
+ *   (optional) An entity object; if it is provided and it has a uid property,
+ *   the user with that ID is unblocked.
+ * @param $context
+ *   (optional) An associative array; if no user ID is found in $entity, the
+ *   'uid' element of this array determines the user to unblock.
+ *
+ * @ingroup actions
+ */
+function user_unblock_user_action(&$entity, $context = array()) {
+  // First priority: If there is a $entity->uid, unblock that user.
+  // This is most likely a user object or the author if a node or comment.
+  if (isset($entity->uid)) {
+    $uid = $entity->uid;
+  }
+  elseif (isset($context['uid'])) {
+    $uid = $context['uid'];
+  }
+  // If neither of those are valid, then unblock the current user.
+  else {
+    $uid = $GLOBALS['user']->uid;
+  }
+
+  // The anonymous user should not be unblocked.
+  if ($uid == 0) {
+    watchdog('action', 'Anonymous user should not be unblocked.', array(), WATCHDOG_WARNING);
+    return;
+  }
+
+  $account = user_load($uid);
+  $account = user_save($account, array('status' => 1));
+  watchdog('action', 'Unblocked user %name.', array('%name' => $account->name));
 }
 
 /**

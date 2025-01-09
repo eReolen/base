@@ -48,9 +48,15 @@ class ShortcutTestCase extends DrupalWebTestCase {
   /**
    * Creates a generic shortcut set.
    */
-  function generateShortcutSet($title = '', $default_links = TRUE) {
+  function generateShortcutSet($title = '', $default_links = TRUE, $set_name = '') {
     $set = new stdClass();
     $set->title = empty($title) ? $this->randomName(10) : $title;
+
+    // Set name is generated automatically if not set.
+    if (!empty($set_name)) {
+      $set->set_name = $set_name;
+    }
+
     if ($default_links) {
       $set->links = array();
       $set->links[] = $this->generateShortcutLink('node/add');
@@ -75,7 +81,7 @@ class ShortcutTestCase extends DrupalWebTestCase {
 
   /**
    * Extracts information from shortcut set links.
-   * 
+   *
    * @param object $set
    *   The shortcut set object to extract information from.
    * @param string $key
@@ -318,7 +324,7 @@ class ShortcutSetsTestCase extends ShortcutTestCase {
    */
   function testShortcutSetRename() {
     $set = $this->set;
-    
+
     $new_title = $this->randomName(10);
     $this->drupalPost('admin/config/user-interface/shortcut/' . $set->set_name . '/edit', array('title' => $new_title), t('Save'));
     $set = shortcut_set_load($set->set_name);
@@ -367,5 +373,17 @@ class ShortcutSetsTestCase extends ShortcutTestCase {
   function testShortcutSetDeleteDefault() {
     $this->drupalGet('admin/config/user-interface/shortcut/' . SHORTCUT_DEFAULT_SET_NAME . '/delete');
     $this->assertResponse(403);
+  }
+
+  /**
+   * Tests creating a new shortcut set with a defined set name.
+   */
+  function testShortcutSetCreateWithSetName() {
+    $random_name = $this->randomName(10);
+    $new_set = $this->generateShortcutSet($random_name, TRUE, $random_name);
+    $sets = shortcut_sets();
+    $this->assertTrue(isset($sets[$random_name]), 'Successfully created a shortcut set with a defined set name.');
+    $this->drupalGet('user/' . $this->admin_user->uid . '/shortcuts');
+    $this->assertText($new_set->title, 'Generated shortcut set was listed as a choice on the user account page.');
   }
 }

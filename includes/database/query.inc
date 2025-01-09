@@ -1190,6 +1190,15 @@ class UpdateQuery extends Query implements QueryConditionInterface {
    *   The prepared statement.
    */
   public function __toString() {
+    if (!is_array($this->expressionFields) || !is_array($this->fields)) {
+      if (version_compare(PHP_VERSION, '7.4', '>=')) {
+        throw new UnexpectedValueException();
+      }
+      else {
+        drupal_trigger_fatal_error('Unexpected Value');
+      }
+    }
+
     // Create a sanitized comment string to prepend to the query.
     $comments = $this->connection->makeComment($this->comments);
 
@@ -1286,6 +1295,15 @@ class MergeQuery extends Query implements QueryConditionInterface {
    * The table or subquery to be used for the condition.
    */
   protected $conditionTable;
+
+  /**
+   * The condition object for this query.
+   *
+   * Condition handling is handled via composition.
+   *
+   * @var DatabaseCondition
+   */
+  protected $condition;
 
   /**
    * An array of fields on which to insert.
@@ -1692,6 +1710,13 @@ class DatabaseCondition implements QueryConditionInterface, Countable {
    * The identifier of the query placeholder this condition has been compiled against.
    */
   protected $queryPlaceholderIdentifier;
+
+  /**
+   * Contains the string version of the Condition.
+   *
+   * @var string
+   */
+  protected $stringVersion;
 
   /**
    * Constructs a DataBaseCondition object.

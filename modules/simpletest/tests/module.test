@@ -9,12 +9,22 @@
  * Unit tests for the module API.
  */
 class ModuleUnitTest extends DrupalWebTestCase {
+  protected $user;
+
   public static function getInfo() {
     return array(
       'name' => 'Module API',
       'description' => 'Test low-level module functions.',
       'group' => 'Module',
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    $GLOBALS['drupal_test_info']['test_class'] = __CLASS__;
+    parent::setUp();
   }
 
   /**

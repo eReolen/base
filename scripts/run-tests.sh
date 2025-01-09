@@ -43,8 +43,8 @@ if ($args['clean']) {
   echo "\nEnvironment cleaned.\n";
 
   // Get the status messages and print them.
-  $messages = array_pop(drupal_get_messages('status'));
-  foreach ($messages as $text) {
+  $messages = drupal_get_messages('status');
+  foreach ($messages['status'] as $text) {
     echo " - " . $text . "\n";
   }
   exit(SIMPLETEST_SCRIPT_EXIT_SUCCESS);
@@ -175,6 +175,14 @@ All arguments are long options.
               development of individual test cases. This option implies --cache.
               To clear all cache entries use --clean.
 
+  --ci-parallel-node-index
+
+              The index of the job in the job set.
+
+  --ci-parallel-node-total
+
+              The total number of instances of this job running in parallel.
+
   <test1>[,<test2>[,<test3> ...]]
 
               One or more tests to be run. By default, these are interpreted
@@ -226,6 +234,8 @@ function simpletest_script_parse_args() {
     'test-id' => 0,
     'execute-test' => '',
     'xml' => '',
+    'ci-parallel-node-index' => 1,
+    'ci-parallel-node-total' => 1,
   );
 
   // Override with set values.
@@ -414,10 +424,19 @@ function simpletest_script_run_one_test($test_id, $test_class) {
 
     simpletest_classloader_register();
 
-    $test = new $test_class($test_id);
+    if (strpos($test_class, '::') > 0) {
+      list($class_name, $method) = explode('::', $test_class, 2);
+      $methods = array($method);
+    }
+    else {
+      $class_name = $test_class;
+      // Use empty array to run all the test methods.
+      $methods = array();
+    }
+    $test = new $class_name($test_id);
     $test->useSetupInstallationCache = !empty($args['cache']);
     $test->useSetupModulesCache = !empty($args['cache-modules']);
-    $test->run();
+    $test->run($methods);
     $info = $test->getInfo();
 
     $had_fails = (isset($test->results['#fail']) && $test->results['#fail'] > 0);
@@ -585,6 +604,12 @@ function simpletest_script_get_test_list() {
     simpletest_script_print_error('No valid tests were specified.');
     exit(SIMPLETEST_SCRIPT_EXIT_FAILURE);
   }
+
+  if ((int) $args['ci-parallel-node-total'] > 1) {
+    $tests_per_job = ceil(count($test_list) / $args['ci-parallel-node-total']);
+    $test_list = array_slice($test_list, ($args['ci-parallel-node-index'] - 1) * $tests_per_job, $tests_per_job);
+  }
+
   return $test_list;
 }
 
